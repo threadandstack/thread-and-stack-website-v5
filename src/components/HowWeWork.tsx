@@ -1,3 +1,5 @@
+import workshopImage from "@/assets/brendan-collaboration.jpeg";
+
 export const HowWeWork = () => {
   const principles = [
     {
@@ -24,15 +26,46 @@ export const HowWeWork = () => {
 
   return (
     <section id="how-we-work" className="py-24 px-6 bg-secondary/10">
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <h2 className="text-4xl md:text-5xl font-bold mb-16 text-balance">
           How we work
         </h2>
         
-        <div className="grid md:grid-cols-2 gap-8">
-          {principles.map((principle, index) => (
+        <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
+          <div className="order-2 md:order-1">
+            <img 
+              src={workshopImage} 
+              alt="Collaborative workshop session"
+              className="rounded-lg shadow-lg w-full h-auto"
+            />
+          </div>
+          
+          <div className="order-1 md:order-2 space-y-8">
+            {principles.slice(0, 2).map((principle, index) => (
+              <div 
+                key={index}
+                className="space-y-3 group"
+              >
+                <div className="text-accent font-mono text-sm font-semibold">
+                  {principle.number}
+                </div>
+                
+                <h3 className="text-2xl font-semibold group-hover:text-accent transition-colors">
+                  {principle.title}
+                </h3>
+                
+                <p className="text-muted-foreground leading-relaxed">
+                  {principle.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+        
+        <div className="grid md:grid-cols-2 gap-8 mt-8">
+          {principles.slice(2).map((principle, index) => (
             <div 
-              key={index}
+              key={index + 2}
               className="space-y-3 group"
             >
               <div className="text-accent font-mono text-sm font-semibold">
