@@ -1,10 +1,18 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import heroImage from "@/assets/brendan-street.jpeg";
 
 export const Hero = () => {
   return (
     <section className="relative min-h-[85vh] flex items-center justify-center px-6 py-24 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-background via-muted/30 to-secondary/20 -z-10" />
+      <div className="absolute inset-0 opacity-5 -z-10">
+        <img 
+          src={heroImage} 
+          alt="" 
+          className="w-full h-full object-cover"
+        />
+      </div>
       
       <div className="max-w-4xl mx-auto text-center space-y-8 animate-fade-in">
         <h1 className="text-5xl md:text-7xl font-bold leading-tight text-balance">
