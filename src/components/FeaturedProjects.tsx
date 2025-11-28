@@ -25,9 +25,9 @@ const ImageCarousel = ({ images }: { images: string[] }) => {
   }, [images.length]);
 
   return (
-    <div className="aspect-[4/3] overflow-hidden relative">
+    <div className="aspect-[4/3] overflow-hidden relative w-full">
       <div 
-        className="flex h-full transition-transform duration-700 ease-in-out"
+        className="flex h-full w-full transition-transform duration-700 ease-in-out"
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
       >
         {images.map((image, index) => (
@@ -35,7 +35,7 @@ const ImageCarousel = ({ images }: { images: string[] }) => {
             key={index}
             src={image}
             alt=""
-            className="w-full h-full object-cover flex-shrink-0"
+            className="min-w-full h-full object-cover flex-shrink-0"
           />
         ))}
       </div>
@@ -53,7 +53,7 @@ export const FeaturedProjects = () => {
       role: "Marketing Strategy & AI Integration",
       description: "Transformed marketing operations with AI workflows, achieving more progress in 2 months than the previous year",
       fullDescription: "Partnered with UBIQ to transform their marketing operations through strategic AI integration. By building custom workflows tailored to their tools and ethics, we achieved more progress in 2 months than they had in the previous year—without sacrificing brand voice or creative control.",
-      images: [ubiq1, ubiq2, ubiq3, ubiq4],
+      images: [ubiq1, ubiq3, ubiq2, ubiq4],
       outcomes: [
         "2 months of progress = previous year's output",
         "Custom AI workflows integrated with existing tools",
