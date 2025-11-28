@@ -10,7 +10,7 @@ interface Project {
   role: string;
   description: string;
   fullDescription?: string;
-  image: string;
+  images: string[];
   outcomes?: string[];
   link?: string;
 }
@@ -40,7 +40,7 @@ export const FeaturedProjectModal = ({
         <div className="space-y-6">
           <div className="aspect-[4/3] overflow-hidden rounded-xl">
             <img
-              src={project.image}
+              src={project.images[0]}
               alt={project.title}
               className="w-full h-full object-cover"
             />
