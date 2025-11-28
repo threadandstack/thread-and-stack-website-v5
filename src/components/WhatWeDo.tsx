@@ -16,15 +16,15 @@ export const WhatWeDo = () => {
               </p>
               
               <p>
-                That means sharper positioning, honest messaging, and practical systems that reduce "creative tax"—the admin, chaos, and context switching that drags you away from meaningful work.
+                That means sharper positioning, honest messaging, and practical strategies and systems that lead to human, intentional, and engaging creatives. I call this the <span className="italic">creative tax</span>—the cognitive load of admin, chaos, and context switching that drags you away from meaningful creative and strategic projects you know need to happen.
               </p>
               
               <p>
-                Together we build workflows that protect creative energy and brand integrity. Your brand becomes a decision filter, not just a logo. AI becomes your co-pilot, not a replacement for judgment.
+                Marketing without strategy is like sinking in quicksand. Together we transform messy marketing into clear narratives that avoid going through the motions, posting for posting's sake. Like a chrysalis emerging, we build strategies that help your brand become what it was always meant to be—torch-bearing work that lights the way forward.
               </p>
               
               <p className="not-italic font-light">
-                You get time back. Your team stays aligned. Your brand shows up consistently.
+                Your brand becomes a living presence. Your team stays aligned. You get time back for the work that matters.
               </p>
             </div>
           </div>

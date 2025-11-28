@@ -3,16 +3,16 @@ import { Check } from "lucide-react";
 export const WhoItsFor = () => {
   const audiences = [
     {
-      title: "Leaders who've outgrown their old story",
-      description: "Your values and ambition have moved on, but your brand is stuck a few chapters back. Different teams tell different versions of the story. Competitors with less depth are claiming your space more loudly."
+      title: "Brands that have outgrown their old story",
+      description: "Your values and ambition have evolved, but your brand narrative is stuck several chapters back. Different teams tell different versions of the story. Competitors with less depth are claiming your space more loudly, while your authentic message gets lost in translation."
     },
     {
-      title: "Leaders focused on brand cohesion",
-      description: "Your brand's intent is clear in leadership's heads, but gets diluted across teams and channels. In key moments—fundraising, launches, partnerships—the brand doesn't land how you hoped."
+      title: "Teams building a brand universe",
+      description: "You're creating something cohesive across multiple touchpoints, but the vision in leadership's heads gets diluted by the time it reaches execution. In crucial moments—fundraising, launches, partnerships—the brand doesn't land with the impact you know it should."
     },
     {
-      title: "Teams who refuse to burn out to scale",
-      description: "You're growing, but questioning the cost. Marketing depends on late nights and heroics. You want systems that protect creative energy, not exhaust it."
+      title: "Leaders seeking sustainable content cycles",
+      description: "You're growing, but refuse to sacrifice your team's wellbeing or creative integrity. Marketing shouldn't depend on late nights and heroics. You need systems that utilize AI not to replace creativity, but to empower creative thinking and protect what matters most."
     }
   ];
 
