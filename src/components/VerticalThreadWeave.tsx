@@ -18,7 +18,7 @@ export const VerticalThreadWeave = () => {
   }, []);
 
   // Calculate the path length to animate based on scroll
-  const pathLength = 5000;
+  const pathLength = 4700;
   const visibleLength = pathLength * scrollProgress;
 
   // Define color stops based on scroll position/sections
@@ -34,7 +34,7 @@ export const VerticalThreadWeave = () => {
     <div className="fixed top-0 left-0 w-full h-full pointer-events-none z-10 hidden md:block">
       <svg
         className="w-full h-full"
-        viewBox="0 0 1440 5000"
+        viewBox="0 0 1440 4700"
         preserveAspectRatio="xMidYMin slice"
         style={{ overflow: 'visible' }}
       >
@@ -64,8 +64,7 @@ export const VerticalThreadWeave = () => {
              Q 1460 3550, 1280 3750
              Q 1100 3950, 1300 4150
              Q 1500 4350, 1340 4550
-             Q 1180 4750, 1300 4900
-             L 1300 5000"
+             Q 1180 4650, 1260 4700"
           stroke="url(#threadGradientDynamic)"
           strokeWidth="3.5"
           fill="none"
@@ -81,7 +80,7 @@ export const VerticalThreadWeave = () => {
         
         {/* Decorative dots along the thread at key weaving points */}
         {scrollProgress > 0.15 && (
-          <circle cx="140" cy="750" r="5" fill={getThreadColor(0.15)} opacity="0.6">
+          <circle cx="100" cy="750" r="5" fill={getThreadColor(0.15)} opacity="0.6">
             <animate
               attributeName="r"
               values="5;7;5"
