@@ -6,21 +6,25 @@ export const WhatWeDo = () => {
       <div className="max-w-6xl mx-auto">
         <div className="grid md:grid-cols-5 gap-12 items-start">
           <div className="md:col-span-3 space-y-8">
-            <h2 className="text-4xl md:text-5xl mb-8 text-balance font-light">
-              What Thread & Stack does
+            <h2 className="text-5xl md:text-6xl mb-12 text-balance font-light leading-tight">
+              Clear narratives.<br />Practical workflows.<br />Living brands.
             </h2>
             
-            <div className="space-y-6 text-lg leading-relaxed border-l-2 thread-border pl-8">
-              <p>
-                I work with purpose‑led founders and teams to build brands and systems that scale without losing their soul.
+            <div className="space-y-6 text-lg md:text-xl leading-relaxed border-l-2 thread-border pl-8">
+              <p className="text-2xl font-light not-italic">
+                I help purpose-led teams close the gap between what they mean and what they're actually saying and shipping.
               </p>
               
               <p>
-                That means clearer positioning, stronger messaging, and practical workflows (Notion, AI, human judgment) that reduce what I call "creative tax"—the admin, chaos, and context switching that drags you away from the good work.
+                That means sharper positioning, honest messaging, and practical systems that reduce "creative tax"—the admin, chaos, and context switching that drags you away from meaningful work.
               </p>
               
               <p>
-                Together we design systems that make the good work easier to do, and easier to repeat. You get time back. Your brand becomes a decision filter, not just a logo. And AI becomes your co‑pilot, not a replacement for your taste.
+                Together we build workflows that protect creative energy and brand integrity. Your brand becomes a decision filter, not just a logo. AI becomes your co-pilot, not a replacement for judgment.
+              </p>
+              
+              <p className="not-italic font-light">
+                You get time back. Your team stays aligned. Your brand shows up consistently.
               </p>
             </div>
           </div>
