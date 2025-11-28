@@ -1,7 +1,8 @@
 import { useState } from "react";
-import graffitiWalk from "@/assets/brendan-graffiti-walk.jpg";
-import graffitiPortrait from "@/assets/brendan-graffiti-portrait.jpg";
-import deskCelebration from "@/assets/brendan-desk-celebration.jpg";
+import ebayProject from "@/assets/ebay-project.png";
+import funraisinProject from "@/assets/funraisin-project.jpg";
+import ubiqProject from "@/assets/ubiq-project.png";
+import immaProject from "@/assets/imma-project.png";
 import ntukDigital from "@/assets/ntuk-digital.png";
 import { FeaturedProjectModal } from "./FeaturedProjectModal";
 
@@ -15,7 +16,7 @@ export const FeaturedProjects = () => {
       role: "Content Strategy & Creative Consulting",
       description: "Built trust among stakeholders and boosted marketing efficiency through creative strategy",
       fullDescription: "Working with eBay's marketing team, I developed content strategy frameworks that built trust among internal stakeholders while significantly boosting marketing efficiency. The work focused on creating clear creative direction and streamlining content workflows across multiple teams and markets.",
-      image: graffitiWalk,
+      image: ebayProject,
       outcomes: [
         "Established unified content strategy framework across teams",
         "Improved stakeholder alignment and decision-making speed",
@@ -24,11 +25,11 @@ export const FeaturedProjects = () => {
       ]
     },
     {
-      title: "Fundraising Everywhere",
+      title: "UBIQ",
       role: "Marketing Strategy & AI Integration",
       description: "Transformed marketing operations with AI workflows, achieving more progress in 2 months than the previous year",
-      fullDescription: "Partnered with Fundraising Everywhere to transform their marketing operations through strategic AI integration. By building custom workflows tailored to their tools and ethics, we achieved more progress in 2 months than they had in the previous year—without sacrificing brand voice or creative control.",
-      image: deskCelebration,
+      fullDescription: "Partnered with UBIQ to transform their marketing operations through strategic AI integration. By building custom workflows tailored to their tools and ethics, we achieved more progress in 2 months than they had in the previous year—without sacrificing brand voice or creative control.",
+      image: ubiqProject,
       outcomes: [
         "2 months of progress = previous year's output",
         "Custom AI workflows integrated with existing tools",
@@ -55,12 +56,25 @@ export const FeaturedProjects = () => {
       role: "Brand & Systems Consulting",
       description: "Fast action planning with exceptional follow-through on brand cohesion and operational systems",
       fullDescription: "Provided strategic consulting to Funraisin focused on brand cohesion and operational systems. The work emphasized fast action planning combined with exceptional follow-through, helping the team maintain brand integrity while scaling their platform and operations.",
-      image: graffitiPortrait,
+      image: funraisinProject,
       outcomes: [
         "Rapid strategic action planning",
         "Improved brand cohesion across touchpoints",
         "Streamlined operational systems",
         "Maintained clarity during growth phase"
+      ]
+    },
+    {
+      title: "IMMA Collective",
+      role: "Brand Strategy & Community Building",
+      description: "Building cohesive brand identity and community systems for emerging creative collective",
+      fullDescription: "Worked with IMMA Collective to establish their brand foundation and community engagement systems. The project focused on creating clarity around their mission while building practical workflows that support their growing creative community.",
+      image: immaProject,
+      outcomes: [
+        "Established clear brand identity and positioning",
+        "Created sustainable community engagement systems",
+        "Built frameworks for consistent communication",
+        "Maintained authenticity while scaling"
       ]
     }
   ];
