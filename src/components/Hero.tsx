@@ -4,7 +4,7 @@ import heroImage from "@/assets/brendan-street.jpeg";
 
 export const Hero = () => {
   return (
-    <section className="relative min-h-[85vh] flex items-center justify-center px-6 py-24 overflow-hidden border-b-2 thread-border">
+    <section className="relative min-h-[85vh] flex items-center justify-center px-6 py-24 overflow-hidden">
       <div className="absolute top-0 left-0 right-0 h-px thread-divider" />
       
       <div className="max-w-4xl mx-auto text-center space-y-8 animate-fade-in">

@@ -2,7 +2,7 @@ import thinkingImage from "@/assets/brendan-cafe.jpeg";
 
 export const WhatWeDo = () => {
   return (
-    <section className="py-24 px-6 bg-card border-b-2 thread-border">
+    <section className="py-24 px-6 bg-card">
       <div className="max-w-6xl mx-auto">
         <div className="grid md:grid-cols-5 gap-12 items-start">
           <div className="md:col-span-3 space-y-8">
