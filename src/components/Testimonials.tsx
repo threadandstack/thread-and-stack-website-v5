@@ -68,7 +68,7 @@ export const Testimonials = () => {
     >
       <div className="max-w-6xl mx-auto">
         <h2 className="text-5xl md:text-6xl mb-16 text-balance font-light">
-          What clients say
+          Kind words
         </h2>
         
         <div className="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8">

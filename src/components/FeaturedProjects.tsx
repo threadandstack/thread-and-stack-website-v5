@@ -13,16 +13,22 @@ import imma3 from "@/assets/imma-2.png";
 import imma4 from "@/assets/imma-3.png";
 import { FeaturedProjectModal } from "./FeaturedProjectModal";
 
-const ImageCarousel = ({ images }: { images: string[] }) => {
+const ImageCarousel = ({ images, isVisible }: { images: string[]; isVisible: boolean }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % images.length);
-    }, 3000);
+    if (!isVisible) return;
 
-    return () => clearInterval(interval);
-  }, [images.length]);
+    const delayTimeout = setTimeout(() => {
+      const interval = setInterval(() => {
+        setCurrentIndex((prev) => (prev + 1) % images.length);
+      }, 3000);
+
+      return () => clearInterval(interval);
+    }, 750);
+
+    return () => clearTimeout(delayTimeout);
+  }, [images.length, isVisible]);
 
   return (
     <div className="aspect-[4/3] overflow-hidden relative w-full block">
@@ -135,7 +141,7 @@ export const FeaturedProjects = () => {
               className="group bg-card rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] transition-all duration-300 overflow-hidden text-left w-full flex flex-col"
             >
               <div className="w-full">
-                <ImageCarousel images={project.images} />
+                <ImageCarousel images={project.images} isVisible={isVisible} />
               </div>
               
               <div className="p-8 space-y-4">
