@@ -17,7 +17,7 @@ export const WhoItsFor = () => {
   ];
 
   return (
-    <section className="py-24 px-6 border-b-2 thread-border">
+    <section className="py-24 px-6">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-4xl md:text-5xl mb-12 text-balance font-light">
           Who this is for

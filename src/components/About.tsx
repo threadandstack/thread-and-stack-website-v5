@@ -4,7 +4,7 @@ import brendanPhoto from "@/assets/brendan-brick.jpeg";
 
 export const About = () => {
   return (
-    <section id="about" className="py-24 px-6 bg-card border-b-2 thread-border">
+    <section id="about" className="py-24 px-6 bg-card">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-4xl md:text-5xl mb-12 font-light">
           About

@@ -25,7 +25,7 @@ export const HowWeWork = () => {
   ];
 
   return (
-    <section id="how-we-work" className="py-24 px-6 bg-muted/30 border-b-2 thread-border">
+    <section id="how-we-work" className="py-24 px-6 bg-muted/30">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-4xl md:text-5xl mb-16 text-balance font-light">
           How we work

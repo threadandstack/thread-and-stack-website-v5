@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 
 export const Contact = () => {
   return (
-    <section id="contact" className="py-24 px-6 border-b-2 thread-border">
+    <section id="contact" className="py-24 px-6">
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl mb-4 font-light">
