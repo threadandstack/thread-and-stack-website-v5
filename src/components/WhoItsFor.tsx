@@ -17,9 +17,9 @@ export const WhoItsFor = () => {
   ];
 
   return (
-    <section className="py-24 px-6">
+    <section className="py-24 px-6 border-b-2 thread-border">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-4xl md:text-5xl font-bold mb-12 text-balance">
+        <h2 className="text-4xl md:text-5xl mb-12 text-balance font-light">
           Who this is for
         </h2>
         
@@ -27,13 +27,13 @@ export const WhoItsFor = () => {
           {audiences.map((audience, index) => (
             <div 
               key={index}
-              className="bg-card p-8 rounded-lg border border-border hover:border-accent/50 transition-all duration-300 hover:shadow-lg"
+              className="bg-card p-8 border-2 thread-border hover:border-accent transition-all duration-300"
             >
-              <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center mb-4">
+              <div className="w-10 h-10 border thread-border flex items-center justify-center mb-4">
                 <Check className="w-5 h-5 text-accent" />
               </div>
               
-              <h3 className="text-xl font-semibold mb-3">
+              <h3 className="text-xl mb-3 font-light not-italic">
                 {audience.title}
               </h3>
               

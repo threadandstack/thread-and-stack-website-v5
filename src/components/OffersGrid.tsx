@@ -33,10 +33,10 @@ export const OffersGrid = () => {
   ];
 
   return (
-    <section className="py-24 px-6">
+    <section className="py-24 px-6 border-b-2 thread-border">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-balance">
+          <h2 className="text-4xl md:text-5xl mb-4 text-balance font-light">
             Ways to work together
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -48,17 +48,17 @@ export const OffersGrid = () => {
           {offers.map((offer, index) => (
             <div 
               key={index}
-              className="bg-card border border-border rounded-lg p-8 hover:border-accent/50 transition-all duration-300 hover:shadow-xl flex flex-col"
+              className="bg-card border-2 thread-border p-8 hover:border-accent transition-all duration-300 flex flex-col"
             >
-              <div className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mb-6 text-accent">
+              <div className="w-12 h-12 border-2 thread-border flex items-center justify-center mb-6 text-accent">
                 {offer.icon}
               </div>
               
-              <h3 className="text-2xl font-bold mb-2">
+              <h3 className="text-2xl mb-2 font-light">
                 {offer.title}
               </h3>
               
-              <p className="text-sm text-accent font-medium mb-4">
+              <p className="text-sm text-accent mb-4">
                 {offer.tagline}
               </p>
               
@@ -66,13 +66,13 @@ export const OffersGrid = () => {
                 {offer.description}
               </p>
               
-              <div className="space-y-4">
-                <p className="text-sm font-semibold text-foreground/70">
+              <div className="space-y-4 pt-4 border-t thread-border">
+                <p className="text-sm font-medium text-foreground/70 not-italic">
                   {offer.price}
                 </p>
                 
                 <Button 
-                  className="w-full group bg-primary text-primary-foreground hover:bg-primary/90"
+                  className="w-full group bg-primary text-primary-foreground hover:bg-primary/90 border thread-border"
                   asChild
                 >
                   <a href={offer.link}>
