@@ -3,6 +3,7 @@ import ubiq1 from "@/assets/ubiq-project.png";
 import ubiq2 from "@/assets/ubiq-1.png";
 import ubiq3 from "@/assets/ubiq-2.png";
 import ubiq4 from "@/assets/ubiq-3.png";
+import ubiq5 from "@/assets/ubiq-5.png";
 import ntuk1 from "@/assets/ntuk-logo.png";
 import ntuk2 from "@/assets/ntuk-digital-2.png";
 import ntuk3 from "@/assets/ntuk-digital-3.png";
@@ -78,7 +79,7 @@ export const FeaturedProjects = () => {
       role: "Marketing Strategy & AI Integration",
       description: "Transformed marketing operations with AI workflows, achieving more progress in 2 months than the previous year",
       fullDescription: "Partnered with UBIQ to transform their marketing operations through strategic AI integration. By building custom workflows tailored to their tools and ethics, we achieved more progress in 2 months than they had in the previous year—without sacrificing brand voice or creative control.",
-      images: [ubiq1, ubiq3, ubiq2, ubiq4],
+      images: [ubiq1, ubiq3, ubiq2, ubiq4, ubiq5],
       outcomes: [
         "2 months of progress = previous year's output",
         "Custom AI workflows integrated with existing tools",
