@@ -10,7 +10,7 @@ export const WhatWeDo = () => {
               Clear narratives.<br />Practical workflows.<br />Living brands.
             </h2>
             
-            <div className="space-y-6 text-lg md:text-xl leading-relaxed border-l-2 thread-border pl-8">
+            <div className="space-y-6 text-lg md:text-xl leading-relaxed border-l-4 border-accent/20 pl-8">
               <p className="text-2xl font-light not-italic">
                 I help purpose-led teams close the gap between what they mean and what they're actually saying and shipping.
               </p>

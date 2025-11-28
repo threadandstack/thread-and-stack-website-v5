@@ -48,9 +48,9 @@ export const OffersGrid = () => {
           {offers.map((offer, index) => (
             <div 
               key={index}
-              className="bg-card border-2 thread-border p-8 hover:border-accent transition-all duration-300 flex flex-col"
+              className="bg-card rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] p-8 transition-all duration-300 flex flex-col"
             >
-              <div className="w-12 h-12 border-2 thread-border flex items-center justify-center mb-6 text-accent">
+              <div className="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center mb-6 text-accent">
                 {offer.icon}
               </div>
               
@@ -66,13 +66,13 @@ export const OffersGrid = () => {
                 {offer.description}
               </p>
               
-              <div className="space-y-4 pt-4 border-t thread-border">
+              <div className="space-y-4 pt-4 border-t border-border/30">
                 <p className="text-sm font-medium text-foreground/70 not-italic">
                   {offer.price}
                 </p>
                 
                 <Button 
-                  className="w-full group bg-primary text-primary-foreground hover:bg-primary/90 border thread-border"
+                  className="w-full group bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl"
                   asChild
                 >
                   <a href={offer.link}>

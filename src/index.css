@@ -32,11 +32,16 @@ All colors MUST be HSL.
     --destructive: 0 70% 50%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
+    --border: 0 0% 92%;
+    --input: 0 0% 95%;
     --ring: 0 0% 20%;
 
-    --radius: 0.25rem;
+    --radius: 1rem;
+    
+    /* Shadows */
+    --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06);
+    --shadow-medium: 0 4px 16px rgba(0, 0, 0, 0.06), 0 2px 4px rgba(0, 0, 0, 0.08);
+    --shadow-large: 0 8px 24px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(0, 0, 0, 0.1);
 
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     
@@ -98,9 +103,20 @@ All colors MUST be HSL.
     @apply font-serif italic;
   }
 
-  /* Thread as flowing ink stroke */
-  .thread-border {
-    border: 1px solid hsl(var(--border));
+  /* Soft card styles */
+  .card-soft {
+    background: hsl(var(--card));
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-soft);
+  }
+  
+  .card-hover {
+    transition: all 0.3s ease;
+  }
+  
+  .card-hover:hover {
+    box-shadow: var(--shadow-medium);
+    transform: translateY(-2px);
   }
 
   .thread-divider {

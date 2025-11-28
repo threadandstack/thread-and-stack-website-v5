@@ -1,6 +1,6 @@
 export const Footer = () => {
   return (
-    <footer className="py-12 px-6 bg-primary text-primary-foreground border-t-2 thread-border">
+    <footer className="py-12 px-6 bg-primary text-primary-foreground border-t border-border/20">
       <div className="max-w-6xl mx-auto">
         <div className="grid md:grid-cols-3 gap-8 mb-8">
           <div>
@@ -28,7 +28,7 @@ export const Footer = () => {
           </div>
         </div>
         
-        <div className="border-t thread-border pt-8 text-center text-sm text-primary-foreground/60">
+        <div className="border-t border-primary-foreground/20 pt-8 text-center text-sm text-primary-foreground/60">
           <p className="not-italic">© {new Date().getFullYear()} Thread & Stack. All rights reserved.</p>
         </div>
       </div>

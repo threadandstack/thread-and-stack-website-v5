@@ -31,7 +31,7 @@ export const Testimonials = () => {
           {testimonials.map((testimonial, index) => (
             <div 
               key={index}
-              className="relative bg-card p-8 transition-all duration-300 hover:shadow-lg group"
+              className="relative bg-card p-8 rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] transition-all duration-300 group"
             >
               {/* Thread accent on left */}
               <div className="absolute left-0 top-8 bottom-8 w-[2px] bg-accent/30 group-hover:bg-accent/60 transition-colors" />
