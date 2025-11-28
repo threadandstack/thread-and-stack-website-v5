@@ -7,17 +7,24 @@ import { OffersGrid } from "@/components/OffersGrid";
 import { About } from "@/components/About";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
+import { ThreadWeave } from "@/components/ThreadWeave";
 
 const Index = () => {
   return (
     <main className="min-h-screen">
       <Navigation />
       <Hero />
+      <ThreadWeave />
       <div id="what-we-do"><WhatWeDo /></div>
+      <ThreadWeave className="rotate-180" />
       <div id="who-its-for"><WhoItsFor /></div>
+      <ThreadWeave />
       <div id="how-we-work"><HowWeWork /></div>
+      <ThreadWeave className="rotate-180" />
       <div id="offers"><OffersGrid /></div>
+      <ThreadWeave />
       <div id="about"><About /></div>
+      <ThreadWeave className="rotate-180" />
       <Contact />
       <Footer />
     </main>
