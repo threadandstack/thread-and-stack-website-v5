@@ -1,5 +1,6 @@
 import { Navigation } from "@/components/Navigation";
 import { Hero } from "@/components/Hero";
+import { ScrollIndicator } from "@/components/ScrollIndicator";
 import { WhatWeDo } from "@/components/WhatWeDo";
 import { WhoItsFor } from "@/components/WhoItsFor";
 import { HowWeWork } from "@/components/HowWeWork";
@@ -15,6 +16,7 @@ import { Footer } from "@/components/Footer";
 const Index = () => {
   return (
     <main className="min-h-screen relative">
+      <ScrollIndicator />
       <Navigation />
       <Hero />
       <div id="what-we-do"><WhatWeDo /></div>

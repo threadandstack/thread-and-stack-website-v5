@@ -1,4 +1,26 @@
+import { useEffect, useRef, useState } from "react";
+
 export const Testimonials = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   const testimonials = [
     {
       quote: "Brendan quickly built trust among our stakeholders, boosting marketing efficiency through creative strategy and consulting.",
@@ -39,7 +61,11 @@ export const Testimonials = () => {
   ];
 
   return (
-    <section id="testimonials" className="py-24 px-6 bg-muted/20">
+    <section 
+      id="testimonials" 
+      ref={sectionRef}
+      className={`py-24 px-6 bg-muted/20 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+    >
       <div className="max-w-6xl mx-auto">
         <h2 className="text-5xl md:text-6xl mb-16 text-balance font-light">
           What clients say

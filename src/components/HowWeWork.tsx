@@ -1,6 +1,27 @@
 import workshopImage from "@/assets/brendan-collaboration.jpeg";
+import { useEffect, useRef, useState } from "react";
 
 export const HowWeWork = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   const principles = [
     {
       number: "01",
@@ -25,7 +46,11 @@ export const HowWeWork = () => {
   ];
 
   return (
-    <section id="how-we-work" className="py-24 px-6 bg-muted/30">
+    <section 
+      id="how-we-work" 
+      ref={sectionRef}
+      className={`py-24 px-6 bg-muted/30 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+    >
       <div className="max-w-6xl mx-auto">
         <h2 className="text-5xl md:text-6xl mb-16 text-balance font-light">
           How we work
