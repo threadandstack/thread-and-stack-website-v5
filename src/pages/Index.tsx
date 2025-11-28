@@ -9,6 +9,7 @@ import { Testimonials } from "@/components/Testimonials";
 import { FeaturedProjects } from "@/components/FeaturedProjects";
 import { About } from "@/components/About";
 import { Contact } from "@/components/Contact";
+import { Newsletter } from "@/components/Newsletter";
 import { Footer } from "@/components/Footer";
 import { ThreadWeave } from "@/components/ThreadWeave";
 
@@ -35,6 +36,8 @@ const Index = () => {
       <div id="about"><About /></div>
       <ThreadWeave className="rotate-180" />
       <Contact />
+      <ThreadWeave />
+      <Newsletter />
       <Footer />
     </main>
   );

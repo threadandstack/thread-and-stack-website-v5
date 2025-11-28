@@ -1,14 +1,35 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Clock, Zap, Users } from "lucide-react";
+import { Clock, Zap, Users } from "lucide-react";
+import { OfferModal } from "./OfferModal";
 
 export const OffersGrid = () => {
+  const [selectedOffer, setSelectedOffer] = useState<typeof offers[0] | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
+
   const offers = [
     {
       icon: <Zap className="w-6 h-6" />,
       title: "Clarity Sessions",
       tagline: "Strategic power hours",
       description: "Unblock positioning, refine your offer, diagnose messy systems, or untangle messaging problems. Leave with a clear decision, actionable steps, and specific language you can use immediately.",
+      fullDescription: "60-minute strategic power hours designed to unblock positioning, refine your offer, diagnose messy systems, or untangle messaging problems. These focused sessions cut through the noise and help you make clear decisions fast.",
       price: "From £300",
+      duration: "60 minutes",
+      whatYouGet: [
+        "Pre-session questionnaire to focus the conversation",
+        "60-minute strategic consultation",
+        "Clear decision or direction",
+        "Actionable next steps",
+        "Specific language and frameworks you can use immediately",
+        "Follow-up notes and resources"
+      ],
+      process: [
+        "Book your session and complete pre-work questionnaire",
+        "We meet for 60 minutes to tackle your specific challenge",
+        "Leave with clarity, decisions, and next steps",
+        "Receive follow-up notes and resources within 24 hours"
+      ],
       cta: "Book a Session",
       link: "/stacked-sessions"
     },
@@ -17,7 +38,24 @@ export const OffersGrid = () => {
       title: "Thread AI Sprint",
       tagline: "AI & Creative Strategy • 6-week deep work",
       description: "Build your 'second brain' with AI-supported workflows tailored to your tools, ethics, and working style. Turn messy ideas and channel experiments into clear narrative and practical systems.",
+      fullDescription: "A 6-week 1:1 mentorship program to build AI-supported workflows tailored to your tools, ethics, and working style. This isn't about replacing human creativity—it's about creating invisible scaffolding that reduces cognitive load and protects your creative energy.",
       price: "From £1k",
+      duration: "6 weeks",
+      whatYouGet: [
+        "6 weekly 1-hour sessions with structured agendas",
+        "Custom AI workflow design for your specific tools and needs",
+        "Hands-on implementation support",
+        "Ethical AI framework aligned with your values",
+        "Content systems and templates",
+        "Ongoing Slack/email support between sessions",
+        "Documentation and playbooks you can reference later"
+      ],
+      process: [
+        "Week 1: Audit your current systems and identify friction points",
+        "Week 2-3: Design and implement AI workflows tailored to your tools",
+        "Week 4-5: Build content systems and test in real scenarios",
+        "Week 6: Refine, document, and ensure sustainability"
+      ],
       cta: "Explore Sprints",
       link: "/mentorship-sprint"
     },
@@ -26,7 +64,25 @@ export const OffersGrid = () => {
       title: "Brand Connection Workshops",
       tagline: "Team alignment sessions",
       description: "Get your team on the same page about story, audience, and behaviour. Answer: 'How do we scale the mission without losing the magic?' Leave with shared language and decision filters.",
+      fullDescription: "Modular team strategy workshops designed to align your team on story, audience, and behaviour. These sessions address the core question: 'How do we scale the mission without losing the magic?' Perfect for teams of 5-20 people navigating growth.",
       price: "From £2k",
+      duration: "Half-day or full-day sessions",
+      whatYouGet: [
+        "Pre-workshop stakeholder interviews and audit",
+        "Facilitated strategy session(s) for your team",
+        "Interactive exercises and frameworks",
+        "Shared language and decision filters",
+        "Clear action plan and next steps",
+        "Workshop documentation and follow-up resources",
+        "Optional: 30-day follow-up check-in"
+      ],
+      process: [
+        "Discovery call to understand your team's challenges",
+        "Pre-workshop stakeholder interviews and preparation",
+        "Facilitated workshop session(s) with your team",
+        "Document outcomes, decisions, and action plans",
+        "Follow-up to ensure momentum and clarity"
+      ],
       cta: "Plan a Workshop",
       link: "/workshops"
     }
@@ -73,18 +129,24 @@ export const OffersGrid = () => {
                 
                 <Button 
                   className="w-full group bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl"
-                  asChild
+                  onClick={() => {
+                    setSelectedOffer(offer);
+                    setModalOpen(true);
+                  }}
                 >
-                  <a href={offer.link}>
-                    {offer.cta}
-                    <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </a>
+                  Learn More
                 </Button>
               </div>
             </div>
           ))}
         </div>
       </div>
+      
+      <OfferModal
+        offer={selectedOffer}
+        open={modalOpen}
+        onOpenChange={setModalOpen}
+      />
     </section>
   );
 };
