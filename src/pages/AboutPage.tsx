@@ -1,5 +1,6 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
+import { AIPhilosophy } from "@/components/AIPhilosophy";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import brendanPhoto from "@/assets/brendan-brick.jpeg";
@@ -120,6 +121,8 @@ const AboutPage = () => {
           </div>
         </div>
       </section>
+      
+      <AIPhilosophy />
       
       <Footer />
     </main>
