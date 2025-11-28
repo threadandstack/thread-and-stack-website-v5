@@ -5,6 +5,7 @@ import { WhoItsFor } from "@/components/WhoItsFor";
 import { HowWeWork } from "@/components/HowWeWork";
 import { OffersGrid } from "@/components/OffersGrid";
 import { Testimonials } from "@/components/Testimonials";
+import { FeaturedProjects } from "@/components/FeaturedProjects";
 import { About } from "@/components/About";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
@@ -24,8 +25,10 @@ const Index = () => {
       <ThreadWeave className="rotate-180" />
       <div id="offers"><OffersGrid /></div>
       <ThreadWeave />
-      <Testimonials />
+      <FeaturedProjects />
       <ThreadWeave className="rotate-180" />
+      <Testimonials />
+      <ThreadWeave />
       <div id="about"><About /></div>
       <ThreadWeave className="rotate-180" />
       <Contact />
