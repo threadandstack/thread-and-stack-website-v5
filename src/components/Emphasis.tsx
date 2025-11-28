@@ -6,10 +6,10 @@ export const Emphasis = ({ className = "", delay = 0 }: { className?: string; de
       preserveAspectRatio="none"
       xmlns="http://www.w3.org/2000/svg"
       style={{
-        animation: `draw-line 0.8s ease-out forwards`,
+        animation: delay < 100 ? `draw-line 1.4s ease-out forwards` : 'none',
         animationDelay: `${delay}s`,
         strokeDasharray: "200",
-        strokeDashoffset: "200"
+        strokeDashoffset: delay < 100 ? "200" : "0"
       }}
     >
       <path
