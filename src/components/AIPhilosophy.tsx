@@ -3,15 +3,11 @@ export const AIPhilosophy = () => {
     <section className="py-24 px-6 bg-card">
       <div className="max-w-4xl mx-auto">
         <h2 className="text-5xl md:text-6xl mb-12 text-balance font-light">
-          AI as invisible scaffolding
+          My approach to AI
         </h2>
         
         <div className="space-y-8 text-lg md:text-xl leading-relaxed">
           <p className="text-2xl font-light not-italic border-l-4 border-accent/20 pl-8">
-            The problem isn't a lack of ideas. It's the pile-up of tabs, documents, and half-finished drafts between what you <span className="italic">mean</span> and what you actually <span className="italic">ship</span>.
-          </p>
-          
-          <p>
             I don't see AI as a replacement for human creativity or judgment. I see it as a second brain and an ops partner in the background—helping you untangle the mess, connect the dots, and keep your best ideas moving.
           </p>
           
