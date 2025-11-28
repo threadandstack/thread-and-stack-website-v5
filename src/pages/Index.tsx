@@ -10,7 +10,6 @@ import { About } from "@/components/About";
 import { Contact } from "@/components/Contact";
 import { Newsletter } from "@/components/Newsletter";
 import { Footer } from "@/components/Footer";
-import { ThreadWeave } from "@/components/ThreadWeave";
 import { VerticalThreadWeave } from "@/components/VerticalThreadWeave";
 
 const Index = () => {
@@ -19,23 +18,14 @@ const Index = () => {
       <VerticalThreadWeave />
       <Navigation />
       <Hero />
-      <ThreadWeave />
       <div id="what-we-do"><WhatWeDo /></div>
-      <ThreadWeave className="rotate-180" fill fillColor="#4338ca" fillDirection="up" />
       <div id="who-its-for"><WhoItsFor /></div>
-      <ThreadWeave fill fillColor="#4338ca" fillDirection="up" />
       <div id="how-we-work"><HowWeWork /></div>
-      <ThreadWeave className="rotate-180" />
       <div id="offers"><OffersGrid /></div>
-      <ThreadWeave />
       <FeaturedProjects />
-      <ThreadWeave className="rotate-180" />
       <Testimonials />
-      <ThreadWeave />
       <div id="about"><About /></div>
-      <ThreadWeave className="rotate-180" />
       <Contact />
-      <ThreadWeave />
       <Newsletter />
       <Footer />
     </main>
