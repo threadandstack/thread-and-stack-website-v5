@@ -1,7 +1,13 @@
+import { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { Emphasis } from "@/components/Emphasis";
+import { motion } from "framer-motion";
+import { useInView } from "framer-motion";
 export const Hero = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
   return <section className="relative min-h-[85vh] flex items-center justify-center px-6 py-24 overflow-hidden">
       <div className="absolute top-0 left-0 right-0 h-px thread-divider" />
       
@@ -14,9 +20,17 @@ export const Hero = () => {
           </h1>
         </div>
         
-        <p className="text-xl md:text-3xl text-muted-foreground max-w-3xl mx-auto text-balance leading-relaxed font-light">The brands that feel alive, are remembered.
-Will yours be?<span className="text-accent">alive</span> are the brands that are remembered.
-        </p>
+        <div ref={ref} className="text-xl md:text-3xl text-muted-foreground max-w-3xl mx-auto text-balance leading-relaxed font-light">
+          <p>The brands that feel <span className="text-accent">alive</span>, are remembered.</p>
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="mt-2"
+          >
+            Will yours?
+          </motion.p>
+        </div>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
           <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 transition-all duration-300 text-lg px-8 group rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] not-italic" asChild>
