@@ -26,7 +26,7 @@ export const HowWeWork = () => {
     description: "You're not outsourcing your thinking to a consultant. We collaborate to create clarity, language, and systems that are genuinely yours."
   }, {
     number: "03",
-    title: "Ship tangible outputs",
+    title: "We hunt decisions and outputs",
     description: "Every session delivers clear language, actionable decisions, and practical tools you can use immediately—not vague frameworks."
   }, {
     number: "04",
