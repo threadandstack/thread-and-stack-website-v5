@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Newsletter = () => {
   const [email, setEmail] = useState("");
@@ -12,41 +13,36 @@ export const Newsletter = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-
-    // Replace with your actual Beehiiv publication ID
-    const beehiivUrl = "https://api.beehiiv.com/v2/publications/YOUR_PUBLICATION_ID/subscriptions";
     
     try {
-      // Note: You'll need to configure this with your Beehiiv API key
-      // For now, this is a placeholder that shows the structure
-      const response = await fetch(beehiivUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer YOUR_API_KEY"
-        },
-        body: JSON.stringify({
-          email: email,
-          reactivate_existing: false,
-          send_welcome_email: true,
-          utm_source: "website",
-          utm_medium: "organic"
-        })
+      console.log("Subscribing email to newsletter:", email);
+      
+      const { data, error } = await supabase.functions.invoke('subscribe-newsletter', {
+        body: { email }
       });
 
-      if (response.ok) {
-        toast({
-          title: "Subscribed!",
-          description: "You've been added to the newsletter. Check your inbox.",
-        });
-        setEmail("");
-      } else {
-        throw new Error("Subscription failed");
+      if (error) {
+        console.error("Newsletter subscription error:", error);
+        throw error;
       }
-    } catch (error) {
+
+      console.log("Newsletter subscription response:", data);
+
+      toast({
+        title: "Subscribed!",
+        description: "You've been added to the newsletter. Check your inbox for a welcome email.",
+      });
+      setEmail("");
+    } catch (error: any) {
+      console.error("Newsletter subscription failed:", error);
+      
+      const errorMessage = error?.message?.includes('already subscribed') 
+        ? "This email is already subscribed to the newsletter."
+        : "Please try again or email me directly.";
+      
       toast({
         title: "Something went wrong",
-        description: "Please try again or email me directly.",
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {
