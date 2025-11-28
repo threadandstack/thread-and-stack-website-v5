@@ -10,12 +10,11 @@ import { About } from "@/components/About";
 import { Contact } from "@/components/Contact";
 import { Newsletter } from "@/components/Newsletter";
 import { Footer } from "@/components/Footer";
-import { VerticalThreadWeave } from "@/components/VerticalThreadWeave";
+
 
 const Index = () => {
   return (
     <main className="min-h-screen relative">
-      <VerticalThreadWeave />
       <Navigation />
       <Hero />
       <div id="what-we-do"><WhatWeDo /></div>
