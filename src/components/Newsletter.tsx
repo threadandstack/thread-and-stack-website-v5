@@ -47,7 +47,7 @@ export const Newsletter = () => {
   };
   return <section className="py-24 px-6 bg-accent/5">
       <div className="max-w-2xl mx-auto text-center">
-        <h2 className="text-4xl md:text-5xl mb-6 font-light">​Thoughts on brand, creativity and systems that breed humanity.</h2>
+        <h2 className="text-4xl md:text-5xl mb-6 font-light">​Thoughts on brand, creativity and systems that build our businesses.</h2>
         <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
           Monthly signals on building brands that stay true while scaling.           
         </p>
