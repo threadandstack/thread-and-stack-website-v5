@@ -9,14 +9,14 @@ export const Hero = () => {
       <div className="max-w-5xl mx-auto text-center space-y-8 animate-fade-in">
         <div className="space-y-4">
           <h1 className="text-6xl md:text-8xl leading-[1.1] text-balance font-light">
-            Turn messy marketing into <span className="relative inline-block">clear narratives
+            Marketing that feels <span className="relative inline-block">more human
               <Emphasis className="absolute -bottom-2 left-0 right-0" />
             </span>
           </h1>
         </div>
         
         <p className="text-xl md:text-3xl text-muted-foreground max-w-3xl mx-auto text-balance leading-relaxed font-light">
-          Build practical workflows that protect creative energy. Show up as a living brand people remember.
+          AI-powered workflows that protect creative energy. Clear narratives that help you grow truer, not just faster.
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">

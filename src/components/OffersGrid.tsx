@@ -14,8 +14,8 @@ export const OffersGrid = () => {
     },
     {
       icon: <Clock className="w-6 h-6" />,
-      title: "AI & Creative Strategy Sprints",
-      tagline: "6-week deep work",
+      title: "Thread AI Sprint",
+      tagline: "AI & Creative Strategy • 6-week deep work",
       description: "Build your 'second brain' with AI-supported workflows tailored to your tools, ethics, and working style. Turn messy ideas and channel experiments into clear narrative and practical systems.",
       price: "From £1k",
       cta: "Explore Sprints",
