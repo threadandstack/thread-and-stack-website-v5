@@ -25,7 +25,7 @@ export const Hero = () => {
           <motion.p
             initial={{ opacity: 0, y: 10 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            transition={{ duration: 0.6, delay: 1.3 }}
             className="mt-2"
           >
             Will yours?
