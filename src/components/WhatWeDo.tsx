@@ -13,7 +13,7 @@ export const WhatWeDo = () => {
           setIsVisible(true);
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.3 }
     );
 
     if (sectionRef.current) {
@@ -33,13 +33,13 @@ export const WhatWeDo = () => {
           <div className="md:col-span-3 space-y-8">
             <h2 className="text-5xl md:text-6xl mb-12 text-balance font-light leading-tight">
               <span className="relative inline-block">Clear
-                <Emphasis className="absolute -bottom-2 left-0 right-0" delay={isVisible ? 0 : 999} />
+                <Emphasis className="absolute -bottom-2 left-0 right-0" delay={isVisible ? 0.5 : 999} />
               </span> narratives.<br />
               <span className="relative inline-block">Practical
-                <Emphasis className="absolute -bottom-2 left-0 right-0" delay={isVisible ? 0.4 : 999} />
+                <Emphasis className="absolute -bottom-2 left-0 right-0" delay={isVisible ? 1.2 : 999} />
               </span> workflows.<br />
               <span className="relative inline-block">Living
-                <Emphasis className="absolute -bottom-2 left-0 right-0" delay={isVisible ? 0.8 : 999} />
+                <Emphasis className="absolute -bottom-2 left-0 right-0" delay={isVisible ? 1.9 : 999} />
               </span> brands.
             </h2>
             
