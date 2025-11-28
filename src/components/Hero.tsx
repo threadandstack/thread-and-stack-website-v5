@@ -16,7 +16,7 @@ export const Hero = () => {
         </div>
         
         <p className="text-xl md:text-3xl text-muted-foreground max-w-3xl mx-auto text-balance leading-relaxed font-light">
-          AI-powered workflows that protect creative energy. Clear narratives that help you grow truer, not just faster.
+          Turn messy marketing into clear narratives and practical workflows that sustain. The brands that feel alive are the brands that are remembered.
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">

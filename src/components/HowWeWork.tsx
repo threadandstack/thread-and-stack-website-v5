@@ -20,7 +20,7 @@ export const HowWeWork = () => {
     {
       number: "04",
       title: "Protect what matters",
-      description: "We design workflows that reduce friction and creative tax while preserving human judgment, taste, and the work you care about."
+      description: "We design workflows that reduce friction and cognitive load while preserving human judgement, taste, and the work you care about."
     }
   ];
 

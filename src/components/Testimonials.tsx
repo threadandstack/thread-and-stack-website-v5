@@ -17,6 +17,24 @@ export const Testimonials = () => {
       author: "Courtney Evans",
       role: "CEO",
       company: "Funraisin"
+    },
+    {
+      quote: "Brendan consistently combined big thinking and strategic expertise to propose innovative ideas for guiding content development.",
+      author: "Chris Mejaski",
+      role: "Content Strategist",
+      company: "eBay"
+    },
+    {
+      quote: "Brendan did a fantastic job on our activation campaign.",
+      author: "Amy Moran",
+      role: "Head of Marketing",
+      company: "Mixergy"
+    },
+    {
+      quote: "Brendan is smart. He gets it quickly. He's a very safe pair of hands.",
+      author: "Gary O'Donnell",
+      role: "Operations Director",
+      company: "Dentsu Aegis"
     }
   ];
 
@@ -27,17 +45,17 @@ export const Testimonials = () => {
           What clients say
         </h2>
         
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8">
           {testimonials.map((testimonial, index) => (
             <div 
               key={index}
-              className="relative bg-card p-8 rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] transition-all duration-300 group"
+              className="relative bg-card p-8 rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] transition-all duration-300 group break-inside-avoid"
             >
               {/* Thread accent on left */}
               <div className="absolute left-0 top-8 bottom-8 w-[2px] bg-accent/30 group-hover:bg-accent/60 transition-colors" />
               
               <div className="pl-6 space-y-4">
-                <p className="text-xl leading-relaxed">
+                <p className="text-lg leading-relaxed">
                   "{testimonial.quote}"
                 </p>
                 
