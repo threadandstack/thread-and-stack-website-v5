@@ -2,6 +2,7 @@ import { ExternalLink } from "lucide-react";
 import graffitiWalk from "@/assets/brendan-graffiti-walk.jpg";
 import graffitiPortrait from "@/assets/brendan-graffiti-portrait.jpg";
 import deskCelebration from "@/assets/brendan-desk-celebration.jpg";
+import ntukDigital from "@/assets/ntuk-digital.png";
 
 export const FeaturedProjects = () => {
   const projects = [
@@ -17,6 +18,13 @@ export const FeaturedProjects = () => {
       role: "Marketing Strategy & AI Integration",
       description: "Transformed marketing operations with AI workflows, achieving more progress in 2 months than the previous year",
       image: deskCelebration,
+      link: "https://pages.threadandstack.com/portfolio?pvs=74"
+    },
+    {
+      title: "Nerve Tumours UK",
+      role: "Brand Strategy & Digital Transformation",
+      description: "Brendan led the client-side aspect of our nationwide rebrand, working with our selected agency partner from start to finish in 2017-18 - redefining how our beneficiaries, supporters and donors relate to our cause",
+      image: ntukDigital,
       link: "https://pages.threadandstack.com/portfolio?pvs=74"
     },
     {
