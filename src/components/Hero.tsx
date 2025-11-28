@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { Emphasis } from "@/components/Emphasis";
-
 export const Hero = () => {
   return <section className="relative min-h-[85vh] flex items-center justify-center px-6 py-24 overflow-hidden">
       <div className="absolute top-0 left-0 right-0 h-px thread-divider" />
@@ -15,8 +14,8 @@ export const Hero = () => {
           </h1>
         </div>
         
-        <p className="text-xl md:text-3xl text-muted-foreground max-w-3xl mx-auto text-balance leading-relaxed font-light">
-          The brands that feel <span className="text-accent">alive</span> are the brands that are remembered.
+        <p className="text-xl md:text-3xl text-muted-foreground max-w-3xl mx-auto text-balance leading-relaxed font-light">The brands that feel alive, are remembered.
+Will yours be?<span className="text-accent">alive</span> are the brands that are remembered.
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
