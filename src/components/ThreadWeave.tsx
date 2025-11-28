@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-export const ThreadWeave = ({ className = "" }: { className?: string }) => {
+export const ThreadWeave = ({ className = "", fill = false, fillColor = "transparent" }: { className?: string; fill?: boolean; fillColor?: string }) => {
   const pathRef = useRef<SVGPathElement>(null);
   const [isVisible, setIsVisible] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -30,6 +30,16 @@ export const ThreadWeave = ({ className = "" }: { className?: string }) => {
         preserveAspectRatio="none"
         style={{ overflow: 'visible' }}
       >
+        {fill && (
+          <path
+            d="M 0 50 Q 25 30, 50 50 T 100 50 L 100 100 L 0 100 Z"
+            fill={fillColor}
+            className="transition-all duration-1000"
+            style={{
+              opacity: isVisible ? 1 : 0,
+            }}
+          />
+        )}
         <path
           ref={pathRef}
           d="M 0 50 Q 25 30, 50 50 T 100 50"
