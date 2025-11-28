@@ -16,7 +16,7 @@ export const Hero = () => {
         </div>
         
         <p className="text-xl md:text-3xl text-muted-foreground max-w-3xl mx-auto text-balance leading-relaxed font-light">
-          The brands that feel alive are the brands that are remembered.
+          The brands that feel <span className="text-accent">alive</span> are the brands that are remembered.
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
