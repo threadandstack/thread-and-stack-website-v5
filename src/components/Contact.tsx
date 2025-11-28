@@ -16,13 +16,13 @@ export const Contact = () => {
           </p>
         </div>
         
-        <form className="space-y-6 bg-card p-8 border-2 thread-border">
+        <form className="space-y-6 bg-card p-8 rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.06)]">
           <div className="space-y-2">
             <Label htmlFor="name" className="not-italic">Name</Label>
             <Input 
               id="name" 
               placeholder="Your name"
-              className="bg-background border thread-border"
+              className="bg-background rounded-lg"
             />
           </div>
           
@@ -32,7 +32,7 @@ export const Contact = () => {
               id="email" 
               type="email" 
               placeholder="your@email.com"
-              className="bg-background border thread-border"
+              className="bg-background rounded-lg"
             />
           </div>
           
@@ -41,7 +41,7 @@ export const Contact = () => {
             <Input 
               id="role" 
               placeholder="Founder at..."
-              className="bg-background border thread-border"
+              className="bg-background rounded-lg"
             />
           </div>
           
@@ -50,14 +50,14 @@ export const Contact = () => {
             <Textarea 
               id="message" 
               placeholder="Tell me about your challenge, question, or what you're hoping to work on..."
-              className="min-h-32 bg-background border thread-border"
+              className="min-h-32 bg-background rounded-lg"
             />
           </div>
           
           <Button 
             type="submit" 
             size="lg" 
-            className="w-full bg-accent text-accent-foreground hover:bg-accent/90 border thread-border"
+            className="w-full bg-accent text-accent-foreground hover:bg-accent/90 rounded-xl"
           >
             Send Message
           </Button>

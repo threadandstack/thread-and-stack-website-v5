@@ -36,7 +36,7 @@ export const HowWeWork = () => {
             <img 
               src={workshopImage} 
               alt="Collaborative workshop session"
-              className="border-2 thread-border w-full h-auto"
+              className="rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.06)] w-full h-auto"
             />
           </div>
           
@@ -44,7 +44,7 @@ export const HowWeWork = () => {
             {principles.slice(0, 2).map((principle, index) => (
               <div 
                 key={index}
-                className="space-y-3 group border-l-2 thread-border pl-6"
+                className="space-y-3 group border-l-4 border-accent/20 pl-6"
               >
                 <div className="text-accent text-sm not-italic font-light">
                   {principle.number}
@@ -66,7 +66,7 @@ export const HowWeWork = () => {
           {principles.slice(2).map((principle, index) => (
             <div 
               key={index + 2}
-              className="space-y-3 group border-l-2 thread-border pl-6"
+              className="space-y-3 group border-l-4 border-accent/20 pl-6"
             >
               <div className="text-accent text-sm not-italic font-light">
                 {principle.number}

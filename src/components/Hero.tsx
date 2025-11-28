@@ -20,14 +20,14 @@ export const Hero = () => {
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
-          <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 transition-all duration-300 text-lg px-8 group border thread-border not-italic" asChild>
+          <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 transition-all duration-300 text-lg px-8 group rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] not-italic" asChild>
             <a href="#contact">
               Book a Stacked Session
               <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
             </a>
           </Button>
           
-          <Button size="lg" variant="outline" className="text-lg px-8 border-2 thread-border hover:bg-foreground hover:text-background not-italic" asChild>
+          <Button size="lg" variant="outline" className="text-lg px-8 rounded-xl hover:bg-foreground hover:text-background not-italic shadow-[0_2px_8px_rgba(0,0,0,0.04)]" asChild>
             <a href="#how-we-work">
               How We Work
             </a>

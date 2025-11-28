@@ -27,9 +27,9 @@ export const WhoItsFor = () => {
           {audiences.map((audience, index) => (
             <div 
               key={index}
-              className="bg-card p-8 border-2 thread-border hover:border-accent transition-all duration-300"
+              className="bg-card p-8 rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] transition-all duration-300"
             >
-              <div className="w-10 h-10 border thread-border flex items-center justify-center mb-4">
+              <div className="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center mb-4">
                 <Check className="w-5 h-5 text-accent" />
               </div>
               

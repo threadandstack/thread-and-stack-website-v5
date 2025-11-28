@@ -15,11 +15,11 @@ export const About = () => {
             <img 
               src={brendanPhoto} 
               alt="Brendan - Thread & Stack founder"
-              className="border-2 thread-border w-full h-auto"
+              className="rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.06)] w-full h-auto"
             />
           </div>
           
-          <div className="space-y-6 text-lg md:text-xl leading-relaxed border-l-2 thread-border pl-8">
+          <div className="space-y-6 text-lg md:text-xl leading-relaxed border-l-4 border-accent/20 pl-8">
             <p className="text-2xl md:text-3xl font-light not-italic">
               I'm Brendan, founder of Thread & Stack.
             </p>
@@ -46,7 +46,7 @@ export const About = () => {
         <div className="mt-12">
           <Button 
             size="lg" 
-            className="bg-accent text-accent-foreground hover:bg-accent/90 group border thread-border"
+            className="bg-accent text-accent-foreground hover:bg-accent/90 group rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
             asChild
           >
             <a href="#contact">
