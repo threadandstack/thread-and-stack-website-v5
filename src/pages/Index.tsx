@@ -19,9 +19,9 @@ const Index = () => {
       <Hero />
       <ThreadWeave />
       <div id="what-we-do"><WhatWeDo /></div>
-      <ThreadWeave className="rotate-180" />
+      <ThreadWeave className="rotate-180" fill fillColor="#4338ca" />
       <div id="who-its-for"><WhoItsFor /></div>
-      <ThreadWeave />
+      <ThreadWeave fill fillColor="#4338ca" />
       <div id="how-we-work"><HowWeWork /></div>
       <ThreadWeave className="rotate-180" />
       <div id="offers"><OffersGrid /></div>
