@@ -25,7 +25,7 @@ const ImageCarousel = ({ images }: { images: string[] }) => {
   }, [images.length]);
 
   return (
-    <div className="aspect-[4/3] overflow-hidden relative w-full">
+    <div className="aspect-[4/3] overflow-hidden relative w-full block">
       <div 
         className="flex h-full w-full transition-transform duration-700 ease-in-out"
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
@@ -35,7 +35,7 @@ const ImageCarousel = ({ images }: { images: string[] }) => {
             key={index}
             src={image}
             alt=""
-            className="min-w-full h-full object-cover flex-shrink-0"
+            className="min-w-full h-full object-cover flex-shrink-0 block"
           />
         ))}
       </div>
@@ -110,9 +110,11 @@ export const FeaturedProjects = () => {
                 setSelectedProject(project);
                 setModalOpen(true);
               }}
-              className="group bg-card rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] transition-all duration-300 overflow-hidden text-left w-full"
+              className="group bg-card rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] transition-all duration-300 overflow-hidden text-left w-full flex flex-col"
             >
-              <ImageCarousel images={project.images} />
+              <div className="w-full">
+                <ImageCarousel images={project.images} />
+              </div>
               
               <div className="p-8 space-y-4">
                 <h3 className="text-2xl font-light not-italic">
