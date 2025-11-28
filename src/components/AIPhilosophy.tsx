@@ -8,11 +8,7 @@ export const AIPhilosophy = () => {
         
         <div className="space-y-8 text-lg md:text-xl leading-relaxed">
           <p className="text-2xl font-light not-italic border-l-4 border-accent/20 pl-8">
-            Most of the founders and teams I work with are already doing meaningful work. The problem isn't a lack of ideas. It's the pile-up of tabs, documents, and half-finished drafts between what they <span className="italic">mean</span> and what they actually <span className="italic">ship</span>.
-          </p>
-          
-          <p>
-            That's where AI comes in for me.
+            The problem isn't a lack of ideas. It's the pile-up of tabs, documents, and half-finished drafts between what you <span className="italic">mean</span> and what you actually <span className="italic">ship</span>.
           </p>
           
           <p>

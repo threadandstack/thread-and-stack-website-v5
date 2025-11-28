@@ -16,13 +16,13 @@ export const Hero = () => {
         </div>
         
         <p className="text-xl md:text-3xl text-muted-foreground max-w-3xl mx-auto text-balance leading-relaxed font-light">
-          Turn messy marketing into clear narratives and practical workflows that sustain. The brands that feel alive are the brands that are remembered.
+          The brands that feel alive are the brands that are remembered.
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
           <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 transition-all duration-300 text-lg px-8 group rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] not-italic" asChild>
             <a href="#contact">
-              Book a Stacked Session
+              Book a Clarity Session
               <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
             </a>
           </Button>
