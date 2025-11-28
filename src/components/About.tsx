@@ -6,8 +6,8 @@ export const About = () => {
   return (
     <section id="about" className="py-24 px-6 bg-card">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-4xl md:text-5xl mb-12 font-light">
-          About
+        <h2 className="text-5xl md:text-6xl mb-16 font-light">
+          About Thread & Stack
         </h2>
         
         <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -19,21 +19,25 @@ export const About = () => {
             />
           </div>
           
-          <div className="space-y-6 text-lg leading-relaxed border-l-2 thread-border pl-8">
-            <p>
-              I'm a brand strategist and systems thinker who's spent years helping purpose-led teams clarify what they stand for and how they work.
+          <div className="space-y-6 text-lg md:text-xl leading-relaxed border-l-2 thread-border pl-8">
+            <p className="text-2xl md:text-3xl font-light not-italic">
+              I'm Brendan, founder of Thread & Stack.
             </p>
             
             <p>
-              My background blends brand strategy (positioning, messaging, narrative) with practical systems design (Notion, AI workflows, operations). I believe the best brands aren't just beautiful—they're functional. They help you make decisions, focus effort, and protect the work that matters.
+              I've spent 12+ years in brand and marketing across global consumer brands, international consultancies, creative agencies, disruptive tech, ambitious start-ups and nonprofits.
             </p>
             
             <p>
-              I work with founders and teams who care more about the mission than the optics—but still need the brand to work. People who want to grow without burning out, scale without losing integrity, and build systems that support humans rather than exhaust them.
+              Now I focus that experience on one thing: helping purpose-led teams turn messy marketing into clear narratives and practical workflows they can sustain.
             </p>
             
-            <p className="not-italic">
-              If that sounds like you, let's talk.
+            <p>
+              Most of the founders and teams I work with are already doing meaningful work. The problem isn't a lack of ideas. It's the gap between what they mean and what they're actually saying and shipping.
+            </p>
+            
+            <p className="not-italic font-light">
+              My work sits at the intersection of strategy, clarity and systems—protecting both your brand integrity and your team's creative energy.
             </p>
           </div>
         </div>

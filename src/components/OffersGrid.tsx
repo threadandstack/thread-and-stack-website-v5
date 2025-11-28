@@ -5,28 +5,28 @@ export const OffersGrid = () => {
   const offers = [
     {
       icon: <Zap className="w-6 h-6" />,
-      title: "Stacked Sessions",
-      tagline: "60-minute strategic power hours",
-      description: "Unblock positioning, refine an offer, diagnose a messy system, or untangle a messaging problem. You leave with a clear decision, a small action plan, and specific language you can use immediately.",
-      price: "~£300",
-      cta: "Book a Stacked Session",
+      title: "Clarity Sessions",
+      tagline: "Strategic power hours",
+      description: "Unblock positioning, refine your offer, diagnose messy systems, or untangle messaging problems. Leave with a clear decision, actionable steps, and specific language you can use immediately.",
+      price: "From £300",
+      cta: "Book a Session",
       link: "/stacked-sessions"
     },
     {
       icon: <Clock className="w-6 h-6" />,
-      title: "Thread AI Mentorship Sprint",
-      tagline: "6-week 1:1 mentorship",
-      description: "Build a 'second brain' and AI-supported workflows tailored to your real tools, ethics, and working style. No generic AI hacks—everything is contextual. Save hours weekly and protect creative energy.",
-      price: "Investment varies",
-      cta: "Explore the Sprint",
+      title: "AI & Creative Strategy Sprints",
+      tagline: "6-week deep work",
+      description: "Build your 'second brain' with AI-supported workflows tailored to your tools, ethics, and working style. Turn messy ideas and channel experiments into clear narrative and practical systems.",
+      price: "From £1k",
+      cta: "Explore Sprints",
       link: "/mentorship-sprint"
     },
     {
       icon: <Users className="w-6 h-6" />,
       title: "Brand Connection Workshops",
-      tagline: "Modular strategy workshops",
-      description: "Align your team on story, audience, and behaviour. Answer the big question: 'How do we scale the mission without losing the magic?' Leave with clear positioning, decision filters, and practical artefacts.",
-      price: "Custom pricing",
+      tagline: "Team alignment sessions",
+      description: "Get your team on the same page about story, audience, and behaviour. Answer: 'How do we scale the mission without losing the magic?' Leave with shared language and decision filters.",
+      price: "From £2k",
       cta: "Plan a Workshop",
       link: "/workshops"
     }
@@ -35,12 +35,12 @@ export const OffersGrid = () => {
   return (
     <section className="py-24 px-6">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl mb-4 text-balance font-light">
+        <div className="text-center mb-16 space-y-6">
+          <h2 className="text-5xl md:text-6xl mb-4 text-balance font-light">
             Ways to work together
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Three doors into building brand clarity and systems that scale sustainably
+          <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            Clear entry points that protect your time, build trust, and create momentum
           </p>
         </div>
         

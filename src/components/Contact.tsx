@@ -8,10 +8,10 @@ export const Contact = () => {
     <section id="contact" className="py-24 px-6">
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl mb-4 font-light">
+          <h2 className="text-5xl md:text-6xl mb-6 font-light">
             Let's talk
           </h2>
-          <p className="text-xl text-muted-foreground">
+          <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed">
             Tell me what you're wrestling with. No pressure, just conversation.
           </p>
         </div>

@@ -4,30 +4,30 @@ export const HowWeWork = () => {
   const principles = [
     {
       number: "01",
-      title: "Human-first, always",
-      description: "No one-size-fits-all playbooks. We start with your reality, your ethics, and your working style."
+      title: "Start with your reality",
+      description: "No generic playbooks or cookie-cutter processes. Every engagement begins with understanding your specific context, ethics, and working style."
     },
     {
       number: "02",
-      title: "Collaborative, not prescriptive",
-      description: "You're not outsourcing your thinking. We're working together to build something that's truly yours."
+      title: "Build together",
+      description: "You're not outsourcing your thinking to a consultant. We collaborate to create clarity, language, and systems that are genuinely yours."
     },
     {
       number: "03",
-      title: "Practical steps, tangible outputs",
-      description: "Every session and workshop leaves you with clear language, decisions, and tools you can use immediately."
+      title: "Ship tangible outputs",
+      description: "Every session delivers clear language, actionable decisions, and practical tools you can use immediately—not vague frameworks."
     },
     {
       number: "04",
-      title: "Systems that protect the magic",
-      description: "We build workflows that reduce friction and protect creative energy, not replace human judgment."
+      title: "Protect what matters",
+      description: "We design workflows that reduce friction and creative tax while preserving human judgment, taste, and the work you care about."
     }
   ];
 
   return (
     <section id="how-we-work" className="py-24 px-6 bg-muted/30">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-4xl md:text-5xl mb-16 text-balance font-light">
+        <h2 className="text-5xl md:text-6xl mb-16 text-balance font-light">
           How we work
         </h2>
         
@@ -50,11 +50,11 @@ export const HowWeWork = () => {
                   {principle.number}
                 </div>
                 
-                <h3 className="text-2xl group-hover:text-accent transition-colors font-light not-italic">
+                <h3 className="text-2xl md:text-3xl group-hover:text-accent transition-colors font-light not-italic">
                   {principle.title}
                 </h3>
                 
-                <p className="text-muted-foreground leading-relaxed">
+                <p className="text-muted-foreground leading-relaxed text-lg">
                   {principle.description}
                 </p>
               </div>
@@ -72,11 +72,11 @@ export const HowWeWork = () => {
                 {principle.number}
               </div>
               
-              <h3 className="text-2xl group-hover:text-accent transition-colors font-light not-italic">
+              <h3 className="text-2xl md:text-3xl group-hover:text-accent transition-colors font-light not-italic">
                 {principle.title}
               </h3>
               
-              <p className="text-muted-foreground leading-relaxed">
+              <p className="text-muted-foreground leading-relaxed text-lg">
                 {principle.description}
               </p>
             </div>

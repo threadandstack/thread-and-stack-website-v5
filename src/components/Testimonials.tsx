@@ -23,7 +23,7 @@ export const Testimonials = () => {
   return (
     <section id="testimonials" className="py-24 px-6 bg-muted/20">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-4xl md:text-5xl mb-16 text-balance font-light">
+        <h2 className="text-5xl md:text-6xl mb-16 text-balance font-light">
           What clients say
         </h2>
         
@@ -37,7 +37,7 @@ export const Testimonials = () => {
               <div className="absolute left-0 top-8 bottom-8 w-[2px] bg-accent/30 group-hover:bg-accent/60 transition-colors" />
               
               <div className="pl-6 space-y-4">
-                <p className="text-lg leading-relaxed">
+                <p className="text-xl leading-relaxed">
                   "{testimonial.quote}"
                 </p>
                 

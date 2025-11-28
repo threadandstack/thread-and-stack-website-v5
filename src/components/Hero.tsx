@@ -1,20 +1,22 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import heroImage from "@/assets/brendan-street.jpeg";
+import { Emphasis } from "@/components/Emphasis";
+
 export const Hero = () => {
   return <section className="relative min-h-[85vh] flex items-center justify-center px-6 py-24 overflow-hidden">
       <div className="absolute top-0 left-0 right-0 h-px thread-divider" />
       
-      <div className="max-w-4xl mx-auto text-center space-y-8 animate-fade-in">
-        <h1 className="text-5xl md:text-7xl leading-tight text-balance font-light">
-          Brands that feel alive, are the brands that get remembered.
-        </h1>
+      <div className="max-w-5xl mx-auto text-center space-y-8 animate-fade-in">
+        <div className="space-y-4">
+          <h1 className="text-6xl md:text-8xl leading-[1.1] text-balance font-light">
+            Turn messy marketing into <span className="relative inline-block">clear narratives
+              <Emphasis className="absolute -bottom-2 left-0 right-0" />
+            </span>
+          </h1>
+        </div>
         
-        <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto text-balance leading-relaxed">
-          
-          
-I help purpose‑led teams turn messy marketing into clear narratives and practical workflows - so your brand shows up as a clear, living presence that people remember.                                                                        
-        
+        <p className="text-xl md:text-3xl text-muted-foreground max-w-3xl mx-auto text-balance leading-relaxed font-light">
+          Build practical workflows that protect creative energy. Show up as a living brand people remember.
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
