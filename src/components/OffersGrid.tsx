@@ -1,11 +1,31 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Clock, Zap, Users } from "lucide-react";
 import { OfferModal } from "./OfferModal";
+import { Emphasis } from "@/components/Emphasis";
 
 export const OffersGrid = () => {
   const [selectedOffer, setSelectedOffer] = useState<typeof offers[0] | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   const offers = [
     {
@@ -89,11 +109,16 @@ export const OffersGrid = () => {
   ];
 
   return (
-    <section className="py-24 px-6">
+    <section 
+      ref={sectionRef}
+      className={`py-24 px-6 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+    >
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16 space-y-6">
           <h2 className="text-5xl md:text-6xl mb-4 text-balance font-light">
-            Ways to work together
+            Ways to work <span className="relative inline-block">together
+              <Emphasis className="absolute -bottom-2 left-0 right-0" />
+            </span>
           </h2>
           <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             Clear entry points that protect your time, build trust, and create momentum

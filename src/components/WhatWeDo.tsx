@@ -1,13 +1,46 @@
 import thinkingImage from "@/assets/brendan-cafe.jpeg";
+import { Emphasis } from "@/components/Emphasis";
+import { useEffect, useRef, useState } from "react";
 
 export const WhatWeDo = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section className="py-24 px-6 bg-card">
+    <section 
+      ref={sectionRef}
+      className={`py-24 px-6 bg-card transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+    >
       <div className="max-w-6xl mx-auto">
         <div className="grid md:grid-cols-5 gap-12 items-start">
           <div className="md:col-span-3 space-y-8">
             <h2 className="text-5xl md:text-6xl mb-12 text-balance font-light leading-tight">
-              Clear narratives.<br />Practical workflows.<br />Living brands.
+              <span className="relative inline-block">Clear
+                <Emphasis className="absolute -bottom-2 left-0 right-0" />
+              </span> narratives.<br />
+              <span className="relative inline-block">Practical
+                <Emphasis className="absolute -bottom-2 left-0 right-0" />
+              </span> workflows.<br />
+              <span className="relative inline-block">Living
+                <Emphasis className="absolute -bottom-2 left-0 right-0" />
+              </span> brands.
             </h2>
             
             <div className="space-y-6 text-lg md:text-xl leading-relaxed border-l-4 border-accent/20 pl-8">
