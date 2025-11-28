@@ -5,24 +5,19 @@ import { Emphasis } from "@/components/Emphasis";
 export const Hero = () => {
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.3 }
-    );
-
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setIsVisible(true);
+      }
+    }, {
+      threshold: 0.3
+    });
     if (ref.current) {
       observer.observe(ref.current);
     }
-
     return () => observer.disconnect();
   }, []);
-
   return <section className="relative min-h-[85vh] flex items-center justify-center px-6 py-24 overflow-hidden">
       <div className="absolute top-0 left-0 right-0 h-px thread-divider" />
       
@@ -37,12 +32,9 @@ export const Hero = () => {
         
         <div ref={ref} className="text-xl md:text-3xl text-muted-foreground max-w-3xl mx-auto text-balance leading-relaxed font-light">
           <p>The brands that feel <span className="text-accent">alive</span>, are remembered.</p>
-          <p 
-            className={`mt-2 transition-all duration-600 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
-            style={{ transitionDelay: isVisible ? '1300ms' : '0ms' }}
-          >
-            Will yours?
-          </p>
+          <p className={`mt-2 transition-all duration-600 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`} style={{
+          transitionDelay: isVisible ? '1300ms' : '0ms'
+        }}>Will yours be?</p>
         </div>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
