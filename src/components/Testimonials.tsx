@@ -1,22 +1,22 @@
 export const Testimonials = () => {
   const testimonials = [
     {
-      quote: "Brendan helped us articulate what we'd been feeling but couldn't name. Our positioning is finally clear, and our team actually understands who we're for.",
-      author: "Sarah Chen",
-      role: "Founder, Impact Studio",
-      company: "B Corp Design Agency"
+      quote: "Brendan quickly built trust among our stakeholders, boosting marketing efficiency through creative strategy and consulting.",
+      author: "Xania Khan",
+      role: "Head of Content Strategy",
+      company: "eBay"
     },
     {
-      quote: "The Notion workflows we built together saved us 10+ hours a week. But more importantly, they protected our creative time. That's priceless.",
-      author: "Marcus Williams",
-      role: "Creative Director",
-      company: "Ethical Fashion Collective"
+      quote: "Brendan has been a dream. His support totally invigorated us. We've made more progress in the last couple of months than we had in the previous year.",
+      author: "Alex Aggidis",
+      role: "Head of Marketing",
+      company: "Fundraising Everywhere"
     },
     {
-      quote: "We were skeptical about AI, but Brendan showed us how to use it as a thinking partner, not a replacement. It's completely changed how we work.",
-      author: "Elena Rodriguez",
-      role: "Operations Lead",
-      company: "Social Impact Startup"
+      quote: "Brendan is one of the most tenacious marketers I've met, fast to action plans with exceptional follow through to get the job done.",
+      author: "Courtney Evans",
+      role: "CEO",
+      company: "Funraisin"
     }
   ];
 
