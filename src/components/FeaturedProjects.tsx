@@ -1,10 +1,47 @@
-import { useState } from "react";
-import ebayProject from "@/assets/ebay-project.png";
-import funraisinProject from "@/assets/funraisin-project.jpg";
-import ubiqProject from "@/assets/ubiq-project.png";
-import immaProject from "@/assets/imma-project.png";
-import ntukDigital from "@/assets/ntuk-digital.png";
+import { useState, useEffect } from "react";
+import ubiq1 from "@/assets/ubiq-project.png";
+import ubiq2 from "@/assets/ubiq-1.png";
+import ubiq3 from "@/assets/ubiq-2.png";
+import ubiq4 from "@/assets/ubiq-3.png";
+import ntuk1 from "@/assets/ntuk-logo.png";
+import ntuk2 from "@/assets/ntuk-digital-2.png";
+import ntuk3 from "@/assets/ntuk-digital-3.png";
+import ntuk4 from "@/assets/ntuk-running.png";
+import imma1 from "@/assets/imma-project.png";
+import imma2 from "@/assets/imma-1.png";
+import imma3 from "@/assets/imma-2.png";
+import imma4 from "@/assets/imma-3.png";
 import { FeaturedProjectModal } from "./FeaturedProjectModal";
+
+const ImageCarousel = ({ images }: { images: string[] }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % images.length);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [images.length]);
+
+  return (
+    <div className="aspect-[4/3] overflow-hidden relative">
+      <div 
+        className="flex h-full transition-transform duration-700 ease-in-out"
+        style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+      >
+        {images.map((image, index) => (
+          <img
+            key={index}
+            src={image}
+            alt=""
+            className="w-full h-full object-cover flex-shrink-0"
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
 
 export const FeaturedProjects = () => {
   const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
@@ -12,24 +49,11 @@ export const FeaturedProjects = () => {
 
   const projects = [
     {
-      title: "eBay",
-      role: "Content Strategy & Creative Consulting",
-      description: "Built trust among stakeholders and boosted marketing efficiency through creative strategy",
-      fullDescription: "Working with eBay's marketing team, I developed content strategy frameworks that built trust among internal stakeholders while significantly boosting marketing efficiency. The work focused on creating clear creative direction and streamlining content workflows across multiple teams and markets.",
-      image: ebayProject,
-      outcomes: [
-        "Established unified content strategy framework across teams",
-        "Improved stakeholder alignment and decision-making speed",
-        "Increased marketing efficiency through clearer creative briefs",
-        "Reduced creative tax for marketing teams"
-      ]
-    },
-    {
       title: "UBIQ",
       role: "Marketing Strategy & AI Integration",
       description: "Transformed marketing operations with AI workflows, achieving more progress in 2 months than the previous year",
       fullDescription: "Partnered with UBIQ to transform their marketing operations through strategic AI integration. By building custom workflows tailored to their tools and ethics, we achieved more progress in 2 months than they had in the previous year—without sacrificing brand voice or creative control.",
-      image: ubiqProject,
+      images: [ubiq1, ubiq2, ubiq3, ubiq4],
       outcomes: [
         "2 months of progress = previous year's output",
         "Custom AI workflows integrated with existing tools",
@@ -43,7 +67,7 @@ export const FeaturedProjects = () => {
       role: "Brand Strategy & Digital Transformation",
       description: "Brendan led the client-side aspect of our nationwide rebrand, working with our selected agency partner from start to finish in 2017-18 - redefining how our beneficiaries, supporters and donors relate to our cause",
       fullDescription: "Led the client-side aspect of Nerve Tumours UK's nationwide rebrand from The Neuro Foundation, working with our selected agency partner from start to finish in 2017-18. Thanks to the digital transformation implemented in the three years prior, Nerve Tumours UK had a seamless launch—redefining how beneficiaries, supporters and donors relate to the cause.",
-      image: ntukDigital,
+      images: [ntuk1, ntuk2, ntuk3, ntuk4],
       outcomes: [
         "Nationwide rebrand from The Neuro Foundation to Nerve Tumours UK",
         "Seamless digital transformation and launch",
@@ -52,24 +76,11 @@ export const FeaturedProjects = () => {
       ]
     },
     {
-      title: "Funraisin",
-      role: "Brand & Systems Consulting",
-      description: "Fast action planning with exceptional follow-through on brand cohesion and operational systems",
-      fullDescription: "Provided strategic consulting to Funraisin focused on brand cohesion and operational systems. The work emphasized fast action planning combined with exceptional follow-through, helping the team maintain brand integrity while scaling their platform and operations.",
-      image: funraisinProject,
-      outcomes: [
-        "Rapid strategic action planning",
-        "Improved brand cohesion across touchpoints",
-        "Streamlined operational systems",
-        "Maintained clarity during growth phase"
-      ]
-    },
-    {
       title: "IMMA Collective",
       role: "Brand Strategy & Community Building",
       description: "Building cohesive brand identity and community systems for emerging creative collective",
       fullDescription: "Worked with IMMA Collective to establish their brand foundation and community engagement systems. The project focused on creating clarity around their mission while building practical workflows that support their growing creative community.",
-      image: immaProject,
+      images: [imma1, imma2, imma3, imma4],
       outcomes: [
         "Established clear brand identity and positioning",
         "Created sustainable community engagement systems",
@@ -101,13 +112,7 @@ export const FeaturedProjects = () => {
               }}
               className="group bg-card rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] transition-all duration-300 overflow-hidden text-left w-full"
             >
-              <div className="aspect-[4/3] overflow-hidden">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-              </div>
+              <ImageCarousel images={project.images} />
               
               <div className="p-8 space-y-4">
                 <h3 className="text-2xl font-light not-italic">
