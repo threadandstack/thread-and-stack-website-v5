@@ -17,7 +17,7 @@ export const OffersGrid = () => {
           setIsVisible(true);
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.3 }
     );
 
     if (sectionRef.current) {
@@ -117,7 +117,7 @@ export const OffersGrid = () => {
         <div className="text-center mb-16 space-y-6">
           <h2 className="text-5xl md:text-6xl mb-4 text-balance font-light">
             Ways to work <span className="relative inline-block">together
-              <Emphasis className="absolute -bottom-2 left-0 right-0" />
+              <Emphasis className="absolute -bottom-2 left-0 right-0" delay={isVisible ? 0.5 : 999} />
             </span>
           </h2>
           <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
