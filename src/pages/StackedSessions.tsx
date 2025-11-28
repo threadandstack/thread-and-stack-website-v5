@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Check } from "lucide-react";
 import { Footer } from "@/components/Footer";
+import { Navigation } from "@/components/Navigation";
 
 const StackedSessions = () => {
   const problems = [
@@ -55,9 +56,11 @@ const StackedSessions = () => {
 
   return (
     <div className="min-h-screen">
-      <header className="py-6 px-6 border-b border-border">
+      <Navigation />
+      
+      <header className="py-6 px-6 border-b-2 thread-border">
         <div className="max-w-6xl mx-auto">
-          <a href="/" className="text-2xl font-bold hover:text-accent transition-colors">
+          <a href="/" className="text-2xl hover:text-accent transition-colors font-light">
             Thread & Stack
           </a>
         </div>
@@ -66,8 +69,8 @@ const StackedSessions = () => {
       <section className="py-24 px-6">
         <div className="max-w-4xl mx-auto">
           <div className="mb-12">
-            <p className="text-accent font-semibold mb-2">60-minute strategic power hours</p>
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 text-balance">
+            <p className="text-accent mb-2 not-italic">60-minute strategic power hours</p>
+            <h1 className="text-5xl md:text-6xl mb-6 text-balance font-light">
               Stacked Sessions
             </h1>
             <p className="text-2xl text-muted-foreground text-balance">
@@ -75,9 +78,9 @@ const StackedSessions = () => {
             </p>
           </div>
 
-          <div className="bg-card border border-border rounded-lg p-8 mb-12">
-            <p className="text-lg mb-4 font-semibold">Investment: ~£300 per session</p>
-            <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 group">
+          <div className="bg-card border-2 thread-border p-8 mb-12">
+            <p className="text-lg mb-4 not-italic">Investment: ~£300 per session</p>
+            <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 group border thread-border not-italic">
               <a href="/#contact" className="flex items-center">
                 Book a Stacked Session
                 <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
@@ -86,15 +89,15 @@ const StackedSessions = () => {
           </div>
 
           <div className="space-y-16">
-            <div>
-              <h2 className="text-3xl font-bold mb-6">Who this is for</h2>
+            <div className="border-l-2 thread-border pl-8">
+              <h2 className="text-3xl mb-6 font-light">Who this is for</h2>
               <p className="text-lg text-muted-foreground mb-6">
                 You're a founder, creative lead, or operator who needs strategic clarity on a specific challenge—and you need it now. You don't have months for a long engagement. You need focused thinking, a clear decision, and language you can use immediately.
               </p>
             </div>
 
             <div>
-              <h2 className="text-3xl font-bold mb-6">Problems we solve</h2>
+              <h2 className="text-3xl mb-6 font-light">Problems we solve</h2>
               <ul className="space-y-3">
                 {problems.map((problem, index) => (
                   <li key={index} className="flex items-start gap-3">
@@ -106,14 +109,14 @@ const StackedSessions = () => {
             </div>
 
             <div>
-              <h2 className="text-3xl font-bold mb-8">How it works</h2>
+              <h2 className="text-3xl mb-8 font-light">How it works</h2>
               <div className="grid md:grid-cols-2 gap-6">
                 {process.map((item, index) => (
-                  <div key={index} className="bg-card border border-border rounded-lg p-6">
-                    <div className="text-accent font-mono text-sm font-semibold mb-3">
+                  <div key={index} className="bg-card border-2 thread-border p-6">
+                    <div className="text-accent text-sm mb-3 not-italic font-light">
                       Step {item.step}
                     </div>
-                    <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
+                    <h3 className="text-xl mb-2 font-light not-italic">{item.title}</h3>
                     <p className="text-muted-foreground">{item.description}</p>
                   </div>
                 ))}
@@ -121,8 +124,8 @@ const StackedSessions = () => {
             </div>
 
             <div>
-              <h2 className="text-3xl font-bold mb-6">What you leave with</h2>
-              <div className="bg-secondary/10 rounded-lg p-8">
+              <h2 className="text-3xl mb-6 font-light">What you leave with</h2>
+              <div className="bg-muted/30 border-2 thread-border p-8">
                 <ul className="space-y-3">
                   <li className="flex items-start gap-3">
                     <Check className="w-5 h-5 text-accent mt-1 flex-shrink-0" />
@@ -145,23 +148,23 @@ const StackedSessions = () => {
             </div>
 
             <div>
-              <h2 className="text-3xl font-bold mb-8">Common questions</h2>
+              <h2 className="text-3xl mb-8 font-light">Common questions</h2>
               <div className="space-y-6">
                 {faqs.map((faq, index) => (
-                  <div key={index} className="border-b border-border pb-6 last:border-0">
-                    <h3 className="text-xl font-semibold mb-3">{faq.q}</h3>
+                  <div key={index} className="border-b thread-border pb-6 last:border-0">
+                    <h3 className="text-xl mb-3 font-light not-italic">{faq.q}</h3>
                     <p className="text-muted-foreground leading-relaxed">{faq.a}</p>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="bg-card border border-border rounded-lg p-8 text-center">
-              <h2 className="text-2xl font-bold mb-4">Ready to unblock something?</h2>
+            <div className="bg-card border-2 thread-border p-8 text-center">
+              <h2 className="text-2xl mb-4 font-light">Ready to unblock something?</h2>
               <p className="text-muted-foreground mb-6">
                 Let's tackle your challenge together. Book a Stacked Session and get clarity fast.
               </p>
-              <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 group">
+              <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 group border thread-border not-italic">
                 <a href="/#contact" className="flex items-center">
                   Book Your Session
                   <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />

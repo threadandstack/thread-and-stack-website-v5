@@ -5,10 +5,10 @@ import { Label } from "@/components/ui/label";
 
 export const Contact = () => {
   return (
-    <section id="contact" className="py-24 px-6">
+    <section id="contact" className="py-24 px-6 border-b-2 thread-border">
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+          <h2 className="text-4xl md:text-5xl mb-4 font-light">
             Let's talk
           </h2>
           <p className="text-xl text-muted-foreground">
@@ -16,48 +16,48 @@ export const Contact = () => {
           </p>
         </div>
         
-        <form className="space-y-6 bg-card p-8 rounded-lg border border-border">
+        <form className="space-y-6 bg-card p-8 border-2 thread-border">
           <div className="space-y-2">
-            <Label htmlFor="name">Name</Label>
+            <Label htmlFor="name" className="not-italic">Name</Label>
             <Input 
               id="name" 
               placeholder="Your name"
-              className="bg-background"
+              className="bg-background border thread-border"
             />
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email" className="not-italic">Email</Label>
             <Input 
               id="email" 
               type="email" 
               placeholder="your@email.com"
-              className="bg-background"
+              className="bg-background border thread-border"
             />
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="role">Role / Organization</Label>
+            <Label htmlFor="role" className="not-italic">Role / Organization</Label>
             <Input 
               id="role" 
               placeholder="Founder at..."
-              className="bg-background"
+              className="bg-background border thread-border"
             />
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="message">What are you wrestling with?</Label>
+            <Label htmlFor="message" className="not-italic">What are you wrestling with?</Label>
             <Textarea 
               id="message" 
               placeholder="Tell me about your challenge, question, or what you're hoping to work on..."
-              className="min-h-32 bg-background"
+              className="min-h-32 bg-background border thread-border"
             />
           </div>
           
           <Button 
             type="submit" 
             size="lg" 
-            className="w-full bg-accent text-accent-foreground hover:bg-accent/90"
+            className="w-full bg-accent text-accent-foreground hover:bg-accent/90 border thread-border"
           >
             Send Message
           </Button>

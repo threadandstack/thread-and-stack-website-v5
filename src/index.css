@@ -8,37 +8,46 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 40 20% 97%;
-    --foreground: 210 15% 20%;
+    --background: 0 0% 100%;
+    --foreground: 0 0% 5%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 210 15% 20%;
+    --card: 0 0% 99%;
+    --card-foreground: 0 0% 5%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 210 15% 20%;
+    --popover-foreground: 0 0% 5%;
 
-    --primary: 210 20% 25%;
-    --primary-foreground: 40 20% 97%;
+    --primary: 0 0% 10%;
+    --primary-foreground: 0 0% 98%;
 
-    --secondary: 150 15% 65%;
-    --secondary-foreground: 210 20% 25%;
+    --secondary: 0 0% 40%;
+    --secondary-foreground: 0 0% 10%;
 
-    --muted: 40 15% 92%;
-    --muted-foreground: 210 10% 45%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 40%;
 
-    --accent: 15 70% 60%;
-    --accent-foreground: 40 20% 97%;
+    --accent: 0 0% 15%;
+    --accent-foreground: 0 0% 98%;
 
     --destructive: 0 70% 50%;
-    --destructive-foreground: 40 20% 97%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 40 15% 88%;
-    --input: 40 15% 88%;
-    --ring: 15 70% 60%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 0 0% 20%;
 
-    --radius: 0.75rem;
+    --radius: 0.25rem;
 
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Thread motif */
+    --thread-pattern: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 8px,
+      hsl(0 0% 85%) 8px,
+      hsl(0 0% 85%) 10px
+    );
   }
 
   .dark {
@@ -78,11 +87,26 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground font-sans antialiased;
+    @apply bg-background text-foreground font-serif antialiased;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-serif;
+    @apply font-serif font-normal;
+  }
+
+  p, blockquote, .secondary-text {
+    @apply font-serif italic;
+  }
+
+  .thread-border {
+    border-style: dashed;
+    border-width: 1px;
+    border-color: hsl(var(--border));
+  }
+
+  .thread-divider {
+    height: 2px;
+    background: var(--thread-pattern);
   }
 }
 

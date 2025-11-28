@@ -25,9 +25,9 @@ export const HowWeWork = () => {
   ];
 
   return (
-    <section id="how-we-work" className="py-24 px-6 bg-secondary/10">
+    <section id="how-we-work" className="py-24 px-6 bg-muted/30 border-b-2 thread-border">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-4xl md:text-5xl font-bold mb-16 text-balance">
+        <h2 className="text-4xl md:text-5xl mb-16 text-balance font-light">
           How we work
         </h2>
         
@@ -36,7 +36,7 @@ export const HowWeWork = () => {
             <img 
               src={workshopImage} 
               alt="Collaborative workshop session"
-              className="rounded-lg shadow-lg w-full h-auto"
+              className="border-2 thread-border w-full h-auto"
             />
           </div>
           
@@ -44,13 +44,13 @@ export const HowWeWork = () => {
             {principles.slice(0, 2).map((principle, index) => (
               <div 
                 key={index}
-                className="space-y-3 group"
+                className="space-y-3 group border-l-2 thread-border pl-6"
               >
-                <div className="text-accent font-mono text-sm font-semibold">
+                <div className="text-accent text-sm not-italic font-light">
                   {principle.number}
                 </div>
                 
-                <h3 className="text-2xl font-semibold group-hover:text-accent transition-colors">
+                <h3 className="text-2xl group-hover:text-accent transition-colors font-light not-italic">
                   {principle.title}
                 </h3>
                 
@@ -66,13 +66,13 @@ export const HowWeWork = () => {
           {principles.slice(2).map((principle, index) => (
             <div 
               key={index + 2}
-              className="space-y-3 group"
+              className="space-y-3 group border-l-2 thread-border pl-6"
             >
-              <div className="text-accent font-mono text-sm font-semibold">
+              <div className="text-accent text-sm not-italic font-light">
                 {principle.number}
               </div>
               
-              <h3 className="text-2xl font-semibold group-hover:text-accent transition-colors">
+              <h3 className="text-2xl group-hover:text-accent transition-colors font-light not-italic">
                 {principle.title}
               </h3>
               

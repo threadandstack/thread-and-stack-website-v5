@@ -2,15 +2,15 @@ import thinkingImage from "@/assets/brendan-cafe.jpeg";
 
 export const WhatWeDo = () => {
   return (
-    <section className="py-24 px-6 bg-card">
+    <section className="py-24 px-6 bg-card border-b-2 thread-border">
       <div className="max-w-6xl mx-auto">
-        <div className="grid md:grid-cols-5 gap-12 items-center">
-          <div className="md:col-span-3 space-y-6">
-            <h2 className="text-4xl md:text-5xl font-bold mb-8 text-balance">
+        <div className="grid md:grid-cols-5 gap-12 items-start">
+          <div className="md:col-span-3 space-y-8">
+            <h2 className="text-4xl md:text-5xl mb-8 text-balance font-light">
               What Thread & Stack does
             </h2>
             
-            <div className="space-y-6 text-lg leading-relaxed text-foreground/90">
+            <div className="space-y-6 text-lg leading-relaxed border-l-2 thread-border pl-8">
               <p>
                 I work with purpose‑led founders and teams to build brands and systems that scale without losing their soul.
               </p>
