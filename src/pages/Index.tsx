@@ -11,10 +11,12 @@ import { Contact } from "@/components/Contact";
 import { Newsletter } from "@/components/Newsletter";
 import { Footer } from "@/components/Footer";
 import { ThreadWeave } from "@/components/ThreadWeave";
+import { VerticalThreadWeave } from "@/components/VerticalThreadWeave";
 
 const Index = () => {
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen relative">
+      <VerticalThreadWeave />
       <Navigation />
       <Hero />
       <ThreadWeave />
