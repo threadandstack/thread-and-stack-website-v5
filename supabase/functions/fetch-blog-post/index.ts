@@ -57,15 +57,16 @@ serve(async (req) => {
 
     const blocksData = await blocksResponse.json()
     
+    console.log('Total blocks fetched:', blocksData.results.length)
+    
     // Helper function to convert rich text to HTML with formatting
     const richTextToHtml = (richTextArray: any[]) => {
+      if (!richTextArray || richTextArray.length === 0) return ''
+      
       return richTextArray.map((text: any) => {
         let content = text.plain_text
         
-        // Apply formatting annotations
-        if (text.annotations.code) {
-          content = `<code>${content}</code>`
-        }
+        // Apply formatting annotations in the correct order
         if (text.annotations.bold) {
           content = `<strong>${content}</strong>`
         }
@@ -78,6 +79,9 @@ serve(async (req) => {
         if (text.annotations.underline) {
           content = `<u>${content}</u>`
         }
+        if (text.annotations.code) {
+          content = `<code>${content}</code>`
+        }
         if (text.href) {
           content = `<a href="${text.href}" target="_blank" rel="noopener noreferrer">${content}</a>`
         }
@@ -86,48 +90,176 @@ serve(async (req) => {
       }).join('')
     }
     
-    // Convert Notion blocks to HTML
-    const content = blocksData.results.map((block: any) => {
+    // Group consecutive list items
+    const blocks = blocksData.results
+    const htmlBlocks: string[] = []
+    let inBulletList = false
+    let inNumberedList = false
+    
+    for (let i = 0; i < blocks.length; i++) {
+      const block = blocks[i]
+      
+      console.log(`Block ${i}: type=${block.type}`)
+      
       switch (block.type) {
         case 'paragraph':
+          if (inBulletList) {
+            htmlBlocks.push('</ul>')
+            inBulletList = false
+          }
+          if (inNumberedList) {
+            htmlBlocks.push('</ol>')
+            inNumberedList = false
+          }
           const text = richTextToHtml(block.paragraph.rich_text)
-          return text ? `<p>${text}</p>` : ''
+          if (text) htmlBlocks.push(`<p>${text}</p>`)
+          break
+          
         case 'heading_1':
+          if (inBulletList) {
+            htmlBlocks.push('</ul>')
+            inBulletList = false
+          }
+          if (inNumberedList) {
+            htmlBlocks.push('</ol>')
+            inNumberedList = false
+          }
           const h1Text = richTextToHtml(block.heading_1.rich_text)
-          return `<h1>${h1Text}</h1>`
+          htmlBlocks.push(`<h1>${h1Text}</h1>`)
+          break
+          
         case 'heading_2':
+          if (inBulletList) {
+            htmlBlocks.push('</ul>')
+            inBulletList = false
+          }
+          if (inNumberedList) {
+            htmlBlocks.push('</ol>')
+            inNumberedList = false
+          }
           const h2Text = richTextToHtml(block.heading_2.rich_text)
-          return `<h2>${h2Text}</h2>`
+          htmlBlocks.push(`<h2>${h2Text}</h2>`)
+          break
+          
         case 'heading_3':
+          if (inBulletList) {
+            htmlBlocks.push('</ul>')
+            inBulletList = false
+          }
+          if (inNumberedList) {
+            htmlBlocks.push('</ol>')
+            inNumberedList = false
+          }
           const h3Text = richTextToHtml(block.heading_3.rich_text)
-          return `<h3>${h3Text}</h3>`
+          htmlBlocks.push(`<h3>${h3Text}</h3>`)
+          break
+          
         case 'bulleted_list_item':
+          if (inNumberedList) {
+            htmlBlocks.push('</ol>')
+            inNumberedList = false
+          }
+          if (!inBulletList) {
+            htmlBlocks.push('<ul>')
+            inBulletList = true
+          }
           const liText = richTextToHtml(block.bulleted_list_item.rich_text)
-          return `<li>${liText}</li>`
+          htmlBlocks.push(`<li>${liText}</li>`)
+          break
+          
         case 'numbered_list_item':
+          if (inBulletList) {
+            htmlBlocks.push('</ul>')
+            inBulletList = false
+          }
+          if (!inNumberedList) {
+            htmlBlocks.push('<ol>')
+            inNumberedList = true
+          }
           const numText = richTextToHtml(block.numbered_list_item.rich_text)
-          return `<li>${numText}</li>`
+          htmlBlocks.push(`<li>${numText}</li>`)
+          break
+          
         case 'quote':
+          if (inBulletList) {
+            htmlBlocks.push('</ul>')
+            inBulletList = false
+          }
+          if (inNumberedList) {
+            htmlBlocks.push('</ol>')
+            inNumberedList = false
+          }
           const quoteText = richTextToHtml(block.quote.rich_text)
-          return `<blockquote>${quoteText}</blockquote>`
+          htmlBlocks.push(`<blockquote>${quoteText}</blockquote>`)
+          break
+          
         case 'code':
+          if (inBulletList) {
+            htmlBlocks.push('</ul>')
+            inBulletList = false
+          }
+          if (inNumberedList) {
+            htmlBlocks.push('</ol>')
+            inNumberedList = false
+          }
           const codeText = block.code.rich_text.map((t: any) => t.plain_text).join('')
           const language = block.code.language || ''
-          return `<pre><code class="language-${language}">${codeText}</code></pre>`
+          htmlBlocks.push(`<pre><code class="language-${language}">${codeText}</code></pre>`)
+          break
+          
         case 'callout':
+          if (inBulletList) {
+            htmlBlocks.push('</ul>')
+            inBulletList = false
+          }
+          if (inNumberedList) {
+            htmlBlocks.push('</ol>')
+            inNumberedList = false
+          }
           const calloutText = richTextToHtml(block.callout.rich_text)
           const icon = block.callout.icon?.emoji || '💡'
-          return `<div class="callout"><span class="callout-icon">${icon}</span><div>${calloutText}</div></div>`
+          htmlBlocks.push(`<div class="callout"><span class="callout-icon">${icon}</span><div>${calloutText}</div></div>`)
+          break
+          
         case 'divider':
-          return '<hr />'
+          if (inBulletList) {
+            htmlBlocks.push('</ul>')
+            inBulletList = false
+          }
+          if (inNumberedList) {
+            htmlBlocks.push('</ol>')
+            inNumberedList = false
+          }
+          htmlBlocks.push('<hr />')
+          break
+          
         case 'image':
+          if (inBulletList) {
+            htmlBlocks.push('</ul>')
+            inBulletList = false
+          }
+          if (inNumberedList) {
+            htmlBlocks.push('</ol>')
+            inNumberedList = false
+          }
           const imageUrl = block.image.file?.url || block.image.external?.url
           const caption = block.image.caption ? richTextToHtml(block.image.caption) : ''
-          return imageUrl ? `<figure><img src="${imageUrl}" alt="${caption}" />${caption ? `<figcaption>${caption}</figcaption>` : ''}</figure>` : ''
+          if (imageUrl) {
+            htmlBlocks.push(`<figure><img src="${imageUrl}" alt="${caption}" />${caption ? `<figcaption>${caption}</figcaption>` : ''}</figure>`)
+          }
+          break
+          
         default:
-          return ''
+          console.log(`Unsupported block type: ${block.type}`)
       }
-    }).join('\n')
+    }
+    
+    // Close any open lists
+    if (inBulletList) htmlBlocks.push('</ul>')
+    if (inNumberedList) htmlBlocks.push('</ol>')
+    
+    const content = htmlBlocks.join('\n')
+    console.log('Generated HTML length:', content.length)
 
     // Extract the header image URL if it exists
     const headerImageFiles = properties['Website blog header image']?.files || []
