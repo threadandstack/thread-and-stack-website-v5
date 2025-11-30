@@ -116,7 +116,7 @@ const BlogPostPage = () => {
             )}
 
             <div 
-              className="prose prose-lg max-w-none prose-headings:font-light prose-headings:tracking-tight prose-h1:text-5xl prose-h1:md:text-6xl prose-h1:mb-8 prose-h1:font-normal prose-h2:text-3xl prose-h2:md:text-4xl prose-h2:mt-16 prose-h2:mb-6 prose-h2:font-normal prose-h3:text-2xl prose-h3:md:text-3xl prose-h3:mt-12 prose-h3:mb-4 prose-h3:font-normal prose-p:text-lg prose-p:leading-relaxed prose-p:mb-6 prose-p:not-italic prose-a:text-accent prose-a:underline prose-a:font-normal prose-blockquote:not-italic prose-blockquote:border-l-4 prose-blockquote:border-accent prose-blockquote:bg-muted/30 prose-blockquote:px-6 prose-blockquote:py-4 prose-blockquote:my-8 prose-blockquote:rounded-r-lg prose-blockquote:text-muted-foreground prose-code:bg-muted prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:not-italic prose-pre:bg-muted prose-pre:p-4 prose-pre:rounded-lg prose-img:rounded-lg prose-img:my-8 prose-figcaption:text-center prose-figcaption:text-sm prose-figcaption:text-muted-foreground prose-figcaption:mt-2 prose-figcaption:italic prose-hr:border-border prose-hr:my-12 prose-strong:font-semibold prose-strong:not-italic prose-em:italic [&_.callout]:bg-muted [&_.callout]:p-6 [&_.callout]:rounded-lg [&_.callout]:flex [&_.callout]:gap-4 [&_.callout]:my-8 [&_.callout-icon]:text-2xl"
+              className="blog-content prose prose-lg max-w-none"
               dangerouslySetInnerHTML={{ __html: post.content }}
             />
           </div>
