@@ -47,9 +47,9 @@ export const Newsletter = () => {
   };
   return <section className="py-24 px-6 bg-accent/5">
       <div className="max-w-2xl mx-auto text-center">
-        <h2 className="text-4xl md:text-5xl mb-6 font-light">​Thoughts on brand, creativity and systems that build our businesses.</h2>
+        <h2 className="text-4xl md:text-5xl mb-6 font-light">Subscribe to Stacked Behaviors</h2>
         <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-          Monthly signals on building brands that stay true while scaling.           
+          Thoughts on brand, creativity, and systems that build our businesses. Subscribe here, and I'll send you monthly signals on building brands that stay true while scaling.
         </p>
         
         <form onSubmit={handleSubmit} className="flex gap-3 max-w-md mx-auto">
