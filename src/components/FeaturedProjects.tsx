@@ -1,17 +1,8 @@
 import { useState, useEffect, useRef } from "react";
-import ubiq1 from "@/assets/ubiq-project.png";
-import ubiq2 from "@/assets/ubiq-1.png";
-import ubiq3 from "@/assets/ubiq-2.png";
-import ubiq4 from "@/assets/ubiq-3.png";
-import ubiq5 from "@/assets/ubiq-5.png";
 import ntuk1 from "@/assets/ntuk-logo.png";
 import ntuk2 from "@/assets/ntuk-digital-2.png";
 import ntuk3 from "@/assets/ntuk-digital-3.png";
 import ntuk4 from "@/assets/ntuk-running.png";
-import imma1 from "@/assets/imma-project.png";
-import imma2 from "@/assets/imma-1.png";
-import imma3 from "@/assets/imma-2.png";
-import imma4 from "@/assets/imma-3.png";
 import { FeaturedProjectModal } from "./FeaturedProjectModal";
 
 const ImageCarousel = ({ images, isVisible }: { images: string[]; isVisible: boolean }) => {
@@ -75,20 +66,6 @@ export const FeaturedProjects = () => {
 
   const projects = [
     {
-      title: "UBIQ",
-      role: "Marketing Strategy & AI Integration",
-      description: "Transformed marketing operations with AI workflows, achieving more progress in 2 months than the previous year",
-      fullDescription: "Partnered with UBIQ to transform their marketing operations through strategic AI integration. By building custom workflows tailored to their tools and ethics, we achieved more progress in 2 months than they had in the previous year—without sacrificing brand voice or creative control.",
-      images: [ubiq1, ubiq3, ubiq2, ubiq4, ubiq5],
-      outcomes: [
-        "2 months of progress = previous year's output",
-        "Custom AI workflows integrated with existing tools",
-        "Maintained authentic brand voice throughout",
-        "Reduced cognitive load for marketing team",
-        "Established sustainable content systems"
-      ]
-    },
-    {
       title: "Nerve Tumours UK",
       role: "Brand Strategy & Digital Transformation",
       description: "Brendan led the client-side aspect of our nationwide rebrand, working with our selected agency partner from start to finish in 2017-18 - redefining how our beneficiaries, supporters and donors relate to our cause",
@@ -99,19 +76,6 @@ export const FeaturedProjects = () => {
         "Seamless digital transformation and launch",
         "Redefined stakeholder relationships across beneficiaries, supporters, and donors",
         "Created sustainable brand and systems foundation"
-      ]
-    },
-    {
-      title: "IMMA Collective",
-      role: "Brand Strategy & Community Building",
-      description: "Building cohesive brand identity and community systems for emerging creative collective",
-      fullDescription: "Worked with IMMA Collective to establish their brand foundation and community engagement systems. The project focused on creating clarity around their mission while building practical workflows that support their growing creative community.",
-      images: [imma1, imma2, imma3, imma4],
-      outcomes: [
-        "Established clear brand identity and positioning",
-        "Created sustainable community engagement systems",
-        "Built frameworks for consistent communication",
-        "Maintained authenticity while scaling"
       ]
     }
   ];
@@ -127,11 +91,11 @@ export const FeaturedProjects = () => {
             Featured Work
           </h2>
           <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Real brands, real transformations. See how we've helped teams grow truer.
+            A transformation story that captures how we work.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="flex justify-center">
           {projects.map((project, index) => (
             <button
               key={index}
@@ -139,22 +103,22 @@ export const FeaturedProjects = () => {
                 setSelectedProject(project);
                 setModalOpen(true);
               }}
-              className="group bg-card rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] transition-all duration-300 overflow-hidden text-left w-full flex flex-col"
+              className="group bg-card rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.06)] hover:shadow-[0_12px_32px_rgba(0,0,0,0.12)] transition-all duration-300 overflow-hidden text-left w-full max-w-3xl flex flex-col"
             >
               <div className="w-full">
                 <ImageCarousel images={project.images} isVisible={isVisible} />
               </div>
               
-              <div className="p-8 space-y-4">
-                <h3 className="text-2xl font-light not-italic">
+              <div className="p-10 md:p-12 space-y-5">
+                <h3 className="text-3xl md:text-4xl font-light not-italic">
                   {project.title}
                 </h3>
                 
-                <p className="text-sm text-accent font-light not-italic">
+                <p className="text-base text-accent font-light not-italic">
                   {project.role}
                 </p>
                 
-                <p className="text-muted-foreground leading-relaxed">
+                <p className="text-muted-foreground leading-relaxed text-lg">
                   {project.description}
                 </p>
                 
