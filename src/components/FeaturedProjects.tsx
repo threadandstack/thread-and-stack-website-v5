@@ -14,7 +14,7 @@ const ImageCarousel = ({ images, isVisible }: { images: string[]; isVisible: boo
     const delayTimeout = setTimeout(() => {
       const interval = setInterval(() => {
         setCurrentIndex((prev) => (prev + 1) % images.length);
-      }, 3000);
+      }, 3500);
 
       return () => clearInterval(interval);
     }, 750);
