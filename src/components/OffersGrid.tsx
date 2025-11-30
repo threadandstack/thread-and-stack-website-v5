@@ -31,50 +31,48 @@ export const OffersGrid = () => {
     {
       icon: <Zap className="w-6 h-6" />,
       title: "Clarity Sessions",
-      tagline: "Strategic power hours",
-      description: "Unblock positioning, refine your offer, diagnose messy systems, or untangle messaging problems. Leave with a clear decision, actionable steps, and specific language you can use immediately.",
-      fullDescription: "60-minute strategic power hours designed to unblock positioning, refine your offer, diagnose messy systems, or untangle messaging problems. These focused sessions cut through the noise and help you make clear decisions fast.",
-      price: "From £300",
+      tagline: "Rapid Strategic Intervention",
+      description: "One Hour. One Problem. Solved. A focused session to unblock positioning, validate decisions, or diagnose messy systems. Leave with recording, AI summary, and a clear action plan.",
+      fullDescription: "Sometimes you don't need a 6-week sprint. Sometimes you just need 60 minutes to unblock a specific problem, validate a decision, or get a second brain on a messy situation. A focused, high-intensity consulting session designed to clear the fog and give you an immediate path forward.",
+      price: "£300",
       duration: "60 minutes",
       whatYouGet: [
-        "Pre-session questionnaire to focus the conversation",
-        "60-minute strategic consultation",
-        "Clear decision or direction",
-        "Actionable next steps",
-        "Specific language and frameworks you can use immediately",
-        "Follow-up notes and resources"
+        "The Recording: Full video/audio of the session",
+        "The Summary: Thread AI transcription and summary of key decisions",
+        "The Action Plan: A bulleted list of exactly what you need to do next",
+        "Pre-session review of your notes",
+        "Immediate, actionable path forward"
       ],
       process: [
-        "Book your session and complete pre-work questionnaire",
-        "We meet for 60 minutes to tackle your specific challenge",
-        "Leave with clarity, decisions, and next steps",
-        "Receive follow-up notes and resources within 24 hours"
+        "Send your notes in advance for review",
+        "60-minute focused session tackling your specific problem",
+        "Receive recording with AI summary and action plan",
+        "Leave with clarity and immediate next steps"
       ],
       cta: "Book a Session",
-      link: "/stacked-sessions"
+      link: "/clarity-sessions"
     },
     {
       icon: <Clock className="w-6 h-6" />,
       title: "Thread AI Sprint",
-      tagline: "AI & Creative Strategy • 6-week deep work",
-      description: "Build your 'second brain' with AI-supported workflows tailored to your tools, ethics, and working style. Turn messy ideas and channel experiments into clear narrative and practical systems.",
-      fullDescription: "A 6-week 1:1 mentorship program to build AI-supported workflows tailored to your tools, ethics, and working style. This isn't about replacing human creativity—it's about creating invisible scaffolding that reduces cognitive load and protects your creative energy.",
+      tagline: "A 6-Week Intensive for Purpose-Driven Marketers",
+      description: "Transform how you work with AI without losing your creative edge. Build a custom productivity system that gives you 5-10 hours back each week. Human-centered. Tool-agnostic. Creativity-first.",
+      fullDescription: "A 6-week 1:1 mentorship program where we build AI-supported workflows tailored to your tools, role, and working style. You stay in control—AI handles mechanical tasks while you focus on creative, strategic work that moves the needle. It's about unlocking time, not replacing thinking.",
       price: "From £1k",
       duration: "6 weeks",
       whatYouGet: [
         "6 weekly 1-hour sessions with structured agendas",
-        "Custom AI workflow design for your specific tools and needs",
-        "Hands-on implementation support",
-        "Ethical AI framework aligned with your values",
-        "Content systems and templates",
-        "Ongoing Slack/email support between sessions",
+        "Custom productivity system built for your actual role and tools",
+        "5-10 hours back each week through AI-enabled workflows",
+        "Confidence using AI without second-guessing or quality drops",
+        "Works in any ecosystem: Microsoft, Google, Notion, or browser-only",
+        "Ongoing support between sessions",
         "Documentation and playbooks you can reference later"
       ],
       process: [
-        "Week 1: Audit your current systems and identify friction points",
-        "Week 2-3: Design and implement AI workflows tailored to your tools",
-        "Week 4-5: Build content systems and test in real scenarios",
-        "Week 6: Refine, document, and ensure sustainability"
+        "Week 1-2: Foundation & Setup - map workflow, identify pain points",
+        "Week 3-4: Implementation & Integration - build tailored AI workflows",
+        "Week 5-6: Refinement & Mastery - refine system, build sustainable habits"
       ],
       cta: "Explore Sprints",
       link: "/mentorship-sprint"
@@ -82,26 +80,23 @@ export const OffersGrid = () => {
     {
       icon: <Users className="w-6 h-6" />,
       title: "Brand Connection Workshops",
-      tagline: "Team alignment sessions",
-      description: "Get your team on the same page about story, audience, and behaviour. Answer: 'How do we scale the mission without losing the magic?' Leave with shared language and decision filters.",
-      fullDescription: "Modular team strategy workshops designed to align your team on story, audience, and behaviour. These sessions address the core question: 'How do we scale the mission without losing the magic?' Perfect for teams of 5-20 people navigating growth.",
+      tagline: "A Modular Strategy System for Purpose-Driven Brands",
+      description: "Fix the disconnect between your brand and your audience. Modular, co-created workshops that get your team aligned on story, positioning, and roadmap. Build exactly what you need—from lean sprints to comprehensive overhauls.",
+      fullDescription: "Most brand strategy is a black box. You pay a fortune, wait three months, and get a PDF that gathers dust. This is different. It's a modular, co-created workshop system designed to fix the disconnect between your brand and your audience...on your terms. Choose the depth and price for each phase to build the workshop that fits your budget and burning questions.",
       price: "From £2k",
-      duration: "Half-day or full-day sessions",
+      duration: "Modular: Half-day to 2-day sprints",
       whatYouGet: [
-        "Pre-workshop stakeholder interviews and audit",
-        "Facilitated strategy session(s) for your team",
-        "Interactive exercises and frameworks",
-        "Shared language and decision filters",
-        "Clear action plan and next steps",
-        "Workshop documentation and follow-up resources",
-        "Optional: 30-day follow-up check-in"
+        "Clarity over Confusion: Hard evidence, not assumptions",
+        "Alignment over Arguments: Force consensus across teams",
+        "Momentum over Stagnation: 3 months of work in 2 days",
+        "Confidence over Risk: Test positioning before building assets",
+        "Modular phases: Discovery, Workshop, and Output options",
+        "Strategic playbook with frameworks and roadmap"
       ],
       process: [
-        "Discovery call to understand your team's challenges",
-        "Pre-workshop stakeholder interviews and preparation",
-        "Facilitated workshop session(s) with your team",
-        "Document outcomes, decisions, and action plans",
-        "Follow-up to ensure momentum and clarity"
+        "Phase 1: Discovery - Questionnaires, interviews, or customer research",
+        "Phase 2: Workshop - Half-day diagnostic to 2-day sprint",
+        "Phase 3: Output - Summary, strategic playbook, or pitch building"
       ],
       cta: "Plan a Workshop",
       link: "/workshops"
