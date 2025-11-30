@@ -1,8 +1,80 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Check } from "lucide-react";
 import { Footer } from "@/components/Footer";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+const quoteFormSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  email: z.string().email("Please enter a valid email address"),
+  phase_one: z.string().min(1, "Please select a Phase 1 option"),
+  phase_two: z.string().min(1, "Please select a Phase 2 option"),
+  phase_three: z.string().min(1, "Please select a Phase 3 option"),
+});
+
+type QuoteFormValues = z.infer<typeof quoteFormSchema>;
 
 const Workshops = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
+  
+  const form = useForm<QuoteFormValues>({
+    resolver: zodResolver(quoteFormSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      phase_one: "",
+      phase_two: "",
+      phase_three: "",
+    },
+  });
+
+  const handleQuoteSubmit = async (values: QuoteFormValues) => {
+    setIsSubmitting(true);
+    try {
+      const { error } = await supabase
+        .from("workshop_quote_requests")
+        .insert([{
+          name: values.name,
+          email: values.email,
+          phase_one: values.phase_one,
+          phase_two: values.phase_two,
+          phase_three: values.phase_three,
+        }]);
+
+      if (error) throw error;
+
+      toast({
+        title: "Quote request submitted!",
+        description: "I'll review your selections and be in touch soon to discuss your workshop.",
+      });
+      
+      form.reset();
+    } catch (error) {
+      console.error("Error submitting quote:", error);
+      toast({
+        title: "Something went wrong",
+        description: "Please try again or email me directly.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   const roiPoints = [
     {
       title: "Clarity over Confusion",
@@ -172,17 +244,131 @@ const Workshops = () => {
               </div>
             </div>
 
-            <div className="bg-card border border-border rounded-lg p-8 text-center">
-              <h2 className="text-2xl font-bold mb-4">Ready to build your workshop?</h2>
-              <p className="text-muted-foreground mb-6">
-                Let's map out the right combination for you.
+            <div className="bg-card border border-border rounded-lg p-8">
+              <h2 className="text-2xl font-bold mb-4">Build Your Quote</h2>
+              <p className="text-muted-foreground mb-8">
+                Select your preferred option for each phase below. I'll receive your selections and reach out to discuss your specific needs and provide a detailed quote.
               </p>
-              <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 group">
-                <a href="/#contact" className="flex items-center">
-                  Book a Scoping Call
-                  <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-                </a>
-              </Button>
+              
+              <form onSubmit={form.handleSubmit(handleQuoteSubmit)} className="space-y-6">
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="name">Your Name</Label>
+                    <Input
+                      id="name"
+                      placeholder="Enter your name"
+                      {...form.register("name")}
+                      className="bg-background"
+                    />
+                    {form.formState.errors.name && (
+                      <p className="text-sm text-destructive">{form.formState.errors.name.message}</p>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="email">Email Address</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="your@email.com"
+                      {...form.register("email")}
+                      className="bg-background"
+                    />
+                    {form.formState.errors.email && (
+                      <p className="text-sm text-destructive">{form.formState.errors.email.message}</p>
+                    )}
+                  </div>
+                </div>
+
+                <div className="space-y-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="phase_one">Phase 1: Discovery</Label>
+                    <Select
+                      onValueChange={(value) => form.setValue("phase_one", value)}
+                      value={form.watch("phase_one")}
+                    >
+                      <SelectTrigger id="phase_one" className="bg-background">
+                        <SelectValue placeholder="Select your Phase 1 option" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-background z-50">
+                        {phases[0].options.map((option, idx) => (
+                          <SelectItem key={idx} value={option.name}>
+                            {option.name} ({option.price})
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    {form.formState.errors.phase_one && (
+                      <p className="text-sm text-destructive">{form.formState.errors.phase_one.message}</p>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="phase_two">Phase 2: The Workshop</Label>
+                    <Select
+                      onValueChange={(value) => form.setValue("phase_two", value)}
+                      value={form.watch("phase_two")}
+                    >
+                      <SelectTrigger id="phase_two" className="bg-background">
+                        <SelectValue placeholder="Select your Phase 2 option" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-background z-50">
+                        {phases[1].options.map((option, idx) => (
+                          <SelectItem key={idx} value={option.name}>
+                            {option.name} ({option.price})
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    {form.formState.errors.phase_two && (
+                      <p className="text-sm text-destructive">{form.formState.errors.phase_two.message}</p>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="phase_three">Phase 3: The Output</Label>
+                    <Select
+                      onValueChange={(value) => form.setValue("phase_three", value)}
+                      value={form.watch("phase_three")}
+                    >
+                      <SelectTrigger id="phase_three" className="bg-background">
+                        <SelectValue placeholder="Select your Phase 3 option" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-background z-50">
+                        {phases[2].options.map((option, idx) => (
+                          <SelectItem key={idx} value={option.name}>
+                            {option.name} ({option.price})
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    {form.formState.errors.phase_three && (
+                      <p className="text-sm text-destructive">{form.formState.errors.phase_three.message}</p>
+                    )}
+                  </div>
+                </div>
+
+                <Button 
+                  type="submit" 
+                  size="lg" 
+                  className="w-full bg-accent text-accent-foreground hover:bg-accent/90"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? "Submitting..." : "Request Detailed Quote"}
+                </Button>
+              </form>
+
+              <div className="mt-8 pt-8 border-t border-border text-center">
+                <p className="text-muted-foreground mb-4">
+                  Or prefer to discuss directly?
+                </p>
+                <Button size="lg" variant="outline" className="group">
+                  <a href="/#contact" className="flex items-center">
+                    Book a Scoping Call
+                    <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                  </a>
+                </Button>
+              </div>
             </div>
           </div>
         </div>

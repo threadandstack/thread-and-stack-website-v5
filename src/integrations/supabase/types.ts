@@ -14,7 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      workshop_quote_requests: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          name: string | null
+          phase_four: string | null
+          phase_one: string | null
+          phase_three: string | null
+          phase_two: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          name?: string | null
+          phase_four?: string | null
+          phase_one?: string | null
+          phase_three?: string | null
+          phase_two?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          name?: string | null
+          phase_four?: string | null
+          phase_one?: string | null
+          phase_three?: string | null
+          phase_two?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
