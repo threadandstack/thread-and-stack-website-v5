@@ -24,10 +24,10 @@ const Index = () => {
       <div id="how-we-work"><HowWeWork /></div>
       <div id="offers"><OffersGrid /></div>
       <FeaturedProjects />
+      <Newsletter />
       <Testimonials />
       <div id="about"><About /></div>
       <Contact />
-      <Newsletter />
       <Footer />
     </main>
   );

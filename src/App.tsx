@@ -11,6 +11,8 @@ import Workshops from "./pages/Workshops";
 import FractionalStrategy from "./pages/FractionalStrategy";
 import DeepEngagement from "./pages/DeepEngagement";
 import NotFound from "./pages/NotFound";
+import BlogPage from "./pages/BlogPage";
+import BlogPostPage from "./pages/BlogPostPage";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +30,8 @@ const App = () => (
           <Route path="/workshops" element={<Workshops />} />
           <Route path="/fractional-strategy" element={<FractionalStrategy />} />
           <Route path="/deep-engagement" element={<DeepEngagement />} />
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/blog/:id" element={<BlogPostPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

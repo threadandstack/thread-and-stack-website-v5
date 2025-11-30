@@ -32,6 +32,7 @@ export const Navigation = () => {
   const mainLinks = [
     { href: "/#what-we-do", label: "What We Do" },
     { href: "/#how-we-work", label: "How We Work" },
+    { href: "/blog", label: "Blog" },
     { href: "/about", label: "About" },
     { href: "/#contact", label: "Contact" },
   ];
