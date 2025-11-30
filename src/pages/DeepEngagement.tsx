@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Check, Target, Layers, FileText, Users } from "lucide-react";
 import { Footer } from "@/components/Footer";
+import { Navigation } from "@/components/Navigation";
 
 const DeepEngagement = () => {
   const projectTypes = [
@@ -115,15 +116,9 @@ const DeepEngagement = () => {
 
   return (
     <div className="min-h-screen">
-      <header className="py-6 px-6 border-b border-border">
-        <div className="max-w-6xl mx-auto">
-          <a href="/" className="text-2xl font-bold hover:text-accent transition-colors">
-            Thread & Stack
-          </a>
-        </div>
-      </header>
+      <Navigation />
 
-      <section className="py-24 px-6">
+      <section className="py-24 px-6 mt-16">
         <div className="max-w-4xl mx-auto">
           <div className="mb-12">
             <p className="text-accent font-semibold mb-2">2-6 Month Transformation Projects</p>
