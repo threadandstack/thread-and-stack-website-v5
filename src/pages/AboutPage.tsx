@@ -93,23 +93,23 @@ const AboutPage = () => {
               
               <div className="space-y-4 text-lg leading-relaxed">
                 <p>
-                  Before founding Thread & Stack, I spent over a decade leading marketing and brand transformation across sectors—from global consumer brands like eBay to ambitious tech startups, creative agencies, and nonprofits.
+                  I studied Media, Communications & Culture and Philosophy at Keele University—a combination that wasn't common at the time. Media Communications were dismissed as a "Mickey Mouse degree," and Philosophy was seen as a waste of time. I chose it because I saw the impact these two subjects could have together. Now, these disciplines underpin our modern world.
                 </p>
                 
                 <p>
-                  As Director of Marketing at UBIQ, I led a complete brand transformation from the ground up—repositioning the company, creating events that generated significant pipeline value, and building repeatable systems that allowed the team to scale sustainably.
+                  That golden thread—following the ethics and impact of communications and culture—took me on a path working with a really wide range of clients and products. From international consultancies like Dentsu B2B working with some of the biggest brands in the world, to Global Content Strategy Lead at eBay developing strategy with worldwide impact.
                 </p>
                 
                 <p>
-                  At Nerve Tumours UK, I led a nationwide rebrand and four-year digital transformation from procurement to implementation—sitting on the Brand Committee with the CEO and Board of Trustees.
+                  At agencies like Funraisin, Lightful, Scooter, and Aqueduct—all specialising in delivering advanced digital and marketing experiences for forward-thinking clients—I got front-row seats to best UX practices. Among them: football teams, disability charities, consumer trading companies, gaming brands, makeup companies, spread betting, banks, social enterprises, nonprofits. Enterprise clients including Netflix and Blizzard Activision. A huge range.
                 </p>
                 
                 <p>
-                  Earlier, I held positions including Global Content Strategy Lead at eBay, Global Marketing Director at Funraisin, and roles at Dentsu B2B, Lightful, and creative agencies serving enterprise clients including Netflix and Blizzard Activision. Each role taught me something different about what happens when strategy, systems, and storytelling come together—or fall apart.
+                  The commercial exposure I gained at Aqueduct and later as Director of Marketing at UBIQ taught me what it takes to transform brands from the ground up—repositioning, building events, creating repeatable systems that scale sustainably.
                 </p>
                 
                 <p>
-                  I studied Media, Communications & Culture and Philosophy at Keele University—a combination that wasn't common at the time. Media Communications were dismissed as a "Mickey Mouse degree," and Philosophy was seen as a waste of time. Now, these disciplines underpin our modern world. That golden thread—following the ethics and impact of communications and culture—has run through everything I've done since.
+                  And I've seen the impact that small teams can have with clients like IMMA Collective, MixerG, Nerve Tumours UK (where I led a nationwide rebrand sitting on the Brand Committee with the CEO and Board of Trustees), and ProSkills.
                 </p>
                 
                 <p className="font-light not-italic">
