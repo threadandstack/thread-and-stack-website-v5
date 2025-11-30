@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Check, Target, Layers, FileText, Users } from "lucide-react";
 import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
+import { FAQ } from "@/components/FAQ";
 
 const DeepEngagement = () => {
   const projectTypes = [
@@ -342,6 +343,36 @@ const DeepEngagement = () => {
         </div>
       </section>
 
+      <FAQ items={[
+        {
+          question: "What is a Deep Engagement?",
+          answer: "Comprehensive 2-6 month transformation projects for organizations ready to commit to fundamental strategic change. This could be a full brand refresh, positioning overhaul, marketing system build, or complete transformation. Unlike quick fixes or surface-level work, Deep Engagements address root causes and create lasting impact with documented systems that outlive the engagement."
+        },
+        {
+          question: "How is this different from other Thread & Stack services?",
+          answer: "Deep Engagement is the most intensive offering - dedicated multi-month work versus one-off Clarity Sessions or ongoing Fractional Strategy retainers. Where Brand Connection Workshops are modular and sprint-based, Deep Engagements are comprehensive end-to-end projects with full documentation, team training, and implementation support. You're investing in transformation, not just strategy."
+        },
+        {
+          question: "What's the typical timeline and investment?",
+          answer: "Projects range 2-6 months depending on scope. Pricing: Brand Refresh (2-3 months, £20-30k), Positioning Overhaul (3-4 months, £30-40k), Marketing System Build (4-6 months, £35-50k), or Complete Transformation (5-6 months, £45-65k). The investment reflects comprehensive strategic work, full documentation, team training, and implementation support."
+        },
+        {
+          question: "What does the process look like?",
+          answer: "Three phases: Deep Discovery (Month 1) - stakeholder interviews, comprehensive audits, strategic foundation workshop; Build & Develop (Months 2-4) - framework development, positioning and messaging architecture, systems design, team workshops, iterative refinement; Refine & Transition (Months 5-6) - final implementation, documentation, team training, launch support, transition to ongoing support (optional retainer)."
+        },
+        {
+          question: "What will we receive as deliverables?",
+          answer: "Comprehensive package: Strategic Foundation Document (positioning, messaging, frameworks), Brand Architecture and Guidelines, Marketing Systems and Process Documentation, Team Training and Capability Development, Implementation Roadmap and Governance, Sustainability and Transition Plan. These aren't just PDFs that gather dust - they're working tools designed for implementation and long-term use."
+        },
+        {
+          question: "What's required from our team?",
+          answer: "Executive sponsorship and decision-making authority, stakeholder time for interviews and workshops (typically 4-6 hours/month per stakeholder), internal team collaboration and knowledge sharing, and commitment to implementation and change management. This is a partnership - you need to be ready to do the work alongside me."
+        },
+        {
+          question: "Who is this right for?",
+          answer: "Organizations (20-100+ people) ready to commit to transformation, needing fundamental change rather than surface-level fixes, and valuing sustainability over quick wins. You're building for the long term and need systems, documentation, and capability that outlive the engagement. You understand this requires organizational buy-in, time, and resources."
+        }
+      ]} />
       <Footer />
     </div>
   );

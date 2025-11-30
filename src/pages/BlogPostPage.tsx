@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Newsletter } from "@/components/Newsletter";
+import { FAQ } from "@/components/FAQ";
 import { Badge } from "@/components/ui/badge";
 import { Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -125,6 +126,32 @@ const BlogPostPage = () => {
       </article>
 
       <Newsletter />
+      <FAQ items={[
+        {
+          question: "What is Stacked Behaviours?",
+          answer: "Stacked Behaviours is Thread & Stack's blog exploring the intersection of brand, creativity, and systems that build our businesses. I share thoughts on behavioral strategy, AI in marketing, and honest takes on running a purpose-driven practice. Subscribe and I'll send you monthly signals on building brands that stay true while scaling."
+        },
+        {
+          question: "What topics do you cover?",
+          answer: "The blog focuses on three core areas: brand strategy and positioning for purpose-led organizations, AI integration in marketing workflows (with a human-centered approach), and practical systems thinking for reducing cognitive load and creative tax. Topics range from behavioral psychology in marketing to Notion workspace design to the ethics of AI in creative work."
+        },
+        {
+          question: "How does this relate to Thread & Stack's services?",
+          answer: "The blog extends the thinking behind Thread & Stack's core offerings: Clarity Sessions (rapid strategic intervention), Thread AI Mentorship Sprint (AI workflow building), Brand Connection Workshops (modular strategy system), Fractional Strategy (ongoing partnership), and Deep Engagement (transformation projects). It's where I share the philosophy, frameworks, and learnings that inform the work."
+        },
+        {
+          question: "What is Thread & Stack's approach to AI?",
+          answer: "We see AI as a second brain and operations partner in the background - never a replacement for human creativity or judgment. Our AI Philosophy centers on creative empowerment: helping you feel more capable and confident, ensuring your brand voice remains authentically yours, and reducing cognitive load so your calendar feels spacious instead of suffocating. AI gives back time, attention, and voice."
+        },
+        {
+          question: "Who is Thread & Stack for?",
+          answer: "We work with two core audiences: conscious learners (values-led founders and small organizations like B Corps and nonprofits) who want growth without compromising integrity, and overwhelmed pragmatists (founders and operators in 2-50 person teams) who need clarity and focus to cut through messy systems and unclear positioning."
+        },
+        {
+          question: "How do I work with Thread & Stack?",
+          answer: "We offer five core services across different levels of commitment: Clarity Sessions (60-minute strategic power hours, from £300), Thread AI Mentorship Sprint (6-week 1:1 mentorship, from £1k), Brand Connection Workshops (modular team workshops, from £2k), Fractional Strategy (monthly retainer for ongoing support), and Deep Engagement (2-6 month transformation projects, from £10-25k). Start with a Clarity Session or book a discovery call."
+        }
+      ]} />
       <Footer />
     </main>
   );

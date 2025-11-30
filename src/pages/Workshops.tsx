@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Check } from "lucide-react";
 import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
+import { FAQ } from "@/components/FAQ";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -369,6 +370,36 @@ const Workshops = () => {
         </div>
       </section>
 
+      <FAQ items={[
+        {
+          question: "What are Brand Connection Workshops?",
+          answer: "A modular, co-created workshop system designed to fix the disconnect between your brand and your audience. Unlike traditional brand strategy (black box, wait three months, get a PDF that gathers dust), this is transparent, collaborative, and built on your terms. You choose the depth and price for each phase: Discovery, Workshop, and Output."
+        },
+        {
+          question: "How does the modular structure work?",
+          answer: "The workshops are broken into three distinct phases, each with multiple options. Phase 1 (Discovery) ranges from £500-£3k, Phase 2 (The Workshop) from £1k-£4k, and Phase 3 (The Output) from £750-£4k. You mix and match to build the workshop that fits your budget and your burning questions. Total investment typically ranges from £2k (lean sprint) to £11k (comprehensive overhaul)."
+        },
+        {
+          question: "Who should attend these workshops?",
+          answer: "Purpose-driven brands facing the fundamental question: 'How do we scale the mission without losing the magic?' Typically teams of 5-30 people in scale-up mode, nonprofits repositioning, or established organizations needing brand alignment across siloed teams. The workshops work best with cross-functional representation: product, marketing, sales, and leadership."
+        },
+        {
+          question: "What's the actual ROI of these workshops?",
+          answer: "Four key outcomes: Clarity over Confusion (replace internal debates with hard evidence), Alignment over Arguments (force cross-functional consensus), Momentum over Stagnation (3 months of alignment work in 2 days), and Confidence over Risk (test positioning before building expensive assets). Think of it as the cheapest insurance policy you can buy before a brand refresh."
+        },
+        {
+          question: "What makes this different from typical brand strategy?",
+          answer: "Traditional brand strategy is often opaque and disconnected from implementation. This workshop system is collaborative, transparent, and built for immediate action. You don't just get insights - you get frameworks, principles, roadmaps, and trained teams ready to execute. The philosophy: great brands don't just 'happen,' they're the result of deep listening, rigorous diagnosis, and strategic storytelling."
+        },
+        {
+          question: "How do I get started?",
+          answer: "Use the quote builder on this page to select your preferred options for each phase, or book a scoping call to discuss your specific needs. I'll review your selections and reach out to provide a detailed quote tailored to your situation. No obligation, just clarity on what this would look like for you."
+        },
+        {
+          question: "How does this relate to Thread & Stack's broader work?",
+          answer: "The Brand Connection Workshops address the clarity and positioning side of our work - untangling the mess between what you mean and what you're actually saying. They complement our systems work (like Thread AI Mentorship Sprint) and longer-term engagements (Fractional Strategy and Deep Engagement). The core philosophy remains: grow not just faster, but truer."
+        }
+      ]} />
       <Footer />
     </div>
   );

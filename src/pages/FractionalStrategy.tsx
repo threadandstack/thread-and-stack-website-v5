@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Check, Calendar, Target, Users, Zap } from "lucide-react";
 import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
+import { FAQ } from "@/components/FAQ";
 
 const FractionalStrategy = () => {
   const benefits = [
@@ -265,6 +266,36 @@ const FractionalStrategy = () => {
         </div>
       </section>
 
+      <FAQ items={[
+        {
+          question: "What is Fractional Strategy?",
+          answer: "Ongoing strategic partnership on a monthly retainer basis. I work as an integrated member of your team, providing senior-level brand positioning, campaign strategy, and creative direction without the overhead of a full-time hire. You get strategic expertise embedded with your team with flexible commitment - perfect for scale-ups and established organizations (20-100+ people)."
+        },
+        {
+          question: "How is this different from hiring a full-time strategist or CMO?",
+          answer: "You get senior strategic thinking without the full-time salary, benefits, recruitment process, and long-term commitment. Fractional engagements are month-to-month with flexible scaling - you can increase or decrease involvement based on your priorities and budget. Plus, you benefit from cross-industry perspective that comes from working with multiple clients."
+        },
+        {
+          question: "What are the engagement models and how do I choose?",
+          answer: "Three models: Core Retainer (2-3 days/month, £2-3k/month) for regular strategic guidance and campaign direction; Extended Retainer (4-6 days/month, £4-6k/month) for growth or transformation requiring deeper involvement; Strategic Leadership (8-10 days/month, £8-12k/month) for fractional CMO or Head of Strategy support. Choice depends on your team size, strategic priorities, and level of support needed."
+        },
+        {
+          question: "What does 'days per month' actually mean in practice?",
+          answer: "It's not necessarily consecutive days. A '3 days per month' retainer might mean monthly strategy sessions, weekly check-ins, ongoing Slack/email access, quarterly reviews, plus ad-hoc unblocking as needed. The time distributes across the month based on your team's rhythm and priorities. We'll define exact cadence and expectations in our engagement agreement."
+        },
+        {
+          question: "Who is this right for?",
+          answer: "Scale-ups (20-100 people) growing fast but can't justify a full-time CMO yet; established organizations with marketing teams needing strategic leadership and capability building; or any team that values flexibility and wants to scale strategic support up or down based on priorities. You need consistent strategic thinking but want to avoid the commitment and cost of a full-time senior hire."
+        },
+        {
+          question: "Can I start small and scale up?",
+          answer: "Absolutely. Many clients start with a Core Retainer to test the partnership, then scale to Extended or Strategic Leadership as priorities evolve. The month-to-month structure allows you to adjust as needs change. Some clients even transition from Deep Engagement projects to ongoing Fractional Strategy for continuity."
+        },
+        {
+          question: "How does Fractional Strategy fit with Thread & Stack's approach?",
+          answer: "Fractional Strategy provides consistent strategic support - the opposite of one-off projects. It's ideal for teams needing ongoing brand positioning work, campaign direction, and strategic unblocking while we reduce the creative tax on your team. Think of it as having a strategic partner in your corner, month after month, protecting what matters while building momentum."
+        }
+      ]} />
       <Footer />
     </div>
   );
