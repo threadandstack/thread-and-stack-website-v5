@@ -68,7 +68,7 @@ export const FeaturedProjects = () => {
     {
       title: "Nerve Tumours UK",
       role: "Brand Strategy & Digital Transformation",
-      description: "Brendan led the client-side aspect of our nationwide rebrand, working with our selected agency partner from start to finish in 2017-18 - redefining how our beneficiaries, supporters and donors relate to our cause",
+      description: "Brendan led the client-side aspect of our rebrand... it redefined how our beneficiaries, supporters and donors relate to our cause",
       fullDescription: "Led the client-side aspect of Nerve Tumours UK's nationwide rebrand from The Neuro Foundation, working with our selected agency partner from start to finish in 2017-18. Thanks to the digital transformation implemented in the three years prior, Nerve Tumours UK had a seamless launch—redefining how beneficiaries, supporters and donors relate to the cause.",
       images: [ntuk1, ntuk2, ntuk3, ntuk4],
       outcomes: [
