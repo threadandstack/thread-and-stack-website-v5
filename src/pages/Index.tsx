@@ -22,7 +22,7 @@ const Index = () => {
     },
     {
       question: "Who do you work with?",
-      answer: "We work with two core audiences: conscious learners (values-led founders and small organizations like B Corps and nonprofits) who want growth without compromising integrity, and overwhelmed pragmatists (founders and operators in 2-50 person teams) who need clarity and focus to cut through messy systems and unclear positioning."
+      answer: "We work with purpose-led organizations across two main profiles: values-driven founders and small organizations (like B Corps, social enterprises, and nonprofits) who prioritize impact and integrity as they grow, and scaling teams (typically 2-50 people) led by founder-operators who are wearing too many hats and need to cut through unclear positioning and messy operational systems to focus on what matters."
     },
     {
       question: "What's the 'creative tax' you mention?",
