@@ -116,7 +116,7 @@ const BlogPostPage = () => {
             )}
 
             <div 
-              className="prose prose-lg max-w-none prose-headings:font-light prose-p:leading-relaxed prose-a:text-accent prose-blockquote:border-l-4 prose-blockquote:border-accent prose-blockquote:pl-4 prose-blockquote:italic prose-code:bg-muted prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-pre:bg-muted prose-pre:p-4 prose-pre:rounded-lg prose-img:rounded-lg prose-figcaption:text-center prose-figcaption:text-sm prose-figcaption:text-muted-foreground prose-figcaption:mt-2 prose-hr:border-border prose-strong:font-semibold [&_.callout]:bg-muted [&_.callout]:p-4 [&_.callout]:rounded-lg [&_.callout]:flex [&_.callout]:gap-3 [&_.callout-icon]:text-2xl"
+              className="prose prose-lg max-w-none prose-headings:font-light prose-h1:text-4xl prose-h1:md:text-5xl prose-h1:mb-6 prose-h2:text-3xl prose-h2:md:text-4xl prose-h2:mt-12 prose-h2:mb-4 prose-h3:text-2xl prose-h3:md:text-3xl prose-h3:mt-8 prose-h3:mb-3 prose-p:leading-relaxed prose-a:text-accent prose-blockquote:border-l-4 prose-blockquote:border-accent prose-blockquote:pl-4 prose-blockquote:italic prose-code:bg-muted prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-pre:bg-muted prose-pre:p-4 prose-pre:rounded-lg prose-img:rounded-lg prose-figcaption:text-center prose-figcaption:text-sm prose-figcaption:text-muted-foreground prose-figcaption:mt-2 prose-hr:border-border prose-strong:font-semibold [&_.callout]:bg-muted [&_.callout]:p-4 [&_.callout]:rounded-lg [&_.callout]:flex [&_.callout]:gap-3 [&_.callout-icon]:text-2xl"
               dangerouslySetInnerHTML={{ __html: post.content }}
             />
           </div>
