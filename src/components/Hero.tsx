@@ -50,12 +50,6 @@ export const Hero = () => {
               How We Work
             </a>
           </Button>
-          
-          <Button size="lg" variant="outline" className="text-lg px-8 rounded-xl hover:bg-foreground hover:text-background not-italic shadow-[0_2px_8px_rgba(0,0,0,0.04)]" asChild>
-            <a href="/blog">
-              Blog
-            </a>
-          </Button>
         </div>
       </div>
     </section>;

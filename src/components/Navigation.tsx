@@ -49,6 +49,13 @@ export const Navigation = () => {
 
           {/* Hero Nav - Desktop Only */}
           <div className="hidden md:flex items-center gap-6">
+            <a 
+              href="/blog" 
+              className="text-sm text-foreground/80 hover:text-foreground transition-colors not-italic"
+            >
+              Blog
+            </a>
+            
             {/* Services Dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger className="flex items-center gap-1 text-sm text-foreground/80 hover:text-foreground transition-colors not-italic">
