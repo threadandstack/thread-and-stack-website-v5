@@ -101,7 +101,7 @@ const AboutPage = () => {
                 </p>
                 
                 <p>
-                  At agencies like Funraisin, Lightful, Scooter, and Aqueduct—all specialising in delivering advanced digital and marketing experiences for forward-thinking clients—I got front-row seats to best UX practices. Among them: football teams, disability charities, consumer trading companies, gaming brands, makeup companies, spread betting, banks, social enterprises, nonprofits. Enterprise clients including Netflix and Blizzard Activision. A huge range.
+                  At agencies like Funraisin, Lightful, Scoota, and Aqueduct (now Flipside)—I got front-row seats to best UX, CX and Accessibility practices. Among them are enterprise brands, to small nonprofits. Hollywood movies to more local consumer insurance ads. Creative tech giants promoting their sustainability impact to energy giants, shifting their business narrative. Football teams, supermarkets, big tech, small tech, gaming, beauty, gambling, banks, social enterprises, nonprofits, global energy giants and digital paperless solutions. A huge range of products, missions and audiences over quite a few agencies.
                 </p>
                 
                 <p>
