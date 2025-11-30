@@ -125,7 +125,7 @@ export const OffersGrid = () => {
         "Ongoing strategic support, workshops, and guidance"
       ],
       cta: "Discuss Engagement",
-      link: "/#contact"
+      link: "/fractional-strategy"
     },
     {
       icon: <Target className="w-6 h-6" />,
@@ -151,7 +151,7 @@ export const OffersGrid = () => {
         "Ongoing: Optional retainer for sustained momentum"
       ],
       cta: "Explore Projects",
-      link: "/#contact"
+      link: "/deep-engagement"
     }
   ];
 
