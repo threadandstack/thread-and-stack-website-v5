@@ -3,53 +3,52 @@ import { ArrowRight, Check } from "lucide-react";
 import { Footer } from "@/components/Footer";
 
 const Workshops = () => {
-  const modules = [
+  const roiPoints = [
     {
-      title: "Brand Foundation",
-      description: "Clarify your story, values, and positioning. Build a narrative that guides decisions and resonates with the right people."
+      title: "Clarity over Confusion",
+      description: "Stop guessing. We replace internal debates and assumptions with hard evidence—whether that's internal pain points or external customer truths."
     },
     {
-      title: "Audience & Connection",
-      description: "Define who you're for (and who you're not for). Understand what your audience actually needs and how you meet them."
+      title: "Alignment over Arguments",
+      description: "Silos kill brands. This process forces consensus. Your product, marketing, and sales teams will finally agree on the problem and the solution."
     },
     {
-      title: "Messaging & Voice",
-      description: "Develop clear, compelling language that reflects your brand and makes it easier to communicate what you do."
+      title: "Momentum over Stagnation",
+      description: "Strategy often dies in email chains. By condensing the decision-making into a sprint, we do 3 months of alignment work in 2 days."
     },
     {
-      title: "Brand Systems & Behaviour",
-      description: "Create decision filters, briefing tools, and practical artefacts so your brand works in day-to-day operations."
+      title: "Confidence over Risk",
+      description: "Launching a brand refresh is expensive. Testing your positioning before you build the assets is the cheapest insurance policy you can buy."
     }
   ];
 
-  const outcomes = [
-    "Clear positioning and narrative everyone on the team can explain",
-    "Defined decision filters for strategy, marketing, and operations",
-    "Practical messaging tools and language guidelines",
-    "Alignment on audience, values, and how you show up",
-    "Artefacts you can use immediately (brand briefs, messaging frameworks, etc.)"
-  ];
-
-  const faqs = [
+  const phases = [
     {
-      q: "How long is a workshop?",
-      a: "Workshops are modular. A single session typically runs 2-3 hours. Some teams book a full-day intensive, others spread sessions over a few weeks. We'll design the format that fits your schedule and goals."
+      phase: "Phase 1: Discovery",
+      description: "We can't solve what we don't understand. We start by listening.",
+      options: [
+        { name: "The Pulse Check", price: "+£500", details: "Questionnaire to 5 key individuals, reviewed ahead of workshop" },
+        { name: "The Deep Dive", price: "+£1.5k", details: "Questionnaire + 5x Pre-Workshop Pain Confession Sessions (1:1 interviews)" },
+        { name: "The Market View", price: "+£3k", details: "Questionnaire + 5x Customer Interviews (speaking directly to your audience)" }
+      ]
     },
     {
-      q: "Who should attend?",
-      a: "Core team members who shape strategy, messaging, and operations. Usually founders, creative leads, and key operators. Smaller teams (3-8 people) tend to get the most value, but we can adapt for larger groups."
+      phase: "Phase 2: The Workshop",
+      description: "The crucible. We get in a room (virtual or physical) and do the work.",
+      options: [
+        { name: "Diagnostic", price: "+£1k", details: "Half Day (3 Hours) - Diagnosis & Alignment" },
+        { name: "Strategy Session", price: "+£2k", details: "Full Day (6 Hours) - Diagnose + Solution" },
+        { name: "The Sprint", price: "+£4k", details: "2-Day Sprint - Day 1: Diagnose + Solution, Day 2: Activation Proposal" }
+      ]
     },
     {
-      q: "Do we need to have a brand already?",
-      a: "Not necessarily. These workshops work for teams building their brand from scratch, teams refining an existing brand, or teams scaling and trying to protect the mission. We meet you where you are."
-    },
-    {
-      q: "What's the difference between this and a Stacked Session?",
-      a: "Stacked Sessions are 1:1 and focused on a specific challenge. Workshops are for teams and involve collaborative work to build alignment and shared language. If you're working solo or need quick clarity, book a Stacked Session. If you need team alignment, a workshop is better."
-    },
-    {
-      q: "What happens after the workshop?",
-      a: "You'll leave with clear artefacts and next steps. Some teams book follow-up sessions to refine or expand the work. Others take what they've built and run with it. You choose what fits."
+      phase: "Phase 3: The Output",
+      description: "Don't let the energy die in the room. Get a roadmap.",
+      options: [
+        { name: "The Summary", price: "+£750", details: "10-15 slides capturing key findings & next steps (48hr turnaround)" },
+        { name: "The Playbook", price: "+£2k", details: "25-35 page strategic report with frameworks, principles, and roadmap" },
+        { name: "The Pitch", price: "+£4k", details: "Everything in the Playbook + 2 Pitch Building Sessions" }
+      ]
     }
   ];
 
@@ -66,20 +65,28 @@ const Workshops = () => {
       <section className="py-24 px-6">
         <div className="max-w-4xl mx-auto">
           <div className="mb-12">
-            <p className="text-accent font-semibold mb-2">Modular brand strategy workshops</p>
+            <p className="text-accent font-semibold mb-2">A Modular Strategy System for Purpose-Driven Brands</p>
             <h1 className="text-5xl md:text-6xl font-bold mb-6 text-balance">
               Brand Connection Workshops
             </h1>
-            <p className="text-2xl text-muted-foreground text-balance">
-              Align your team on story, audience, and behaviour. Answer the big question: "How do we scale the mission without losing the magic?"
-            </p>
+            <div className="bg-secondary/10 rounded-lg p-6 border-l-4 border-accent mb-6">
+              <p className="text-lg text-muted-foreground">
+                Most brand strategy is a black box. You pay a fortune, wait three months, and get a PDF that gathers dust.
+              </p>
+              <p className="text-lg text-muted-foreground mt-3 font-semibold">
+                This is different.
+              </p>
+              <p className="text-lg text-muted-foreground mt-2">
+                It's a modular, co-created workshop system designed to fix the disconnect between your brand and your audience...on your terms.
+              </p>
+            </div>
           </div>
 
           <div className="bg-card border border-border rounded-lg p-8 mb-12">
-            <p className="text-lg mb-4 font-semibold">Custom pricing based on team size and scope</p>
+            <p className="text-lg mb-4 font-semibold">Total investment: From £2k (lean sprint) to £11k (comprehensive overhaul)</p>
             <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 group">
               <a href="/#contact" className="flex items-center">
-                Plan a Workshop
+                Book a Scoping Call
                 <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
               </a>
             </Button>
@@ -87,107 +94,92 @@ const Workshops = () => {
 
           <div className="space-y-16">
             <div>
-              <h2 className="text-3xl font-bold mb-6">Who this is for</h2>
-              <p className="text-lg text-muted-foreground mb-6">
-                You're a purpose-led team (2-50 people) who cares about mission, integrity, and impact. You're growing, but you're worried about losing what makes you different. You need clarity on positioning, alignment on strategy, and practical tools to protect the mission as you scale.
+              <h2 className="text-3xl font-bold mb-6">The Outcome: ROI & Value</h2>
+              <p className="text-lg text-muted-foreground mb-8">
+                It's not just a workshop. It's an accelerator.
               </p>
-              <p className="text-lg text-muted-foreground">
-                These workshops are for teams who want to do brand work collaboratively, not have it done to them.
-              </p>
-            </div>
-
-            <div>
-              <h2 className="text-3xl font-bold mb-6">The central question</h2>
-              <div className="bg-secondary/10 rounded-lg p-8 border-l-4 border-accent">
-                <p className="text-2xl font-semibold text-balance">
-                  "How do we scale the mission without losing the magic?"
+              <div className="space-y-4">
+                {roiPoints.map((point, index) => (
+                  <div key={index} className="bg-card border border-border rounded-lg p-6">
+                    <h3 className="text-xl font-semibold mb-2">{point.title}</h3>
+                    <p className="text-muted-foreground">{point.description}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="bg-secondary/10 rounded-lg p-6 mt-6 border-l-4 border-accent">
+                <p className="text-xl font-semibold text-muted-foreground">
+                  "Grow not just faster, but truer."
+                </p>
+                <p className="text-muted-foreground mt-3">
+                  This process ensures your growth is rooted in the reality of your value, not just the trends of the market.
                 </p>
               </div>
             </div>
 
             <div>
-              <h2 className="text-3xl font-bold mb-8">Workshop modules</h2>
-              <p className="text-lg text-muted-foreground mb-8">
-                Workshops are modular. We design the session(s) based on where you are and what you need. Here are the core modules:
+              <h2 className="text-3xl font-bold mb-6">The Deliverable</h2>
+              <p className="text-lg text-muted-foreground">
+                You don't just leave with "good vibes." You leave with a Playbook—a toolkit of pricing, messaging, and behaviour that you can implement immediately.
               </p>
-              <div className="space-y-4">
-                {modules.map((module, index) => (
-                  <div key={index} className="bg-card border border-border rounded-lg p-6">
-                    <h3 className="text-xl font-semibold mb-2">{module.title}</h3>
-                    <p className="text-muted-foreground">{module.description}</p>
-                  </div>
-                ))}
-              </div>
             </div>
 
             <div>
-              <h2 className="text-3xl font-bold mb-6">What you leave with</h2>
-              <div className="bg-secondary/10 rounded-lg p-8">
-                <ul className="space-y-3">
-                  {outcomes.map((outcome, index) => (
-                    <li key={index} className="flex items-start gap-3">
-                      <Check className="w-5 h-5 text-accent mt-1 flex-shrink-0" />
-                      <span className="text-lg">{outcome}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              <h2 className="text-3xl font-bold mb-6">The Philosophy: Connection is Engineered</h2>
+              <p className="text-lg text-muted-foreground mb-6">
+                Great brands don't just "happen." They are the result of deep listening, rigorous diagnosis, and strategic storytelling.
+              </p>
+              <p className="text-lg text-muted-foreground mb-4">This workshop series is designed to:</p>
+              <ul className="space-y-3">
+                <li className="flex items-start gap-3">
+                  <Check className="w-5 h-5 text-accent mt-1 flex-shrink-0" />
+                  <span className="text-lg">Unearth the truth about where you stand with your audience</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <Check className="w-5 h-5 text-accent mt-1 flex-shrink-0" />
+                  <span className="text-lg">Diagnose the disconnect using behavioural psychology and brand frameworks</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <Check className="w-5 h-5 text-accent mt-1 flex-shrink-0" />
+                  <span className="text-lg">Build a roadmap that bridges the gap between who you are and who they need you to be</span>
+                </li>
+              </ul>
             </div>
 
             <div>
-              <h2 className="text-3xl font-bold mb-6">How it works</h2>
-              <div className="space-y-4">
-                <div className="bg-card border border-border rounded-lg p-6">
-                  <div className="text-accent font-mono text-sm font-semibold mb-2">Step 1</div>
-                  <h3 className="text-xl font-semibold mb-2">Discovery & scoping</h3>
-                  <p className="text-muted-foreground">
-                    We talk through your challenges, goals, and team context. I'll design a workshop (or series) that fits your needs.
-                  </p>
-                </div>
-                <div className="bg-card border border-border rounded-lg p-6">
-                  <div className="text-accent font-mono text-sm font-semibold mb-2">Step 2</div>
-                  <h3 className="text-xl font-semibold mb-2">Pre-work (optional)</h3>
-                  <p className="text-muted-foreground">
-                    Some workshops benefit from light pre-work (e.g., a short team survey or audit). Nothing heavy—just enough to make the session more focused.
-                  </p>
-                </div>
-                <div className="bg-card border border-border rounded-lg p-6">
-                  <div className="text-accent font-mono text-sm font-semibold mb-2">Step 3</div>
-                  <h3 className="text-xl font-semibold mb-2">Collaborative workshop</h3>
-                  <p className="text-muted-foreground">
-                    We work together to build alignment, clarify positioning, and create practical tools. I facilitate; you bring the expertise on your mission and audience.
-                  </p>
-                </div>
-                <div className="bg-card border border-border rounded-lg p-6">
-                  <div className="text-accent font-mono text-sm font-semibold mb-2">Step 4</div>
-                  <h3 className="text-xl font-semibold mb-2">Outputs & follow-up</h3>
-                  <p className="text-muted-foreground">
-                    You'll leave with clear artefacts (brand briefs, messaging frameworks, decision filters). I'll provide a summary and next steps. If you want ongoing support, we can schedule check-ins.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <h2 className="text-3xl font-bold mb-8">Common questions</h2>
-              <div className="space-y-6">
-                {faqs.map((faq, index) => (
-                  <div key={index} className="border-b border-border pb-6 last:border-0">
-                    <h3 className="text-xl font-semibold mb-3">{faq.q}</h3>
-                    <p className="text-muted-foreground leading-relaxed">{faq.a}</p>
+              <h2 className="text-3xl font-bold mb-8">Build Your Own Roadmap</h2>
+              <p className="text-lg text-muted-foreground mb-8">
+                Strategy shouldn't be one-size-fits-all. I've broken the process down into three distinct phases. You choose the depth (and the price) for each phase. Mix and match to build the workshop that fits your budget and your burning questions.
+              </p>
+              
+              <div className="space-y-8">
+                {phases.map((phase, index) => (
+                  <div key={index} className="bg-card border border-border rounded-lg p-8">
+                    <h3 className="text-2xl font-semibold mb-3">{phase.phase}</h3>
+                    <p className="text-muted-foreground mb-6">{phase.description}</p>
+                    <div className="space-y-4">
+                      {phase.options.map((option, optIndex) => (
+                        <div key={optIndex} className="bg-secondary/10 rounded-lg p-4 border-l-4 border-accent">
+                          <div className="flex justify-between items-start mb-2">
+                            <h4 className="font-semibold">{option.name}</h4>
+                            <span className="text-accent font-semibold">{option.price}</span>
+                          </div>
+                          <p className="text-sm text-muted-foreground">{option.details}</p>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 ))}
               </div>
             </div>
 
             <div className="bg-card border border-border rounded-lg p-8 text-center">
-              <h2 className="text-2xl font-bold mb-4">Ready to align your team?</h2>
+              <h2 className="text-2xl font-bold mb-4">Ready to build your workshop?</h2>
               <p className="text-muted-foreground mb-6">
-                Let's design a workshop that builds clarity, alignment, and practical tools for your brand.
+                Let's map out the right combination for you.
               </p>
               <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 group">
                 <a href="/#contact" className="flex items-center">
-                  Plan Your Workshop
+                  Book a Scoping Call
                   <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
                 </a>
               </Button>

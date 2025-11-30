@@ -3,55 +3,30 @@ import { ArrowRight, Check } from "lucide-react";
 import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
 
-const StackedSessions = () => {
-  const problems = [
-    "Your positioning feels vague or hard to explain",
-    "You're stuck between two directions and need clarity fast",
-    "Your messaging doesn't match the work you actually do",
-    "You have a systems or workflow tangle that's slowing you down",
-    "You need a second pair of eyes on strategy or comms"
-  ];
-
-  const process = [
+const ClaritySessions = () => {
+  const focusAreas = [
     {
-      step: "1",
-      title: "Book a session",
-      description: "Choose a time that works for you. We'll meet on Zoom."
+      title: "Strategy Unblocking",
+      examples: [
+        '"I\'m stuck on this positioning statement."',
+        '"Does this campaign angle actually make sense?"',
+        '"I have too many ideas—which one is the winner?"'
+      ]
     },
     {
-      step: "2",
-      title: "Brief prep",
-      description: "You'll share a bit of context before we meet (nothing heavy—just enough to hit the ground running)."
-    },
-    {
-      step: "3",
-      title: "60-minute strategic sprint",
-      description: "We dig into your challenge, work through decisions together, and create a clear path forward."
-    },
-    {
-      step: "4",
-      title: "Leave with clarity",
-      description: "You walk away with a decision, an action plan, and language you can use immediately."
+      title: "Notion / AI Triage",
+      examples: [
+        '"My workspace is a mess—where do I start?"',
+        '"How do I build a CRM that doesn\'t suck?"',
+        '"Show me how to use AI for [specific task]."'
+      ]
     }
   ];
 
-  const faqs = [
-    {
-      q: "What can we cover in 60 minutes?",
-      a: "More than you'd think. These sessions are tightly focused—we're not trying to rebuild your entire brand in an hour. We're making one clear decision or solving one specific problem. Think: refining your positioning statement, untangling a messaging knot, diagnosing a workflow issue, or choosing between strategic options."
-    },
-    {
-      q: "Is this right for my team size?",
-      a: "Yes. Stacked Sessions work for solo founders, small teams, and growing organizations. If you have a focused challenge and want strategic clarity fast, this is for you."
-    },
-    {
-      q: "What if I need more than one session?",
-      a: "That's fine. Some people book a single session for a specific challenge. Others book a few sessions spaced out over time. You choose what fits."
-    },
-    {
-      q: "What happens after the session?",
-      a: "You'll get a short follow-up summary with the key decisions and action steps we discussed. If you want ongoing support, we can talk about the Mentorship Sprint or Workshop options."
-    }
+  const outputs = [
+    "The Recording: Full video/audio of the session so you don't have to take frantic notes",
+    "The Summary: Thread AI transcription and summary of key decisions",
+    "The Action Plan: A bulleted list of exactly what you need to do next"
   ];
 
   return (
@@ -69,104 +44,81 @@ const StackedSessions = () => {
       <section className="py-24 px-6">
         <div className="max-w-4xl mx-auto">
           <div className="mb-12">
-            <p className="text-accent mb-2 not-italic">60-minute strategic power hours</p>
+            <p className="text-accent mb-2 not-italic">Rapid Strategic Intervention</p>
             <h1 className="text-5xl md:text-6xl mb-6 text-balance font-light">
-              Stacked Sessions
+              Clarity Sessions
             </h1>
-            <p className="text-2xl text-muted-foreground text-balance">
-              Unblock positioning, refine an offer, diagnose a messy system, or untangle a messaging problem. Fast, focused, strategic.
-            </p>
+            <div className="bg-secondary/10 rounded-lg p-6 border-l-4 border-accent mb-6">
+              <p className="text-lg text-muted-foreground">
+                Sometimes you don't need a 6-week sprint. Sometimes you just need 60 minutes to unblock a specific problem, validate a decision, or get a second brain on a messy situation.
+              </p>
+            </div>
           </div>
 
           <div className="bg-card border-2 thread-border p-8 mb-12">
-            <p className="text-lg mb-4 not-italic">Investment: ~£300 per session</p>
+            <h3 className="text-2xl font-semibold mb-3">The Offer</h3>
+            <p className="text-xl mb-4">One Hour. One Problem. Solved.</p>
+            <p className="text-lg text-muted-foreground mb-4">
+              A focused, high-intensity consulting session designed to clear the fog and give you an immediate path forward.
+            </p>
+            <p className="text-lg mb-2 not-italic"><strong>Price:</strong> £300 (VAT incl.)</p>
+            <p className="text-lg mb-4 not-italic"><strong>Format:</strong> 60 Minutes (Virtual) + Recording + Action Plan</p>
+            <p className="text-sm text-muted-foreground mb-6 italic">Send me your notes in advance, and I'll go over them beforehand.</p>
             <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 group border thread-border not-italic">
               <a href="/#contact" className="flex items-center">
-                Book a Stacked Session
+                Book a Clarity Session
                 <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
               </a>
             </Button>
           </div>
 
           <div className="space-y-16">
-            <div className="border-l-2 thread-border pl-8">
-              <h2 className="text-3xl mb-6 font-light">Who this is for</h2>
+            <div>
+              <h2 className="text-3xl mb-6 font-light">What we can solve in an hour</h2>
               <p className="text-lg text-muted-foreground mb-6">
-                You're a founder, creative lead, or operator who needs strategic clarity on a specific challenge—and you need it now. You don't have months for a long engagement. You need focused thinking, a clear decision, and language you can use immediately.
+                This isn't a "chat." We get straight to work. Common focuses include:
               </p>
-            </div>
-
-            <div>
-              <h2 className="text-3xl mb-6 font-light">Problems we solve</h2>
-              <ul className="space-y-3">
-                {problems.map((problem, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-accent mt-1 flex-shrink-0" />
-                    <span className="text-lg">{problem}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div>
-              <h2 className="text-3xl mb-8 font-light">How it works</h2>
-              <div className="grid md:grid-cols-2 gap-6">
-                {process.map((item, index) => (
+              <div className="space-y-6">
+                {focusAreas.map((area, index) => (
                   <div key={index} className="bg-card border-2 thread-border p-6">
-                    <div className="text-accent text-sm mb-3 not-italic font-light">
-                      Step {item.step}
-                    </div>
-                    <h3 className="text-xl mb-2 font-light not-italic">{item.title}</h3>
-                    <p className="text-muted-foreground">{item.description}</p>
+                    <h3 className="text-xl font-semibold mb-4">{area.title}</h3>
+                    <ul className="space-y-2">
+                      {area.examples.map((example, exIndex) => (
+                        <li key={exIndex} className="text-muted-foreground pl-4 border-l-2 border-accent/30">
+                          {example}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 ))}
               </div>
             </div>
 
             <div>
-              <h2 className="text-3xl mb-6 font-light">What you leave with</h2>
+              <h2 className="text-3xl mb-6 font-light">The Output</h2>
+              <p className="text-lg text-muted-foreground mb-6">
+                You don't just get a call. You get an asset.
+              </p>
               <div className="bg-muted/30 border-2 thread-border p-8">
                 <ul className="space-y-3">
-                  <li className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-accent mt-1 flex-shrink-0" />
-                    <span className="text-lg">A clear decision or direction</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-accent mt-1 flex-shrink-0" />
-                    <span className="text-lg">Specific language and messaging you can use immediately</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-accent mt-1 flex-shrink-0" />
-                    <span className="text-lg">A focused action plan (no overwhelm, just clear next steps)</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-accent mt-1 flex-shrink-0" />
-                    <span className="text-lg">Follow-up summary of key decisions and actions</span>
-                  </li>
+                  {outputs.map((output, index) => (
+                    <li key={index} className="flex items-start gap-3">
+                      <Check className="w-5 h-5 text-accent mt-1 flex-shrink-0" />
+                      <span className="text-lg">{output}</span>
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>
 
-            <div>
-              <h2 className="text-3xl mb-8 font-light">Common questions</h2>
-              <div className="space-y-6">
-                {faqs.map((faq, index) => (
-                  <div key={index} className="border-b thread-border pb-6 last:border-0">
-                    <h3 className="text-xl mb-3 font-light not-italic">{faq.q}</h3>
-                    <p className="text-muted-foreground leading-relaxed">{faq.a}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
             <div className="bg-card border-2 thread-border p-8 text-center">
-              <h2 className="text-2xl mb-4 font-light">Ready to unblock something?</h2>
+              <h2 className="text-2xl mb-4 font-light">Ready to unblock?</h2>
               <p className="text-muted-foreground mb-6">
-                Let's tackle your challenge together. Book a Stacked Session and get clarity fast.
+                Let's tackle your challenge together and get you clarity fast.
               </p>
               <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 group border thread-border not-italic">
                 <a href="/#contact" className="flex items-center">
-                  Book Your Session
+                  Book a Clarity Session
                   <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
                 </a>
               </Button>
@@ -180,4 +132,4 @@ const StackedSessions = () => {
   );
 };
 
-export default StackedSessions;
+export default ClaritySessions;
