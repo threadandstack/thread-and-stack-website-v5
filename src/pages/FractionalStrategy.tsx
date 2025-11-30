@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { HandDrawnArrowRight, HandDrawnCheck, HandDrawnCalendar, HandDrawnTarget, HandDrawnUsers, HandDrawnZap } from "@/components/icons/HandDrawnIcons";
+import { ArrowRight, Check, Calendar, Target, Users, Zap } from "lucide-react";
 import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
 import { FAQ } from "@/components/FAQ";
@@ -8,22 +8,22 @@ import { FAQ } from "@/components/FAQ";
 const FractionalStrategy = () => {
   const benefits = [
     {
-      icon: <HandDrawnTarget className="w-6 h-6" />,
+      icon: <Target className="w-6 h-6" />,
       title: "Senior Strategic Thinking",
       description: "Access to strategic expertise without the overhead of a full-time senior hire"
     },
     {
-      icon: <HandDrawnZap className="w-6 h-6" />,
+      icon: <Zap className="w-6 h-6" />,
       title: "Flexibility & Scalability",
       description: "Scale engagement up or down based on your needs and strategic priorities"
     },
     {
-      icon: <HandDrawnUsers className="w-6 h-6" />,
+      icon: <Users className="w-6 h-6" />,
       title: "Embedded Partnership",
       description: "Work as an integrated part of your team, not an external consultant"
     },
     {
-      icon: <HandDrawnCalendar className="w-6 h-6" />,
+      icon: <Calendar className="w-6 h-6" />,
       title: "Consistent Support",
       description: "Ongoing access for questions, unblocking, and strategic guidance"
     }
@@ -127,7 +127,7 @@ const FractionalStrategy = () => {
             <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 group">
               <a href="/#contact" className="flex items-center">
                 Discuss Your Needs
-                <HandDrawnArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
               </a>
             </Button>
           </div>
@@ -166,7 +166,7 @@ const FractionalStrategy = () => {
                       <ul className="space-y-2">
                         {model.includes.map((item, idx) => (
                           <li key={idx} className="flex items-start gap-3">
-                            <HandDrawnCheck className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
+                            <Check className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
                             <span className="text-muted-foreground">{item}</span>
                           </li>
                         ))}
@@ -214,7 +214,7 @@ const FractionalStrategy = () => {
                         <ul className="space-y-2">
                           {study.outcomes.map((outcome, idx) => (
                             <li key={idx} className="flex items-start gap-3">
-                              <HandDrawnCheck className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
+                              <Check className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
                               <span className="text-muted-foreground">{outcome}</span>
                             </li>
                           ))}
@@ -258,7 +258,7 @@ const FractionalStrategy = () => {
               <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 group">
                 <a href="/#contact" className="flex items-center">
                   Book a Discovery Call
-                  <HandDrawnArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
                 </a>
               </Button>
             </div>

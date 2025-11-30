@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { HandDrawnArrowRight, HandDrawnCheck } from "@/components/icons/HandDrawnIcons";
+import { ArrowRight, Check } from "lucide-react";
 import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
 import { FAQ } from "@/components/FAQ";
@@ -155,7 +155,7 @@ const Workshops = () => {
             <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 group">
               <a href="/#contact" className="flex items-center">
                 Book a Scoping Call
-                <HandDrawnArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
               </a>
             </Button>
           </div>
@@ -199,15 +199,15 @@ const Workshops = () => {
               <p className="text-lg text-muted-foreground mb-4">This workshop series is designed to:</p>
               <ul className="space-y-3">
                 <li className="flex items-start gap-3">
-                  <HandDrawnCheck className="w-5 h-5 text-accent mt-1 flex-shrink-0" />
+                  <Check className="w-5 h-5 text-accent mt-1 flex-shrink-0" />
                   <span className="text-lg">Unearth the truth about where you stand with your audience</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <HandDrawnCheck className="w-5 h-5 text-accent mt-1 flex-shrink-0" />
+                  <Check className="w-5 h-5 text-accent mt-1 flex-shrink-0" />
                   <span className="text-lg">Diagnose the disconnect using behavioural psychology and brand frameworks</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <HandDrawnCheck className="w-5 h-5 text-accent mt-1 flex-shrink-0" />
+                  <Check className="w-5 h-5 text-accent mt-1 flex-shrink-0" />
                   <span className="text-lg">Build a roadmap that bridges the gap between who you are and who they need you to be</span>
                 </li>
               </ul>
@@ -361,7 +361,7 @@ const Workshops = () => {
                 <Button size="lg" variant="outline" className="group">
                   <a href="/#contact" className="flex items-center">
                     Book a Scoping Call
-                    <HandDrawnArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
                   </a>
                 </Button>
               </div>

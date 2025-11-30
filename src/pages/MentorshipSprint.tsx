@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { HandDrawnArrowRight, HandDrawnCheck } from "@/components/icons/HandDrawnIcons";
+import { ArrowRight, Check } from "lucide-react";
 import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
 import { FAQ } from "@/components/FAQ";
@@ -93,7 +93,7 @@ const MentorshipSprint = () => {
             <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 group">
               <a href="/#contact" className="flex items-center">
                 Book Engagement Call
-                <HandDrawnArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
               </a>
             </Button>
           </div>
@@ -137,7 +137,7 @@ const MentorshipSprint = () => {
                 <ul className="space-y-3">
                   {outcomes.map((outcome, index) => (
                     <li key={index} className="flex items-start gap-3">
-                      <HandDrawnCheck className="w-5 h-5 text-accent mt-1 flex-shrink-0" />
+                      <Check className="w-5 h-5 text-accent mt-1 flex-shrink-0" />
                       <span className="text-lg">{outcome}</span>
                     </li>
                   ))}
@@ -189,7 +189,7 @@ const MentorshipSprint = () => {
               <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 group">
                 <a href="/#contact" className="flex items-center">
                   Explore the Sprint
-                  <HandDrawnArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
                 </a>
               </Button>
             </div>

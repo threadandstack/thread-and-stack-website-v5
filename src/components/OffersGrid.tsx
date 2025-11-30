@@ -1,14 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
+import { Clock, Zap, Users, Repeat, Target } from "lucide-react";
 import { OfferModal } from "./OfferModal";
 import { Emphasis } from "@/components/Emphasis";
-import { 
-  HandDrawnClock, 
-  HandDrawnZap, 
-  HandDrawnUsers, 
-  HandDrawnRepeat, 
-  HandDrawnTarget 
-} from "@/components/icons/HandDrawnIcons";
 
 export const OffersGrid = () => {
   const [selectedOffer, setSelectedOffer] = useState<typeof offers[0] | null>(null);
@@ -35,7 +29,7 @@ export const OffersGrid = () => {
 
   const offers = [
     {
-      icon: <HandDrawnZap className="w-6 h-6" />,
+      icon: <Zap className="w-6 h-6" />,
       title: "Clarity Sessions",
       tagline: "Rapid Strategic Intervention",
       description: "One Hour. One Problem. Solved. A focused session to unblock positioning, validate decisions, or diagnose messy systems. Leave with recording, AI summary, and a clear action plan.",
@@ -59,7 +53,7 @@ export const OffersGrid = () => {
       link: "/clarity-sessions"
     },
     {
-      icon: <HandDrawnClock className="w-6 h-6" />,
+      icon: <Clock className="w-6 h-6" />,
       title: "Thread AI Sprint",
       tagline: "A 6-Week Intensive for Purpose-Driven Marketers",
       description: "Transform how you work with AI without losing your creative edge. Build a custom productivity system that gives you 5-10 hours back each week. Human-centered. Tool-agnostic. Creativity-first.",
@@ -84,7 +78,7 @@ export const OffersGrid = () => {
       link: "/mentorship-sprint"
     },
     {
-      icon: <HandDrawnUsers className="w-6 h-6" />,
+      icon: <Users className="w-6 h-6" />,
       title: "Brand Connection Workshops",
       tagline: "A Modular Strategy System for Purpose-Driven Brands",
       description: "Fix the disconnect between your brand and your audience. Modular, co-created workshops that get your team aligned on story, positioning, and roadmap. Build exactly what you need—from lean sprints to comprehensive overhauls.",
@@ -108,7 +102,7 @@ export const OffersGrid = () => {
       link: "/workshops"
     },
     {
-      icon: <HandDrawnRepeat className="w-6 h-6" />,
+      icon: <Repeat className="w-6 h-6" />,
       title: "Fractional Strategy",
       tagline: "Ongoing Strategic Partnership",
       description: "Embedded strategic support on a monthly retainer. Brand positioning, campaign strategy, and creative direction—without the overhead of a full-time hire. For scale-ups and established orgs needing consistent strategic guidance.",
@@ -134,7 +128,7 @@ export const OffersGrid = () => {
       link: "/fractional-strategy"
     },
     {
-      icon: <HandDrawnTarget className="w-6 h-6" />,
+      icon: <Target className="w-6 h-6" />,
       title: "Deep Engagement",
       tagline: "2-6 Month Transformation Projects",
       description: "Full brand refreshes, positioning overhauls, or comprehensive system builds. For organizations ready to commit to deep strategic work with clear deliverables and measurable transformation over 2-6 months.",

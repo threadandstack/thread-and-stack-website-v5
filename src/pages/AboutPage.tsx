@@ -3,7 +3,7 @@ import { Footer } from "@/components/Footer";
 import { AIPhilosophy } from "@/components/AIPhilosophy";
 import { FAQ } from "@/components/FAQ";
 import { Button } from "@/components/ui/button";
-import { HandDrawnArrowRight } from "@/components/icons/HandDrawnIcons";
+import { ArrowRight } from "lucide-react";
 import brendanPhoto from "@/assets/brendan-brick.jpeg";
 import brendanCollaboration from "@/assets/brendan-collaboration.jpeg";
 import brendanWorkshop from "@/assets/brendan-workshop.jpeg";
@@ -119,7 +119,7 @@ const AboutPage = () => {
               >
                 <a href="/#contact">
                   Let's Work Together
-                  <HandDrawnArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </a>
               </Button>
             </div>
