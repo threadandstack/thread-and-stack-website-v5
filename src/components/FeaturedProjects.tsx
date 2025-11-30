@@ -103,13 +103,13 @@ export const FeaturedProjects = () => {
                 setSelectedProject(project);
                 setModalOpen(true);
               }}
-              className="group bg-card rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.06)] hover:shadow-[0_12px_32px_rgba(0,0,0,0.12)] transition-all duration-300 overflow-hidden text-left w-full max-w-3xl flex flex-col"
+              className="group bg-card rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.06)] hover:shadow-[0_12px_32px_rgba(0,0,0,0.12)] transition-all duration-300 overflow-hidden text-left w-full max-w-5xl flex flex-col md:flex-row"
             >
-              <div className="w-full">
+              <div className="w-full md:w-1/2 flex-shrink-0">
                 <ImageCarousel images={project.images} isVisible={isVisible} />
               </div>
               
-              <div className="p-10 md:p-12 space-y-5">
+              <div className="p-8 md:p-12 flex flex-col justify-center space-y-5 md:w-1/2">
                 <h3 className="text-3xl md:text-4xl font-light not-italic">
                   {project.title}
                 </h3>
