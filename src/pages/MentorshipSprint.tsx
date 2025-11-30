@@ -4,56 +4,51 @@ import { Footer } from "@/components/Footer";
 
 const MentorshipSprint = () => {
   const outcomes = [
-    "A 'second brain' system tailored to your work, tools, and ethics",
-    "AI workflows that save hours weekly without compromising your judgment",
-    "Clear processes for recurring creative and operational tasks",
-    "Confidence using AI as a co-pilot, not a crutch",
-    "Time and energy back for the work that actually matters"
+    "5-10 hours back each week through AI-enabled workflows",
+    "A custom productivity system built for your actual role and tools",
+    "Confidence using AI without second-guessing or quality drops",
+    "Better creative output by focusing on work that matters",
+    "A competitive edge that positions you for whatever comes next"
   ];
 
   const structure = [
     {
-      week: "Week 1",
-      title: "Foundation & context",
-      description: "We map your current workflows, tools, and pain points. No assumptions—just listening."
+      week: "Week 1-2",
+      title: "Foundation & Setup",
+      description: "We map your current workflow, identify pain points, and start building your custom system. You stay in control—AI handles mechanical tasks."
     },
     {
-      week: "Week 2-3",
-      title: "Build your system",
-      description: "We design and implement your 'second brain' in Notion (or your preferred tool), tailored to how you actually work."
+      week: "Week 3-4",
+      title: "Implementation & Integration",
+      description: "We implement AI workflows tailored to your tools (Microsoft, Google, Notion, or browser-only). The principles transfer regardless of your ecosystem."
     },
     {
-      week: "Week 4-5",
-      title: "AI integration",
-      description: "We layer in AI workflows (prompts, automations, ethical guardrails) that fit your context and values."
-    },
-    {
-      week: "Week 6",
-      title: "Test, refine, sustain",
-      description: "We test everything, troubleshoot friction, and build habits so the system sticks."
+      week: "Week 5-6",
+      title: "Refinement & Mastery",
+      description: "We refine your system, troubleshoot friction points, and build sustainable habits. You'll work smarter, not harder."
     }
   ];
 
   const faqs = [
     {
-      q: "What tools do we use?",
-      a: "Primarily Notion, but we adapt to your existing stack. If you use other tools (Airtable, Coda, etc.), we'll work with those. The goal is to meet you where you are, not force you into new software."
+      q: "Is this just another ChatGPT course?",
+      a: "No. This is about building a complete productivity system tailored to your role, tools, and goals. ChatGPT might be one tool we use, but this is about the whole workflow—not just prompts."
     },
     {
-      q: "Do I need to be 'good at AI' already?",
-      a: "Not at all. This sprint is for people who want to learn AI thoughtfully, not hack their way through generic prompts. We'll build your confidence step by step."
+      q: "What if my company blocks AI tools?",
+      a: "We'll work with whatever your reality is. Many corporate environments have restrictions, and we can adapt. I've worked with clients navigating IT approval processes and Microsoft ecosystems."
     },
     {
-      q: "How much time does this require from me?",
-      a: "We meet 1:1 weekly (60 minutes), plus you'll spend a few hours between sessions implementing and testing what we build. Think of it as an investment that pays back in time saved every week after."
+      q: "I'm not technical - will I be able to do this?",
+      a: "Yes. This isn't about being technical. It's about being willing to learn and experiment. If you can use a search engine and follow instructions, you can do this."
     },
     {
-      q: "What if my team wants to join?",
-      a: "The Sprint is designed for 1:1 work, but we can adapt for small teams (2-3 people). If you have a larger team, the Brand Connection Workshops might be a better fit."
+      q: "What if I don't have time for homework?",
+      a: "This works best when you can dedicate 2-3 hours per week between sessions. If you're completely underwater right now, it might be worth waiting for a calmer moment."
     },
     {
       q: "What happens after the 6 weeks?",
-      a: "You'll have a working system and the skills to maintain and evolve it. Some clients book occasional check-in sessions (Stacked Sessions) for ongoing support, but you'll be self-sufficient by the end."
+      a: "You'll have a working system and the skills to maintain it. Some clients book occasional Clarity Sessions for ongoing support, but you'll be self-sufficient by the end."
     }
   ];
 
@@ -70,20 +65,38 @@ const MentorshipSprint = () => {
       <section className="py-24 px-6">
         <div className="max-w-4xl mx-auto">
           <div className="mb-12">
-            <p className="text-accent font-semibold mb-2">6-week 1:1 mentorship</p>
+            <p className="text-accent font-semibold mb-2">A 6-Week Intensive for Purpose-Driven Marketers</p>
             <h1 className="text-5xl md:text-6xl font-bold mb-6 text-balance">
               Thread AI Mentorship Sprint
             </h1>
             <p className="text-2xl text-muted-foreground text-balance">
-              Build a 'second brain' and AI-supported workflows tailored to your real tools, ethics, and working style. Save hours weekly. Protect creative energy.
+              Transform how you work with AI - without losing your creative edge.
+            </p>
+          </div>
+
+          <div className="bg-secondary/10 rounded-lg p-8 mb-12 border-l-4 border-accent">
+            <h3 className="text-xl font-semibold mb-3">About Thread AI</h3>
+            <p className="text-lg text-muted-foreground mb-4">
+              Thread AI is my philosophy for working with AI as a marketing professional:
+            </p>
+            <p className="text-lg text-muted-foreground mb-2">
+              <strong>Human-centered. Tool-agnostic. Creativity-first.</strong>
+            </p>
+            <ul className="space-y-2 text-muted-foreground">
+              <li>→ You stay in control. AI handles mechanical tasks, you handle creative decisions.</li>
+              <li>→ Works in any ecosystem - Microsoft, Google, Notion, or browser-only. The principles transfer regardless of tools.</li>
+              <li>→ AI frees up mental bandwidth for the creative, strategic work that actually moves the needle.</li>
+            </ul>
+            <p className="text-lg text-muted-foreground mt-4 font-semibold">
+              It's about unlocking time, not replacing thinking.
             </p>
           </div>
 
           <div className="bg-card border border-border rounded-lg p-8 mb-12">
-            <p className="text-lg mb-4 font-semibold">Investment varies based on scope</p>
+            <p className="text-lg mb-4 font-semibold">Investment: From £1k</p>
             <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 group">
               <a href="/#contact" className="flex items-center">
-                Start the Sprint
+                Book Engagement Call
                 <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
               </a>
             </Button>
@@ -93,20 +106,17 @@ const MentorshipSprint = () => {
             <div>
               <h2 className="text-3xl font-bold mb-6">Who this is for</h2>
               <p className="text-lg text-muted-foreground mb-6">
-                You're a founder, creative lead, or solo operator drowning in admin, context switching, and recurring tasks. You know AI could help, but you're skeptical of generic hacks and worried about losing your creative judgment.
+                Purpose-driven marketers who want to implement AI into their workflow without sacrificing quality or creativity.
               </p>
               <p className="text-lg text-muted-foreground">
-                This sprint is for people who want to build systems that protect their taste and integrity—not replace them.
+                The plan is to amplify what you already do well - not replace your creative input. We want to free up mental space for the strategic, contributive work that actually matters.
               </p>
             </div>
 
             <div>
-              <h2 className="text-3xl font-bold mb-6">What you'll build</h2>
+              <h2 className="text-3xl font-bold mb-6">The Outcome</h2>
               <p className="text-lg text-muted-foreground mb-6">
-                Over 6 weeks, we'll design and implement a 'second brain'—a personalized system that organizes your work, reduces friction, and integrates AI where it actually makes sense for you.
-              </p>
-              <p className="text-lg text-muted-foreground mb-6">
-                No one-size-fits-all templates. No copying someone else's productivity stack. Everything is built around your reality: your tools, your ethics, your working style.
+                After 6 weeks, you'll work smarter, not harder. And you'll have the systems to prove it.
               </p>
             </div>
 
