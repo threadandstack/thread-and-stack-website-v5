@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { Clock, Zap, Users } from "lucide-react";
+import { Clock, Zap, Users, Repeat, Target } from "lucide-react";
 import { OfferModal } from "./OfferModal";
 import { Emphasis } from "@/components/Emphasis";
 
@@ -100,6 +100,58 @@ export const OffersGrid = () => {
       ],
       cta: "Plan a Workshop",
       link: "/workshops"
+    },
+    {
+      icon: <Repeat className="w-6 h-6" />,
+      title: "Fractional Strategy",
+      tagline: "Ongoing Strategic Partnership",
+      description: "Embedded strategic support on a monthly retainer. Brand positioning, campaign strategy, and creative direction—without the overhead of a full-time hire. For scale-ups and established orgs needing consistent strategic guidance.",
+      fullDescription: "Get continuous strategic support without the commitment of a full-time hire. I work as an embedded member of your team, providing brand strategy, positioning guidance, and campaign direction on an ongoing monthly basis. Perfect for growing companies (20-100+ people) who need senior strategic thinking but want flexibility.",
+      price: "Case-by-case",
+      duration: "Monthly retainer",
+      whatYouGet: [
+        "Set monthly hours/days embedded with your team",
+        "Strategic guidance on brand positioning and campaigns",
+        "Creative direction and decision support",
+        "Ongoing access for questions and unblocking",
+        "Team workshops and alignment sessions as needed",
+        "Documentation and strategic frameworks",
+        "Flexibility to scale engagement up or down"
+      ],
+      process: [
+        "Discovery call to understand your strategic needs",
+        "Scope monthly engagement and establish rhythms",
+        "Embed with your team on agreed cadence",
+        "Ongoing strategic support, workshops, and guidance"
+      ],
+      cta: "Discuss Engagement",
+      link: "/#contact"
+    },
+    {
+      icon: <Target className="w-6 h-6" />,
+      title: "Deep Engagement",
+      tagline: "2-6 Month Transformation Projects",
+      description: "Full brand refreshes, positioning overhauls, or comprehensive system builds. For organizations ready to commit to deep strategic work with clear deliverables and measurable transformation over 2-6 months.",
+      fullDescription: "Comprehensive strategic projects for organizations ready to invest in transformation. Whether it's a complete brand refresh, positioning overhaul, or building marketing systems from the ground up—this is for teams (20-100+ people) committed to deep work with lasting impact.",
+      price: "Case-by-case",
+      duration: "2-6 months",
+      whatYouGet: [
+        "Comprehensive discovery and stakeholder alignment",
+        "Full strategic framework and positioning work",
+        "Brand refresh or complete overhaul as needed",
+        "Marketing systems and operational infrastructure",
+        "Team training and capability building",
+        "Implementation support and guidance",
+        "Documentation, playbooks, and sustainability plan"
+      ],
+      process: [
+        "Month 1: Deep discovery, audit, and strategic foundation",
+        "Months 2-4: Build positioning, systems, and frameworks",
+        "Months 5-6: Refine, implement, train team, and transition",
+        "Ongoing: Optional retainer for sustained momentum"
+      ],
+      cta: "Explore Projects",
+      link: "/#contact"
     }
   ];
 
@@ -120,8 +172,51 @@ export const OffersGrid = () => {
           </p>
         </div>
         
-        <div className="grid md:grid-cols-3 gap-8">
-          {offers.map((offer, index) => (
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {/* First row - 3 cards */}
+          {offers.slice(0, 3).map((offer, index) => (
+            <div 
+              key={index}
+              className="bg-card rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] p-8 transition-all duration-300 flex flex-col"
+            >
+              <div className="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center mb-6 text-accent">
+                {offer.icon}
+              </div>
+              
+              <h3 className="text-2xl mb-2 font-light">
+                {offer.title}
+              </h3>
+              
+              <p className="text-sm text-accent mb-4">
+                {offer.tagline}
+              </p>
+              
+              <p className="text-muted-foreground leading-relaxed mb-6 flex-grow">
+                {offer.description}
+              </p>
+              
+              <div className="space-y-4 pt-4 border-t border-border/30">
+                <p className="text-sm font-medium text-foreground/70 not-italic">
+                  {offer.price}
+                </p>
+                
+                <Button 
+                  className="w-full group bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl"
+                  onClick={() => {
+                    setSelectedOffer(offer);
+                    setModalOpen(true);
+                  }}
+                >
+                  Learn More
+                </Button>
+              </div>
+            </div>
+          ))}
+        </div>
+        
+        {/* Second row - 2 cards centered */}
+        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto mt-8">
+          {offers.slice(3).map((offer, index) => (
             <div 
               key={index}
               className="bg-card rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] p-8 transition-all duration-300 flex flex-col"
