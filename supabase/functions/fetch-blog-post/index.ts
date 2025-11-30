@@ -83,10 +83,15 @@ serve(async (req) => {
       }
     }).join('\n')
 
+    // Extract the header image URL if it exists
+    const headerImageFiles = properties['Website blog header image']?.files || []
+    const headerImage = headerImageFiles.length > 0 ? headerImageFiles[0].file?.url || headerImageFiles[0].external?.url : null
+
     const post = {
       title: properties['Task name']?.title?.[0]?.plain_text || 'Untitled',
       description: properties['Description']?.rich_text?.[0]?.plain_text || '',
       contentType: properties['Content type']?.select?.name || '',
+      headerImage: headerImage,
       content: content,
       channels: properties['Channels']?.multi_select?.map((c: any) => c.name) || []
     }

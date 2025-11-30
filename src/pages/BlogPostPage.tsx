@@ -10,6 +10,7 @@ interface BlogPostDetail {
   title: string;
   description: string;
   contentType: string;
+  headerImage?: string | null;
   content: string;
   channels: string[];
 }
@@ -46,7 +47,7 @@ const BlogPostPage = () => {
 
   const getContentTypeColor = (type: string) => {
     const colors: Record<string, string> = {
-      "Substack Article": "bg-orange-500",
+      "Longform": "bg-orange-500",
       "LinkedIn Post": "bg-blue-500",
       "Website Copy": "bg-brown-500",
     };
@@ -81,32 +82,44 @@ const BlogPostPage = () => {
       <Navigation />
       
       <article className="py-24 px-6">
-        <div className="max-w-3xl mx-auto">
-          <div className="flex gap-3 mb-6 flex-wrap">
-            <Badge className={`${getContentTypeColor(post.contentType)} text-white`}>
-              {post.contentType}
-            </Badge>
-            {post.channels.map((channel) => (
-              <Badge key={channel} variant="outline">
-                {channel}
-              </Badge>
-            ))}
-          </div>
-
-          <h1 className="text-5xl md:text-6xl mb-6 font-light leading-tight">
-            {post.title}
-          </h1>
-
-          {post.description && (
-            <p className="text-xl text-muted-foreground mb-12 leading-relaxed italic">
-              {post.description}
-            </p>
+        <div className="max-w-4xl mx-auto">
+          {post.headerImage && (
+            <div className="aspect-[21/9] overflow-hidden rounded-2xl mb-12">
+              <img 
+                src={post.headerImage} 
+                alt={post.title}
+                className="w-full h-full object-cover"
+              />
+            </div>
           )}
 
-          <div 
-            className="prose prose-lg max-w-none prose-headings:font-light prose-p:leading-relaxed prose-a:text-accent"
-            dangerouslySetInnerHTML={{ __html: post.content }}
-          />
+          <div className="max-w-3xl mx-auto">
+            <div className="flex gap-3 mb-6 flex-wrap">
+              <Badge className={`${getContentTypeColor(post.contentType)} text-white`}>
+                {post.contentType}
+              </Badge>
+              {post.channels.map((channel) => (
+                <Badge key={channel} variant="outline">
+                  {channel}
+                </Badge>
+              ))}
+            </div>
+
+            <h1 className="text-5xl md:text-6xl mb-6 font-light leading-tight">
+              {post.title}
+            </h1>
+
+            {post.description && (
+              <p className="text-xl text-muted-foreground mb-12 leading-relaxed italic">
+                {post.description}
+              </p>
+            )}
+
+            <div 
+              className="prose prose-lg max-w-none prose-headings:font-light prose-p:leading-relaxed prose-a:text-accent"
+              dangerouslySetInnerHTML={{ __html: post.content }}
+            />
+          </div>
         </div>
       </article>
 

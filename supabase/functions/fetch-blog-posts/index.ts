@@ -38,20 +38,10 @@ serve(async (req) => {
                 }
               },
               {
-                or: [
-                  {
-                    property: 'Content type',
-                    select: {
-                      equals: 'Substack Article'
-                    }
-                  },
-                  {
-                    property: 'Content type',
-                    select: {
-                      equals: 'LinkedIn Post'
-                    }
-                  }
-                ]
+                property: 'Content type',
+                select: {
+                  equals: 'Longform'
+                }
               }
             ]
           },
@@ -77,12 +67,17 @@ serve(async (req) => {
     const posts = data.results.map((page: any) => {
       const properties = page.properties
       
+      // Extract the header image URL if it exists
+      const headerImageFiles = properties['Website blog header image']?.files || []
+      const headerImage = headerImageFiles.length > 0 ? headerImageFiles[0].file?.url || headerImageFiles[0].external?.url : null
+      
       return {
         id: page.id,
         title: properties['Task name']?.title?.[0]?.plain_text || 'Untitled',
         description: properties['Description']?.rich_text?.[0]?.plain_text || '',
         contentType: properties['Content type']?.select?.name || '',
         status: properties['Status']?.status?.name || '',
+        headerImage: headerImage,
         url: page.url,
         channels: properties['Channels']?.multi_select?.map((c: any) => c.name) || []
       }
