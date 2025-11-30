@@ -93,15 +93,23 @@ const AboutPage = () => {
               
               <div className="space-y-4 text-lg leading-relaxed">
                 <p>
-                  I've led brand and marketing at organizations including Nerve Tumours UK (where I led a nationwide rebrand and digital transformation), and worked with clients from eBay to early-stage ethical startups.
+                  Before founding Thread & Stack, I spent over a decade leading marketing and brand transformation across sectors—from global consumer brands like eBay to ambitious tech startups, creative agencies, and nonprofits.
                 </p>
                 
                 <p>
-                  My experience spans brand strategy, content systems, team workshops, and AI-supported workflows. I've seen what works when teams are under pressure to scale while staying true to their mission.
+                  As Director of Marketing at UBIQ, I led a complete brand transformation that contributed to 83% year-on-year growth, created an event series generating £1.09M in pipeline value, and built repeatable systems for scale while managing a £180k budget.
+                </p>
+                
+                <p>
+                  At Nerve Tumours UK, I led a nationwide rebrand and four-year digital transformation from procurement to implementation—sitting on the Brand Committee with the CEO and Board of Trustees.
+                </p>
+                
+                <p>
+                  Earlier roles include Global Content Strategy Lead at eBay (developing strategy for millions of users), Global Marketing Director at Funraisin (delivering 60% YoY audience growth for two years running with 500% ROI), and positions at Dentsu B2B, Lightful (where I increased product activation from 38% to 68%), and creative agencies serving enterprise clients including Netflix and Blizzard Activision.
                 </p>
                 
                 <p className="font-light not-italic">
-                  Now I focus on one thing: helping purpose-led teams protect what matters while building brands that actually grow.
+                  I studied Media, Communications & Culture and Philosophy at Keele University. Now I focus on one thing: helping purpose-led teams protect what matters while building brands that actually grow.
                 </p>
               </div>
             </div>
