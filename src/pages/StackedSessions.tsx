@@ -32,16 +32,8 @@ const ClaritySessions = () => {
   return (
     <div className="min-h-screen">
       <Navigation />
-      
-      <header className="py-6 px-6 border-b-2 thread-border">
-        <div className="max-w-6xl mx-auto">
-          <a href="/" className="text-2xl hover:text-accent transition-colors font-light">
-            Thread & Stack
-          </a>
-        </div>
-      </header>
 
-      <section className="py-24 px-6">
+      <section className="py-24 px-6 mt-16">
         <div className="max-w-4xl mx-auto">
           <div className="mb-12">
             <p className="text-accent mb-2 not-italic">Rapid Strategic Intervention</p>

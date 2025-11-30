@@ -12,7 +12,7 @@ const AboutPage = () => {
     <main className="min-h-screen">
       <Navigation />
       
-      <section className="py-24 px-6">
+      <section className="py-24 px-6 mt-16">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-6xl md:text-7xl mb-12 font-light">
             About Thread & Stack
