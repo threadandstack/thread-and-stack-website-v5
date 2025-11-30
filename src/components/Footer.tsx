@@ -16,6 +16,8 @@ export const Footer = () => {
               <li><a href="/clarity-sessions" className="hover:text-primary-foreground transition-colors">Clarity Sessions</a></li>
               <li><a href="/mentorship-sprint" className="hover:text-primary-foreground transition-colors">Mentorship Sprint</a></li>
               <li><a href="/workshops" className="hover:text-primary-foreground transition-colors">Workshops</a></li>
+              <li><a href="/fractional-strategy" className="hover:text-primary-foreground transition-colors">Fractional Strategy</a></li>
+              <li><a href="/deep-engagement" className="hover:text-primary-foreground transition-colors">Deep Engagement</a></li>
             </ul>
           </div>
           

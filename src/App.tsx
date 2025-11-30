@@ -8,6 +8,8 @@ import AboutPage from "./pages/AboutPage";
 import StackedSessions from "./pages/StackedSessions";
 import MentorshipSprint from "./pages/MentorshipSprint";
 import Workshops from "./pages/Workshops";
+import FractionalStrategy from "./pages/FractionalStrategy";
+import DeepEngagement from "./pages/DeepEngagement";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,6 +26,8 @@ const App = () => (
           <Route path="/clarity-sessions" element={<StackedSessions />} />
           <Route path="/mentorship-sprint" element={<MentorshipSprint />} />
           <Route path="/workshops" element={<Workshops />} />
+          <Route path="/fractional-strategy" element={<FractionalStrategy />} />
+          <Route path="/deep-engagement" element={<DeepEngagement />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
