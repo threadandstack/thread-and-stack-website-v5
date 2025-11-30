@@ -13,6 +13,7 @@ interface BlogPost {
   description: string;
   contentType: string;
   status: string;
+  headerImage?: string | null;
   url: string;
   channels: string[];
 }
@@ -44,7 +45,7 @@ const BlogPage = () => {
 
   const getContentTypeColor = (type: string) => {
     const colors: Record<string, string> = {
-      "Substack Article": "bg-orange-500",
+      "Longform": "bg-orange-500",
       "LinkedIn Post": "bg-blue-500",
       "Website Copy": "bg-brown-500",
     };
@@ -69,37 +70,51 @@ const BlogPage = () => {
               <Loader2 className="h-8 w-8 animate-spin text-accent" />
             </div>
           ) : (
-            <div className="space-y-6">
+            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
               {posts.map((post) => (
-                <Card 
+                <Link
                   key={post.id}
-                  className="p-8 hover:shadow-lg transition-shadow cursor-pointer"
+                  to={`/blog/${post.id}`}
+                  className="group cursor-pointer"
                 >
-                  <Link to={`/blog/${post.id}`}>
-                    <div className="flex gap-3 mb-4 flex-wrap">
-                      <Badge className={`${getContentTypeColor(post.contentType)} text-white`}>
-                        {post.contentType}
-                      </Badge>
-                      {post.channels.map((channel) => (
-                        <Badge key={channel} variant="outline">
-                          {channel}
-                        </Badge>
-                      ))}
-                    </div>
-                    <h2 className="text-3xl mb-3 font-light hover:text-accent transition-colors">
-                      {post.title}
-                    </h2>
-                    {post.description && (
-                      <p className="text-muted-foreground leading-relaxed">
-                        {post.description}
-                      </p>
+                  <Card className="h-full transition-all hover:shadow-lg overflow-hidden">
+                    {post.headerImage && (
+                      <div className="aspect-[16/9] overflow-hidden">
+                        <img 
+                          src={post.headerImage} 
+                          alt={post.title}
+                          className="w-full h-full object-cover transition-transform group-hover:scale-105"
+                        />
+                      </div>
                     )}
-                  </Link>
-                </Card>
+                    <div className="p-6">
+                      <div className="flex gap-2 mb-4 flex-wrap">
+                        <Badge className={`${getContentTypeColor(post.contentType)} text-white`}>
+                          {post.contentType}
+                        </Badge>
+                        {post.channels.slice(0, 2).map((channel) => (
+                          <Badge key={channel} variant="outline">
+                            {channel}
+                          </Badge>
+                        ))}
+                      </div>
+
+                      <h2 className="text-2xl mb-3 group-hover:text-accent transition-colors">
+                        {post.title}
+                      </h2>
+
+                      {post.description && (
+                        <p className="text-muted-foreground leading-relaxed line-clamp-3">
+                          {post.description}
+                        </p>
+                      )}
+                    </div>
+                  </Card>
+                </Link>
               ))}
 
               {posts.length === 0 && !isLoading && (
-                <div className="text-center py-20">
+                <div className="col-span-full text-center py-20">
                   <p className="text-xl text-muted-foreground">
                     No published posts yet. Check back soon.
                   </p>
