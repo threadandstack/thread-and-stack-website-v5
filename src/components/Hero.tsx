@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
 import { Emphasis } from "@/components/Emphasis";
+import { HandDrawnArrowRight } from "@/components/icons/HandDrawnIcons";
 export const Hero = () => {
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -41,7 +41,7 @@ export const Hero = () => {
           <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 transition-all duration-300 text-lg px-8 group rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] not-italic" asChild>
             <a href="#contact">
               Book a Clarity Session
-              <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+              <HandDrawnArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
             </a>
           </Button>
           

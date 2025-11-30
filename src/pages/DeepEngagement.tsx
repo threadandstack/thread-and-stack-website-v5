@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Check, Target, Layers, FileText, Users } from "lucide-react";
+import { HandDrawnArrowRight, HandDrawnCheck, HandDrawnTarget, HandDrawnLayers, HandDrawnFileText, HandDrawnUsers } from "@/components/icons/HandDrawnIcons";
 import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
 import { FAQ } from "@/components/FAQ";
@@ -8,28 +8,28 @@ import { FAQ } from "@/components/FAQ";
 const DeepEngagement = () => {
   const projectTypes = [
     {
-      icon: <Target className="w-6 h-6" />,
+      icon: <HandDrawnTarget className="w-6 h-6" />,
       title: "Brand Refresh",
       duration: "2-3 months",
       description: "Update positioning, messaging, and visual identity while preserving brand equity",
       ideal: "Organizations needing modernization without complete reinvention"
     },
     {
-      icon: <Layers className="w-6 h-6" />,
+      icon: <HandDrawnLayers className="w-6 h-6" />,
       title: "Positioning Overhaul",
       duration: "3-4 months",
       description: "Complete repositioning for new markets, audiences, or strategic direction",
       ideal: "Companies pivoting, expanding, or addressing positioning misalignment"
     },
     {
-      icon: <FileText className="w-6 h-6" />,
+      icon: <HandDrawnFileText className="w-6 h-6" />,
       title: "Marketing System Build",
       duration: "4-6 months",
       description: "Build comprehensive marketing infrastructure, processes, and capabilities",
       ideal: "Teams scaling operations or transitioning from founder-led to system-driven"
     },
     {
-      icon: <Users className="w-6 h-6" />,
+      icon: <HandDrawnUsers className="w-6 h-6" />,
       title: "Complete Transformation",
       duration: "5-6 months",
       description: "End-to-end strategic work combining brand, positioning, and systems",
@@ -145,7 +145,7 @@ const DeepEngagement = () => {
             <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 group">
               <a href="/#contact" className="flex items-center">
                 Explore Projects
-                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                <HandDrawnArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
               </a>
             </Button>
           </div>
@@ -186,7 +186,7 @@ const DeepEngagement = () => {
                     <ul className="space-y-2">
                       {phase.activities.map((activity, idx) => (
                         <li key={idx} className="flex items-start gap-3">
-                          <Check className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
+                          <HandDrawnCheck className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
                           <span className="text-muted-foreground">{activity}</span>
                         </li>
                       ))}
@@ -204,9 +204,9 @@ const DeepEngagement = () => {
               <div className="bg-card border border-border rounded-lg p-8">
                 <ul className="space-y-3">
                   {deliverables.map((deliverable, index) => (
-                    <li key={index} className="flex items-start gap-3">
-                      <Check className="w-6 h-6 text-accent mt-0.5 flex-shrink-0" />
-                      <span className="text-lg">{deliverable}</span>
+                  <li key={index} className="flex items-start gap-3">
+                    <HandDrawnCheck className="w-6 h-6 text-accent mt-0.5 flex-shrink-0" />
+                    <span className="text-lg">{deliverable}</span>
                     </li>
                   ))}
                 </ul>
@@ -250,9 +250,9 @@ const DeepEngagement = () => {
                         <h4 className="font-semibold mb-2">The Outcomes</h4>
                         <ul className="space-y-2">
                           {study.outcomes.map((outcome, idx) => (
-                            <li key={idx} className="flex items-start gap-3">
-                              <Check className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
-                              <span className="text-muted-foreground">{outcome}</span>
+                          <li key={idx} className="flex items-start gap-3">
+                            <HandDrawnCheck className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
+                            <span className="text-muted-foreground">{outcome}</span>
                             </li>
                           ))}
                         </ul>
@@ -283,19 +283,19 @@ const DeepEngagement = () => {
                   <h3 className="text-xl font-semibold mb-3">What's Required From You</h3>
                   <ul className="space-y-2">
                     <li className="flex items-start gap-3">
-                      <Check className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
+                      <HandDrawnCheck className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
                       <span className="text-muted-foreground">Executive sponsorship and decision-making authority</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <Check className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
+                      <HandDrawnCheck className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
                       <span className="text-muted-foreground">Stakeholder time for interviews and workshops (typically 4-6 hours/month per stakeholder)</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <Check className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
+                      <HandDrawnCheck className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
                       <span className="text-muted-foreground">Internal team collaboration and knowledge sharing</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <Check className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
+                      <HandDrawnCheck className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
                       <span className="text-muted-foreground">Commitment to implementation and change management</span>
                     </li>
                   </ul>
@@ -335,7 +335,7 @@ const DeepEngagement = () => {
               <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 group">
                 <a href="/#contact" className="flex items-center">
                   Book a Scoping Call
-                  <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                  <HandDrawnArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
                 </a>
               </Button>
             </div>
