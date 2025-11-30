@@ -57,27 +57,73 @@ serve(async (req) => {
 
     const blocksData = await blocksResponse.json()
     
+    // Helper function to convert rich text to HTML with formatting
+    const richTextToHtml = (richTextArray: any[]) => {
+      return richTextArray.map((text: any) => {
+        let content = text.plain_text
+        
+        // Apply formatting annotations
+        if (text.annotations.code) {
+          content = `<code>${content}</code>`
+        }
+        if (text.annotations.bold) {
+          content = `<strong>${content}</strong>`
+        }
+        if (text.annotations.italic) {
+          content = `<em>${content}</em>`
+        }
+        if (text.annotations.strikethrough) {
+          content = `<s>${content}</s>`
+        }
+        if (text.annotations.underline) {
+          content = `<u>${content}</u>`
+        }
+        if (text.href) {
+          content = `<a href="${text.href}" target="_blank" rel="noopener noreferrer">${content}</a>`
+        }
+        
+        return content
+      }).join('')
+    }
+    
     // Convert Notion blocks to HTML
     const content = blocksData.results.map((block: any) => {
       switch (block.type) {
         case 'paragraph':
-          const text = block.paragraph.rich_text.map((t: any) => t.plain_text).join('')
-          return `<p>${text}</p>`
+          const text = richTextToHtml(block.paragraph.rich_text)
+          return text ? `<p>${text}</p>` : ''
         case 'heading_1':
-          const h1Text = block.heading_1.rich_text.map((t: any) => t.plain_text).join('')
+          const h1Text = richTextToHtml(block.heading_1.rich_text)
           return `<h1>${h1Text}</h1>`
         case 'heading_2':
-          const h2Text = block.heading_2.rich_text.map((t: any) => t.plain_text).join('')
+          const h2Text = richTextToHtml(block.heading_2.rich_text)
           return `<h2>${h2Text}</h2>`
         case 'heading_3':
-          const h3Text = block.heading_3.rich_text.map((t: any) => t.plain_text).join('')
+          const h3Text = richTextToHtml(block.heading_3.rich_text)
           return `<h3>${h3Text}</h3>`
         case 'bulleted_list_item':
-          const liText = block.bulleted_list_item.rich_text.map((t: any) => t.plain_text).join('')
+          const liText = richTextToHtml(block.bulleted_list_item.rich_text)
           return `<li>${liText}</li>`
         case 'numbered_list_item':
-          const numText = block.numbered_list_item.rich_text.map((t: any) => t.plain_text).join('')
+          const numText = richTextToHtml(block.numbered_list_item.rich_text)
           return `<li>${numText}</li>`
+        case 'quote':
+          const quoteText = richTextToHtml(block.quote.rich_text)
+          return `<blockquote>${quoteText}</blockquote>`
+        case 'code':
+          const codeText = block.code.rich_text.map((t: any) => t.plain_text).join('')
+          const language = block.code.language || ''
+          return `<pre><code class="language-${language}">${codeText}</code></pre>`
+        case 'callout':
+          const calloutText = richTextToHtml(block.callout.rich_text)
+          const icon = block.callout.icon?.emoji || '💡'
+          return `<div class="callout"><span class="callout-icon">${icon}</span><div>${calloutText}</div></div>`
+        case 'divider':
+          return '<hr />'
+        case 'image':
+          const imageUrl = block.image.file?.url || block.image.external?.url
+          const caption = block.image.caption ? richTextToHtml(block.image.caption) : ''
+          return imageUrl ? `<figure><img src="${imageUrl}" alt="${caption}" />${caption ? `<figcaption>${caption}</figcaption>` : ''}</figure>` : ''
         default:
           return ''
       }
