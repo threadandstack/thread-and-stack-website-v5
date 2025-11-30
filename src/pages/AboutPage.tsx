@@ -104,16 +104,8 @@ const AboutPage = () => {
                   At agencies like Funraisin, Lightful, Scoota, and Aqueduct (now Flipside)—I got front-row seats to best UX, CX and Accessibility practices. Among them are enterprise brands, to small nonprofits. Hollywood movies to more local consumer insurance ads. Creative tech giants promoting their sustainability impact to energy giants, shifting their business narrative. Football teams, supermarkets, big tech, small tech, gaming, beauty, gambling, banks, social enterprises, nonprofits, global energy giants and digital paperless solutions. A huge range of products, missions and audiences over quite a few agencies.
                 </p>
                 
-                <p>
-                  The commercial exposure I gained at Aqueduct and later as Director of Marketing at UBIQ taught me what it takes to transform brands from the ground up—repositioning, building events, creating repeatable systems that scale sustainably.
-                </p>
-                
-                <p>
-                  And I've seen the impact that small teams can have with clients like IMMA Collective, MixerG, Nerve Tumours UK (where I led a nationwide rebrand sitting on the Brand Committee with the CEO and Board of Trustees), and ProSkills.
-                </p>
-                
                 <p className="font-light not-italic">
-                  Now I focus on one thing: helping purpose-led teams protect what matters while building brands that actually grow.
+                  Now I focus on one thing: helping purpose-led teams protect what matters while building brands that actually grow. I've seen the impact the wrong approach can have on great teams - be they lean and nimble growth machines, or enterprise level powerhouses - the problem is always clarity. That's where I can help.
                 </p>
               </div>
             </div>
