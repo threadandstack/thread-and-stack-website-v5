@@ -97,7 +97,7 @@ const AboutPage = () => {
                 </p>
                 
                 <p>
-                  As Director of Marketing at UBIQ, I led a complete brand transformation that contributed to 83% year-on-year growth, created an event series generating £1.09M in pipeline value, and built repeatable systems for scale while managing a £180k budget.
+                  As Director of Marketing at UBIQ, I led a complete brand transformation from the ground up—repositioning the company, creating events that generated significant pipeline value, and building repeatable systems that allowed the team to scale sustainably.
                 </p>
                 
                 <p>
@@ -105,11 +105,15 @@ const AboutPage = () => {
                 </p>
                 
                 <p>
-                  Earlier roles include Global Content Strategy Lead at eBay (developing strategy for millions of users), Global Marketing Director at Funraisin (delivering 60% YoY audience growth for two years running with 500% ROI), and positions at Dentsu B2B, Lightful (where I increased product activation from 38% to 68%), and creative agencies serving enterprise clients including Netflix and Blizzard Activision.
+                  Earlier, I held positions including Global Content Strategy Lead at eBay, Global Marketing Director at Funraisin, and roles at Dentsu B2B, Lightful, and creative agencies serving enterprise clients including Netflix and Blizzard Activision. Each role taught me something different about what happens when strategy, systems, and storytelling come together—or fall apart.
+                </p>
+                
+                <p>
+                  I studied Media, Communications & Culture and Philosophy at Keele University—a combination that wasn't common at the time. Media Communications were dismissed as a "Mickey Mouse degree," and Philosophy was seen as a waste of time. Now, these disciplines underpin our modern world. That golden thread—following the ethics and impact of communications and culture—has run through everything I've done since.
                 </p>
                 
                 <p className="font-light not-italic">
-                  I studied Media, Communications & Culture and Philosophy at Keele University. Now I focus on one thing: helping purpose-led teams protect what matters while building brands that actually grow.
+                  Now I focus on one thing: helping purpose-led teams protect what matters while building brands that actually grow.
                 </p>
               </div>
             </div>
