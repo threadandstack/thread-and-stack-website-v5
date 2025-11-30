@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
+import { Newsletter } from "@/components/Newsletter";
 import { Badge } from "@/components/ui/badge";
 import { Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -123,6 +124,7 @@ const BlogPostPage = () => {
         </div>
       </article>
 
+      <Newsletter />
       <Footer />
     </main>
   );
