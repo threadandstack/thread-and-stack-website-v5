@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Check } from "lucide-react";
 import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
+import { FAQ } from "@/components/FAQ";
 
 const MentorshipSprint = () => {
   const outcomes = [
@@ -196,6 +197,36 @@ const MentorshipSprint = () => {
         </div>
       </section>
 
+      <FAQ items={[
+        {
+          question: "What is the Thread AI Mentorship Sprint?",
+          answer: "A 6-week intensive 1:1 program where we build AI-supported workflows tailored to your actual tools, role, and values. This isn't another generic ChatGPT course - it's about building a complete productivity system that gives you back 5-10 hours per week while protecting your creative edge."
+        },
+        {
+          question: "Is this just another ChatGPT course?",
+          answer: "No. This is about building a complete productivity system tailored to your role, tools, and goals. ChatGPT might be one tool we use, but this is about the whole workflow - not just prompts. We focus on human-centered AI: you stay in control, AI handles mechanical tasks, and you handle creative decisions."
+        },
+        {
+          question: "What if my company blocks AI tools?",
+          answer: "We'll work with whatever your reality is. Many corporate environments have restrictions, and we can adapt. The principles transfer regardless of tools - whether you're working in Microsoft, Google, Notion, or browser-only environments. I've worked with clients navigating IT approval processes and enterprise ecosystems successfully."
+        },
+        {
+          question: "I'm not technical - will I be able to do this?",
+          answer: "Yes. This isn't about being technical. It's about being willing to learn and experiment. If you can use a search engine and follow instructions, you can do this. The focus is on practical workflows that reduce your cognitive load, not complex technical implementations."
+        },
+        {
+          question: "What time commitment is required?",
+          answer: "You'll need to dedicate 2-3 hours per week between our sessions for implementation and experimentation. This works best when you can carve out focused time to build new habits. If you're completely underwater right now, it might be worth waiting for a calmer moment to get the full value."
+        },
+        {
+          question: "What happens after the 6 weeks?",
+          answer: "You'll have a working system and the skills to maintain it independently. Some clients book occasional Clarity Sessions for ongoing support or optimization, but you'll be self-sufficient by the end of the sprint. The goal is to build sustainable systems that outlive our engagement."
+        },
+        {
+          question: "How does this fit with Thread & Stack's overall approach?",
+          answer: "The Thread AI Mentorship Sprint embodies our core philosophy: reducing the creative tax (cognitive load from admin and chaos) so you can focus on meaningful work. AI becomes your second brain and operations partner in the background - giving back time, attention, and voice while protecting your judgment and creativity."
+        }
+      ]} />
       <Footer />
     </div>
   );

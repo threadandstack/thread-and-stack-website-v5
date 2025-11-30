@@ -1,6 +1,7 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { AIPhilosophy } from "@/components/AIPhilosophy";
+import { FAQ } from "@/components/FAQ";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import brendanPhoto from "@/assets/brendan-brick.jpeg";
@@ -127,6 +128,37 @@ const AboutPage = () => {
       </section>
       
       <AIPhilosophy />
+      
+      <FAQ items={[
+        {
+          question: "Who is Brendan and what is Thread & Stack?",
+          answer: "I'm Brendan, founder of Thread & Stack - a brand and systems consultancy for purpose-led founders and teams. With 12+ years across global consumer brands, consultancies, creative agencies, tech, startups, and nonprofits, I focus on one thing: helping purpose-led teams turn messy marketing into clear narratives and practical workflows they can sustain."
+        },
+        {
+          question: "What's the core problem Thread & Stack solves?",
+          answer: "The creative tax - the cognitive load of admin, chaos, and context-switching that drags you away from meaningful creative and strategic work. It's the pile-up between intention and execution: tabs, documents, and half-finished drafts between what you mean to say and what actually ships. I help teams untangle the mess, connect the dots, and keep their best ideas moving."
+        },
+        {
+          question: "What's unique about Thread & Stack's approach?",
+          answer: "I work at the intersection of strategy, clarity, and systems - protecting both your brand integrity and your team's creative energy. Unlike agencies focused on either creative or operations, I bridge both. I create invisible scaffolding that reduces friction and cognitive load without adding more processes. The result: brands that feel alive, teams that feel spacious, and work that actually ships."
+        },
+        {
+          question: "What's your background and experience?",
+          answer: "I studied Media, Communications & Culture and Philosophy at Keele University - disciplines that now underpin our modern world. I've worked across international consultancies (Dentsu B2B), global brands (eBay), creative agencies (Funraisin, Lightful, Scoota, Aqueduct/Flipside), enterprise to small nonprofits, Hollywood to local ads, tech giants to energy companies. A huge range of products, missions, and audiences taught me one thing: the problem is always clarity."
+        },
+        {
+          question: "What services does Thread & Stack offer?",
+          answer: "Five core offerings: Clarity Sessions (60-min strategic power hours, from £300), Thread AI Mentorship Sprint (6-week AI workflow building, from £1k), Brand Connection Workshops (modular team strategy, from £2k), Fractional Strategy (monthly retainer for ongoing partnership), and Deep Engagement (2-6 month transformation projects, from £10-25k). Each addresses different needs across the clarity-to-execution spectrum."
+        },
+        {
+          question: "How does Thread & Stack use AI?",
+          answer: "AI is a second brain and operations partner in the background - never a replacement for human creativity or judgment. My Thread AI Philosophy centers on creative empowerment: you feel more capable and confident (not automated), your brand voice remains authentically yours, and AI reduces cognitive load so your calendar feels spacious instead of suffocating. AI gives back time, attention, and voice."
+        },
+        {
+          question: "Who are Thread & Stack's ideal clients?",
+          answer: "Two core audiences: conscious learners (values-led founders and small organizations like B Corps and nonprofits) who want growth without compromising integrity, and overwhelmed pragmatists (founders and operators in 2-50 person teams) who need clarity and focus to cut through messy systems and unclear positioning. If you're doing meaningful work but struggling with the gap between intention and execution, we should talk."
+        }
+      ]} />
       
       <Footer />
     </main>
