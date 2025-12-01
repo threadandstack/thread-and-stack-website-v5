@@ -17,18 +17,18 @@ export const WhoItsFor = () => {
     return () => observer.disconnect();
   }, []);
   const audiences = [{
-    title: "Brands that have outgrown their old story",
-    description: "Your values and ambition have evolved, but your brand narrative is stuck several chapters back. Different teams tell different versions of the story. Competitors with less depth are claiming your space more loudly, while your authentic message gets lost in translation."
+    title: "Your story has moved on.",
+    description: "Your values and ambition have shifted, but the brand still speaks in an older voice. You need clarity, updated language, and creative direction that reflect who you are today."
   }, {
-    title: "Teams building a brand universe",
-    description: "You're creating something cohesive across multiple touchpoints, but the vision in leadership's heads gets diluted by the time it reaches execution. In crucial moments—fundraising, launches, partnerships—the brand doesn't land with the impact you know it should."
+    title: "Your brand is becoming a universe.",
+    description: "You are expanding across new touchpoints and channels. The brand needs coherence, expression, and a visual system that keeps everything connected and true."
   }, {
-    title: "Leaders seeking sustainable content cycles",
-    description: "You're growing, but refuse to sacrifice your team's wellbeing or creative integrity. Marketing shouldn't depend on late nights and heroics. You need systems that utilize AI not to replace creativity, but to empower creative thinking and protect what matters most."
+    title: "Your team needs clarity and creative support.",
+    description: "You want to grow without sacrificing wellbeing or creative integrity. Your team needs systems and support that protect their energy and strengthen the work they produce."
   }];
   return <section ref={sectionRef} className={`py-24 px-6 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-5xl md:text-6xl mb-16 text-balance font-light">This is for the builders.</h2>
+        <h2 className="text-5xl md:text-6xl mb-16 text-balance font-light">For makers, founders, and teams.</h2>
         
         <div className="grid md:grid-cols-3 gap-8">
           {audiences.map((audience, index) => <div key={index} className="bg-card p-8 rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] transition-all duration-300">
