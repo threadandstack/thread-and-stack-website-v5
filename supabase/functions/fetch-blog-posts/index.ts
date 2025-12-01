@@ -34,13 +34,7 @@ serve(async (req) => {
             select: {
               equals: 'live'
             }
-          },
-          sorts: [
-            {
-              property: 'Created time',
-              direction: 'descending'
-            }
-          ]
+          }
         })
       }
     )
