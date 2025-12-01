@@ -14,6 +14,7 @@ interface BlogPost {
   headerImage?: string | null;
   url: string;
   readingTime?: string | null;
+  theme?: string | null;
 }
 
 const BlogPage = () => {
@@ -77,23 +78,26 @@ const BlogPage = () => {
                       </div>
                     )}
                     <div className="p-6">
-                      {post.readingTime && (
-                        <div className="mb-4">
-                          <span className="text-sm text-muted-foreground">
-                            {post.readingTime} min read
+                      <div className="flex items-center gap-3 mb-4">
+                        {post.theme && (
+                          <span className="px-3 py-1 bg-accent/10 text-accent text-sm rounded-full">
+                            {post.theme}
                           </span>
-                        </div>
-                      )}
+                        )}
+                        {post.readingTime && (
+                          <span className="text-sm text-muted-foreground">
+                            {post.readingTime}
+                          </span>
+                        )}
+                      </div>
 
                       <h2 className="text-2xl mb-3 group-hover:text-accent transition-colors">
                         {post.title}
                       </h2>
 
-                      {post.description && (
-                        <p className="text-muted-foreground leading-relaxed line-clamp-3">
-                          {post.description}
-                        </p>
-                      )}
+                      <p className="text-sm text-muted-foreground italic">
+                        Brendan @ Thread and Stack
+                      </p>
                     </div>
                   </Card>
                 </Link>
