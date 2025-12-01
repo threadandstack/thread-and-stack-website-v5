@@ -68,7 +68,7 @@ serve(async (req) => {
         description: properties['Description']?.rich_text?.[0]?.plain_text || '',
         headerImage: headerImage,
         url: page.url,
-        readingTime: properties['Reading time in mins']?.rich_text?.[0]?.plain_text || null,
+        readingTime: properties['Reading time in mins']?.number || properties['Reading time in mins']?.rich_text?.[0]?.plain_text || null,
         theme: properties['Theme']?.select?.name || null
       }
     })

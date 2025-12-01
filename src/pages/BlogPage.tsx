@@ -17,6 +17,17 @@ interface BlogPost {
   theme?: string | null;
 }
 
+const getThemeColors = (theme: string): string => {
+  const themeMap: Record<string, string> = {
+    'Growth': 'bg-emerald-100 text-emerald-700',
+    'Strategy': 'bg-orange-100 text-orange-700',
+    'Creative': 'bg-pink-100 text-pink-700',
+    'Systems': 'bg-blue-100 text-blue-700',
+    'Case Studies': 'bg-accent/10 text-accent',
+  };
+  return themeMap[theme] || 'bg-accent/10 text-accent';
+};
+
 const BlogPage = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -80,13 +91,13 @@ const BlogPage = () => {
                     <div className="p-6">
                       <div className="flex items-center gap-3 mb-4">
                         {post.theme && (
-                          <span className="px-3 py-1 bg-accent/10 text-accent text-sm rounded-full">
+                          <span className={`px-3 py-1 text-sm rounded-full ${getThemeColors(post.theme)}`}>
                             {post.theme}
                           </span>
                         )}
                         {post.readingTime && (
                           <span className="text-sm text-muted-foreground">
-                            {post.readingTime}
+                            {post.readingTime} min read
                           </span>
                         )}
                       </div>
