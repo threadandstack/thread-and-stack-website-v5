@@ -12,14 +12,15 @@ interface FAQItem {
 
 interface FAQProps {
   items: FAQItem[];
+  title?: string;
 }
 
-export const FAQ = ({ items }: FAQProps) => {
+export const FAQ = ({ items, title = "Common Questions" }: FAQProps) => {
   return (
     <section className="py-20 px-6 bg-background">
       <div className="max-w-3xl mx-auto">
         <h2 className="text-4xl mb-12 text-center font-light">
-          Common Questions
+          {title}
         </h2>
         
         <Accordion type="single" collapsible className="w-full space-y-4">

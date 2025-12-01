@@ -6,6 +6,9 @@ import { Newsletter } from "@/components/Newsletter";
 import { FAQ } from "@/components/FAQ";
 import { Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 
 interface BlogPostDetail {
   title: string;
@@ -14,6 +17,61 @@ interface BlogPostDetail {
   content: string;
   readingTime?: string | null;
 }
+
+const InlineSubscribe = () => {
+  const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('subscribe-newsletter', {
+        body: { email }
+      });
+      if (error) throw error;
+      toast({
+        title: "Subscribed!",
+        description: "You've been added to the newsletter."
+      });
+      setEmail("");
+    } catch (error: any) {
+      const errorMessage = error?.message?.includes('already subscribed') 
+        ? "This email is already subscribed." 
+        : "Please try again.";
+      toast({
+        title: "Something went wrong",
+        description: errorMessage,
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="flex gap-2 max-w-sm">
+      <Input
+        type="email"
+        placeholder="your@email.com"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        required
+        className="bg-background/50 border-border/30 text-sm"
+      />
+      <Button 
+        type="submit" 
+        disabled={isSubmitting}
+        variant="outline"
+        size="sm"
+        className="shrink-0"
+      >
+        {isSubmitting ? "..." : "Subscribe"}
+      </Button>
+    </form>
+  );
+};
 
 const BlogPostPage = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -74,16 +132,6 @@ const BlogPostPage = () => {
       
       <article className="py-24 px-6">
         <div className="max-w-4xl mx-auto">
-          {post.headerImage && (
-            <div className="aspect-[21/9] overflow-hidden rounded-2xl mb-12">
-              <img 
-                src={post.headerImage} 
-                alt={post.title}
-                className="w-full h-full object-cover"
-              />
-            </div>
-          )}
-
           <div className="max-w-3xl mx-auto">
             {post.readingTime && (
               <div className="mb-6">
@@ -98,11 +146,27 @@ const BlogPostPage = () => {
             </h1>
 
             {post.description && (
-              <p className="text-xl text-muted-foreground mb-12 leading-relaxed italic">
+              <p className="text-xl text-muted-foreground mb-8 leading-relaxed italic">
                 {post.description}
               </p>
             )}
 
+            <div className="mb-12">
+              <InlineSubscribe />
+            </div>
+          </div>
+
+          {post.headerImage && (
+            <div className="aspect-[21/9] overflow-hidden rounded-2xl mb-12">
+              <img 
+                src={post.headerImage} 
+                alt={post.title}
+                className="w-full h-full object-cover"
+              />
+            </div>
+          )}
+
+          <div className="max-w-3xl mx-auto">
             <div 
               className="blog-content prose prose-lg max-w-none"
               dangerouslySetInnerHTML={{ __html: post.content }}
@@ -137,7 +201,7 @@ const BlogPostPage = () => {
           question: "How do I work with Thread & Stack?",
           answer: "We offer five core services across different levels of commitment: Clarity Sessions (60-minute strategic power hours, from £300), Thread AI Mentorship Sprint (6-week 1:1 mentorship, from £1k), Brand Connection Workshops (modular team workshops, from £2k), Fractional Strategy (monthly retainer for ongoing support), and Deep Engagement (2-6 month transformation projects, from £10-25k). Start with a Clarity Session or book a discovery call."
         }
-      ]} />
+      ]} title="About Stacked Behaviours" />
       <Footer />
     </main>
   );
