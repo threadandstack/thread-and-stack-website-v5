@@ -194,7 +194,7 @@ const Workshops = () => {
             <div>
               <h2 className="text-3xl font-bold mb-6">The Philosophy: Connection is Engineered</h2>
               <p className="text-lg text-muted-foreground mb-6">
-                Great brands don't just "happen." They are the result of deep listening, rigorous diagnosis, and strategic storytelling.
+                Great brands don't just "happen." They are the result of asking deep questions, rigorous diagnosis, strategic storytelling and intentional content.
               </p>
               <p className="text-lg text-muted-foreground mb-4">This workshop series is designed to:</p>
               <ul className="space-y-3">
