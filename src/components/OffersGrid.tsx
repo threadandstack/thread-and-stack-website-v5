@@ -32,16 +32,16 @@ export const OffersGrid = () => {
       icon: <Zap className="w-6 h-6" />,
       title: "Clarity Sessions",
       tagline: "Rapid Strategic Intervention",
-      description: "One Hour. One Problem. Solved. A focused session to unblock positioning, validate decisions, or diagnose messy systems. Leave with recording, AI summary, and a clear action plan.",
-      fullDescription: "Sometimes you don't need a 6-week sprint. Sometimes you just need 60 minutes to unblock a specific problem, validate a decision, or get a second brain on a messy situation. A focused, high-intensity consulting session designed to clear the fog and give you an immediate path forward.",
+      description: "One Hour. One Problem. Solved. Unblock positioning, diagnose visual identity gaps, validate creative direction, or diagnose messy systems. Leave with recording, AI summary, and a clear action plan.",
+      fullDescription: "Sometimes you don't need a 6-week sprint. Sometimes you just need 60 minutes to unblock a specific problem, validate a creative direction decision, diagnose brand inconsistencies, or get a second brain on a messy situation. A focused, high-intensity consulting session designed to clear the fog and give you an immediate path forward.",
       price: "£300",
       duration: "60 minutes",
       whatYouGet: [
         "The Recording: Full video/audio of the session",
         "The Summary: Thread AI transcription and summary of key decisions",
         "The Action Plan: A bulleted list of exactly what you need to do next",
-        "Pre-session review of your notes",
-        "Immediate, actionable path forward"
+        "Pre-session review of your notes and any brand materials",
+        "Immediate, actionable path forward for strategy or creative work"
       ],
       process: [
         "Send your notes in advance for review",
@@ -81,7 +81,7 @@ export const OffersGrid = () => {
       icon: <Users className="w-6 h-6" />,
       title: "Brand Connection Workshops",
       tagline: "A Modular Strategy System for Purpose-Driven Brands",
-      description: "Fix the disconnect between your brand and your audience. Modular, co-created workshops that get your team aligned on story, positioning, and roadmap. Build exactly what you need—from lean sprints to comprehensive overhauls.",
+      description: "Fix the disconnect between your brand and your audience. Modular, co-created workshops that get your team aligned on story, positioning, visual identity direction, and roadmap. Build exactly what you need—from lean sprints to comprehensive overhauls.",
       fullDescription: "Most brand strategy is a black box. You pay a fortune, wait three months, and get a PDF that gathers dust. This is different. It's a modular, co-created workshop system designed to fix the disconnect between your brand and your audience...on your terms. Choose the depth and price for each phase to build the workshop that fits your budget and burning questions.",
       price: "From £2k",
       duration: "Modular: Half-day to 2-day sprints",
@@ -89,9 +89,9 @@ export const OffersGrid = () => {
         "Clarity over Confusion: Hard evidence, not assumptions",
         "Alignment over Arguments: Force consensus across teams",
         "Momentum over Stagnation: 3 months of work in 2 days",
-        "Confidence over Risk: Test positioning before building assets",
-        "Modular phases: Discovery, Workshop, and Output options",
-        "Strategic playbook with frameworks and roadmap"
+        "Confidence over Risk: Test positioning before building creative assets",
+        "Visual direction and brand world building foundations",
+        "Strategic playbook with frameworks, creative direction, and roadmap"
       ],
       process: [
         "Phase 1: Discovery - Questionnaires, interviews, or customer research",
@@ -105,17 +105,17 @@ export const OffersGrid = () => {
       icon: <Repeat className="w-6 h-6" />,
       title: "Fractional Strategy",
       tagline: "Ongoing Strategic Partnership",
-      description: "Embedded strategic support on a monthly retainer. Brand positioning, campaign strategy, and creative direction—without the overhead of a full-time hire. For scale-ups and established orgs needing consistent strategic guidance.",
-      fullDescription: "Get continuous strategic support without the commitment of a full-time hire. I work as an embedded member of your team, providing brand strategy, positioning guidance, and campaign direction on an ongoing monthly basis. Perfect for growing companies (20-100+ people) who need senior strategic thinking but want flexibility.",
+      description: "Embedded strategic and creative support on a monthly retainer. Brand positioning, campaign strategy, creative direction, and asset development—without the overhead of a full-time hire. For scale-ups and established orgs needing consistent strategic guidance.",
+      fullDescription: "Get continuous strategic and creative support without the commitment of a full-time hire. I work as an embedded member of your team, providing brand strategy, positioning guidance, creative direction, and hands-on design support on an ongoing monthly basis. Perfect for growing companies (20-100+ people) who need senior strategic thinking and design craft but want flexibility.",
       price: "Case-by-case",
       duration: "Monthly retainer",
       whatYouGet: [
         "Set monthly hours/days embedded with your team",
         "Strategic guidance on brand positioning and campaigns",
-        "Creative direction and decision support",
-        "Ongoing access for questions and unblocking",
+        "Creative direction, visual identity development, and asset design",
+        "Ongoing access for strategic and creative decision support",
         "Team workshops and alignment sessions as needed",
-        "Documentation and strategic frameworks",
+        "Brand guidelines, design systems, and strategic frameworks",
         "Flexibility to scale engagement up or down"
       ],
       process: [
@@ -131,18 +131,18 @@ export const OffersGrid = () => {
       icon: <Target className="w-6 h-6" />,
       title: "Deep Engagement",
       tagline: "2-6 Month Transformation Projects",
-      description: "Full brand refreshes, positioning overhauls, or comprehensive system builds. For organizations ready to commit to deep strategic work with clear deliverables and measurable transformation over 2-6 months.",
-      fullDescription: "Comprehensive strategic projects for organizations ready to invest in transformation. Whether it's a complete brand refresh, positioning overhaul, or building marketing systems from the ground up—this is for teams (20-100+ people) committed to deep work with lasting impact.",
+      description: "Full brand refreshes, visual identity development, positioning overhauls, or comprehensive system builds. For organizations ready to commit to deep strategic and creative work with clear deliverables and measurable transformation over 2-6 months.",
+      fullDescription: "Comprehensive strategic and creative projects for organizations ready to invest in transformation. Whether it's a complete brand refresh with new visual identity, positioning overhaul, brand world building, or building marketing systems from the ground up—this is for teams (20-100+ people) committed to deep work with lasting impact.",
       price: "Case-by-case",
       duration: "2-6 months",
       whatYouGet: [
         "Comprehensive discovery and stakeholder alignment",
         "Full strategic framework and positioning work",
-        "Brand refresh or complete overhaul as needed",
+        "Visual identity systems, brand guidelines, and creative direction",
+        "Brand refresh or complete overhaul with asset development",
         "Marketing systems and operational infrastructure",
         "Team training and capability building",
-        "Implementation support and guidance",
-        "Documentation, playbooks, and sustainability plan"
+        "Documentation, design systems, playbooks, and sustainability plan"
       ],
       process: [
         "Month 1: Deep discovery, audit, and strategic foundation",

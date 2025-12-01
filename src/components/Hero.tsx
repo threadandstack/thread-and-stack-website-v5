@@ -34,7 +34,7 @@ export const Hero = () => {
           <p>The brands that feel <span className="text-accent">alive</span>, are remembered.</p>
           <p className={`mt-2 transition-all duration-600 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`} style={{
           transitionDelay: isVisible ? '1300ms' : '0ms'
-        }}>Will yours be?</p>
+        }}>I'll help you build yours through strategy, creative direction, and systems that work.</p>
         </div>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
