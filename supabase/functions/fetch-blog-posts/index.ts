@@ -31,8 +31,8 @@ serve(async (req) => {
         body: JSON.stringify({
           filter: {
             property: 'Status',
-            select: {
-              equals: 'live'
+            status: {
+              equals: 'Live'
             }
           }
         })
@@ -52,10 +52,10 @@ serve(async (req) => {
       const properties = page.properties
       
       // Extract the featured image URL if it exists
-      const featuredImageFiles = properties['Featured image']?.files || []
+      const featuredImageFiles = properties['Featured IMG']?.files || []
       const headerImage = featuredImageFiles.length > 0 ? featuredImageFiles[0].file?.url || featuredImageFiles[0].external?.url : null
       
-      const title = properties['Blog name']?.title?.[0]?.plain_text || 'Untitled'
+      const title = properties['Name']?.title?.[0]?.plain_text || 'Untitled'
       const slug = title
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, '-')
