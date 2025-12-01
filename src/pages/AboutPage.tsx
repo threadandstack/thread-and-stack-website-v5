@@ -77,7 +77,7 @@ founder of Thread & Stack.</p>
                 When it comes to AI, I see it as a second brain and operations partner in the background—never a replacement for human creativity or judgment. My approach centers on creative empowerment: helping you feel more capable (not automated), ensuring your brand voice remains authentically yours, and using AI to reduce cognitive load so your calendar feels spacious instead of suffocating. The goal is giving back time, attention, and voice.
               </p>
               
-              <p className="font-light not-italic">The result? Brands that feel alive, teams that feel spacious, and work that actually ships.</p>
+              <p className="font-bold not-italic">The result? Brands that feel alive, teams that feel spacious, and work that actually ships.</p>
             </div>
             
             <div className="bg-accent/5 p-8 rounded-2xl space-y-6">
