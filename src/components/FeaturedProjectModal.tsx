@@ -4,6 +4,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 interface Project {
   title: string;
@@ -84,6 +86,15 @@ export const FeaturedProjectModal = ({
               </ul>
             </div>
           )}
+          
+          <div className="mt-8 pt-6 border-t border-border/20 flex flex-col items-center text-center space-y-4">
+            <p className="text-foreground/70 text-lg">
+              Ready to transform your brand like this?
+            </p>
+            <Button asChild size="lg" className="font-light">
+              <Link to="/contact">Book a Call</Link>
+            </Button>
+          </div>
         </div>
       </DialogContent>
     </Dialog>
