@@ -211,6 +211,15 @@ const Workshops = () => {
                   <span className="text-lg">Build a roadmap that bridges the gap between who you are and who they need you to be</span>
                 </li>
               </ul>
+              
+              <div className="bg-secondary/10 rounded-lg p-6 mt-8 border-l-4 border-accent">
+                <p className="text-lg text-muted-foreground mb-4">
+                  Being both a designer and a strategist means I understand how <span className="italic">aesthetic judgement</span> and strategic thinking work together—how a strong visual system supports your narrative, how <span className="italic">asset development</span> flows from positioning, how design decisions either reinforce or undermine what you're trying to say.
+                </p>
+                <p className="text-lg text-muted-foreground">
+                  These workshops don't just produce strategic frameworks. They integrate <span className="italic">visual identity</span>, <span className="italic">creative direction</span>, and <span className="italic">design craft</span> with your positioning—ensuring what you build feels cohesive, true, and ready to live in the world.
+                </p>
+              </div>
             </div>
 
             <div>
