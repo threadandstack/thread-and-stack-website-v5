@@ -17,14 +17,22 @@ export const OffersGrid = () => {
           setIsVisible(true);
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.1, rootMargin: '50px' }
     );
 
     if (sectionRef.current) {
       observer.observe(sectionRef.current);
     }
 
-    return () => observer.disconnect();
+    // Fallback: make visible after 2 seconds if observer doesn't trigger
+    const timeout = setTimeout(() => {
+      setIsVisible(true);
+    }, 2000);
+
+    return () => {
+      observer.disconnect();
+      clearTimeout(timeout);
+    };
   }, []);
 
   const offers = [
