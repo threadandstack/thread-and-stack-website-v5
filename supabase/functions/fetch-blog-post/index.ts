@@ -43,8 +43,8 @@ serve(async (req) => {
         body: JSON.stringify({
           filter: {
             property: 'Status',
-            select: {
-              equals: 'live'
+            status: {
+              equals: 'Live'
             }
           }
         })
@@ -59,7 +59,7 @@ serve(async (req) => {
     
     // Find the page that matches the slug
     const matchingPage = queryData.results.find((page: any) => {
-      const title = page.properties['Blog name']?.title?.[0]?.plain_text || ''
+      const title = page.properties['Name']?.title?.[0]?.plain_text || ''
       const pageSlug = title
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, '-')
@@ -313,11 +313,11 @@ serve(async (req) => {
     console.log('Generated HTML length:', content.length)
 
     // Extract the featured image URL if it exists
-    const featuredImageFiles = properties['Featured image']?.files || []
+    const featuredImageFiles = properties['Featured IMG']?.files || []
     const headerImage = featuredImageFiles.length > 0 ? featuredImageFiles[0].file?.url || featuredImageFiles[0].external?.url : null
 
     const post = {
-      title: properties['Blog name']?.title?.[0]?.plain_text || 'Untitled',
+      title: properties['Name']?.title?.[0]?.plain_text || 'Untitled',
       description: properties['Description']?.rich_text?.[0]?.plain_text || '',
       headerImage: headerImage,
       content: content,
