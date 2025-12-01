@@ -15,7 +15,7 @@ interface BlogPost {
   status: string;
   headerImage?: string | null;
   url: string;
-  channels: string[];
+  readingTime?: number;
 }
 
 const BlogPage = () => {
@@ -88,15 +88,15 @@ const BlogPage = () => {
                       </div>
                     )}
                     <div className="p-6">
-                      <div className="flex gap-2 mb-4 flex-wrap">
+                      <div className="flex gap-2 mb-4 flex-wrap items-center">
                         <Badge className={`${getContentTypeColor(post.contentType)} text-white`}>
                           {post.contentType}
                         </Badge>
-                        {post.channels.slice(0, 2).map((channel) => (
-                          <Badge key={channel} variant="outline">
-                            {channel}
-                          </Badge>
-                        ))}
+                        {post.readingTime && (
+                          <span className="text-sm text-muted-foreground">
+                            {post.readingTime} min read
+                          </span>
+                        )}
                       </div>
 
                       <h2 className="text-2xl mb-3 group-hover:text-accent transition-colors">

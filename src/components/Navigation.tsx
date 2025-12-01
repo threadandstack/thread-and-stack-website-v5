@@ -56,6 +56,13 @@ export const Navigation = () => {
               Blog
             </a>
             
+            <a 
+              href="/about" 
+              className="text-sm text-foreground/80 hover:text-foreground transition-colors not-italic"
+            >
+              About
+            </a>
+            
             {/* Services Dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger className="flex items-center gap-1 text-sm text-foreground/80 hover:text-foreground transition-colors not-italic">

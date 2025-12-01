@@ -14,7 +14,7 @@ interface BlogPostDetail {
   contentType: string;
   headerImage?: string | null;
   content: string;
-  channels: string[];
+  readingTime?: number;
 }
 
 const BlogPostPage = () => {
@@ -96,15 +96,15 @@ const BlogPostPage = () => {
           )}
 
           <div className="max-w-3xl mx-auto">
-            <div className="flex gap-3 mb-6 flex-wrap">
+            <div className="flex gap-3 mb-6 flex-wrap items-center">
               <Badge className={`${getContentTypeColor(post.contentType)} text-white`}>
                 {post.contentType}
               </Badge>
-              {post.channels.map((channel) => (
-                <Badge key={channel} variant="outline">
-                  {channel}
-                </Badge>
-              ))}
+              {post.readingTime && (
+                <span className="text-sm text-muted-foreground">
+                  {post.readingTime} min read
+                </span>
+              )}
             </div>
 
             <h1 className="text-5xl md:text-6xl mb-6 font-light leading-tight">

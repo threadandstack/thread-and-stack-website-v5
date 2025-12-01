@@ -271,7 +271,7 @@ serve(async (req) => {
       contentType: properties['Content type']?.select?.name || '',
       headerImage: headerImage,
       content: content,
-      channels: properties['Channels']?.multi_select?.map((c: any) => c.name) || []
+      readingTime: properties['Reading time']?.number || null
     }
 
     return new Response(

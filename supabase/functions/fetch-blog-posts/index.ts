@@ -79,7 +79,7 @@ serve(async (req) => {
         status: properties['Status']?.status?.name || '',
         headerImage: headerImage,
         url: page.url,
-        channels: properties['Channels']?.multi_select?.map((c: any) => c.name) || []
+        readingTime: properties['Reading time']?.number || null
       }
     })
 
