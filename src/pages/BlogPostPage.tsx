@@ -4,17 +4,15 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Newsletter } from "@/components/Newsletter";
 import { FAQ } from "@/components/FAQ";
-import { Badge } from "@/components/ui/badge";
 import { Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
 interface BlogPostDetail {
   title: string;
   description: string;
-  contentType: string;
   headerImage?: string | null;
   content: string;
-  readingTime?: number;
+  readingTime?: string | null;
 }
 
 const BlogPostPage = () => {
@@ -46,15 +44,6 @@ const BlogPostPage = () => {
 
     fetchPost();
   }, [slug]);
-
-  const getContentTypeColor = (type: string) => {
-    const colors: Record<string, string> = {
-      "Longform": "bg-orange-500",
-      "LinkedIn Post": "bg-blue-500",
-      "Website Copy": "bg-brown-500",
-    };
-    return colors[type] || "bg-gray-500";
-  };
 
   if (isLoading) {
     return (
@@ -96,16 +85,13 @@ const BlogPostPage = () => {
           )}
 
           <div className="max-w-3xl mx-auto">
-            <div className="flex gap-3 mb-6 flex-wrap items-center">
-              <Badge className={`${getContentTypeColor(post.contentType)} text-white`}>
-                {post.contentType}
-              </Badge>
-              {post.readingTime && (
+            {post.readingTime && (
+              <div className="mb-6">
                 <span className="text-sm text-muted-foreground">
                   {post.readingTime} min read
                 </span>
-              )}
-            </div>
+              </div>
+            )}
 
             <h1 className="text-5xl md:text-6xl mb-6 font-light leading-tight">
               {post.title}

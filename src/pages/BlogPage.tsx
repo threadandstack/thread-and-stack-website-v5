@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -12,11 +11,9 @@ interface BlogPost {
   slug: string;
   title: string;
   description: string;
-  contentType: string;
-  status: string;
   headerImage?: string | null;
   url: string;
-  readingTime?: number;
+  readingTime?: string | null;
 }
 
 const BlogPage = () => {
@@ -43,15 +40,6 @@ const BlogPage = () => {
 
     fetchPosts();
   }, []);
-
-  const getContentTypeColor = (type: string) => {
-    const colors: Record<string, string> = {
-      "Longform": "bg-orange-500",
-      "LinkedIn Post": "bg-blue-500",
-      "Website Copy": "bg-brown-500",
-    };
-    return colors[type] || "bg-gray-500";
-  };
 
   return (
     <main className="min-h-screen relative pt-24">
@@ -89,16 +77,13 @@ const BlogPage = () => {
                       </div>
                     )}
                     <div className="p-6">
-                      <div className="flex gap-2 mb-4 flex-wrap items-center">
-                        <Badge className={`${getContentTypeColor(post.contentType)} text-white`}>
-                          {post.contentType}
-                        </Badge>
-                        {post.readingTime && (
+                      {post.readingTime && (
+                        <div className="mb-4">
                           <span className="text-sm text-muted-foreground">
                             {post.readingTime} min read
                           </span>
-                        )}
-                      </div>
+                        </div>
+                      )}
 
                       <h2 className="text-2xl mb-3 group-hover:text-accent transition-colors">
                         {post.title}
