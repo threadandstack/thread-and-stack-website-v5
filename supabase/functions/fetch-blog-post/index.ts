@@ -321,7 +321,7 @@ serve(async (req) => {
       description: properties['Description']?.rich_text?.[0]?.plain_text || '',
       headerImage: headerImage,
       content: content,
-      readingTime: properties['Reading time in mins']?.rich_text?.[0]?.plain_text || null
+      readingTime: properties['Reading time']?.rich_text?.[0]?.plain_text || null
     }
 
     return new Response(
