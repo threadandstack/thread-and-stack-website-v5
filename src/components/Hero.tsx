@@ -30,10 +30,10 @@ export const Hero = () => {
           </h1>
         </div>
         
-        <div ref={ref} className="text-xl md:text-3xl text-muted-foreground max-w-3xl mx-auto text-balance leading-relaxed font-light">
-          <p>The brands that feel <span className="text-accent">alive</span>, are remembered.</p>
-          <p className={`mt-2 transition-all duration-600 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`} style={{
-          transitionDelay: isVisible ? '1300ms' : '0ms'
+        <div ref={ref} className="max-w-3xl mx-auto text-balance leading-relaxed font-light">
+          <p className="text-xl md:text-3xl text-muted-foreground">The brands that feel <span className="text-accent">alive</span>, are remembered.</p>
+          <p className={`mt-4 text-base md:text-xl text-muted-foreground/80 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`} style={{
+          transitionDelay: isVisible ? '1800ms' : '0ms'
         }}>I'll help you build yours through strategy, creative direction, and systems that work.</p>
         </div>
         
