@@ -69,14 +69,14 @@ export const FeaturedProjects = () => {
     {
       title: "Nerve Tumours UK",
       role: "Brand Strategy & Digital Transformation",
-      description: "Brendan led the client-side aspect of our nationwide rebrand, working with our selected agency partner from start to finish in 2017-18 - redefining how our beneficiaries, supporters and donors relate to our cause",
-      fullDescription: "Led the client-side aspect of Nerve Tumours UK's nationwide rebrand from The Neuro Foundation, working with our selected agency partner from start to finish in 2017-18. Thanks to the digital transformation implemented in the three years prior, Nerve Tumours UK had a seamless launch—redefining how beneficiaries, supporters and donors relate to the cause.",
+      description: "I was delighted to be part of the Nerve Tumours UK rebrand and worked with their chosen agency partner as their in-house brand lead. We transformed the way that their beneficiaries perceived neurofibromatosis, NF1, NF2 and SWN. It required a bold approach from all the collaborators involved.",
+      fullDescription: "26,000 people in the UK live with a form of Neurofibromatosis, yet few realised the support they received via the NHS was often funded by The Neuro Foundation. The charity needed a clearer name, identity, and story to centre beneficiaries and sharpen mission clarity. Working as their in-house brand lead alongside their chosen agency partner, we delivered a holistic transformation that put beneficiaries first.",
       images: [ntuk1, ntuk2, ntuk3, ntuk4, ntuk5],
       outcomes: [
-        "Nationwide rebrand from The Neuro Foundation to Nerve Tumours UK",
-        "Seamless digital transformation and launch",
-        "Redefined stakeholder relationships across beneficiaries, supporters, and donors",
-        "Created sustainable brand and systems foundation"
+        "Holistic identity and strategy refresh including new name and culture",
+        "Charity-wide asset refresh: medical guides, fundraising materials, merchandise, stationery, donor journeys, websites",
+        "Beneficiary-first narrative and messaging",
+        "Transformed perceptions of neurofibromatosis (NF1, NF2 and SWN)"
       ]
     }
   ];
