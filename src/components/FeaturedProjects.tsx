@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from "react";
-import ntuk1 from "@/assets/ntuk-quote.png";
-import ntuk2 from "@/assets/ntuk-digital-2.png";
-import ntuk3 from "@/assets/ntuk-digital-3.png";
-import ntuk4 from "@/assets/ntuk-running.png";
+import ntuk1 from "@/assets/ntuk-logo-new.png";
+import ntuk2 from "@/assets/ntuk-quote-new.png";
+import ntuk3 from "@/assets/ntuk-olivia.png";
+import ntuk4 from "@/assets/ntuk-kieran.png";
+import ntuk5 from "@/assets/ntuk-running-new.png";
 import { FeaturedProjectModal } from "./FeaturedProjectModal";
 
 const ImageCarousel = ({ images, isVisible }: { images: string[]; isVisible: boolean }) => {
@@ -70,7 +71,7 @@ export const FeaturedProjects = () => {
       role: "Brand Strategy & Digital Transformation",
       description: "Brendan led the client-side aspect of our nationwide rebrand, working with our selected agency partner from start to finish in 2017-18 - redefining how our beneficiaries, supporters and donors relate to our cause",
       fullDescription: "Led the client-side aspect of Nerve Tumours UK's nationwide rebrand from The Neuro Foundation, working with our selected agency partner from start to finish in 2017-18. Thanks to the digital transformation implemented in the three years prior, Nerve Tumours UK had a seamless launch—redefining how beneficiaries, supporters and donors relate to the cause.",
-      images: [ntuk1, ntuk2, ntuk3, ntuk4],
+      images: [ntuk1, ntuk2, ntuk3, ntuk4, ntuk5],
       outcomes: [
         "Nationwide rebrand from The Neuro Foundation to Nerve Tumours UK",
         "Seamless digital transformation and launch",
