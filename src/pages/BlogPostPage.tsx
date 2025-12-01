@@ -2,13 +2,11 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
-import { Newsletter } from "@/components/Newsletter";
+import { BlogNewsletterCTA } from "@/components/BlogNewsletterCTA";
+import { LetsWorkTogether } from "@/components/LetsWorkTogether";
 import { FAQ } from "@/components/FAQ";
 import { Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { useToast } from "@/hooks/use-toast";
 
 interface BlogPostDetail {
   title: string;
@@ -18,60 +16,6 @@ interface BlogPostDetail {
   readingTime?: string | null;
 }
 
-const InlineSubscribe = () => {
-  const [email, setEmail] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const { toast } = useToast();
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    try {
-      const { data, error } = await supabase.functions.invoke('subscribe-newsletter', {
-        body: { email }
-      });
-      if (error) throw error;
-      toast({
-        title: "Subscribed!",
-        description: "You've been added to the newsletter."
-      });
-      setEmail("");
-    } catch (error: any) {
-      const errorMessage = error?.message?.includes('already subscribed') 
-        ? "This email is already subscribed." 
-        : "Please try again.";
-      toast({
-        title: "Something went wrong",
-        description: errorMessage,
-        variant: "destructive"
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  return (
-    <form onSubmit={handleSubmit} className="flex gap-2 max-w-sm">
-      <Input
-        type="email"
-        placeholder="your@email.com"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-        className="bg-background/50 border-border/30 text-sm"
-      />
-      <Button 
-        type="submit" 
-        disabled={isSubmitting}
-        variant="outline"
-        size="sm"
-        className="shrink-0"
-      >
-        {isSubmitting ? "..." : "Subscribe"}
-      </Button>
-    </form>
-  );
-};
 
 const BlogPostPage = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -152,7 +96,7 @@ const BlogPostPage = () => {
             )}
 
             <div className="mb-12">
-              <InlineSubscribe />
+              <BlogNewsletterCTA />
             </div>
           </div>
 
@@ -175,7 +119,7 @@ const BlogPostPage = () => {
         </div>
       </article>
 
-      <Newsletter />
+      <LetsWorkTogether source="blog-post" />
       <FAQ items={[
         {
           question: "What is Stacked Behaviours?",
