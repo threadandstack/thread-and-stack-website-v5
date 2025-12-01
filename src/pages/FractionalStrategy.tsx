@@ -36,9 +36,9 @@ const FractionalStrategy = () => {
       ideal: "Teams needing regular strategic guidance and campaign direction",
       includes: [
         "Monthly strategy sessions and planning",
-        "Ongoing brand positioning and messaging support",
-        "Campaign strategy and creative direction",
-        "Slack/email access for questions",
+        "Ongoing brand positioning, messaging, and visual direction support",
+        "Campaign strategy, creative direction, and asset guidance",
+        "Slack/email access for strategic and creative questions",
         "Quarterly strategic reviews"
       ]
     },
@@ -110,10 +110,10 @@ const FractionalStrategy = () => {
             </h1>
             <div className="bg-secondary/10 rounded-lg p-6 border-l-4 border-accent mb-6">
               <p className="text-lg text-muted-foreground">
-                Get senior strategic support embedded with your team on a monthly retainer. Brand positioning, campaign strategy, and creative direction—without the overhead of a full-time hire.
+                Get senior strategic and creative support embedded with your team on a monthly retainer. Brand positioning, campaign strategy, creative direction, and visual identity development—without the overhead of a full-time hire.
               </p>
               <p className="text-lg text-muted-foreground mt-3 font-semibold">
-                Perfect for scale-ups and established organizations (20-100+ people) who need consistent strategic thinking but want flexibility.
+                Perfect for scale-ups and established organizations (20-100+ people) who need consistent strategic thinking and design craft but want flexibility.
               </p>
             </div>
           </div>
@@ -122,7 +122,7 @@ const FractionalStrategy = () => {
             <h3 className="text-2xl font-semibold mb-3">The Model</h3>
             <p className="text-xl mb-4">Strategic expertise. Embedded support. Flexible commitment.</p>
             <p className="text-lg text-muted-foreground mb-6">
-              I work as an integrated member of your team, providing ongoing strategic guidance on brand positioning, campaign development, and creative direction. You get senior-level thinking without the full-time salary, benefits, and commitment.
+              I work as an integrated member of your team, providing ongoing strategic guidance on brand positioning, campaign development, creative direction, and visual identity systems. You get senior-level strategic thinking and design craft without the full-time salary, benefits, and commitment.
             </p>
             <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 group">
               <a href="/#contact" className="flex items-center">

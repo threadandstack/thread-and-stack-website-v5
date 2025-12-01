@@ -7,19 +7,20 @@ import { FAQ } from "@/components/FAQ";
 const ClaritySessions = () => {
   const focusAreas = [
     {
-      title: "Strategy Unblocking",
+      title: "Strategy & Creative Direction",
       examples: [
         '"I\'m stuck on this positioning statement."',
-        '"Does this campaign angle actually make sense?"',
-        '"I have too many ideas—which one is the winner?"'
+        '"Does this visual direction actually fit our brand?"',
+        '"I have too many campaign ideas—which one is the winner?"',
+        '"Our brand feels inconsistent across channels—help me diagnose it."'
       ]
     },
     {
-      title: "Notion / AI Triage",
+      title: "Systems & Workflow Design",
       examples: [
         '"My workspace is a mess—where do I start?"',
-        '"How do I build a CRM that doesn\'t suck?"',
-        '"Show me how to use AI for [specific task]."'
+        '"How do I build a content system that doesn\'t suck?"',
+        '"Show me how to use AI for [specific creative task]."'
       ]
     }
   ];
@@ -41,7 +42,7 @@ const ClaritySessions = () => {
     },
     {
       question: "What kind of problems can we solve in one hour?",
-      answer: "Anything that's creating a bottleneck in your marketing or strategy work. Common focuses include: positioning statements that aren't landing, campaign angles that need validation, Notion workspace organization, AI workflow design for specific tasks, messaging clarity, offer refinement, or strategic prioritization when you have too many ideas. If it's keeping you stuck, we can likely tackle it."
+      answer: "Anything that's creating a bottleneck in your marketing, strategy, or creative work. Common focuses include: positioning statements that aren't landing, campaign angles that need validation, visual identity diagnosis and creative direction decisions, Notion workspace organization, AI workflow design for creative tasks, messaging clarity, brand consistency issues, offer refinement, or strategic prioritization when you have too many ideas. If it's keeping you stuck—strategy or creative—we can likely tackle it."
     },
     {
       question: "What do I get after the session?",
