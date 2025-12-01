@@ -11,6 +11,7 @@ interface Project {
   description: string;
   fullDescription?: string;
   quote?: string;
+  quoteAttribution?: string;
   images: string[];
   outcomes?: string[];
   link?: string;
@@ -62,6 +63,11 @@ export const FeaturedProjectModal = ({
               <p className="text-foreground/90 italic leading-relaxed text-lg">
                 "{project.quote}"
               </p>
+              {project.quoteAttribution && (
+                <footer className="mt-3 text-foreground/70 not-italic text-base">
+                  — {project.quoteAttribution}
+                </footer>
+              )}
             </blockquote>
           )}
           
