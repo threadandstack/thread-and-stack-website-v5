@@ -35,9 +35,9 @@ export const WhatWeDo = () => {
               <span className="relative inline-block">Clear
                 <Emphasis className="absolute -bottom-2 left-0 right-0" delay={isVisible ? 0.5 : 999} />
               </span> narratives.<br />
-              <span className="relative inline-block">Practical
+              <span className="relative inline-block">Creative
                 <Emphasis className="absolute -bottom-2 left-0 right-0" delay={isVisible ? 1.2 : 999} />
-              </span> workflows.<br />
+              </span> direction.<br />
               <span className="relative inline-block">Living
                 <Emphasis className="absolute -bottom-2 left-0 right-0" delay={isVisible ? 1.9 : 999} />
               </span> brands.
@@ -45,15 +45,19 @@ export const WhatWeDo = () => {
             
             <div className="space-y-6 text-lg md:text-xl leading-relaxed border-l-4 border-accent/20 pl-8">
               <p className="text-2xl font-light not-italic">
-                I help purpose-led teams close the gap between what they mean and what they're actually saying and shipping.
+                I'm an experienced marketing strategist, brand builder, and designer. But most importantly, I'm a human who understands what it means to build connection with each other.
               </p>
               
               <p>
-                That means sharper positioning, honest messaging, and practical strategies and systems that lead to human, intentional, and engaging creatives. I call this the <span className="italic">creative tax</span>—the cognitive load of admin, chaos, and context switching that drags you away from meaningful creative and strategic projects you know need to happen.
+                I help purpose-led teams close the gap between what they mean and what they're actually saying and shipping—through <span className="italic">visual identity</span>, <span className="italic">creative direction</span>, and <span className="italic">brand world building</span> that feels cohesive and true. That means sharper positioning, honest messaging, and the design craft to bring it all to life.
               </p>
               
               <p>
-                Marketing without strategy is like sinking in quicksand. Together we transform messy marketing into clear narratives that avoid going through the motions, posting for posting's sake. Like a chrysalis emerging, we build strategies that help your brand become what it was always meant to be—torch-bearing work that lights the way forward.
+                Being both a designer and a strategist is rare. It means I understand how <span className="italic">aesthetic judgement</span> and strategic thinking work together—how a strong visual system supports your narrative, how <span className="italic">asset development</span> flows from positioning, how design decisions either reinforce or undermine what you're trying to say.
+              </p>
+              
+              <p>
+                I call the weight of disconnected creative work the <span className="italic">creative tax</span>—the cognitive load of admin, chaos, and context switching that drags you away from meaningful work. Together we transform messy marketing into clear narratives and practical systems that help your brand become what it was always meant to be.
               </p>
               
               <p className="not-italic font-light">
