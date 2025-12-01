@@ -24,7 +24,7 @@ const ImageCarousel = ({ images, isVisible }: { images: string[]; isVisible: boo
   }, [images.length, isVisible]);
 
   return (
-    <div className="aspect-[4/3] overflow-hidden relative w-full block">
+    <div className="aspect-square overflow-hidden relative w-full block">
       <div 
         className="flex h-full w-full transition-transform duration-700 ease-in-out"
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
