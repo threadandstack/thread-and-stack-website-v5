@@ -11,7 +11,7 @@ const DeepEngagement = () => {
       icon: <Target className="w-6 h-6" />,
       title: "Brand Refresh",
       duration: "2-3 months",
-      description: "Update positioning, messaging, and visual identity while preserving brand equity",
+      description: "Update positioning, messaging, and visual identity system while preserving brand equity. Includes brand world building and asset development.",
       ideal: "Organizations needing modernization without complete reinvention"
     },
     {
@@ -25,14 +25,14 @@ const DeepEngagement = () => {
       icon: <FileText className="w-6 h-6" />,
       title: "Marketing System Build",
       duration: "4-6 months",
-      description: "Build comprehensive marketing infrastructure, processes, and capabilities",
+      description: "Build comprehensive marketing infrastructure, creative workflows, and capabilities including content systems and design asset libraries",
       ideal: "Teams scaling operations or transitioning from founder-led to system-driven"
     },
     {
       icon: <Users className="w-6 h-6" />,
       title: "Complete Transformation",
       duration: "5-6 months",
-      description: "End-to-end strategic work combining brand, positioning, and systems",
+      description: "End-to-end strategic work combining brand positioning, visual identity system, creative direction, and operational systems",
       ideal: "Organizations ready for comprehensive transformation with lasting impact"
     }
   ];
@@ -55,6 +55,8 @@ const DeepEngagement = () => {
       activities: [
         "Core strategic framework development",
         "Positioning and messaging architecture",
+        "Visual identity systems and brand world building",
+        "Creative direction and asset development",
         "Marketing systems and infrastructure design",
         "Team workshops and capability building",
         "Iterative refinement with stakeholder feedback"
@@ -108,7 +110,8 @@ const DeepEngagement = () => {
 
   const deliverables = [
     "Strategic Foundation Document (positioning, messaging, frameworks)",
-    "Brand Architecture and Guidelines",
+    "Visual Identity System and Brand Guidelines",
+    "Creative Direction and Asset Development",
     "Marketing Systems and Process Documentation",
     "Team Training and Capability Development",
     "Implementation Roadmap and Governance",
@@ -128,10 +131,10 @@ const DeepEngagement = () => {
             </h1>
             <div className="bg-secondary/10 rounded-lg p-6 border-l-4 border-accent mb-6">
               <p className="text-lg text-muted-foreground">
-                Comprehensive strategic projects for organizations ready to commit to transformation. Full brand refreshes, positioning overhauls, or marketing system builds with clear deliverables and measurable impact.
+                Comprehensive strategic and creative projects for organizations ready to commit to transformation. Full brand refreshes with visual identity systems, positioning overhauls, brand world building, or marketing system builds with clear deliverables and measurable impact.
               </p>
               <p className="text-lg text-muted-foreground mt-3 font-semibold">
-                For teams (20-100+ people) ready to invest in deep work that creates lasting change.
+                For teams (20-100+ people) ready to invest in deep strategic and creative work that creates lasting change.
               </p>
             </div>
           </div>

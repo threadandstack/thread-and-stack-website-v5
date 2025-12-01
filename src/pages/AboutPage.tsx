@@ -48,15 +48,15 @@ const AboutPage = () => {
               <h2 className="text-3xl font-light not-italic">The Problem I Solve</h2>
               
               <p>
-                Most of the founders and teams I work with are already doing meaningful work. The problem isn't a lack of ideas. It's the gap between what they mean and what they're actually saying and shipping.
+                Most of the founders and teams I work with are already doing meaningful work. The problem isn't a lack of ideas. It's the gap between what they mean and what they're actually saying, showing, and shipping.
               </p>
               
               <p>
-                There's a pile-up between intention and execution: tabs, documents, and half-finished drafts between what you want to say and what actually goes out the door.
+                There's a pile-up between intention and execution: disconnected visual identity, inconsistent creative direction, tabs full of half-finished drafts, and brand guidelines that don't match what's going out the door.
               </p>
               
               <p>
-                I call this the <strong>creative tax</strong>—the cognitive load of admin, chaos surrounding your work, and the context switching that drags you away from meaningful creative and strategic work.
+                I call this the <strong>creative tax</strong>—the cognitive load of admin, chaos surrounding your creative work, the context switching between strategy and execution, and the lack of design craft tying it all together. It drags you away from the meaningful creative and strategic work that actually moves the needle.
               </p>
             </div>
             
