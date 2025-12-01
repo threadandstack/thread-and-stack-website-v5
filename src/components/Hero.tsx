@@ -2,6 +2,39 @@ import { useRef, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { Emphasis } from "@/components/Emphasis";
+
+const HeadlineWord = ({ children, delay, isEmphasized = false }: { children: React.ReactNode; delay: number; isEmphasized?: boolean }) => {
+  const [isVisible, setIsVisible] = useState(false);
+  
+  useEffect(() => {
+    const timer = setTimeout(() => setIsVisible(true), delay);
+    return () => clearTimeout(timer);
+  }, [delay]);
+
+  if (isEmphasized) {
+    return (
+      <span 
+        className={`relative inline-block transition-all duration-700 ease-out ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+        }`}
+      >
+        {children}
+        <Emphasis className="absolute -bottom-2 left-0 right-0" delay={isVisible ? 0 : 100} />
+      </span>
+    );
+  }
+
+  return (
+    <span 
+      className={`inline-block transition-all duration-700 ease-out ${
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+      }`}
+    >
+      {children}
+    </span>
+  );
+};
+
 export const Hero = () => {
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -21,12 +54,13 @@ export const Hero = () => {
   return <section className="relative min-h-[85vh] flex items-center justify-center px-6 py-24 overflow-hidden">
       <div className="absolute top-0 left-0 right-0 h-px thread-divider" />
       
-      <div className="max-w-5xl mx-auto text-center space-y-8 animate-fade-in">
+      <div className="max-w-5xl mx-auto text-center space-y-8">
         <div className="space-y-4">
           <h1 className="text-6xl md:text-8xl leading-[1.1] text-balance font-light">
-            Marketing that feels <span className="relative inline-block">more human
-              <Emphasis className="absolute -bottom-2 left-0 right-0" />
-            </span>
+            <HeadlineWord delay={100}>Marketing</HeadlineWord>{" "}
+            <HeadlineWord delay={250}>that</HeadlineWord>{" "}
+            <HeadlineWord delay={400}>feels</HeadlineWord>{" "}
+            <HeadlineWord delay={550} isEmphasized>more human</HeadlineWord>
           </h1>
         </div>
         
