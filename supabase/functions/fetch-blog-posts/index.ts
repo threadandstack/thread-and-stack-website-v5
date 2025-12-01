@@ -67,6 +67,9 @@ serve(async (req) => {
     const posts = data.results.map((page: any) => {
       const properties = page.properties
       
+      // Log properties to debug reading time
+      console.log('Post properties:', JSON.stringify(properties, null, 2))
+      
       // Extract the header image URL if it exists
       const headerImageFiles = properties['Website blog header image']?.files || []
       const headerImage = headerImageFiles.length > 0 ? headerImageFiles[0].file?.url || headerImageFiles[0].external?.url : null
