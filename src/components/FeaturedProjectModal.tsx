@@ -10,6 +10,7 @@ interface Project {
   role: string;
   description: string;
   fullDescription?: string;
+  quote?: string;
   images: string[];
   outcomes?: string[];
   link?: string;
@@ -55,6 +56,14 @@ export const FeaturedProjectModal = ({
               {project.fullDescription || project.description}
             </p>
           </div>
+          
+          {project.quote && (
+            <blockquote className="border-l-4 border-accent pl-6 py-4 my-6 bg-muted/30 rounded-r-lg">
+              <p className="text-foreground/90 italic leading-relaxed text-lg">
+                "{project.quote}"
+              </p>
+            </blockquote>
+          )}
           
           {project.outcomes && project.outcomes.length > 0 && (
             <div>
