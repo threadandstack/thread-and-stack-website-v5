@@ -17,6 +17,9 @@ interface Project {
   images: string[];
   outcomes?: string[];
   link?: string;
+  creativeDirection?: string;
+  visualSystem?: string;
+  designLeadership?: string;
 }
 
 interface FeaturedProjectModalProps {
@@ -71,6 +74,39 @@ export const FeaturedProjectModal = ({
                 </footer>
               )}
             </blockquote>
+          )}
+          
+          {(project.creativeDirection || project.visualSystem || project.designLeadership) && (
+            <div className="space-y-6 my-8">
+              <h4 className="text-2xl font-light mb-6 not-italic">Creative Rationale</h4>
+              
+              {project.creativeDirection && (
+                <div>
+                  <h5 className="text-lg font-light mb-2 text-accent not-italic">Creative Direction</h5>
+                  <p className="text-foreground/80 leading-relaxed">
+                    {project.creativeDirection}
+                  </p>
+                </div>
+              )}
+              
+              {project.visualSystem && (
+                <div>
+                  <h5 className="text-lg font-light mb-2 text-accent not-italic">Visual System</h5>
+                  <p className="text-foreground/80 leading-relaxed">
+                    {project.visualSystem}
+                  </p>
+                </div>
+              )}
+              
+              {project.designLeadership && (
+                <div>
+                  <h5 className="text-lg font-light mb-2 text-accent not-italic">Design Leadership</h5>
+                  <p className="text-foreground/80 leading-relaxed">
+                    {project.designLeadership}
+                  </p>
+                </div>
+              )}
+            </div>
           )}
           
           {project.outcomes && project.outcomes.length > 0 && (

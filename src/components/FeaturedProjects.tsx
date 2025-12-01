@@ -74,6 +74,9 @@ export const FeaturedProjects = () => {
       quote: "Brendan led the client-side aspect of our nationwide rebrand, working with our selected agency partner from start to finish in 2017-18. Thanks to him, 'The Neuro Foundation' became 'Nerve Tumours UK' and the digital transformation that he and his team implemented with me during the three years prior, Nerve Tumours UK had a seamless launch - redefining how our beneficiaries, supporters and donors relate to our cause.",
       quoteAttribution: "Karen Cockburn, CEO, Nerve Tumours UK",
       images: [ntuk1, ntuk2, ntuk3, ntuk4, ntuk5],
+      creativeDirection: "We established bold, visible, and creative direction rooted in warmth but didn't move too far away from medical visual cues. Previous brand colours had involved murky greens, then flipped too far toward NHS colourist schemes. We were looking for a more neutral brand that could live in the everyday world.",
+      visualSystem: "We leaned on colour theory and paid close attention to customer experience and user journeys for email design, website design, and fundraising hub. We took inspiration from websites like Pinterest and paid attention to what the content would look like in social media.",
+      designLeadership: "We knew The Neuro Foundation was not a name doing our beneficiaries any good. It was confusing and causing misalignment—people often thought we were a brain charity. Our beneficiaries often hid behind the complexity of 'neurofibromatosis,' and bringing the reality of nerve tumours to the forefront was a bold move that matched the vision we had for the brand.",
       outcomes: [
         "Holistic identity and strategy refresh including new name and culture",
         "Charity-wide asset refresh: medical guides, fundraising materials, merchandise, stationery, donor journeys, websites",
