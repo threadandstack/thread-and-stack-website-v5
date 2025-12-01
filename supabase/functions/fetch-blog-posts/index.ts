@@ -71,9 +71,16 @@ serve(async (req) => {
       const headerImageFiles = properties['Website blog header image']?.files || []
       const headerImage = headerImageFiles.length > 0 ? headerImageFiles[0].file?.url || headerImageFiles[0].external?.url : null
       
+      const title = properties['Task name']?.title?.[0]?.plain_text || 'Untitled'
+      const slug = title
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '')
+      
       return {
         id: page.id,
-        title: properties['Task name']?.title?.[0]?.plain_text || 'Untitled',
+        slug: slug,
+        title: title,
         description: properties['Description']?.rich_text?.[0]?.plain_text || '',
         contentType: properties['Content type']?.select?.name || '',
         status: properties['Status']?.status?.name || '',

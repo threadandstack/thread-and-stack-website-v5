@@ -9,6 +9,7 @@ import { supabase } from "@/integrations/supabase/client";
 
 interface BlogPost {
   id: string;
+  slug: string;
   title: string;
   description: string;
   contentType: string;
@@ -74,7 +75,7 @@ const BlogPage = () => {
               {posts.map((post) => (
                 <Link
                   key={post.id}
-                  to={`/blog/${post.id}`}
+                  to={`/blog/${post.slug}`}
                   className="group cursor-pointer"
                 >
                   <Card className="h-full transition-all hover:shadow-lg overflow-hidden">

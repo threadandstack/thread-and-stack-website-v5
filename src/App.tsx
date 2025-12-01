@@ -31,7 +31,7 @@ const App = () => (
           <Route path="/fractional-strategy" element={<FractionalStrategy />} />
           <Route path="/deep-engagement" element={<DeepEngagement />} />
           <Route path="/blog" element={<BlogPage />} />
-          <Route path="/blog/:id" element={<BlogPostPage />} />
+          <Route path="/blog/:slug" element={<BlogPostPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
