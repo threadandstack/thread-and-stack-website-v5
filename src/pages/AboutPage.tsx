@@ -77,14 +77,22 @@ const AboutPage = () => {
               <h2 className="text-3xl font-light not-italic">How I Work</h2>
               
               <p>
-                My work sits at the intersection of strategy, clarity and systems—protecting both your brand integrity and your team's creative energy.
+                My work sits at the intersection of brand strategy, creative direction, and systems design—protecting both your brand integrity and your team's creative energy.
               </p>
               
               <p>
-                I help you untangle the mess, connect the dots, and keep your best ideas moving. Not by adding more processes, but by creating invisible scaffolding that reduces friction and cognitive load.
+                Being both a designer and a strategist is rare. It means I understand how aesthetic judgement and strategic thinking work together—how visual identity supports your narrative, how asset development flows from positioning, how design decisions either reinforce or undermine what you're trying to say.
               </p>
               
               <p>
+                I help you untangle the mess, connect the dots, and keep your best ideas moving. Through visual identity, creative direction, and brand world building that feels cohesive and true. Not by adding more processes, but by creating invisible scaffolding that reduces friction and cognitive load.
+              </p>
+              
+              <p>
+                When it comes to AI, I see it as a second brain and operations partner in the background—never a replacement for human creativity or judgment. My approach centers on creative empowerment: helping you feel more capable (not automated), ensuring your brand voice remains authentically yours, and using AI to reduce cognitive load so your calendar feels spacious instead of suffocating. The goal is giving back time, attention, and voice.
+              </p>
+              
+              <p className="font-light not-italic">
                 The result? Brands that feel alive, teams that feel spacious, and work that actually ships.
               </p>
             </div>
@@ -106,7 +114,7 @@ const AboutPage = () => {
                 </p>
                 
                 <p className="font-light not-italic">
-                  Now I focus on one thing: helping purpose-led teams protect what matters while building brands that actually grow. I've seen the impact the wrong approach can have on great teams - be they lean and nimble growth machines, or enterprise level powerhouses - the problem is always clarity. That's where I can help.
+                  Now I focus on one thing: helping purpose-led teams protect what matters while building brands that actually grow. I've seen the impact the wrong approach can have on great teams - be they lean and nimble growth machines, or enterprise level powerhouses - the problem is always clarity. Strategic positioning paired with strong design craft. That's where I can help.
                 </p>
               </div>
             </div>
@@ -127,8 +135,6 @@ const AboutPage = () => {
         </div>
       </section>
       
-      <AIPhilosophy />
-      
       <FAQ items={[
         {
           question: "Who is Brendan and what is Thread & Stack?",
@@ -140,7 +146,7 @@ const AboutPage = () => {
         },
         {
           question: "What's unique about Thread & Stack's approach?",
-          answer: "I work at the intersection of strategy, clarity, and systems - protecting both your brand integrity and your team's creative energy. Unlike agencies focused on either creative or operations, I bridge both. I create invisible scaffolding that reduces friction and cognitive load without adding more processes. The result: brands that feel alive, teams that feel spacious, and work that actually ships."
+          answer: "I work at the intersection of brand strategy, creative direction, and systems design - protecting both your brand integrity and your team's creative energy. Being both a designer and a strategist is rare. It means I understand how aesthetic judgement and strategic thinking work together - how visual identity supports narrative, how asset development flows from positioning, how design decisions reinforce or undermine messaging. I create invisible scaffolding that reduces friction and cognitive load without adding more processes. The result: brands that feel alive, teams that feel spacious, and work that actually ships."
         },
         {
           question: "What's your background and experience?",
@@ -148,7 +154,7 @@ const AboutPage = () => {
         },
         {
           question: "What services does Thread & Stack offer?",
-          answer: "Five core offerings: Clarity Sessions (60-min strategic power hours, from £300), Thread AI Mentorship Sprint (6-week AI workflow building, from £1k), Brand Connection Workshops (modular team strategy, from £2k), Fractional Strategy (monthly retainer for ongoing partnership), and Deep Engagement (2-6 month transformation projects, from £10-25k). Each addresses different needs across the clarity-to-execution spectrum."
+          answer: "Five core offerings: Clarity Sessions (60-min strategic and creative interventions, from £300), Thread AI Mentorship Sprint (6-week AI workflow building, from £1k), Brand Connection Workshops (modular team strategy with visual direction, from £2k), Fractional Strategy (monthly retainer for ongoing strategic and creative partnership including brand positioning, creative direction, and asset development), and Deep Engagement (2-6 month transformation projects including visual identity development and brand world building, from £10-25k). Each addresses different needs across the strategy-to-execution spectrum."
         },
         {
           question: "How does Thread & Stack use AI?",

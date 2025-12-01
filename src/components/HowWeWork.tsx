@@ -22,16 +22,20 @@ export const HowWeWork = () => {
     description: "No generic playbooks or cookie-cutter processes. Every engagement begins with understanding your specific context, ethics, and working style."
   }, {
     number: "02",
-    title: "Build together",
-    description: "You're not outsourcing your thinking to a consultant. We collaborate to create clarity, language, and systems that are genuinely yours."
+    title: "Co-create visual and strategic systems",
+    description: "You're not outsourcing your thinking to a consultant. We collaborate to build positioning, visual identity, and workflows that are genuinely yours—from brand world building to practical implementation."
   }, {
     number: "03",
-    title: "We hunt decisions and outputs",
-    description: "Every session delivers clear language, actionable decisions, and practical tools you can use immediately—not vague frameworks."
+    title: "Hunt decisions and tangible outputs",
+    description: "Every session delivers clear language, actionable decisions, and concrete deliverables—creative direction, asset development, strategic frameworks—not vague concepts."
   }, {
     number: "04",
     title: "Protect what matters",
-    description: "We design workflows that reduce friction and cognitive load while preserving human judgement, taste, and the work you care about."
+    description: "We design workflows that reduce friction and cognitive load while preserving human judgement, aesthetic taste, and the creative work you care about."
+  }, {
+    number: "05",
+    title: "Design craft meets strategic thinking",
+    description: "Rare combination of strategic positioning and design execution means your brand doesn't just sound right—it looks and feels right across every touchpoint."
   }];
   return <section id="how-we-work" ref={sectionRef} className={`py-24 px-6 bg-muted/30 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
       <div className="max-w-6xl mx-auto">
@@ -59,7 +63,7 @@ export const HowWeWork = () => {
           </div>
         </div>
         
-        <div className="grid md:grid-cols-2 gap-8 mt-8">
+        <div className="grid md:grid-cols-3 gap-8 mt-8">
           {principles.slice(2).map((principle, index) => <div key={index + 2} className="space-y-3 group border-l-4 border-accent/20 pl-6">
               <div className="text-accent text-sm not-italic font-light">
                 {principle.number}

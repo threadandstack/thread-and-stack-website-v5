@@ -62,7 +62,7 @@ export const About = () => {
             </p>
             
             <p className="not-italic font-light">
-              My work sits at the intersection of strategy, clarity and systems—protecting both your brand integrity and your team's creative energy.
+              My work sits at the intersection of brand strategy, creative direction, and systems design—protecting both your brand integrity and your team's creative energy.
             </p>
           </div>
         </div>
