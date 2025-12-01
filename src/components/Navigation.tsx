@@ -174,60 +174,73 @@ export const Navigation = () => {
             </Button>
           </div>
         </div>
+      </nav>
 
-        {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className="lg:hidden border-t border-border bg-background">
-            <div className="px-6 py-4 space-y-4">
-              {mainLinks.slice(0, 2).map((link) => (
+      {/* Mobile Menu Overlay - Works from any scroll position */}
+      {isMobileMenuOpen && (
+        <div 
+          className="fixed inset-0 z-[60] bg-background/95 backdrop-blur-sm md:hidden"
+          style={{ paddingTop: isScrolled ? '64px' : '80px' }}
+        >
+          <div className="absolute top-0 right-0 p-6">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <X />
+            </Button>
+          </div>
+          
+          <div className="px-6 py-4 space-y-4 overflow-y-auto h-full">
+            {mainLinks.slice(0, 2).map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="block py-3 text-lg text-foreground/80 hover:text-foreground transition-colors"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {link.label}
+              </a>
+            ))}
+
+            <div className="border-t border-border/50 pt-4">
+              <p className="text-xs text-muted-foreground mb-3 not-italic">Services</p>
+              {services.map((service) => (
+                <a
+                  key={service.href}
+                  href={service.href}
+                  className="block py-3 text-lg text-foreground/80 hover:text-foreground transition-colors pl-4"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {service.label}
+                </a>
+              ))}
+            </div>
+
+            <div className="border-t border-border/50 pt-4">
+              {mainLinks.slice(2).map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
-                  className="block py-2 text-sm text-foreground/80 hover:text-foreground transition-colors"
+                  className="block py-3 text-lg text-foreground/80 hover:text-foreground transition-colors"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {link.label}
                 </a>
               ))}
-
-              <div className="border-t border-border/50 pt-4">
-                <p className="text-xs text-muted-foreground mb-3 not-italic">Services</p>
-                {services.map((service) => (
-                  <a
-                    key={service.href}
-                    href={service.href}
-                    className="block py-2 text-sm text-foreground/80 hover:text-foreground transition-colors pl-4"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    {service.label}
-                  </a>
-                ))}
-              </div>
-
-              <div className="border-t border-border/50 pt-4">
-                {mainLinks.slice(2).map((link) => (
-                  <a
-                    key={link.href}
-                    href={link.href}
-                    className="block py-2 text-sm text-foreground/80 hover:text-foreground transition-colors"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    {link.label}
-                  </a>
-                ))}
-              </div>
-
-              <Button 
-                size="sm" 
-                className="w-full bg-accent text-accent-foreground hover:bg-accent/90 rounded-xl mt-4"
-                asChild
-              >
-                <a href="/#contact" onClick={() => setIsMobileMenuOpen(false)}>Get Started</a>
-              </Button>
             </div>
+
+            <Button 
+              size="lg" 
+              className="w-full bg-accent text-accent-foreground hover:bg-accent/90 rounded-xl mt-4"
+              asChild
+            >
+              <a href="/#contact" onClick={() => setIsMobileMenuOpen(false)}>Get Started</a>
+            </Button>
           </div>
-        )}
-      </nav>
+        </div>
+      )}
 
       {/* Spacer for floating nav */}
       {isScrolled && <div className="h-16" />}
