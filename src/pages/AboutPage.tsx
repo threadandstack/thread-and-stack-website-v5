@@ -7,10 +7,8 @@ import { ArrowRight } from "lucide-react";
 import brendanPhoto from "@/assets/brendan-brick.jpeg";
 import brendanCollaboration from "@/assets/brendan-collaboration.jpeg";
 import brendanWorkshop from "@/assets/brendan-workshop.jpeg";
-
 const AboutPage = () => {
-  return (
-    <main className="min-h-screen">
+  return <main className="min-h-screen">
       <Navigation />
       
       <section className="py-24 px-6 mt-16">
@@ -22,17 +20,12 @@ const AboutPage = () => {
           <div className="space-y-16">
             <div className="grid md:grid-cols-2 gap-12 items-start">
               <div className="relative">
-                <img 
-                  src={brendanPhoto} 
-                  alt="Brendan - Thread & Stack founder"
-                  className="rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.06)] w-full h-auto"
-                />
+                <img src={brendanPhoto} alt="Brendan - Thread & Stack founder" className="rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.06)] w-full h-auto" />
               </div>
               
               <div className="space-y-6 text-lg leading-relaxed">
-                <p className="text-3xl font-light not-italic">
-                  I'm Brendan, founder of Thread & Stack.
-                </p>
+                <p className="text-3xl font-light not-italic">I'm Brendan, 
+founder of Thread & Stack.</p>
                 
                 <p>
                   I've spent 12+ years in brand and marketing across global consumer brands, international consultancies, creative agencies, disruptive tech, ambitious start-ups and nonprofits.
@@ -61,16 +54,8 @@ const AboutPage = () => {
             </div>
             
             <div className="grid md:grid-cols-2 gap-8">
-              <img 
-                src={brendanCollaboration} 
-                alt="Brendan collaborating with clients"
-                className="rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.06)] w-full h-auto"
-              />
-              <img 
-                src={brendanWorkshop} 
-                alt="Brendan leading a workshop"
-                className="rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.06)] w-full h-auto"
-              />
+              <img src={brendanCollaboration} alt="Brendan collaborating with clients" className="rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.06)] w-full h-auto" />
+              <img src={brendanWorkshop} alt="Brendan leading a workshop" className="rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.06)] w-full h-auto" />
             </div>
             
             <div className="prose prose-lg max-w-none space-y-6 text-lg leading-relaxed border-l-4 border-accent/20 pl-8">
@@ -92,9 +77,7 @@ const AboutPage = () => {
                 When it comes to AI, I see it as a second brain and operations partner in the background—never a replacement for human creativity or judgment. My approach centers on creative empowerment: helping you feel more capable (not automated), ensuring your brand voice remains authentically yours, and using AI to reduce cognitive load so your calendar feels spacious instead of suffocating. The goal is giving back time, attention, and voice.
               </p>
               
-              <p className="font-light not-italic">
-                The result? Brands that feel alive, teams that feel spacious, and work that actually ships.
-              </p>
+              <p className="font-light not-italic">The result? Brands that feel alive, teams that feel spacious, and work that actually ships.</p>
             </div>
             
             <div className="bg-accent/5 p-8 rounded-2xl space-y-6">
@@ -120,11 +103,7 @@ const AboutPage = () => {
             </div>
             
             <div className="text-center pt-8">
-              <Button 
-                size="lg" 
-                className="bg-accent text-accent-foreground hover:bg-accent/90 group rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
-                asChild
-              >
+              <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 group rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)]" asChild>
                 <a href="/#contact">
                   Let's Work Together
                   <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -135,40 +114,30 @@ const AboutPage = () => {
         </div>
       </section>
       
-      <FAQ items={[
-        {
-          question: "Who is Brendan and what is Thread & Stack?",
-          answer: "I'm Brendan, founder of Thread & Stack - a brand and systems consultancy for purpose-led founders and teams. With 12+ years across global consumer brands, consultancies, creative agencies, tech, startups, and nonprofits, I focus on one thing: helping purpose-led teams turn messy marketing into clear narratives and practical workflows they can sustain."
-        },
-        {
-          question: "What's the core problem Thread & Stack solves?",
-          answer: "The creative tax - the cognitive load of admin, chaos, and context-switching that drags you away from meaningful creative and strategic work. It's the pile-up between intention and execution: tabs, documents, and half-finished drafts between what you mean to say and what actually ships. I help teams untangle the mess, connect the dots, and keep their best ideas moving."
-        },
-        {
-          question: "What's unique about Thread & Stack's approach?",
-          answer: "I work at the intersection of brand strategy, creative direction, and systems design - protecting both your brand integrity and your team's creative energy. Being both a designer and a strategist is rare. It means I understand how aesthetic judgement and strategic thinking work together - how visual identity supports narrative, how asset development flows from positioning, how design decisions reinforce or undermine messaging. I create invisible scaffolding that reduces friction and cognitive load without adding more processes. The result: brands that feel alive, teams that feel spacious, and work that actually ships."
-        },
-        {
-          question: "What's your background and experience?",
-          answer: "I studied Media, Communications & Culture and Philosophy at Keele University - disciplines that now underpin our modern world. I've worked across international consultancies (Dentsu B2B), global brands (eBay), creative agencies (Funraisin, Lightful, Scoota, Aqueduct/Flipside), enterprise to small nonprofits, Hollywood to local ads, tech giants to energy companies. A huge range of products, missions, and audiences taught me one thing: the problem is always clarity."
-        },
-        {
-          question: "What services does Thread & Stack offer?",
-          answer: "Five core offerings: Clarity Sessions (60-min strategic and creative interventions, from £300), Thread AI Mentorship Sprint (6-week AI workflow building, from £1k), Brand Connection Workshops (modular team strategy with visual direction, from £2k), Fractional Strategy (monthly retainer for ongoing strategic and creative partnership including brand positioning, creative direction, and asset development), and Deep Engagement (2-6 month transformation projects including visual identity development and brand world building, from £10-25k). Each addresses different needs across the strategy-to-execution spectrum."
-        },
-        {
-          question: "How does Thread & Stack use AI?",
-          answer: "AI is a second brain and operations partner in the background - never a replacement for human creativity or judgment. My Thread AI Philosophy centers on creative empowerment: you feel more capable and confident (not automated), your brand voice remains authentically yours, and AI reduces cognitive load so your calendar feels spacious instead of suffocating. AI gives back time, attention, and voice."
-        },
-        {
-          question: "Who are Thread & Stack's ideal clients?",
-          answer: "Purpose-led organizations across two main profiles: values-driven founders and small organizations (like B Corps, social enterprises, and nonprofits) who prioritize impact and integrity as they grow, and scaling teams (typically 2-50 people) led by founder-operators who are wearing too many hats and need to cut through unclear positioning and messy operational systems. If you're doing meaningful work but struggling with the gap between intention and execution, we should talk."
-        }
-      ]} />
+      <FAQ items={[{
+      question: "Who is Brendan and what is Thread & Stack?",
+      answer: "I'm Brendan, founder of Thread & Stack - a brand and systems consultancy for purpose-led founders and teams. With 12+ years across global consumer brands, consultancies, creative agencies, tech, startups, and nonprofits, I focus on one thing: helping purpose-led teams turn messy marketing into clear narratives and practical workflows they can sustain."
+    }, {
+      question: "What's the core problem Thread & Stack solves?",
+      answer: "The creative tax - the cognitive load of admin, chaos, and context-switching that drags you away from meaningful creative and strategic work. It's the pile-up between intention and execution: tabs, documents, and half-finished drafts between what you mean to say and what actually ships. I help teams untangle the mess, connect the dots, and keep their best ideas moving."
+    }, {
+      question: "What's unique about Thread & Stack's approach?",
+      answer: "I work at the intersection of brand strategy, creative direction, and systems design - protecting both your brand integrity and your team's creative energy. Being both a designer and a strategist is rare. It means I understand how aesthetic judgement and strategic thinking work together - how visual identity supports narrative, how asset development flows from positioning, how design decisions reinforce or undermine messaging. I create invisible scaffolding that reduces friction and cognitive load without adding more processes. The result: brands that feel alive, teams that feel spacious, and work that actually ships."
+    }, {
+      question: "What's your background and experience?",
+      answer: "I studied Media, Communications & Culture and Philosophy at Keele University - disciplines that now underpin our modern world. I've worked across international consultancies (Dentsu B2B), global brands (eBay), creative agencies (Funraisin, Lightful, Scoota, Aqueduct/Flipside), enterprise to small nonprofits, Hollywood to local ads, tech giants to energy companies. A huge range of products, missions, and audiences taught me one thing: the problem is always clarity."
+    }, {
+      question: "What services does Thread & Stack offer?",
+      answer: "Five core offerings: Clarity Sessions (60-min strategic and creative interventions, from £300), Thread AI Mentorship Sprint (6-week AI workflow building, from £1k), Brand Connection Workshops (modular team strategy with visual direction, from £2k), Fractional Strategy (monthly retainer for ongoing strategic and creative partnership including brand positioning, creative direction, and asset development), and Deep Engagement (2-6 month transformation projects including visual identity development and brand world building, from £10-25k). Each addresses different needs across the strategy-to-execution spectrum."
+    }, {
+      question: "How does Thread & Stack use AI?",
+      answer: "AI is a second brain and operations partner in the background - never a replacement for human creativity or judgment. My Thread AI Philosophy centers on creative empowerment: you feel more capable and confident (not automated), your brand voice remains authentically yours, and AI reduces cognitive load so your calendar feels spacious instead of suffocating. AI gives back time, attention, and voice."
+    }, {
+      question: "Who are Thread & Stack's ideal clients?",
+      answer: "Purpose-led organizations across two main profiles: values-driven founders and small organizations (like B Corps, social enterprises, and nonprofits) who prioritize impact and integrity as they grow, and scaling teams (typically 2-50 people) led by founder-operators who are wearing too many hats and need to cut through unclear positioning and messy operational systems. If you're doing meaningful work but struggling with the gap between intention and execution, we should talk."
+    }]} />
       
       <Footer />
-    </main>
-  );
+    </main>;
 };
-
 export default AboutPage;
