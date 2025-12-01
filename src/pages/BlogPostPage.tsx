@@ -18,17 +18,17 @@ interface BlogPostDetail {
 }
 
 const BlogPostPage = () => {
-  const { id } = useParams<{ id: string }>();
+  const { slug } = useParams<{ slug: string }>();
   const [post, setPost] = useState<BlogPostDetail | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchPost = async () => {
-      if (!id) return;
+      if (!slug) return;
 
       try {
         const { data, error } = await supabase.functions.invoke('fetch-blog-post', {
-          body: { postId: id }
+          body: { slug }
         });
         
         if (error) {
@@ -45,7 +45,7 @@ const BlogPostPage = () => {
     };
 
     fetchPost();
-  }, [id]);
+  }, [slug]);
 
   const getContentTypeColor = (type: string) => {
     const colors: Record<string, string> = {

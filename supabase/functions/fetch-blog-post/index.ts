@@ -11,16 +11,77 @@ serve(async (req) => {
   }
 
   try {
-    const { postId } = await req.json()
+    const { slug } = await req.json()
     
-    if (!postId) {
-      throw new Error('Post ID is required')
+    if (!slug) {
+      throw new Error('Slug is required')
     }
 
     const NOTION_API_KEY = Deno.env.get('NOTION_API_KEY')
     if (!NOTION_API_KEY) {
       throw new Error('NOTION_API_KEY not configured')
     }
+    
+    // First, query the database to find the page by title
+    const databaseId = '2758863b87d480508ca9d5363b7bd842'
+    
+    // Convert slug back to title format for searching
+    const searchTitle = slug
+      .split('-')
+      .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ')
+    
+    const queryResponse = await fetch(
+      `https://api.notion.com/v1/databases/${databaseId}/query`,
+      {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${NOTION_API_KEY}`,
+          'Notion-Version': '2022-06-28',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          filter: {
+            and: [
+              {
+                property: 'Status',
+                status: {
+                  equals: 'Done'
+                }
+              },
+              {
+                property: 'Content type',
+                select: {
+                  equals: 'Longform'
+                }
+              }
+            ]
+          }
+        })
+      }
+    )
+    
+    if (!queryResponse.ok) {
+      throw new Error(`Failed to query database: ${queryResponse.status}`)
+    }
+    
+    const queryData = await queryResponse.json()
+    
+    // Find the page that matches the slug
+    const matchingPage = queryData.results.find((page: any) => {
+      const title = page.properties['Task name']?.title?.[0]?.plain_text || ''
+      const pageSlug = title
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '')
+      return pageSlug === slug
+    })
+    
+    if (!matchingPage) {
+      throw new Error('Post not found')
+    }
+    
+    const postId = matchingPage.id
 
     // Fetch page properties
     const pageResponse = await fetch(
