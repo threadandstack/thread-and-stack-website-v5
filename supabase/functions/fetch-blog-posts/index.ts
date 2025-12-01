@@ -16,8 +16,8 @@ serve(async (req) => {
       throw new Error('NOTION_API_KEY not configured')
     }
 
-    // Query the Content Library database
-    const databaseId = '2758863b87d480508ca9d5363b7bd842'
+    // Query the Published Blog Library database
+    const databaseId = '2bc8863b87d4802fa65dd15c42ffa13b'
     
     const response = await fetch(
       `https://api.notion.com/v1/databases/${databaseId}/query`,
@@ -30,24 +30,14 @@ serve(async (req) => {
         },
         body: JSON.stringify({
           filter: {
-            and: [
-              {
-                property: 'Status',
-                status: {
-                  equals: 'Done'
-                }
-              },
-              {
-                property: 'Content type',
-                select: {
-                  equals: 'Longform'
-                }
-              }
-            ]
+            property: 'Status',
+            select: {
+              equals: 'live'
+            }
           },
           sorts: [
             {
-              property: 'Due date',
+              property: 'Created time',
               direction: 'descending'
             }
           ]
@@ -67,14 +57,11 @@ serve(async (req) => {
     const posts = data.results.map((page: any) => {
       const properties = page.properties
       
-      // Log properties to debug reading time
-      console.log('Post properties:', JSON.stringify(properties, null, 2))
+      // Extract the featured image URL if it exists
+      const featuredImageFiles = properties['Featured image']?.files || []
+      const headerImage = featuredImageFiles.length > 0 ? featuredImageFiles[0].file?.url || featuredImageFiles[0].external?.url : null
       
-      // Extract the header image URL if it exists
-      const headerImageFiles = properties['Website blog header image']?.files || []
-      const headerImage = headerImageFiles.length > 0 ? headerImageFiles[0].file?.url || headerImageFiles[0].external?.url : null
-      
-      const title = properties['Task name']?.title?.[0]?.plain_text || 'Untitled'
+      const title = properties['Blog name']?.title?.[0]?.plain_text || 'Untitled'
       const slug = title
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, '-')
@@ -85,11 +72,9 @@ serve(async (req) => {
         slug: slug,
         title: title,
         description: properties['Description']?.rich_text?.[0]?.plain_text || '',
-        contentType: properties['Content type']?.select?.name || '',
-        status: properties['Status']?.status?.name || '',
         headerImage: headerImage,
         url: page.url,
-        readingTime: properties['Reading time']?.number || null
+        readingTime: properties['Reading time in mins']?.rich_text?.[0]?.plain_text || null
       }
     })
 

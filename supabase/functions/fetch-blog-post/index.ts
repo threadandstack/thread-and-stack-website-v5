@@ -23,7 +23,7 @@ serve(async (req) => {
     }
     
     // First, query the database to find the page by title
-    const databaseId = '2758863b87d480508ca9d5363b7bd842'
+    const databaseId = '2bc8863b87d4802fa65dd15c42ffa13b'
     
     // Convert slug back to title format for searching
     const searchTitle = slug
@@ -42,20 +42,10 @@ serve(async (req) => {
         },
         body: JSON.stringify({
           filter: {
-            and: [
-              {
-                property: 'Status',
-                status: {
-                  equals: 'Done'
-                }
-              },
-              {
-                property: 'Content type',
-                select: {
-                  equals: 'Longform'
-                }
-              }
-            ]
+            property: 'Status',
+            select: {
+              equals: 'live'
+            }
           }
         })
       }
@@ -69,7 +59,7 @@ serve(async (req) => {
     
     // Find the page that matches the slug
     const matchingPage = queryData.results.find((page: any) => {
-      const title = page.properties['Task name']?.title?.[0]?.plain_text || ''
+      const title = page.properties['Blog name']?.title?.[0]?.plain_text || ''
       const pageSlug = title
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, '-')
@@ -322,17 +312,16 @@ serve(async (req) => {
     const content = htmlBlocks.join('\n')
     console.log('Generated HTML length:', content.length)
 
-    // Extract the header image URL if it exists
-    const headerImageFiles = properties['Website blog header image']?.files || []
-    const headerImage = headerImageFiles.length > 0 ? headerImageFiles[0].file?.url || headerImageFiles[0].external?.url : null
+    // Extract the featured image URL if it exists
+    const featuredImageFiles = properties['Featured image']?.files || []
+    const headerImage = featuredImageFiles.length > 0 ? featuredImageFiles[0].file?.url || featuredImageFiles[0].external?.url : null
 
     const post = {
-      title: properties['Task name']?.title?.[0]?.plain_text || 'Untitled',
+      title: properties['Blog name']?.title?.[0]?.plain_text || 'Untitled',
       description: properties['Description']?.rich_text?.[0]?.plain_text || '',
-      contentType: properties['Content type']?.select?.name || '',
       headerImage: headerImage,
       content: content,
-      readingTime: properties['Reading time']?.number || null
+      readingTime: properties['Reading time in mins']?.rich_text?.[0]?.plain_text || null
     }
 
     return new Response(
