@@ -64,9 +64,9 @@ const BlogNewsletterCTA = () => {
   };
 
   return (
-    <div className="max-w-xl mx-auto mb-16 text-center">
-      <p className="text-muted-foreground mb-4">
-        Don't miss out on our Stacked Behaviors articles. Stick your email in here and we'll make sure you get notified straight to your inbox.
+    <div className="max-w-xl mx-auto mb-16 text-center bg-muted/50 rounded-xl p-6 border border-border/30">
+      <p className="text-foreground font-medium mb-4">
+        Notify me about the next issue ↓
       </p>
       <form onSubmit={handleSubmit} className="flex gap-2 max-w-md mx-auto">
         <Input
