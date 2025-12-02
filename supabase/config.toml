@@ -2,3 +2,12 @@ project_id = "uohhfesyumigbpqjpacl"
 
 [functions.subscribe-newsletter]
 verify_jwt = false
+
+[functions.fetch-blog-posts]
+verify_jwt = false
+
+[functions.fetch-blog-post]
+verify_jwt = false
+
+[functions.sync-lead-to-notion]
+verify_jwt = false
