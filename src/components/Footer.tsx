@@ -31,8 +31,12 @@ export const Footer = () => {
           </div>
         </div>
         
-        <div className="border-t border-primary-foreground/20 pt-8 text-center text-sm text-primary-foreground/60">
+        <div className="border-t border-primary-foreground/20 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-primary-foreground/60">
           <p className="not-italic">© {new Date().getFullYear()} Thread & Stack. All rights reserved.</p>
+          <div className="flex gap-6">
+            <a href="/privacy" className="hover:text-primary-foreground transition-colors">Privacy Policy</a>
+            <a href="/data-guarantee" className="hover:text-primary-foreground transition-colors">Data Guarantee</a>
+          </div>
         </div>
       </div>
     </footer>

@@ -11,3 +11,6 @@ verify_jwt = false
 
 [functions.sync-lead-to-notion]
 verify_jwt = false
+
+[functions.fetch-notion-page]
+verify_jwt = false
