@@ -13,6 +13,8 @@ import DeepEngagement from "./pages/DeepEngagement";
 import NotFound from "./pages/NotFound";
 import BlogPage from "./pages/BlogPage";
 import BlogPostPage from "./pages/BlogPostPage";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import DataGuarantee from "./pages/DataGuarantee";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +34,8 @@ const App = () => (
           <Route path="/deep-engagement" element={<DeepEngagement />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blog/:slug" element={<BlogPostPage />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/data-guarantee" element={<DataGuarantee />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
