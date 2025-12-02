@@ -14,6 +14,7 @@ interface LetsWorkTogetherProps {
 export const LetsWorkTogether = ({ source = "blog" }: LetsWorkTogetherProps) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [role, setRole] = useState("");
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
@@ -22,13 +23,18 @@ export const LetsWorkTogether = ({ source = "blog" }: LetsWorkTogetherProps) => 
     e.preventDefault();
     setIsSubmitting(true);
 
+    // Combine role and message for storage
+    const fullMessage = role.trim() 
+      ? `[${role.trim()}]\n\n${message.trim()}` 
+      : message.trim();
+
     try {
       const { error } = await supabase
         .from('leads')
         .insert({
           name: name.trim() || null,
           email: email.trim(),
-          message: message.trim() || null,
+          message: fullMessage || null,
           source
         });
 
@@ -39,7 +45,7 @@ export const LetsWorkTogether = ({ source = "blog" }: LetsWorkTogetherProps) => 
         body: {
           name: name.trim() || null,
           email: email.trim(),
-          message: message.trim() || null,
+          message: fullMessage || null,
           source
         }
       }).catch(err => console.error('Notion sync error:', err));
@@ -51,6 +57,7 @@ export const LetsWorkTogether = ({ source = "blog" }: LetsWorkTogetherProps) => 
       
       setName("");
       setEmail("");
+      setRole("");
       setMessage("");
     } catch (error: any) {
       console.error("Lead submission error:", error);
@@ -94,6 +101,18 @@ export const LetsWorkTogether = ({ source = "blog" }: LetsWorkTogetherProps) => 
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              className="bg-background rounded-lg mt-1"
+            />
+          </div>
+          
+          <div>
+            <Label htmlFor="lead-role" className="text-sm text-muted-foreground">Role / Organisation</Label>
+            <Input 
+              id="lead-role"
+              type="text" 
+              placeholder="Founder at..."
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
               className="bg-background rounded-lg mt-1"
             />
           </div>

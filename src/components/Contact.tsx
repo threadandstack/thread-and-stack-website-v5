@@ -127,7 +127,7 @@ export const Contact = () => {
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="role" className="not-italic">Role / Organization</Label>
+            <Label htmlFor="role" className="not-italic">Role / Organisation</Label>
             <Input 
               id="role" 
               placeholder="Founder at..."
