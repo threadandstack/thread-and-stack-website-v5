@@ -11,14 +11,14 @@ const SessionsAndSprints = () => {
       examples: [
         '"I\'m stuck on this positioning statement."',
         '"Does this visual direction actually fit our brand?"',
-        '"I have too many campaign ideas—which one is the winner?"',
-        '"Our brand feels inconsistent across channels—help me diagnose it."'
+        '"I have too many campaign ideas; which one is the winner?"',
+        '"Our brand feels inconsistent across channels. Help me diagnose it."'
       ]
     },
     {
       title: "Systems & Workflow Design",
       examples: [
-        '"My workspace is a mess—where do I start?"',
+        '"My workspace is a mess. Where do I start?"',
         '"How do I build a content system that doesn\'t suck?"',
         '"Show me how to use AI for [specific creative task]."'
       ]
@@ -43,7 +43,7 @@ const SessionsAndSprints = () => {
     {
       week: "Week 1-2",
       title: "Foundation & Setup",
-      description: "We map your current workflow, identify pain points, and start building your custom system. You stay in control—AI handles mechanical tasks."
+      description: "We map your current workflow, identify pain points, and start building your custom system. You stay in control; AI handles mechanical tasks."
     },
     {
       week: "Week 3-4",

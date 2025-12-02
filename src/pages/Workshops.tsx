@@ -96,7 +96,7 @@ const Workshops = () => {
   const roiPoints = [
     {
       title: "Clarity over Confusion",
-      description: "Stop guessing. We replace internal debates and assumptions with hard evidence—whether that's internal pain points or external customer truths."
+      description: "Stop guessing. We replace internal debates and assumptions with hard evidence, whether that's internal pain points or external customer truths."
     },
     {
       title: "Alignment over Arguments",
@@ -203,7 +203,7 @@ const Workshops = () => {
             <div>
               <h2 className="text-3xl font-bold mb-6">The Deliverable</h2>
               <p className="text-lg text-muted-foreground">
-                You don't just leave with "good vibes." You leave with a Playbook—a toolkit of pricing, messaging, and behaviour that you can implement immediately.
+                You don't just leave with "good vibes." You leave with a Playbook: a toolkit of pricing, messaging, and behaviour that you can implement immediately.
               </p>
             </div>
 
@@ -230,10 +230,10 @@ const Workshops = () => {
               
               <div className="bg-secondary/10 rounded-lg p-6 mt-8 border-l-4 border-accent">
                 <p className="text-lg text-muted-foreground mb-4">
-                  Being both a designer and a strategist means I understand how <span className="italic">aesthetic judgement</span> and strategic thinking work together—how a strong visual system supports your narrative, how <span className="italic">asset development</span> flows from positioning, how design decisions either reinforce or undermine what you're trying to say.
+                  Being both a designer and a strategist means I understand how <span className="italic">aesthetic judgement</span> and strategic thinking work together: how a strong visual system supports your narrative, how <span className="italic">asset development</span> flows from positioning, how design decisions either reinforce or undermine what you're trying to say.
                 </p>
                 <p className="text-lg text-muted-foreground">
-                  These workshops integrate your brand's story, your founder's intent—and the foundations of your business, your values—into a <span className="italic">visual identity</span>, <span className="italic">creative direction</span>, and design plays that echo your positioning—ensuring what you build feels cohesive, true, and ready to live in the world.
+                  These workshops integrate your brand's story, your founder's intent, and the foundations of your business, your values, into a <span className="italic">visual identity</span>, <span className="italic">creative direction</span>, and design plays that echo your positioning. What you build feels cohesive, true, and ready to live in the world.
                 </p>
               </div>
             </div>
