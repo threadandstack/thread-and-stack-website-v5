@@ -13,11 +13,9 @@ export const Footer = () => {
           <div>
             <h4 className="mb-3 font-light not-italic">Offers</h4>
             <ul className="space-y-2 text-sm text-primary-foreground/80">
-              <li><a href="/clarity-sessions" className="hover:text-primary-foreground transition-colors">Clarity Sessions</a></li>
-              <li><a href="/mentorship-sprint" className="hover:text-primary-foreground transition-colors">Mentorship Sprint</a></li>
-              <li><a href="/workshops" className="hover:text-primary-foreground transition-colors">Workshops</a></li>
-              <li><a href="/fractional-strategy" className="hover:text-primary-foreground transition-colors">Fractional Strategy</a></li>
-              <li><a href="/deep-engagement" className="hover:text-primary-foreground transition-colors">Deep Engagement</a></li>
+              <li><a href="/sessions-and-sprints" className="hover:text-primary-foreground transition-colors">Sessions & Sprints</a></li>
+              <li><a href="/workshops" className="hover:text-primary-foreground transition-colors">Brand Connection Workshops</a></li>
+              <li><a href="/fractional-deep-engagement" className="hover:text-primary-foreground transition-colors">Fractional & Deep Engagement</a></li>
             </ul>
           </div>
           
