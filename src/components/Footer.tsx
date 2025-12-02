@@ -30,13 +30,13 @@ export const Footer = () => {
               <li><a href="/sessions-and-sprints" className="hover:text-primary-foreground transition-colors">Sessions & Sprints</a></li>
               <li><a href="/workshops" className="hover:text-primary-foreground transition-colors">Brand Connection Workshops</a></li>
               <li><a href="/fractional-deep-engagement" className="hover:text-primary-foreground transition-colors">Fractional & Deep Engagement</a></li>
+              <li><a href="/blog" className="hover:text-primary-foreground transition-colors italic">Stacked Behaviours Newsletter</a></li>
             </ul>
           </div>
           
           <div>
             <h4 className="mb-3 font-light not-italic">Connect</h4>
             <ul className="space-y-2 text-sm text-primary-foreground/80">
-              <li><a href="/blog" className="hover:text-primary-foreground transition-colors">Blog</a></li>
               <li><a href="#contact" className="hover:text-primary-foreground transition-colors">Get in Touch</a></li>
               <li><a href="https://www.linkedin.com/in/rodgersbrendan/" target="_blank" rel="noopener noreferrer" className="hover:text-primary-foreground transition-colors flex items-center gap-2"><Linkedin className="h-4 w-4" />LinkedIn</a></li>
               <li><a href="https://bsky.app/profile/threadandstack.com" target="_blank" rel="noopener noreferrer" className="hover:text-primary-foreground transition-colors flex items-center gap-2"><BlueskyIcon className="h-4 w-4" />Bluesky</a></li>
