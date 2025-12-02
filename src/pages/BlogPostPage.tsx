@@ -7,6 +7,7 @@ import { LetsWorkTogether } from "@/components/LetsWorkTogether";
 import { FAQ } from "@/components/FAQ";
 import { Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import brendanAvatar from "@/assets/brendan-avatar.png";
 
 interface BlogPostDetail {
   title: string;
@@ -112,9 +113,16 @@ const BlogPostPage = () => {
 
             {/* Meta info: Author, Category, Read time */}
             <div className="flex flex-wrap items-center gap-4 mb-8 text-sm">
-              <span className="text-muted-foreground">
-                Brendan @ Thread and Stack
-              </span>
+              <div className="flex items-center gap-3">
+                <img 
+                  src={brendanAvatar} 
+                  alt="Brendan" 
+                  className="w-10 h-10 rounded-full object-cover"
+                />
+                <span className="text-muted-foreground">
+                  Brendan @ Thread and Stack
+                </span>
+              </div>
               {post.theme && (
                 <span className={`px-3 py-1 rounded-full text-xs font-medium ${getThemeColor(post.theme)}`}>
                   {post.theme}
