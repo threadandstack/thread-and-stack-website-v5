@@ -59,6 +59,22 @@ const Workshops = () => {
 
       if (error) throw error;
 
+      // Sync to Notion (fire and forget)
+      const workshopMessage = [
+        values.phase_one && `Phase 1: ${values.phase_one}`,
+        values.phase_two && `Phase 2: ${values.phase_two}`,
+        values.phase_three && `Phase 3: ${values.phase_three}`,
+      ].filter(Boolean).join('\n');
+
+      supabase.functions.invoke('sync-lead-to-notion', {
+        body: {
+          name: values.name,
+          email: values.email,
+          message: workshopMessage || 'Workshop quote request',
+          source: 'workshop-quote'
+        }
+      }).catch(err => console.error('Notion sync error:', err));
+
       toast({
         title: "Quote request submitted!",
         description: "I'll review your selections and be in touch soon to discuss your workshop.",
