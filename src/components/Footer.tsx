@@ -24,7 +24,8 @@ export const Footer = () => {
             <ul className="space-y-2 text-sm text-primary-foreground/80">
               <li><a href="/blog" className="hover:text-primary-foreground transition-colors">Blog</a></li>
               <li><a href="#contact" className="hover:text-primary-foreground transition-colors">Get in Touch</a></li>
-              <li><a href="#how-we-work" className="hover:text-primary-foreground transition-colors">How We Work</a></li>
+              <li><a href="https://www.linkedin.com/in/rodgersbrendan/" target="_blank" rel="noopener noreferrer" className="hover:text-primary-foreground transition-colors">LinkedIn</a></li>
+              <li><a href="https://bsky.app/profile/threadandstack.com" target="_blank" rel="noopener noreferrer" className="hover:text-primary-foreground transition-colors">Bluesky</a></li>
             </ul>
           </div>
         </div>
