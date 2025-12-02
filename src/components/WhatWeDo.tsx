@@ -61,7 +61,7 @@ export const WhatWeDo = () => {
               </p>
               
               <p className="not-italic font-light">
-                When you close the gap between what you mean and what you're saying, your brand becomes a living presence. Your team stays aligned. And you get time back for the work that matters.
+                When you close the gap between what you mean and what you're saying, your brand becomes that living presence. Externally—it becomes easier to remember, and it feels more confident. Internally—your team stays aligned with ease. And you get to focus on the work that matters.
               </p>
             </div>
           </div>
