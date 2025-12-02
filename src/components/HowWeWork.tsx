@@ -23,11 +23,11 @@ export const HowWeWork = () => {
   }, {
     number: "02",
     title: "Co-create visual and strategic systems",
-    description: "You're not outsourcing your thinking to a consultant. We collaborate to build positioning, visual identity, and workflows that are genuinely yours—from brand world building to practical implementation."
+    description: "You're not outsourcing your thinking to a consultant. We collaborate to build positioning, visual identity, and workflows that are genuinely yours, from brand world building to practical implementation."
   }, {
     number: "03",
     title: "Hunt decisions and tangible outputs",
-    description: "Every session delivers clear language, actionable decisions, and concrete deliverables—creative direction, asset development, strategic frameworks—not vague concepts."
+    description: "Every session delivers clear language, actionable decisions, and concrete deliverables: creative direction, asset development, strategic frameworks. Not vague concepts."
   }, {
     number: "04",
     title: "Protect what matters",
@@ -35,7 +35,7 @@ export const HowWeWork = () => {
   }, {
     number: "05",
     title: "Design craft meets strategic thinking",
-    description: "Rare combination of strategic positioning and design execution means your brand doesn't just sound right—it looks and feels right across every touchpoint."
+    description: "Rare combination of strategic positioning and design execution means your brand doesn't just sound right; it looks and feels right across every touchpoint."
   }];
   return <section id="how-we-work" ref={sectionRef} className={`py-24 px-6 bg-muted/30 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
       <div className="max-w-6xl mx-auto">

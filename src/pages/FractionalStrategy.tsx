@@ -110,7 +110,7 @@ const FractionalStrategy = () => {
             </h1>
             <div className="bg-secondary/10 rounded-lg p-6 border-l-4 border-accent mb-6">
               <p className="text-lg text-muted-foreground">
-                Get senior strategic and creative support embedded with your team on a monthly retainer. Brand positioning, campaign strategy, creative direction, and visual identity development—without the overhead of a full-time hire.
+                Get senior strategic and creative support embedded with your team on a monthly retainer. Brand positioning, campaign strategy, creative direction, and visual identity development, without the overhead of a full-time hire.
               </p>
               <p className="text-lg text-muted-foreground mt-3 font-semibold">
                 Perfect for scale-ups and established organizations (20-100+ people) who need consistent strategic thinking and design craft but want flexibility.

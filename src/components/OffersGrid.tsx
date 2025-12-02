@@ -49,7 +49,7 @@ export const OffersGrid = () => {
       icon: <Users className="w-6 h-6" />,
       title: "Brand Connection Workshops",
       tagline: "A Modular Strategy System for Purpose-Driven Brands",
-      description: "Fix the disconnect between your brand and your audience. Modular, co-created workshops that get your team aligned on story, positioning, visual identity direction, and roadmap. Build exactly what you need—from lean sprints to comprehensive overhauls.",
+      description: "Fix the disconnect between your brand and your audience. Modular, co-created workshops that get your team aligned on story, positioning, visual identity direction, and roadmap. Build exactly what you need, from lean sprints to comprehensive overhauls.",
       link: "/workshops",
       price: "From £2k",
       cta: "Learn More"

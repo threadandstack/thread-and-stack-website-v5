@@ -49,7 +49,7 @@ founder of Thread & Stack.</p>
               </p>
               
               <p>
-                I call this the <strong>creative tax</strong>—the cognitive load of admin, chaos surrounding your creative work, the context switching between strategy and execution, and the lack of design craft tying it all together. It drags you away from the meaningful creative and strategic work that actually moves the needle.
+                I call this the <strong>creative tax</strong>: the cognitive load of admin, chaos surrounding your creative work, the context switching between strategy and execution, and the lack of design craft tying it all together. It drags you away from the meaningful creative and strategic work that actually moves the needle.
               </p>
             </div>
             
@@ -62,11 +62,11 @@ founder of Thread & Stack.</p>
               <h2 className="text-3xl font-light not-italic">How I Work</h2>
               
               <p>
-                My work sits at the intersection of brand strategy, creative direction, and systems design—protecting both your brand integrity and your team's creative energy.
+                My work sits at the intersection of brand strategy, creative direction, and systems design, protecting both your brand integrity and your team's creative energy.
               </p>
               
               <p>
-                Being both a designer and a strategist is rare. It means I understand how aesthetic judgement and strategic thinking work together—how visual identity supports your narrative, how asset development flows from positioning, how design decisions either reinforce or undermine what you're trying to say.
+                Being both a designer and a strategist is rare. It means I understand how aesthetic judgement and strategic thinking work together: how visual identity supports your narrative, how asset development flows from positioning, how design decisions either reinforce or undermine what you're trying to say.
               </p>
               
               <p>
@@ -74,7 +74,7 @@ founder of Thread & Stack.</p>
               </p>
               
               <p>
-                When it comes to AI, I see it as a second brain and operations partner in the background—never a replacement for human creativity or judgment. My approach centers on creative empowerment: helping you feel more capable (not automated), ensuring your brand voice remains authentically yours, and using AI to reduce cognitive load so your calendar feels spacious instead of suffocating. The goal is giving back time, attention, and voice.
+                When it comes to AI, I see it as a second brain and operations partner in the background, never a replacement for human creativity or judgment. My approach centers on creative empowerment: helping you feel more capable (not automated), ensuring your brand voice remains authentically yours, and using AI to reduce cognitive load so your calendar feels spacious instead of suffocating. The goal is giving back time, attention, and voice.
               </p>
               
               <p className="font-bold not-italic">The result? Brands that feel alive, teams that feel spacious, and work that actually ships.</p>
@@ -85,15 +85,15 @@ founder of Thread & Stack.</p>
               
               <div className="space-y-4 text-lg leading-relaxed">
                 <p>
-                  I studied Media, Communications & Culture and Philosophy at Keele University—a combination that wasn't common at the time. Media Communications were dismissed as a "Mickey Mouse degree," and Philosophy was seen as a waste of time. I chose it because I saw the impact these two subjects could have together. Now, these disciplines underpin our modern world.
+                  I studied Media, Communications & Culture and Philosophy at Keele University, a combination that wasn't common at the time. Media Communications were dismissed as a "Mickey Mouse degree," and Philosophy was seen as a waste of time. I chose it because I saw the impact these two subjects could have together. Now, these disciplines underpin our modern world.
                 </p>
                 
                 <p>
-                  That golden thread—following the ethics and impact of communications and culture—took me on a path working with a really wide range of clients and products. From international consultancies like Dentsu B2B working with some of the biggest brands in the world, to Global Content Strategy Lead at eBay developing strategy with worldwide impact.
+                  That golden thread, following the ethics and impact of communications and culture, took me on a path working with a really wide range of clients and products. From international consultancies like Dentsu B2B working with some of the biggest brands in the world, to Global Content Strategy Lead at eBay developing strategy with worldwide impact.
                 </p>
                 
                 <p>
-                  At agencies like Funraisin, Lightful, Scoota, and Aqueduct (now Flipside)—I got front-row seats to best UX, CX and Accessibility practices. Among them are enterprise brands, to small nonprofits. Hollywood movies to more local consumer insurance ads. Creative tech giants promoting their sustainability impact to energy giants, shifting their business narrative. Football teams, supermarkets, big tech, small tech, gaming, beauty, gambling, banks, social enterprises, nonprofits, global energy giants and digital paperless solutions. A huge range of products, missions and audiences over quite a few agencies.
+                  At agencies like Funraisin, Lightful, Scoota, and Aqueduct (now Flipside), I got front-row seats to best UX, CX and Accessibility practices. Among them are enterprise brands, to small nonprofits. Hollywood movies to more local consumer insurance ads. Creative tech giants promoting their sustainability impact to energy giants, shifting their business narrative. Football teams, supermarkets, big tech, small tech, gaming, beauty, gambling, banks, social enterprises, nonprofits, global energy giants and digital paperless solutions. A huge range of products, missions and audiences over quite a few agencies.
                 </p>
                 
                 <p className="font-light not-italic">

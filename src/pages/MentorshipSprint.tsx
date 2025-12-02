@@ -17,7 +17,7 @@ const MentorshipSprint = () => {
     {
       week: "Week 1-2",
       title: "Foundation & Setup",
-      description: "We map your current workflow, identify pain points, and start building your custom system. You stay in control—AI handles mechanical tasks."
+      description: "We map your current workflow, identify pain points, and start building your custom system. You stay in control; AI handles mechanical tasks."
     },
     {
       week: "Week 3-4",
@@ -34,7 +34,7 @@ const MentorshipSprint = () => {
   const faqs = [
     {
       q: "Is this just another ChatGPT course?",
-      a: "No. This is about building a complete productivity system tailored to your role, tools, and goals. ChatGPT might be one tool we use, but this is about the whole workflow—not just prompts."
+      a: "No. This is about building a complete productivity system tailored to your role, tools, and goals. ChatGPT might be one tool we use, but this is about the whole workflow, not just prompts."
     },
     {
       q: "What if my company blocks AI tools?",

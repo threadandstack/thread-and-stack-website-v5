@@ -110,7 +110,7 @@ export const FeaturedProjectModal = ({
               </p>
               {project.quoteAttribution && (
                 <footer className="mt-3 text-foreground/70 not-italic text-base">
-                  — {project.quoteAttribution}
+                  - {project.quoteAttribution}
                 </footer>
               )}
             </blockquote>

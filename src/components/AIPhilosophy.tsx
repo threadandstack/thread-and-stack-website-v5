@@ -8,7 +8,7 @@ export const AIPhilosophy = () => {
         
         <div className="space-y-8 text-lg md:text-xl leading-relaxed">
           <p className="text-2xl font-light not-italic border-l-4 border-accent/20 pl-8">
-            I don't see AI as a replacement for human creativity or judgment. I see it as a second brain and an ops partner in the background—helping you untangle the mess, connect the dots, and keep your best ideas moving.
+            I don't see AI as a replacement for human creativity or judgment. I see it as a second brain and an ops partner in the background, helping you untangle the mess, connect the dots, and keep your best ideas moving.
           </p>
           
           <div className="bg-accent/5 rounded-2xl p-8 my-12">
@@ -54,7 +54,7 @@ export const AIPhilosophy = () => {
             <ul className="space-y-3 text-lg">
               <li>Spend less time on busywork and more time on the conversations, decisions, and creative work only you can do.</li>
               <li>Build a brand and a body of work that feels alive, coherent, and true to your values.</li>
-              <li>Use AI as invisible scaffolding—the thing that makes consistency feel light, not heroic.</li>
+              <li>Use AI as invisible scaffolding: the thing that makes consistency feel light, not heroic.</li>
             </ul>
           </div>
           
