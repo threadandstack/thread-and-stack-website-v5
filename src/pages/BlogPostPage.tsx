@@ -14,8 +14,25 @@ interface BlogPostDetail {
   headerImage?: string | null;
   content: string;
   readingTime?: string | null;
+  theme?: string | null;
 }
 
+const getThemeColor = (theme: string | null | undefined) => {
+  switch (theme?.toLowerCase()) {
+    case 'growth':
+      return 'bg-emerald-100 text-emerald-800';
+    case 'strategy':
+      return 'bg-orange-100 text-orange-800';
+    case 'creative':
+      return 'bg-pink-100 text-pink-800';
+    case 'systems':
+      return 'bg-blue-100 text-blue-800';
+    case 'case studies':
+      return 'bg-accent/20 text-accent';
+    default:
+      return 'bg-muted text-muted-foreground';
+  }
+};
 
 const BlogPostPage = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -76,30 +93,7 @@ const BlogPostPage = () => {
       
       <article className="py-24 px-6">
         <div className="max-w-4xl mx-auto">
-          <div className="max-w-3xl mx-auto">
-            {post.readingTime && (
-              <div className="mb-6">
-                <span className="text-sm text-muted-foreground">
-                  {post.readingTime} min read
-                </span>
-              </div>
-            )}
-
-            <h1 className="text-5xl md:text-6xl mb-6 font-light leading-tight">
-              {post.title}
-            </h1>
-
-            {post.description && (
-              <p className="text-xl text-muted-foreground mb-8 leading-relaxed italic">
-                {post.description}
-              </p>
-            )}
-
-            <div className="mb-12">
-              <BlogNewsletterCTA />
-            </div>
-          </div>
-
+          {/* Header Image - Now above title */}
           {post.headerImage && (
             <div className="aspect-[21/9] overflow-hidden rounded-2xl mb-12">
               <img 
@@ -111,6 +105,41 @@ const BlogPostPage = () => {
           )}
 
           <div className="max-w-3xl mx-auto">
+            {/* Title */}
+            <h1 className="text-5xl md:text-6xl mb-6 font-light leading-tight">
+              {post.title}
+            </h1>
+
+            {/* Meta info: Author, Category, Read time */}
+            <div className="flex flex-wrap items-center gap-4 mb-8 text-sm">
+              <span className="text-muted-foreground">
+                Brendan @ Thread and Stack
+              </span>
+              {post.theme && (
+                <span className={`px-3 py-1 rounded-full text-xs font-medium ${getThemeColor(post.theme)}`}>
+                  {post.theme}
+                </span>
+              )}
+              {post.readingTime && (
+                <span className="text-muted-foreground">
+                  {post.readingTime} min read
+                </span>
+              )}
+            </div>
+
+            {/* Description */}
+            {post.description && (
+              <p className="text-xl text-muted-foreground mb-8 leading-relaxed italic">
+                {post.description}
+              </p>
+            )}
+
+            {/* Subscribe button (collapsible) */}
+            <div className="mb-12">
+              <BlogNewsletterCTA />
+            </div>
+
+            {/* Content */}
             <div 
               className="blog-content prose prose-lg max-w-none"
               dangerouslySetInnerHTML={{ __html: post.content }}
