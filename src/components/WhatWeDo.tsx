@@ -57,7 +57,7 @@ export const WhatWeDo = () => {
               </p>
               
               <p>
-                What's needed isn't more content or another campaign. It's clarity: a <span className="italic">visual identity</span> that supports your narrative, <span className="italic">positioning</span> that resonates, and systems that let your team ship work that feels cohesive and true.
+                What's needed isn't more content or another campaign. It's clarity: <span className="italic">positioning</span> that resonates, a <span className="italic">visual identity</span> that confidently articulates your narrative, and systems that let your team ship work that feels cohesive and true. Modern branding isn't a PDF guideline—it's modular, expansive, and living.
               </p>
               
               <p className="not-italic font-light">
