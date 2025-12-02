@@ -63,11 +63,13 @@ const BlogPage = () => {
           <h1 className="text-5xl md:text-6xl mb-6 font-light text-center">
             Stacked <span className="italic">Behaviours</span>
           </h1>
-          <p className="text-xl text-muted-foreground mb-12 text-center leading-relaxed max-w-2xl mx-auto">
+          <p className="text-xl text-muted-foreground mb-8 text-center leading-relaxed max-w-2xl mx-auto">
             Thoughts on brand, creativity, and the systems that build our businesses.
           </p>
 
-          <BlogNewsletterCTA />
+          <div className="flex justify-center mb-16">
+            <BlogNewsletterCTA />
+          </div>
 
           {isLoading ? (
             <div className="flex justify-center py-20">
