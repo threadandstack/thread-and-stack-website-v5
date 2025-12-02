@@ -22,7 +22,7 @@ const ModalImageCarousel = ({ images }: { images: string[] }) => {
   }, [images.length]);
 
   return (
-    <div className="aspect-[4/3] overflow-hidden rounded-xl relative">
+    <div className="aspect-square overflow-hidden rounded-xl relative">
       <div 
         className="flex h-full w-full transition-transform duration-700 ease-in-out"
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
