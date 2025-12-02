@@ -383,8 +383,8 @@ const Workshops = () => {
                 <p className="text-muted-foreground mb-4">
                   Or prefer to discuss directly?
                 </p>
-                <Button size="lg" variant="outline" className="group">
-                  <a href="/#contact" className="flex items-center">
+                <Button size="lg" variant="outline" className="group" asChild>
+                  <a href="/#contact">
                     Book a Scoping Call
                     <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
                   </a>
