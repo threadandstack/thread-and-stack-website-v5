@@ -34,6 +34,16 @@ export const LetsWorkTogether = ({ source = "blog" }: LetsWorkTogetherProps) => 
 
       if (error) throw error;
 
+      // Sync to Notion in background (don't await - fire and forget)
+      supabase.functions.invoke('sync-lead-to-notion', {
+        body: {
+          name: name.trim() || null,
+          email: email.trim(),
+          message: message.trim() || null,
+          source
+        }
+      }).catch(err => console.error('Notion sync error:', err));
+
       toast({
         title: "Thanks for reaching out!",
         description: "I'll be in touch soon."
