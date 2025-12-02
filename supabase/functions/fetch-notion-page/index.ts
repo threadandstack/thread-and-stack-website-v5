@@ -73,9 +73,16 @@ serve(async (req) => {
     const page = queryData.results[0]
     const pageId = page.id
     const lastEdited = page.last_edited_time
+    const properties = page.properties
     
     // Extract title from properties
-    const title = page.properties['Name']?.title?.[0]?.plain_text || pageTitle
+    const title = properties['Name']?.title?.[0]?.plain_text || pageTitle
+    
+    // Extract featured image if it exists
+    const featuredImageFiles = properties['Featured IMG']?.files || []
+    const headerImage = featuredImageFiles.length > 0 
+      ? featuredImageFiles[0].file?.url || featuredImageFiles[0].external?.url 
+      : null
 
     console.log('Found page:', pageId, 'Last edited:', lastEdited)
 
@@ -144,6 +151,25 @@ serve(async (req) => {
         return content
       }).join('')
     }
+
+    // Helper function to fetch table rows
+    const fetchTableRows = async (tableBlockId: string) => {
+      const tableRowsResponse = await fetch(
+        `https://api.notion.com/v1/blocks/${tableBlockId}/children`,
+        {
+          headers: {
+            'Authorization': `Bearer ${NOTION_API_KEY}`,
+            'Notion-Version': '2022-06-28',
+          }
+        }
+      )
+      if (!tableRowsResponse.ok) {
+        console.error('Failed to fetch table rows')
+        return []
+      }
+      const tableRowsData = await tableRowsResponse.json()
+      return tableRowsData.results || []
+    }
     
     // Convert blocks to HTML
     const htmlBlocks: string[] = []
@@ -158,7 +184,8 @@ serve(async (req) => {
           if (inBulletList) { htmlBlocks.push('</ul>'); inBulletList = false }
           if (inNumberedList) { htmlBlocks.push('</ol>'); inNumberedList = false }
           const text = richTextToHtml(block.paragraph.rich_text)
-          if (text) htmlBlocks.push(`<p>${text}</p>`)
+          // Include empty paragraphs for spacing
+          htmlBlocks.push(`<p>${text || '&nbsp;'}</p>`)
           break
           
         case 'heading_1':
@@ -215,11 +242,15 @@ serve(async (req) => {
           if (inBulletList) { htmlBlocks.push('</ul>'); inBulletList = false }
           if (inNumberedList) { htmlBlocks.push('</ol>'); inNumberedList = false }
           const calloutText = richTextToHtml(block.callout.rich_text)
+          // Get icon - could be emoji, external image, or null
           const calloutIcon = block.callout.icon
           let iconHtml = ''
           if (calloutIcon?.type === 'emoji' && calloutIcon.emoji) {
             iconHtml = `<span class="callout-icon">${calloutIcon.emoji}</span>`
+          } else if (calloutIcon?.type === 'external' && calloutIcon.external?.url) {
+            iconHtml = `<img class="callout-icon-img" src="${calloutIcon.external.url}" alt="" />`
           }
+          // Get background color from Notion (defaults to gray_background if not set)
           const calloutColor = block.callout.color || 'default'
           htmlBlocks.push(`<div class="callout callout-${calloutColor}">${iconHtml}<div class="callout-content">${calloutText}</div></div>`)
           break
@@ -246,6 +277,30 @@ serve(async (req) => {
           const toggleText = richTextToHtml(block.toggle.rich_text)
           htmlBlocks.push(`<details><summary>${toggleText}</summary></details>`)
           break
+
+        case 'table':
+          if (inBulletList) { htmlBlocks.push('</ul>'); inBulletList = false }
+          if (inNumberedList) { htmlBlocks.push('</ol>'); inNumberedList = false }
+          // Fetch table rows
+          const tableRows = await fetchTableRows(block.id)
+          const hasColumnHeader = block.table.has_column_header
+          const hasRowHeader = block.table.has_row_header
+          
+          let tableHtml = '<table>'
+          tableRows.forEach((row: any, rowIndex: number) => {
+            const isHeaderRow = hasColumnHeader && rowIndex === 0
+            tableHtml += '<tr>'
+            row.table_row.cells.forEach((cell: any, cellIndex: number) => {
+              const isHeaderCell = isHeaderRow || (hasRowHeader && cellIndex === 0)
+              const cellTag = isHeaderCell ? 'th' : 'td'
+              const cellContent = richTextToHtml(cell)
+              tableHtml += `<${cellTag}>${cellContent}</${cellTag}>`
+            })
+            tableHtml += '</tr>'
+          })
+          tableHtml += '</table>'
+          htmlBlocks.push(tableHtml)
+          break
           
         default:
           console.log(`Unsupported block type: ${block.type}`)
@@ -263,7 +318,8 @@ serve(async (req) => {
       JSON.stringify({ 
         title,
         content,
-        lastEdited
+        lastEdited,
+        headerImage
       }),
       { 
         headers: { 
