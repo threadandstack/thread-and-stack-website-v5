@@ -268,8 +268,17 @@ serve(async (req) => {
             inNumberedList = false
           }
           const calloutText = richTextToHtml(block.callout.rich_text)
-          const icon = block.callout.icon?.emoji || '💡'
-          htmlBlocks.push(`<div class="callout"><span class="callout-icon">${icon}</span><div>${calloutText}</div></div>`)
+          // Get icon - could be emoji, external image, or null
+          const calloutIcon = block.callout.icon
+          let iconHtml = ''
+          if (calloutIcon?.type === 'emoji' && calloutIcon.emoji) {
+            iconHtml = `<span class="callout-icon">${calloutIcon.emoji}</span>`
+          } else if (calloutIcon?.type === 'external' && calloutIcon.external?.url) {
+            iconHtml = `<img class="callout-icon-img" src="${calloutIcon.external.url}" alt="" />`
+          }
+          // Get background color from Notion (defaults to gray_background if not set)
+          const calloutColor = block.callout.color || 'default'
+          htmlBlocks.push(`<div class="callout callout-${calloutColor}">${iconHtml}<div class="callout-content">${calloutText}</div></div>`)
           break
           
         case 'divider':

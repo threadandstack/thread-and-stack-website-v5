@@ -220,6 +220,76 @@ All colors MUST be HSL.
     margin-bottom: 0.75rem;
     line-height: 1.7;
   }
+  
+  /* Callout styles matching Notion */
+  .blog-content .callout {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    margin: 1.5rem 0;
+    border-radius: 0.5rem;
+    background: hsl(var(--muted) / 0.5);
+  }
+  
+  .blog-content .callout-icon {
+    font-size: 1.25rem;
+    line-height: 1.5;
+    flex-shrink: 0;
+  }
+  
+  .blog-content .callout-icon-img {
+    width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
+  }
+  
+  .blog-content .callout-content {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .blog-content .callout-content p {
+    margin-bottom: 0;
+  }
+  
+  /* Notion callout color variants */
+  .blog-content .callout-default,
+  .blog-content .callout-gray_background {
+    background: hsl(0 0% 50% / 0.1);
+  }
+  
+  .blog-content .callout-brown_background {
+    background: hsl(30 50% 50% / 0.15);
+  }
+  
+  .blog-content .callout-orange_background {
+    background: hsl(30 80% 50% / 0.15);
+  }
+  
+  .blog-content .callout-yellow_background {
+    background: hsl(45 80% 50% / 0.15);
+  }
+  
+  .blog-content .callout-green_background {
+    background: hsl(140 50% 45% / 0.15);
+  }
+  
+  .blog-content .callout-blue_background {
+    background: hsl(210 70% 50% / 0.15);
+  }
+  
+  .blog-content .callout-purple_background {
+    background: hsl(256 70% 55% / 0.15);
+  }
+  
+  .blog-content .callout-pink_background {
+    background: hsl(330 70% 55% / 0.15);
+  }
+  
+  .blog-content .callout-red_background {
+    background: hsl(0 70% 50% / 0.15);
+  }
 }
 
 @layer utilities {
