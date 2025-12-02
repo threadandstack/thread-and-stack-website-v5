@@ -22,19 +22,9 @@ export const Navigation = () => {
   }, []);
 
   const services = [
-    { href: "/clarity-sessions", label: "Clarity Sessions" },
-    { href: "/mentorship-sprint", label: "Thread AI Sprint" },
+    { href: "/sessions-and-sprints", label: "Sessions & Sprints" },
     { href: "/workshops", label: "Brand Connection Workshops" },
-    { href: "/fractional-strategy", label: "Fractional Strategy" },
-    { href: "/deep-engagement", label: "Deep Engagement" },
-  ];
-
-  const mainLinks = [
-    { href: "/#what-we-do", label: "What We Do" },
-    { href: "/#how-we-work", label: "How We Work" },
-    { href: "/blog", label: "Blog" },
-    { href: "/about", label: "About" },
-    { href: "/#contact", label: "Contact" },
+    { href: "/fractional-deep-engagement", label: "Fractional & Deep Engagement" },
   ];
 
   return (
@@ -48,28 +38,21 @@ export const Navigation = () => {
           </a>
 
           {/* Hero Nav - Desktop Only */}
-          <div className="hidden md:flex items-center gap-6">
-            <a 
-              href="/blog" 
-              className="text-sm text-foreground/80 hover:text-foreground transition-colors not-italic"
-            >
-              Blog
-            </a>
-            
+          <div className="hidden md:flex items-center gap-8">
             <a 
               href="/about" 
-              className="text-sm text-foreground/80 hover:text-foreground transition-colors not-italic"
+              className="text-base text-foreground/80 hover:text-foreground transition-colors not-italic"
             >
               About
             </a>
             
             {/* Services Dropdown */}
             <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center gap-1 text-sm text-foreground/80 hover:text-foreground transition-colors not-italic">
+              <DropdownMenuTrigger className="flex items-center gap-1 text-base text-foreground/80 hover:text-foreground transition-colors not-italic">
                 Services
                 <ChevronDown className="w-4 h-4" />
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="bg-background border border-border z-50 min-w-[240px]">
+              <DropdownMenuContent align="end" className="bg-background border border-border z-50 min-w-[280px]">
                 {services.map((service) => (
                   <DropdownMenuItem key={service.href} asChild>
                     <a href={service.href} className="cursor-pointer">
@@ -79,6 +62,13 @@ export const Navigation = () => {
                 ))}
               </DropdownMenuContent>
             </DropdownMenu>
+
+            <a 
+              href="/blog" 
+              className="text-base text-foreground/80 hover:text-foreground transition-colors italic"
+            >
+              Stacked Behaviours
+            </a>
 
             {/* Get Started CTA */}
             <Button 
@@ -116,24 +106,21 @@ export const Navigation = () => {
             </a>
 
             {/* Desktop Navigation - Full Menu */}
-            <div className="hidden lg:flex items-center gap-8">
-              {mainLinks.slice(0, 2).map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="text-sm text-foreground/80 hover:text-foreground transition-colors not-italic"
-                >
-                  {link.label}
-                </a>
-              ))}
+            <div className="hidden md:flex items-center gap-8">
+              <a
+                href="/about"
+                className="text-base text-foreground/80 hover:text-foreground transition-colors not-italic"
+              >
+                About
+              </a>
 
               {/* Services Dropdown */}
               <DropdownMenu>
-                <DropdownMenuTrigger className="flex items-center gap-1 text-sm text-foreground/80 hover:text-foreground transition-colors not-italic">
+                <DropdownMenuTrigger className="flex items-center gap-1 text-base text-foreground/80 hover:text-foreground transition-colors not-italic">
                   Services
                   <ChevronDown className="w-4 h-4" />
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="center" className="bg-background border border-border z-50 min-w-[240px]">
+                <DropdownMenuContent align="center" className="bg-background border border-border z-50 min-w-[280px]">
                   {services.map((service) => (
                     <DropdownMenuItem key={service.href} asChild>
                       <a href={service.href} className="cursor-pointer">
@@ -144,15 +131,12 @@ export const Navigation = () => {
                 </DropdownMenuContent>
               </DropdownMenu>
 
-              {mainLinks.slice(2).map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="text-sm text-foreground/80 hover:text-foreground transition-colors not-italic"
-                >
-                  {link.label}
-                </a>
-              ))}
+              <a
+                href="/blog"
+                className="text-base text-foreground/80 hover:text-foreground transition-colors italic"
+              >
+                Stacked Behaviours
+              </a>
 
               <Button 
                 size="sm" 
@@ -193,16 +177,13 @@ export const Navigation = () => {
           </div>
           
           <div className="px-6 py-4 space-y-4 overflow-y-auto h-full">
-            {mainLinks.slice(0, 2).map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="block py-3 text-lg text-foreground/80 hover:text-foreground transition-colors"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {link.label}
-              </a>
-            ))}
+            <a
+              href="/about"
+              className="block py-3 text-lg text-foreground/80 hover:text-foreground transition-colors"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              About
+            </a>
 
             <div className="border-t border-border/50 pt-4">
               <p className="text-xs text-muted-foreground mb-3 not-italic">Services</p>
@@ -219,16 +200,13 @@ export const Navigation = () => {
             </div>
 
             <div className="border-t border-border/50 pt-4">
-              {mainLinks.slice(2).map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="block py-3 text-lg text-foreground/80 hover:text-foreground transition-colors"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {link.label}
-                </a>
-              ))}
+              <a
+                href="/blog"
+                className="block py-3 text-lg text-foreground/80 hover:text-foreground transition-colors italic"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Stacked Behaviours
+              </a>
             </div>
 
             <Button 

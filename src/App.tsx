@@ -10,6 +10,8 @@ import MentorshipSprint from "./pages/MentorshipSprint";
 import Workshops from "./pages/Workshops";
 import FractionalStrategy from "./pages/FractionalStrategy";
 import DeepEngagement from "./pages/DeepEngagement";
+import SessionsAndSprints from "./pages/SessionsAndSprints";
+import FractionalDeepEngagement from "./pages/FractionalDeepEngagement";
 import NotFound from "./pages/NotFound";
 import BlogPage from "./pages/BlogPage";
 import BlogPostPage from "./pages/BlogPostPage";
@@ -27,11 +29,14 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/about" element={<AboutPage />} />
-          <Route path="/clarity-sessions" element={<StackedSessions />} />
-          <Route path="/mentorship-sprint" element={<MentorshipSprint />} />
+          <Route path="/sessions-and-sprints" element={<SessionsAndSprints />} />
+          <Route path="/fractional-deep-engagement" element={<FractionalDeepEngagement />} />
           <Route path="/workshops" element={<Workshops />} />
-          <Route path="/fractional-strategy" element={<FractionalStrategy />} />
-          <Route path="/deep-engagement" element={<DeepEngagement />} />
+          {/* Legacy routes - redirect to new combined pages */}
+          <Route path="/clarity-sessions" element={<SessionsAndSprints />} />
+          <Route path="/mentorship-sprint" element={<SessionsAndSprints />} />
+          <Route path="/fractional-strategy" element={<FractionalDeepEngagement />} />
+          <Route path="/deep-engagement" element={<FractionalDeepEngagement />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blog/:slug" element={<BlogPostPage />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />

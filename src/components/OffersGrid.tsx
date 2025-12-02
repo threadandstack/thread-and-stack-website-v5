@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { Clock, Zap, Users, Repeat, Target } from "lucide-react";
-import { OfferModal } from "./OfferModal";
+import { Zap, Users, Target } from "lucide-react";
+import { ServiceDrawer } from "./ServiceDrawer";
 import { Emphasis } from "@/components/Emphasis";
 
 export const OffersGrid = () => {
   const [selectedOffer, setSelectedOffer] = useState<typeof offers[0] | null>(null);
-  const [modalOpen, setModalOpen] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -38,128 +38,30 @@ export const OffersGrid = () => {
   const offers = [
     {
       icon: <Zap className="w-6 h-6" />,
-      title: "Clarity Sessions",
-      tagline: "Rapid Strategic Intervention",
-      description: "One Hour. One Problem. Solved. Unblock positioning, diagnose visual identity gaps, validate creative direction, or diagnose messy systems. Leave with recording, AI summary, and a clear action plan.",
-      fullDescription: "Sometimes you don't need a 6-week sprint. Sometimes you just need 60 minutes to unblock a specific problem, validate a creative direction decision, diagnose brand inconsistencies, or get a second brain on a messy situation. A focused, high-intensity consulting session designed to clear the fog and give you an immediate path forward.",
-      price: "£300",
-      duration: "60 minutes",
-      whatYouGet: [
-        "The Recording: Full video/audio of the session",
-        "The Summary: Thread AI transcription and summary of key decisions",
-        "The Action Plan: A bulleted list of exactly what you need to do next",
-        "Pre-session review of your notes and any brand materials",
-        "Immediate, actionable path forward for strategy or creative work"
-      ],
-      process: [
-        "Send your notes in advance for review",
-        "60-minute focused session tackling your specific problem",
-        "Receive recording with AI summary and action plan",
-        "Leave with clarity and immediate next steps"
-      ],
-      cta: "Book a Session",
-      link: "/clarity-sessions"
-    },
-    {
-      icon: <Clock className="w-6 h-6" />,
-      title: "Thread AI Sprint",
-      tagline: "A 6-Week Intensive for Purpose-Driven Marketers",
-      description: "Transform how you work with AI without losing your creative edge. Build a custom productivity system that gives you 5-10 hours back each week. Human-centered. Tool-agnostic. Creativity-first.",
-      fullDescription: "A 6-week 1:1 mentorship program where we build AI-supported workflows tailored to your tools, role, and working style. You stay in control—AI handles mechanical tasks while you focus on creative, strategic work that moves the needle. It's about unlocking time, not replacing thinking.",
-      price: "From £1k",
-      duration: "6 weeks",
-      whatYouGet: [
-        "6 weekly 1-hour sessions with structured agendas",
-        "Custom productivity system built for your actual role and tools",
-        "5-10 hours back each week through AI-enabled workflows",
-        "Confidence using AI without second-guessing or quality drops",
-        "Works in any ecosystem: Microsoft, Google, Notion, or browser-only",
-        "Ongoing support between sessions",
-        "Documentation and playbooks you can reference later"
-      ],
-      process: [
-        "Week 1-2: Foundation & Setup - map workflow, identify pain points",
-        "Week 3-4: Implementation & Integration - build tailored AI workflows",
-        "Week 5-6: Refinement & Mastery - refine system, build sustainable habits"
-      ],
-      cta: "Explore Sprints",
-      link: "/mentorship-sprint"
+      title: "Sessions & Sprints",
+      tagline: "Focused Strategic Support",
+      description: "One-hour Clarity Sessions for rapid intervention (£300), or six-week Thread AI Sprints to transform how you work with AI (from £1k). Two ways to get unstuck and build momentum.",
+      link: "/sessions-and-sprints",
+      price: "From £300",
+      cta: "Learn More"
     },
     {
       icon: <Users className="w-6 h-6" />,
       title: "Brand Connection Workshops",
       tagline: "A Modular Strategy System for Purpose-Driven Brands",
       description: "Fix the disconnect between your brand and your audience. Modular, co-created workshops that get your team aligned on story, positioning, visual identity direction, and roadmap. Build exactly what you need—from lean sprints to comprehensive overhauls.",
-      fullDescription: "Most brand strategy is a black box. You pay a fortune, wait three months, and get a PDF that gathers dust. This is different. It's a modular, co-created workshop system designed to fix the disconnect between your brand and your audience...on your terms. Choose the depth and price for each phase to build the workshop that fits your budget and burning questions.",
+      link: "/workshops",
       price: "From £2k",
-      duration: "Modular: Half-day to 2-day sprints",
-      whatYouGet: [
-        "Clarity over Confusion: Hard evidence, not assumptions",
-        "Alignment over Arguments: Force consensus across teams",
-        "Momentum over Stagnation: 3 months of work in 2 days",
-        "Confidence over Risk: Test positioning before building creative assets",
-        "Visual direction and brand world building foundations",
-        "Strategic playbook with frameworks, creative direction, and roadmap"
-      ],
-      process: [
-        "Phase 1: Discovery - Questionnaires, interviews, or customer research",
-        "Phase 2: Workshop - Half-day diagnostic to 2-day sprint",
-        "Phase 3: Output - Summary, strategic playbook, or pitch building"
-      ],
-      cta: "Plan a Workshop",
-      link: "/workshops"
-    },
-    {
-      icon: <Repeat className="w-6 h-6" />,
-      title: "Fractional Strategy",
-      tagline: "Ongoing Strategic Partnership",
-      description: "Embedded strategic and creative support on a monthly retainer. Brand positioning, campaign strategy, creative direction, and asset development—without the overhead of a full-time hire. For scale-ups and established orgs needing consistent strategic guidance.",
-      fullDescription: "Get continuous strategic and creative support without the commitment of a full-time hire. I work as an embedded member of your team, providing brand strategy, positioning guidance, creative direction, and hands-on design support on an ongoing monthly basis. Perfect for growing companies (20-100+ people) who need senior strategic thinking and design craft but want flexibility.",
-      price: "Case-by-case",
-      duration: "Monthly retainer",
-      whatYouGet: [
-        "Set monthly hours/days embedded with your team",
-        "Strategic guidance on brand positioning and campaigns",
-        "Creative direction, visual identity development, and asset design",
-        "Ongoing access for strategic and creative decision support",
-        "Team workshops and alignment sessions as needed",
-        "Brand guidelines, design systems, and strategic frameworks",
-        "Flexibility to scale engagement up or down"
-      ],
-      process: [
-        "Discovery call to understand your strategic needs",
-        "Scope monthly engagement and establish rhythms",
-        "Embed with your team on agreed cadence",
-        "Ongoing strategic support, workshops, and guidance"
-      ],
-      cta: "Discuss Engagement",
-      link: "/fractional-strategy"
+      cta: "Learn More"
     },
     {
       icon: <Target className="w-6 h-6" />,
-      title: "Deep Engagement",
-      tagline: "2-6 Month Transformation Projects",
-      description: "Full brand refreshes, visual identity development, positioning overhauls, or comprehensive system builds. For organizations ready to commit to deep strategic and creative work with clear deliverables and measurable transformation over 2-6 months.",
-      fullDescription: "Comprehensive strategic and creative projects for organizations ready to invest in transformation. Whether it's a complete brand refresh with new visual identity, positioning overhaul, brand world building, or building marketing systems from the ground up—this is for teams (20-100+ people) committed to deep work with lasting impact.",
+      title: "Fractional & Deep Engagement",
+      tagline: "Strategic Partnership & Transformation",
+      description: "Two models for sustained partnership. Ongoing monthly retainers for continuous strategic support, or intensive 2-6 month projects for comprehensive transformation. For scale-ups and established organizations (20-100+ people).",
+      link: "/fractional-deep-engagement",
       price: "Case-by-case",
-      duration: "2-6 months",
-      whatYouGet: [
-        "Comprehensive discovery and stakeholder alignment",
-        "Full strategic framework and positioning work",
-        "Visual identity systems, brand guidelines, and creative direction",
-        "Brand refresh or complete overhaul with asset development",
-        "Marketing systems and operational infrastructure",
-        "Team training and capability building",
-        "Documentation, design systems, playbooks, and sustainability plan"
-      ],
-      process: [
-        "Month 1: Deep discovery, audit, and strategic foundation",
-        "Months 2-4: Build positioning, systems, and frameworks",
-        "Months 5-6: Refine, implement, train team, and transition",
-        "Ongoing: Optional retainer for sustained momentum"
-      ],
-      cta: "Explore Projects",
-      link: "/deep-engagement"
+      cta: "Learn More"
     }
   ];
 
@@ -180,9 +82,8 @@ export const OffersGrid = () => {
           </p>
         </div>
         
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {/* First row - 3 cards */}
-          {offers.slice(0, 3).map((offer, index) => (
+        <div className="grid md:grid-cols-3 gap-8">
+          {offers.map((offer, index) => (
             <div 
               key={index}
               className="bg-card rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] p-8 transition-all duration-300 flex flex-col"
@@ -212,52 +113,10 @@ export const OffersGrid = () => {
                   className="w-full group bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl"
                   onClick={() => {
                     setSelectedOffer(offer);
-                    setModalOpen(true);
+                    setDrawerOpen(true);
                   }}
                 >
-                  Learn More
-                </Button>
-              </div>
-            </div>
-          ))}
-        </div>
-        
-        {/* Second row - 2 cards centered */}
-        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto mt-8">
-          {offers.slice(3).map((offer, index) => (
-            <div 
-              key={index}
-              className="bg-card rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] p-8 transition-all duration-300 flex flex-col"
-            >
-              <div className="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center mb-6 text-accent">
-                {offer.icon}
-              </div>
-              
-              <h3 className="text-2xl mb-2 font-light">
-                {offer.title}
-              </h3>
-              
-              <p className="text-sm text-accent mb-4">
-                {offer.tagline}
-              </p>
-              
-              <p className="text-muted-foreground leading-relaxed mb-6 flex-grow">
-                {offer.description}
-              </p>
-              
-              <div className="space-y-4 pt-4 border-t border-border/30">
-                <p className="text-sm font-medium text-foreground/70 not-italic">
-                  {offer.price}
-                </p>
-                
-                <Button 
-                  className="w-full group bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl"
-                  onClick={() => {
-                    setSelectedOffer(offer);
-                    setModalOpen(true);
-                  }}
-                >
-                  Learn More
+                  {offer.cta}
                 </Button>
               </div>
             </div>
@@ -265,10 +124,10 @@ export const OffersGrid = () => {
         </div>
       </div>
       
-      <OfferModal
+      <ServiceDrawer
         offer={selectedOffer}
-        open={modalOpen}
-        onOpenChange={setModalOpen}
+        open={drawerOpen}
+        onOpenChange={setDrawerOpen}
       />
     </section>
   );
