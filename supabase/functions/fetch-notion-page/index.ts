@@ -11,10 +11,10 @@ serve(async (req) => {
   }
 
   try {
-    const { pageId } = await req.json()
+    const { pageTitle } = await req.json()
     
-    if (!pageId) {
-      throw new Error('Page ID is required')
+    if (!pageTitle) {
+      throw new Error('Page title is required')
     }
 
     const NOTION_API_KEY = Deno.env.get('NOTION_API_KEY')
@@ -22,27 +22,62 @@ serve(async (req) => {
       throw new Error('NOTION_API_KEY not configured')
     }
 
-    // Fetch page properties
-    const pageResponse = await fetch(
-      `https://api.notion.com/v1/pages/${pageId}`,
+    // Query the Published Blog Library database for governance pages
+    const databaseId = '2bc8863b87d4802fa65dd15c42ffa13b'
+    
+    console.log('Querying database for page:', pageTitle)
+    
+    const queryResponse = await fetch(
+      `https://api.notion.com/v1/databases/${databaseId}/query`,
       {
+        method: 'POST',
         headers: {
           'Authorization': `Bearer ${NOTION_API_KEY}`,
           'Notion-Version': '2022-06-28',
-        }
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          filter: {
+            and: [
+              {
+                property: 'Status',
+                status: {
+                  equals: 'Live - Non Blog'
+                }
+              },
+              {
+                property: 'Name',
+                title: {
+                  equals: pageTitle
+                }
+              }
+            ]
+          }
+        })
       }
     )
 
-    if (!pageResponse.ok) {
-      throw new Error(`Failed to fetch page: ${pageResponse.status}`)
+    if (!queryResponse.ok) {
+      const errorText = await queryResponse.text()
+      console.error('Notion database query error:', errorText)
+      throw new Error(`Failed to query database: ${queryResponse.status}`)
     }
 
-    const pageData = await pageResponse.json()
+    const queryData = await queryResponse.json()
+    
+    if (!queryData.results || queryData.results.length === 0) {
+      console.error('Page not found in database:', pageTitle)
+      throw new Error('Page not found')
+    }
+
+    const page = queryData.results[0]
+    const pageId = page.id
+    const lastEdited = page.last_edited_time
     
     // Extract title from properties
-    const titleProperty = Object.values(pageData.properties).find((prop: any) => prop.type === 'title') as any
-    const title = titleProperty?.title?.[0]?.plain_text || 'Untitled'
-    const lastEdited = pageData.last_edited_time
+    const title = page.properties['Name']?.title?.[0]?.plain_text || pageTitle
+
+    console.log('Found page:', pageId, 'Last edited:', lastEdited)
 
     // Fetch page content (blocks) - handle pagination for long pages
     let allBlocks: any[] = []

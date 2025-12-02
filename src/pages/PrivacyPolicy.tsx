@@ -4,8 +4,6 @@ import { Footer } from "@/components/Footer";
 import { supabase } from "@/integrations/supabase/client";
 import { Skeleton } from "@/components/ui/skeleton";
 
-const NOTION_PAGE_ID = "2108863b87d4806fad97cc292d523a2f";
-
 const PrivacyPolicy = () => {
   const [content, setContent] = useState<string>("");
   const [title, setTitle] = useState<string>("Privacy Policy");
@@ -17,7 +15,7 @@ const PrivacyPolicy = () => {
     const fetchContent = async () => {
       try {
         const { data, error } = await supabase.functions.invoke("fetch-notion-page", {
-          body: { pageId: NOTION_PAGE_ID },
+          body: { pageTitle: "Privacy Policy" },
         });
 
         if (error) throw error;

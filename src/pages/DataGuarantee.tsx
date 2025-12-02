@@ -4,8 +4,6 @@ import { Footer } from "@/components/Footer";
 import { supabase } from "@/integrations/supabase/client";
 import { Skeleton } from "@/components/ui/skeleton";
 
-const NOTION_PAGE_ID = "1fc8863b87d4801fac0ac9fddd7a1ed4";
-
 const DataGuarantee = () => {
   const [content, setContent] = useState<string>("");
   const [title, setTitle] = useState<string>("Data Guarantee");
@@ -17,7 +15,7 @@ const DataGuarantee = () => {
     const fetchContent = async () => {
       try {
         const { data, error } = await supabase.functions.invoke("fetch-notion-page", {
-          body: { pageId: NOTION_PAGE_ID },
+          body: { pageTitle: "Data Guarantee" },
         });
 
         if (error) throw error;
