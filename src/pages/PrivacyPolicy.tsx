@@ -8,6 +8,7 @@ const PrivacyPolicy = () => {
   const [content, setContent] = useState<string>("");
   const [title, setTitle] = useState<string>("Privacy Policy");
   const [lastEdited, setLastEdited] = useState<string>("");
+  const [headerImage, setHeaderImage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -23,6 +24,7 @@ const PrivacyPolicy = () => {
         setTitle(data.title || "Privacy Policy");
         setContent(data.content);
         setLastEdited(data.lastEdited);
+        setHeaderImage(data.headerImage || null);
       } catch (err: any) {
         console.error("Error fetching privacy policy:", err);
         setError("Unable to load privacy policy. Please try again later.");
@@ -47,7 +49,7 @@ const PrivacyPolicy = () => {
       <Navigation />
       
       <main className="pt-32 pb-20 px-6">
-        <article className="max-w-3xl mx-auto">
+        <article className="max-w-4xl mx-auto">
           {isLoading ? (
             <div className="space-y-4">
               <Skeleton className="h-12 w-3/4" />
@@ -66,30 +68,32 @@ const PrivacyPolicy = () => {
             </div>
           ) : (
             <>
-              <header className="mb-12">
-                <h1 className="text-4xl md:text-5xl font-serif mb-4">{title}</h1>
-                {formattedDate && (
-                  <p className="text-sm text-muted-foreground">
-                    Last updated: {formattedDate}
-                  </p>
-                )}
-              </header>
-              
-              <div 
-                className="prose prose-lg max-w-none
-                  prose-headings:font-serif prose-headings:font-normal
-                  prose-h1:text-3xl prose-h1:mt-12 prose-h1:mb-4
-                  prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4
-                  prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3
-                  prose-p:text-foreground/90 prose-p:leading-relaxed prose-p:mb-4
-                  prose-a:text-primary prose-a:no-underline hover:prose-a:underline
-                  prose-ul:my-4 prose-ol:my-4
-                  prose-li:text-foreground/90 prose-li:mb-2
-                  prose-blockquote:border-l-primary prose-blockquote:bg-muted/30 prose-blockquote:py-2 prose-blockquote:px-4 prose-blockquote:rounded-r-lg
-                  prose-strong:text-foreground
-                  prose-hr:border-border prose-hr:my-8"
-                dangerouslySetInnerHTML={{ __html: content }}
-              />
+              {/* Header Image */}
+              {headerImage && (
+                <div className="aspect-[21/9] overflow-hidden rounded-2xl mb-12">
+                  <img 
+                    src={headerImage} 
+                    alt={title}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              )}
+
+              <div className="max-w-3xl mx-auto">
+                <header className="mb-12">
+                  <h1 className="text-4xl md:text-5xl font-light mb-4">{title}</h1>
+                  {formattedDate && (
+                    <p className="text-sm text-muted-foreground">
+                      Last updated: {formattedDate}
+                    </p>
+                  )}
+                </header>
+                
+                <div 
+                  className="blog-content prose prose-lg max-w-none"
+                  dangerouslySetInnerHTML={{ __html: content }}
+                />
+              </div>
             </>
           )}
         </article>

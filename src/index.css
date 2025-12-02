@@ -290,6 +290,54 @@ All colors MUST be HSL.
   .blog-content .callout-red_background {
     background: hsl(0 70% 50% / 0.15);
   }
+
+  /* Table styles */
+  .blog-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-size: 0.95rem;
+  }
+
+  .blog-content th,
+  .blog-content td {
+    border: 1px solid hsl(var(--border));
+    padding: 0.75rem 1rem;
+    text-align: left;
+  }
+
+  .blog-content th {
+    background: hsl(var(--muted) / 0.5);
+    font-weight: 600;
+  }
+
+  .blog-content tr:nth-child(even) {
+    background: hsl(var(--muted) / 0.2);
+  }
+
+  /* Figure and image styles */
+  .blog-content figure {
+    margin: 2rem 0;
+  }
+
+  .blog-content figure img {
+    width: 100%;
+    border-radius: 0.5rem;
+  }
+
+  .blog-content figcaption {
+    text-align: center;
+    font-size: 0.875rem;
+    color: hsl(var(--muted-foreground));
+    margin-top: 0.5rem;
+    font-style: italic;
+  }
+
+  /* Empty paragraph for spacing */
+  .blog-content p:empty,
+  .blog-content p:has(> br:only-child) {
+    min-height: 1.5rem;
+  }
 }
 
 @layer utilities {
