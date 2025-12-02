@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import {
   Dialog,
   DialogContent,
@@ -6,6 +7,51 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+
+const ModalImageCarousel = ({ images }: { images: string[] }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    if (images.length <= 1) return;
+
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % images.length);
+    }, 3500);
+
+    return () => clearInterval(interval);
+  }, [images.length]);
+
+  return (
+    <div className="aspect-[4/3] overflow-hidden rounded-xl relative">
+      <div 
+        className="flex h-full w-full transition-transform duration-700 ease-in-out"
+        style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+      >
+        {images.map((image, index) => (
+          <img
+            key={index}
+            src={image}
+            alt=""
+            className="min-w-full h-full object-cover flex-shrink-0"
+          />
+        ))}
+      </div>
+      {images.length > 1 && (
+        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
+          {images.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentIndex(index)}
+              className={`w-2 h-2 rounded-full transition-all ${
+                index === currentIndex ? 'bg-white' : 'bg-white/50'
+              }`}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
 
 interface Project {
   title: string;
@@ -45,13 +91,7 @@ export const FeaturedProjectModal = ({
         </DialogHeader>
         
         <div className="space-y-6">
-          <div className="aspect-[4/3] overflow-hidden rounded-xl">
-            <img
-              src={project.images[0]}
-              alt={project.title}
-              className="w-full h-full object-cover"
-            />
-          </div>
+          <ModalImageCarousel images={project.images} />
           
           <p className="text-accent font-light not-italic">
             {project.role}
