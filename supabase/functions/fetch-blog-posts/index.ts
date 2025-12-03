@@ -61,15 +61,23 @@ serve(async (req) => {
         .replace(/[^a-z0-9]+/g, '-')
         .replace(/^-+|-+$/g, '')
       
+      // Extract intro (max 50 chars hook)
+      const intro = properties['Intro']?.rich_text?.[0]?.plain_text || null
+      
+      // Extract published date
+      const publishedDate = properties['Published']?.date?.start || null
+      
       return {
         id: page.id,
         slug: slug,
         title: title,
         description: properties['Description']?.rich_text?.[0]?.plain_text || '',
+        intro: intro,
         headerImage: headerImage,
         url: page.url,
         readingTime: properties['Reading time']?.rich_text?.[0]?.plain_text || null,
-        theme: properties['Theme']?.select?.name || null
+        theme: properties['Theme']?.select?.name || null,
+        publishedDate: publishedDate
       }
     })
 
