@@ -16,6 +16,7 @@ interface BlogPostDetail {
   content: string;
   readingTime?: string | null;
   theme?: string | null;
+  lastEditedTime?: string | null;
 }
 
 const getThemeColor = (theme: string | null | undefined) => {
@@ -33,6 +34,15 @@ const getThemeColor = (theme: string | null | undefined) => {
     default:
       return 'bg-muted text-muted-foreground';
   }
+};
+
+const formatLastEdited = (dateString: string): string => {
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric'
+  });
 };
 
 const BlogPostPage = () => {
@@ -111,7 +121,7 @@ const BlogPostPage = () => {
               {post.title}
             </h1>
 
-            {/* Meta info: Author, Category, Read time */}
+            {/* Meta info: Author, Category, Read time, Last edited */}
             <div className="flex flex-wrap items-center gap-4 mb-8 text-sm">
               <div className="flex items-center gap-3">
                 <img 
@@ -132,6 +142,14 @@ const BlogPostPage = () => {
                 <span className="text-muted-foreground">
                   {post.readingTime} min read
                 </span>
+              )}
+              {post.lastEditedTime && (
+                <>
+                  <span className="text-muted-foreground/50">|</span>
+                  <span className="text-muted-foreground">
+                    Updated {formatLastEdited(post.lastEditedTime)}
+                  </span>
+                </>
               )}
             </div>
 

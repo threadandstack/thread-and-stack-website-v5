@@ -12,10 +12,12 @@ interface BlogPost {
   slug: string;
   title: string;
   description: string;
+  intro?: string | null;
   headerImage?: string | null;
   url: string;
   readingTime?: string | null;
   theme?: string | null;
+  publishedDate?: string | null;
 }
 
 const getThemeColors = (theme: string): string => {
@@ -27,6 +29,15 @@ const getThemeColors = (theme: string): string => {
     'Case Studies': 'bg-accent/10 text-accent',
   };
   return themeMap[theme] || 'bg-accent/10 text-accent';
+};
+
+const formatPublishedDate = (dateString: string): string => {
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric'
+  });
 };
 
 const BlogPage = () => {
@@ -111,9 +122,22 @@ const BlogPage = () => {
                         {post.title}
                       </h2>
 
-                      <p className="text-sm text-muted-foreground italic">
-                        Brendan @ Thread and Stack
-                      </p>
+                      {post.intro && (
+                        <p className="text-muted-foreground mb-4 line-clamp-2">
+                          {post.intro}
+                        </p>
+                      )}
+
+                      <div className="flex items-center justify-between text-sm text-muted-foreground">
+                        <span className="italic">
+                          Brendan @ Thread and Stack
+                        </span>
+                        {post.publishedDate && (
+                          <span>
+                            {formatPublishedDate(post.publishedDate)}
+                          </span>
+                        )}
+                      </div>
                     </div>
                   </Card>
                 </Link>
