@@ -319,14 +319,18 @@ All colors MUST be HSL.
     background: hsl(var(--muted) / 0.2);
   }
 
-  /* Figure and image styles */
+  /* Figure and image styles - inline images smaller and centered */
   .blog-content figure {
-    margin: 2rem 0;
+    margin: 2rem auto;
+    max-width: 65%;
+    text-align: center;
   }
 
   .blog-content figure img {
     width: 100%;
     border-radius: 0.5rem;
+    display: block;
+    margin: 0 auto;
   }
 
   .blog-content figcaption {
@@ -335,6 +339,13 @@ All colors MUST be HSL.
     color: hsl(var(--muted-foreground));
     margin-top: 0.5rem;
     font-style: italic;
+  }
+  
+  /* Mobile: slightly larger images for readability */
+  @media (max-width: 768px) {
+    .blog-content figure {
+      max-width: 85%;
+    }
   }
 
   /* Empty paragraph for spacing */
