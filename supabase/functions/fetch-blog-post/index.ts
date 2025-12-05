@@ -275,7 +275,19 @@ serve(async (req) => {
           
         case 'quote':
           const quoteText = richTextToHtml(block.quote.rich_text)
-          htmlBlocks.push(`<blockquote>${quoteText}</blockquote>`)
+          // Fetch children if the quote has them (multi-line quotes)
+          let quoteChildrenHtml = ''
+          if (block.has_children) {
+            const quoteChildren = await fetchBlockChildren(block.id)
+            const quoteChildParts: string[] = []
+            for (const child of quoteChildren) {
+              const childHtml = await blockToHtml(child)
+              if (childHtml) quoteChildParts.push(childHtml)
+            }
+            quoteChildrenHtml = quoteChildParts.join('\n')
+          }
+          const fullQuoteContent = quoteText + (quoteChildrenHtml ? `\n${quoteChildrenHtml}` : '')
+          htmlBlocks.push(`<blockquote>${fullQuoteContent}</blockquote>`)
           break
           
         case 'code':

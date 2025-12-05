@@ -322,7 +322,7 @@ All colors MUST be HSL.
   /* Figure and image styles - inline images smaller and centered */
   .blog-content figure {
     margin: 2rem auto;
-    max-width: 65%;
+    max-width: 55%;
     text-align: center;
   }
 
@@ -344,7 +344,7 @@ All colors MUST be HSL.
   /* Mobile: slightly larger images for readability */
   @media (max-width: 768px) {
     .blog-content figure {
-      max-width: 85%;
+      max-width: 75%;
     }
   }
 
