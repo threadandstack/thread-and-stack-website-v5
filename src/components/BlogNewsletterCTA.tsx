@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { ChevronDown, ChevronUp } from "lucide-react";
@@ -8,6 +10,7 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 export const BlogNewsletterCTA = () => {
   const [email, setEmail] = useState("");
   const [honeypot, setHoneypot] = useState("");
+  const [consent, setConsent] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const { toast } = useToast();
@@ -17,6 +20,15 @@ export const BlogNewsletterCTA = () => {
     
     // Honeypot check - if filled, silently reject (bot detected)
     if (honeypot) {
+      return;
+    }
+
+    if (!consent) {
+      toast({
+        title: "Consent required",
+        description: "Please agree to receive emails before subscribing.",
+        variant: "destructive"
+      });
       return;
     }
     
@@ -31,6 +43,7 @@ export const BlogNewsletterCTA = () => {
         description: "You've been added to the newsletter."
       });
       setEmail("");
+      setConsent(false);
       setIsExpanded(false);
     } catch (error: any) {
       const errorMessage = error?.message?.includes('already subscribed') 
@@ -73,22 +86,40 @@ export const BlogNewsletterCTA = () => {
           <ChevronUp className="h-4 w-4" />
         </Button>
       </div>
-      <form onSubmit={handleSubmit} className="flex gap-2 max-w-md mx-auto relative">
-        <Input
-          type="email"
-          placeholder="your@email.com"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          className="bg-background border-border/50"
-        />
-        <Button 
-          type="submit" 
-          disabled={isSubmitting}
-          className="shrink-0 bg-accent hover:bg-accent/90 text-accent-foreground"
-        >
-          {isSubmitting ? "..." : "Subscribe"}
-        </Button>
+      <form onSubmit={handleSubmit} className="relative">
+        <div className="flex gap-2 max-w-md mx-auto mb-3">
+          <Input
+            type="email"
+            placeholder="your@email.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="bg-background border-border/50"
+          />
+          <Button 
+            type="submit" 
+            disabled={isSubmitting || !consent}
+            className="shrink-0 bg-accent hover:bg-accent/90 text-accent-foreground"
+          >
+            {isSubmitting ? "..." : "Subscribe"}
+          </Button>
+        </div>
+        
+        <div className="flex items-start gap-2 text-left max-w-md mx-auto">
+          <Checkbox 
+            id="blog-newsletter-consent" 
+            checked={consent}
+            onCheckedChange={(checked) => setConsent(checked === true)}
+            className="mt-0.5"
+          />
+          <Label 
+            htmlFor="blog-newsletter-consent" 
+            className="text-xs text-muted-foreground cursor-pointer leading-tight"
+          >
+            I agree to receive email communications from Thread & Stack
+          </Label>
+        </div>
+        
         {/* Honeypot field - hidden from users, catches bots */}
         <div className="absolute -left-[9999px]" aria-hidden="true">
           <Input 
@@ -102,7 +133,7 @@ export const BlogNewsletterCTA = () => {
         </div>
       </form>
       <p className="text-xs text-muted-foreground/70 mt-3">
-        By subscribing, you agree to receive emails from Thread & Stack. You can unsubscribe at any time. We respect your privacy and will never share your data.
+        You can unsubscribe at any time. We respect your privacy and will never share your data.
       </p>
     </div>
   );
