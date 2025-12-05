@@ -23,11 +23,14 @@ const handler = async (req: Request): Promise<Response> => {
 
     const { email }: SubscribeRequest = await req.json();
 
-    // Validate email
-    if (!email || !email.includes('@')) {
+    // Validate email with proper regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const trimmedEmail = email?.trim()?.toLowerCase();
+    
+    if (!trimmedEmail || !emailRegex.test(trimmedEmail) || trimmedEmail.length > 255) {
       console.error('Invalid email provided:', email);
       return new Response(
-        JSON.stringify({ error: 'Invalid email address' }),
+        JSON.stringify({ error: 'Please provide a valid email address' }),
         {
           status: 400,
           headers: { 'Content-Type': 'application/json', ...corsHeaders },
@@ -46,7 +49,7 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    console.log('Subscribing email to Beehiiv:', email);
+    console.log('Subscribing email to Beehiiv:', trimmedEmail);
 
     // Subscribe to Beehiiv
     const beehiivUrl = `https://api.beehiiv.com/v2/publications/${BEEHIIV_PUBLICATION_ID}/subscriptions`;
@@ -58,7 +61,7 @@ const handler = async (req: Request): Promise<Response> => {
         'Authorization': `Bearer ${BEEHIIV_API_KEY}`,
       },
       body: JSON.stringify({
-        email: email,
+        email: trimmedEmail,
         reactivate_existing: false,
         send_welcome_email: true,
         utm_source: 'website',
@@ -97,7 +100,7 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    console.log('Successfully subscribed email to Beehiiv:', email);
+    console.log('Successfully subscribed email to Beehiiv:', trimmedEmail);
 
     return new Response(
       JSON.stringify({ 
