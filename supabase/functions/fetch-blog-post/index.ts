@@ -304,13 +304,18 @@ serve(async (req) => {
           
         case 'callout':
           const calloutText = richTextToHtml(block.callout.rich_text)
-          // Get icon - could be emoji, external image, or null
+          // Get icon - could be emoji, custom_emoji, external image, file, or null
           const calloutIcon = block.callout.icon
           let iconHtml = ''
           if (calloutIcon?.type === 'emoji' && calloutIcon.emoji) {
             iconHtml = `<span class="callout-icon">${calloutIcon.emoji}</span>`
+          } else if (calloutIcon?.type === 'custom_emoji' && calloutIcon.custom_emoji?.url) {
+            // Custom emoji uploaded to Notion workspace
+            iconHtml = `<img class="callout-icon-img" src="${calloutIcon.custom_emoji.url}" alt="${calloutIcon.custom_emoji.name || ''}" />`
           } else if (calloutIcon?.type === 'external' && calloutIcon.external?.url) {
             iconHtml = `<img class="callout-icon-img" src="${calloutIcon.external.url}" alt="" />`
+          } else if (calloutIcon?.type === 'file' && calloutIcon.file?.url) {
+            iconHtml = `<img class="callout-icon-img" src="${calloutIcon.file.url}" alt="" />`
           }
           // Get background color from Notion (defaults to gray_background if not set)
           const calloutColor = block.callout.color || 'default'
