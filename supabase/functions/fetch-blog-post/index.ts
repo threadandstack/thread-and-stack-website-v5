@@ -118,6 +118,9 @@ serve(async (req) => {
       return richTextArray.map((text: any) => {
         let content = text.plain_text
         
+        // Convert newlines (shift+return in Notion) to <br> tags
+        content = content.replace(/\n/g, '<br>')
+        
         // Apply formatting annotations in the correct order
         if (text.annotations.bold) {
           content = `<strong>${content}</strong>`
