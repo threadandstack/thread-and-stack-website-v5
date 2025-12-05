@@ -251,9 +251,20 @@ All colors MUST be HSL.
   .blog-content .callout-content {
     flex: 1;
     min-width: 0;
+    font-size: 1rem;
+    line-height: 1.7;
   }
   
-  .blog-content .callout-content p {
+  .blog-content .callout-content p,
+  .blog-content .callout-content div,
+  .blog-content .callout-content span {
+    font-size: inherit;
+    line-height: inherit;
+    margin-bottom: 0.5rem;
+  }
+  
+  .blog-content .callout-content p:last-child,
+  .blog-content .callout-content div:last-child {
     margin-bottom: 0;
   }
   
