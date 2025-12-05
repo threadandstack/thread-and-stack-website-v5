@@ -33,11 +33,18 @@ export const ContactDrawer = ({ open, onOpenChange, source = "drawer" }: Contact
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
   const [message, setMessage] = useState("");
+  const [honeypot, setHoneypot] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Honeypot check - if filled, silently reject (bot detected)
+    if (honeypot) {
+      return;
+    }
+    
     setIsSubmitting(true);
 
     // Validate input with zod
@@ -161,10 +168,22 @@ export const ContactDrawer = ({ open, onOpenChange, source = "drawer" }: Contact
               placeholder="Tell me a bit about your project or what you're wrestling with..."
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              className="bg-background rounded-lg mt-1 min-h-[120px]"
-            />
-          </div>
-          
+            className="bg-background rounded-lg mt-1 min-h-[120px]"
+          />
+        </div>
+        
+        {/* Honeypot field - hidden from users, catches bots */}
+        <div className="absolute -left-[9999px]" aria-hidden="true">
+          <Input 
+            type="text"
+            name="website"
+            tabIndex={-1}
+            autoComplete="off"
+            value={honeypot}
+            onChange={(e) => setHoneypot(e.target.value)}
+          />
+        </div>
+        
           <Button 
             type="submit" 
             disabled={isSubmitting}

@@ -1,0 +1,1 @@
+DROP POLICY IF EXISTS "Authenticated users can view all requests" ON public.workshop_quote_requests;

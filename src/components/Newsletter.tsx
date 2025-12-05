@@ -6,12 +6,19 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 export const Newsletter = () => {
   const [email, setEmail] = useState("");
+  const [honeypot, setHoneypot] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const {
     toast
   } = useToast();
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Honeypot check - if filled, silently reject (bot detected)
+    if (honeypot) {
+      return;
+    }
+    
     setIsSubmitting(true);
     try {
       console.log("Subscribing email to newsletter:", email);
@@ -52,7 +59,7 @@ export const Newsletter = () => {
           Thoughts on brand, creativity, and systems that build our businesses. Subscribe here, and I'll send you monthly signals on building brands that stay true while scaling.
         </p>
         
-        <form onSubmit={handleSubmit} className="flex gap-3 max-w-md mx-auto">
+        <form onSubmit={handleSubmit} className="flex gap-3 max-w-md mx-auto relative">
           <div className="flex-1">
             <Label htmlFor="newsletter-email" className="sr-only">Email</Label>
             <Input id="newsletter-email" type="email" placeholder="your@email.com" value={email} onChange={e => setEmail(e.target.value)} required className="bg-background rounded-lg" />
@@ -60,6 +67,17 @@ export const Newsletter = () => {
           <Button type="submit" disabled={isSubmitting} className="bg-accent text-accent-foreground hover:bg-accent/90 rounded-xl">
             {isSubmitting ? "Subscribing..." : "Subscribe"}
           </Button>
+          {/* Honeypot field - hidden from users, catches bots */}
+          <div className="absolute -left-[9999px]" aria-hidden="true">
+            <Input 
+              type="text"
+              name="website"
+              tabIndex={-1}
+              autoComplete="off"
+              value={honeypot}
+              onChange={(e) => setHoneypot(e.target.value)}
+            />
+          </div>
         </form>
         
         <p className="text-sm text-muted-foreground mt-4">
