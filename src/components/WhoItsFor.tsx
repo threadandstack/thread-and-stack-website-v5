@@ -1,5 +1,7 @@
 import { Check } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
+
 export const WhoItsFor = () => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
@@ -18,13 +20,19 @@ export const WhoItsFor = () => {
   }, []);
   const audiences = [{
     title: "Your story has moved on.",
-    description: "Your values and ambition have shifted, but the brand still speaks in an older voice. You need clarity, updated language, and creative direction that reflect who you are today."
+    description: "Your values and ambition have shifted, but the brand still speaks in an older voice. You need clarity, updated language, and creative direction that reflect who you are today.",
+    linkText: "Want to tell your story with soul?",
+    linkUrl: "/blog/storytelling-with-a-soul"
   }, {
     title: "Your brand is becoming a universe.",
-    description: "You are expanding across new touchpoints and channels. The brand needs coherence, expression, and a visual system that keeps everything connected and true."
+    description: "You are expanding across new touchpoints and channels. The brand needs coherence, expression, and a visual system that keeps everything connected and true.",
+    linkText: "What is a brand universe?",
+    linkUrl: "/blog/what-is-a-brand-universe"
   }, {
     title: "Your team needs clarity and creative support.",
-    description: "You want to grow without sacrificing wellbeing or creative integrity. Your team needs systems and support that protect their energy and strengthen the work they produce."
+    description: "You want to grow without sacrificing wellbeing or creative integrity. Your team needs systems and support that protect their energy and strengthen the work they produce.",
+    linkText: "The role of strategic clarity",
+    linkUrl: "/blog/why-you-and-your-team-care-about-clarity"
   }];
   return <section ref={sectionRef} className={`py-24 px-6 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
       <div className="max-w-6xl mx-auto">
@@ -40,9 +48,16 @@ export const WhoItsFor = () => {
                 {audience.title}
               </h3>
               
-              <p className="text-muted-foreground leading-relaxed text-lg">
+              <p className="text-muted-foreground leading-relaxed text-lg mb-4">
                 {audience.description}
               </p>
+              
+              <Link 
+                to={audience.linkUrl} 
+                className="text-sm italic text-accent hover:text-accent/80 transition-colors"
+              >
+                {audience.linkText} →
+              </Link>
             </div>)}
         </div>
       </div>
