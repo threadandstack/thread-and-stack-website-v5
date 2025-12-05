@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Check, Target, Layers, FileText, Users, Calendar, Zap, Repeat } from "lucide-react";
 import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
 import { FAQ } from "@/components/FAQ";
+import { ContactDrawer } from "@/components/ContactDrawer";
 
 const FractionalDeepEngagement = () => {
-  // Fractional Strategy content
+  const [contactOpen, setContactOpen] = useState(false);
+
   const fractionalBenefits = [
     {
       icon: <Target className="w-6 h-6" />,
@@ -69,7 +71,6 @@ const FractionalDeepEngagement = () => {
     }
   ];
 
-  // Deep Engagement content
   const projectTypes = [
     {
       icon: <Target className="w-6 h-6" />,
@@ -180,10 +181,19 @@ const FractionalDeepEngagement = () => {
     }
   ];
 
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="min-h-screen">
       <Navigation />
+      <ContactDrawer open={contactOpen} onOpenChange={setContactOpen} source="fractional-deep" />
 
+      {/* Hero with Anchor Navigation */}
       <section className="py-24 px-6 mt-16">
         <div className="max-w-4xl mx-auto">
           <div className="mb-12">
@@ -196,180 +206,211 @@ const FractionalDeepEngagement = () => {
                 Two models for sustained strategic partnership. Ongoing monthly retainers for continuous support, or intensive 2-6 month projects for comprehensive transformation. For scale-ups and established organizations (20-100+ people) ready to invest in strategic and creative leadership.
               </p>
             </div>
-          </div>
-
-          {/* Fractional Strategy Section */}
-          <div className="mb-20">
-            <div className="flex items-center gap-4 mb-8">
-              <div className="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center text-accent">
-                <Repeat className="w-6 h-6" />
-              </div>
-              <div>
-                <h2 className="text-3xl font-light">Fractional Strategy</h2>
-                <p className="text-accent">Ongoing Strategic Partnership</p>
-              </div>
-            </div>
-
-            <div className="bg-card border border-border rounded-lg p-8 mb-8">
-              <h3 className="text-2xl font-semibold mb-3">The Model</h3>
-              <p className="text-xl mb-4">Strategic expertise. Embedded support. Flexible commitment.</p>
-              <p className="text-lg text-muted-foreground mb-6">
-                I work as an integrated member of your team, providing ongoing strategic guidance on brand positioning, campaign development, creative direction, and visual identity systems. You get senior-level strategic thinking and design craft without the full-time salary, benefits, and commitment.
-              </p>
-              <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 group" asChild>
-                <a href="/#contact">
-                  Discuss Your Needs
-                  <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-                </a>
+            
+            {/* Anchor Navigation */}
+            <div className="flex gap-4 mt-8">
+              <Button 
+                variant="outline"
+                size="lg"
+                onClick={() => scrollToSection('fractional')}
+                className="group"
+              >
+                Fractional Strategy
+                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Button>
+              <Button 
+                size="lg"
+                className="bg-indigo text-white hover:bg-indigo/90 group"
+                onClick={() => scrollToSection('deep-engagement')}
+              >
+                Deep Engagement
+                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Button>
             </div>
+          </div>
+        </div>
+      </section>
 
-            <div className="space-y-8">
-              <div>
-                <h3 className="text-2xl font-light mb-6">Why Fractional?</h3>
-                <div className="grid md:grid-cols-2 gap-6">
-                  {fractionalBenefits.map((benefit, index) => (
-                    <div key={index} className="bg-card border border-border rounded-lg p-6">
-                      <div className="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center mb-4 text-accent">
-                        {benefit.icon}
-                      </div>
-                      <h4 className="text-xl font-semibold mb-2">{benefit.title}</h4>
-                      <p className="text-muted-foreground">{benefit.description}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <h3 className="text-2xl font-light mb-6">Engagement Models</h3>
-                <p className="text-lg text-muted-foreground mb-6">
-                  Choose the level of involvement that fits your needs. All engagements are month-to-month with flexible scaling.
-                </p>
-                <div className="space-y-6">
-                  {engagementModels.map((model, index) => (
-                    <div key={index} className="bg-card border border-border rounded-lg p-8">
-                      <div className="mb-6">
-                        <h4 className="text-2xl font-semibold mb-2">{model.title}</h4>
-                        <p className="text-accent font-semibold mb-2">{model.commitment}</p>
-                        <p className="text-muted-foreground italic">{model.ideal}</p>
-                      </div>
-                      <div>
-                        <h5 className="font-semibold mb-3">What's Included:</h5>
-                        <ul className="space-y-2">
-                          {model.includes.map((item, idx) => (
-                            <li key={idx} className="flex items-start gap-3">
-                              <Check className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
-                              <span className="text-muted-foreground">{item}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+      {/* Fractional Strategy Section */}
+      <section id="fractional" className="py-24 px-6">
+        <div className="max-w-4xl mx-auto">
+          <div className="flex items-center gap-4 mb-8">
+            <div className="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center text-accent">
+              <Repeat className="w-6 h-6" />
+            </div>
+            <div>
+              <h2 className="text-3xl font-light">Fractional Strategy</h2>
+              <p className="text-accent">Ongoing Strategic Partnership</p>
             </div>
           </div>
 
-          {/* Deep Engagement Section */}
-          <div className="mb-16">
-            <div className="flex items-center gap-4 mb-8">
-              <div className="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center text-accent">
-                <Target className="w-6 h-6" />
-              </div>
-              <div>
-                <h2 className="text-3xl font-light">Deep Engagement</h2>
-                <p className="text-accent">2-6 Month Transformation Projects</p>
-              </div>
-            </div>
+          <div className="bg-card border border-border rounded-lg p-8 mb-8">
+            <h3 className="text-2xl font-semibold mb-3">The Model</h3>
+            <p className="text-xl mb-4">Strategic expertise. Embedded support. Flexible commitment.</p>
+            <p className="text-lg text-muted-foreground mb-6">
+              I work as an integrated member of your team, providing ongoing strategic guidance on brand positioning, campaign development, creative direction, and visual identity systems. You get senior-level strategic thinking and design craft without the full-time salary, benefits, and commitment.
+            </p>
+            <Button 
+              size="lg" 
+              className="bg-accent text-accent-foreground hover:bg-accent/90 group"
+              onClick={() => setContactOpen(true)}
+            >
+              Discuss Your Needs
+              <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </div>
 
-            <div className="bg-card border border-border rounded-lg p-8 mb-8">
-              <h3 className="text-2xl font-semibold mb-3">The Commitment</h3>
-              <p className="text-xl mb-4">Deep work. Clear deliverables. Lasting transformation.</p>
-              <p className="text-lg text-muted-foreground mb-6">
-                This isn't a quick fix or surface-level refresh. It's a comprehensive engagement where we work together intensively over 2-6 months to create fundamental strategic change. You get complete transformation with documented systems that outlive the engagement.
-              </p>
-              <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 group" asChild>
-                <a href="/#contact">
-                  Explore Projects
-                  <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-                </a>
-              </Button>
-            </div>
-
-            <div className="space-y-8">
-              <div>
-                <h3 className="text-2xl font-light mb-6">Project Types</h3>
-                <p className="text-lg text-muted-foreground mb-6">
-                  Each engagement is customized to your specific needs, but most fall into these categories:
-                </p>
-                <div className="grid md:grid-cols-2 gap-6">
-                  {projectTypes.map((project, index) => (
-                    <div key={index} className="bg-card border border-border rounded-lg p-6">
-                      <div className="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center mb-4 text-accent">
-                        {project.icon}
-                      </div>
-                      <h4 className="text-xl font-semibold mb-2">{project.title}</h4>
-                      <p className="text-accent text-sm mb-3">{project.duration}</p>
-                      <p className="text-muted-foreground mb-3">{project.description}</p>
-                      <p className="text-sm text-muted-foreground italic">Ideal for: {project.ideal}</p>
+          <div className="space-y-8">
+            <div>
+              <h3 className="text-2xl font-light mb-6">Why Fractional?</h3>
+              <div className="grid md:grid-cols-2 gap-6">
+                {fractionalBenefits.map((benefit, index) => (
+                  <div key={index} className="bg-card border border-border rounded-lg p-6">
+                    <div className="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center mb-4 text-accent">
+                      {benefit.icon}
                     </div>
-                  ))}
-                </div>
+                    <h4 className="text-xl font-semibold mb-2">{benefit.title}</h4>
+                    <p className="text-muted-foreground">{benefit.description}</p>
+                  </div>
+                ))}
               </div>
+            </div>
 
-              <div>
-                <h3 className="text-2xl font-light mb-6">The Process</h3>
-                <div className="space-y-6">
-                  {phases.map((phase, index) => (
-                    <div key={index} className="bg-card border border-border rounded-lg p-8">
-                      <div className="mb-4">
-                        <h4 className="text-2xl font-semibold mb-1">{phase.title}</h4>
-                        <p className="text-accent font-semibold">{phase.month}</p>
-                      </div>
+            <div>
+              <h3 className="text-2xl font-light mb-6">Engagement Models</h3>
+              <p className="text-lg text-muted-foreground mb-6">
+                Choose the level of involvement that fits your needs. All engagements are month-to-month with flexible scaling.
+              </p>
+              <div className="space-y-6">
+                {engagementModels.map((model, index) => (
+                  <div key={index} className="bg-card border border-border rounded-lg p-8">
+                    <div className="mb-6">
+                      <h4 className="text-2xl font-semibold mb-2">{model.title}</h4>
+                      <p className="text-accent font-semibold mb-2">{model.commitment}</p>
+                      <p className="text-muted-foreground italic">{model.ideal}</p>
+                    </div>
+                    <div>
+                      <h5 className="font-semibold mb-3">What's Included:</h5>
                       <ul className="space-y-2">
-                        {phase.activities.map((activity, idx) => (
+                        {model.includes.map((item, idx) => (
                           <li key={idx} className="flex items-start gap-3">
                             <Check className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
-                            <span className="text-muted-foreground">{activity}</span>
+                            <span className="text-muted-foreground">{item}</span>
                           </li>
                         ))}
                       </ul>
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-              <div>
-                <h3 className="text-2xl font-light mb-6">What You Get</h3>
-                <p className="text-lg text-muted-foreground mb-4">
-                  Comprehensive deliverables designed for implementation and sustainability:
-                </p>
-                <div className="bg-card border border-border rounded-lg p-8">
-                  <ul className="space-y-3">
-                    {deliverables.map((deliverable, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <Check className="w-6 h-6 text-accent mt-0.5 flex-shrink-0" />
-                        <span className="text-lg">{deliverable}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+      {/* Deep Engagement Section - Indigo Background */}
+      <section id="deep-engagement" className="py-24 px-6 bg-indigo text-indigo-foreground">
+        <div className="max-w-4xl mx-auto">
+          <div className="flex items-center gap-4 mb-8">
+            <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-white">
+              <Target className="w-6 h-6" />
+            </div>
+            <div>
+              <h2 className="text-3xl font-light text-white">Deep Engagement</h2>
+              <p className="text-white/80">2-6 Month Transformation Projects</p>
+            </div>
+          </div>
+
+          <div className="bg-white/10 border border-white/20 rounded-lg p-8 mb-8">
+            <h3 className="text-2xl font-semibold mb-3 text-white">The Commitment</h3>
+            <p className="text-xl mb-4 text-white">Deep work. Clear deliverables. Lasting transformation.</p>
+            <p className="text-lg text-white/90 mb-6">
+              This isn't a quick fix or surface-level refresh. It's a comprehensive engagement where we work together intensively over 2-6 months to create fundamental strategic change. You get complete transformation with documented systems that outlive the engagement.
+            </p>
+            <Button 
+              size="lg" 
+              className="bg-white text-indigo hover:bg-white/90 group"
+              onClick={() => setContactOpen(true)}
+            >
+              Explore Projects
+              <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </div>
+
+          <div className="space-y-8">
+            <div>
+              <h3 className="text-2xl font-light mb-6 text-white">Project Types</h3>
+              <p className="text-lg text-white/80 mb-6">
+                Each engagement is customized to your specific needs, but most fall into these categories:
+              </p>
+              <div className="grid md:grid-cols-2 gap-6">
+                {projectTypes.map((project, index) => (
+                  <div key={index} className="bg-white/10 border border-white/20 rounded-lg p-6">
+                    <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mb-4 text-white">
+                      {project.icon}
+                    </div>
+                    <h4 className="text-xl font-semibold mb-2 text-white">{project.title}</h4>
+                    <p className="text-white/70 text-sm mb-3">{project.duration}</p>
+                    <p className="text-white/80 mb-3">{project.description}</p>
+                    <p className="text-sm text-white/70 italic">Ideal for: {project.ideal}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <h3 className="text-2xl font-light mb-6 text-white">The Process</h3>
+              <div className="space-y-6">
+                {phases.map((phase, index) => (
+                  <div key={index} className="bg-white/10 border border-white/20 rounded-lg p-8">
+                    <div className="mb-4">
+                      <h4 className="text-2xl font-semibold mb-1 text-white">{phase.title}</h4>
+                      <p className="text-white/70 font-semibold">{phase.month}</p>
+                    </div>
+                    <ul className="space-y-2">
+                      {phase.activities.map((activity, idx) => (
+                        <li key={idx} className="flex items-start gap-3">
+                          <Check className="w-5 h-5 text-white mt-0.5 flex-shrink-0" />
+                          <span className="text-white/80">{activity}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <h3 className="text-2xl font-light mb-6 text-white">What You Get</h3>
+              <p className="text-lg text-white/80 mb-4">
+                Comprehensive deliverables designed for implementation and sustainability:
+              </p>
+              <div className="bg-white/10 border border-white/20 rounded-lg p-8">
+                <ul className="space-y-3">
+                  {deliverables.map((deliverable, index) => (
+                    <li key={index} className="flex items-start gap-3">
+                      <Check className="w-6 h-6 text-white mt-0.5 flex-shrink-0" />
+                      <span className="text-lg text-white/90">{deliverable}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
           </div>
 
           {/* Final CTA */}
-          <div className="bg-card border-2 thread-border p-8 text-center">
-            <h2 className="text-2xl mb-4 font-light">Ready to explore a partnership?</h2>
-            <p className="text-muted-foreground mb-6">
+          <div className="bg-white/10 border border-white/20 rounded-lg p-8 text-center mt-12">
+            <h2 className="text-2xl mb-4 font-light text-white">Ready to explore a partnership?</h2>
+            <p className="text-white/80 mb-6">
               Let's discuss your challenges and find the right engagement model for your team.
             </p>
-            <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 group border thread-border not-italic" asChild>
-              <a href="/#contact">
-                Book a Discovery Call
-                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-              </a>
+            <Button 
+              size="lg" 
+              className="bg-white text-indigo hover:bg-white/90 group"
+              onClick={() => setContactOpen(true)}
+            >
+              Start a Conversation
+              <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
           </div>
         </div>

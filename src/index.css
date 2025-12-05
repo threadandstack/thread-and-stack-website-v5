@@ -28,6 +28,10 @@ All colors MUST be HSL.
 
     --accent: 256 89% 50%;
     --accent-foreground: 0 0% 98%;
+    
+    /* Indigo section background */
+    --indigo: 234 89% 50%;
+    --indigo-foreground: 0 0% 98%;
 
     --destructive: 0 70% 50%;
     --destructive-foreground: 0 0% 98%;

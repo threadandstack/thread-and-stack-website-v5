@@ -1,10 +1,14 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Check, Zap, Clock } from "lucide-react";
 import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
 import { FAQ } from "@/components/FAQ";
+import { ContactDrawer } from "@/components/ContactDrawer";
 
 const SessionsAndSprints = () => {
+  const [contactOpen, setContactOpen] = useState(false);
+
   const clarityFocusAreas = [
     {
       title: "Strategy & Creative Direction",
@@ -91,7 +95,9 @@ const SessionsAndSprints = () => {
   return (
     <div className="min-h-screen">
       <Navigation />
+      <ContactDrawer open={contactOpen} onOpenChange={setContactOpen} source="sessions-sprints" />
 
+      {/* Clarity Sessions Section */}
       <section className="py-24 px-6 mt-16">
         <div className="max-w-4xl mx-auto">
           <div className="mb-12">
@@ -106,7 +112,6 @@ const SessionsAndSprints = () => {
             </div>
           </div>
 
-          {/* Clarity Sessions Section */}
           <div className="mb-20">
             <div className="flex items-center gap-4 mb-8">
               <div className="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center text-accent">
@@ -127,11 +132,13 @@ const SessionsAndSprints = () => {
               <p className="text-lg mb-2 not-italic"><strong>Price:</strong> £300 (VAT incl.)</p>
               <p className="text-lg mb-4 not-italic"><strong>Format:</strong> 60 Minutes (Virtual) + Recording + Action Plan</p>
               <p className="text-sm text-muted-foreground mb-6 italic">Send me your notes in advance, and I'll go over them beforehand.</p>
-              <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 group border thread-border not-italic" asChild>
-                <a href="/#contact">
-                  Book a Clarity Session
-                  <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-                </a>
+              <Button 
+                size="lg" 
+                className="bg-accent text-accent-foreground hover:bg-accent/90 group border thread-border not-italic"
+                onClick={() => setContactOpen(true)}
+              >
+                Book a Clarity Session
+                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
             </div>
 
@@ -175,90 +182,96 @@ const SessionsAndSprints = () => {
               </div>
             </div>
           </div>
+        </div>
+      </section>
 
-          {/* Thread AI Sprint Section */}
-          <div className="mb-16">
-            <div className="flex items-center gap-4 mb-8">
-              <div className="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center text-accent">
-                <Clock className="w-6 h-6" />
-              </div>
-              <div>
-                <h2 className="text-3xl font-light">Thread AI Sprint</h2>
-                <p className="text-accent">A 6-Week Intensive for Purpose-Driven Marketers</p>
-              </div>
+      {/* Thread AI Sprint Section - Indigo Background */}
+      <section className="py-24 px-6 bg-indigo text-indigo-foreground">
+        <div className="max-w-4xl mx-auto">
+          <div className="flex items-center gap-4 mb-8">
+            <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-white">
+              <Clock className="w-6 h-6" />
             </div>
-
-            <div className="bg-secondary/10 rounded-lg p-8 mb-8 border-l-4 border-accent">
-              <h3 className="text-xl font-semibold mb-3">About Thread AI</h3>
-              <p className="text-lg text-muted-foreground mb-4">
-                Thread AI is my philosophy for working with AI as a marketing professional:
-              </p>
-              <p className="text-lg text-muted-foreground mb-2">
-                <strong>Human-centered. Tool-agnostic. Creativity-first.</strong>
-              </p>
-              <ul className="space-y-2 text-muted-foreground">
-                <li>→ You stay in control. AI handles mechanical tasks, you handle creative decisions.</li>
-                <li>→ Works in any ecosystem - Microsoft, Google, Notion, or browser-only. The principles transfer regardless of tools.</li>
-                <li>→ AI frees up mental bandwidth for the creative, strategic work that actually moves the needle.</li>
-              </ul>
-              <p className="text-lg text-muted-foreground mt-4 font-semibold">
-                It's about unlocking time, not replacing thinking.
-              </p>
+            <div>
+              <h2 className="text-3xl font-light text-white">Thread AI Sprint</h2>
+              <p className="text-white/80">A 6-Week Intensive for Purpose-Driven Marketers</p>
             </div>
+          </div>
 
-            <div className="bg-card border border-border rounded-lg p-8 mb-8">
-              <p className="text-lg mb-4 font-semibold">Investment: From £1k</p>
-              <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 group" asChild>
-                <a href="/#contact">
-                  Book Engagement Call
-                  <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-                </a>
-              </Button>
-            </div>
+          <div className="bg-white/10 rounded-lg p-8 mb-8 border-l-4 border-white/30">
+            <h3 className="text-xl font-semibold mb-3 text-white">About Thread AI</h3>
+            <p className="text-lg text-white/90 mb-4">
+              Thread AI is my philosophy for working with AI as a marketing professional:
+            </p>
+            <p className="text-lg text-white/90 mb-2">
+              <strong>Human-centered. Tool-agnostic. Creativity-first.</strong>
+            </p>
+            <ul className="space-y-2 text-white/80">
+              <li>→ You stay in control. AI handles mechanical tasks, you handle creative decisions.</li>
+              <li>→ Works in any ecosystem - Microsoft, Google, Notion, or browser-only. The principles transfer regardless of tools.</li>
+              <li>→ AI frees up mental bandwidth for the creative, strategic work that actually moves the needle.</li>
+            </ul>
+            <p className="text-lg text-white/90 mt-4 font-semibold">
+              It's about unlocking time, not replacing thinking.
+            </p>
+          </div>
 
-            <div className="space-y-8">
-              <div>
-                <h3 className="text-2xl font-light mb-6">Sprint Structure</h3>
-                <div className="space-y-4">
-                  {sprintStructure.map((item, index) => (
-                    <div key={index} className="bg-card border border-border rounded-lg p-6">
-                      <div className="text-accent font-mono text-sm font-semibold mb-2">
-                        {item.week}
-                      </div>
-                      <h4 className="text-xl font-semibold mb-2">{item.title}</h4>
-                      <p className="text-muted-foreground">{item.description}</p>
+          <div className="bg-white/10 border border-white/20 rounded-lg p-8 mb-8">
+            <p className="text-lg mb-4 font-semibold text-white">Investment: From £1k</p>
+            <Button 
+              size="lg" 
+              className="bg-white text-indigo hover:bg-white/90 group"
+              onClick={() => setContactOpen(true)}
+            >
+              Book Engagement Call
+              <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </div>
+
+          <div className="space-y-8">
+            <div>
+              <h3 className="text-2xl font-light mb-6 text-white">Sprint Structure</h3>
+              <div className="space-y-4">
+                {sprintStructure.map((item, index) => (
+                  <div key={index} className="bg-white/10 border border-white/20 rounded-lg p-6">
+                    <div className="text-white/70 font-mono text-sm font-semibold mb-2">
+                      {item.week}
                     </div>
-                  ))}
-                </div>
+                    <h4 className="text-xl font-semibold mb-2 text-white">{item.title}</h4>
+                    <p className="text-white/80">{item.description}</p>
+                  </div>
+                ))}
               </div>
+            </div>
 
-              <div>
-                <h3 className="text-2xl font-light mb-6">What you leave with</h3>
-                <div className="bg-secondary/10 rounded-lg p-8">
-                  <ul className="space-y-3">
-                    {sprintOutcomes.map((outcome, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <Check className="w-5 h-5 text-accent mt-1 flex-shrink-0" />
-                        <span className="text-lg">{outcome}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+            <div>
+              <h3 className="text-2xl font-light mb-6 text-white">What you leave with</h3>
+              <div className="bg-white/10 rounded-lg p-8">
+                <ul className="space-y-3">
+                  {sprintOutcomes.map((outcome, index) => (
+                    <li key={index} className="flex items-start gap-3">
+                      <Check className="w-5 h-5 text-white mt-1 flex-shrink-0" />
+                      <span className="text-lg text-white/90">{outcome}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
           </div>
 
           {/* Final CTA */}
-          <div className="bg-card border-2 thread-border p-8 text-center">
-            <h2 className="text-2xl mb-4 font-light">Ready to get unstuck?</h2>
-            <p className="text-muted-foreground mb-6">
+          <div className="bg-white/10 border border-white/20 rounded-lg p-8 text-center mt-12">
+            <h2 className="text-2xl mb-4 font-light text-white">Ready to get unstuck?</h2>
+            <p className="text-white/80 mb-6">
               Whether you need a focused hour or a transformative six weeks, let's find the right fit.
             </p>
-            <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 group border thread-border not-italic" asChild>
-              <a href="/#contact">
-                Start a Conversation
-                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-              </a>
+            <Button 
+              size="lg" 
+              className="bg-white text-indigo hover:bg-white/90 group"
+              onClick={() => setContactOpen(true)}
+            >
+              Start a Conversation
+              <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
           </div>
         </div>
