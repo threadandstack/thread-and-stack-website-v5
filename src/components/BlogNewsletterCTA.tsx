@@ -7,12 +7,19 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 
 export const BlogNewsletterCTA = () => {
   const [email, setEmail] = useState("");
+  const [honeypot, setHoneypot] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Honeypot check - if filled, silently reject (bot detected)
+    if (honeypot) {
+      return;
+    }
+    
     setIsSubmitting(true);
     try {
       const { error } = await supabase.functions.invoke('subscribe-newsletter', {
@@ -66,7 +73,7 @@ export const BlogNewsletterCTA = () => {
           <ChevronUp className="h-4 w-4" />
         </Button>
       </div>
-      <form onSubmit={handleSubmit} className="flex gap-2 max-w-md mx-auto">
+      <form onSubmit={handleSubmit} className="flex gap-2 max-w-md mx-auto relative">
         <Input
           type="email"
           placeholder="your@email.com"
@@ -82,6 +89,17 @@ export const BlogNewsletterCTA = () => {
         >
           {isSubmitting ? "..." : "Subscribe"}
         </Button>
+        {/* Honeypot field - hidden from users, catches bots */}
+        <div className="absolute -left-[9999px]" aria-hidden="true">
+          <Input 
+            type="text"
+            name="website"
+            tabIndex={-1}
+            autoComplete="off"
+            value={honeypot}
+            onChange={(e) => setHoneypot(e.target.value)}
+          />
+        </div>
       </form>
       <p className="text-xs text-muted-foreground/70 mt-3">
         By subscribing, you agree to receive emails from Thread & Stack. You can unsubscribe at any time. We respect your privacy and will never share your data.

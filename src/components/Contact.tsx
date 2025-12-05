@@ -20,6 +20,7 @@ export const Contact = () => {
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
   const [message, setMessage] = useState("");
+  const [honeypot, setHoneypot] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const { toast } = useToast();
@@ -43,6 +44,12 @@ export const Contact = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Honeypot check - if filled, silently reject (bot detected)
+    if (honeypot) {
+      return;
+    }
+    
     setIsSubmitting(true);
 
     // Validate input with zod
@@ -170,9 +177,21 @@ export const Contact = () => {
               placeholder="Tell me about your challenge, question, or what you're hoping to work on..."
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              className="min-h-32 bg-background rounded-lg"
-            />
-          </div>
+            className="min-h-32 bg-background rounded-lg"
+          />
+        </div>
+        
+        {/* Honeypot field - hidden from users, catches bots */}
+        <div className="absolute -left-[9999px]" aria-hidden="true">
+          <Input 
+            type="text"
+            name="website"
+            tabIndex={-1}
+            autoComplete="off"
+            value={honeypot}
+            onChange={(e) => setHoneypot(e.target.value)}
+          />
+        </div>
           
           <Button 
             type="submit" 
