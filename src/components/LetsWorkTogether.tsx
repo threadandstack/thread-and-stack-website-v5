@@ -6,6 +6,14 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { ArrowRight } from "lucide-react";
+import { z } from "zod";
+
+const leadSchema = z.object({
+  name: z.string().max(100, "Name must be less than 100 characters").optional(),
+  email: z.string().email("Please enter a valid email address").max(255, "Email must be less than 255 characters"),
+  role: z.string().max(100, "Role must be less than 100 characters").optional(),
+  message: z.string().max(5000, "Message must be less than 5000 characters").optional(),
+});
 
 interface LetsWorkTogetherProps {
   source?: string;
@@ -22,6 +30,24 @@ export const LetsWorkTogether = ({ source = "blog" }: LetsWorkTogetherProps) => 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+
+    // Validate input with zod
+    const validation = leadSchema.safeParse({
+      name: name.trim() || undefined,
+      email: email.trim(),
+      role: role.trim() || undefined,
+      message: message.trim() || undefined,
+    });
+
+    if (!validation.success) {
+      toast({
+        title: "Validation error",
+        description: validation.error.errors[0]?.message || "Please check your input",
+        variant: "destructive"
+      });
+      setIsSubmitting(false);
+      return;
+    }
 
     // Combine role and message for storage
     const fullMessage = role.trim() 
