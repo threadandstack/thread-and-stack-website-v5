@@ -1,7 +1,5 @@
 import thinkingImage from "@/assets/brendan-cafe.jpeg";
 import { Emphasis } from "@/components/Emphasis";
-import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 export const WhatWeDo = () => {
@@ -51,17 +49,12 @@ export const WhatWeDo = () => {
               You know what you stand for. But somewhere between intention and execution, things get tangled. The <span className="italic">creative tax</span>, the cognitive load of admin, chaos, and context switching, buries the strategic thinking and creative direction that actually moves things forward. What's needed is clarity: positioning that resonates, visual identity that confidently articulates your narrative, and systems that let your team ship work that feels cohesive and true.
             </p>
             
-            <Button 
-              variant="outline" 
-              size="lg" 
-              className="rounded-xl group"
-              asChild
+            <a 
+              href="/how-i-work" 
+              className="text-sm italic text-accent hover:text-accent/80 transition-colors relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-[1px] after:bottom-0 after:left-0 after:bg-accent after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left"
             >
-              <a href="/how-i-work">
-                How I Work
-                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </a>
-            </Button>
+              How I work →
+            </a>
           </div>
           
           <div className="order-first md:order-last">
