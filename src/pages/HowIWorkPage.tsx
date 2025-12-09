@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import workshopImage from "@/assets/brendan-collaboration.jpeg";
 import { useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 const HowIWorkPage = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -12,6 +13,19 @@ const HowIWorkPage = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const realityRef = useRef<HTMLElement>(null);
   const aiRef = useRef<HTMLElement>(null);
+  const location = useLocation();
+
+  // Handle hash scroll on page load
+  useEffect(() => {
+    if (location.hash) {
+      const element = document.querySelector(location.hash);
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: "smooth" });
+        }, 100);
+      }
+    }
+  }, [location.hash]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -182,8 +196,9 @@ const HowIWorkPage = () => {
 
       {/* Thread AI Philosophy Section - Purple Background */}
       <section
+        id="thread-ai-philosophy"
         ref={aiRef}
-        className={`py-24 px-6 bg-accent transition-all duration-1000 ${
+        className={`py-24 px-6 bg-accent scroll-mt-24 transition-all duration-1000 ${
           aiVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         }`}
       >
