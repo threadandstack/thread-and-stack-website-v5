@@ -252,7 +252,7 @@ const SessionsAndSprints = () => {
             </p>
             <a 
               href="/how-i-work#thread-ai-philosophy" 
-              className="inline-flex items-center gap-2 text-white mt-6 text-base font-medium underline underline-offset-4 decoration-white/50 hover:decoration-white transition-all group"
+              className="inline-flex items-center gap-2 text-white mt-6 text-base font-medium italic underline underline-offset-4 decoration-white/50 hover:decoration-white transition-all group"
             >
               Learn more about the Thread AI Philosophy 
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
