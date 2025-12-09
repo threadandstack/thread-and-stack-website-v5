@@ -24,8 +24,18 @@ serve(async (req) => {
       throw new Error('NOTION_API_KEY is not configured');
     }
 
-    if (!email) {
-      throw new Error('Email is required');
+    // Server-side validation (defense-in-depth alongside client-side Zod validation)
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const trimmedEmail = email?.trim()?.toLowerCase();
+
+    if (!trimmedEmail || !emailRegex.test(trimmedEmail) || trimmedEmail.length > 255) {
+      throw new Error('Invalid email');
+    }
+    if (name && name.length > 100) {
+      throw new Error('Name too long');
+    }
+    if (message && message.length > 5000) {
+      throw new Error('Message too long');
     }
 
     // Create a page in the Notion database
