@@ -193,7 +193,13 @@ const HowIWorkPage = () => {
           </h2>
 
           <p className="text-accent-foreground/70 text-sm mb-8 italic">
-            Particularly relevant for those exploring Thread AI Sprints
+            Particularly relevant for those exploring{" "}
+            <a
+              href="/sessions-and-sprints#thread-ai"
+              className="underline hover:text-accent-foreground transition-colors"
+            >
+              Thread AI Sprints
+            </a>
           </p>
 
           <div className="prose prose-lg max-w-none space-y-6 text-lg leading-relaxed text-accent-foreground">
