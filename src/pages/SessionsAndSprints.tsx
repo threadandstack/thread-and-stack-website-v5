@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Check, Zap, Clock } from "lucide-react";
 import { Footer } from "@/components/Footer";
@@ -8,6 +9,18 @@ import { ContactDrawer } from "@/components/ContactDrawer";
 
 const SessionsAndSprints = () => {
   const [contactOpen, setContactOpen] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash) {
+      const element = document.querySelector(location.hash);
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: "smooth" });
+        }, 100);
+      }
+    }
+  }, [location.hash]);
 
   const clarityFocusAreas = [
     {
