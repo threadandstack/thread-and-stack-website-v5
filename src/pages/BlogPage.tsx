@@ -2,11 +2,11 @@ import { useState, useEffect } from "react";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Card } from "@/components/ui/card";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { BlogNewsletterCTA } from "@/components/BlogNewsletterCTA";
-
+import { SubscribeLightbox } from "@/components/SubscribeLightbox";
 interface BlogPost {
   id: string;
   slug: string;
@@ -43,7 +43,17 @@ const formatPublishedDate = (dateString: string): string => {
 const BlogPage = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [showSubscribe, setShowSubscribe] = useState(searchParams.get('subscribe') === 'true');
 
+  const handleSubscribeChange = (open: boolean) => {
+    setShowSubscribe(open);
+    if (!open) {
+      // Remove subscribe param from URL when closing
+      searchParams.delete('subscribe');
+      setSearchParams(searchParams, { replace: true });
+    }
+  };
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -68,6 +78,7 @@ const BlogPage = () => {
   return (
     <main className="min-h-screen relative pt-24">
       <Navigation />
+      <SubscribeLightbox open={showSubscribe} onOpenChange={handleSubscribeChange} />
       
       <section className="py-24 px-6">
         <div className="max-w-4xl mx-auto">
