@@ -45,6 +45,13 @@ export const Navigation = () => {
             >
               About
             </a>
+
+            <a 
+              href="/how-i-work" 
+              className="text-base text-foreground/80 hover:text-foreground transition-colors not-italic"
+            >
+              How I Work
+            </a>
             
             {/* Services Dropdown */}
             <DropdownMenu>
@@ -112,6 +119,13 @@ export const Navigation = () => {
                 className="text-base text-foreground/80 hover:text-foreground transition-colors not-italic"
               >
                 About
+              </a>
+
+              <a
+                href="/how-i-work"
+                className="text-base text-foreground/80 hover:text-foreground transition-colors not-italic"
+              >
+                How I Work
               </a>
 
               {/* Services Dropdown */}
@@ -183,6 +197,13 @@ export const Navigation = () => {
               onClick={() => setIsMobileMenuOpen(false)}
             >
               About
+            </a>
+            <a
+              href="/how-i-work"
+              className="block py-3 text-lg text-foreground/80 hover:text-foreground transition-colors"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              How I Work
             </a>
 
             <div className="border-t border-border/50 pt-4">

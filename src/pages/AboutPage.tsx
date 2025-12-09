@@ -58,26 +58,18 @@ founder of Thread & Stack.</p>
               <img src={brendanWorkshop} alt="Brendan leading a workshop" className="rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.06)] w-full h-auto" />
             </div>
             
-            <div className="prose prose-lg max-w-none space-y-6 text-lg leading-relaxed border-l-4 border-accent/20 pl-8">
-              <h2 className="text-3xl font-light not-italic">How I Work</h2>
-              
-              <p>
-                My work sits at the intersection of brand strategy, creative direction, and systems design, protecting both your brand integrity and your team's creative energy.
-              </p>
-              
-              <p>
-                Being both a designer and a strategist is rare. It means I understand how aesthetic judgement and strategic thinking work together: how visual identity supports your narrative, how asset development flows from positioning, how design decisions either reinforce or undermine what you're trying to say.
-              </p>
-              
-              <p>
-                I help you untangle the mess, connect the dots, and keep your best ideas moving. Through visual identity, creative direction, and brand world building that feels cohesive and true. Not by adding more processes, but by creating invisible scaffolding that reduces friction and cognitive load.
-              </p>
-              
-              <p>
-                When it comes to AI, I see it as a second brain and operations partner in the background, never a replacement for human creativity or judgment. My approach centers on creative empowerment: helping you feel more capable (not automated), ensuring your brand voice remains authentically yours, and using AI to reduce cognitive load so your calendar feels spacious instead of suffocating. The goal is giving back time, attention, and voice.
-              </p>
-              
-              <p className="font-bold not-italic">The result? Brands that feel alive, teams that feel spacious, and work that actually ships.</p>
+            <div className="text-center">
+              <Button
+                variant="outline"
+                size="lg"
+                className="rounded-xl"
+                asChild
+              >
+                <a href="/how-i-work">
+                  Learn How I Work
+                  <ArrowRight className="ml-2 w-4 h-4" />
+                </a>
+              </Button>
             </div>
             
             <div className="bg-accent/5 p-8 rounded-2xl space-y-6">
