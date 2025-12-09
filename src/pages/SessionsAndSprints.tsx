@@ -250,6 +250,13 @@ const SessionsAndSprints = () => {
             <p className="text-lg text-white/90 mt-4 font-semibold">
               It's about unlocking time, not replacing thinking.
             </p>
+            <a 
+              href="/how-i-work#thread-ai-philosophy" 
+              className="inline-flex items-center gap-1 text-white/70 hover:text-white mt-4 text-sm italic transition-colors group"
+            >
+              Learn more about the Thread AI Philosophy 
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </a>
           </div>
 
           <div className="bg-white/10 border border-white/20 rounded-lg p-8 mb-8">
