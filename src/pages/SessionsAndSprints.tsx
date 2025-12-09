@@ -119,13 +119,36 @@ const SessionsAndSprints = () => {
               Sessions & Sprints
             </h1>
             <div className="bg-secondary/10 rounded-lg p-6 border-l-4 border-accent mb-6">
-              <p className="text-lg text-muted-foreground">
+              <p className="text-lg text-muted-foreground mb-4">
                 Two ways to get unstuck and build momentum. One-hour Clarity Sessions for rapid intervention, or six-week Sprints to transform how you work with AI.
               </p>
+              <div className="flex flex-wrap gap-3 mt-4">
+                <Button 
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    const element = document.querySelector('.clarity-sessions-section');
+                    element?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="group"
+                >
+                  Jump to Clarity Sessions →
+                </Button>
+                <Button 
+                  size="sm"
+                  className="bg-indigo text-white hover:bg-indigo/90 group"
+                  onClick={() => {
+                    const element = document.getElementById('thread-ai');
+                    element?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                >
+                  Explore Thread AI Sprints →
+                </Button>
+              </div>
             </div>
           </div>
 
-          <div className="mb-20">
+          <div className="mb-20 clarity-sessions-section">
             <div className="flex items-center gap-4 mb-8">
               <div className="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center text-accent">
                 <Zap className="w-6 h-6" />

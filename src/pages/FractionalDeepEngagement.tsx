@@ -202,30 +202,28 @@ const FractionalDeepEngagement = () => {
               Fractional & Deep Engagement
             </h1>
             <div className="bg-secondary/10 rounded-lg p-6 border-l-4 border-accent mb-6">
-              <p className="text-lg text-muted-foreground">
+              <p className="text-lg text-muted-foreground mb-4">
                 Two models for sustained strategic partnership. Ongoing monthly retainers for continuous support, or intensive 2-6 month projects for comprehensive transformation. For scale-ups and established organizations (20-100+ people) ready to invest in strategic and creative leadership.
               </p>
-            </div>
-            
-            {/* Anchor Navigation */}
-            <div className="flex gap-4 mt-8">
-              <Button 
-                variant="outline"
-                size="lg"
-                onClick={() => scrollToSection('fractional')}
-                className="group"
-              >
-                Fractional Strategy
-                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Button>
-              <Button 
-                size="lg"
-                className="bg-indigo text-white hover:bg-indigo/90 group"
-                onClick={() => scrollToSection('deep-engagement')}
-              >
-                Deep Engagement
-                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Button>
+              
+              {/* Quick Navigation with CTA language */}
+              <div className="flex flex-wrap gap-3 mt-4">
+                <Button 
+                  variant="outline"
+                  size="sm"
+                  onClick={() => scrollToSection('fractional')}
+                  className="group"
+                >
+                  Explore Fractional Strategy →
+                </Button>
+                <Button 
+                  size="sm"
+                  className="bg-indigo text-white hover:bg-indigo/90 group"
+                  onClick={() => scrollToSection('deep-engagement')}
+                >
+                  Learn About Deep Engagement →
+                </Button>
+              </div>
             </div>
           </div>
         </div>
