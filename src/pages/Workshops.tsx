@@ -272,157 +272,160 @@ const Workshops = () => {
               </div>
             </div>
 
-            {/* Compact Phase Cards */}
-            <div>
-              <h2 className="text-3xl font-bold mb-8">Build Your Workshop</h2>
-              <div className="grid md:grid-cols-3 gap-4">
-                {phases.map((phase, index) => (
-                  <div key={index} className="bg-card border border-border rounded-lg p-6 aspect-square flex flex-col">
-                    <div className="text-accent font-mono text-sm font-semibold mb-1">{phase.phase}</div>
-                    <h3 className="text-xl font-semibold mb-4">{phase.title}</h3>
-                    <ul className="space-y-2 flex-1">
-                      {phase.options.map((option, optIndex) => (
-                        <li key={optIndex} className="flex justify-between items-center text-sm">
-                          <span className="text-muted-foreground">{option.name}</span>
-                          <span className="text-accent font-semibold">{option.price}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Build Your Workshop - Indigo Background */}
+      <section className="py-24 px-6 bg-indigo text-indigo-foreground">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-3xl font-bold mb-8 text-white">Build Your Workshop</h2>
+          <div className="grid md:grid-cols-3 gap-4">
+            {phases.map((phase, index) => (
+              <div key={index} className="bg-white/10 border border-white/20 rounded-lg p-6 aspect-square flex flex-col">
+                <div className="text-white/70 font-mono text-sm font-semibold mb-1">{phase.phase}</div>
+                <h3 className="text-xl font-semibold mb-4 text-white">{phase.title}</h3>
+                <ul className="space-y-2 flex-1">
+                  {phase.options.map((option, optIndex) => (
+                    <li key={optIndex} className="flex justify-between items-center text-sm">
+                      <span className="text-white/80">{option.name}</span>
+                      <span className="text-white font-semibold">{option.price}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-            </div>
+            ))}
+          </div>
 
-            <div className="bg-card border border-border rounded-lg p-8">
-              <h2 className="text-2xl font-bold mb-4">Build Your Quote</h2>
-              <p className="text-muted-foreground mb-8">
-                Select your preferred option for each phase below. I'll receive your selections and reach out to discuss your specific needs and provide a detailed quote.
-              </p>
-              
-              <form onSubmit={form.handleSubmit(handleQuoteSubmit)} className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="name">Your Name</Label>
-                    <Input
-                      id="name"
-                      placeholder="Enter your name"
-                      {...form.register("name")}
-                      className="bg-background"
-                    />
-                    {form.formState.errors.name && (
-                      <p className="text-sm text-destructive">{form.formState.errors.name.message}</p>
-                    )}
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email Address</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="your@email.com"
-                      {...form.register("email")}
-                      className="bg-background"
-                    />
-                    {form.formState.errors.email && (
-                      <p className="text-sm text-destructive">{form.formState.errors.email.message}</p>
-                    )}
-                  </div>
+          <div className="bg-white/10 border border-white/20 rounded-lg p-8 mt-8">
+            <h2 className="text-2xl font-bold mb-4 text-white">Build Your Quote</h2>
+            <p className="text-white/80 mb-8">
+              Select your preferred option for each phase below. I'll receive your selections and reach out to discuss your specific needs and provide a detailed quote.
+            </p>
+            
+            <form onSubmit={form.handleSubmit(handleQuoteSubmit)} className="space-y-6">
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <Label htmlFor="name" className="text-white">Your Name</Label>
+                  <Input
+                    id="name"
+                    placeholder="Enter your name"
+                    {...form.register("name")}
+                    className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
+                  />
+                  {form.formState.errors.name && (
+                    <p className="text-sm text-red-300">{form.formState.errors.name.message}</p>
+                  )}
                 </div>
 
-                <div className="space-y-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="phase_one">Phase 1: Discovery</Label>
-                    <Select
-                      onValueChange={(value) => form.setValue("phase_one", value)}
-                      value={form.watch("phase_one")}
-                    >
-                      <SelectTrigger id="phase_one" className="bg-background">
-                        <SelectValue placeholder="Select your Phase 1 option" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-background z-50">
-                        {phaseDetails[0].options.map((option, idx) => (
-                          <SelectItem key={idx} value={option.name}>
-                            {option.name} ({option.price})
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    {form.formState.errors.phase_one && (
-                      <p className="text-sm text-destructive">{form.formState.errors.phase_one.message}</p>
-                    )}
-                  </div>
+                <div className="space-y-2">
+                  <Label htmlFor="email" className="text-white">Email Address</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="your@email.com"
+                    {...form.register("email")}
+                    className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
+                  />
+                  {form.formState.errors.email && (
+                    <p className="text-sm text-red-300">{form.formState.errors.email.message}</p>
+                  )}
+                </div>
+              </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="phase_two">Phase 2: The Workshop</Label>
-                    <Select
-                      onValueChange={(value) => form.setValue("phase_two", value)}
-                      value={form.watch("phase_two")}
-                    >
-                      <SelectTrigger id="phase_two" className="bg-background">
-                        <SelectValue placeholder="Select your Phase 2 option" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-background z-50">
-                        {phaseDetails[1].options.map((option, idx) => (
-                          <SelectItem key={idx} value={option.name}>
-                            {option.name} ({option.price})
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    {form.formState.errors.phase_two && (
-                      <p className="text-sm text-destructive">{form.formState.errors.phase_two.message}</p>
-                    )}
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="phase_three">Phase 3: The Output</Label>
-                    <Select
-                      onValueChange={(value) => form.setValue("phase_three", value)}
-                      value={form.watch("phase_three")}
-                    >
-                      <SelectTrigger id="phase_three" className="bg-background">
-                        <SelectValue placeholder="Select your Phase 3 option" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-background z-50">
-                        {phaseDetails[2].options.map((option, idx) => (
-                          <SelectItem key={idx} value={option.name}>
-                            {option.name} ({option.price})
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    {form.formState.errors.phase_three && (
-                      <p className="text-sm text-destructive">{form.formState.errors.phase_three.message}</p>
-                    )}
-                  </div>
+              <div className="space-y-6">
+                <div className="space-y-2">
+                  <Label htmlFor="phase_one" className="text-white">Phase 1: Discovery</Label>
+                  <Select
+                    onValueChange={(value) => form.setValue("phase_one", value)}
+                    value={form.watch("phase_one")}
+                  >
+                    <SelectTrigger id="phase_one" className="bg-white/10 border-white/20 text-white">
+                      <SelectValue placeholder="Select your Phase 1 option" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-background z-50">
+                      {phaseDetails[0].options.map((option, idx) => (
+                        <SelectItem key={idx} value={option.name}>
+                          {option.name} ({option.price})
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  {form.formState.errors.phase_one && (
+                    <p className="text-sm text-red-300">{form.formState.errors.phase_one.message}</p>
+                  )}
                 </div>
 
-                <Button 
-                  type="submit" 
-                  size="lg" 
-                  className="w-full bg-accent text-accent-foreground hover:bg-accent/90"
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? "Submitting..." : "Request Quote"}
-                  <ArrowRight className="ml-2" />
-                </Button>
-              </form>
-            </div>
+                <div className="space-y-2">
+                  <Label htmlFor="phase_two" className="text-white">Phase 2: The Workshop</Label>
+                  <Select
+                    onValueChange={(value) => form.setValue("phase_two", value)}
+                    value={form.watch("phase_two")}
+                  >
+                    <SelectTrigger id="phase_two" className="bg-white/10 border-white/20 text-white">
+                      <SelectValue placeholder="Select your Phase 2 option" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-background z-50">
+                      {phaseDetails[1].options.map((option, idx) => (
+                        <SelectItem key={idx} value={option.name}>
+                          {option.name} ({option.price})
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  {form.formState.errors.phase_two && (
+                    <p className="text-sm text-red-300">{form.formState.errors.phase_two.message}</p>
+                  )}
+                </div>
 
-            <div className="bg-card border-2 thread-border p-8 text-center">
-              <h2 className="text-2xl mb-4 font-light">Want to discuss before committing?</h2>
-              <p className="text-muted-foreground mb-6">
-                Book a scoping call to talk through your challenges and see if this is the right fit.
-              </p>
+                <div className="space-y-2">
+                  <Label htmlFor="phase_three" className="text-white">Phase 3: The Output</Label>
+                  <Select
+                    onValueChange={(value) => form.setValue("phase_three", value)}
+                    value={form.watch("phase_three")}
+                  >
+                    <SelectTrigger id="phase_three" className="bg-white/10 border-white/20 text-white">
+                      <SelectValue placeholder="Select your Phase 3 option" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-background z-50">
+                      {phaseDetails[2].options.map((option, idx) => (
+                        <SelectItem key={idx} value={option.name}>
+                          {option.name} ({option.price})
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  {form.formState.errors.phase_three && (
+                    <p className="text-sm text-red-300">{form.formState.errors.phase_three.message}</p>
+                  )}
+                </div>
+              </div>
+
               <Button 
+                type="submit" 
                 size="lg" 
-                className="bg-accent text-accent-foreground hover:bg-accent/90 group"
-                onClick={() => setContactOpen(true)}
+                className="w-full bg-white text-indigo hover:bg-white/90"
+                disabled={isSubmitting}
               >
-                Book a Scoping Call
-                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                {isSubmitting ? "Submitting..." : "Request Quote"}
+                <ArrowRight className="ml-2" />
               </Button>
-            </div>
+            </form>
+          </div>
+
+          <div className="bg-white/10 border border-white/20 rounded-lg p-8 text-center mt-8">
+            <h2 className="text-2xl mb-4 font-light text-white">Want to discuss before committing?</h2>
+            <p className="text-white/80 mb-6">
+              Book a scoping call to talk through your challenges and see if this is the right fit.
+            </p>
+            <Button 
+              size="lg" 
+              className="bg-white text-indigo hover:bg-white/90 group"
+              onClick={() => setContactOpen(true)}
+            >
+              Book a Scoping Call
+              <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+            </Button>
           </div>
         </div>
       </section>

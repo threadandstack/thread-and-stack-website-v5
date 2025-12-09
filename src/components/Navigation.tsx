@@ -37,13 +37,19 @@ export const Navigation = () => {
             Thread & Stack
           </a>
 
-          {/* Hero Nav - Desktop Only */}
           <div className="hidden md:flex items-center gap-8">
             <a 
               href="/about" 
               className="text-base text-foreground/80 hover:text-foreground transition-colors not-italic"
             >
               About
+            </a>
+
+            <a 
+              href="/collective" 
+              className="text-base text-foreground/80 hover:text-foreground transition-colors not-italic"
+            >
+              The Collective
             </a>
 
             <a 
@@ -112,13 +118,19 @@ export const Navigation = () => {
               Thread & Stack
             </a>
 
-            {/* Desktop Navigation - Full Menu */}
             <div className="hidden md:flex items-center gap-8">
               <a
                 href="/about"
                 className="text-base text-foreground/80 hover:text-foreground transition-colors not-italic"
               >
                 About
+              </a>
+
+              <a
+                href="/collective"
+                className="text-base text-foreground/80 hover:text-foreground transition-colors not-italic"
+              >
+                The Collective
               </a>
 
               <a
@@ -197,6 +209,13 @@ export const Navigation = () => {
               onClick={() => setIsMobileMenuOpen(false)}
             >
               About
+            </a>
+            <a
+              href="/collective"
+              className="block py-3 text-lg text-foreground/80 hover:text-foreground transition-colors"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              The Collective
             </a>
             <a
               href="/how-i-work"

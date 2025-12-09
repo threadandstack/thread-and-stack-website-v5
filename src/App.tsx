@@ -18,6 +18,7 @@ import BlogPage from "./pages/BlogPage";
 import BlogPostPage from "./pages/BlogPostPage";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import DataGuarantee from "./pages/DataGuarantee";
+import CollectivePage from "./pages/CollectivePage";
 
 const queryClient = new QueryClient();
 
@@ -43,6 +44,7 @@ const App = () => (
           <Route path="/blog/:slug" element={<BlogPostPage />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/data-guarantee" element={<DataGuarantee />} />
+          <Route path="/collective" element={<CollectivePage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
