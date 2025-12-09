@@ -46,13 +46,6 @@ export const Navigation = () => {
             </a>
 
             <a 
-              href="/collective" 
-              className="text-base text-foreground/80 hover:text-foreground transition-colors not-italic"
-            >
-              The Collective
-            </a>
-
-            <a 
               href="/how-i-work" 
               className="text-base text-foreground/80 hover:text-foreground transition-colors not-italic"
             >
@@ -124,13 +117,6 @@ export const Navigation = () => {
                 className="text-base text-foreground/80 hover:text-foreground transition-colors not-italic"
               >
                 About
-              </a>
-
-              <a
-                href="/collective"
-                className="text-base text-foreground/80 hover:text-foreground transition-colors not-italic"
-              >
-                The Collective
               </a>
 
               <a
@@ -209,13 +195,6 @@ export const Navigation = () => {
               onClick={() => setIsMobileMenuOpen(false)}
             >
               About
-            </a>
-            <a
-              href="/collective"
-              className="block py-3 text-lg text-foreground/80 hover:text-foreground transition-colors"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              The Collective
             </a>
             <a
               href="/how-i-work"

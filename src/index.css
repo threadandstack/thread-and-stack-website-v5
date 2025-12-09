@@ -26,10 +26,10 @@ All colors MUST be HSL.
     --muted: 0 0% 96%;
     --muted-foreground: 0 0% 40%;
 
-    --accent: 256 89% 50%;
+    --accent: 234 89% 50%;
     --accent-foreground: 0 0% 98%;
     
-    /* Indigo section background */
+    /* Indigo section background (same as accent for consistency) */
     --indigo: 234 89% 50%;
     --indigo-foreground: 0 0% 98%;
 
