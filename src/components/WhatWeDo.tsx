@@ -44,7 +44,7 @@ export const WhatWeDo = () => {
         
         {/* Content row - text on left, image on right */}
         <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div className="space-y-8">
+          <div className="space-y-10">
             <p className="text-xl md:text-2xl font-light not-italic leading-relaxed">
               You know what you stand for. But somewhere between intention and execution, things get tangled. The <span className="italic">creative tax</span>, the cognitive load of admin, chaos, and context switching, buries the strategic thinking and creative direction that actually moves things forward. What's needed is clarity: positioning that resonates, visual identity that confidently articulates your narrative, and systems that let your team ship work that feels cohesive and true.
             </p>
