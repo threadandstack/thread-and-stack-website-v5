@@ -7,24 +7,39 @@ import { useEffect, useRef, useState } from "react";
 
 const HowIWorkPage = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [realityVisible, setRealityVisible] = useState(false);
+  const [aiVisible, setAiVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
+  const realityRef = useRef<HTMLElement>(null);
+  const aiRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            if (entry.target === sectionRef.current) setIsVisible(true);
+            if (entry.target === realityRef.current) setRealityVisible(true);
+            if (entry.target === aiRef.current) setAiVisible(true);
+          }
+        });
       },
       { threshold: 0.2 }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    if (realityRef.current) observer.observe(realityRef.current);
+    if (aiRef.current) observer.observe(aiRef.current);
 
     return () => observer.disconnect();
   }, []);
+
+  const fourCs = [
+    { word: "Creativity", description: "The drive to make, shape, and express." },
+    { word: "Connection", description: "The need to belong and relate to others." },
+    { word: "Curiosity", description: "The pull to explore, question, and understand." },
+    { word: "Contribution", description: "The desire to matter and leave something behind." },
+  ];
 
   const principles = [
     {
@@ -63,16 +78,53 @@ const HowIWorkPage = () => {
     <main className="min-h-screen">
       <Navigation />
 
+      {/* My Approach - Four C's Section */}
       <section
         ref={sectionRef}
         className={`py-24 px-6 mt-16 transition-all duration-1000 ${
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         }`}
       >
-        <div className="max-w-6xl mx-auto">
-          <h1 className="text-5xl md:text-6xl mb-16 text-balance font-light">
-            We start with your reality.
+        <div className="max-w-4xl mx-auto">
+          <h1 className="text-5xl md:text-6xl mb-8 text-balance font-light">
+            My Approach
           </h1>
+
+          <div className="prose prose-lg max-w-none space-y-6 text-lg leading-relaxed border-l-4 border-accent/20 pl-8 mb-16">
+            <p>
+              I believe four fundamental drives form the basis of the human condition. They shape how we work, create, and connect with others.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            {fourCs.map((item, index) => (
+              <div
+                key={index}
+                className="p-6 rounded-xl bg-muted/30 border border-border/30"
+              >
+                <h3 className="text-2xl md:text-3xl font-light mb-2">{item.word}</h3>
+                <p className="text-muted-foreground">{item.description}</p>
+              </div>
+            ))}
+          </div>
+
+          <p className="text-muted-foreground mt-8 text-lg leading-relaxed">
+            These aren't just abstract ideas. They're the lens through which I approach every engagement, ensuring that the work we do together honours what makes you human.
+          </p>
+        </div>
+      </section>
+
+      {/* We Start With Your Reality Section */}
+      <section
+        ref={realityRef}
+        className={`py-24 px-6 bg-muted/30 transition-all duration-1000 ${
+          realityVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+        }`}
+      >
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl md:text-5xl mb-16 text-balance font-light">
+            We start with your reality.
+          </h2>
 
           <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
             <div className="order-2 md:order-1">
@@ -128,59 +180,49 @@ const HowIWorkPage = () => {
         </div>
       </section>
 
-      {/* Philosophy Section - from About page */}
-      <section className="py-24 px-6 bg-muted/30">
+      {/* Thread AI Philosophy Section - Purple Background */}
+      <section
+        ref={aiRef}
+        className={`py-24 px-6 bg-accent transition-all duration-1000 ${
+          aiVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+        }`}
+      >
         <div className="max-w-4xl mx-auto">
-          <div className="prose prose-lg max-w-none space-y-6 text-lg leading-relaxed border-l-4 border-accent/20 pl-8">
-            <h2 className="text-3xl font-light not-italic">My Approach</h2>
+          <h2 className="text-4xl md:text-5xl mb-8 text-balance font-light text-accent-foreground">
+            The Thread AI Philosophy
+          </h2>
 
+          <p className="text-accent-foreground/70 text-sm mb-8 italic">
+            Particularly relevant for those exploring Thread AI Sprints
+          </p>
+
+          <div className="prose prose-lg max-w-none space-y-6 text-lg leading-relaxed text-accent-foreground">
             <p>
-              My work sits at the intersection of brand strategy, creative
-              direction, and systems design, protecting both your brand
-              integrity and your team's creative energy.
+              When it comes to AI, I see it as a second brain and operations partner in the background, never a replacement for human creativity or judgment.
             </p>
 
             <p>
-              Being both a designer and a strategist is rare. It means I
-              understand how aesthetic judgement and strategic thinking work
-              together: how visual identity supports your narrative, how asset
-              development flows from positioning, how design decisions either
-              reinforce or undermine what you're trying to say.
+              My approach centers on creative empowerment: helping you feel more capable (not automated), ensuring your brand voice remains authentically yours, and using AI to reduce cognitive load so your calendar feels spacious instead of suffocating.
             </p>
 
-            <p>
-              I help you untangle the mess, connect the dots, and keep your best
-              ideas moving. Through visual identity, creative direction, and
-              brand world building that feels cohesive and true. Not by adding
-              more processes, but by creating invisible scaffolding that reduces
-              friction and cognitive load.
-            </p>
-          </div>
+            <div className="my-12 py-8 border-t border-b border-accent-foreground/20">
+              <p className="text-xl font-light mb-6">
+                The four C's, Creativity, Connection, Curiosity, and Contribution, must be protected from AI oversupport.
+              </p>
+              <p className="text-accent-foreground/80">
+                We want to prevent human skill atrophy just as much as we want to deliver true connection. AI should give back time, attention, and voice, not replace the meaningful work only you can do.
+              </p>
+            </div>
 
-          <div className="prose prose-lg max-w-none space-y-6 text-lg leading-relaxed border-l-4 border-accent/20 pl-8 mt-16">
-            <h2 className="text-3xl font-light not-italic">AI as a Co-Pilot</h2>
-
-            <p>
-              When it comes to AI, I see it as a second brain and operations
-              partner in the background, never a replacement for human
-              creativity or judgment. My approach centers on creative
-              empowerment: helping you feel more capable (not automated),
-              ensuring your brand voice remains authentically yours, and using
-              AI to reduce cognitive load so your calendar feels spacious
-              instead of suffocating. The goal is giving back time, attention,
-              and voice.
-            </p>
-
-            <p className="font-bold not-italic">
-              The result? Brands that feel alive, teams that feel spacious, and
-              work that actually ships.
+            <p className="font-medium">
+              The result? Brands that feel alive, teams that feel spacious, and work that actually ships.
             </p>
           </div>
 
           <div className="text-center pt-16">
             <Button
               size="lg"
-              className="bg-accent text-accent-foreground hover:bg-accent/90 group rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
+              className="bg-accent-foreground text-accent hover:bg-accent-foreground/90 group rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
               asChild
             >
               <a href="/#contact">
