@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import AboutPage from "./pages/AboutPage";
+import HowIWorkPage from "./pages/HowIWorkPage";
 import StackedSessions from "./pages/StackedSessions";
 import MentorshipSprint from "./pages/MentorshipSprint";
 import Workshops from "./pages/Workshops";
@@ -29,6 +30,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/how-i-work" element={<HowIWorkPage />} />
           <Route path="/sessions-and-sprints" element={<SessionsAndSprints />} />
           <Route path="/fractional-deep-engagement" element={<FractionalDeepEngagement />} />
           <Route path="/workshops" element={<Workshops />} />

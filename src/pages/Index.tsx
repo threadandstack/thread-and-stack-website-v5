@@ -3,7 +3,6 @@ import { Hero } from "@/components/Hero";
 import { ScrollIndicator } from "@/components/ScrollIndicator";
 import { WhatWeDo } from "@/components/WhatWeDo";
 import { WhoItsFor } from "@/components/WhoItsFor";
-import { HowWeWork } from "@/components/HowWeWork";
 import { OffersGrid } from "@/components/OffersGrid";
 import { Testimonials } from "@/components/Testimonials";
 import { FeaturedProjects } from "@/components/FeaturedProjects";
@@ -53,9 +52,8 @@ const Index = () => {
       <Hero />
       <div id="what-we-do"><WhatWeDo /></div>
       <div id="who-its-for"><WhoItsFor /></div>
-      <div id="how-we-work"><HowWeWork /></div>
-      <div id="offers"><OffersGrid /></div>
       <FeaturedProjects />
+      <div id="offers"><OffersGrid /></div>
       <Newsletter />
       <Testimonials />
       <div id="about"><About /></div>
