@@ -1,5 +1,7 @@
 import thinkingImage from "@/assets/brendan-cafe.jpeg";
 import { Emphasis } from "@/components/Emphasis";
+import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 export const WhatWeDo = () => {
@@ -42,20 +44,32 @@ export const WhatWeDo = () => {
           </span> brands.
         </h2>
         
-        {/* Content row - image and text side by side */}
+        {/* Content row - text on left, image on right */}
         <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div>
+          <div className="space-y-8">
+            <p className="text-xl md:text-2xl font-light not-italic leading-relaxed">
+              You know what you stand for. But somewhere between intention and execution, things get tangled. The <span className="italic">creative tax</span>, the cognitive load of admin, chaos, and context switching, buries the strategic thinking and creative direction that actually moves things forward. What's needed is clarity: positioning that resonates, visual identity that confidently articulates your narrative, and systems that let your team ship work that feels cohesive and true.
+            </p>
+            
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="rounded-xl group"
+              asChild
+            >
+              <a href="/how-i-work">
+                How I Work
+                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </a>
+            </Button>
+          </div>
+          
+          <div className="order-first md:order-last">
             <img 
               src={thinkingImage} 
               alt="Strategic thinking"
               className="rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.06)] w-full h-auto"
             />
-          </div>
-          
-          <div className="text-lg md:text-xl leading-relaxed">
-            <p className="text-xl md:text-2xl font-light not-italic">
-              You know what you stand for. But somewhere between intention and execution, things get tangled. The <span className="italic">creative tax</span>, the cognitive load of admin, chaos, and context switching, buries the strategic thinking and creative direction that actually moves things forward. What's needed is clarity: positioning that resonates, visual identity that confidently articulates your narrative, and systems that let your team ship work that feels cohesive and true.
-            </p>
           </div>
         </div>
       </div>
