@@ -186,7 +186,7 @@ const SessionsAndSprints = () => {
       </section>
 
       {/* Thread AI Sprint Section - Indigo Background */}
-      <section className="py-24 px-6 bg-indigo text-indigo-foreground">
+      <section id="thread-ai" className="py-24 px-6 bg-indigo text-indigo-foreground scroll-mt-24">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-4 mb-8">
             <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-white">
