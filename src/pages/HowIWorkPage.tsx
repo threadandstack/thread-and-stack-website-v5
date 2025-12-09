@@ -228,7 +228,7 @@ const HowIWorkPage = () => {
 
             <div className="my-12 py-8 border-t border-b border-accent-foreground/20">
               <p className="text-xl font-light mb-6">
-                The four C's, Creativity, Connection, Curiosity, and Contribution, must be protected from AI oversupport.
+                The four pillars of the human condition: Connection, Creativity, Curiosity, and Contribution, must be protected from AI oversupport.
               </p>
               <p className="text-accent-foreground/80">
                 We want to prevent human skill atrophy just as much as we want to deliver true connection. AI should give back time, attention, and voice, not replace the meaningful work only you can do.
