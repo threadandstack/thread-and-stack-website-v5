@@ -181,10 +181,30 @@ serve(async (req) => {
           return `<h3>${richTextToHtml(block.heading_3.rich_text)}</h3>`
           
         case 'bulleted_list_item':
-          return `<li>${richTextToHtml(block.bulleted_list_item.rich_text)}</li>`
+          const bulletText = richTextToHtml(block.bulleted_list_item.rich_text)
+          let bulletChildrenHtml = ''
+          if (block.has_children) {
+            const bulletChildren = await fetchBlockChildren(block.id)
+            const nestedBullets = bulletChildren.filter((c: any) => c.type === 'bulleted_list_item')
+            if (nestedBullets.length > 0) {
+              const nestedItems = await Promise.all(nestedBullets.map((c: any) => blockToHtml(c)))
+              bulletChildrenHtml = `<ul>${nestedItems.join('')}</ul>`
+            }
+          }
+          return `<li>${bulletText}${bulletChildrenHtml}</li>`
           
         case 'numbered_list_item':
-          return `<li>${richTextToHtml(block.numbered_list_item.rich_text)}</li>`
+          const numItemText = richTextToHtml(block.numbered_list_item.rich_text)
+          let numChildrenHtml = ''
+          if (block.has_children) {
+            const numChildren = await fetchBlockChildren(block.id)
+            const nestedNums = numChildren.filter((c: any) => c.type === 'numbered_list_item')
+            if (nestedNums.length > 0) {
+              const nestedNumItems = await Promise.all(nestedNums.map((c: any) => blockToHtml(c)))
+              numChildrenHtml = `<ol>${nestedNumItems.join('')}</ol>`
+            }
+          }
+          return `<li>${numItemText}${numChildrenHtml}</li>`
           
         case 'quote':
           return `<blockquote>${richTextToHtml(block.quote.rich_text)}</blockquote>`
@@ -263,8 +283,22 @@ serve(async (req) => {
             htmlBlocks.push('<ul>')
             inBulletList = true
           }
-          const liText = richTextToHtml(block.bulleted_list_item.rich_text)
-          htmlBlocks.push(`<li>${liText}</li>`)
+          const bulletItemText = richTextToHtml(block.bulleted_list_item.rich_text)
+          // Handle nested children
+          let nestedBulletHtml = ''
+          if (block.has_children) {
+            const bulletChildren = await fetchBlockChildren(block.id)
+            const nestedBullets = bulletChildren.filter((b: any) => b.type === 'bulleted_list_item')
+            if (nestedBullets.length > 0) {
+              const nestedItems: string[] = []
+              for (const child of nestedBullets) {
+                const childHtml = await blockToHtml(child)
+                nestedItems.push(childHtml)
+              }
+              nestedBulletHtml = `<ul>${nestedItems.join('')}</ul>`
+            }
+          }
+          htmlBlocks.push(`<li>${bulletItemText}${nestedBulletHtml}</li>`)
           break
           
         case 'numbered_list_item':
@@ -272,8 +306,22 @@ serve(async (req) => {
             htmlBlocks.push('<ol>')
             inNumberedList = true
           }
-          const numText = richTextToHtml(block.numbered_list_item.rich_text)
-          htmlBlocks.push(`<li>${numText}</li>`)
+          const numItemMainText = richTextToHtml(block.numbered_list_item.rich_text)
+          // Handle nested children
+          let nestedNumHtml = ''
+          if (block.has_children) {
+            const numChildren = await fetchBlockChildren(block.id)
+            const nestedNums = numChildren.filter((b: any) => b.type === 'numbered_list_item')
+            if (nestedNums.length > 0) {
+              const nestedNumItems: string[] = []
+              for (const child of nestedNums) {
+                const childHtml = await blockToHtml(child)
+                nestedNumItems.push(childHtml)
+              }
+              nestedNumHtml = `<ol>${nestedNumItems.join('')}</ol>`
+            }
+          }
+          htmlBlocks.push(`<li>${numItemMainText}${nestedNumHtml}</li>`)
           break
           
         case 'quote':
