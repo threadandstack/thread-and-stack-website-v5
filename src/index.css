@@ -216,6 +216,7 @@ All colors MUST be HSL.
   .blog-content ul,
   .blog-content ol {
     margin: 1.5rem 0;
+    margin-left: 2.5vw;
     padding-left: 0;
     list-style: none;
   }
@@ -225,50 +226,51 @@ All colors MUST be HSL.
     margin-bottom: 0.75rem;
     line-height: 1.7;
     position: relative;
-    padding-left: 1.75rem;
+    padding-left: 1.5rem;
   }
   
-  /* Primary bullets - indigo filled circle */
+  /* Primary bullets - indigo ring */
   .blog-content ul > li::before {
     content: '';
     position: absolute;
     left: 0;
     top: 0.55em;
-    width: 8px;
-    height: 8px;
-    background: hsl(var(--accent));
-    border-radius: 50%;
-  }
-  
-  /* Secondary bullets - indigo ring */
-  .blog-content ul > li > ul > li::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0.55em;
-    width: 6px;
-    height: 6px;
+    width: 7px;
+    height: 7px;
     background: transparent;
     border: 1.5px solid hsl(var(--accent));
     border-radius: 50%;
   }
   
-  /* Tertiary bullets - indigo dash */
+  /* Secondary bullets - small indigo dot */
+  .blog-content ul > li > ul > li::before {
+    content: '';
+    position: absolute;
+    left: 0.5px;
+    top: 0.65em;
+    width: 4px;
+    height: 4px;
+    background: hsl(var(--accent) / 0.7);
+    border: none;
+    border-radius: 50%;
+  }
+  
+  /* Tertiary bullets - fine indigo dash */
   .blog-content ul > li > ul > li > ul > li::before {
     content: '';
     position: absolute;
     left: 0;
     top: 0.75em;
-    width: 8px;
-    height: 2px;
-    background: hsl(var(--accent) / 0.6);
-    border-radius: 1px;
+    width: 6px;
+    height: 1px;
+    background: hsl(var(--accent) / 0.5);
+    border-radius: 0;
   }
   
   /* Nested list spacing */
   .blog-content ul ul,
   .blog-content ol ol {
-    margin: 0.5rem 0 0.5rem 0.5rem;
+    margin: 0.5rem 0 0.5rem 0.25rem;
   }
   
   /* Callout styles matching Notion */
