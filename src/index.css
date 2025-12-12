@@ -236,7 +236,7 @@ All colors MUST be HSL.
     top: 0.55em;
     width: 8px;
     height: 8px;
-    background: hsl(var(--primary));
+    background: hsl(var(--accent));
     border-radius: 50%;
   }
   
@@ -249,7 +249,7 @@ All colors MUST be HSL.
     width: 6px;
     height: 6px;
     background: transparent;
-    border: 1.5px solid hsl(var(--primary));
+    border: 1.5px solid hsl(var(--accent));
     border-radius: 50%;
   }
   
@@ -261,7 +261,7 @@ All colors MUST be HSL.
     top: 0.75em;
     width: 8px;
     height: 2px;
-    background: hsl(var(--primary) / 0.6);
+    background: hsl(var(--accent) / 0.6);
     border-radius: 1px;
   }
   
