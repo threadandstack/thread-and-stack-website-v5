@@ -45,6 +45,15 @@ import workshop25 from "@/assets/photos/workshop/brendan-25.jpg";
 
 // Shoreditch photos
 import shoreditch26 from "@/assets/photos/shoreditch/brendan-26.jpg";
+
+// Portrait photos
+import portrait4 from "@/assets/photos/portraits/brendan-4.jpg";
+import portrait5 from "@/assets/photos/portraits/brendan-5.jpg";
+import portrait6 from "@/assets/photos/portraits/brendan-6.jpg";
+import portrait7 from "@/assets/photos/portraits/brendan-7.jpg";
+import portrait8 from "@/assets/photos/portraits/brendan-8.jpg";
+import portrait9 from "@/assets/photos/portraits/brendan-9.jpg";
+import portrait10 from "@/assets/photos/portraits/brendan-10.jpg";
 import shoreditch27 from "@/assets/photos/shoreditch/brendan-27.jpg";
 import shoreditch28 from "@/assets/photos/shoreditch/brendan-28.jpg";
 import shoreditch29 from "@/assets/photos/shoreditch/brendan-29.jpg";
@@ -816,13 +825,30 @@ console.log(greeting);`}</code></pre>
             </div>
           </div>
 
+          {/* Portraits */}
           <div className="space-y-4 pt-8 border-t border-border/50">
             <div className="flex items-baseline gap-2">
               <span className="text-xs text-muted-foreground uppercase tracking-widest">Portraits</span>
               <span className="text-xs text-muted-foreground">— Headshots, profile photos</span>
             </div>
-            <div className="p-8 border border-dashed border-border rounded-xl text-center text-muted-foreground text-sm">
-              Upload Portrait photos to populate this section
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {[
+                { src: portrait4, alt: "Full length portrait white wall" },
+                { src: portrait5, alt: "Smiling portrait hands clasped" },
+                { src: portrait6, alt: "Thoughtful portrait hands clasped" },
+                { src: portrait7, alt: "Smiling portrait studio" },
+                { src: portrait8, alt: "Laughing portrait" },
+                { src: portrait9, alt: "Arms crossed portrait" },
+                { src: portrait10, alt: "Hands in pockets portrait" },
+              ].map((photo, idx) => (
+                <div key={idx} className="aspect-[3/4] rounded-xl overflow-hidden bg-muted">
+                  <img 
+                    src={photo.src} 
+                    alt={photo.alt}
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+              ))}
             </div>
           </div>
         </section>
