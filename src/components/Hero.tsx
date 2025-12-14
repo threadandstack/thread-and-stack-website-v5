@@ -1,43 +1,11 @@
 import { useRef, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import { Emphasis } from "@/components/Emphasis";
-
-const HeadlineWord = ({ children, delay, isEmphasized = false }: { children: React.ReactNode; delay: number; isEmphasized?: boolean }) => {
-  const [isVisible, setIsVisible] = useState(false);
-  
-  useEffect(() => {
-    const timer = setTimeout(() => setIsVisible(true), delay);
-    return () => clearTimeout(timer);
-  }, [delay]);
-
-  if (isEmphasized) {
-    return (
-      <span 
-        className={`relative inline-block transition-all duration-700 ease-out ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-        }`}
-      >
-        {children}
-        <Emphasis className="absolute -bottom-2 left-0 right-0" delay={isVisible ? 0 : 100} />
-      </span>
-    );
-  }
-
-  return (
-    <span 
-      className={`inline-block transition-all duration-700 ease-out ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-      }`}
-    >
-      {children}
-    </span>
-  );
-};
 
 export const Hero = () => {
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  
   useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {
@@ -51,30 +19,18 @@ export const Hero = () => {
     }
     return () => observer.disconnect();
   }, []);
-  return <section className="relative min-h-[85vh] flex items-center justify-center px-6 py-24 overflow-hidden">
+
+  return (
+    <section className="relative min-h-[85vh] flex items-center justify-center px-6 py-24 overflow-hidden">
       <div className="absolute top-0 left-0 right-0 h-px thread-divider" />
       
       <div className="max-w-5xl mx-auto text-center space-y-8">
-        {/* Marginalia-style hero headline */}
+        {/* 07 Subtle Application style headline */}
         <div className="space-y-4">
-          <h1 className="font-serif-pro leading-snug">
-            <span className="block">
-              <HeadlineWord delay={100}>
-                <span className="text-5xl md:text-7xl font-bold">Marketing</span>
-              </HeadlineWord>{" "}
-              <HeadlineWord delay={250}>
-                <span className="text-4xl md:text-6xl font-normal text-muted-foreground inline-block" style={{ transform: "translateY(2px)" }}>
-                  that feels
-                </span>
-              </HeadlineWord>
-            </span>
-            <span className="block mt-2">
-              <HeadlineWord delay={400} isEmphasized>
-                <span className="text-5xl md:text-7xl font-extrabold inline-block" style={{ transform: "rotate(-0.5deg)", color: "#1340E8" }}>
-                  more human
-                </span>
-              </HeadlineWord>
-            </span>
+          <h1 className="font-serif-pro text-4xl md:text-6xl font-semibold leading-tight max-w-4xl mx-auto">
+            Marketing that feels{" "}
+            <span className="inline-block" style={{ transform: "translateY(-1px)" }}>more</span>{" "}
+            <span className="inline-block text-accent" style={{ transform: "translateY(1px)" }}>human</span>
           </h1>
         </div>
         
@@ -82,11 +38,12 @@ export const Hero = () => {
           <p className="font-serif-pro text-xl md:text-2xl text-muted-foreground">
             The brands that feel <span className="text-accent font-medium">alive</span>, are remembered.
           </p>
-          <p className={`mt-4 font-serif-pro italic text-base md:text-lg text-muted-foreground/70 border-l-2 border-accent/30 pl-4 inline-block transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`} style={{
-            transitionDelay: isVisible ? '1800ms' : '0ms',
-            transform: isVisible ? 'rotate(-0.3deg)' : 'rotate(0deg)'
+          <p className={`mt-4 font-serif-pro text-lg text-muted-foreground/70 max-w-xl mx-auto transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`} style={{
+            transitionDelay: isVisible ? '400ms' : '0ms'
           }}>
-            Strategy. Creative direction. Systems that work.
+            Through strategy, creative direction, and systems that{" "}
+            <span className="inline-block font-medium" style={{ transform: "translateY(-0.5px)" }}>actually</span>{" "}
+            work.
           </p>
         </div>
         
@@ -105,5 +62,6 @@ export const Hero = () => {
           </Button>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
