@@ -45,7 +45,7 @@ export const Navigation = () => {
             <img 
               src={isLogoHovered ? IndigoStacked : BlackStacked} 
               alt="Thread & Stack" 
-              className="h-6 md:h-7 w-auto"
+              className="h-12 md:h-14 w-auto"
             />
           </a>
 
@@ -128,7 +128,7 @@ export const Navigation = () => {
               <img 
                 src={isLogoHovered ? IndigoStacked : BlackStacked} 
                 alt="Thread & Stack" 
-                className="h-5 md:h-6 w-auto"
+                className="h-10 md:h-12 w-auto"
               />
             </a>
 
