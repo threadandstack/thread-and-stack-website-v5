@@ -5,9 +5,15 @@ import { Emphasis } from "@/components/Emphasis";
 import GreyStacked from "@/assets/logos/Grey_TS_Stacked.svg";
 import IndigoStacked from "@/assets/logos/Indigo_TS_Stacked.svg";
 import BlackStacked from "@/assets/logos/Black_TS_Stacked.svg";
+import WhiteStacked from "@/assets/logos/White_TS_Stacked.svg";
 import GreyWordmark from "@/assets/logos/Grey_TS_Wordmark.svg";
 import IndigoWordmark from "@/assets/logos/Indigo_TS_Wordmark.svg";
 import BlackWordmark from "@/assets/logos/Black_TS_Wordmark.svg";
+import WhiteWordmark from "@/assets/logos/White_TS_Wordmark.svg";
+import GreySocialSq from "@/assets/logos/Grey_TS_SocialSq.svg";
+import IndigoSocialSq from "@/assets/logos/Indigo_TS_SocialSq.svg";
+import BlackSocialSq from "@/assets/logos/Black_TS_SocialSq.svg";
+import WhiteSocialSq from "@/assets/logos/White_TS_SocialSq.svg";
 
 // Typography demo - Approved styles only
 export const TypographyDemo = () => {
@@ -80,8 +86,32 @@ export const TypographyDemo = () => {
           <div className="space-y-4">
             <p className="text-sm text-muted-foreground">On dark background</p>
             <div className="bg-foreground p-8 rounded-xl flex flex-wrap gap-8 items-center">
+              <img src={WhiteStacked} alt="White on dark" className="h-16 w-auto" />
+              <img src={WhiteWordmark} alt="White Wordmark on dark" className="h-6 w-auto" />
               <img src={IndigoStacked} alt="Indigo on dark" className="h-16 w-auto" />
-              <img src={IndigoWordmark} alt="Indigo Wordmark on dark" className="h-6 w-auto" />
+            </div>
+          </div>
+
+          {/* Social Square / Favicon */}
+          <div className="space-y-4">
+            <p className="text-sm text-muted-foreground">Social Square (Favicon style)</p>
+            <div className="flex flex-wrap gap-6 items-end">
+              <div className="bg-background p-4 rounded-xl border border-border">
+                <img src={GreySocialSq} alt="Grey SocialSq" className="h-12 w-12" />
+                <p className="text-xs text-muted-foreground mt-2">Grey</p>
+              </div>
+              <div className="bg-background p-4 rounded-xl border border-border">
+                <img src={IndigoSocialSq} alt="Indigo SocialSq" className="h-12 w-12" />
+                <p className="text-xs text-muted-foreground mt-2">Indigo</p>
+              </div>
+              <div className="bg-background p-4 rounded-xl border border-border">
+                <img src={BlackSocialSq} alt="Black SocialSq" className="h-12 w-12" />
+                <p className="text-xs text-muted-foreground mt-2">Black</p>
+              </div>
+              <div className="bg-foreground p-4 rounded-xl">
+                <img src={WhiteSocialSq} alt="White SocialSq" className="h-12 w-12" />
+                <p className="text-xs text-background/70 mt-2">White</p>
+              </div>
             </div>
           </div>
         </section>
