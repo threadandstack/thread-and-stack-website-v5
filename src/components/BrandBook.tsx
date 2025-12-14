@@ -423,6 +423,157 @@ export const BrandBook = () => {
           </div>
         </section>
 
+        {/* NOTION BLOCK TRANSLATIONS */}
+        <section className="space-y-8 py-16 border-b border-border">
+          <div className="flex items-baseline gap-4">
+            <span className="text-xs text-accent uppercase tracking-widest font-semibold">★ NOTION</span>
+            <h2 className="font-serif-pro text-xl font-semibold">Block Translations</h2>
+          </div>
+          <p className="text-sm text-muted-foreground max-w-xl">
+            Notion blocks rendered on the website. These are live examples of the CSS styling applied via <code className="text-xs bg-muted px-1 py-0.5 rounded">blog-content</code> class.
+          </p>
+          
+          <div className="blog-content space-y-8 bg-muted/20 p-8 md:p-12 rounded-2xl">
+            {/* Headings */}
+            <div>
+              <span className="text-xs text-muted-foreground uppercase tracking-widest mb-4 block font-sans">Headings</span>
+              <h1>Heading 1</h1>
+              <h2>Heading 2</h2>
+              <h3>Heading 3</h3>
+            </div>
+
+            {/* Paragraph */}
+            <div className="pt-6 border-t border-border/50">
+              <span className="text-xs text-muted-foreground uppercase tracking-widest mb-4 block font-sans">Paragraph</span>
+              <p>This is a standard paragraph with <strong>bold text</strong>, <em>italic text</em>, <u>underlined text</u>, <s>strikethrough</s>, and <code>inline code</code>. Links look like <a href="#" className="text-accent underline">this hyperlink</a>.</p>
+            </div>
+
+            {/* Bulleted List */}
+            <div className="pt-6 border-t border-border/50">
+              <span className="text-xs text-muted-foreground uppercase tracking-widest mb-4 block font-sans">Bulleted List (3 levels)</span>
+              <ul>
+                <li>Primary bullet point with indigo ring
+                  <ul>
+                    <li>Secondary bullet with smaller indigo dot
+                      <ul>
+                        <li>Tertiary bullet with fine indigo dash</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li>Another primary item</li>
+              </ul>
+            </div>
+
+            {/* Numbered List */}
+            <div className="pt-6 border-t border-border/50">
+              <span className="text-xs text-muted-foreground uppercase tracking-widest mb-4 block font-sans">Numbered List</span>
+              <ol className="list-decimal list-inside">
+                <li>First numbered item</li>
+                <li>Second numbered item</li>
+                <li>Third numbered item</li>
+              </ol>
+            </div>
+
+            {/* Quote */}
+            <div className="pt-6 border-t border-border/50">
+              <span className="text-xs text-muted-foreground uppercase tracking-widest mb-4 block font-sans">Quote Block</span>
+              <blockquote>
+                "Great brands don't just 'happen.' They are the result of asking deep questions, rigorous diagnosis, strategic storytelling and intentional content."<br/>
+                — Brendan Rodgers
+              </blockquote>
+            </div>
+
+            {/* Callouts */}
+            <div className="pt-6 border-t border-border/50">
+              <span className="text-xs text-muted-foreground uppercase tracking-widest mb-4 block font-sans">Callout Blocks (with color variants)</span>
+              <div className="callout callout-default">
+                <span className="callout-icon">💡</span>
+                <div className="callout-content">
+                  <p>Default/Gray callout with emoji icon</p>
+                </div>
+              </div>
+              <div className="callout callout-blue_background">
+                <span className="callout-icon">ℹ️</span>
+                <div className="callout-content">
+                  <p>Blue background callout for informational content</p>
+                </div>
+              </div>
+              <div className="callout callout-yellow_background">
+                <span className="callout-icon">⚠️</span>
+                <div className="callout-content">
+                  <p>Yellow background callout for warnings or notes</p>
+                </div>
+              </div>
+              <div className="callout callout-green_background">
+                <span className="callout-icon">✅</span>
+                <div className="callout-content">
+                  <p>Green background callout for success or tips</p>
+                </div>
+              </div>
+              <div className="callout callout-purple_background">
+                <span className="callout-icon">🔮</span>
+                <div className="callout-content">
+                  <p>Purple background callout for insights</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Code Block */}
+            <div className="pt-6 border-t border-border/50">
+              <span className="text-xs text-muted-foreground uppercase tracking-widest mb-4 block font-sans">Code Block</span>
+              <pre className="bg-foreground text-background p-4 rounded-lg overflow-x-auto"><code className="language-javascript">{`const greeting = "Hello, Thread & Stack";
+console.log(greeting);`}</code></pre>
+            </div>
+
+            {/* Table */}
+            <div className="pt-6 border-t border-border/50">
+              <span className="text-xs text-muted-foreground uppercase tracking-widest mb-4 block font-sans">Table</span>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Service</th>
+                    <th>Duration</th>
+                    <th>From</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Clarity Sessions</td>
+                    <td>60 minutes</td>
+                    <td>£300</td>
+                  </tr>
+                  <tr>
+                    <td>Mentorship Sprint</td>
+                    <td>6 weeks</td>
+                    <td>£1k</td>
+                  </tr>
+                  <tr>
+                    <td>Brand Workshops</td>
+                    <td>Half/Full day</td>
+                    <td>£2k</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            {/* Divider */}
+            <div className="pt-6 border-t border-border/50">
+              <span className="text-xs text-muted-foreground uppercase tracking-widest mb-4 block font-sans">Divider</span>
+              <hr />
+            </div>
+
+            {/* Image/Figure */}
+            <div className="pt-6 border-t border-border/50">
+              <span className="text-xs text-muted-foreground uppercase tracking-widest mb-4 block font-sans">Figure with Caption</span>
+              <figure>
+                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&q=80" alt="Abstract gradient" />
+                <figcaption>Image caption appears here in italic, muted text</figcaption>
+              </figure>
+            </div>
+          </div>
+        </section>
+
         {/* WEIGHT REFERENCE */}
         <section className="space-y-8 pt-16">
           <h2 className="font-serif-pro text-xl font-semibold">Weight Reference</h2>
