@@ -70,7 +70,7 @@ export const Hero = () => {
             </span>
             <span className="block mt-2">
               <HeadlineWord delay={400} isEmphasized>
-                <span className="text-5xl md:text-7xl font-extrabold inline-block" style={{ transform: "rotate(-0.5deg)", color: "hsl(234 89% 50%)" }}>
+                <span className="text-5xl md:text-7xl font-extrabold inline-block !text-[hsl(234,89%,50%)]" style={{ transform: "rotate(-0.5deg)" }}>
                   more human
                 </span>
               </HeadlineWord>
