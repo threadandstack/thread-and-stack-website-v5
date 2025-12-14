@@ -266,72 +266,48 @@ export const TypographyDemo = () => {
           </div>
         </section>
 
-        {/* VARIATION 6: Stacked Words (Logo-inspired) - Product Cards */}
+        {/* VARIATION 6: Product Cards (Using Subtle Application Style 07) */}
         <section className="space-y-8 py-16 border-b border-border">
           <div className="flex items-baseline gap-4">
             <span className="text-xs text-muted-foreground uppercase tracking-widest">06</span>
-            <h2 className="font-serif-pro text-xl font-semibold">Stacked Words (Product Cards)</h2>
+            <h2 className="font-serif-pro text-xl font-semibold">Product Cards (Subtle Application)</h2>
           </div>
           <p className="text-sm text-muted-foreground max-w-xl">
-            Direct translation of logo energy. Could work well for product/service cards.
+            Using the Subtle Application style for product cards. Clean, minimal intervention.
           </p>
           
           <div className="grid md:grid-cols-3 gap-6">
             {/* Product Card 1 */}
-            <div className="bg-muted/20 p-6 rounded-2xl space-y-2 hover:bg-muted/30 transition-colors cursor-pointer">
-              <div className="space-y-0">
-                <h3 
-                  className="font-serif-pro text-2xl md:text-3xl font-bold leading-none"
-                  style={{ transform: "rotate(-0.8deg)" }}
-                >
-                  Clarity
-                </h3>
-                <h3 
-                  className="font-serif-pro text-2xl md:text-3xl font-bold leading-none text-accent"
-                  style={{ transform: "translateX(4px) rotate(0.3deg)" }}
-                >
-                  Sessions
-                </h3>
-              </div>
-              <p className="text-sm text-muted-foreground pt-2">60-minute strategic power hours</p>
+            <div className="bg-muted/20 p-6 rounded-2xl space-y-3 hover:bg-muted/30 transition-colors cursor-pointer">
+              <h3 className="font-serif-pro text-2xl md:text-3xl font-semibold leading-tight">
+                Clarity{" "}
+                <span className="inline-block" style={{ transform: "translateY(1px)" }}>
+                  <span style={{ color: "hsl(234 89% 50%)" }}>Sessions</span>
+                </span>
+              </h3>
+              <p className="text-sm text-muted-foreground">60-minute strategic power hours</p>
             </div>
 
             {/* Product Card 2 */}
-            <div className="bg-muted/20 p-6 rounded-2xl space-y-2 hover:bg-muted/30 transition-colors cursor-pointer">
-              <div className="space-y-0">
-                <h3 
-                  className="font-serif-pro text-2xl md:text-3xl font-bold leading-none"
-                  style={{ transform: "rotate(-0.5deg)" }}
-                >
-                  Mentorship
-                </h3>
-                <h3 
-                  className="font-serif-pro text-2xl md:text-3xl font-bold leading-none text-accent"
-                  style={{ transform: "translateX(6px) rotate(0.4deg)" }}
-                >
-                  Sprints
-                </h3>
-              </div>
-              <p className="text-sm text-muted-foreground pt-2">6-week AI workflow builds</p>
+            <div className="bg-muted/20 p-6 rounded-2xl space-y-3 hover:bg-muted/30 transition-colors cursor-pointer">
+              <h3 className="font-serif-pro text-2xl md:text-3xl font-semibold leading-tight">
+                Mentorship{" "}
+                <span className="inline-block" style={{ transform: "translateY(1px)" }}>
+                  <span style={{ color: "hsl(234 89% 50%)" }}>Sprints</span>
+                </span>
+              </h3>
+              <p className="text-sm text-muted-foreground">6-week AI workflow builds</p>
             </div>
 
             {/* Product Card 3 */}
-            <div className="bg-muted/20 p-6 rounded-2xl space-y-2 hover:bg-muted/30 transition-colors cursor-pointer">
-              <div className="space-y-0">
-                <h3 
-                  className="font-serif-pro text-2xl md:text-3xl font-bold leading-none"
-                  style={{ transform: "rotate(-0.6deg)" }}
-                >
-                  Brand
-                </h3>
-                <h3 
-                  className="font-serif-pro text-2xl md:text-3xl font-bold leading-none text-accent"
-                  style={{ transform: "translateX(5px) rotate(0.5deg)" }}
-                >
-                  Workshops
-                </h3>
-              </div>
-              <p className="text-sm text-muted-foreground pt-2">Modular team strategy sessions</p>
+            <div className="bg-muted/20 p-6 rounded-2xl space-y-3 hover:bg-muted/30 transition-colors cursor-pointer">
+              <h3 className="font-serif-pro text-2xl md:text-3xl font-semibold leading-tight">
+                Brand{" "}
+                <span className="inline-block" style={{ transform: "translateY(1px)" }}>
+                  <span style={{ color: "hsl(234 89% 50%)" }}>Workshops</span>
+                </span>
+              </h3>
+              <p className="text-sm text-muted-foreground">Modular team strategy sessions</p>
             </div>
           </div>
         </section>
