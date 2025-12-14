@@ -1,4 +1,4 @@
-export const Emphasis = ({ className = "", delay = 0 }: { className?: string; delay?: number }) => {
+export const Emphasis = ({ className = "", delay = 0, animate = true }: { className?: string; delay?: number; animate?: boolean }) => {
   return (
     <svg 
       viewBox="0 0 200 8" 
@@ -6,10 +6,10 @@ export const Emphasis = ({ className = "", delay = 0 }: { className?: string; de
       preserveAspectRatio="none"
       xmlns="http://www.w3.org/2000/svg"
       style={{
-        animation: delay < 100 ? `draw-line 1.4s ease-out forwards` : 'none',
-        animationDelay: `${delay}s`,
+        animation: animate ? `draw-line 1s ease-out forwards` : 'none',
+        animationDelay: `${delay}ms`,
         strokeDasharray: "200",
-        strokeDashoffset: delay < 100 ? "200" : "0"
+        strokeDashoffset: animate ? "200" : "0"
       }}
     >
       <path
