@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import { Emphasis } from "@/components/Emphasis";
 
 export const Hero = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -30,7 +31,10 @@ export const Hero = () => {
           <h1 className="font-serif-pro text-4xl md:text-6xl font-semibold leading-tight max-w-4xl mx-auto">
             Marketing that feels{" "}
             <span className="inline-block" style={{ transform: "translateY(-1px)" }}>more</span>{" "}
-            <span className="inline-block text-accent" style={{ transform: "translateY(1px)" }}>human</span>
+            <span className="inline-block text-accent relative" style={{ transform: "translateY(1px)" }}>
+              human
+              <Emphasis className="absolute -bottom-2 left-0 right-0" delay={300} />
+            </span>
           </h1>
         </div>
         
