@@ -19,6 +19,7 @@ import BlogPostPage from "./pages/BlogPostPage";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import DataGuarantee from "./pages/DataGuarantee";
 import CollectivePage from "./pages/CollectivePage";
+import ThreadMotifDemo from "./components/ThreadMotifDemo";
 
 const queryClient = new QueryClient();
 
@@ -45,6 +46,7 @@ const App = () => (
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/data-guarantee" element={<DataGuarantee />} />
           <Route path="/collective" element={<CollectivePage />} />
+          <Route path="/thread-demo" element={<ThreadMotifDemo />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
