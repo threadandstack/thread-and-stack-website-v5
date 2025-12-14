@@ -7,7 +7,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import BlackStacked from "@/assets/logos/Black_TS_Stacked.svg";
+import GreyStacked from "@/assets/logos/Grey_TS_Stacked.svg";
 import IndigoStacked from "@/assets/logos/Indigo_TS_Stacked.svg";
 
 export const Navigation = () => {
@@ -43,7 +43,7 @@ export const Navigation = () => {
             onMouseLeave={() => setIsLogoHovered(false)}
           >
             <img 
-              src={isLogoHovered ? IndigoStacked : BlackStacked} 
+              src={isLogoHovered ? IndigoStacked : GreyStacked}
               alt="Thread & Stack" 
               className="h-12 md:h-14 w-auto"
             />
@@ -126,7 +126,7 @@ export const Navigation = () => {
               onMouseLeave={() => setIsLogoHovered(false)}
             >
               <img 
-                src={isLogoHovered ? IndigoStacked : BlackStacked} 
+                src={isLogoHovered ? IndigoStacked : GreyStacked} 
                 alt="Thread & Stack" 
                 className="h-10 md:h-12 w-auto"
               />
