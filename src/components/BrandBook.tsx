@@ -43,6 +43,18 @@ import workshop23 from "@/assets/photos/workshop/brendan-23.jpg";
 import workshop24 from "@/assets/photos/workshop/brendan-24.jpg";
 import workshop25 from "@/assets/photos/workshop/brendan-25.jpg";
 
+// Shoreditch photos
+import shoreditch26 from "@/assets/photos/shoreditch/brendan-26.jpg";
+import shoreditch27 from "@/assets/photos/shoreditch/brendan-27.jpg";
+import shoreditch28 from "@/assets/photos/shoreditch/brendan-28.jpg";
+import shoreditch29 from "@/assets/photos/shoreditch/brendan-29.jpg";
+import shoreditch30 from "@/assets/photos/shoreditch/brendan-30.jpg";
+import shoreditch31 from "@/assets/photos/shoreditch/brendan-31.jpg";
+import shoreditch33 from "@/assets/photos/shoreditch/brendan-33.jpg";
+import shoreditch34 from "@/assets/photos/shoreditch/brendan-34.jpg";
+import shoreditch35 from "@/assets/photos/shoreditch/brendan-35.jpg";
+import shoreditch37 from "@/assets/photos/shoreditch/brendan-37.jpg";
+
 // Custom social icons used in Footer
 const BlueskyIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" className={className} fill="currentColor">
@@ -774,14 +786,33 @@ console.log(greeting);`}</code></pre>
             </div>
           </div>
 
-          {/* Placeholder for future categories */}
+          {/* Shoreditch Photos */}
           <div className="space-y-4 pt-8 border-t border-border/50">
             <div className="flex items-baseline gap-2">
               <span className="text-xs text-muted-foreground uppercase tracking-widest">Shoreditch</span>
               <span className="text-xs text-muted-foreground">— Street, urban, location</span>
             </div>
-            <div className="p-8 border border-dashed border-border rounded-xl text-center text-muted-foreground text-sm">
-              Upload Shoreditch photos to populate this section
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+              {[
+                { src: shoreditch26, alt: "Walking past street art" },
+                { src: shoreditch27, alt: "Mr Cenz mural walk" },
+                { src: shoreditch28, alt: "Standing by geometric mural" },
+                { src: shoreditch29, alt: "Profile by mural" },
+                { src: shoreditch30, alt: "Portrait by mural" },
+                { src: shoreditch31, alt: "Looking up portrait" },
+                { src: shoreditch33, alt: "Thoughtful portrait" },
+                { src: shoreditch34, alt: "Smiling portrait" },
+                { src: shoreditch35, alt: "Phone on colourful street" },
+                { src: shoreditch37, alt: "Cafe thoughtful" },
+              ].map((photo, idx) => (
+                <div key={idx} className="aspect-[4/3] rounded-xl overflow-hidden bg-muted">
+                  <img 
+                    src={photo.src} 
+                    alt={photo.alt}
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+              ))}
             </div>
           </div>
 
