@@ -298,6 +298,152 @@ export const BrandBook = () => {
           </div>
         </section>
 
+        {/* CARD VARIATIONS */}
+        <section className="space-y-8 py-16 border-b border-border">
+          <div className="flex items-baseline gap-4">
+            <span className="text-xs text-accent uppercase tracking-widest font-semibold">★ CARDS</span>
+            <h2 className="font-serif-pro text-xl font-semibold">Card Variations</h2>
+          </div>
+          <p className="text-sm text-muted-foreground max-w-xl">
+            Card styles used across the site: Product/Service cards, Portfolio entries, and Blog cards.
+          </p>
+          
+          <div className="space-y-12">
+            {/* Product/Service Card */}
+            <div>
+              <span className="text-xs text-muted-foreground uppercase tracking-widest mb-4 block">Product/Service Card</span>
+              <div className="max-w-sm">
+                <div className="bg-card rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] p-8 transition-all duration-300 flex flex-col">
+                  <div className="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center mb-6 text-accent">
+                    <Zap className="w-6 h-6" />
+                  </div>
+                  
+                  <h3 className="text-2xl mb-2 font-light">
+                    Sessions & Sprints
+                  </h3>
+                  
+                  <p className="text-sm text-accent mb-4">
+                    Focused Strategic Support
+                  </p>
+                  
+                  <p className="text-muted-foreground leading-relaxed mb-6 flex-grow">
+                    One-hour Clarity Sessions for rapid intervention, or six-week Thread AI Sprints to transform how you work with AI.
+                  </p>
+                  
+                  <div className="space-y-4 pt-4 border-t border-border/30">
+                    <p className="text-sm font-medium text-foreground/70">
+                      From £300
+                    </p>
+                    
+                    <button className="w-full bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl py-2 px-4 text-sm font-medium transition-colors">
+                      Learn More
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <p className="text-xs text-muted-foreground mt-4">
+                <code className="bg-muted px-1 py-0.5 rounded">rounded-2xl</code> • 
+                <code className="bg-muted px-1 py-0.5 rounded ml-1">shadow-soft → shadow-medium on hover</code> • 
+                <code className="bg-muted px-1 py-0.5 rounded ml-1">icon in accent/10 container</code>
+              </p>
+            </div>
+
+            {/* Portfolio/Featured Card */}
+            <div className="pt-8 border-t border-border/50">
+              <span className="text-xs text-muted-foreground uppercase tracking-widest mb-4 block">Portfolio/Featured Card</span>
+              <div className="max-w-4xl">
+                <div className="group bg-card rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.06)] hover:shadow-[0_12px_32px_rgba(0,0,0,0.12)] transition-all duration-300 overflow-hidden flex flex-col md:flex-row cursor-pointer">
+                  <div className="w-full md:w-1/2 flex-shrink-0 bg-muted aspect-square md:aspect-auto flex items-center justify-center">
+                    <span className="text-muted-foreground text-sm">Image Carousel Area</span>
+                  </div>
+                  
+                  <div className="p-8 md:p-12 flex flex-col justify-center space-y-5 md:w-1/2">
+                    <h3 className="text-3xl md:text-4xl font-light">
+                      Nerve Tumours UK
+                    </h3>
+                    
+                    <p className="text-base text-accent font-light">
+                      Brand Strategy & Digital Transformation
+                    </p>
+                    
+                    <p className="text-muted-foreground leading-relaxed text-lg">
+                      I was delighted to be part of the Nerve Tumours UK rebrand and worked with their chosen agency partner as their in-house brand lead.
+                    </p>
+                    
+                    <p className="text-sm text-accent font-light">
+                      Click to learn more →
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <p className="text-xs text-muted-foreground mt-4">
+                <code className="bg-muted px-1 py-0.5 rounded">horizontal layout on desktop</code> • 
+                <code className="bg-muted px-1 py-0.5 rounded ml-1">50/50 split image + content</code> • 
+                <code className="bg-muted px-1 py-0.5 rounded ml-1">elevated shadow on hover</code>
+              </p>
+            </div>
+
+            {/* Blog Card */}
+            <div className="pt-8 border-t border-border/50">
+              <span className="text-xs text-muted-foreground uppercase tracking-widest mb-4 block">Blog Card</span>
+              <div className="max-w-sm">
+                <div className="group cursor-pointer">
+                  <div className="h-full transition-all hover:shadow-lg overflow-hidden rounded-xl border bg-card text-card-foreground shadow">
+                    <div className="aspect-[16/9] overflow-hidden bg-muted flex items-center justify-center">
+                      <span className="text-muted-foreground text-sm">Featured Image</span>
+                    </div>
+                    <div className="p-6">
+                      <div className="flex items-center gap-3 mb-4">
+                        <span className="px-3 py-1 text-sm rounded-full bg-emerald-100 text-emerald-700">
+                          Growth
+                        </span>
+                        <span className="text-sm text-muted-foreground">
+                          5 min read
+                        </span>
+                      </div>
+
+                      <h2 className="text-2xl mb-3 group-hover:text-accent transition-colors font-light">
+                        Article Title Goes Here
+                      </h2>
+
+                      <p className="text-muted-foreground mb-4 line-clamp-2">
+                        A brief intro or hook that entices readers to click through and read the full article.
+                      </p>
+
+                      <div className="flex items-center justify-between text-sm text-muted-foreground">
+                        <span className="italic">
+                          Brendan @ Thread and Stack
+                        </span>
+                        <span>
+                          12 Dec 2024
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <p className="text-xs text-muted-foreground mt-4">
+                <code className="bg-muted px-1 py-0.5 rounded">16:9 featured image</code> • 
+                <code className="bg-muted px-1 py-0.5 rounded ml-1">theme color-coded tag</code> • 
+                <code className="bg-muted px-1 py-0.5 rounded ml-1">title accent on hover</code> • 
+                <code className="bg-muted px-1 py-0.5 rounded ml-1">author + date footer</code>
+              </p>
+            </div>
+
+            {/* Theme Tag Colors */}
+            <div className="pt-8 border-t border-border/50">
+              <span className="text-xs text-muted-foreground uppercase tracking-widest mb-4 block">Blog Theme Tags</span>
+              <div className="flex flex-wrap gap-3">
+                <span className="px-3 py-1 text-sm rounded-full bg-emerald-100 text-emerald-700">Growth</span>
+                <span className="px-3 py-1 text-sm rounded-full bg-orange-100 text-orange-700">Strategy</span>
+                <span className="px-3 py-1 text-sm rounded-full bg-pink-100 text-pink-700">Creative</span>
+                <span className="px-3 py-1 text-sm rounded-full bg-blue-100 text-blue-700">Systems</span>
+                <span className="px-3 py-1 text-sm rounded-full bg-accent/10 text-accent">Case Studies</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* ICONOGRAPHY */}
         <section className="space-y-8 py-16 border-b border-border">
           <div className="flex items-baseline gap-4">
