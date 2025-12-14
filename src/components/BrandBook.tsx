@@ -39,6 +39,9 @@ import workshop19 from "@/assets/photos/workshop/brendan-19.jpg";
 import workshop20 from "@/assets/photos/workshop/brendan-20.jpg";
 import workshop21 from "@/assets/photos/workshop/brendan-21.jpg";
 import workshop22 from "@/assets/photos/workshop/brendan-22.jpg";
+import workshop23 from "@/assets/photos/workshop/brendan-23.jpg";
+import workshop24 from "@/assets/photos/workshop/brendan-24.jpg";
+import workshop25 from "@/assets/photos/workshop/brendan-25.jpg";
 
 // Custom social icons used in Footer
 const BlueskyIcon = ({ className }: { className?: string }) => (
@@ -756,6 +759,9 @@ console.log(greeting);`}</code></pre>
                 { src: workshop20, alt: "Brendan seated in workshop" },
                 { src: workshop21, alt: "Team collaboration" },
                 { src: workshop22, alt: "Hands-on work detail" },
+                { src: workshop23, alt: "Team laughing in workshop" },
+                { src: workshop24, alt: "Brendan explaining concept" },
+                { src: workshop25, alt: "Brendan smiling in conversation" },
               ].map((photo, idx) => (
                 <div key={idx} className="aspect-[4/3] rounded-xl overflow-hidden bg-muted">
                   <img 
