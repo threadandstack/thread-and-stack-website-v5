@@ -7,10 +7,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import BlackWordmark from "@/assets/logos/Black_TS_Wordmark.svg";
+import IndigoWordmark from "@/assets/logos/Indigo_TS_Wordmark.svg";
 
 export const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isLogoHovered, setIsLogoHovered] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,8 +36,17 @@ export const Navigation = () => {
       <nav className="absolute top-0 left-0 right-0 z-40 py-6 px-6">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           {/* Logo */}
-          <a href="/" className="text-2xl font-light text-foreground hover:text-accent transition-colors">
-            Thread & Stack
+          <a 
+            href="/" 
+            className="block transition-opacity duration-200"
+            onMouseEnter={() => setIsLogoHovered(true)}
+            onMouseLeave={() => setIsLogoHovered(false)}
+          >
+            <img 
+              src={isLogoHovered ? IndigoWordmark : BlackWordmark} 
+              alt="Thread & Stack" 
+              className="h-6 md:h-7 w-auto"
+            />
           </a>
 
           <div className="hidden md:flex items-center gap-8">
@@ -107,8 +119,17 @@ export const Navigation = () => {
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <a href="/" className="text-xl font-light text-foreground hover:text-accent transition-colors">
-              Thread & Stack
+            <a 
+              href="/" 
+              className="block transition-opacity duration-200"
+              onMouseEnter={() => setIsLogoHovered(true)}
+              onMouseLeave={() => setIsLogoHovered(false)}
+            >
+              <img 
+                src={isLogoHovered ? IndigoWordmark : BlackWordmark} 
+                alt="Thread & Stack" 
+                className="h-5 md:h-6 w-auto"
+              />
             </a>
 
             <div className="hidden md:flex items-center gap-8">
