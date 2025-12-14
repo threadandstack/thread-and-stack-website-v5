@@ -7,8 +7,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import BlackWordmark from "@/assets/logos/Black_TS_Wordmark.svg";
-import IndigoWordmark from "@/assets/logos/Indigo_TS_Wordmark.svg";
+import BlackStacked from "@/assets/logos/Black_TS_Stacked.svg";
+import IndigoStacked from "@/assets/logos/Indigo_TS_Stacked.svg";
 
 export const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -43,7 +43,7 @@ export const Navigation = () => {
             onMouseLeave={() => setIsLogoHovered(false)}
           >
             <img 
-              src={isLogoHovered ? IndigoWordmark : BlackWordmark} 
+              src={isLogoHovered ? IndigoStacked : BlackStacked} 
               alt="Thread & Stack" 
               className="h-6 md:h-7 w-auto"
             />
@@ -126,7 +126,7 @@ export const Navigation = () => {
               onMouseLeave={() => setIsLogoHovered(false)}
             >
               <img 
-                src={isLogoHovered ? IndigoWordmark : BlackWordmark} 
+                src={isLogoHovered ? IndigoStacked : BlackStacked} 
                 alt="Thread & Stack" 
                 className="h-5 md:h-6 w-auto"
               />
