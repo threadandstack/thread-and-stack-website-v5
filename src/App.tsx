@@ -20,7 +20,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import DataGuarantee from "./pages/DataGuarantee";
 import CollectivePage from "./pages/CollectivePage";
 import ThreadMotifDemo from "./components/ThreadMotifDemo";
-import TypographyDemo from "./components/TypographyDemo";
+import BrandBook from "./components/BrandBook";
 
 const queryClient = new QueryClient();
 
@@ -48,7 +48,7 @@ const App = () => (
           <Route path="/data-guarantee" element={<DataGuarantee />} />
           <Route path="/collective" element={<CollectivePage />} />
           <Route path="/thread-demo" element={<ThreadMotifDemo />} />
-          <Route path="/type-demo" element={<TypographyDemo />} />
+          <Route path="/brand-book" element={<BrandBook />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
