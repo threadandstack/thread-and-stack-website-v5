@@ -16,6 +16,7 @@ export default {
       fontFamily: {
         sans: ["Inter", "system-ui", "sans-serif"],
         serif: ["Crimson Text", "Georgia", "serif"],
+        "serif-pro": ["Crimson Pro", "Crimson Text", "Georgia", "serif"],
       },
       colors: {
         border: "hsl(var(--border))",
