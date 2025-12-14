@@ -30,6 +30,16 @@ import IndigoSocialSq from "@/assets/logos/Indigo_TS_SocialSq.svg";
 import BlackSocialSq from "@/assets/logos/Black_TS_SocialSq.svg";
 import WhiteSocialSq from "@/assets/logos/White_TS_SocialSq.svg";
 
+// Photography imports
+import workshop1 from "@/assets/photos/workshop/brendan-1.jpg";
+import workshop2 from "@/assets/photos/workshop/brendan-2.jpg";
+import workshop3 from "@/assets/photos/workshop/brendan-3.jpg";
+import workshop18 from "@/assets/photos/workshop/brendan-18.jpg";
+import workshop19 from "@/assets/photos/workshop/brendan-19.jpg";
+import workshop20 from "@/assets/photos/workshop/brendan-20.jpg";
+import workshop21 from "@/assets/photos/workshop/brendan-21.jpg";
+import workshop22 from "@/assets/photos/workshop/brendan-22.jpg";
+
 // Custom social icons used in Footer
 const BlueskyIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" className={className} fill="currentColor">
@@ -716,6 +726,66 @@ console.log(greeting);`}</code></pre>
                 <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&q=80" alt="Abstract gradient" />
                 <figcaption>Image caption appears here in italic, muted text</figcaption>
               </figure>
+            </div>
+          </div>
+        </section>
+
+        {/* PHOTOGRAPHY */}
+        <section className="space-y-8 py-16 border-b border-border">
+          <div className="flex items-baseline gap-4">
+            <span className="text-xs text-accent uppercase tracking-widest font-semibold">★ PHOTOGRAPHY</span>
+            <h2 className="font-serif-pro text-xl font-semibold">Brand Photography</h2>
+          </div>
+          <p className="text-sm text-muted-foreground max-w-xl">
+            Photography assets organized by category. Use for hero sections, about pages, and marketing materials.
+          </p>
+          
+          {/* Workshop Photos */}
+          <div className="space-y-4">
+            <div className="flex items-baseline gap-2">
+              <span className="text-xs text-muted-foreground uppercase tracking-widest">Workshop</span>
+              <span className="text-xs text-muted-foreground">— Strategy sessions, team collaboration</span>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {[
+                { src: workshop1, alt: "Brendan working with post-its" },
+                { src: workshop2, alt: "Brendan in workshop - side profile" },
+                { src: workshop3, alt: "Brendan smiling in workshop" },
+                { src: workshop18, alt: "Team workshop session" },
+                { src: workshop19, alt: "Brendan presenting to team" },
+                { src: workshop20, alt: "Brendan seated in workshop" },
+                { src: workshop21, alt: "Team collaboration" },
+                { src: workshop22, alt: "Hands-on work detail" },
+              ].map((photo, idx) => (
+                <div key={idx} className="aspect-[4/3] rounded-xl overflow-hidden bg-muted">
+                  <img 
+                    src={photo.src} 
+                    alt={photo.alt}
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Placeholder for future categories */}
+          <div className="space-y-4 pt-8 border-t border-border/50">
+            <div className="flex items-baseline gap-2">
+              <span className="text-xs text-muted-foreground uppercase tracking-widest">Shoreditch</span>
+              <span className="text-xs text-muted-foreground">— Street, urban, location</span>
+            </div>
+            <div className="p-8 border border-dashed border-border rounded-xl text-center text-muted-foreground text-sm">
+              Upload Shoreditch photos to populate this section
+            </div>
+          </div>
+
+          <div className="space-y-4 pt-8 border-t border-border/50">
+            <div className="flex items-baseline gap-2">
+              <span className="text-xs text-muted-foreground uppercase tracking-widest">Portraits</span>
+              <span className="text-xs text-muted-foreground">— Headshots, profile photos</span>
+            </div>
+            <div className="p-8 border border-dashed border-border rounded-xl text-center text-muted-foreground text-sm">
+              Upload Portrait photos to populate this section
             </div>
           </div>
         </section>
