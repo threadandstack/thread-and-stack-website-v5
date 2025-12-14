@@ -5,7 +5,14 @@ import { Emphasis } from "@/components/Emphasis";
 
 export const Hero = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [showUnderline, setShowUnderline] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  
+  useEffect(() => {
+    // Trigger underline animation after page load
+    const timer = setTimeout(() => setShowUnderline(true), 600);
+    return () => clearTimeout(timer);
+  }, []);
   
   useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => {
@@ -33,7 +40,7 @@ export const Hero = () => {
             <span className="inline-block" style={{ transform: "translateY(-1px)" }}>more</span>{" "}
             <span className="inline-block text-accent relative" style={{ transform: "translateY(1px)" }}>
               human
-              <Emphasis className="absolute -bottom-2 left-0 right-0" delay={300} />
+              {showUnderline && <Emphasis className="absolute -bottom-2 left-0 right-0" delay={0} animate={true} />}
             </span>
           </h1>
         </div>
