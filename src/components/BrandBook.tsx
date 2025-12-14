@@ -54,6 +54,13 @@ import portrait7 from "@/assets/photos/portraits/brendan-7.jpg";
 import portrait8 from "@/assets/photos/portraits/brendan-8.jpg";
 import portrait9 from "@/assets/photos/portraits/brendan-9.jpg";
 import portrait10 from "@/assets/photos/portraits/brendan-10.jpg";
+import portrait11 from "@/assets/photos/portraits/brendan-11.jpg";
+import portrait12 from "@/assets/photos/portraits/brendan-12.jpg";
+import portrait13 from "@/assets/photos/portraits/brendan-13.jpg";
+import portrait14 from "@/assets/photos/portraits/brendan-14.jpg";
+import portrait15 from "@/assets/photos/portraits/brendan-15.jpg";
+import portrait16 from "@/assets/photos/portraits/brendan-16.jpg";
+import portrait17 from "@/assets/photos/portraits/brendan-17.jpg";
 import shoreditch27 from "@/assets/photos/shoreditch/brendan-27.jpg";
 import shoreditch28 from "@/assets/photos/shoreditch/brendan-28.jpg";
 import shoreditch29 from "@/assets/photos/shoreditch/brendan-29.jpg";
@@ -840,6 +847,13 @@ console.log(greeting);`}</code></pre>
                 { src: portrait8, alt: "Laughing portrait" },
                 { src: portrait9, alt: "Arms crossed portrait" },
                 { src: portrait10, alt: "Hands in pockets portrait" },
+                { src: portrait11, alt: "Seated portrait smiling" },
+                { src: portrait12, alt: "Seated portrait thoughtful" },
+                { src: portrait13, alt: "Seated with coffee" },
+                { src: portrait14, alt: "Standing in jacket" },
+                { src: portrait15, alt: "Standing portrait jacket" },
+                { src: portrait16, alt: "Smiling portrait jacket" },
+                { src: portrait17, alt: "Relaxed portrait jacket" },
               ].map((photo, idx) => (
                 <div key={idx} className="aspect-[3/4] rounded-xl overflow-hidden bg-muted">
                   <img 
