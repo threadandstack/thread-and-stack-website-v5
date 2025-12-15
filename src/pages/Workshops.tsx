@@ -117,6 +117,7 @@ const Workshops = () => {
     {
       phase: "Phase 1",
       title: "Discovery",
+      description: "We listen before we leap.",
       options: [
         { name: "The Pulse Check", price: "+£500" },
         { name: "The Deep Dive", price: "+£1.5k" },
@@ -126,6 +127,7 @@ const Workshops = () => {
     {
       phase: "Phase 2",
       title: "The Workshop",
+      description: "We get in a room and do the work.",
       options: [
         { name: "Diagnostic", price: "+£1k" },
         { name: "Strategy Session", price: "+£2k" },
@@ -135,6 +137,7 @@ const Workshops = () => {
     {
       phase: "Phase 3",
       title: "The Output",
+      description: "You leave with a roadmap, not just notes.",
       options: [
         { name: "The Summary", price: "+£750" },
         { name: "The Playbook", price: "+£2k" },
@@ -282,9 +285,10 @@ const Workshops = () => {
           <h2 className="text-3xl font-bold mb-8 text-white">Build Your Workshop</h2>
           <div className="grid md:grid-cols-3 gap-4">
             {phases.map((phase, index) => (
-              <div key={index} className="bg-white/10 border border-white/20 rounded-lg p-6 aspect-square flex flex-col">
+              <div key={index} className="bg-white/10 border border-white/20 rounded-lg p-4 md:p-6 flex flex-col">
                 <div className="text-white/70 font-mono text-sm font-semibold mb-1">{phase.phase}</div>
-                <h3 className="text-xl font-semibold mb-4 text-white">{phase.title}</h3>
+                <h3 className="text-lg md:text-xl font-semibold mb-1 text-white">{phase.title}</h3>
+                <p className="text-white/60 text-sm mb-4">{phase.description}</p>
                 <ul className="space-y-2 flex-1">
                   {phase.options.map((option, optIndex) => (
                     <li key={optIndex} className="flex justify-between items-center text-sm">
