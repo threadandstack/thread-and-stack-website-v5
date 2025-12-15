@@ -38,14 +38,21 @@ export const Navigation = () => {
           {/* Logo */}
           <a 
             href="/" 
-            className="block transition-opacity duration-200"
+            className="block relative"
             onMouseEnter={() => setIsLogoHovered(true)}
             onMouseLeave={() => setIsLogoHovered(false)}
           >
             <img 
-              src={isLogoHovered ? IndigoStacked : GreyStacked}
+              src={GreyStacked}
               alt="Thread & Stack" 
-              className="h-12 md:h-14 w-auto"
+              className="h-12 md:h-14 w-auto transition-opacity duration-500 ease-in-out"
+              style={{ opacity: isLogoHovered ? 0 : 1 }}
+            />
+            <img 
+              src={IndigoStacked}
+              alt="" 
+              className="h-12 md:h-14 w-auto absolute inset-0 transition-opacity duration-500 ease-in-out"
+              style={{ opacity: isLogoHovered ? 1 : 0 }}
             />
           </a>
 
@@ -121,14 +128,21 @@ export const Navigation = () => {
             {/* Logo */}
             <a 
               href="/" 
-              className="block transition-opacity duration-200"
+              className="block relative"
               onMouseEnter={() => setIsLogoHovered(true)}
               onMouseLeave={() => setIsLogoHovered(false)}
             >
               <img 
-                src={isLogoHovered ? IndigoStacked : GreyStacked} 
+                src={GreyStacked}
                 alt="Thread & Stack" 
-                className="h-10 md:h-12 w-auto"
+                className="h-10 md:h-12 w-auto transition-opacity duration-500 ease-in-out"
+                style={{ opacity: isLogoHovered ? 0 : 1 }}
+              />
+              <img 
+                src={IndigoStacked}
+                alt="" 
+                className="h-10 md:h-12 w-auto absolute inset-0 transition-opacity duration-500 ease-in-out"
+                style={{ opacity: isLogoHovered ? 1 : 0 }}
               />
             </a>
 
