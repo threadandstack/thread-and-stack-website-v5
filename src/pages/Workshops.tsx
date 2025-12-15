@@ -117,21 +117,21 @@ const Workshops = () => {
     {
       phase: "Phase 1",
       title: "Discovery",
-      description: "We listen before we leap.",
+      description: "We can't solve what we don't understand.",
       options: [
-        { name: "The Pulse Check", price: "+£500" },
-        { name: "The Deep Dive", price: "+£1.5k" },
-        { name: "The Market View", price: "+£3k" }
+        { name: "The Pulse Check", price: "+£500", detail: "Questionnaire to 5 key individuals" },
+        { name: "The Deep Dive", price: "+£1.5k", detail: "Questionnaire + 5x 1:1 interviews" },
+        { name: "The Market View", price: "+£3k", detail: "Questionnaire + 5x customer interviews" }
       ]
     },
     {
       phase: "Phase 2",
       title: "The Workshop",
-      description: "We get in a room and do the work.",
+      description: "The crucible where alignment happens.",
       options: [
-        { name: "Diagnostic", price: "+£1k" },
-        { name: "Strategy Session", price: "+£2k" },
-        { name: "The Sprint", price: "+£4k" }
+        { name: "Diagnostic", price: "+£1k", detail: "Half day: Diagnosis & alignment" },
+        { name: "Strategy Session", price: "+£2k", detail: "Full day: Diagnosis + solution frameworks" },
+        { name: "The Sprint", price: "+£4k", detail: "2-day sprint: Diagnosis, solution, activation plan" }
       ]
     },
     {
@@ -139,9 +139,9 @@ const Workshops = () => {
       title: "The Output",
       description: "You leave with a roadmap, not just notes.",
       options: [
-        { name: "The Summary", price: "+£750" },
-        { name: "The Playbook", price: "+£2k" },
-        { name: "The Pitch", price: "+£4k" }
+        { name: "The Summary", price: "+£750", detail: "10-15 slides, 48hr turnaround" },
+        { name: "The Playbook", price: "+£2k", detail: "25-35 page strategic report" },
+        { name: "The Pitch", price: "+£4k", detail: "Playbook + 2 pitch-building sessions" }
       ]
     }
   ];
@@ -289,11 +289,14 @@ const Workshops = () => {
                 <div className="text-white/70 font-mono text-sm font-semibold mb-1">{phase.phase}</div>
                 <h3 className="text-lg md:text-xl font-semibold mb-1 text-white">{phase.title}</h3>
                 <p className="text-white/60 text-sm mb-4">{phase.description}</p>
-                <ul className="space-y-2 flex-1">
+                <ul className="space-y-3 flex-1">
                   {phase.options.map((option, optIndex) => (
-                    <li key={optIndex} className="flex justify-between items-center text-sm">
-                      <span className="text-white/80">{option.name}</span>
-                      <span className="text-white font-semibold">{option.price}</span>
+                    <li key={optIndex} className="text-sm">
+                      <div className="flex justify-between items-center">
+                        <span className="text-white/90 font-medium">{option.name}</span>
+                        <span className="text-white font-semibold">{option.price}</span>
+                      </div>
+                      <p className="text-white/50 text-xs mt-0.5">{option.detail}</p>
                     </li>
                   ))}
                 </ul>
