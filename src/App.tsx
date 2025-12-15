@@ -19,6 +19,7 @@ import BlogPostPage from "./pages/BlogPostPage";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import DataGuarantee from "./pages/DataGuarantee";
 import CollectivePage from "./pages/CollectivePage";
+import IndexPhotoHero from "./pages/IndexPhotoHero";
 import ThreadMotifDemo from "./components/ThreadMotifDemo";
 import BrandBook from "./components/BrandBook";
 
@@ -49,6 +50,7 @@ const App = () => (
           <Route path="/collective" element={<CollectivePage />} />
           <Route path="/thread-demo" element={<ThreadMotifDemo />} />
           <Route path="/brand-book" element={<BrandBook />} />
+          <Route path="/v/photo-hero" element={<IndexPhotoHero />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
