@@ -1,11 +1,12 @@
 import { useRef, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronDown } from "lucide-react";
 import { Emphasis } from "@/components/Emphasis";
 
 export const Hero = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [showUnderline, setShowUnderline] = useState(false);
+  const [scrollOpacity, setScrollOpacity] = useState(1);
   const ref = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
@@ -26,6 +27,18 @@ export const Hero = () => {
       observer.observe(ref.current);
     }
     return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const fadeStart = 50;
+      const fadeEnd = 200;
+      const opacity = Math.max(0, 1 - (scrollY - fadeStart) / (fadeEnd - fadeStart));
+      setScrollOpacity(scrollY < fadeStart ? 1 : opacity);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
@@ -72,6 +85,17 @@ export const Hero = () => {
             </a>
           </Button>
         </div>
+      </div>
+      
+      {/* Scroll indicator */}
+      <div 
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 transition-opacity duration-300"
+        style={{ opacity: scrollOpacity }}
+      >
+        <ChevronDown 
+          className="w-6 h-6 text-accent animate-bounce" 
+          strokeWidth={2}
+        />
       </div>
     </section>
   );
