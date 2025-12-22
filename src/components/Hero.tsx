@@ -48,7 +48,7 @@ export const Hero = () => {
       <div className="max-w-5xl mx-auto text-center space-y-8">
         {/* 07 Subtle Application style headline */}
         <div className="space-y-4">
-          <h1 className="font-serif-pro text-4xl md:text-6xl font-semibold leading-tight max-w-4xl mx-auto">
+          <h1 className="font-serif-pro text-4xl md:text-6xl font-semibold italic leading-tight max-w-4xl mx-auto">
             Marketing that feels{" "}
             <span className="inline-block" style={{ transform: "translateY(-1px)" }}>more</span>{" "}
             <span className="inline-block text-accent relative" style={{ transform: "translateY(1px)" }}>
@@ -59,10 +59,10 @@ export const Hero = () => {
         </div>
         
         <div ref={ref} className="max-w-3xl mx-auto text-balance leading-relaxed">
-          <p className="font-serif-pro text-xl md:text-2xl text-muted-foreground">
+          <p className="font-sans text-base md:text-lg text-muted-foreground">
             The brands that feel <span className="text-accent font-medium">alive</span>, are remembered.
           </p>
-          <p className={`mt-4 font-serif-pro text-lg text-muted-foreground/70 max-w-xl mx-auto transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`} style={{
+          <p className={`mt-4 font-sans text-base text-muted-foreground/70 max-w-xl mx-auto transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`} style={{
             transitionDelay: isVisible ? '400ms' : '0ms'
           }}>
             Through strategy, creative direction, and systems that{" "}
@@ -72,14 +72,14 @@ export const Hero = () => {
         </div>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
-          <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 transition-all duration-300 text-lg px-8 group rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] not-italic font-serif-pro font-semibold" asChild>
+          <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 transition-all duration-300 text-lg px-8 group rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] not-italic font-sans font-semibold" asChild>
             <a href="#contact">
               Book a Clarity Session
               <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
             </a>
           </Button>
           
-          <Button size="lg" variant="outline" className="text-lg px-8 rounded-xl hover:bg-foreground hover:text-background not-italic shadow-[0_2px_8px_rgba(0,0,0,0.04)] font-serif-pro" asChild>
+          <Button size="lg" variant="outline" className="text-lg px-8 rounded-xl hover:bg-foreground hover:text-background not-italic shadow-[0_2px_8px_rgba(0,0,0,0.04)] font-sans" asChild>
             <a href="#how-we-work">
               How We Work
             </a>

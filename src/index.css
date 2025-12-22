@@ -96,15 +96,15 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground font-serif antialiased;
+    @apply bg-background text-foreground font-sans antialiased;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-serif font-light;
+    @apply font-serif-pro font-semibold italic;
   }
 
   .secondary-text {
-    @apply font-serif italic;
+    @apply font-sans;
   }
 
   /* Soft card styles */

@@ -72,12 +72,12 @@ export const OffersGrid = () => {
     >
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16 space-y-6">
-          <h2 className="text-5xl md:text-6xl mb-4 text-balance font-light">
+          <h2 className="text-5xl md:text-6xl mb-4 text-balance font-semibold italic">
             Ways to work <span className="relative inline-block">together
               <Emphasis className="absolute -bottom-2 left-0 right-0" delay={isVisible ? 0.5 : 999} />
             </span>
           </h2>
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+          <p className="text-base md:text-lg font-sans text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             Clear entry points that protect your time, build trust, and create momentum
           </p>
         </div>
@@ -92,20 +92,20 @@ export const OffersGrid = () => {
                 {offer.icon}
               </div>
               
-              <h3 className="text-2xl mb-2 font-light">
+              <h3 className="text-2xl mb-2 font-semibold italic">
                 {offer.title}
               </h3>
               
-              <p className="text-sm text-accent mb-4">
+              <p className="text-sm font-sans text-accent mb-4">
                 {offer.tagline}
               </p>
               
-              <p className="text-muted-foreground leading-relaxed mb-6 flex-grow">
+              <p className="font-sans text-muted-foreground leading-relaxed mb-6 flex-grow">
                 {offer.description}
               </p>
               
               <div className="space-y-4 pt-4 border-t border-border/30">
-                <p className="text-sm font-medium text-foreground/70 not-italic">
+                <p className="text-sm font-sans font-medium text-foreground/70 not-italic">
                   {offer.price}
                 </p>
                 
