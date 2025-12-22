@@ -924,7 +924,7 @@ console.log(greeting);`}</code></pre>
                   Marketing that feels{" "}
                   <span className="text-accent">human</span>
                 </h3>
-                <p className="font-sans text-lg md:text-xl text-background/70 leading-relaxed max-w-2xl">
+                <p className="font-sans text-base md:text-lg text-background/70 leading-relaxed max-w-2xl">
                   The brands that stand out aren't louder — they're clearer. Through strategic clarity and creative direction, we help founders and teams build marketing that actually connects.
                 </p>
                 <p className="font-sans text-base text-background/50 leading-relaxed max-w-2xl">
