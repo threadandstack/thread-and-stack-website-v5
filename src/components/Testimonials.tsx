@@ -67,7 +67,7 @@ export const Testimonials = () => {
       className={`py-24 px-6 bg-muted/20 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
     >
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-5xl md:text-6xl mb-16 text-balance font-light">
+        <h2 className="text-5xl md:text-6xl mb-16 text-balance font-semibold italic">
           Kind words
         </h2>
         
@@ -81,18 +81,18 @@ export const Testimonials = () => {
               <div className="absolute left-0 top-8 bottom-8 w-[2px] bg-accent/30 group-hover:bg-accent/60 transition-colors" />
               
               <div className="pl-6 space-y-4">
-                <p className="text-lg leading-relaxed">
+                <p className="text-base font-sans leading-relaxed">
                   "{testimonial.quote}"
                 </p>
                 
                 <div className="pt-4 border-t border-border/50">
-                  <p className="font-light not-italic text-foreground">
+                  <p className="font-sans not-italic text-foreground">
                     {testimonial.author}
                   </p>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm font-sans text-muted-foreground">
                     {testimonial.role}
                   </p>
-                  <p className="text-xs text-muted-foreground/70 mt-1">
+                  <p className="text-xs font-sans text-muted-foreground/70 mt-1">
                     {testimonial.company}
                   </p>
                 </div>

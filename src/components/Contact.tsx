@@ -126,10 +126,10 @@ export const Contact = () => {
     >
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-5xl md:text-6xl mb-6 font-light">
+          <h2 className="text-5xl md:text-6xl mb-6 font-semibold italic">
             Let's talk
           </h2>
-          <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed">
+          <p className="text-base md:text-lg font-sans text-muted-foreground leading-relaxed">
             Tell me what you're wrestling with. No pressure, just conversation.
           </p>
         </div>

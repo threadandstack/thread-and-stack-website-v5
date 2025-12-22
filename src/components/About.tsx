@@ -31,7 +31,7 @@ export const About = () => {
       className={`py-24 px-6 bg-card transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
     >
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-5xl md:text-6xl mb-16 font-light">
+        <h2 className="text-5xl md:text-6xl mb-16 font-semibold italic">
           About Thread & Stack
         </h2>
         
@@ -44,8 +44,8 @@ export const About = () => {
             />
           </div>
           
-          <div className="space-y-6 text-lg md:text-xl leading-relaxed border-l-4 border-accent/20 pl-8">
-            <p className="text-2xl md:text-3xl font-light not-italic">
+          <div className="space-y-6 text-base md:text-lg leading-relaxed border-l-4 border-accent/20 pl-8 font-sans">
+            <p className="text-xl md:text-2xl font-sans not-italic">
               I'm Brendan, founder of Thread & Stack.
             </p>
             
@@ -61,7 +61,7 @@ export const About = () => {
               Most of the founders and teams I work with are already doing meaningful work. The problem isn't a lack of ideas. It's the gap between what they mean and what they're actually saying and shipping.
             </p>
             
-            <p className="not-italic font-light">
+            <p className="not-italic">
               My work sits at the intersection of brand strategy, creative direction, and systems design, protecting both your brand integrity and your team's creative energy.
             </p>
           </div>

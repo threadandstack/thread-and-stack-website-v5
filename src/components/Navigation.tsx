@@ -59,21 +59,21 @@ export const Navigation = () => {
           <div className="hidden md:flex items-center gap-8">
             <a 
               href="/about" 
-              className="text-base text-foreground/80 hover:text-foreground transition-colors not-italic"
+              className="text-base font-sans text-foreground/80 hover:text-foreground transition-colors not-italic"
             >
               About
             </a>
 
             <a 
               href="/how-i-work" 
-              className="text-base text-foreground/80 hover:text-foreground transition-colors not-italic"
+              className="text-base font-sans text-foreground/80 hover:text-foreground transition-colors not-italic"
             >
               How I Work
             </a>
             
             {/* Services Dropdown */}
             <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center gap-1 text-base text-foreground/80 hover:text-foreground transition-colors not-italic">
+              <DropdownMenuTrigger className="flex items-center gap-1 text-base font-sans text-foreground/80 hover:text-foreground transition-colors not-italic">
                 Services
                 <ChevronDown className="w-4 h-4" />
               </DropdownMenuTrigger>
@@ -90,7 +90,7 @@ export const Navigation = () => {
 
             <a 
               href="/blog" 
-              className="text-base text-foreground/80 hover:text-foreground transition-colors italic"
+              className="text-base font-serif-pro text-foreground/80 hover:text-foreground transition-colors italic"
             >
               Stacked Behaviours
             </a>
@@ -98,7 +98,7 @@ export const Navigation = () => {
             {/* Get Started CTA */}
             <Button 
               size="sm" 
-              className="bg-accent text-accent-foreground hover:bg-accent/90 rounded-xl not-italic"
+              className="bg-accent text-accent-foreground hover:bg-accent/90 rounded-xl not-italic font-sans"
               asChild
             >
               <a href="/#contact">Get Started</a>
@@ -149,21 +149,21 @@ export const Navigation = () => {
             <div className="hidden md:flex items-center gap-8">
               <a
                 href="/about"
-                className="text-base text-foreground/80 hover:text-foreground transition-colors not-italic"
+                className="text-base font-sans text-foreground/80 hover:text-foreground transition-colors not-italic"
               >
                 About
               </a>
 
               <a
                 href="/how-i-work"
-                className="text-base text-foreground/80 hover:text-foreground transition-colors not-italic"
+                className="text-base font-sans text-foreground/80 hover:text-foreground transition-colors not-italic"
               >
                 How I Work
               </a>
 
               {/* Services Dropdown */}
               <DropdownMenu>
-                <DropdownMenuTrigger className="flex items-center gap-1 text-base text-foreground/80 hover:text-foreground transition-colors not-italic">
+                <DropdownMenuTrigger className="flex items-center gap-1 text-base font-sans text-foreground/80 hover:text-foreground transition-colors not-italic">
                   Services
                   <ChevronDown className="w-4 h-4" />
                 </DropdownMenuTrigger>
@@ -180,14 +180,14 @@ export const Navigation = () => {
 
               <a
                 href="/blog"
-                className="text-base text-foreground/80 hover:text-foreground transition-colors italic"
+                className="text-base font-serif-pro text-foreground/80 hover:text-foreground transition-colors italic"
               >
                 Stacked Behaviours
               </a>
 
               <Button 
                 size="sm" 
-                className="bg-accent text-accent-foreground hover:bg-accent/90 rounded-xl not-italic"
+                className="bg-accent text-accent-foreground hover:bg-accent/90 rounded-xl not-italic font-sans"
                 asChild
               >
                 <a href="/#contact">Get Started</a>
@@ -226,26 +226,26 @@ export const Navigation = () => {
           <div className="px-6 py-4 space-y-4 overflow-y-auto h-full">
             <a
               href="/about"
-              className="block py-3 text-lg text-foreground/80 hover:text-foreground transition-colors"
+              className="block py-3 text-lg font-sans text-foreground/80 hover:text-foreground transition-colors"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               About
             </a>
             <a
               href="/how-i-work"
-              className="block py-3 text-lg text-foreground/80 hover:text-foreground transition-colors"
+              className="block py-3 text-lg font-sans text-foreground/80 hover:text-foreground transition-colors"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               How I Work
             </a>
 
             <div className="border-t border-border/50 pt-4">
-              <p className="text-xs text-muted-foreground mb-3 not-italic">Services</p>
+              <p className="text-xs text-muted-foreground mb-3 not-italic font-sans">Services</p>
               {services.map((service) => (
                 <a
                   key={service.href}
                   href={service.href}
-                  className="block py-3 text-lg text-foreground/80 hover:text-foreground transition-colors pl-4"
+                  className="block py-3 text-lg font-sans text-foreground/80 hover:text-foreground transition-colors pl-4"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {service.label}
@@ -256,7 +256,7 @@ export const Navigation = () => {
             <div className="border-t border-border/50 pt-4">
               <a
                 href="/blog"
-                className="block py-3 text-lg text-foreground/80 hover:text-foreground transition-colors italic"
+                className="block py-3 text-lg font-serif-pro text-foreground/80 hover:text-foreground transition-colors italic"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Stacked Behaviours
@@ -265,7 +265,7 @@ export const Navigation = () => {
 
             <Button 
               size="lg" 
-              className="w-full bg-accent text-accent-foreground hover:bg-accent/90 rounded-xl mt-4"
+              className="w-full bg-accent text-accent-foreground hover:bg-accent/90 rounded-xl mt-4 font-sans"
               asChild
             >
               <a href="/#contact" onClick={() => setIsMobileMenuOpen(false)}>Get Started</a>

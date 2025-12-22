@@ -18,25 +18,25 @@ export const Footer = () => {
       <div className="max-w-6xl mx-auto">
         <div className="grid md:grid-cols-3 gap-8 mb-8">
           <div>
-            <h3 className="text-2xl mb-2 font-light">Thread & Stack</h3>
-            <p className="text-primary-foreground/80 text-sm">
+            <h3 className="text-2xl mb-2 font-semibold italic">Thread & Stack</h3>
+            <p className="font-sans text-primary-foreground/80 text-sm">
               Marketing that feels more human.
             </p>
           </div>
           
           <div>
-            <h4 className="mb-3 font-light not-italic">Offers</h4>
-            <ul className="space-y-2 text-sm text-primary-foreground/80">
+            <h4 className="mb-3 font-semibold italic not-italic">Offers</h4>
+            <ul className="space-y-2 text-sm font-sans text-primary-foreground/80">
               <li><a href="/sessions-and-sprints" className="hover:text-primary-foreground transition-colors">Sessions & Sprints</a></li>
               <li><a href="/workshops" className="hover:text-primary-foreground transition-colors">Brand Connection Workshops</a></li>
               <li><a href="/fractional-deep-engagement" className="hover:text-primary-foreground transition-colors">Fractional & Deep Engagement</a></li>
-              <li><a href="/blog" className="hover:text-primary-foreground transition-colors italic">Stacked Behaviours Newsletter</a></li>
+              <li><a href="/blog" className="hover:text-primary-foreground transition-colors font-serif-pro italic">Stacked Behaviours Newsletter</a></li>
             </ul>
           </div>
           
           <div>
-            <h4 className="mb-3 font-light not-italic">Connect</h4>
-            <ul className="space-y-2 text-sm text-primary-foreground/80">
+            <h4 className="mb-3 font-semibold italic">Connect</h4>
+            <ul className="space-y-2 text-sm font-sans text-primary-foreground/80">
               <li><a href="#contact" className="hover:text-primary-foreground transition-colors">Get in Touch</a></li>
               <li><a href="https://www.linkedin.com/in/rodgersbrendan/" target="_blank" rel="noopener noreferrer" className="hover:text-primary-foreground transition-colors flex items-center gap-2"><Linkedin className="h-4 w-4" />LinkedIn</a></li>
               <li><a href="https://bsky.app/profile/threadandstack.com" target="_blank" rel="noopener noreferrer" className="hover:text-primary-foreground transition-colors flex items-center gap-2"><BlueskyIcon className="h-4 w-4" />Bluesky</a></li>
@@ -45,7 +45,7 @@ export const Footer = () => {
           </div>
         </div>
         
-        <div className="border-t border-primary-foreground/20 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-primary-foreground/60">
+        <div className="border-t border-primary-foreground/20 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm font-sans text-primary-foreground/60">
           <p className="not-italic">© {new Date().getFullYear()} Thread & Stack. All rights reserved.</p>
           <div className="flex gap-6">
             <a href="/privacy" className="hover:text-primary-foreground transition-colors">Privacy Policy</a>
