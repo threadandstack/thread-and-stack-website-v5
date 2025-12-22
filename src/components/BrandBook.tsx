@@ -867,15 +867,157 @@ console.log(greeting);`}</code></pre>
           </div>
         </section>
 
+        {/* TYPOGRAPHY PAIRING DEMO */}
+        <section className="space-y-8 py-16 border-b border-border">
+          <div className="flex items-baseline gap-4">
+            <span className="text-xs text-accent uppercase tracking-widest font-semibold">★ TYPE PAIRING</span>
+            <h2 className="font-serif-pro text-xl font-semibold">Serif + Sans-Serif Demo</h2>
+          </div>
+          <p className="text-sm text-muted-foreground max-w-xl">
+            Exploring Crimson Pro (serif) for headlines paired with Inter (sans-serif) for body text. 
+            Kit uses Inter for readability in their app alongside a custom display font.
+          </p>
+          
+          {/* Demo Card: Serif Headlines + Sans Body */}
+          <div className="space-y-8 bg-muted/20 p-8 md:p-12 rounded-2xl">
+            <div className="space-y-6">
+              <span className="text-xs text-muted-foreground uppercase tracking-widest font-sans">Option A: Serif Headlines + Sans Body</span>
+              
+              <div className="space-y-4">
+                <h3 className="font-serif-pro text-4xl md:text-5xl font-bold leading-tight">
+                  Marketing that feels{" "}
+                  <span className="text-accent">human</span>
+                </h3>
+                <p className="font-sans text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl">
+                  The brands that stand out aren't louder — they're clearer. Through strategic clarity and creative direction, we help founders and teams build marketing that actually connects.
+                </p>
+                <p className="font-sans text-base text-muted-foreground/80 leading-relaxed max-w-2xl">
+                  Whether you're a founder struggling to articulate what makes you different, or a team needing alignment on brand direction, our approach brings clarity to the chaos.
+                </p>
+              </div>
+            </div>
+            
+            {/* Service cards with mixed typography */}
+            <div className="grid md:grid-cols-3 gap-6 pt-6 border-t border-border/30">
+              <div className="space-y-2">
+                <h4 className="font-serif-pro text-xl font-semibold">Clarity Sessions</h4>
+                <p className="font-sans text-sm text-muted-foreground">60-minute strategic power hours to untangle complex challenges and find your next move.</p>
+              </div>
+              <div className="space-y-2">
+                <h4 className="font-serif-pro text-xl font-semibold">Mentorship Sprints</h4>
+                <p className="font-sans text-sm text-muted-foreground">6-week intensive programs building AI workflows and systems that actually stick.</p>
+              </div>
+              <div className="space-y-2">
+                <h4 className="font-serif-pro text-xl font-semibold">Brand Workshops</h4>
+                <p className="font-sans text-sm text-muted-foreground">Half-day to multi-day sessions bringing teams together for strategic alignment.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Demo Card: All Sans (Kit style) */}
+          <div className="space-y-8 bg-foreground text-background p-8 md:p-12 rounded-2xl">
+            <div className="space-y-6">
+              <span className="text-xs text-background/60 uppercase tracking-widest font-sans">Option B: All Sans-Serif (Kit style)</span>
+              
+              <div className="space-y-4">
+                <h3 className="font-sans text-4xl md:text-5xl font-bold leading-tight tracking-tight">
+                  Marketing that feels{" "}
+                  <span className="text-accent">human</span>
+                </h3>
+                <p className="font-sans text-lg md:text-xl text-background/70 leading-relaxed max-w-2xl">
+                  The brands that stand out aren't louder — they're clearer. Through strategic clarity and creative direction, we help founders and teams build marketing that actually connects.
+                </p>
+                <p className="font-sans text-base text-background/50 leading-relaxed max-w-2xl">
+                  Whether you're a founder struggling to articulate what makes you different, or a team needing alignment on brand direction, our approach brings clarity to the chaos.
+                </p>
+              </div>
+            </div>
+            
+            {/* Service cards all sans */}
+            <div className="grid md:grid-cols-3 gap-6 pt-6 border-t border-background/20">
+              <div className="space-y-2">
+                <h4 className="font-sans text-xl font-semibold">Clarity Sessions</h4>
+                <p className="font-sans text-sm text-background/60">60-minute strategic power hours to untangle complex challenges and find your next move.</p>
+              </div>
+              <div className="space-y-2">
+                <h4 className="font-sans text-xl font-semibold">Mentorship Sprints</h4>
+                <p className="font-sans text-sm text-background/60">6-week intensive programs building AI workflows and systems that actually stick.</p>
+              </div>
+              <div className="space-y-2">
+                <h4 className="font-sans text-xl font-semibold">Brand Workshops</h4>
+                <p className="font-sans text-sm text-background/60">Half-day to multi-day sessions bringing teams together for strategic alignment.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Demo Card: Serif body (current approach) */}
+          <div className="space-y-8 bg-accent/5 p-8 md:p-12 rounded-2xl border border-accent/20">
+            <div className="space-y-6">
+              <span className="text-xs text-accent uppercase tracking-widest font-sans">Option C: All Serif (Current)</span>
+              
+              <div className="space-y-4">
+                <h3 className="font-serif-pro text-4xl md:text-5xl font-bold leading-tight">
+                  Marketing that feels{" "}
+                  <span className="text-accent">human</span>
+                </h3>
+                <p className="font-serif-pro text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl">
+                  The brands that stand out aren't louder — they're clearer. Through strategic clarity and creative direction, we help founders and teams build marketing that actually connects.
+                </p>
+                <p className="font-serif-pro text-base text-muted-foreground/80 leading-relaxed max-w-2xl">
+                  Whether you're a founder struggling to articulate what makes you different, or a team needing alignment on brand direction, our approach brings clarity to the chaos.
+                </p>
+              </div>
+            </div>
+            
+            {/* Service cards all serif */}
+            <div className="grid md:grid-cols-3 gap-6 pt-6 border-t border-accent/20">
+              <div className="space-y-2">
+                <h4 className="font-serif-pro text-xl font-semibold">Clarity Sessions</h4>
+                <p className="font-serif-pro text-sm text-muted-foreground">60-minute strategic power hours to untangle complex challenges and find your next move.</p>
+              </div>
+              <div className="space-y-2">
+                <h4 className="font-serif-pro text-xl font-semibold">Mentorship Sprints</h4>
+                <p className="font-serif-pro text-sm text-muted-foreground">6-week intensive programs building AI workflows and systems that actually stick.</p>
+              </div>
+              <div className="space-y-2">
+                <h4 className="font-serif-pro text-xl font-semibold">Brand Workshops</h4>
+                <p className="font-serif-pro text-sm text-muted-foreground">Half-day to multi-day sessions bringing teams together for strategic alignment.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Font Stack Reference */}
+          <div className="bg-muted/10 p-6 rounded-xl border border-border/50 space-y-4">
+            <span className="text-xs text-muted-foreground uppercase tracking-widest font-sans">Font Stack Reference</span>
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <p className="font-sans text-sm font-semibold">Sans-Serif (Inter)</p>
+                <p className="font-sans text-2xl">The quick brown fox jumps over the lazy dog</p>
+                <p className="font-sans text-xs text-muted-foreground">Kit uses Inter for body text. Clean, readable, professional.</p>
+              </div>
+              <div className="space-y-2">
+                <p className="font-sans text-sm font-semibold">Serif (Crimson Pro)</p>
+                <p className="font-serif-pro text-2xl">The quick brown fox jumps over the lazy dog</p>
+                <p className="font-sans text-xs text-muted-foreground">Our current headline font. Warm, editorial, distinctive.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* WEIGHT REFERENCE */}
         <section className="space-y-8 pt-16">
           <h2 className="font-serif-pro text-xl font-semibold">Weight Reference</h2>
           <div className="grid gap-4">
-            <p className="font-serif-pro text-2xl font-normal">Regular (400) — Body text</p>
-            <p className="font-serif-pro text-2xl font-medium">Medium (500) — Emphasis</p>
-            <p className="font-serif-pro text-2xl font-semibold">Semibold (600) — Section headers</p>
-            <p className="font-serif-pro text-2xl font-bold">Bold (700) — Headlines</p>
-            <p className="font-serif-pro text-2xl font-extrabold">Extrabold (800) — Maximum impact</p>
+            <p className="font-serif-pro text-2xl font-normal">Serif Regular (400) — Body text</p>
+            <p className="font-serif-pro text-2xl font-medium">Serif Medium (500) — Emphasis</p>
+            <p className="font-serif-pro text-2xl font-semibold">Serif Semibold (600) — Section headers</p>
+            <p className="font-serif-pro text-2xl font-bold">Serif Bold (700) — Headlines</p>
+          </div>
+          <div className="grid gap-4 pt-6 border-t border-border/50">
+            <p className="font-sans text-2xl font-normal">Sans Regular (400) — Body text</p>
+            <p className="font-sans text-2xl font-medium">Sans Medium (500) — Emphasis</p>
+            <p className="font-sans text-2xl font-semibold">Sans Semibold (600) — Section headers</p>
+            <p className="font-sans text-2xl font-bold">Sans Bold (700) — Headlines</p>
           </div>
         </section>
       </div>
