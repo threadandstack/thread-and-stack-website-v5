@@ -914,13 +914,13 @@ console.log(greeting);`}</code></pre>
             </div>
           </div>
 
-          {/* Demo Card: All Sans (Kit style) */}
+          {/* Demo Card: Italic Serif Headlines + Sans Body */}
           <div className="space-y-8 bg-foreground text-background p-8 md:p-12 rounded-2xl">
             <div className="space-y-6">
-              <span className="text-xs text-background/60 uppercase tracking-widest font-sans">Option B: All Sans-Serif (Kit style)</span>
+              <span className="text-xs text-background/60 uppercase tracking-widest font-sans">Option B: Italic Serif Headlines + Sans Body</span>
               
               <div className="space-y-4">
-                <h3 className="font-sans text-4xl md:text-5xl font-bold leading-tight tracking-tight">
+                <h3 className="font-serif-pro text-4xl md:text-5xl font-semibold leading-tight italic">
                   Marketing that feels{" "}
                   <span className="text-accent">human</span>
                 </h3>
@@ -933,18 +933,18 @@ console.log(greeting);`}</code></pre>
               </div>
             </div>
             
-            {/* Service cards all sans */}
+            {/* Service cards with italic serif headlines + sans body */}
             <div className="grid md:grid-cols-3 gap-6 pt-6 border-t border-background/20">
               <div className="space-y-2">
-                <h4 className="font-sans text-xl font-semibold">Clarity Sessions</h4>
+                <h4 className="font-serif-pro text-xl font-semibold italic">Clarity Sessions</h4>
                 <p className="font-sans text-sm text-background/60">60-minute strategic power hours to untangle complex challenges and find your next move.</p>
               </div>
               <div className="space-y-2">
-                <h4 className="font-sans text-xl font-semibold">Mentorship Sprints</h4>
+                <h4 className="font-serif-pro text-xl font-semibold italic">Mentorship Sprints</h4>
                 <p className="font-sans text-sm text-background/60">6-week intensive programs building AI workflows and systems that actually stick.</p>
               </div>
               <div className="space-y-2">
-                <h4 className="font-sans text-xl font-semibold">Brand Workshops</h4>
+                <h4 className="font-serif-pro text-xl font-semibold italic">Brand Workshops</h4>
                 <p className="font-sans text-sm text-background/60">Half-day to multi-day sessions bringing teams together for strategic alignment.</p>
               </div>
             </div>
