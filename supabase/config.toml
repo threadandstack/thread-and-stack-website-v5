@@ -14,3 +14,6 @@ verify_jwt = false
 
 [functions.fetch-notion-page]
 verify_jwt = false
+
+[functions.og-blog]
+verify_jwt = false
