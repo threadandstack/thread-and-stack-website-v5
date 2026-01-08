@@ -41,6 +41,63 @@ export type Database = {
         }
         Relationships: []
       }
+      page_seo: {
+        Row: {
+          canonical_url: string | null
+          created_at: string | null
+          id: string
+          keywords: string[] | null
+          meta_description: string | null
+          no_follow: boolean | null
+          no_index: boolean | null
+          og_description: string | null
+          og_image_path: string | null
+          og_title: string | null
+          page_path: string
+          page_title: string | null
+          twitter_description: string | null
+          twitter_image_path: string | null
+          twitter_title: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          canonical_url?: string | null
+          created_at?: string | null
+          id?: string
+          keywords?: string[] | null
+          meta_description?: string | null
+          no_follow?: boolean | null
+          no_index?: boolean | null
+          og_description?: string | null
+          og_image_path?: string | null
+          og_title?: string | null
+          page_path: string
+          page_title?: string | null
+          twitter_description?: string | null
+          twitter_image_path?: string | null
+          twitter_title?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          canonical_url?: string | null
+          created_at?: string | null
+          id?: string
+          keywords?: string[] | null
+          meta_description?: string | null
+          no_follow?: boolean | null
+          no_index?: boolean | null
+          og_description?: string | null
+          og_image_path?: string | null
+          og_title?: string | null
+          page_path?: string
+          page_title?: string | null
+          twitter_description?: string | null
+          twitter_image_path?: string | null
+          twitter_title?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       workshop_quote_requests: {
         Row: {
           created_at: string
