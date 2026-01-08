@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -7,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
-import { Plus, Pencil, Trash2, Upload, X, Save, ArrowLeft } from "lucide-react";
+import { Plus, Pencil, Trash2, Upload, X, Save, ArrowLeft, LogOut, Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
   Dialog,
@@ -52,6 +54,8 @@ const emptyFormData: Omit<PageSeo, 'id' | 'created_at' | 'updated_at'> = {
 };
 
 const SeoAdminPage = () => {
+  const navigate = useNavigate();
+  const { user, loading: authLoading, isAdmin, signOut } = useAdminAuth();
   const [entries, setEntries] = useState<PageSeo[]>([]);
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -62,8 +66,20 @@ const SeoAdminPage = () => {
   const [uploadType, setUploadType] = useState<'og' | 'twitter'>('og');
 
   useEffect(() => {
-    fetchEntries();
-  }, []);
+    if (!authLoading && !user) {
+      navigate("/admin/login");
+    } else if (!authLoading && user && !isAdmin) {
+      toast.error("You don't have admin access");
+      signOut();
+      navigate("/admin/login");
+    }
+  }, [authLoading, user, isAdmin, navigate, signOut]);
+
+  useEffect(() => {
+    if (isAdmin) {
+      fetchEntries();
+    }
+  }, [isAdmin]);
 
   const fetchEntries = async () => {
     const { data, error } = await supabase
@@ -229,6 +245,18 @@ const SeoAdminPage = () => {
     return data.publicUrl;
   };
 
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+      </div>
+    );
+  }
+
+  if (!user || !isAdmin) {
+    return null;
+  }
+
   return (
     <div className="min-h-screen bg-background p-6">
       <div className="max-w-6xl mx-auto">
@@ -244,10 +272,16 @@ const SeoAdminPage = () => {
               <p className="text-muted-foreground">Manage meta tags and OG images for all pages</p>
             </div>
           </div>
-          <Button onClick={openCreateDialog}>
-            <Plus className="h-4 w-4 mr-2" />
-            Add Page
-          </Button>
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-muted-foreground">{user.email}</span>
+            <Button variant="outline" size="icon" onClick={signOut}>
+              <LogOut className="h-4 w-4" />
+            </Button>
+            <Button onClick={openCreateDialog}>
+              <Plus className="h-4 w-4 mr-2" />
+              Add Page
+            </Button>
+          </div>
         </div>
 
         {loading ? (
