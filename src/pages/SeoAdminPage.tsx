@@ -53,10 +53,33 @@ const emptyFormData: Omit<PageSeo, 'id' | 'created_at' | 'updated_at'> = {
   no_follow: false,
 };
 
+// All site pages (excluding admin pages)
+const SITE_PAGES = [
+  { path: "/", label: "Home", type: "site" },
+  { path: "/about", label: "About", type: "site" },
+  { path: "/how-i-work", label: "How I Work", type: "site" },
+  { path: "/sessions-and-sprints", label: "Sessions & Sprints", type: "site" },
+  { path: "/fractional-deep-engagement", label: "Fractional Deep Engagement", type: "site" },
+  { path: "/workshops", label: "Workshops", type: "site" },
+  { path: "/blog", label: "Blog", type: "site" },
+  { path: "/privacy", label: "Privacy Policy", type: "site" },
+  { path: "/data-guarantee", label: "Data Guarantee", type: "site" },
+  { path: "/collective", label: "Collective", type: "site" },
+  { path: "/brand-book", label: "Brand Book", type: "site" },
+];
+
+interface AllPageEntry {
+  path: string;
+  label: string;
+  type: "site" | "blog";
+  seoEntry?: PageSeo;
+}
+
 const SeoAdminPage = () => {
   const navigate = useNavigate();
   const { user, loading: authLoading, isAdmin, signOut } = useAdminAuth();
   const [entries, setEntries] = useState<PageSeo[]>([]);
+  const [blogPosts, setBlogPosts] = useState<{ slug: string; title: string }[]>([]);
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingEntry, setEditingEntry] = useState<PageSeo | null>(null);
@@ -64,6 +87,7 @@ const SeoAdminPage = () => {
   const [keywordsInput, setKeywordsInput] = useState("");
   const [uploading, setUploading] = useState(false);
   const [uploadType, setUploadType] = useState<'og' | 'twitter'>('og');
+  const [filterType, setFilterType] = useState<"all" | "site" | "blog" | "configured" | "unconfigured">("all");
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -78,6 +102,7 @@ const SeoAdminPage = () => {
   useEffect(() => {
     if (isAdmin) {
       fetchEntries();
+      fetchBlogPosts();
     }
   }, [isAdmin]);
 
@@ -96,9 +121,55 @@ const SeoAdminPage = () => {
     setLoading(false);
   };
 
+  const fetchBlogPosts = async () => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/fetch-blog-posts`
+      );
+      if (response.ok) {
+        const data = await response.json();
+        setBlogPosts(data.posts || []);
+      }
+    } catch (error) {
+      console.error("Failed to fetch blog posts:", error);
+    }
+  };
+
+  // Combine all pages with their SEO status
+  const allPages: AllPageEntry[] = [
+    ...SITE_PAGES.map((page) => ({
+      path: page.path,
+      label: page.label,
+      type: "site" as const,
+      seoEntry: entries.find((e) => e.page_path === page.path),
+    })),
+    ...blogPosts.map((post) => ({
+      path: `/blog/${post.slug}`,
+      label: post.title,
+      type: "blog" as const,
+      seoEntry: entries.find((e) => e.page_path === `/blog/${post.slug}`),
+    })),
+  ];
+
+  const filteredPages = allPages.filter((page) => {
+    if (filterType === "all") return true;
+    if (filterType === "site") return page.type === "site";
+    if (filterType === "blog") return page.type === "blog";
+    if (filterType === "configured") return !!page.seoEntry;
+    if (filterType === "unconfigured") return !page.seoEntry;
+    return true;
+  });
+
   const openCreateDialog = () => {
     setEditingEntry(null);
     setFormData(emptyFormData);
+    setKeywordsInput("");
+    setDialogOpen(true);
+  };
+
+  const openCreateDialogForPath = (path: string) => {
+    setEditingEntry(null);
+    setFormData({ ...emptyFormData, page_path: path });
     setKeywordsInput("");
     setDialogOpen(true);
   };
@@ -262,7 +333,7 @@ const SeoAdminPage = () => {
       <div className="max-w-6xl mx-auto">
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-4">
-            <Link to="/">
+            <Link to="/admin">
               <Button variant="ghost" size="icon">
                 <ArrowLeft className="h-5 w-5" />
               </Button>
@@ -277,45 +348,76 @@ const SeoAdminPage = () => {
             <Button variant="outline" size="icon" onClick={signOut}>
               <LogOut className="h-4 w-4" />
             </Button>
-            <Button onClick={openCreateDialog}>
-              <Plus className="h-4 w-4 mr-2" />
-              Add Page
-            </Button>
           </div>
+        </div>
+
+        {/* Filter tabs */}
+        <div className="flex gap-2 mb-6 flex-wrap">
+          {[
+            { key: "all", label: "All Pages" },
+            { key: "site", label: "Site Pages" },
+            { key: "blog", label: "Blog Posts" },
+            { key: "configured", label: "Configured" },
+            { key: "unconfigured", label: "Needs SEO" },
+          ].map((tab) => (
+            <Button
+              key={tab.key}
+              variant={filterType === tab.key ? "default" : "outline"}
+              size="sm"
+              onClick={() => setFilterType(tab.key as typeof filterType)}
+            >
+              {tab.label}
+              {tab.key === "unconfigured" && (
+                <span className="ml-2 bg-destructive/20 text-destructive px-1.5 py-0.5 rounded text-xs">
+                  {allPages.filter((p) => !p.seoEntry).length}
+                </span>
+              )}
+            </Button>
+          ))}
         </div>
 
         {loading ? (
           <div className="text-center py-12 text-muted-foreground">Loading...</div>
-        ) : entries.length === 0 ? (
+        ) : filteredPages.length === 0 ? (
           <Card>
             <CardContent className="py-12 text-center text-muted-foreground">
-              No SEO entries yet. Click "Add Page" to create one.
+              No pages match the current filter.
             </CardContent>
           </Card>
         ) : (
           <div className="grid gap-4">
-            {entries.map((entry) => (
-              <Card key={entry.id}>
+            {filteredPages.map((page) => (
+              <Card key={page.path} className={!page.seoEntry ? "border-dashed border-yellow-500/50" : ""}>
                 <CardContent className="p-4">
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-3 mb-2">
-                        <code className="text-sm bg-muted px-2 py-1 rounded">{entry.page_path}</code>
-                        {entry.no_index && (
+                        <code className="text-sm bg-muted px-2 py-1 rounded">{page.path}</code>
+                        <span className={`text-xs px-2 py-0.5 rounded ${page.type === "blog" ? "bg-blue-100 text-blue-800" : "bg-green-100 text-green-800"}`}>
+                          {page.type === "blog" ? "Blog" : "Site"}
+                        </span>
+                        {page.seoEntry ? (
+                          <span className="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded">SEO ✓</span>
+                        ) : (
+                          <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded">Needs SEO</span>
+                        )}
+                        {page.seoEntry?.no_index && (
                           <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded">noindex</span>
                         )}
-                        {entry.no_follow && (
+                        {page.seoEntry?.no_follow && (
                           <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded">nofollow</span>
                         )}
                       </div>
-                      <h3 className="font-medium truncate">{entry.page_title || entry.og_title || "No title set"}</h3>
+                      <h3 className="font-medium truncate">
+                        {page.seoEntry?.page_title || page.seoEntry?.og_title || page.label}
+                      </h3>
                       <p className="text-sm text-muted-foreground line-clamp-2">
-                        {entry.meta_description || entry.og_description || "No description set"}
+                        {page.seoEntry?.meta_description || page.seoEntry?.og_description || "No description set"}
                       </p>
-                      {entry.og_image_path && (
+                      {page.seoEntry?.og_image_path && (
                         <div className="mt-2">
                           <img 
-                            src={getImageUrl(entry.og_image_path)} 
+                            src={getImageUrl(page.seoEntry.og_image_path)} 
                             alt="OG Image" 
                             className="h-16 rounded object-cover"
                           />
@@ -323,12 +425,21 @@ const SeoAdminPage = () => {
                       )}
                     </div>
                     <div className="flex gap-2">
-                      <Button variant="outline" size="icon" onClick={() => openEditDialog(entry)}>
-                        <Pencil className="h-4 w-4" />
-                      </Button>
-                      <Button variant="outline" size="icon" onClick={() => handleDelete(entry.id)}>
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
+                      {page.seoEntry ? (
+                        <>
+                          <Button variant="outline" size="icon" onClick={() => openEditDialog(page.seoEntry!)}>
+                            <Pencil className="h-4 w-4" />
+                          </Button>
+                          <Button variant="outline" size="icon" onClick={() => handleDelete(page.seoEntry!.id)}>
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </>
+                      ) : (
+                        <Button onClick={() => openCreateDialogForPath(page.path)}>
+                          <Plus className="h-4 w-4 mr-2" />
+                          Add SEO
+                        </Button>
+                      )}
                     </div>
                   </div>
                 </CardContent>
