@@ -22,6 +22,7 @@ import CollectivePage from "./pages/CollectivePage";
 import IndexPhotoHero from "./pages/IndexPhotoHero";
 import ThreadMotifDemo from "./components/ThreadMotifDemo";
 import BrandBook from "./components/BrandBook";
+import SeoAdminPage from "./pages/SeoAdminPage";
 
 const queryClient = new QueryClient();
 
@@ -51,7 +52,9 @@ const App = () => (
           <Route path="/thread-demo" element={<ThreadMotifDemo />} />
           <Route path="/brand-book" element={<BrandBook />} />
           <Route path="/v/photo-hero" element={<IndexPhotoHero />} />
+          <Route path="/admin/seo" element={<SeoAdminPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="*" element={<NotFound />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
