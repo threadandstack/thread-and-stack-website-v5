@@ -24,6 +24,7 @@ import ThreadMotifDemo from "./components/ThreadMotifDemo";
 import BrandBook from "./components/BrandBook";
 import SeoAdminPage from "./pages/SeoAdminPage";
 import AdminLoginPage from "./pages/AdminLoginPage";
+import AdminDashboard from "./pages/AdminDashboard";
 
 const queryClient = new QueryClient();
 
@@ -54,6 +55,7 @@ const App = () => (
           <Route path="/brand-book" element={<BrandBook />} />
           <Route path="/v/photo-hero" element={<IndexPhotoHero />} />
           <Route path="/admin/login" element={<AdminLoginPage />} />
+          <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/admin/seo" element={<SeoAdminPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

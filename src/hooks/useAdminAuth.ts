@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import type { User } from "@supabase/supabase-js";
 
-// Add allowed admin emails here
+// Allowed admin emails
 const ALLOWED_ADMIN_EMAILS = [
-  "brendan@thinkstudio.uk",
-  // Add more emails as needed
+  "br@brendanrodgers.uk",
+  "br@threadandstack.com",
 ];
 
 export const useAdminAuth = () => {
