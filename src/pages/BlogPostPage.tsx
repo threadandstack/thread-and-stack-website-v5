@@ -75,6 +75,49 @@ const BlogPostPage = () => {
     fetchPost();
   }, [slug]);
 
+  // Update meta tags for social sharing
+  useEffect(() => {
+    if (!post) return;
+
+    const siteUrl = window.location.origin;
+    const pageUrl = `${siteUrl}/blog/${slug}`;
+    const imageUrl = post.headerImage || `${siteUrl}/images/websiteshare.png`;
+
+    // Helper to update or create meta tag
+    const setMetaTag = (property: string, content: string, isName = false) => {
+      const attr = isName ? 'name' : 'property';
+      let element = document.querySelector(`meta[${attr}="${property}"]`);
+      if (!element) {
+        element = document.createElement('meta');
+        element.setAttribute(attr, property);
+        document.head.appendChild(element);
+      }
+      element.setAttribute('content', content);
+    };
+
+    // Update document title
+    const originalTitle = document.title;
+    document.title = `${post.title} | Thread & Stack`;
+
+    // Open Graph tags
+    setMetaTag('og:title', post.title);
+    setMetaTag('og:description', post.description || '');
+    setMetaTag('og:image', imageUrl);
+    setMetaTag('og:url', pageUrl);
+    setMetaTag('og:type', 'article');
+
+    // Twitter Card tags
+    setMetaTag('twitter:card', 'summary_large_image', true);
+    setMetaTag('twitter:title', post.title, true);
+    setMetaTag('twitter:description', post.description || '', true);
+    setMetaTag('twitter:image', imageUrl, true);
+
+    // Cleanup on unmount
+    return () => {
+      document.title = originalTitle;
+    };
+  }, [post, slug]);
+
   if (isLoading) {
     return (
       <main className="min-h-screen relative pt-24">
