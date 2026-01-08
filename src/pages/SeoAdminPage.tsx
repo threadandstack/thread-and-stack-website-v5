@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
-import { Plus, Pencil, Trash2, Upload, X, Save, ArrowLeft, LogOut, Loader2 } from "lucide-react";
+import { Plus, Pencil, Trash2, Upload, X, Save, ArrowLeft, LogOut, Loader2, ImageIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
   Dialog,
@@ -88,6 +88,9 @@ const SeoAdminPage = () => {
   const [uploading, setUploading] = useState(false);
   const [uploadType, setUploadType] = useState<'og' | 'twitter'>('og');
   const [filterType, setFilterType] = useState<"all" | "site" | "blog" | "configured" | "unconfigured">("all");
+  const [inlineUploading, setInlineUploading] = useState<string | null>(null);
+
+  const GLOBAL_OG_IMAGE = "/images/websiteshare.png";
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -316,6 +319,52 @@ const SeoAdminPage = () => {
     return data.publicUrl;
   };
 
+  const handleInlineImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, entryId: string, pagePath: string) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      toast.error("Please upload an image file");
+      return;
+    }
+
+    setInlineUploading(entryId);
+
+    const fileExt = file.name.split('.').pop();
+    const fileName = `${pagePath.replace(/\//g, '-').replace(/^-/, '')}-og-${Date.now()}.${fileExt}`;
+
+    const { error: uploadError } = await supabase.storage
+      .from('og-images')
+      .upload(fileName, file);
+
+    if (uploadError) {
+      toast.error("Failed to upload image");
+      console.error(uploadError);
+      setInlineUploading(null);
+      return;
+    }
+
+    const { data: urlData } = supabase.storage
+      .from('og-images')
+      .getPublicUrl(fileName);
+
+    // Update the entry in the database
+    const { error: updateError } = await supabase
+      .from('page_seo')
+      .update({ og_image_path: urlData.publicUrl })
+      .eq('id', entryId);
+
+    if (updateError) {
+      toast.error("Failed to update entry");
+      console.error(updateError);
+    } else {
+      toast.success("Image uploaded and saved");
+      fetchEntries();
+    }
+
+    setInlineUploading(null);
+  };
+
   if (authLoading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
@@ -386,65 +435,103 @@ const SeoAdminPage = () => {
           </Card>
         ) : (
           <div className="grid gap-4">
-            {filteredPages.map((page) => (
-              <Card key={page.path} className={!page.seoEntry ? "border-dashed border-yellow-500/50" : ""}>
-                <CardContent className="p-4">
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-3 mb-2">
-                        <code className="text-sm bg-muted px-2 py-1 rounded">{page.path}</code>
-                        <span className={`text-xs px-2 py-0.5 rounded ${page.type === "blog" ? "bg-blue-100 text-blue-800" : "bg-green-100 text-green-800"}`}>
-                          {page.type === "blog" ? "Blog" : "Site"}
-                        </span>
-                        {page.seoEntry ? (
-                          <span className="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded">SEO ✓</span>
-                        ) : (
-                          <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded">Needs SEO</span>
+            {filteredPages.map((page) => {
+              const hasCustomImage = !!page.seoEntry?.og_image_path;
+              const imageUrl = hasCustomImage 
+                ? getImageUrl(page.seoEntry!.og_image_path) 
+                : GLOBAL_OG_IMAGE;
+              
+              return (
+                <Card key={page.path} className={!page.seoEntry ? "border-dashed border-yellow-500/50" : ""}>
+                  <CardContent className="p-4">
+                    <div className="flex items-start gap-4">
+                      {/* Image preview section */}
+                      <div className="relative flex-shrink-0 w-32 h-20 rounded-lg overflow-hidden bg-muted group">
+                        <img 
+                          src={imageUrl || ""} 
+                          alt="OG preview" 
+                          className={`w-full h-full object-cover ${!hasCustomImage ? 'opacity-50' : ''}`}
+                        />
+                        {!hasCustomImage && (
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <span className="text-[10px] bg-background/80 px-1.5 py-0.5 rounded text-muted-foreground">
+                              Global fallback
+                            </span>
+                          </div>
                         )}
-                        {page.seoEntry?.no_index && (
-                          <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded">noindex</span>
-                        )}
-                        {page.seoEntry?.no_follow && (
-                          <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded">nofollow</span>
+                        {page.seoEntry && (
+                          <label className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
+                            {inlineUploading === page.seoEntry.id ? (
+                              <Loader2 className="h-5 w-5 text-white animate-spin" />
+                            ) : (
+                              <>
+                                <Upload className="h-5 w-5 text-white" />
+                                <input
+                                  type="file"
+                                  accept="image/*"
+                                  className="hidden"
+                                  onChange={(e) => handleInlineImageUpload(e, page.seoEntry!.id, page.path)}
+                                />
+                              </>
+                            )}
+                          </label>
                         )}
                       </div>
-                      <h3 className="font-medium truncate">
-                        {page.seoEntry?.page_title || page.seoEntry?.og_title || page.label}
-                      </h3>
-                      <p className="text-sm text-muted-foreground line-clamp-2">
-                        {page.seoEntry?.meta_description || page.seoEntry?.og_description || "No description set"}
-                      </p>
-                      {page.seoEntry?.og_image_path && (
-                        <div className="mt-2">
-                          <img 
-                            src={getImageUrl(page.seoEntry.og_image_path)} 
-                            alt="OG Image" 
-                            className="h-16 rounded object-cover"
-                          />
+
+                      {/* Content section */}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1.5 flex-wrap">
+                          <code className="text-xs bg-muted px-1.5 py-0.5 rounded">{page.path}</code>
+                          <span className={`text-xs px-1.5 py-0.5 rounded ${page.type === "blog" ? "bg-blue-100 text-blue-800" : "bg-green-100 text-green-800"}`}>
+                            {page.type === "blog" ? "Blog" : "Site"}
+                          </span>
+                          {page.seoEntry ? (
+                            <span className="text-xs bg-green-100 text-green-800 px-1.5 py-0.5 rounded">SEO ✓</span>
+                          ) : (
+                            <span className="text-xs bg-yellow-100 text-yellow-800 px-1.5 py-0.5 rounded">Needs SEO</span>
+                          )}
+                          {hasCustomImage ? (
+                            <span className="text-xs bg-accent/20 text-accent px-1.5 py-0.5 rounded flex items-center gap-1">
+                              <ImageIcon className="h-3 w-3" /> Custom
+                            </span>
+                          ) : page.seoEntry && (
+                            <span className="text-xs bg-muted text-muted-foreground px-1.5 py-0.5 rounded">No image</span>
+                          )}
+                          {page.seoEntry?.no_index && (
+                            <span className="text-xs bg-yellow-100 text-yellow-800 px-1.5 py-0.5 rounded">noindex</span>
+                          )}
                         </div>
-                      )}
-                    </div>
-                    <div className="flex gap-2">
-                      {page.seoEntry ? (
-                        <>
-                          <Button variant="outline" size="icon" onClick={() => openEditDialog(page.seoEntry!)}>
-                            <Pencil className="h-4 w-4" />
+                        <h3 className="font-medium truncate text-sm">
+                          {page.seoEntry?.page_title || page.seoEntry?.og_title || page.label}
+                        </h3>
+                        <p className="text-xs text-muted-foreground line-clamp-1">
+                          {page.seoEntry?.meta_description || page.seoEntry?.og_description || "No description set"}
+                        </p>
+                      </div>
+
+                      {/* Actions */}
+                      <div className="flex gap-2 flex-shrink-0">
+                        {page.seoEntry ? (
+                          <>
+                            <Button variant="outline" size="icon" onClick={() => openEditDialog(page.seoEntry!)}>
+                              <Pencil className="h-4 w-4" />
+                            </Button>
+                            <Button variant="outline" size="icon" onClick={() => handleDelete(page.seoEntry!.id)}>
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </>
+                        ) : (
+                          <Button size="sm" onClick={() => openCreateDialogForPath(page.path)}>
+                            <Plus className="h-4 w-4 mr-1" />
+                            Add SEO
                           </Button>
-                          <Button variant="outline" size="icon" onClick={() => handleDelete(page.seoEntry!.id)}>
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        </>
-                      ) : (
-                        <Button onClick={() => openCreateDialogForPath(page.path)}>
-                          <Plus className="h-4 w-4 mr-2" />
-                          Add SEO
-                        </Button>
-                      )}
+                        )}
+                      </div>
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         )}
 
