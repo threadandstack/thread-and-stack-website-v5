@@ -13,46 +13,45 @@ const AdminLoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [isSignUp, setIsSignUp] = useState(false);
+  const [isForgotPassword, setIsForgotPassword] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
-    if (isSignUp) {
-      const { error } = await supabase.auth.signUp({
-        email: email.trim(),
-        password,
-        options: {
-          emailRedirectTo: window.location.origin,
-        },
-      });
+    const { error } = await supabase.auth.signInWithPassword({
+      email: email.trim(),
+      password,
+    });
 
-      if (error) {
-        toast.error(error.message);
-        setLoading(false);
-        return;
-      }
-
-      toast.success("Account created! You can now sign in.");
-      setIsSignUp(false);
+    if (error) {
+      toast.error(error.message);
       setLoading(false);
-    } else {
-      const { error } = await supabase.auth.signInWithPassword({
-        email: email.trim(),
-        password,
-      });
-
-      if (error) {
-        toast.error(error.message);
-        setLoading(false);
-        return;
-      }
-
-      toast.success("Logged in successfully");
-      navigate("/admin");
+      return;
     }
+
+    toast.success("Logged in successfully");
+    navigate("/admin");
+  };
+
+  const handleForgotPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+      redirectTo: `${window.location.origin}/admin/reset-password`,
+    });
+
+    if (error) {
+      toast.error(error.message);
+      setLoading(false);
+      return;
+    }
+
+    toast.success("Password reset link sent! Check your email.");
+    setIsForgotPassword(false);
+    setLoading(false);
   };
 
   return (
@@ -66,72 +65,94 @@ const AdminLoginPage = () => {
               </Button>
             </Link>
           </div>
-          <CardTitle>{isSignUp ? "Create Admin Account" : "Admin Login"}</CardTitle>
+          <CardTitle>{isForgotPassword ? "Reset Password" : "Admin Login"}</CardTitle>
           <CardDescription>
-            {isSignUp ? "Create your account to access the admin panel" : "Sign in to access the admin panel"}
+            {isForgotPassword 
+              ? "Enter your email to receive a password reset link" 
+              : "Sign in to access the admin panel"}
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="admin@example.com"
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                required
-                minLength={6}
-              />
-            </div>
-            <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? (
-                <>
-                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  {isSignUp ? "Creating account..." : "Signing in..."}
-                </>
-              ) : (
-                isSignUp ? "Create Account" : "Sign In"
-              )}
-            </Button>
-          </form>
-          <div className="mt-4 text-center text-sm text-muted-foreground">
-            {isSignUp ? (
-              <>
-                Already have an account?{" "}
+          {isForgotPassword ? (
+            <form onSubmit={handleForgotPassword} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="admin@example.com"
+                  required
+                />
+              </div>
+              <Button type="submit" className="w-full" disabled={loading}>
+                {loading ? (
+                  <>
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    Sending...
+                  </>
+                ) : (
+                  "Send Reset Link"
+                )}
+              </Button>
+              <div className="text-center">
                 <button
                   type="button"
-                  onClick={() => setIsSignUp(false)}
-                  className="text-primary hover:underline"
+                  onClick={() => setIsForgotPassword(false)}
+                  className="text-sm text-primary hover:underline"
                 >
-                  Sign in
+                  Back to login
                 </button>
-              </>
-            ) : (
-              <>
-                Need an account?{" "}
+              </div>
+            </form>
+          ) : (
+            <>
+              <form onSubmit={handleLogin} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="email">Email</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="admin@example.com"
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="password">Password</Label>
+                  <Input
+                    id="password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="••••••••"
+                    required
+                  />
+                </div>
+                <Button type="submit" className="w-full" disabled={loading}>
+                  {loading ? (
+                    <>
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      Signing in...
+                    </>
+                  ) : (
+                    "Sign In"
+                  )}
+                </Button>
+              </form>
+              <div className="mt-4 text-center">
                 <button
                   type="button"
-                  onClick={() => setIsSignUp(true)}
-                  className="text-primary hover:underline"
+                  onClick={() => setIsForgotPassword(true)}
+                  className="text-sm text-muted-foreground hover:text-primary hover:underline"
                 >
-                  Create one
+                  Forgot password?
                 </button>
-              </>
-            )}
-          </div>
+              </div>
+            </>
+          )}
         </CardContent>
       </Card>
     </div>
