@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
-import { Plus, Pencil, Trash2, Upload, X, Save, ArrowLeft, LogOut, Loader2, ImageIcon } from "lucide-react";
+import { Plus, Pencil, Trash2, Upload, X, Save, ArrowLeft, LogOut, Loader2, ImageIcon, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
   Dialog,
@@ -393,7 +393,13 @@ const SeoAdminPage = () => {
               <p className="text-muted-foreground">Manage meta tags and OG images for all pages</p>
             </div>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
+            <Link to="/admin/geo">
+              <Button variant="outline" size="sm" className="gap-2">
+                <Sparkles className="h-4 w-4" />
+                GEO Tracker
+              </Button>
+            </Link>
             <span className="text-sm text-muted-foreground">{user.email}</span>
             <Button variant="outline" size="icon" onClick={signOut}>
               <LogOut className="h-4 w-4" />
