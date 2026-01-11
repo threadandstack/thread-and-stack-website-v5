@@ -50,7 +50,6 @@ const AdminDashboard = () => {
       description: "Browse and manage project images and assets",
       icon: Image,
       href: "/admin/images",
-      comingSoon: true,
     },
   ];
 
@@ -81,38 +80,21 @@ const AdminDashboard = () => {
           {adminSections.map((section) => (
             <Card 
               key={section.title} 
-              className={`transition-all hover:shadow-lg ${section.comingSoon ? 'opacity-60' : 'cursor-pointer hover:border-primary'}`}
+              className="transition-all hover:shadow-lg cursor-pointer hover:border-primary"
             >
-              {section.comingSoon ? (
-                <div className="relative">
-                  <CardHeader>
-                    <div className="flex items-center gap-3">
-                      <div className="p-2 rounded-lg bg-muted">
-                        <section.icon className="h-5 w-5" />
-                      </div>
-                      <CardTitle className="text-lg">{section.title}</CardTitle>
+              <Link to={section.href}>
+                <CardHeader>
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 rounded-lg bg-primary/10">
+                      <section.icon className="h-5 w-5 text-primary" />
                     </div>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription>{section.description}</CardDescription>
-                    <span className="inline-block mt-3 text-xs bg-muted px-2 py-1 rounded">Coming Soon</span>
-                  </CardContent>
-                </div>
-              ) : (
-                <Link to={section.href}>
-                  <CardHeader>
-                    <div className="flex items-center gap-3">
-                      <div className="p-2 rounded-lg bg-primary/10">
-                        <section.icon className="h-5 w-5 text-primary" />
-                      </div>
-                      <CardTitle className="text-lg">{section.title}</CardTitle>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription>{section.description}</CardDescription>
-                  </CardContent>
-                </Link>
-              )}
+                    <CardTitle className="text-lg">{section.title}</CardTitle>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription>{section.description}</CardDescription>
+                </CardContent>
+              </Link>
             </Card>
           ))}
         </div>
