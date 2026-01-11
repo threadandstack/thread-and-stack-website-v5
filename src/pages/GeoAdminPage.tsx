@@ -123,6 +123,8 @@ const GeoAdminPage = () => {
   const [filterType, setFilterType] = useState<"all" | "site" | "blog" | "optimized" | "needs-work">("all");
   const [testingPage, setTestingPage] = useState<string | null>(null);
   const [aiTestDialog, setAiTestDialog] = useState<{ open: boolean; page: PageGeoData | null }>({ open: false, page: null });
+  const [scanningAll, setScanningAll] = useState(false);
+  const [scanProgress, setScanProgress] = useState({ current: 0, total: 0 });
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -257,6 +259,64 @@ const GeoAdminPage = () => {
     });
   };
 
+  const scanPage = async (page: PageGeoData): Promise<PageGeoData | null> => {
+    try {
+      const { data, error } = await supabase.functions.invoke("geo-scan-page", {
+        body: { url: `${window.location.origin}${page.path}` },
+      });
+
+      if (error) throw error;
+
+      return {
+        ...page,
+        checks: data.checks,
+        score: data.score,
+        lastChecked: new Date().toISOString(),
+      };
+    } catch (error) {
+      console.error("Scan error for", page.path, error);
+      return null;
+    }
+  };
+
+  const scanAllPages = async () => {
+    setScanningAll(true);
+    setScanProgress({ current: 0, total: pages.length });
+    
+    const updatedPages = [...pages];
+    
+    for (let i = 0; i < pages.length; i++) {
+      setScanProgress({ current: i + 1, total: pages.length });
+      const scanned = await scanPage(pages[i]);
+      if (scanned) {
+        updatedPages[i] = scanned;
+      }
+      // Small delay to avoid overwhelming the server
+      await new Promise(r => setTimeout(r, 300));
+    }
+    
+    setPages(updatedPages);
+    savePageData(updatedPages);
+    setScanningAll(false);
+    toast.success(`Scanned ${pages.length} pages`);
+  };
+
+  const scanSinglePage = async (page: PageGeoData) => {
+    setTestingPage(page.path);
+    const scanned = await scanPage(page);
+    if (scanned) {
+      setPages((prev) => {
+        const updated = prev.map((p) => p.path === page.path ? scanned : p);
+        savePageData(updated);
+        return updated;
+      });
+      toast.success(`Scanned ${page.label}`);
+    } else {
+      toast.error("Failed to scan page");
+    }
+    setTestingPage(null);
+  };
+
   const runAiTest = async (page: PageGeoData) => {
     setTestingPage(page.path);
     
@@ -378,14 +438,36 @@ const GeoAdminPage = () => {
               <div>
                 <h3 className="text-lg font-semibold">Overall GEO Score</h3>
                 <p className="text-sm text-muted-foreground">
-                  Across {pages.length} pages
+                  {anyChecked 
+                    ? `${checkedPages.length} of ${pages.length} pages scanned`
+                    : `${pages.length} pages ready to scan`
+                  }
                 </p>
               </div>
-              <div className={`text-4xl font-bold ${getScoreColor(overallScore, overallMax, anyChecked)}`}>
-                {anyChecked ? `${overallPercentage}%` : "—"}
+              <div className="flex items-center gap-4">
+                <Button
+                  onClick={scanAllPages}
+                  disabled={scanningAll}
+                  className="gap-2"
+                >
+                  {scanningAll ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      Scanning {scanProgress.current}/{scanProgress.total}...
+                    </>
+                  ) : (
+                    <>
+                      <RefreshCw className="h-4 w-4" />
+                      Scan All Pages
+                    </>
+                  )}
+                </Button>
+                <div className={`text-4xl font-bold ${getScoreColor(overallScore, overallMax, anyChecked)}`}>
+                  {anyChecked ? `${overallPercentage}%` : "—"}
+                </div>
               </div>
             </div>
-            <Progress value={overallPercentage} className="h-3" />
+            <Progress value={scanningAll ? (scanProgress.current / scanProgress.total) * 100 : overallPercentage} className="h-3" />
           </CardContent>
         </Card>
 
@@ -478,17 +560,30 @@ const GeoAdminPage = () => {
                       {/* Action buttons */}
                       <div className="flex gap-2 flex-wrap">
                         <Button
+                          variant="default"
+                          size="sm"
+                          onClick={() => scanSinglePage(page)}
+                          disabled={testingPage === page.path || scanningAll}
+                        >
+                          {testingPage === page.path ? (
+                            <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                          ) : (
+                            <RefreshCw className="h-4 w-4 mr-2" />
+                          )}
+                          Scan Page
+                        </Button>
+                        <Button
                           variant="outline"
                           size="sm"
                           onClick={() => runAiTest(page)}
-                          disabled={testingPage === page.path}
+                          disabled={testingPage === page.path || scanningAll}
                         >
                           {testingPage === page.path ? (
                             <Loader2 className="h-4 w-4 mr-2 animate-spin" />
                           ) : (
                             <Bot className="h-4 w-4 mr-2" />
                           )}
-                          Test with AI
+                          Deep AI Analysis
                         </Button>
                         {page.aiTestResult && (
                           <Button
