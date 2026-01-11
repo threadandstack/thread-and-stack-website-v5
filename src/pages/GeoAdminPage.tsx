@@ -295,14 +295,20 @@ const GeoAdminPage = () => {
     }
   };
 
-  const getScoreColor = (score: number, max: number) => {
+  const hasBeenChecked = (page: PageGeoData) => {
+    return Object.keys(page.checks).length > 0;
+  };
+
+  const getScoreColor = (score: number, max: number, checked: boolean) => {
+    if (!checked) return "text-muted-foreground";
     const percentage = (score / max) * 100;
     if (percentage >= 75) return "text-green-600";
     if (percentage >= 50) return "text-yellow-600";
     return "text-red-600";
   };
 
-  const getScoreBadge = (score: number, max: number) => {
+  const getScoreBadge = (score: number, max: number, checked: boolean) => {
+    if (!checked) return "bg-muted text-muted-foreground";
     const percentage = (score / max) * 100;
     if (percentage >= 75) return "bg-green-100 text-green-800";
     if (percentage >= 50) return "bg-yellow-100 text-yellow-800";
@@ -318,9 +324,11 @@ const GeoAdminPage = () => {
     return true;
   });
 
-  const overallScore = pages.reduce((sum, p) => sum + p.score, 0);
-  const overallMax = pages.reduce((sum, p) => sum + p.maxScore, 0);
+  const checkedPages = pages.filter(p => hasBeenChecked(p));
+  const overallScore = checkedPages.reduce((sum, p) => sum + p.score, 0);
+  const overallMax = checkedPages.reduce((sum, p) => sum + p.maxScore, 0);
   const overallPercentage = overallMax > 0 ? Math.round((overallScore / overallMax) * 100) : 0;
+  const anyChecked = checkedPages.length > 0;
 
   if (authLoading) {
     return (
@@ -373,8 +381,8 @@ const GeoAdminPage = () => {
                   Across {pages.length} pages
                 </p>
               </div>
-              <div className={`text-4xl font-bold ${getScoreColor(overallScore, overallMax)}`}>
-                {overallPercentage}%
+              <div className={`text-4xl font-bold ${getScoreColor(overallScore, overallMax, anyChecked)}`}>
+                {anyChecked ? `${overallPercentage}%` : "—"}
               </div>
             </div>
             <Progress value={overallPercentage} className="h-3" />
@@ -427,6 +435,7 @@ const GeoAdminPage = () => {
         ) : (
           <Accordion type="single" collapsible className="space-y-3">
             {filteredPages.map((page) => {
+              const checked = hasBeenChecked(page);
               const percentage = Math.round((page.score / page.maxScore) * 100);
               
               return (
@@ -434,8 +443,8 @@ const GeoAdminPage = () => {
                   <AccordionTrigger className="hover:no-underline py-4">
                     <div className="flex items-center gap-4 flex-1">
                       {/* Score badge */}
-                      <Badge className={`${getScoreBadge(page.score, page.maxScore)} min-w-[48px] justify-center`}>
-                        {percentage}%
+                      <Badge className={`${getScoreBadge(page.score, page.maxScore, checked)} min-w-[48px] justify-center`}>
+                        {checked ? `${percentage}%` : "—"}
                       </Badge>
                       
                       {/* Page info */}
