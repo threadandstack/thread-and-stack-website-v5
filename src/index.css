@@ -391,23 +391,23 @@ All colors MUST be HSL.
     display: block;
   }
 
-  /* Image alignment classes from Notion */
-  .blog-content figure.image-left {
-    margin-right: auto;
-    margin-left: 0;
-    text-align: left;
-  }
-
-  .blog-content figure.image-center {
+  /* Content images (with captions) - medium size, centered */
+  .blog-content figure.image-content {
+    max-width: 65%;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
   }
 
-  .blog-content figure.image-right {
-    margin-left: auto;
-    margin-right: 0;
-    text-align: right;
+  /* Decorative images (no caption, like logos) - small, left-aligned */
+  .blog-content figure.image-decorative {
+    max-width: 180px;
+    margin-left: 0;
+    margin-right: auto;
+  }
+
+  .blog-content figure.image-decorative img {
+    border-radius: 0;
   }
 
   .blog-content figcaption {
@@ -417,10 +417,13 @@ All colors MUST be HSL.
     font-style: italic;
   }
   
-  /* Mobile: slightly larger images for readability */
+  /* Mobile adjustments */
   @media (max-width: 768px) {
-    .blog-content figure {
-      max-width: 90% !important;
+    .blog-content figure.image-content {
+      max-width: 85%;
+    }
+    .blog-content figure.image-decorative {
+      max-width: 140px;
     }
   }
 
