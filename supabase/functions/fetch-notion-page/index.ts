@@ -348,7 +348,31 @@ serve(async (req) => {
           const imageUrl = block.image.file?.url || block.image.external?.url
           const caption = block.image.caption ? richTextToHtml(block.image.caption) : ''
           if (imageUrl) {
-            htmlBlocks.push(`<figure><img src="${imageUrl}" alt="${caption}" />${caption ? `<figcaption>${caption}</figcaption>` : ''}</figure>`)
+            // Get image width from Notion block format (if resized)
+            const imageWidth = block.image?.width
+            // Get format metadata for alignment (Notion stores this in block-level format property)
+            const blockFormat = (block as any).format || {}
+            const blockWidth = blockFormat.block_width || imageWidth
+            const alignment = blockFormat.block_alignment || 'left'
+            
+            // Build style attributes
+            const styleAttrs: string[] = []
+            if (blockWidth && blockWidth < 800) {
+              styleAttrs.push(`max-width: ${blockWidth}px`)
+            }
+            
+            // Determine alignment class
+            let alignClass = ''
+            if (alignment === 'center') {
+              alignClass = 'image-center'
+            } else if (alignment === 'right') {
+              alignClass = 'image-right'
+            } else {
+              alignClass = 'image-left'
+            }
+            
+            const styleAttr = styleAttrs.length > 0 ? ` style="${styleAttrs.join('; ')}"` : ''
+            htmlBlocks.push(`<figure class="${alignClass}"${styleAttr}><img src="${imageUrl}" alt="${caption}" />${caption ? `<figcaption>${caption}</figcaption>` : ''}</figure>`)
           }
           break
           
