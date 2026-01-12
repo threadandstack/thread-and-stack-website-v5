@@ -323,15 +323,52 @@ serve(async (req) => {
           // Get background color from Notion (defaults to gray_background if not set)
           const calloutColor = block.callout.color || 'default'
           
-          // Fetch children if the callout has them
+          // Fetch children if the callout has them (wrap list items in <ul>/<ol>)
           let childrenHtml = ''
           if (block.has_children) {
             const children = await fetchBlockChildren(block.id)
             const childHtmlParts: string[] = []
+            let inChildBulletList = false
+            let inChildNumberedList = false
+
             for (const child of children) {
+              // Close lists when switching to a non-list block
+              if (child.type !== 'bulleted_list_item' && inChildBulletList) {
+                childHtmlParts.push('</ul>')
+                inChildBulletList = false
+              }
+              if (child.type !== 'numbered_list_item' && inChildNumberedList) {
+                childHtmlParts.push('</ol>')
+                inChildNumberedList = false
+              }
+
+              if (child.type === 'bulleted_list_item') {
+                if (!inChildBulletList) {
+                  childHtmlParts.push('<ul>')
+                  inChildBulletList = true
+                }
+                const childHtml = await blockToHtml(child)
+                if (childHtml) childHtmlParts.push(childHtml)
+                continue
+              }
+
+              if (child.type === 'numbered_list_item') {
+                if (!inChildNumberedList) {
+                  childHtmlParts.push('<ol>')
+                  inChildNumberedList = true
+                }
+                const childHtml = await blockToHtml(child)
+                if (childHtml) childHtmlParts.push(childHtml)
+                continue
+              }
+
               const childHtml = await blockToHtml(child)
               if (childHtml) childHtmlParts.push(childHtml)
             }
+
+            if (inChildBulletList) childHtmlParts.push('</ul>')
+            if (inChildNumberedList) childHtmlParts.push('</ol>')
+
             childrenHtml = childHtmlParts.join('\n')
           }
           
