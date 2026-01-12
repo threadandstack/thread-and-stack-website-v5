@@ -316,24 +316,21 @@ All colors MUST be HSL.
     margin-bottom: 0;
   }
   
-  /* Lists inside callouts */
+  /* Lists inside callouts – match main list styling, just tighter spacing */
   .blog-content .callout-content ul,
   .blog-content .callout-content ol {
-    margin: 0.5rem 0;
+    margin: 0.75rem 0;
     margin-left: 0;
-    padding-left: 0;
+    padding-left: 0.25rem; /* keeps bullets off the callout edge */
   }
-  
+
   .blog-content .callout-content li {
-    padding-left: 1.25rem;
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.5rem;
     font-size: inherit;
   }
-  
-  .blog-content .callout-content ul > li::before {
-    width: 5px;
-    height: 5px;
-    top: 0.6em;
+
+  .blog-content .callout-content li:last-child {
+    margin-bottom: 0;
   }
   
   /* Reduce top margin on headings that follow callouts */
