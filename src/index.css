@@ -316,6 +316,32 @@ All colors MUST be HSL.
     margin-bottom: 0;
   }
   
+  /* Lists inside callouts */
+  .blog-content .callout-content ul,
+  .blog-content .callout-content ol {
+    margin: 0.5rem 0;
+    margin-left: 0;
+    padding-left: 0;
+  }
+  
+  .blog-content .callout-content li {
+    padding-left: 1.25rem;
+    margin-bottom: 0.4rem;
+    font-size: inherit;
+  }
+  
+  .blog-content .callout-content ul > li::before {
+    width: 5px;
+    height: 5px;
+    top: 0.6em;
+  }
+  
+  /* Reduce top margin on headings that follow callouts */
+  .blog-content .callout + h2,
+  .blog-content .callout + h3 {
+    margin-top: 2rem;
+  }
+  
   /* Notion callout color variants */
   .blog-content .callout-default,
   .blog-content .callout-gray_background {
