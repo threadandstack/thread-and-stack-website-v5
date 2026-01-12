@@ -316,6 +316,11 @@ All colors MUST be HSL.
     margin-bottom: 0;
   }
   
+  /* Remove top margin from first child in callout (e.g., heading) */
+  .blog-content .callout-content > *:first-child {
+    margin-top: 0;
+  }
+  
   /* Lists inside callouts – match main list styling, just tighter spacing */
   .blog-content .callout-content ul,
   .blog-content .callout-content ol {
