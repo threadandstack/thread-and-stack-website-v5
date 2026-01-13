@@ -2,7 +2,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, Loader2, Users, Eye, FileText, LogOut as BounceIcon, RefreshCw } from "lucide-react";
+import { ArrowLeft, Loader2, Users, Eye, FileText, LogOut as BounceIcon, RefreshCw, Globe, Monitor, MapPin } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import {
@@ -32,7 +32,12 @@ interface AnalyticsData {
   sessions: number;
   bounces: number;
   bounceRate: number;
+  pageviewsPerVisit: number;
+  avgSessionDuration: number;
   topPages: { path: string; visits: number }[];
+  trafficSources: { source: string; visits: number }[];
+  devices: { device: string; visits: number }[];
+  countries: { country: string; visits: number }[];
   dailyData: { date: string; visits: number; sessions: number }[];
 }
 
@@ -96,29 +101,8 @@ const AdminAnalyticsPage = () => {
     } catch (error) {
       console.error("Error fetching analytics:", error);
       toast.error("Failed to load analytics data");
-      // Set mock data for demo purposes
-      setAnalytics({
-        visits: 1247,
-        sessions: 892,
-        bounces: 312,
-        bounceRate: 35,
-        topPages: [
-          { path: "/", visits: 523 },
-          { path: "/blog", visits: 234 },
-          { path: "/about", visits: 187 },
-          { path: "/how-i-work", visits: 156 },
-          { path: "/sessions-and-sprints", visits: 98 },
-        ],
-        dailyData: Array.from({ length: 7 }, (_, i) => {
-          const date = new Date();
-          date.setDate(date.getDate() - (6 - i));
-          return {
-            date: date.toLocaleDateString("en-GB", { day: "numeric", month: "short" }),
-            visits: Math.floor(Math.random() * 200) + 100,
-            sessions: Math.floor(Math.random() * 150) + 80,
-          };
-        }),
-      });
+      // No fallback - show error state
+      setAnalytics(null);
     } finally {
       setIsLoading(false);
     }
@@ -279,38 +263,135 @@ const AdminAnalyticsPage = () => {
               </CardContent>
             </Card>
 
-            {/* Top Pages */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <FileText className="h-5 w-5" />
-                  Top Pages
-                </CardTitle>
-                <CardDescription>Most visited pages in the selected period</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Page</TableHead>
-                      <TableHead className="text-right">Visits</TableHead>
-                      <TableHead className="text-right">% of Total</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {analytics.topPages.map((page) => (
-                      <TableRow key={page.path}>
-                        <TableCell className="font-medium">{page.path}</TableCell>
-                        <TableCell className="text-right">{page.visits.toLocaleString()}</TableCell>
-                        <TableCell className="text-right">
-                          {((page.visits / analytics.visits) * 100).toFixed(1)}%
-                        </TableCell>
+            {/* Data Tables Grid */}
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
+              {/* Top Pages */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-base">
+                    <FileText className="h-4 w-4" />
+                    Top Pages
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Page</TableHead>
+                        <TableHead className="text-right">Views</TableHead>
                       </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </CardContent>
-            </Card>
+                    </TableHeader>
+                    <TableBody>
+                      {analytics.topPages.slice(0, 5).map((page) => (
+                        <TableRow key={page.path}>
+                          <TableCell className="font-medium truncate max-w-[200px]">{page.path}</TableCell>
+                          <TableCell className="text-right">{page.visits.toLocaleString()}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </Card>
+
+              {/* Traffic Sources */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-base">
+                    <Globe className="h-4 w-4" />
+                    Traffic Sources
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Source</TableHead>
+                        <TableHead className="text-right">Visits</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {(analytics.trafficSources || []).slice(0, 5).map((source) => (
+                        <TableRow key={source.source}>
+                          <TableCell className="font-medium">{source.source}</TableCell>
+                          <TableCell className="text-right">{source.visits.toLocaleString()}</TableCell>
+                        </TableRow>
+                      ))}
+                      {(!analytics.trafficSources || analytics.trafficSources.length === 0) && (
+                        <TableRow>
+                          <TableCell colSpan={2} className="text-center text-muted-foreground">No data</TableCell>
+                        </TableRow>
+                      )}
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </Card>
+
+              {/* Devices */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-base">
+                    <Monitor className="h-4 w-4" />
+                    Devices
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Device</TableHead>
+                        <TableHead className="text-right">Visits</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {(analytics.devices || []).map((device) => (
+                        <TableRow key={device.device}>
+                          <TableCell className="font-medium capitalize">{device.device}</TableCell>
+                          <TableCell className="text-right">{device.visits.toLocaleString()}</TableCell>
+                        </TableRow>
+                      ))}
+                      {(!analytics.devices || analytics.devices.length === 0) && (
+                        <TableRow>
+                          <TableCell colSpan={2} className="text-center text-muted-foreground">No data</TableCell>
+                        </TableRow>
+                      )}
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </Card>
+
+              {/* Countries */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-base">
+                    <MapPin className="h-4 w-4" />
+                    Countries
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Country</TableHead>
+                        <TableHead className="text-right">Visits</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {(analytics.countries || []).slice(0, 5).map((country) => (
+                        <TableRow key={country.country}>
+                          <TableCell className="font-medium">{country.country}</TableCell>
+                          <TableCell className="text-right">{country.visits.toLocaleString()}</TableCell>
+                        </TableRow>
+                      ))}
+                      {(!analytics.countries || analytics.countries.length === 0) && (
+                        <TableRow>
+                          <TableCell colSpan={2} className="text-center text-muted-foreground">No data</TableCell>
+                        </TableRow>
+                      )}
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </Card>
+            </div>
           </>
         ) : (
           <div className="text-center py-20">
