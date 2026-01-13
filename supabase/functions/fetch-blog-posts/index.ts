@@ -67,6 +67,9 @@ serve(async (req) => {
       // Extract published date
       const publishedDate = properties['Published']?.date?.start || null
       
+      // Extract featured checkbox
+      const featured = properties['Featured']?.checkbox || false
+      
       return {
         id: page.id,
         slug: slug,
@@ -77,7 +80,8 @@ serve(async (req) => {
         url: page.url,
         readingTime: properties['Reading time']?.rich_text?.[0]?.plain_text || null,
         theme: properties['Theme']?.select?.name || null,
-        publishedDate: publishedDate
+        publishedDate: publishedDate,
+        featured: featured
       }
     })
 
