@@ -2,6 +2,7 @@ import { useRef, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, ChevronDown } from "lucide-react";
 import { Emphasis } from "@/components/Emphasis";
+import { trackCtaClick } from "@/hooks/useAnalytics";
 
 export const Hero = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -73,14 +74,14 @@ export const Hero = () => {
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
           <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 transition-all duration-300 text-lg px-8 group rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] not-italic font-sans font-semibold" asChild>
-            <a href="#contact">
+            <a href="#contact" onClick={() => trackCtaClick('Book a Clarity Session', 'hero')}>
               Book a Clarity Session
               <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
             </a>
           </Button>
           
           <Button size="lg" variant="outline" className="text-lg px-8 rounded-xl hover:bg-foreground hover:text-background not-italic shadow-[0_2px_8px_rgba(0,0,0,0.04)] font-sans" asChild>
-            <a href="#how-we-work">
+            <a href="#how-we-work" onClick={() => trackCtaClick('How We Work', 'hero')}>
               How We Work
             </a>
           </Button>

@@ -5,6 +5,7 @@ import ntuk3 from "@/assets/ntuk-olivia.png";
 import ntuk4 from "@/assets/ntuk-kieran.png";
 import ntuk5 from "@/assets/ntuk-running-new.png";
 import { FeaturedProjectModal } from "./FeaturedProjectModal";
+import { trackCaseStudyView } from "@/hooks/useAnalytics";
 
 const ImageCarousel = ({ images, isVisible }: { images: string[]; isVisible: boolean }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -108,6 +109,7 @@ export const FeaturedProjects = () => {
               onClick={() => {
                 setSelectedProject(project);
                 setModalOpen(true);
+                trackCaseStudyView(project.title);
               }}
               className="group bg-card rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.06)] hover:shadow-[0_12px_32px_rgba(0,0,0,0.12)] transition-all duration-300 overflow-hidden text-left w-full max-w-5xl flex flex-col md:flex-row"
             >

@@ -8,6 +8,7 @@ import { FAQ } from "@/components/FAQ";
 import { Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import brendanAvatar from "@/assets/brendan-avatar.png";
+import { trackBlogRead } from "@/hooks/useAnalytics";
 
 interface BlogPostDetail {
   title: string;
@@ -74,6 +75,13 @@ const BlogPostPage = () => {
 
     fetchPost();
   }, [slug]);
+
+  // Track blog read
+  useEffect(() => {
+    if (post && slug) {
+      trackBlogRead(post.title, slug);
+    }
+  }, [post, slug]);
 
   // Update meta tags for social sharing
   useEffect(() => {

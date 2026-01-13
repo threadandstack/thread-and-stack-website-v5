@@ -1,13 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Check, Target, Layers, FileText, Users, Calendar, Zap, Repeat } from "lucide-react";
 import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
 import { FAQ } from "@/components/FAQ";
 import { ContactDrawer } from "@/components/ContactDrawer";
+import { trackServiceView, useScrollDepthTracking } from "@/hooks/useAnalytics";
 
 const FractionalDeepEngagement = () => {
   const [contactOpen, setContactOpen] = useState(false);
+
+  useEffect(() => {
+    trackServiceView('Fractional & Deep Engagement');
+    const cleanup = useScrollDepthTracking('fractional-deep-engagement');
+    return cleanup;
+  }, []);
 
   const fractionalBenefits = [
     {

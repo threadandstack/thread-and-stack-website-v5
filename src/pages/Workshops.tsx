@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Check } from "lucide-react";
 import { Footer } from "@/components/Footer";
@@ -19,6 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ContactDrawer } from "@/components/ContactDrawer";
+import { trackServiceView, useScrollDepthTracking } from "@/hooks/useAnalytics";
 
 const quoteFormSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -34,6 +35,12 @@ const Workshops = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [contactOpen, setContactOpen] = useState(false);
   const { toast } = useToast();
+
+  useEffect(() => {
+    trackServiceView('Brand Connection Workshops');
+    const cleanup = useScrollDepthTracking('workshops');
+    return cleanup;
+  }, []);
   
   const form = useForm<QuoteFormValues>({
     resolver: zodResolver(quoteFormSchema),
