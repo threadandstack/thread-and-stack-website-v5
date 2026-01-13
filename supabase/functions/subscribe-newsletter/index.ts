@@ -8,6 +8,40 @@ const corsHeaders = {
 const BEEHIIV_API_KEY = Deno.env.get('BEEHIIV_API_KEY');
 const BEEHIIV_PUBLICATION_ID = 'pub_b9e5eda8-3a17-4d9b-9f97-fb9208f49676';
 
+// GA4 Measurement Protocol
+const GA4_MEASUREMENT_ID = 'G-G9DYRX0MH4';
+const GA4_API_SECRET = Deno.env.get('GA4_API_SECRET');
+
+async function sendGA4Event(eventName: string, params: Record<string, string | number> = {}) {
+  if (!GA4_API_SECRET) {
+    console.warn('GA4_API_SECRET not configured, skipping server-side tracking');
+    return;
+  }
+  
+  try {
+    const response = await fetch(
+      `https://www.google-analytics.com/mp/collect?measurement_id=${GA4_MEASUREMENT_ID}&api_secret=${GA4_API_SECRET}`,
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          client_id: crypto.randomUUID(), // Anonymous client ID for server-side events
+          events: [{
+            name: eventName,
+            params: {
+              ...params,
+              engagement_time_msec: 100,
+              session_id: Date.now().toString(),
+            }
+          }]
+        })
+      }
+    );
+    console.log(`GA4 event '${eventName}' sent, status:`, response.status);
+  } catch (error) {
+    console.error('GA4 tracking error:', error);
+  }
+}
+
 interface SubscribeRequest {
   email: string;
 }
@@ -101,6 +135,13 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     console.log('Successfully subscribed email to Beehiiv:', trimmedEmail);
+
+    // Send GA4 server-side event
+    await sendGA4Event('newsletter_signup', {
+      method: 'email',
+      content_type: 'newsletter',
+      source: 'server',
+    });
 
     return new Response(
       JSON.stringify({ 
