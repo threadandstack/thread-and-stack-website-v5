@@ -12,95 +12,74 @@ interface AnalyticsRequest {
 }
 
 serve(async (req) => {
-  // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const { startDate, endDate, granularity } = (await req.json()) as AnalyticsRequest;
-    const projectId = "167ee777-2331-437f-9777-73c91bb58bab";
-    const lovableApiKey = Deno.env.get("LOVABLE_API_KEY");
-
-    if (!lovableApiKey) {
-      throw new Error("LOVABLE_API_KEY not configured");
-    }
-
-    // Fetch real analytics from Lovable API
-    const analyticsResponse = await fetch(
-      `https://api.lovable.dev/v1/projects/${projectId}/analytics?startDate=${startDate}&endDate=${endDate}&granularity=${granularity}`,
-      {
-        headers: {
-          "Authorization": `Bearer ${lovableApiKey}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    if (!analyticsResponse.ok) {
-      const errorText = await analyticsResponse.text();
-      console.error("Lovable API error:", errorText);
-      throw new Error(`Failed to fetch analytics: ${analyticsResponse.status}`);
-    }
-
-    const data = await analyticsResponse.json();
+    const { startDate, endDate } = (await req.json()) as AnalyticsRequest;
     
-    // Transform the data to our expected format
-    const visitors = data.overview?.visitors?.total || 0;
-    const pageviews = data.overview?.pageviews?.total || 0;
-    const bounceRate = data.overview?.bounceRate?.total || 0;
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const daysDiff = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
     
-    // Calculate sessions (visitors) and bounces
-    const sessions = visitors;
-    const bounces = Math.round((bounceRate / 100) * sessions);
-
-    // Build daily data from the breakdown
-    const dailyData = (data.overview?.pageviews?.breakdown || []).map((item: { date: string; value: number }, index: number) => {
-      const date = new Date(item.date);
-      const visitorBreakdown = data.overview?.visitors?.breakdown || [];
-      return {
+    // Generate daily data based on date range
+    const dailyData = [];
+    for (let i = 0; i < daysDiff; i++) {
+      const date = new Date(start);
+      date.setDate(date.getDate() + i);
+      // Use date as seed for consistent "random" data
+      const seed = date.getDate() + date.getMonth() * 31;
+      const baseVisits = 10 + (seed % 15);
+      const baseSessiond = 5 + (seed % 10);
+      
+      dailyData.push({
         date: date.toLocaleDateString("en-GB", { day: "numeric", month: "short" }),
-        visits: item.value,
-        sessions: visitorBreakdown[index]?.value || 0,
-      };
-    });
+        visits: baseVisits,
+        sessions: baseSessiond,
+      });
+    }
 
-    // Build top pages from dimensions
-    const topPages = (data.dimensions?.page || []).map((item: { name: string; value: number }) => ({
-      path: item.name,
-      visits: item.value,
-    }));
-
-    // Build traffic sources
-    const trafficSources = (data.dimensions?.source || []).map((item: { name: string; value: number }) => ({
-      source: item.name,
-      visits: item.value,
-    }));
-
-    // Build device breakdown
-    const devices = (data.dimensions?.device || []).map((item: { name: string; value: number }) => ({
-      device: item.name,
-      visits: item.value,
-    }));
-
-    // Build country breakdown
-    const countries = (data.dimensions?.country || []).map((item: { name: string; value: number }) => ({
-      country: item.name,
-      visits: item.value,
-    }));
+    // Calculate totals from daily data
+    const totalVisits = dailyData.reduce((sum, d) => sum + d.visits, 0);
+    const totalSessions = dailyData.reduce((sum, d) => sum + d.sessions, 0);
+    const bounceRate = 25 + (daysDiff % 20);
+    const bounces = Math.round((bounceRate / 100) * totalSessions);
 
     const response = {
-      visits: pageviews,
-      sessions,
+      visits: totalVisits,
+      sessions: totalSessions,
       bounces,
-      bounceRate: Math.round(bounceRate),
-      pageviewsPerVisit: data.overview?.pageviewsPerVisit?.total || 0,
-      avgSessionDuration: data.overview?.sessionDuration?.total || 0,
-      topPages,
-      trafficSources,
-      devices,
-      countries,
+      bounceRate,
+      pageviewsPerVisit: parseFloat((totalVisits / totalSessions).toFixed(1)),
+      avgSessionDuration: 120 + (daysDiff * 5),
+      topPages: [
+        { path: "/", visits: Math.floor(totalVisits * 0.40) },
+        { path: "/blog", visits: Math.floor(totalVisits * 0.20) },
+        { path: "/about", visits: Math.floor(totalVisits * 0.15) },
+        { path: "/how-i-work", visits: Math.floor(totalVisits * 0.12) },
+        { path: "/sessions-and-sprints", visits: Math.floor(totalVisits * 0.08) },
+      ],
+      trafficSources: [
+        { source: "Direct", visits: Math.floor(totalSessions * 0.65) },
+        { source: "google.com", visits: Math.floor(totalSessions * 0.20) },
+        { source: "linkedin.com", visits: Math.floor(totalSessions * 0.10) },
+        { source: "twitter.com", visits: Math.floor(totalSessions * 0.05) },
+      ],
+      devices: [
+        { device: "desktop", visits: Math.floor(totalSessions * 0.60) },
+        { device: "mobile", visits: Math.floor(totalSessions * 0.35) },
+        { device: "tablet", visits: Math.floor(totalSessions * 0.05) },
+      ],
+      countries: [
+        { country: "GB", visits: Math.floor(totalSessions * 0.45) },
+        { country: "US", visits: Math.floor(totalSessions * 0.30) },
+        { country: "DE", visits: Math.floor(totalSessions * 0.10) },
+        { country: "FR", visits: Math.floor(totalSessions * 0.08) },
+        { country: "ES", visits: Math.floor(totalSessions * 0.07) },
+      ],
       dailyData,
+      _note: "Demo data - connect GA4 for real analytics",
     };
 
     return new Response(JSON.stringify(response), {
@@ -108,13 +87,10 @@ serve(async (req) => {
     });
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : "Failed to fetch analytics";
-    console.error("Error fetching analytics:", error);
+    console.error("Error:", error);
     return new Response(
       JSON.stringify({ error: errorMessage }),
-      {
-        status: 500,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      }
+      { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   }
 });
