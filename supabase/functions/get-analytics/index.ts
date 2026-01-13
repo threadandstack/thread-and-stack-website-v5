@@ -19,67 +19,98 @@ serve(async (req) => {
 
   try {
     const { startDate, endDate, granularity } = (await req.json()) as AnalyticsRequest;
+    const projectId = "167ee777-2331-437f-9777-73c91bb58bab";
+    const lovableApiKey = Deno.env.get("LOVABLE_API_KEY");
 
-    // Fetch analytics from the Lovable analytics API
-    const analyticsUrl = `https://api.lovable.dev/v1/analytics`;
-    const projectId = Deno.env.get("VITE_SUPABASE_PROJECT_ID") || "uohhfesyumigbpqjpacl";
-    
-    // For now, return calculated mock data based on date range
-    // This can be replaced with actual analytics API when available
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-    const daysDiff = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
-    
-    // Generate realistic-looking data
-    const baseVisits = 150 + Math.floor(Math.random() * 50);
-    const baseSessions = Math.floor(baseVisits * 0.7);
-    const baseBounces = Math.floor(baseSessions * 0.35);
-
-    const totalVisits = baseVisits * daysDiff;
-    const totalSessions = baseSessions * daysDiff;
-    const totalBounces = baseBounces * daysDiff;
-    const bounceRate = Math.round((totalBounces / totalSessions) * 100);
-
-    // Generate daily data
-    const dailyData = [];
-    for (let i = 0; i < daysDiff; i++) {
-      const date = new Date(start);
-      date.setDate(date.getDate() + i);
-      const dayVariance = 0.7 + Math.random() * 0.6; // 70% to 130% variance
-      
-      dailyData.push({
-        date: date.toLocaleDateString("en-GB", { day: "numeric", month: "short" }),
-        visits: Math.floor(baseVisits * dayVariance),
-        sessions: Math.floor(baseSessions * dayVariance),
-      });
+    if (!lovableApiKey) {
+      throw new Error("LOVABLE_API_KEY not configured");
     }
 
-    // Top pages with realistic distribution
-    const topPages = [
-      { path: "/", visits: Math.floor(totalVisits * 0.42) },
-      { path: "/blog", visits: Math.floor(totalVisits * 0.19) },
-      { path: "/about", visits: Math.floor(totalVisits * 0.15) },
-      { path: "/how-i-work", visits: Math.floor(totalVisits * 0.12) },
-      { path: "/sessions-and-sprints", visits: Math.floor(totalVisits * 0.08) },
-      { path: "/fractional-deep-engagement", visits: Math.floor(totalVisits * 0.04) },
-    ];
+    // Fetch real analytics from Lovable API
+    const analyticsResponse = await fetch(
+      `https://api.lovable.dev/v1/projects/${projectId}/analytics?startDate=${startDate}&endDate=${endDate}&granularity=${granularity}`,
+      {
+        headers: {
+          "Authorization": `Bearer ${lovableApiKey}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (!analyticsResponse.ok) {
+      const errorText = await analyticsResponse.text();
+      console.error("Lovable API error:", errorText);
+      throw new Error(`Failed to fetch analytics: ${analyticsResponse.status}`);
+    }
+
+    const data = await analyticsResponse.json();
+    
+    // Transform the data to our expected format
+    const visitors = data.overview?.visitors?.total || 0;
+    const pageviews = data.overview?.pageviews?.total || 0;
+    const bounceRate = data.overview?.bounceRate?.total || 0;
+    
+    // Calculate sessions (visitors) and bounces
+    const sessions = visitors;
+    const bounces = Math.round((bounceRate / 100) * sessions);
+
+    // Build daily data from the breakdown
+    const dailyData = (data.overview?.pageviews?.breakdown || []).map((item: { date: string; value: number }, index: number) => {
+      const date = new Date(item.date);
+      const visitorBreakdown = data.overview?.visitors?.breakdown || [];
+      return {
+        date: date.toLocaleDateString("en-GB", { day: "numeric", month: "short" }),
+        visits: item.value,
+        sessions: visitorBreakdown[index]?.value || 0,
+      };
+    });
+
+    // Build top pages from dimensions
+    const topPages = (data.dimensions?.page || []).map((item: { name: string; value: number }) => ({
+      path: item.name,
+      visits: item.value,
+    }));
+
+    // Build traffic sources
+    const trafficSources = (data.dimensions?.source || []).map((item: { name: string; value: number }) => ({
+      source: item.name,
+      visits: item.value,
+    }));
+
+    // Build device breakdown
+    const devices = (data.dimensions?.device || []).map((item: { name: string; value: number }) => ({
+      device: item.name,
+      visits: item.value,
+    }));
+
+    // Build country breakdown
+    const countries = (data.dimensions?.country || []).map((item: { name: string; value: number }) => ({
+      country: item.name,
+      visits: item.value,
+    }));
 
     const response = {
-      visits: totalVisits,
-      sessions: totalSessions,
-      bounces: totalBounces,
-      bounceRate,
+      visits: pageviews,
+      sessions,
+      bounces,
+      bounceRate: Math.round(bounceRate),
+      pageviewsPerVisit: data.overview?.pageviewsPerVisit?.total || 0,
+      avgSessionDuration: data.overview?.sessionDuration?.total || 0,
       topPages,
+      trafficSources,
+      devices,
+      countries,
       dailyData,
     };
 
     return new Response(JSON.stringify(response), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
-  } catch (error) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : "Failed to fetch analytics";
     console.error("Error fetching analytics:", error);
     return new Response(
-      JSON.stringify({ error: "Failed to fetch analytics" }),
+      JSON.stringify({ error: errorMessage }),
       {
         status: 500,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
