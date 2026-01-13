@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { BlogNewsletterCTA } from "@/components/BlogNewsletterCTA";
-import { LetsWorkTogether } from "@/components/LetsWorkTogether";
+import { BlogCTACallout } from "@/components/BlogCTACallout";
 import { FAQ } from "@/components/FAQ";
 import { Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -221,11 +221,12 @@ const BlogPostPage = () => {
               className="blog-content prose prose-lg max-w-none"
               dangerouslySetInnerHTML={{ __html: post.content }}
             />
+
+            {/* Subtle CTA Callout */}
+            <BlogCTACallout theme={post.theme} title={post.title} />
           </div>
         </div>
       </article>
-
-      <LetsWorkTogether source="blog-post" />
       <FAQ items={[
         {
           question: "What is Stacked Behaviours?",
