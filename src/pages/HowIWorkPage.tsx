@@ -5,11 +5,13 @@ import { ArrowRight } from "lucide-react";
 import workshopImage from "@/assets/brendan-collaboration.jpeg";
 import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { ContactDrawer } from "@/components/ContactDrawer";
 
 const HowIWorkPage = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [realityVisible, setRealityVisible] = useState(false);
   const [aiVisible, setAiVisible] = useState(false);
+  const [contactOpen, setContactOpen] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const realityRef = useRef<HTMLElement>(null);
   const aiRef = useRef<HTMLElement>(null);
@@ -91,6 +93,7 @@ const HowIWorkPage = () => {
   return (
     <main className="min-h-screen">
       <Navigation />
+      <ContactDrawer open={contactOpen} onOpenChange={setContactOpen} source="how-i-work" />
 
       {/* My Approach - Four C's Section */}
       <section
@@ -244,12 +247,10 @@ const HowIWorkPage = () => {
             <Button
               size="lg"
               className="bg-accent-foreground text-accent hover:bg-accent-foreground/90 group rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
-              asChild
+              onClick={() => setContactOpen(true)}
             >
-              <a href="/#contact">
-                Let's Work Together
-                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </a>
+              Let's Work Together
+              <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Button>
           </div>
         </div>
