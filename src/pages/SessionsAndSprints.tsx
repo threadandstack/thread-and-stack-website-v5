@@ -6,10 +6,17 @@ import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
 import { FAQ } from "@/components/FAQ";
 import { ContactDrawer } from "@/components/ContactDrawer";
+import { trackServiceView, useScrollDepthTracking } from "@/hooks/useAnalytics";
 
 const SessionsAndSprints = () => {
   const [contactOpen, setContactOpen] = useState(false);
   const location = useLocation();
+
+  useEffect(() => {
+    trackServiceView('Sessions & Sprints');
+    const cleanup = useScrollDepthTracking('sessions-and-sprints');
+    return cleanup;
+  }, []);
 
   useEffect(() => {
     if (location.hash) {

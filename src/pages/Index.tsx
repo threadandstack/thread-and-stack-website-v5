@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Navigation } from "@/components/Navigation";
 import { Hero } from "@/components/Hero";
 import { ScrollIndicator } from "@/components/ScrollIndicator";
@@ -11,9 +12,14 @@ import { Contact } from "@/components/Contact";
 import { Newsletter } from "@/components/Newsletter";
 import { Footer } from "@/components/Footer";
 import { FAQ } from "@/components/FAQ";
+import { useScrollDepthTracking } from "@/hooks/useAnalytics";
 
 
 const Index = () => {
+  useEffect(() => {
+    const cleanup = useScrollDepthTracking('homepage');
+    return cleanup;
+  }, []);
   const faqItems = [
     {
       question: "What makes Thread & Stack different from other consultancies?",

@@ -7,6 +7,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { ArrowRight, X } from "lucide-react";
 import { z } from "zod";
+import { trackContactFormSubmit } from "@/hooks/useAnalytics";
 import {
   Sheet,
   SheetContent,
@@ -81,6 +82,8 @@ export const ContactDrawer = ({ open, onOpenChange, source = "drawer" }: Contact
 
       if (error) throw error;
 
+      trackContactFormSubmit(source);
+      
       supabase.functions.invoke('sync-lead-to-notion', {
         body: {
           name: name.trim() || null,

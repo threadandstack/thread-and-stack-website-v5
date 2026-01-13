@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { trackNewsletterSignup } from "@/hooks/useAnalytics";
 
 export const Newsletter = () => {
   const [email, setEmail] = useState("");
@@ -41,6 +42,7 @@ export const Newsletter = () => {
         throw error;
       }
       console.log("Newsletter subscription response:", data);
+      trackNewsletterSignup();
       toast({
         title: "Subscribed!",
         description: "You've been added to the newsletter. Check your inbox for a welcome email."

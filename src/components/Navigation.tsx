@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import GreyStacked from "@/assets/logos/Grey_TS_Stacked.svg";
 import IndigoStacked from "@/assets/logos/Indigo_TS_Stacked.svg";
+import { trackNavClick, trackCtaClick } from "@/hooks/useAnalytics";
 
 export const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -60,6 +61,7 @@ export const Navigation = () => {
             <a 
               href="/about" 
               className="text-base font-sans text-foreground/80 hover:text-foreground transition-colors not-italic"
+              onClick={() => trackNavClick('About', 'header')}
             >
               About
             </a>
@@ -67,6 +69,7 @@ export const Navigation = () => {
             <a 
               href="/how-i-work" 
               className="text-base font-sans text-foreground/80 hover:text-foreground transition-colors not-italic"
+              onClick={() => trackNavClick('How I Work', 'header')}
             >
               How I Work
             </a>
@@ -80,7 +83,7 @@ export const Navigation = () => {
               <DropdownMenuContent align="end" className="bg-background border border-border z-50 min-w-[280px]">
                 {services.map((service) => (
                   <DropdownMenuItem key={service.href} asChild>
-                    <a href={service.href} className="cursor-pointer">
+                    <a href={service.href} className="cursor-pointer" onClick={() => trackNavClick(service.label, 'header')}>
                       {service.label}
                     </a>
                   </DropdownMenuItem>
@@ -91,6 +94,7 @@ export const Navigation = () => {
             <a 
               href="/blog" 
               className="text-base font-serif-pro text-foreground/80 hover:text-foreground transition-colors italic"
+              onClick={() => trackNavClick('Stacked Behaviours', 'header')}
             >
               Stacked Behaviours
             </a>
@@ -101,7 +105,7 @@ export const Navigation = () => {
               className="bg-accent text-accent-foreground hover:bg-accent/90 rounded-xl not-italic font-sans"
               asChild
             >
-              <a href="/#contact">Get Started</a>
+              <a href="/#contact" onClick={() => trackCtaClick('Get Started', 'header')}>Get Started</a>
             </Button>
           </div>
 
@@ -150,6 +154,7 @@ export const Navigation = () => {
               <a
                 href="/about"
                 className="text-base font-sans text-foreground/80 hover:text-foreground transition-colors not-italic"
+                onClick={() => trackNavClick('About', 'floating')}
               >
                 About
               </a>
@@ -157,6 +162,7 @@ export const Navigation = () => {
               <a
                 href="/how-i-work"
                 className="text-base font-sans text-foreground/80 hover:text-foreground transition-colors not-italic"
+                onClick={() => trackNavClick('How I Work', 'floating')}
               >
                 How I Work
               </a>
@@ -170,7 +176,7 @@ export const Navigation = () => {
                 <DropdownMenuContent align="center" className="bg-background border border-border z-50 min-w-[280px]">
                   {services.map((service) => (
                     <DropdownMenuItem key={service.href} asChild>
-                      <a href={service.href} className="cursor-pointer">
+                      <a href={service.href} className="cursor-pointer" onClick={() => trackNavClick(service.label, 'floating')}>
                         {service.label}
                       </a>
                     </DropdownMenuItem>
@@ -181,6 +187,7 @@ export const Navigation = () => {
               <a
                 href="/blog"
                 className="text-base font-serif-pro text-foreground/80 hover:text-foreground transition-colors italic"
+                onClick={() => trackNavClick('Stacked Behaviours', 'floating')}
               >
                 Stacked Behaviours
               </a>
@@ -190,7 +197,7 @@ export const Navigation = () => {
                 className="bg-accent text-accent-foreground hover:bg-accent/90 rounded-xl not-italic font-sans"
                 asChild
               >
-                <a href="/#contact">Get Started</a>
+                <a href="/#contact" onClick={() => trackCtaClick('Get Started', 'floating-nav')}>Get Started</a>
               </Button>
             </div>
 
