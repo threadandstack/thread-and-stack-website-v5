@@ -28,6 +28,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import AdminResetPassword from "./pages/AdminResetPassword";
 import ImageLibraryPage from "./pages/ImageLibraryPage";
 import GeoAdminPage from "./pages/GeoAdminPage";
+import AdminAnalyticsPage from "./pages/AdminAnalyticsPage";
 
 const queryClient = new QueryClient();
 
@@ -63,6 +64,7 @@ const App = () => (
           <Route path="/admin/seo" element={<SeoAdminPage />} />
           <Route path="/admin/images" element={<ImageLibraryPage />} />
           <Route path="/admin/geo" element={<GeoAdminPage />} />
+          <Route path="/admin/analytics" element={<AdminAnalyticsPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
           <Route path="*" element={<NotFound />} />

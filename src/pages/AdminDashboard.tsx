@@ -2,7 +2,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, LogOut, Loader2, Search, BookOpen, Image } from "lucide-react";
+import { ArrowLeft, LogOut, Loader2, Search, BookOpen, Image, BarChart3 } from "lucide-react";
 import { useEffect } from "react";
 import { toast } from "sonner";
 
@@ -33,6 +33,12 @@ const AdminDashboard = () => {
   }
 
   const adminSections = [
+    {
+      title: "Analytics",
+      description: "View website visits, sessions, top pages, and bounce rates",
+      icon: BarChart3,
+      href: "/admin/analytics",
+    },
     {
       title: "SEO Manager",
       description: "Manage meta tags, OG images, and social sharing for all pages",
