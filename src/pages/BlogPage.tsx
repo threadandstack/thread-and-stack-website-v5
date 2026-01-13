@@ -46,6 +46,15 @@ const BlogPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams();
   const [showSubscribe, setShowSubscribe] = useState(searchParams.get('subscribe') === 'true');
+  const [activeTheme, setActiveTheme] = useState<string | null>(null);
+
+  // Get unique themes from posts
+  const themes = [...new Set(posts.map(p => p.theme).filter(Boolean))] as string[];
+
+  // Filter posts by active theme
+  const filteredPosts = activeTheme
+    ? posts.filter(p => p.theme === activeTheme)
+    : posts;
 
   const handleSubscribeChange = (open: boolean) => {
     setShowSubscribe(open);
@@ -90,9 +99,38 @@ const BlogPage = () => {
             Thoughts on brand, creativity, and the systems that build our businesses.
           </p>
 
-          <div className="flex justify-center mb-16">
+          <div className="flex justify-center mb-8">
             <BlogNewsletterCTA />
           </div>
+
+          {/* Theme Filters */}
+          {!isLoading && themes.length > 0 && (
+            <div className="flex flex-wrap justify-center gap-2 mb-12">
+              <button
+                onClick={() => setActiveTheme(null)}
+                className={`px-4 py-2 text-sm rounded-full transition-all ${
+                  activeTheme === null
+                    ? 'bg-foreground text-background'
+                    : 'bg-muted text-muted-foreground hover:bg-muted/80'
+                }`}
+              >
+                All
+              </button>
+              {themes.map((theme) => (
+                <button
+                  key={theme}
+                  onClick={() => setActiveTheme(theme)}
+                  className={`px-4 py-2 text-sm rounded-full transition-all ${
+                    activeTheme === theme
+                      ? 'bg-foreground text-background'
+                      : `${getThemeColors(theme)} hover:opacity-80`
+                  }`}
+                >
+                  {theme}
+                </button>
+              ))}
+            </div>
+          )}
 
           {isLoading ? (
             <div className="flex justify-center py-20">
@@ -100,11 +138,11 @@ const BlogPage = () => {
             </div>
           ) : (
             <>
-              {/* Featured Article */}
-              {posts.find(p => p.featured) && (
+              {/* Featured Article - only show when no filter active or filter matches */}
+              {filteredPosts.find(p => p.featured) && !activeTheme && (
                 <div className="mb-12">
                   {(() => {
-                    const featuredPost = posts.find(p => p.featured)!;
+                    const featuredPost = filteredPosts.find(p => p.featured)!;
                     return (
                       <Link
                         to={`/blog/${featuredPost.slug}`}
@@ -169,7 +207,7 @@ const BlogPage = () => {
 
               {/* Regular Articles Grid */}
               <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                {posts.filter(p => !p.featured).map((post) => (
+                {(activeTheme ? filteredPosts : filteredPosts.filter(p => !p.featured)).map((post) => (
                   <Link
                     key={post.id}
                     to={`/blog/${post.slug}`}
@@ -224,10 +262,10 @@ const BlogPage = () => {
                   </Link>
                 ))}
 
-                {posts.filter(p => !p.featured).length === 0 && !isLoading && (
+                {(activeTheme ? filteredPosts : filteredPosts.filter(p => !p.featured)).length === 0 && !isLoading && (
                   <div className="col-span-full text-center py-20">
                     <p className="text-xl text-muted-foreground">
-                      No published posts yet. Check back soon.
+                      {activeTheme ? `No posts in "${activeTheme}" yet.` : 'No published posts yet. Check back soon.'}
                     </p>
                   </div>
                 )}
