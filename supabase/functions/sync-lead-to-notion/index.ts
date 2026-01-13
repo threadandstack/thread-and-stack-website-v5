@@ -4,6 +4,40 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 const NOTION_API_KEY = Deno.env.get('NOTION_API_KEY');
 const NOTION_DATABASE_ID = '2bd8863b87d480669541f70cf640a28f';
 
+// GA4 Measurement Protocol
+const GA4_MEASUREMENT_ID = 'G-G9DYRX0MH4';
+const GA4_API_SECRET = Deno.env.get('GA4_API_SECRET');
+
+async function sendGA4Event(eventName: string, params: Record<string, string | number> = {}) {
+  if (!GA4_API_SECRET) {
+    console.warn('GA4_API_SECRET not configured, skipping server-side tracking');
+    return;
+  }
+  
+  try {
+    const response = await fetch(
+      `https://www.google-analytics.com/mp/collect?measurement_id=${GA4_MEASUREMENT_ID}&api_secret=${GA4_API_SECRET}`,
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          client_id: crypto.randomUUID(),
+          events: [{
+            name: eventName,
+            params: {
+              ...params,
+              engagement_time_msec: 100,
+              session_id: Date.now().toString(),
+            }
+          }]
+        })
+      }
+    );
+    console.log(`GA4 event '${eventName}' sent, status:`, response.status);
+  } catch (error) {
+    console.error('GA4 tracking error:', error);
+  }
+}
+
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
@@ -97,6 +131,12 @@ serve(async (req) => {
 
     const data = await response.json();
     console.log('Lead synced to Notion successfully:', data.id);
+
+    // Send GA4 server-side event
+    await sendGA4Event('contact_form_submit', {
+      source: source || 'website',
+      content_type: 'lead',
+    });
 
     return new Response(JSON.stringify({ success: true, notionPageId: data.id }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
