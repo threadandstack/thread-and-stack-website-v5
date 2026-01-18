@@ -31,7 +31,7 @@ const getThemeCTA = (theme: string | null | undefined) => {
     case 'systems':
       return {
         headline: "Ready to build better systems?",
-        subtext: "Discover how AI-powered workflows can give you back 5-10 hours a week.",
+        subtext: "Let's design workflows that honour systems thinking, creative integrity, and human intentionality.",
         buttonText: "Explore AI Systems"
       };
     case 'case studies':
