@@ -4,6 +4,7 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { BlogNewsletterCTA } from "@/components/BlogNewsletterCTA";
 import { BlogCTACallout } from "@/components/BlogCTACallout";
+import { RelatedBlogs } from "@/components/RelatedBlogs";
 import { FAQ } from "@/components/FAQ";
 import { Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -49,6 +50,7 @@ const formatLastEdited = (dateString: string): string => {
 const BlogPostPage = () => {
   const { slug } = useParams<{ slug: string }>();
   const [post, setPost] = useState<BlogPostDetail | null>(null);
+  const [featuredRelatedSlug, setFeaturedRelatedSlug] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -74,6 +76,25 @@ const BlogPostPage = () => {
     };
 
     fetchPost();
+  }, [slug]);
+
+  // Fetch SEO data for featured related blog
+  useEffect(() => {
+    const fetchSeoData = async () => {
+      if (!slug) return;
+
+      const { data, error } = await supabase
+        .from('page_seo')
+        .select('featured_related_blog_slug')
+        .eq('page_path', `/blog/${slug}`)
+        .single();
+
+      if (!error && data?.featured_related_blog_slug) {
+        setFeaturedRelatedSlug(data.featured_related_blog_slug);
+      }
+    };
+
+    fetchSeoData();
   }, [slug]);
 
   // Track blog read
@@ -227,6 +248,10 @@ const BlogPostPage = () => {
           </div>
         </div>
       </article>
+
+      {/* Related Blogs Carousel */}
+      <RelatedBlogs currentSlug={slug || ''} featuredRelatedSlug={featuredRelatedSlug} />
+
       <FAQ items={[
         {
           question: "What is Stacked Behaviours?",

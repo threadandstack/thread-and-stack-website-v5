@@ -45,6 +45,7 @@ export type Database = {
         Row: {
           canonical_url: string | null
           created_at: string | null
+          featured_related_blog_slug: string | null
           id: string
           keywords: string[] | null
           meta_description: string | null
@@ -63,6 +64,7 @@ export type Database = {
         Insert: {
           canonical_url?: string | null
           created_at?: string | null
+          featured_related_blog_slug?: string | null
           id?: string
           keywords?: string[] | null
           meta_description?: string | null
@@ -81,6 +83,7 @@ export type Database = {
         Update: {
           canonical_url?: string | null
           created_at?: string | null
+          featured_related_blog_slug?: string | null
           id?: string
           keywords?: string[] | null
           meta_description?: string | null

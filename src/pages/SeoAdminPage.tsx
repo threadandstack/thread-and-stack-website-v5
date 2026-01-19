@@ -17,6 +17,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface PageSeo {
   id: string;
@@ -33,6 +40,7 @@ interface PageSeo {
   keywords: string[] | null;
   no_index: boolean;
   no_follow: boolean;
+  featured_related_blog_slug: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -51,6 +59,7 @@ const emptyFormData: Omit<PageSeo, 'id' | 'created_at' | 'updated_at'> = {
   keywords: [],
   no_index: false,
   no_follow: false,
+  featured_related_blog_slug: null,
 };
 
 // All site pages (excluding admin pages)
@@ -193,6 +202,7 @@ const SeoAdminPage = () => {
       keywords: entry.keywords || [],
       no_index: entry.no_index,
       no_follow: entry.no_follow,
+      featured_related_blog_slug: entry.featured_related_blog_slug || null,
     });
     setKeywordsInput((entry.keywords || []).join(", "));
     setDialogOpen(true);
@@ -219,6 +229,7 @@ const SeoAdminPage = () => {
       keywords: keywordsInput.trim() 
         ? keywordsInput.split(",").map(k => k.trim()).filter(Boolean)
         : null,
+      featured_related_blog_slug: formData.featured_related_blog_slug || null,
     };
 
     if (editingEntry) {
@@ -730,6 +741,42 @@ const SeoAdminPage = () => {
                   </div>
                 </div>
               </div>
+
+              {/* Related Blog (only for blog posts) */}
+              {formData.page_path.startsWith('/blog/') && (
+                <div className="space-y-4">
+                  <h4 className="font-medium text-sm text-muted-foreground uppercase tracking-wide">Related Content</h4>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="featured_related_blog">Featured Related Blog</Label>
+                    <p className="text-sm text-muted-foreground">
+                      This post will appear in the center of the "Continue Reading" carousel
+                    </p>
+                    <Select
+                      value={formData.featured_related_blog_slug || "none"}
+                      onValueChange={(value) => setFormData(prev => ({ 
+                        ...prev, 
+                        featured_related_blog_slug: value === "none" ? null : value 
+                      }))}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a blog post" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="none">None (auto-select)</SelectItem>
+                        {blogPosts
+                          .filter(post => `/blog/${post.slug}` !== formData.page_path)
+                          .map(post => (
+                            <SelectItem key={post.slug} value={post.slug}>
+                              {post.title}
+                            </SelectItem>
+                          ))
+                        }
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+              )}
 
               {/* Robot Directives */}
               <div className="space-y-4">
