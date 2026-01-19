@@ -39,6 +39,15 @@ const getThemeColors = (theme: string): string => {
   return themeMap[theme] || 'bg-accent/10 text-accent';
 };
 
+const formatPublishedDate = (dateString: string): string => {
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric'
+  });
+};
+
 export const RelatedBlogs = ({ currentSlug, featuredRelatedSlug }: RelatedBlogsProps) => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -173,29 +182,40 @@ export const RelatedBlogs = ({ currentSlug, featuredRelatedSlug }: RelatedBlogsP
                         />
                       </div>
                     )}
-                    <div className="p-5">
-                      <div className="flex items-center gap-2 mb-3">
+                    <div className="p-6">
+                      <div className="flex items-center gap-3 mb-4">
                         {post.theme && (
-                          <span className={`px-2.5 py-1 text-xs rounded-full ${getThemeColors(post.theme)}`}>
+                          <span className={`px-3 py-1 text-sm rounded-full ${getThemeColors(post.theme)}`}>
                             {post.theme}
                           </span>
                         )}
                         {post.readingTime && (
-                          <span className="text-xs text-muted-foreground">
-                            {post.readingTime} min
+                          <span className="text-sm text-muted-foreground">
+                            {post.readingTime} min read
                           </span>
                         )}
                       </div>
 
-                      <h3 className="text-lg font-medium mb-2 group-hover:text-accent transition-colors line-clamp-2">
+                      <h3 className="text-2xl mb-3 group-hover:text-accent transition-colors line-clamp-2">
                         {post.title}
                       </h3>
 
                       {post.intro && (
-                        <p className="text-sm text-muted-foreground line-clamp-2">
+                        <p className="text-muted-foreground mb-4 line-clamp-2">
                           {post.intro}
                         </p>
                       )}
+
+                      <div className="flex items-center justify-between text-sm text-muted-foreground">
+                        <span className="italic">
+                          Brendan @ Thread and Stack
+                        </span>
+                        {post.publishedDate && (
+                          <span>
+                            {formatPublishedDate(post.publishedDate)}
+                          </span>
+                        )}
+                      </div>
                     </div>
                   </Card>
                 </Link>
