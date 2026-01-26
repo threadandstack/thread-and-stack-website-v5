@@ -8,8 +8,8 @@ export function BookShuffleLoader({ className }: BookShuffleLoaderProps) {
   const cards = [0, 1, 2, 3, 4];
   
   return (
-    <div className={`relative w-full h-full flex items-center justify-center ${className}`}>
-      <div className="relative w-16 h-24">
+    <div className={`relative flex items-center justify-center overflow-visible ${className}`}>
+      <div className="relative w-14 h-20">
         {cards.map((index) => (
           <motion.div
             key={index}
