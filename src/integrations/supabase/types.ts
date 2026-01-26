@@ -17,27 +17,45 @@ export type Database = {
       fiction_favorites: {
         Row: {
           answer: string
+          city: string | null
           cluster_key: string | null
+          country: string | null
           created_at: string
+          device_type: string | null
           emojis: string | null
           enriched_answer: string | null
           id: string
+          is_repeat_visitor: boolean | null
+          timezone: string | null
+          user_agent: string | null
         }
         Insert: {
           answer: string
+          city?: string | null
           cluster_key?: string | null
+          country?: string | null
           created_at?: string
+          device_type?: string | null
           emojis?: string | null
           enriched_answer?: string | null
           id?: string
+          is_repeat_visitor?: boolean | null
+          timezone?: string | null
+          user_agent?: string | null
         }
         Update: {
           answer?: string
+          city?: string | null
           cluster_key?: string | null
+          country?: string | null
           created_at?: string
+          device_type?: string | null
           emojis?: string | null
           enriched_answer?: string | null
           id?: string
+          is_repeat_visitor?: boolean | null
+          timezone?: string | null
+          user_agent?: string | null
         }
         Relationships: []
       }
