@@ -386,6 +386,7 @@ export default function FictionFavoritesPage() {
         const pos = positions.get(item.id) || { x: 50, y: 20 };
         const isNew = item.id === newItemId;
         const displayText = item.enriched_answer || item.answer;
+        const genreColor = item.genre ? getGenreColor(item.genre) : undefined;
         
         return (
           <FictionCloudItem
@@ -396,6 +397,7 @@ export default function FictionFavoritesPage() {
             isNew={isNew}
             count={item.count}
             position={pos}
+            genreColor={genreColor}
             onClick={() => setSelectedBook({ 
               title: item.answer, 
               clusterKey: item.cluster_key 
