@@ -626,11 +626,19 @@ export default function FictionFavoritesPage() {
             </motion.div>
           </div>
 
-          {/* Cloud zone - relative container for positioned items with dynamic height */}
-          {favorites.length > 0 && (
+          {/* Cloud zone - relative container for positioned items with calculated height */}
+          {favorites.length > 0 && (() => {
+            // Calculate unique genres for height
+            const uniqueGenres = new Set(aggregatedFavorites.map(f => f.genre || 'Uncategorized'));
+            const numGenres = uniqueGenres.size;
+            return (
             <div 
-              className="relative flex-1 mt-4"
-              style={{ minHeight: `${Math.max(700, aggregatedFavorites.length * 100)}px` }}
+              className="relative mt-4"
+              style={{ 
+                // Calculate height based on number of genres - each genre gets ~25vh
+                height: `${Math.max(60, numGenres * 25)}vh`,
+                minHeight: '400px'
+              }}
             >
               {/* Constellation lines for mobile */}
               <ConstellationLines 
@@ -646,11 +654,12 @@ export default function FictionFavoritesPage() {
               {/* Book items */}
               {renderCloudItems()}
             </div>
-          )}
+            );
+          })()}
         </div>
 
-        {/* Campfire scene and footer anchored at bottom */}
-        <div className="relative z-20 mt-auto">
+        {/* Campfire scene and footer - anchored at natural document flow end */}
+        <div className="relative z-30 flex-shrink-0">
           <CampfireScene />
           <Footer />
         </div>
