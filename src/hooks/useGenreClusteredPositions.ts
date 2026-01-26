@@ -17,6 +17,7 @@ interface PositionedItem {
   size: Size;
   anchorX?: number; // Reference to genre anchor for collision resolution
   anchorY?: number;
+  zoneBounds?: { yMin: number; yMax: number }; // Hard bounds for this item's zone (mobile only)
 }
 
 interface CloudItem {
@@ -34,6 +35,7 @@ interface UseGenreClusteredOptions {
 interface GenreClusterResult {
   positions: Map<string, Position>;
   genreAnchors: Map<string, Position>;
+  genreZoneBounds: Map<string, { yMin: number; yMax: number }>; // Vertical bounds per genre (mobile)
   applyCohesionForce: () => void; // Gradually pull scattered books back toward clusters
 }
 
@@ -81,25 +83,34 @@ const GENRE_ZONES_DESKTOP: { xCenter: number; yCenter: number; radius: number }[
   { xCenter: 82, yCenter: 65, radius: 6 },   // Inner-right lower
 ];
 
-// Mobile/Tablet zones - vertically stacked single-column layout to prevent horizontal overlap
-// Each zone gets its own vertical band with much larger gaps
-const generateMobileZones = (startYPercent: number): { xCenter: number; yCenter: number; radius: number }[] => {
-  const rowGap = 35; // Much larger gap between rows to prevent cluster overlap
-  return [
-    // Single column layout - all centered, vertically stacked
-    { xCenter: 50, yCenter: startYPercent, radius: 8 },
-    { xCenter: 50, yCenter: startYPercent + rowGap, radius: 8 },
-    { xCenter: 50, yCenter: startYPercent + rowGap * 2, radius: 8 },
-    { xCenter: 50, yCenter: startYPercent + rowGap * 3, radius: 8 },
-    { xCenter: 50, yCenter: startYPercent + rowGap * 4, radius: 8 },
-    { xCenter: 50, yCenter: startYPercent + rowGap * 5, radius: 8 },
-    { xCenter: 50, yCenter: startYPercent + rowGap * 6, radius: 8 },
-    { xCenter: 50, yCenter: startYPercent + rowGap * 7, radius: 8 },
-    { xCenter: 50, yCenter: startYPercent + rowGap * 8, radius: 8 },
-    { xCenter: 50, yCenter: startYPercent + rowGap * 9, radius: 8 },
-    { xCenter: 50, yCenter: startYPercent + rowGap * 10, radius: 8 },
-    { xCenter: 50, yCenter: startYPercent + rowGap * 11, radius: 8 },
-  ];
+// Mobile zones - each zone represents a strict vertical band
+// Books CANNOT leave their band - this prevents constellation overlap
+interface MobileZone {
+  xCenter: number;
+  yCenter: number;
+  yMin: number; // Hard upper bound for books in this zone
+  yMax: number; // Hard lower bound for books in this zone
+  radius: number;
+}
+
+const generateMobileZones = (startYPercent: number, numGenres: number): MobileZone[] => {
+  // Calculate band height based on number of genres
+  // Each genre gets an equal vertical slice
+  const bandHeight = Math.max(20, 80 / Math.max(1, numGenres)); // At least 20% per band
+  const zones: MobileZone[] = [];
+  
+  for (let i = 0; i < Math.max(12, numGenres); i++) {
+    const yCenter = startYPercent + (i * bandHeight) + (bandHeight / 2);
+    zones.push({
+      xCenter: 50,
+      yCenter,
+      yMin: startYPercent + (i * bandHeight) + 2, // 2% padding at top
+      yMax: startYPercent + ((i + 1) * bandHeight) - 2, // 2% padding at bottom
+      radius: 6,
+    });
+  }
+  
+  return zones;
 };
 
 export function useGenreClusteredPositions(
@@ -135,13 +146,7 @@ export function useGenreClusteredPositions(
     return 12;
   }, []);
 
-  const zones = useMemo(() => 
-    isMobile ? generateMobileZones(mobileStartY) : GENRE_ZONES_DESKTOP, 
-    [isMobile, mobileStartY]
-  );
-  const minSpacing = isMobile ? 5 : 1.5; // Much larger gap on mobile to prevent overlap
-
-  // Group items by genre
+  // Group items by genre (must come before zones calculation)
   const genreGroups = useMemo(() => {
     const groups: Record<string, CloudItem[]> = {};
     items.forEach(item => {
@@ -151,6 +156,14 @@ export function useGenreClusteredPositions(
     });
     return groups;
   }, [items]);
+
+  const numGenres = Object.keys(genreGroups).length;
+  
+  const zones = useMemo(() => 
+    isMobile ? generateMobileZones(mobileStartY, numGenres) : GENRE_ZONES_DESKTOP.map(z => ({ ...z, yMin: 0, yMax: 100 })), 
+    [isMobile, mobileStartY, numGenres]
+  );
+  const minSpacing = isMobile ? 5 : 1.5; // Much larger gap on mobile to prevent overlap
 
   // Assign zones to genres - ensure each genre gets a unique zone
   const genreZoneAssignments = useMemo(() => {
@@ -186,46 +199,81 @@ export function useGenreClusteredPositions(
   }, [minSpacing]);
 
   // Position items around their genre's anchor point (but not ON the anchor)
+  // On mobile, strictly enforce vertical zone bounds
   const positionItemsAroundAnchor = useCallback((
     zoneItems: CloudItem[],
     anchor: { x: number; y: number },
     maxRadius: number,
-    anchorExclusionRadius: number // Keep items away from anchor center
+    anchorExclusionRadius: number, // Keep items away from anchor center
+    zoneBounds?: { yMin: number; yMax: number } // Mobile only - strict vertical limits
   ): PositionedItem[] => {
     const positioned: PositionedItem[] = [];
     
     // Stronger edge margins on mobile to prevent cutoff
-    const safeMarginX = isMobile ? 18 : 8; // Increased from 12 to 18 for mobile
-    const safeMarginY = isMobile ? 6 : 4;
+    const safeMarginX = isMobile ? 15 : 8;
+    const safeMarginY = isMobile ? 3 : 4;
     
     zoneItems.forEach((item, idx) => {
       const displayText = item.enriched_answer || item.answer;
       const size = estimateItemSize(displayText, isMobile);
       
-      // Place books in a tighter ring around anchor on mobile (since zones are more separated)
-      const angle = (idx * 137.5 * Math.PI) / 180; // Golden angle
-      const minDistance = anchorExclusionRadius + 1;
-      // On mobile, keep books closer to their anchor since zones are well-separated
-      const mobileRadius = isMobile ? Math.min(maxRadius * 0.7, minDistance + idx * 1.5) : Math.min(maxRadius, minDistance + idx * 2);
-      const distance = mobileRadius;
-      
-      let pos: Position = {
-        x: anchor.x + Math.cos(angle) * distance,
-        y: anchor.y + Math.sin(angle) * distance * 0.8 // Slightly compress vertically
-      };
-      
-      // Clamp to safe bounds - stronger edge avoidance
-      pos.x = clamp(pos.x, size.w / 2 + safeMarginX, 100 - size.w / 2 - safeMarginX);
-      pos.y = clamp(pos.y, size.h / 2 + safeMarginY, 100 - size.h / 2 - safeMarginY);
-      
-      positioned.push({
-        id: item.id,
-        genre: item.genre,
-        position: pos,
-        size,
-        anchorX: anchor.x,
-        anchorY: anchor.y
-      });
+      if (isMobile && zoneBounds) {
+        // MOBILE: Grid-based layout within strict zone bounds
+        // Books are arranged in rows below the anchor, never crossing zone boundaries
+        const booksPerRow = 2;
+        const row = Math.floor(idx / booksPerRow);
+        const col = idx % booksPerRow;
+        
+        // Vertical: start below anchor, stack rows downward within zone
+        const rowHeight = size.h + 3; // Item height + spacing
+        const startY = anchor.y + anchorExclusionRadius + 2; // Start below anchor
+        let y = startY + (row * rowHeight);
+        
+        // Horizontal: alternate left/right of center
+        const horizontalSpread = 25; // How far left/right from center
+        let x: number;
+        if (booksPerRow <= 1) {
+          x = 50;
+        } else {
+          x = col === 0 ? (50 - horizontalSpread + (row % 2) * 8) : (50 + horizontalSpread - (row % 2) * 8);
+        }
+        
+        // Strict clamp to zone bounds
+        y = clamp(y, zoneBounds.yMin + size.h / 2 + anchorExclusionRadius + 2, zoneBounds.yMax - size.h / 2 - safeMarginY);
+        x = clamp(x, size.w / 2 + safeMarginX, 100 - size.w / 2 - safeMarginX);
+        
+        positioned.push({
+          id: item.id,
+          genre: item.genre,
+          position: { x, y },
+          size,
+          anchorX: anchor.x,
+          anchorY: anchor.y,
+          zoneBounds
+        });
+      } else {
+        // DESKTOP: Ring layout around anchor
+        const angle = (idx * 137.5 * Math.PI) / 180; // Golden angle
+        const minDistance = anchorExclusionRadius + 2;
+        const distance = Math.min(maxRadius, minDistance + idx * 2);
+        
+        let pos: Position = {
+          x: anchor.x + Math.cos(angle) * distance,
+          y: anchor.y + Math.sin(angle) * distance * 0.8
+        };
+        
+        pos.x = clamp(pos.x, size.w / 2 + safeMarginX, 100 - size.w / 2 - safeMarginX);
+        pos.y = clamp(pos.y, size.h / 2 + safeMarginY, 100 - size.h / 2 - safeMarginY);
+        
+        positioned.push({
+          id: item.id,
+          genre: item.genre,
+          position: pos,
+          size,
+          anchorX: anchor.x,
+          anchorY: anchor.y
+        });
+      }
     });
     
     return positioned;
@@ -298,11 +346,15 @@ export function useGenreClusteredPositions(
         }
       }
       
-      // Second pass: Resolve item-to-item collisions with stronger push
+      // Second pass: Resolve item-to-item collisions
+      // On mobile, only resolve within same genre (zones don't overlap)
       for (let i = 0; i < resolved.length; i++) {
         for (let j = i + 1; j < resolved.length; j++) {
           const a = resolved[i];
           const b = resolved[j];
+          
+          // On mobile, skip collision between different genres (they're in separate zones)
+          if (isMobile && a.genre !== b.genre) continue;
           
           if (checkOverlap(a, b)) {
             hasCollision = true;
@@ -312,7 +364,7 @@ export function useGenreClusteredPositions(
             
             if (dx === 0 && dy === 0) {
               dx = (Math.random() - 0.5) * 8;
-              dy = (Math.random() - 0.5) * 8;
+              dy = (Math.random() - 0.5) * 4; // Less vertical randomness on mobile
             }
             
             const dist = Math.sqrt(dx * dx + dy * dy) || 1;
@@ -320,7 +372,8 @@ export function useGenreClusteredPositions(
             // Stronger push when items are very close
             const overlapFactor = 1.5 + (2 / (dist + 0.3));
             const pushX = (dx / dist) * basePushStrength * overlapFactor;
-            const pushY = (dy / dist) * basePushStrength * overlapFactor;
+            // On mobile, prefer horizontal push to stay within zone bounds
+            const pushY = isMobile ? (dy / dist) * basePushStrength * overlapFactor * 0.3 : (dy / dist) * basePushStrength * overlapFactor;
             
             // Check if pushing toward edge - if so, push the other item more
             const aAtLeftEdge = a.position.x < edgeZone;
@@ -344,6 +397,7 @@ export function useGenreClusteredPositions(
       }
       
       // Third pass: Push items away from their anchor (exclusion zone around star/label)
+      // And enforce strict zone bounds on mobile
       for (const item of resolved) {
         const anchor = item.genre ? anchors.get(item.genre) : null;
         if (anchor) {
@@ -351,17 +405,30 @@ export function useGenreClusteredPositions(
           const dyToAnchor = item.position.y - anchor.y;
           const distToAnchor = Math.sqrt(dxToAnchor * dxToAnchor + dyToAnchor * dyToAnchor);
           
-          // If too close to anchor, push away
+          // If too close to anchor, push away (prefer pushing down on mobile)
           if (distToAnchor < anchorExclusionRadius && distToAnchor > 0.1) {
             const pushAway = (anchorExclusionRadius - distToAnchor) * 0.6;
             item.position.x += (dxToAnchor / distToAnchor) * pushAway;
-            item.position.y += (dyToAnchor / distToAnchor) * pushAway;
+            // On mobile, always push items downward from anchor
+            if (isMobile) {
+              item.position.y = Math.max(item.position.y, anchor.y + anchorExclusionRadius + 1);
+            } else {
+              item.position.y += (dyToAnchor / distToAnchor) * pushAway;
+            }
           }
         }
         
-        // Final clamp to safe bounds
+        // Final clamp - on mobile, use strict zone bounds
         item.position.x = clamp(item.position.x, item.size.w / 2 + safeMarginX, 100 - item.size.w / 2 - safeMarginX);
-        item.position.y = clamp(item.position.y, item.size.h / 2 + safeMarginY, 100 - item.size.h / 2 - safeMarginY);
+        
+        if (isMobile && item.zoneBounds) {
+          // Strict zone bounds on mobile - NEVER cross into another constellation
+          const anchor = item.genre ? anchors.get(item.genre) : null;
+          const minY = anchor ? anchor.y + anchorExclusionRadius + 1 : item.zoneBounds.yMin + item.size.h / 2;
+          item.position.y = clamp(item.position.y, minY, item.zoneBounds.yMax - item.size.h / 2 - 1);
+        } else {
+          item.position.y = clamp(item.position.y, item.size.h / 2 + safeMarginY, 100 - item.size.h / 2 - safeMarginY);
+        }
       }
       
       // Early exit if well-separated
@@ -402,22 +469,22 @@ export function useGenreClusteredPositions(
     });
 
     // STEP 2: Position books around their genre's anchor (not on top of it)
+    // On mobile, pass strict zone bounds to prevent cross-constellation overlap
     let allPositioned: PositionedItem[] = [];
-    const bookClusterRadius = isMobile ? 18 : 15;
-    const anchorExclusionRadius = isMobile ? 6 : 5; // Keep books away from star/label
-    const bookOffsetY = isMobile ? 5 : 6; // Books start slightly below anchor
+    const bookClusterRadius = isMobile ? 12 : 15;
+    const anchorExclusionRadius = isMobile ? 4 : 5; // Keep books away from star/label
     
     Object.entries(genreGroups).forEach(([genre, groupItems]) => {
       const anchor = anchors.get(genre);
       if (!anchor) return;
       
-      // Book clustering center is offset below the anchor
-      const bookAnchor = {
-        x: anchor.x,
-        y: Math.min(92, anchor.y + bookOffsetY)
-      };
+      const zoneIdx = genreZoneAssignments.get(genre) || 0;
+      const zone = zones[zoneIdx] as MobileZone;
       
-      const positioned = positionItemsAroundAnchor(groupItems, bookAnchor, bookClusterRadius, anchorExclusionRadius);
+      // Get zone bounds for mobile strict clamping
+      const zoneBounds = isMobile && zone ? { yMin: zone.yMin, yMax: zone.yMax } : undefined;
+      
+      const positioned = positionItemsAroundAnchor(groupItems, anchor, bookClusterRadius, anchorExclusionRadius, zoneBounds);
       allPositioned = [...allPositioned, ...positioned];
     });
 
@@ -503,5 +570,20 @@ export function useGenreClusteredPositions(
     return () => clearInterval(interval);
   }, [applyCohesionForce]);
 
-  return { positions, genreAnchors, applyCohesionForce };
+  // Build zone bounds map for external use
+  const genreZoneBounds = useMemo(() => {
+    const bounds = new Map<string, { yMin: number; yMax: number }>();
+    if (isMobile) {
+      Object.keys(genreGroups).forEach(genre => {
+        const zoneIdx = genreZoneAssignments.get(genre) || 0;
+        const zone = zones[zoneIdx] as MobileZone;
+        if (zone) {
+          bounds.set(genre, { yMin: zone.yMin, yMax: zone.yMax });
+        }
+      });
+    }
+    return bounds;
+  }, [genreGroups, genreZoneAssignments, zones, isMobile]);
+
+  return { positions, genreAnchors, genreZoneBounds, applyCohesionForce };
 }

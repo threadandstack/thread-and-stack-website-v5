@@ -316,7 +316,7 @@ export default function FictionFavoritesPage() {
   const aggregatedFavorites = aggregateByCluster(favorites);
   
   // Use genre-clustered positioning - books of the same genre cluster together
-  const { positions: autoPositions, genreAnchors: autoGenreAnchors } = useGenreClusteredPositions(aggregatedFavorites, {
+  const { positions: autoPositions, genreAnchors: autoGenreAnchors, genreZoneBounds } = useGenreClusteredPositions(aggregatedFavorites, {
     mobileHeaderHeightPx: 420 // Larger value to ensure constellations start well below input
   });
   
