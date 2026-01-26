@@ -316,7 +316,7 @@ export default function FictionFavoritesPage() {
   const aggregatedFavorites = aggregateByCluster(favorites);
   
   // Use genre-clustered positioning - books of the same genre cluster together
-  const { positions: autoPositions, genreAnchors: autoGenreAnchors, genreZoneBounds, genreCount } = useGenreClusteredPositions(aggregatedFavorites, {
+  const { positions: autoPositions, genreAnchors: autoGenreAnchors, genreZoneBounds, genreCount, itemTilts } = useGenreClusteredPositions(aggregatedFavorites, {
     mobileHeaderHeightPx: 420 // Larger value to ensure constellations start well below input
   });
   
@@ -413,6 +413,7 @@ export default function FictionFavoritesPage() {
         const isNew = item.id === newItemId;
         const displayText = item.enriched_answer || item.answer;
         const genreColor = item.genre ? getGenreColor(item.genre) : undefined;
+        const tilt = itemTilts.get(item.id) || 0;
         
         return (
           <FictionCloudItem
@@ -424,6 +425,7 @@ export default function FictionFavoritesPage() {
             count={item.count}
             position={pos}
             genreColor={genreColor}
+            tilt={tilt}
             onClick={() => setSelectedBook({ 
               title: item.answer, 
               clusterKey: item.cluster_key,

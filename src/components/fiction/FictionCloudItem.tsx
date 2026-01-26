@@ -10,6 +10,7 @@ interface FictionCloudItemProps {
   count: number;
   position: { x: number; y: number };
   genreColor?: string; // HSL color from constellation
+  tilt?: number; // Rotation in degrees for avoiding overlaps
   onClick: () => void;
   onPositionChange?: (id: string, newPosition: { x: number; y: number }) => void;
 }
@@ -104,6 +105,7 @@ export function FictionCloudItem({
   count,
   position,
   genreColor,
+  tilt = 0,
   onClick,
   onPositionChange
 }: FictionCloudItemProps) {
@@ -221,7 +223,7 @@ export function FictionCloudItem({
       style={{
         left: `${position.x + visualOffsetX}%`,
         top: `${position.y + visualOffsetY}%`,
-        transform: 'translate(-50%, -50%)',
+        transform: `translate(-50%, -50%) rotate(${isDragEnabled ? 0 : tilt}deg)`,
         zIndex: isDragEnabled ? 100 : isNew ? 50 : 10,
         backgroundColor: colors.background,
         borderWidth: 2,
