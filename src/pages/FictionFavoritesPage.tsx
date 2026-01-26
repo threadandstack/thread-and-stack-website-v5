@@ -632,17 +632,21 @@ export default function FictionFavoritesPage() {
           {/* Cloud zone - relative container for positioned items with calculated height */}
           {favorites.length > 0 && (() => {
             // Use genreCount from the positioning hook for accurate height calculation
-            // Each genre needs ~40vh for full circular clock-face layout with comfortable spacing
-            const calculatedHeight = Math.max(100, genreCount * 40);
+            // Mobile needs MUCH more physical space per genre to keep clusters truly circular.
+            // Requirement: increase per-genre band height from ~40vh → minimum 120vh.
+            // Also scale aggressively with dense genres (10–30 books) to avoid row overlaps.
+            const maxGenreSize = Math.max(1, ...Array.from(genreBookCounts.values()));
+            const perGenreVh = Math.min(320, Math.max(120, maxGenreSize * 10));
+            const calculatedHeight = Math.max(100, genreCount * perGenreVh);
             // Get sorted genres from the zone bounds (already popularity-sorted by the hook)
             const sortedGenres = Array.from(genreZoneBounds.keys());
             return (
             <div 
               className="relative mt-4"
               style={{ 
-                // Height based on number of genres - each genre gets 40vh for full circular layout
+                // Height based on number of genres - each genre gets a large vertical band
                 height: `${calculatedHeight}vh`,
-                minHeight: `${Math.max(600, genreCount * 320)}px`
+                minHeight: `${Math.max(600, Math.round(genreCount * (320 * (perGenreVh / 40))))}px`
               }}
             >
               {/* DEBUG: Zone boundaries visualization */}

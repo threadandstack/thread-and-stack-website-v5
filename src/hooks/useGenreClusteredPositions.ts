@@ -49,15 +49,16 @@ const estimateItemSize = (text: string, isMobile: boolean): Size => {
   const textLen = (text?.length ?? 0) + 4; // Account for emojis/padding
   
   // Calculate width based on text - no max truncation
-  const charWidth = isMobile ? 7 : 7.5;
-  const basePadding = isMobile ? 32 : 40;
+  // Mobile: keep pills narrower so collisions are solvable within 0–100% X bounds.
+  const charWidth = isMobile ? 6.1 : 7.5;
+  const basePadding = isMobile ? 26 : 40;
   const calculatedWidth = basePadding + textLen * charWidth;
   
   // Reasonable limits but generous enough for most titles
-  const maxWidthPx = isMobile ? 180 : 280; // Slightly narrower on mobile to help edge spacing
-  const minWidthPx = isMobile ? 80 : 100;
+  const maxWidthPx = isMobile ? 140 : 280;
+  const minWidthPx = isMobile ? 70 : 100;
   const widthPx = clamp(calculatedWidth, minWidthPx, maxWidthPx);
-  const heightPx = isMobile ? 36 : 38;
+  const heightPx = isMobile ? 34 : 38;
 
   return {
     w: (widthPx / Math.max(1, vw)) * 100,
@@ -218,7 +219,11 @@ export function useGenreClusteredPositions(
     isMobile ? generateMobileZones(mobileStartY, numGenres) : GENRE_ZONES_DESKTOP.map(z => ({ ...z, yMin: 0, yMax: 100 })), 
     [isMobile, mobileStartY, numGenres]
   );
-  const minSpacing = isMobile ? 1.5 : 1.5; // 1.5% vh minimum gap between items
+
+  // Mobile needs dramatically more separation to avoid the "horizontal row" collapse.
+  // Positions are 0–100 (% of container). X maps to viewport width; Y maps to container height.
+  const minSpacing = isMobile ? 2.5 : 1.5;
+  const minRowHorizontalSpacing = isMobile ? 15 : 0; // 15% of screen width (user requirement)
 
   // Assign zones to genres - ensure each genre gets a unique zone
   const genreZoneAssignments = useMemo(() => {
@@ -248,10 +253,18 @@ export function useGenreClusteredPositions(
 
   // Check overlap between two items
   const checkOverlap = useCallback((a: PositionedItem, b: PositionedItem): boolean => {
-    const overlapX = Math.abs(a.position.x - b.position.x) < (a.size.w / 2 + b.size.w / 2 + minSpacing);
-    const overlapY = Math.abs(a.position.y - b.position.y) < (a.size.h / 2 + b.size.h / 2 + minSpacing);
+    const dy = Math.abs(a.position.y - b.position.y);
+    const overlapY = dy < (a.size.h / 2 + b.size.h / 2 + minSpacing);
+
+    // If two items are on the same visual "row" (overlapping in Y), enforce a hard
+    // minimum horizontal spacing to prevent row clustering.
+    const requiredXGap = overlapY && minRowHorizontalSpacing > 0
+      ? Math.max(a.size.w / 2 + b.size.w / 2 + minSpacing, minRowHorizontalSpacing)
+      : (a.size.w / 2 + b.size.w / 2 + minSpacing);
+
+    const overlapX = Math.abs(a.position.x - b.position.x) < requiredXGap;
     return overlapX && overlapY;
-  }, [minSpacing]);
+  }, [minSpacing, minRowHorizontalSpacing]);
 
   // ==========================================================================
   // TRUE CIRCULAR CLOCK-FACE DISTRIBUTION
@@ -273,24 +286,34 @@ export function useGenreClusteredPositions(
     
     if (itemCount === 0) return positioned;
     
-    // ========== 4-TIER RING SYSTEM ==========
-    const RING_DISTANCES = [0.40, 0.60, 0.80, 0.95];
-    
-    // ========== RADIUS SCALING FOR DENSE GENRES ==========
-    let radiusScale: number;
-    if (itemCount <= 3) {
-      radiusScale = 0.85;
-    } else if (itemCount <= 6) {
-      radiusScale = 1.0;
-    } else if (itemCount <= 10) {
-      radiusScale = 1.3;
-    } else if (itemCount <= 15) {
-      radiusScale = 1.6;
-    } else if (itemCount <= 20) {
-      radiusScale = 1.9;
-    } else {
-      radiusScale = 2.2 + (itemCount - 20) * 0.05;
-    }
+
+    // Desktop: 4-ring distribution
+    const DESKTOP_RING_FRACTIONS = [0.40, 0.60, 0.80, 0.95];
+
+    // Mobile: 5 rings with explicit slot counts and a 60° offset between rings
+    // Ring 1 = 3 slots, Ring 2 = 6, Ring 3 = 9, Ring 4 = 12, Ring 5 = 15
+    const MOBILE_RING_SLOT_COUNTS = [3, 6, 9, 12, 15];
+    const MOBILE_RING_FRACTIONS = [0.26, 0.42, 0.58, 0.74, 0.90];
+    const MOBILE_RING_OFFSET_DEGREES = 60;
+
+    // User requirement: for mobile dense genres (9+ books), use a 4.0× radius multiplier.
+    // IMPORTANT: Apply this to baseMaxRadius (not maxSafeRadius) so the multiplier actually matters.
+    const getRadiusScale = (n: number) => {
+      if (isMobile) {
+        if (n >= 9) return 4.0;
+        if (n >= 6) return 3.0;
+        if (n >= 4) return 2.2;
+        return 1.6;
+      }
+      if (n <= 3) return 0.85;
+      if (n <= 6) return 1.0;
+      if (n <= 10) return 1.3;
+      if (n <= 15) return 1.6;
+      if (n <= 20) return 1.9;
+      return 2.2 + (n - 20) * 0.05;
+    };
+
+    const radiusScale = getRadiusScale(itemCount);
     
     // Minimal margin from absolute screen edge
     const edgeMargin = 2;
@@ -301,20 +324,42 @@ export function useGenreClusteredPositions(
       const halfW = size.w / 2;
       const halfH = size.h / 2;
       
-      // ========== UNIQUE ANGLE FOR EACH BOOK ==========
-      // Evenly distribute all books around 360° (0° = 12 o'clock / up)
-      const angleDegrees = (idx / itemCount) * 360;
+      // ========== ANGLE + RING ASSIGNMENT ==========
+      let angleDegrees: number;
+      let ringFraction: number;
+      let ringIndex: number;
+
+      if (isMobile) {
+        const totalSlots = MOBILE_RING_SLOT_COUNTS.reduce((a, b) => a + b, 0);
+        const wrappedIdx = idx % totalSlots;
+
+        let remaining = wrappedIdx;
+        ringIndex = 0;
+        for (let r = 0; r < MOBILE_RING_SLOT_COUNTS.length; r++) {
+          if (remaining < MOBILE_RING_SLOT_COUNTS[r]) {
+            ringIndex = r;
+            break;
+          }
+          remaining -= MOBILE_RING_SLOT_COUNTS[r];
+        }
+
+        const slotsInRing = MOBILE_RING_SLOT_COUNTS[ringIndex];
+        const slotIndex = remaining;
+
+        angleDegrees = (slotIndex / slotsInRing) * 360 + ringIndex * MOBILE_RING_OFFSET_DEGREES;
+        ringFraction = MOBILE_RING_FRACTIONS[ringIndex];
+      } else {
+        angleDegrees = (idx / itemCount) * 360;
+        const ringPattern = [0, 2, 1, 3];
+        ringIndex = ringPattern[idx % 4];
+        ringFraction = DESKTOP_RING_FRACTIONS[ringIndex];
+      }
+
       const angleRad = (angleDegrees * Math.PI) / 180;
-      
+
       // Unit vector for this angle (0° = up = -Y in screen coords)
-      const sinA = Math.sin(angleRad); // X component
-      const cosA = Math.cos(angleRad); // Y component (inverted for screen)
-      
-      // ========== ALTERNATING RING PATTERN ==========
-      // [0,2,1,3] ensures consecutive angles are on different rings
-      const ringPattern = [0, 2, 1, 3];
-      const ringIndex = ringPattern[idx % 4];
-      const ringFraction = RING_DISTANCES[ringIndex];
+      const sinA = Math.sin(angleRad);
+      const cosA = Math.cos(angleRad);
       
       if (isMobile && zoneBounds) {
         // ========== MOBILE: PRESERVE CIRCULAR PATTERN ==========
@@ -345,14 +390,15 @@ export function useGenreClusteredPositions(
           maxSafeRadius = Math.min(maxSafeRadius, maxRadiusForY);
         }
         
-        // Clamp to reasonable bounds
-        maxSafeRadius = clamp(maxSafeRadius, 5, 50);
-        
-        // Apply ring fraction and scaling
-        const desiredRadius = maxSafeRadius * ringFraction * radiusScale;
-        
-        // Use the smaller of desired vs max safe (preserves circular pattern)
-        const actualRadius = Math.min(desiredRadius, maxSafeRadius * 0.95);
+        // NOTE: Scaling relative to maxSafeRadius causes outer rings to collapse to the boundary
+        // (and visually form rows). Instead, scale baseMaxRadius and cap per-angle by maxSafeRadius.
+        maxSafeRadius = clamp(maxSafeRadius, 5, 55);
+
+        const targetMaxRadius = baseMaxRadius * radiusScale;
+        const maxAllowedRadius = Math.min(targetMaxRadius, maxSafeRadius * 0.98);
+
+        const minDistance = anchorExclusionRadius + 2;
+        const actualRadius = clamp(maxAllowedRadius * ringFraction, minDistance, maxAllowedRadius);
         
         // Calculate final position using SINGLE radius (true circle)
         const x = anchor.x + sinA * actualRadius;
@@ -434,8 +480,8 @@ export function useGenreClusteredPositions(
       position: { ...item.position } 
     }));
     
-    const iterations = 100;
-    const basePushStrength = isMobile ? 3 : 2;
+    const iterations = isMobile ? 180 : 100;
+    const basePushStrength = isMobile ? 7 : 2;
     
     // CRITICAL: Edge pushback should ONLY happen at TRUE viewport boundaries
     // Within zones, items should use the FULL available space
@@ -529,8 +575,10 @@ export function useGenreClusteredPositions(
             // Stronger push when items are very close
             const overlapFactor = 1.5 + (2 / (dist + 0.3));
             const pushX = (dx / dist) * basePushStrength * overlapFactor;
-            // On mobile, prefer horizontal push to stay within zone bounds
-            const pushY = isMobile ? (dy / dist) * basePushStrength * overlapFactor * 0.3 : (dy / dist) * basePushStrength * overlapFactor;
+            // On mobile, allow strong vertical separation now that zones have far more physical height.
+            const pushY = isMobile
+              ? (dy / dist) * basePushStrength * overlapFactor * 0.85
+              : (dy / dist) * basePushStrength * overlapFactor;
             
             // SYMMETRIC collision resolution - equal weights for both items
             // No edge bias - let items spread naturally in both directions
