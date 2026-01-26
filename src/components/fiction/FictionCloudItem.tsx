@@ -36,23 +36,27 @@ export function FictionCloudItem({
 
   return (
     <motion.button
+      layout
+      layoutId={id}
       initial={isNew ? { 
         opacity: 0, 
         scale: 0.5,
-        x: "50vw",
-        y: "50vh"
+        left: "50%",
+        top: "50%"
       } : { opacity: 0, scale: 0.8 }}
       animate={{ 
         opacity: 1, 
         scale: 1,
-        x: 0,
+        left: `${position.x}%`,
+        top: `${position.y}%`,
         y: [0, -floatAnim.yAmount, 0, floatAnim.yAmount / 2, 0],
       }}
       exit={{ opacity: 0, scale: 0.8 }}
       transition={{ 
         opacity: { duration: 0.5 },
         scale: { duration: isNew ? 1.2 : 0.5, type: "spring", bounce: 0.3 },
-        x: { duration: isNew ? 1.2 : 0.5 },
+        left: { duration: 0.8, type: "spring", bounce: 0.2 },
+        top: { duration: 0.8, type: "spring", bounce: 0.2 },
         y: { 
           duration: floatAnim.duration,
           repeat: Infinity,
@@ -65,17 +69,15 @@ export function FictionCloudItem({
         absolute px-4 py-2 rounded-full text-left
         ${isCluster ? 'bg-accent/10 border border-accent/20' : 'bg-muted/50 border border-border/50'}
         ${isNew ? 'ring-2 ring-accent ring-offset-2 ring-offset-background' : ''}
-        shadow-sm hover:shadow-md hover:scale-105 transition-all cursor-pointer
-        max-w-[200px] md:max-w-[280px]
+        shadow-sm hover:shadow-md hover:scale-105 transition-shadow cursor-pointer
+        max-w-[180px] md:max-w-[240px] whitespace-nowrap
       `}
       style={{
-        left: `${position.x}%`,
-        top: `${position.y}%`,
         transform: 'translate(-50%, -50%)',
         zIndex: isNew ? 50 : 10
       }}
     >
-      <span className="text-xs md:text-sm font-medium line-clamp-2">
+      <span className="text-xs md:text-sm font-medium truncate block">
         {displayText}
       </span>
       {isCluster && isFirst && clusterCount > 1 && (
