@@ -24,6 +24,7 @@ export type Database = {
           device_type: string | null
           emojis: string | null
           enriched_answer: string | null
+          genre: string | null
           id: string
           is_repeat_visitor: boolean | null
           timezone: string | null
@@ -38,6 +39,7 @@ export type Database = {
           device_type?: string | null
           emojis?: string | null
           enriched_answer?: string | null
+          genre?: string | null
           id?: string
           is_repeat_visitor?: boolean | null
           timezone?: string | null
@@ -52,6 +54,7 @@ export type Database = {
           device_type?: string | null
           emojis?: string | null
           enriched_answer?: string | null
+          genre?: string | null
           id?: string
           is_repeat_visitor?: boolean | null
           timezone?: string | null

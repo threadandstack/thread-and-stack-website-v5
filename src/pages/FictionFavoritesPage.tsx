@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { motion, AnimatePresence } from "framer-motion";
@@ -8,6 +8,7 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { FictionCloudItem } from "@/components/fiction/FictionCloudItem";
 import { FictionDetailModal } from "@/components/fiction/FictionDetailModal";
+import { ConstellationLabels } from "@/components/fiction/ConstellationLabels";
 import { AddedCountBadge } from "@/components/fiction/AddedCountBadge";
 import { FictionTagInput } from "@/components/fiction/FictionTagInput";
 import { StarryBackdrop } from "@/components/fiction/StarryBackdrop";
@@ -22,6 +23,7 @@ interface FictionFavorite {
   enriched_answer: string | null;
   emojis: string | null;
   cluster_key: string | null;
+  genre: string | null;
   created_at: string;
 }
 
@@ -257,6 +259,17 @@ export default function FictionFavoritesPage() {
   
   // Use collision-aware positioning with aggregated items
   const positions = useCloudPositions(aggregatedFavorites);
+  
+  // Calculate genre counts for constellation labels
+  const genreCounts = useMemo(() => {
+    const counts = new Map<string, number>();
+    favorites.forEach(item => {
+      if (item.genre) {
+        counts.set(item.genre, (counts.get(item.genre) || 0) + 1);
+      }
+    });
+    return counts;
+  }, [favorites]);
 
   // Render cloud items helper
   const renderCloudItems = () => (
@@ -296,6 +309,9 @@ export default function FictionFavoritesPage() {
 
         {/* Added count badge */}
         <AddedCountBadge count={addedCount} show={showAddedBadge} />
+
+        {/* Constellation labels - curved genre names */}
+        <ConstellationLabels genreCounts={genreCounts} minCount={3} />
 
         {/* Full-page cloud container */}
         <div className="absolute inset-0 overflow-hidden">
