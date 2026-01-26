@@ -5,9 +5,7 @@ interface FictionCloudItemProps {
   displayText: string;
   clusterKey: string;
   isNew: boolean;
-  isCluster: boolean;
-  clusterCount: number;
-  isFirst: boolean;
+  count: number;
   position: { x: number; y: number };
   onClick: () => void;
 }
@@ -54,18 +52,43 @@ const getPositionBasedColors = (yPercent: number) => {
   }
 };
 
+// Get badge color based on count - progresses through a spectrum as popularity increases
+const getCountBadgeColor = (count: number): { bg: string; text: string } => {
+  if (count <= 1) {
+    return { bg: '', text: '' }; // No badge
+  } else if (count === 2) {
+    // Blue - just getting started
+    return { bg: 'hsl(217, 91%, 60%)', text: 'hsl(0, 0%, 100%)' };
+  } else if (count === 3) {
+    // Purple - gaining traction
+    return { bg: 'hsl(271, 81%, 56%)', text: 'hsl(0, 0%, 100%)' };
+  } else if (count === 4) {
+    // Crimson - popular
+    return { bg: 'hsl(348, 83%, 47%)', text: 'hsl(0, 0%, 100%)' };
+  } else if (count === 5) {
+    // Pink - very popular
+    return { bg: 'hsl(330, 81%, 60%)', text: 'hsl(0, 0%, 100%)' };
+  } else if (count >= 6 && count < 10) {
+    // Hot pink/magenta - super popular
+    return { bg: 'hsl(322, 93%, 58%)', text: 'hsl(0, 0%, 100%)' };
+  } else {
+    // Golden yellow - legendary status
+    return { bg: 'hsl(45, 93%, 58%)', text: 'hsl(0, 0%, 15%)' };
+  }
+};
+
 export function FictionCloudItem({
   id,
   displayText,
   isNew,
-  isCluster,
-  clusterCount,
-  isFirst,
+  count,
   position,
   onClick
 }: FictionCloudItemProps) {
   const floatAnim = getFloatAnimation(id);
   const colors = getPositionBasedColors(position.y);
+  const badgeColors = getCountBadgeColor(count);
+  const showBadge = count > 1;
 
   return (
     <motion.button
@@ -115,9 +138,15 @@ export function FictionCloudItem({
       <span className="text-xs md:text-sm font-medium truncate block">
         {displayText}
       </span>
-      {isCluster && isFirst && clusterCount > 1 && (
-        <span className="absolute -top-2 -right-2 bg-accent text-accent-foreground text-xs px-2 py-0.5 rounded-full">
-          {clusterCount}
+      {showBadge && (
+        <span 
+          className="absolute -top-2 -right-2 text-xs px-2 py-0.5 rounded-full font-semibold shadow-sm"
+          style={{
+            backgroundColor: badgeColors.bg,
+            color: badgeColors.text,
+          }}
+        >
+          {count}
         </span>
       )}
     </motion.button>
