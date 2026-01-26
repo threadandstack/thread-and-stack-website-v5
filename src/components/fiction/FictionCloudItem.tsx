@@ -22,6 +22,30 @@ const getFloatAnimation = (id: string) => {
   return { duration, delay, yAmount };
 };
 
+// Calculate color based on vertical position for contrast against gradient
+// Top of page = darker gradient, so lighter text
+// Bottom of page = lighter gradient, so darker text
+const getPositionBasedColors = (yPercent: number) => {
+  // Normalize y to 0-1 range (0 = top, 1 = bottom)
+  const normalized = Math.max(0, Math.min(100, yPercent)) / 100;
+  
+  // Background: lighter at top (more visible against dark), darker at bottom
+  const bgLightness = 95 - (normalized * 40); // 95% at top, 55% at bottom
+  const bgAlpha = 0.85 + (normalized * 0.1); // slightly more opaque at bottom
+  
+  // Text: lighter at top, darker at bottom
+  const textLightness = 100 - (normalized * 80); // 100% (white) at top, 20% (dark) at bottom
+  
+  // Border: adapt similarly
+  const borderAlpha = 0.3 + (normalized * 0.3);
+  
+  return {
+    background: `hsla(234, 30%, ${bgLightness}%, ${bgAlpha})`,
+    text: `hsl(234, 20%, ${textLightness}%)`,
+    border: `hsla(234, 50%, ${50 + (1 - normalized) * 30}%, ${borderAlpha})`,
+  };
+};
+
 export function FictionCloudItem({
   id,
   displayText,
@@ -33,6 +57,7 @@ export function FictionCloudItem({
   onClick
 }: FictionCloudItemProps) {
   const floatAnim = getFloatAnimation(id);
+  const colors = getPositionBasedColors(position.y);
 
   return (
     <motion.button
@@ -67,14 +92,18 @@ export function FictionCloudItem({
       onClick={onClick}
       className={`
         absolute px-4 py-2 rounded-full text-left
-        ${isCluster ? 'bg-accent/10 border border-accent/20' : 'bg-muted/50 border border-border/50'}
-        ${isNew ? 'ring-2 ring-accent ring-offset-2 ring-offset-background' : ''}
-        shadow-sm hover:shadow-md hover:scale-105 transition-shadow cursor-pointer
+        ${isNew ? 'ring-2 ring-accent ring-offset-2 ring-offset-transparent' : ''}
+        shadow-md hover:shadow-lg hover:scale-105 transition-all cursor-pointer
         max-w-[180px] md:max-w-[240px] whitespace-nowrap
       `}
       style={{
         transform: 'translate(-50%, -50%)',
-        zIndex: isNew ? 50 : 10
+        zIndex: isNew ? 50 : 10,
+        backgroundColor: colors.background,
+        borderWidth: 1,
+        borderStyle: 'solid',
+        borderColor: colors.border,
+        color: colors.text,
       }}
     >
       <span className="text-xs md:text-sm font-medium truncate block">
