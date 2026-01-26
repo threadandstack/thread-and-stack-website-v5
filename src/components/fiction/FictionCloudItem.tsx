@@ -25,14 +25,16 @@ const getFloatAnimation = (id: string) => {
   return { duration, delay, yAmount };
 };
 
-// Parse HSL color and generate themed colors for book pills
+// Parse HSL color and generate celestial styling for book pills
+// White fill with colored outline and glow effect
 const getGenreBasedColors = (genreColor?: string) => {
   if (!genreColor) {
-    // Fallback for uncategorized items
+    // Fallback for uncategorized items - subtle indigo glow
     return {
-      background: `hsla(234, 40%, 25%, 0.9)`,
-      text: `hsl(0, 0%, 98%)`,
-      border: `hsla(234, 50%, 50%, 0.5)`,
+      background: `hsla(0, 0%, 100%, 0.95)`,
+      text: `hsl(234, 50%, 20%)`,
+      border: `hsl(234, 70%, 70%)`,
+      glow: `0 0 12px hsla(234, 70%, 70%, 0.5), 0 0 24px hsla(234, 70%, 70%, 0.3)`,
     };
   }
   
@@ -40,21 +42,22 @@ const getGenreBasedColors = (genreColor?: string) => {
   const match = genreColor.match(/hsl\((\d+),\s*(\d+)%,\s*(\d+)%\)/);
   if (!match) {
     return {
-      background: `hsla(234, 40%, 25%, 0.9)`,
-      text: `hsl(0, 0%, 98%)`,
-      border: `hsla(234, 50%, 50%, 0.5)`,
+      background: `hsla(0, 0%, 100%, 0.95)`,
+      text: `hsl(234, 50%, 20%)`,
+      border: `hsl(234, 70%, 70%)`,
+      glow: `0 0 12px hsla(234, 70%, 70%, 0.5), 0 0 24px hsla(234, 70%, 70%, 0.3)`,
     };
   }
   
   const hue = parseInt(match[1]);
   const saturation = parseInt(match[2]);
   
-  // Create a darker, more saturated version for the background
-  // and ensure good contrast with white text
+  // Celestial styling: white fill, colored outline, colored glow
   return {
-    background: `hsla(${hue}, ${Math.min(saturation + 15, 85)}%, 28%, 0.92)`,
-    text: `hsl(${hue}, 20%, 98%)`,
-    border: `hsla(${hue}, ${saturation}%, 55%, 0.6)`,
+    background: `hsla(0, 0%, 100%, 0.95)`,
+    text: `hsl(${hue}, ${Math.min(saturation + 20, 90)}%, 25%)`,
+    border: `hsl(${hue}, ${saturation}%, 65%)`,
+    glow: `0 0 10px hsla(${hue}, ${saturation}%, 70%, 0.6), 0 0 20px hsla(${hue}, ${saturation}%, 70%, 0.35), 0 0 30px hsla(0, 0%, 100%, 0.2)`,
   };
 };
 
@@ -188,7 +191,7 @@ export function FictionCloudItem({
         absolute px-3 py-1.5 rounded-full text-center select-none whitespace-nowrap
         ${isNew ? 'ring-2 ring-accent ring-offset-2 ring-offset-transparent' : ''}
         ${isDragEnabled ? 'ring-2 ring-white/50 cursor-grabbing' : isHolding ? 'cursor-grab' : 'cursor-pointer'}
-        shadow-md hover:shadow-lg transition-shadow
+        transition-all duration-200
       `}
       style={{
         left: `${position.x + visualOffsetX}%`,
@@ -196,10 +199,11 @@ export function FictionCloudItem({
         transform: 'translate(-50%, -50%)',
         zIndex: isDragEnabled ? 100 : isNew ? 50 : 10,
         backgroundColor: colors.background,
-        borderWidth: 1,
+        borderWidth: 2,
         borderStyle: 'solid',
-        borderColor: isDragEnabled ? 'hsla(0, 0%, 100%, 0.6)' : colors.border,
+        borderColor: isDragEnabled ? 'hsla(0, 0%, 100%, 0.8)' : colors.border,
         color: colors.text,
+        boxShadow: isDragEnabled ? `0 0 20px hsla(0, 0%, 100%, 0.8)` : colors.glow,
         touchAction: 'none',
         // Pause float animation while dragging or holding
         animation: isDragEnabled || isHolding || isDragging ? 'none' : `float-${Math.abs(id.charCodeAt(0) % 3)} ${floatAnim.duration}s ease-in-out ${floatAnim.delay}s infinite`,

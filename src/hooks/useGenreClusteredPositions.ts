@@ -34,6 +34,7 @@ interface UseGenreClusteredOptions {
 interface GenreClusterResult {
   positions: Map<string, Position>;
   genreAnchors: Map<string, Position>;
+  applyCohesionForce: () => void; // Gradually pull scattered books back toward clusters
 }
 
 const clamp = (n: number, min: number, max: number) => Math.max(min, Math.min(max, n));
@@ -384,5 +385,68 @@ export function useGenreClusteredPositions(
     setGenreAnchors(anchors); // Use the fixed anchors, not recalculated ones
   }, [items, genreGroups, genreZoneAssignments, zones, positionItemsAroundAnchor, resolveCollisions, isMobile, positions.size]);
 
-  return { positions, genreAnchors };
+  // Cohesion force: gradually pull scattered books back toward their cluster centers
+  const applyCohesionForce = useCallback(() => {
+    if (positions.size === 0 || genreAnchors.size === 0) return;
+    
+    const cohesionStrength = 0.08; // Gentle pull (8% of distance per tick)
+    const maxDrift = isMobile ? 25 : 20; // Only apply if book has drifted beyond this distance
+    const bookOffsetY = isMobile ? 5 : 6;
+    
+    const newPositions = new Map<string, Position>();
+    let hasChanges = false;
+    
+    items.forEach(item => {
+      const currentPos = positions.get(item.id);
+      if (!currentPos || !item.genre) {
+        if (currentPos) newPositions.set(item.id, currentPos);
+        return;
+      }
+      
+      const anchor = genreAnchors.get(item.genre);
+      if (!anchor) {
+        newPositions.set(item.id, currentPos);
+        return;
+      }
+      
+      // Book cluster center is offset below anchor
+      const clusterCenter = {
+        x: anchor.x,
+        y: Math.min(92, anchor.y + bookOffsetY)
+      };
+      
+      const dx = currentPos.x - clusterCenter.x;
+      const dy = currentPos.y - clusterCenter.y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      
+      // Only apply cohesion if book has drifted beyond threshold
+      if (distance > maxDrift) {
+        hasChanges = true;
+        const pullX = dx * cohesionStrength;
+        const pullY = dy * cohesionStrength;
+        
+        newPositions.set(item.id, {
+          x: clamp(currentPos.x - pullX, 10, 90),
+          y: clamp(currentPos.y - pullY, 8, 92)
+        });
+      } else {
+        newPositions.set(item.id, currentPos);
+      }
+    });
+    
+    if (hasChanges) {
+      setPositions(newPositions);
+    }
+  }, [items, positions, genreAnchors, isMobile]);
+
+  // Set up periodic cohesion force
+  useEffect(() => {
+    const interval = setInterval(() => {
+      applyCohesionForce();
+    }, 3000); // Apply every 3 seconds
+    
+    return () => clearInterval(interval);
+  }, [applyCohesionForce]);
+
+  return { positions, genreAnchors, applyCohesionForce };
 }
