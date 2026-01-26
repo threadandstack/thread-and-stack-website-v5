@@ -93,47 +93,54 @@ interface MobileZone {
   radius: number;
 }
 
-// Clock-face positioning order: 6, 12, 3, 9, 2, 11, 7, 5, then continue pattern
-// Angles in degrees (0 = 3 o'clock, 90 = 6 o'clock, etc.)
+// Clock-face positioning order: 6, 12, 3, 9, 2, 11, 7, 5, then continue.
+// Angles in degrees where 0° = 12 o'clock, 90° = 3 o'clock, 180° = 6 o'clock, 270° = 9 o'clock.
 const CLOCK_POSITIONS = [
-  180,  // 6 o'clock (bottom)
-  0,    // 12 o'clock (top)
-  90,   // 3 o'clock (right)
-  270,  // 9 o'clock (left)
-  30,   // 2 o'clock
-  330,  // 11 o'clock
-  210,  // 7 o'clock
-  150,  // 5 o'clock
-  // Second ring (slightly inward)
-  60,   // 1 o'clock
-  300,  // 10 o'clock
-  240,  // 8 o'clock
-  120,  // 4 o'clock
-  // Third ring fills gaps
-  15, 45, 75, 105, 135, 165, 195, 225, 255, 285, 315, 345
+  180, // 6 o'clock
+  0,   // 12 o'clock
+  90,  // 3 o'clock
+  270, // 9 o'clock
+  60,  // 2 o'clock
+  330, // 11 o'clock
+  210, // 7 o'clock
+  150, // 5 o'clock
+  // Next: fill remaining main hours
+  30,  // 1 o'clock
+  300, // 10 o'clock
+  240, // 8 o'clock
+  120, // 4 o'clock
+  // Then fill the gaps as needed
+  15, 45, 75, 105, 135, 165, 195, 225, 255, 285, 315, 345,
 ];
 
 const generateMobileZones = (startYPercent: number, numGenres: number): MobileZone[] => {
-  // Each genre gets a fixed-height band - generous spacing to fit books in clock pattern
-  const minBandHeight = 22; // At least 22% per genre band for clock layout
-  const bandHeight = Math.max(minBandHeight, 100 / Math.max(1, numGenres));
+  // IMPORTANT: Positions are % within the cloud container (0–100).
+  // Zone bounds MUST stay within 0–100. We create *physical* room by increasing
+  // the container height (vh/px), not by letting yMin/yMax exceed 100.
+  const zoneCount = Math.max(1, numGenres);
+  const bandHeight = 100 / zoneCount;
   const zones: MobileZone[] = [];
-  
-  for (let i = 0; i < Math.max(12, numGenres); i++) {
-    const yMin = i * bandHeight;
-    const yMax = (i + 1) * bandHeight;
-    // Star at exact center of zone
-    const yCenter = yMin + (bandHeight / 2);
-    
+
+  for (let i = 0; i < zoneCount; i++) {
+    const yMinRaw = i * bandHeight;
+    const yMaxRaw = (i + 1) * bandHeight;
+
+    // Padding inside the band, proportional but capped.
+    const padding = Math.min(1.2, bandHeight * 0.2);
+    const yMin = clamp(yMinRaw + padding, 0, 100);
+    const yMax = clamp(yMaxRaw - padding, 0, 100);
+
+    const yCenter = clamp(yMinRaw + bandHeight / 2, 2, 98);
+
     zones.push({
       xCenter: 50,
-      yCenter: Math.min(yCenter, 95),
-      yMin: yMin + 1,
-      yMax: Math.min(yMax - 1, 98),
+      yCenter,
+      yMin,
+      yMax: Math.max(yMax, yMin + 0.5),
       radius: 6,
     });
   }
-  
+
   return zones;
 };
 
@@ -266,8 +273,9 @@ export function useGenreClusteredPositions(
         const radiusY = baseRadiusY * ringScale;
         
         // Calculate position from center (anchor is at center of zone)
+        // (0° = 12 o'clock => above the star)
         let x = anchor.x + Math.sin(angleRad) * radiusX;
-        let y = anchor.y + Math.cos(angleRad) * radiusY;
+        let y = anchor.y - Math.cos(angleRad) * radiusY;
         
         // Clamp to zone bounds
         x = clamp(x, size.w / 2 + safeMarginX, 100 - size.w / 2 - safeMarginX);
