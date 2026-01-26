@@ -267,13 +267,26 @@ export function useGenreClusteredPositions(
     // Generate clock positions based on number of items for even distribution
     const clockPositions = isMobile ? generateClockPositions(zoneItems.length) : CLOCK_POSITIONS_DESKTOP;
     
+    // RANDOMIZED DISTANCE TIERS: Break radius into 4 chunks (25% each)
+    // Constraint: if last item was in tier 4 (75-100%), next can't be in tier 4
+    // This creates visual variety and prevents clustering at same distance
+    const distanceTiers = [0.35, 0.55, 0.75, 0.95]; // Center points of each tier
+    let lastTierIndex = -1;
+    
+    // Seeded random based on item ID for consistency across re-renders
+    const seededRandom = (seed: string, index: number): number => {
+      const hash = seed.split('').reduce((a, b, i) => {
+        return ((a << 5) - a + b.charCodeAt(0) + index * 17) & 0x7fffffff;
+      }, 0);
+      return (hash % 1000) / 1000;
+    };
+    
     zoneItems.forEach((item, idx) => {
       const displayText = item.enriched_answer || item.answer;
       const size = estimateItemSize(displayText, isMobile);
       
       if (isMobile && zoneBounds) {
-        // MOBILE: TRUE CIRCULAR clock-face positioning
-        // Each item gets its own angle for even distribution around the star
+        // MOBILE: TRUE CIRCULAR clock-face positioning with RANDOMIZED DISTANCE
         const clockAngle = clockPositions[idx % clockPositions.length];
         const angleRad = (clockAngle * Math.PI) / 180;
         
@@ -286,23 +299,36 @@ export function useGenreClusteredPositions(
         const roomBelow = zoneBounds.yMax - anchor.y;
         
         // Use the smaller of the two to ensure full circle fits
-        const baseRadiusY = Math.min(roomAbove, roomBelow) - 3; // Leave padding
-        const baseRadiusX = Math.min(35, zoneWidth / 3);
+        const maxRadiusY = Math.min(roomAbove, roomBelow) - 4;
+        const maxRadiusX = Math.min(38, zoneWidth / 2.5);
         
-        // For many items, use multiple concentric rings
-        const itemsPerRing = 8;
-        const ringIndex = Math.floor(idx / itemsPerRing);
-        const ringScale = 1 - (ringIndex * 0.3); // Each ring 30% smaller radius
+        // RANDOMIZED TIER SELECTION with constraint
+        // Pick a random tier, but if last was tier 4 (outer), exclude it
+        let availableTiers = [0, 1, 2, 3];
+        if (lastTierIndex === 3) {
+          availableTiers = [0, 1, 2]; // Exclude outer tier if last was outer
+        }
         
-        const radiusX = Math.max(8, baseRadiusX * ringScale);
-        const radiusY = Math.max(6, baseRadiusY * ringScale);
+        // Use seeded random for consistent positioning
+        const rand = seededRandom(item.id, idx);
+        const tierIndex = availableTiers[Math.floor(rand * availableTiers.length)];
+        lastTierIndex = tierIndex;
+        
+        // Get the tier's distance multiplier (0.35, 0.55, 0.75, or 0.95)
+        const tierMultiplier = distanceTiers[tierIndex];
+        
+        // Add small jitter within the tier (±10% of tier range)
+        const jitter = (seededRandom(item.id, idx + 100) - 0.5) * 0.15;
+        const finalMultiplier = clamp(tierMultiplier + jitter, 0.25, 1.0);
+        
+        const radiusX = Math.max(10, maxRadiusX * finalMultiplier);
+        const radiusY = Math.max(8, maxRadiusY * finalMultiplier);
         
         // Calculate position using standard circle formula
-        // sin for X (0° = top, positive right), -cos for Y (0° = top, negative = up)
         let x = anchor.x + Math.sin(angleRad) * radiusX;
         let y = anchor.y - Math.cos(angleRad) * radiusY;
         
-        // Gentle clamp to zone bounds (but allow circular distribution)
+        // Gentle clamp to zone bounds
         x = clamp(x, size.w / 2 + safeMarginX, 100 - size.w / 2 - safeMarginX);
         y = clamp(y, zoneBounds.yMin + size.h / 2 + 1, zoneBounds.yMax - size.h / 2 - 1);
         
@@ -316,10 +342,24 @@ export function useGenreClusteredPositions(
           zoneBounds
         });
       } else {
-        // DESKTOP: Ring layout around anchor using golden angle
+        // DESKTOP: Ring layout with randomized distance tiers
         const angle = (idx * 137.5 * Math.PI) / 180;
+        
+        // Apply same tier logic for desktop
+        let availableTiers = [0, 1, 2, 3];
+        if (lastTierIndex === 3) {
+          availableTiers = [0, 1, 2];
+        }
+        const rand = seededRandom(item.id, idx);
+        const tierIndex = availableTiers[Math.floor(rand * availableTiers.length)];
+        lastTierIndex = tierIndex;
+        
+        const tierMultiplier = distanceTiers[tierIndex];
+        const jitter = (seededRandom(item.id, idx + 100) - 0.5) * 0.1;
+        const finalMultiplier = clamp(tierMultiplier + jitter, 0.3, 1.0);
+        
         const minDistance = anchorExclusionRadius + 2;
-        const distance = Math.min(maxRadius, minDistance + idx * 2);
+        const distance = minDistance + (maxRadius - minDistance) * finalMultiplier;
         
         let pos: Position = {
           x: anchor.x + Math.cos(angle) * distance,
