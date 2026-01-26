@@ -69,19 +69,22 @@ const estimateItemSize = (text: string, isMobile: boolean): Size => {
 // Zones are distributed across both sides of the central CTA
 // Compact vertical spacing to avoid large empty areas
 const GENRE_ZONES_DESKTOP: { xCenter: number; yCenter: number; radius: number }[] = [
-  // Upper band (visible in first viewport) - left side
-  { xCenter: 10, yCenter: 25, radius: 7 },   // Top-left
-  { xCenter: 10, yCenter: 50, radius: 7 },   // Mid-left  
-  { xCenter: 10, yCenter: 75, radius: 7 },   // Lower-left
-  // Upper band - right side
-  { xCenter: 90, yCenter: 25, radius: 7 },   // Top-right
-  { xCenter: 90, yCenter: 50, radius: 7 },   // Mid-right
-  { xCenter: 90, yCenter: 75, radius: 7 },   // Lower-right
-  // Additional zones closer to center if needed (staggered)
-  { xCenter: 18, yCenter: 35, radius: 6 },   // Inner-left upper
-  { xCenter: 18, yCenter: 65, radius: 6 },   // Inner-left lower
-  { xCenter: 82, yCenter: 35, radius: 6 },   // Inner-right upper
-  { xCenter: 82, yCenter: 65, radius: 6 },   // Inner-right lower
+  // IMPORTANT: anchors must not sit too close to the viewport edges,
+  // otherwise half the circle gets clamped and the cluster appears to "avoid" that side.
+  // These x values are chosen so clusters can expand left/right symmetrically.
+  // Left column
+  { xCenter: 22, yCenter: 25, radius: 7 },
+  { xCenter: 22, yCenter: 50, radius: 7 },
+  { xCenter: 22, yCenter: 75, radius: 7 },
+  // Right column
+  { xCenter: 78, yCenter: 25, radius: 7 },
+  { xCenter: 78, yCenter: 50, radius: 7 },
+  { xCenter: 78, yCenter: 75, radius: 7 },
+  // Inner (smaller) zones
+  { xCenter: 32, yCenter: 35, radius: 6 },
+  { xCenter: 32, yCenter: 65, radius: 6 },
+  { xCenter: 68, yCenter: 35, radius: 6 },
+  { xCenter: 68, yCenter: 65, radius: 6 },
 ];
 
 // Mobile zones - each zone represents a strict vertical band
@@ -263,7 +266,7 @@ export function useGenreClusteredPositions(
     
     // MINIMAL safe margins - only prevent going off-screen
     // Let items use the FULL available space within zones
-    const safeMarginX = isMobile ? 4 : 4;
+    const safeMarginX = isMobile ? 4 : 2;
     const safeMarginY = isMobile ? 1 : 2;
     
     // Generate clock positions based on number of items for even distribution
@@ -575,7 +578,8 @@ export function useGenreClusteredPositions(
     // Use popularity-sorted genres (most books → zone 0 at top)
     sortedGenresByPopularity.forEach((genre, idx) => {
       // Assign zones in order: most popular genre gets zone 0 (top)
-      const zone = zones[idx] || zones[zones.length - 1];
+      // NEVER fall back to the last zone (that concentrates genres on one side).
+      const zone = zones[idx % zones.length];
       
       // Anchor at center of its zone
       anchors.set(genre, {
@@ -596,7 +600,7 @@ export function useGenreClusteredPositions(
       if (!anchor || !groupItems) return;
       
       // Get zone for this genre's strict bounds
-      const zone = zones[idx] || zones[zones.length - 1];
+      const zone = zones[idx % zones.length];
       const zoneBounds = isMobile ? { yMin: zone.yMin, yMax: zone.yMax } : undefined;
       
       const positioned = positionItemsAroundAnchor(groupItems, anchor, bookClusterRadius, anchorExclusionRadius, zoneBounds);
