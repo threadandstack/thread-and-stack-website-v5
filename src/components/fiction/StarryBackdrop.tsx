@@ -9,22 +9,26 @@ interface Star {
   opacity: number;
   duration: number;
   delay: number;
+  color: "white" | "indigo";
 }
 
 export function StarryBackdrop() {
   const stars = useMemo(() => {
     const starArray: Star[] = [];
-    const starCount = 80;
+    const starCount = 120;
     
     for (let i = 0; i < starCount; i++) {
       starArray.push({
         id: i,
         x: Math.random() * 100,
         y: Math.random() * 100,
-        size: Math.random() * 2 + 1,
-        opacity: Math.random() * 0.5 + 0.2,
-        duration: Math.random() * 3 + 2,
-        delay: Math.random() * 2,
+        // Pixel-style stars: small integer sizes (2-4px)
+        size: Math.floor(Math.random() * 3) + 2,
+        opacity: Math.random() * 0.6 + 0.3,
+        duration: Math.random() * 4 + 3,
+        delay: Math.random() * 3,
+        // Mix of white and indigo stars
+        color: Math.random() > 0.4 ? "white" : "indigo",
       });
     }
     return starArray;
@@ -32,23 +36,51 @@ export function StarryBackdrop() {
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {/* Gradient overlay for depth */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-background/90" />
+      {/* Night sky gradient: deep indigo to lighter blue */}
+      <div 
+        className="absolute inset-0"
+        style={{
+          background: `linear-gradient(
+            180deg,
+            hsl(234 89% 8%) 0%,
+            hsl(234 70% 15%) 30%,
+            hsl(234 50% 25%) 60%,
+            hsl(220 60% 35%) 85%,
+            hsl(210 50% 45%) 100%
+          )`
+        }}
+      />
       
-      {/* Stars */}
+      {/* Subtle radial glow overlay */}
+      <div 
+        className="absolute inset-0"
+        style={{
+          background: `radial-gradient(
+            ellipse at 50% 30%,
+            hsla(234 89% 50% / 0.15) 0%,
+            transparent 60%
+          )`
+        }}
+      />
+      
+      {/* Pixel stars */}
       {stars.map((star) => (
         <motion.div
           key={star.id}
-          className="absolute rounded-full bg-accent/60"
+          className="absolute"
           style={{
             left: `${star.x}%`,
             top: `${star.y}%`,
             width: star.size,
             height: star.size,
+            backgroundColor: star.color === "white" 
+              ? `hsla(0 0% 100% / ${star.opacity})`
+              : `hsla(234 89% 70% / ${star.opacity})`,
+            // Pixel/crisp edges - no border-radius
+            imageRendering: "pixelated",
           }}
           animate={{
-            opacity: [star.opacity * 0.3, star.opacity, star.opacity * 0.3],
-            scale: [0.8, 1.2, 0.8],
+            opacity: [star.opacity * 0.4, star.opacity, star.opacity * 0.4],
           }}
           transition={{
             duration: star.duration,
@@ -59,9 +91,36 @@ export function StarryBackdrop() {
         />
       ))}
       
-      {/* Subtle glow spots */}
-      <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-accent/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-1/3 right-1/4 w-48 h-48 bg-primary/5 rounded-full blur-3xl" />
+      {/* Larger accent stars (still pixel-style) */}
+      {[...Array(8)].map((_, i) => (
+        <motion.div
+          key={`big-star-${i}`}
+          className="absolute"
+          style={{
+            left: `${10 + (i * 12) + Math.random() * 5}%`,
+            top: `${15 + Math.random() * 60}%`,
+            width: 4,
+            height: 4,
+            backgroundColor: i % 2 === 0 
+              ? "hsla(0 0% 100% / 0.9)"
+              : "hsla(234 89% 75% / 0.8)",
+          }}
+          animate={{
+            opacity: [0.5, 1, 0.5],
+            boxShadow: [
+              "0 0 0px hsla(234 89% 70% / 0)",
+              "0 0 8px hsla(234 89% 70% / 0.5)",
+              "0 0 0px hsla(234 89% 70% / 0)",
+            ],
+          }}
+          transition={{
+            duration: 2 + Math.random() * 2,
+            delay: Math.random() * 2,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      ))}
     </div>
   );
 }
