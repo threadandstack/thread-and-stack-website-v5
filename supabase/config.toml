@@ -17,3 +17,6 @@ verify_jwt = false
 
 [functions.og-blog]
 verify_jwt = false
+
+[functions.enrich-fiction]
+verify_jwt = false

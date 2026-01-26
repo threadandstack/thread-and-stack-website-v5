@@ -14,6 +14,33 @@ export type Database = {
   }
   public: {
     Tables: {
+      fiction_favorites: {
+        Row: {
+          answer: string
+          cluster_key: string | null
+          created_at: string
+          emojis: string | null
+          enriched_answer: string | null
+          id: string
+        }
+        Insert: {
+          answer: string
+          cluster_key?: string | null
+          created_at?: string
+          emojis?: string | null
+          enriched_answer?: string | null
+          id?: string
+        }
+        Update: {
+          answer?: string
+          cluster_key?: string | null
+          created_at?: string
+          emojis?: string | null
+          enriched_answer?: string | null
+          id?: string
+        }
+        Relationships: []
+      }
       leads: {
         Row: {
           created_at: string
