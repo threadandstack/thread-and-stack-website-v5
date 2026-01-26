@@ -94,23 +94,36 @@ interface MobileZone {
   radius: number;
 }
 
-// Clock-face positioning order: 6, 12, 3, 9, 2, 11, 7, 5, then continue.
+// Clock-face positioning order for MOBILE: prioritize positions BELOW the star
+// Since the star is in the upper portion of each zone, we have more room below.
+// Primary positions: 6 o'clock (directly below), then spread to 4, 5, 7, 8 (lower arc)
+// Secondary: 3, 9 (sides), then finally 12, 1, 2, 10, 11 (above - may get clamped)
 // Angles in degrees where 0° = 12 o'clock, 90° = 3 o'clock, 180° = 6 o'clock, 270° = 9 o'clock.
-const CLOCK_POSITIONS = [
-  180, // 6 o'clock
-  0,   // 12 o'clock
-  90,  // 3 o'clock
-  270, // 9 o'clock
+const CLOCK_POSITIONS_MOBILE = [
+  180, // 6 o'clock (directly below) - FIRST
+  150, // 5 o'clock (below-right)
+  210, // 7 o'clock (below-left)
+  120, // 4 o'clock (right-lower)
+  240, // 8 o'clock (left-lower)
+  90,  // 3 o'clock (right)
+  270, // 9 o'clock (left)
+  160, // between 5 and 6
+  200, // between 6 and 7
+  130, // between 4 and 5
+  230, // between 7 and 8
+  170, // closer to 6
+  190, // closer to 6
+  // Upper positions (may get clamped but included for large clusters)
   60,  // 2 o'clock
-  330, // 11 o'clock
-  210, // 7 o'clock
-  150, // 5 o'clock
-  // Next: fill remaining main hours
-  30,  // 1 o'clock
   300, // 10 o'clock
-  240, // 8 o'clock
-  120, // 4 o'clock
-  // Then fill the gaps as needed
+  30,  // 1 o'clock
+  330, // 11 o'clock
+  0,   // 12 o'clock (directly above - likely clamped)
+];
+
+// Desktop uses golden angle spiral - full circle distribution
+const CLOCK_POSITIONS_DESKTOP = [
+  180, 0, 90, 270, 60, 330, 210, 150, 30, 300, 240, 120,
   15, 45, 75, 105, 135, 165, 195, 225, 255, 285, 315, 345,
 ];
 
@@ -131,7 +144,9 @@ const generateMobileZones = (startYPercent: number, numGenres: number): MobileZo
     const yMin = clamp(yMinRaw + padding, 0, 100);
     const yMax = clamp(yMaxRaw - padding, 0, 100);
 
-    const yCenter = clamp(yMinRaw + bandHeight / 2, 2, 98);
+    // Position anchor in the UPPER THIRD of the zone
+    // This gives more room for books to spread BELOW the star (6 o'clock area)
+    const yCenter = clamp(yMinRaw + bandHeight * 0.3, 2, 98);
 
     zones.push({
       xCenter: 50,
@@ -257,9 +272,9 @@ export function useGenreClusteredPositions(
       const size = estimateItemSize(displayText, isMobile);
       
       if (isMobile && zoneBounds) {
-        // MOBILE: Clock-face positioning around centered star
-        // Use clock positions in order: 6, 12, 3, 9, 2, 11, 7, 5, etc.
-        const clockAngle = CLOCK_POSITIONS[idx % CLOCK_POSITIONS.length];
+        // MOBILE: Clock-face positioning - prioritize positions BELOW the star
+        // since the anchor is in the upper portion of each zone
+        const clockAngle = CLOCK_POSITIONS_MOBILE[idx % CLOCK_POSITIONS_MOBILE.length];
         const angleRad = (clockAngle * Math.PI) / 180;
         
         // Calculate zone dimensions to determine radius
