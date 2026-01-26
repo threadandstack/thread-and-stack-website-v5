@@ -81,7 +81,7 @@ export function FictionTagInput({ onSubmit, isSubmitting }: FictionTagInputProps
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.8 }}
-              className="inline-flex items-center gap-1 px-3 py-1 bg-accent/10 text-accent-foreground rounded-full text-sm font-medium"
+              className="inline-flex items-center gap-1 px-3 py-1 bg-accent text-accent-foreground rounded-full text-sm font-medium"
             >
               {tag}
               <button
@@ -90,7 +90,7 @@ export function FictionTagInput({ onSubmit, isSubmitting }: FictionTagInputProps
                   e.stopPropagation();
                   removeTag(index);
                 }}
-                className="hover:bg-accent/20 rounded-full p-0.5 transition-colors"
+                className="hover:bg-accent-foreground/20 rounded-full p-0.5 transition-colors"
               >
                 <X className="h-3 w-3" />
               </button>
