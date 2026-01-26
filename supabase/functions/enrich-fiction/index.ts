@@ -52,7 +52,8 @@ serve(async (req) => {
       }
     }
 
-    // Call AI to enrich the answer with emojis and generate a cluster key
+    // Call AI to enrich the answer with emojis only
+    // cluster_key is already set on insert - we don't want AI to override it
     // Retry logic for transient errors
     let response: Response | null = null;
     let lastError = "";
@@ -70,20 +71,22 @@ serve(async (req) => {
             messages: [
               {
                 role: "system",
-            content: `You enrich fiction book/story titles with emojis and generate cluster keys.
+            content: `You enrich fiction book/story titles with emojis.
 
 CRITICAL RULES:
-1. emojis: Return EXACTLY 2 emojis (no more, no less). Pick the 2 most iconic emojis representing the story's genre, themes, setting, or characters.
-2. cluster_key: A normalized, lowercase key for grouping similar works (e.g., "the great gatsby", "harry potter", "lord of the rings").
+1. Return EXACTLY 2 emojis (no more, no less)
+2. Pick the 2 most iconic emojis representing the story's genre, themes, setting, or characters
 
 Examples:
-- "1984" → emojis: "👁️📺", cluster_key: "1984"
-- "The Great Gatsby" → emojis: "🥂💚", cluster_key: "the great gatsby"
-- "Harry Potter" → emojis: "⚡🧙", cluster_key: "harry potter"`
+- "1984" → "👁️📺"
+- "The Great Gatsby" → "🥂💚"
+- "Harry Potter" → "⚡🧙"
+- "Pride and Prejudice" → "💕📜"
+- "The Hunger Games" → "🔥🏹"`
               },
               {
                 role: "user",
-                content: `Enrich this fiction title: "${answer}"`
+                content: `Return exactly 2 emojis for this fiction title: "${answer}"`
               }
             ],
             tools: [
@@ -91,20 +94,16 @@ Examples:
                 type: "function",
                 function: {
                   name: "enrich_fiction",
-                  description: "Enrich a fiction title with emojis and clustering info",
+                  description: "Return 2 emojis for a fiction title",
                   parameters: {
                     type: "object",
                     properties: {
                       emojis: {
                         type: "string",
                         description: "Exactly 2 emojis (e.g. '📚🔮'). Must be precisely 2 emoji characters, no spaces."
-                      },
-                      cluster_key: {
-                        type: "string",
-                        description: "Normalized lowercase key for grouping similar works"
                       }
                     },
-                    required: ["emojis", "cluster_key"],
+                    required: ["emojis"],
                     additionalProperties: false
                   }
                 }
@@ -167,20 +166,18 @@ Examples:
       console.log("AI enrichment failed after retries, using fallback values");
       
       const fallbackEmojis = "📚✨";
-      const fallbackClusterKey = answer.toLowerCase().trim().replace(/[^a-z0-9\s]/g, '').slice(0, 50);
 
       await supabase
         .from("fiction_favorites")
         .update({
           emojis: fallbackEmojis,
-          cluster_key: fallbackClusterKey,
           enriched_answer: `${fallbackEmojis} ${answer}`,
           ...metadataUpdate
         })
         .eq("id", id);
 
       return new Response(
-        JSON.stringify({ success: true, emojis: fallbackEmojis, cluster_key: fallbackClusterKey, fallback: true }),
+        JSON.stringify({ success: true, emojis: fallbackEmojis, fallback: true }),
         { headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
@@ -188,14 +185,12 @@ Examples:
     const data = await response.json();
     const toolCall = data.choices?.[0]?.message?.tool_calls?.[0];
     
-    let emojis = "📚";
-    let cluster_key = answer.toLowerCase().trim();
+    let emojis = "📚✨";
     
     if (toolCall?.function?.arguments) {
       try {
         const args = JSON.parse(toolCall.function.arguments);
         emojis = args.emojis || emojis;
-        cluster_key = args.cluster_key || cluster_key;
         
         // Ensure EXACTLY 2 emojis by extracting emoji characters and taking first 2
         const emojiRegex = /\p{Emoji_Presentation}|\p{Emoji}\uFE0F/gu;
@@ -212,11 +207,12 @@ Examples:
       }
     }
 
+    // Update only emojis and enriched_answer - DO NOT update cluster_key
+    // cluster_key is set on insert and should not be overwritten by AI
     const { error: updateError } = await supabase
       .from("fiction_favorites")
       .update({
         emojis,
-        cluster_key,
         enriched_answer: `${emojis} ${answer}`,
         ...metadataUpdate
       })
@@ -228,7 +224,7 @@ Examples:
     }
 
     return new Response(
-      JSON.stringify({ success: true, emojis, cluster_key, geo: geoData }),
+      JSON.stringify({ success: true, emojis, geo: geoData }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   } catch (e) {
