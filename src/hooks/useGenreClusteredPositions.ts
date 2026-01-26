@@ -267,10 +267,10 @@ export function useGenreClusteredPositions(
     // Generate clock positions based on number of items for even distribution
     const clockPositions = isMobile ? generateClockPositions(zoneItems.length) : CLOCK_POSITIONS_DESKTOP;
     
-    // RANDOMIZED DISTANCE TIERS: Break radius into 4 chunks (25% each)
-    // Constraint: if last item was in tier 4 (75-100%), next can't be in tier 4
-    // This creates visual variety and prevents clustering at same distance
-    const distanceTiers = [0.35, 0.55, 0.75, 0.95]; // Center points of each tier
+    // RANDOMIZED DISTANCE TIERS: Break radius into 4 chunks with DRAMATIC separation
+    // Tiers are spread apart for clear visual distinction
+    // Constraint: if last item was in tier 4 (outer), next can't be in tier 4
+    const distanceTiers = [0.30, 0.50, 0.72, 0.95]; // More spread between tiers
     let lastTierIndex = -1;
     
     // Seeded random based on item ID for consistency across re-renders
@@ -398,11 +398,11 @@ export function useGenreClusteredPositions(
       position: { ...item.position } 
     }));
     
-    const iterations = 150; // More iterations for thorough separation
-    const basePushStrength = isMobile ? 5 : 3; // Increased base push
-    const safeMarginX = isMobile ? 20 : 10; // Stronger edge margins
-    const safeMarginY = isMobile ? 8 : 5;
-    const edgeZone = isMobile ? 30 : 22; // Wider edge zone
+    const iterations = 100; // Reduced iterations - less aggressive pushing
+    const basePushStrength = isMobile ? 3 : 2; // Reduced push strength
+    const safeMarginX = isMobile ? 8 : 6; // Smaller edge margins - allow left side!
+    const safeMarginY = isMobile ? 4 : 3;
+    const edgeZone = isMobile ? 12 : 10; // Much smaller edge zone - was causing right-bias
     
     // Get max cluster size for scaling
     const maxClusterSize = Math.max(1, ...Array.from(clusterSizes.values()));
@@ -410,41 +410,41 @@ export function useGenreClusteredPositions(
     for (let iter = 0; iter < iterations; iter++) {
       let hasCollision = false;
       
-      // First pass: Push items away from edges - strength scales with cluster size
+      // First pass: SYMMETRIC edge avoidance - push away from BOTH edges equally
+      // No position.x < 50 / > 50 checks - treat left and right the same
       for (const item of resolved) {
         const clusterSize = clusterSizes.get(item.genre || '') || 1;
-        // Busier clusters push harder (1.0 to 2.5x multiplier)
-        const clusterMultiplier = 1 + ((clusterSize / maxClusterSize) * 1.5);
+        const clusterMultiplier = 1 + ((clusterSize / maxClusterSize) * 0.5); // Reduced multiplier
         
         const leftEdgeDist = item.position.x - safeMarginX;
         const rightEdgeDist = (100 - safeMarginX) - item.position.x;
         
-        // If too close to left edge, push right
-        if (leftEdgeDist < edgeZone && item.position.x < 50) {
-          const pushStrength = ((edgeZone - leftEdgeDist) / edgeZone) * 3 * clusterMultiplier;
+        // Push away from left edge - NO position check, just distance
+        if (leftEdgeDist < edgeZone) {
+          const pushStrength = ((edgeZone - leftEdgeDist) / edgeZone) * 1.5 * clusterMultiplier;
           item.position.x += pushStrength;
           hasCollision = true;
         }
         
-        // If too close to right edge, push left
-        if (rightEdgeDist < edgeZone && item.position.x > 50) {
-          const pushStrength = ((edgeZone - rightEdgeDist) / edgeZone) * 3 * clusterMultiplier;
+        // Push away from right edge - NO position check, just distance
+        if (rightEdgeDist < edgeZone) {
+          const pushStrength = ((edgeZone - rightEdgeDist) / edgeZone) * 1.5 * clusterMultiplier;
           item.position.x -= pushStrength;
           hasCollision = true;
         }
         
-        // Also check top/bottom edges
+        // Top/bottom edges - symmetric
         const topEdgeDist = item.position.y - safeMarginY;
         const bottomEdgeDist = (100 - safeMarginY) - item.position.y;
         
-        if (topEdgeDist < edgeZone * 0.5) {
-          const pushStrength = ((edgeZone * 0.5 - topEdgeDist) / (edgeZone * 0.5)) * 2;
+        if (topEdgeDist < edgeZone * 0.4) {
+          const pushStrength = ((edgeZone * 0.4 - topEdgeDist) / (edgeZone * 0.4)) * 1.5;
           item.position.y += pushStrength;
           hasCollision = true;
         }
         
-        if (bottomEdgeDist < edgeZone * 0.5) {
-          const pushStrength = ((edgeZone * 0.5 - bottomEdgeDist) / (edgeZone * 0.5)) * 2;
+        if (bottomEdgeDist < edgeZone * 0.4) {
+          const pushStrength = ((edgeZone * 0.4 - bottomEdgeDist) / (edgeZone * 0.4)) * 1.5;
           item.position.y -= pushStrength;
           hasCollision = true;
         }
@@ -479,18 +479,10 @@ export function useGenreClusteredPositions(
             // On mobile, prefer horizontal push to stay within zone bounds
             const pushY = isMobile ? (dy / dist) * basePushStrength * overlapFactor * 0.3 : (dy / dist) * basePushStrength * overlapFactor;
             
-            // Check if pushing toward edge - if so, push the other item more
-            const aAtLeftEdge = a.position.x < edgeZone;
-            const aAtRightEdge = a.position.x > (100 - edgeZone);
-            const bAtLeftEdge = b.position.x < edgeZone;
-            const bAtRightEdge = b.position.x > (100 - edgeZone);
-            
-            // Bias push away from edges - items near edges move less, others move more
-            let aWeight = 0.5;
-            let bWeight = 0.5;
-            
-            if (aAtLeftEdge || aAtRightEdge) { aWeight = 0.1; bWeight = 0.9; }
-            if (bAtLeftEdge || bAtRightEdge) { aWeight = 0.9; bWeight = 0.1; }
+            // SYMMETRIC collision resolution - equal weights for both items
+            // No edge bias - let items spread naturally in both directions
+            const aWeight = 0.5;
+            const bWeight = 0.5;
             
             a.position.x -= pushX * aWeight;
             a.position.y -= pushY * aWeight;
