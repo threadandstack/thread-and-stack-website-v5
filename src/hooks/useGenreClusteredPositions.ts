@@ -265,23 +265,55 @@ export function useGenreClusteredPositions(
   ): PositionedItem[] => {
     const positioned: PositionedItem[] = [];
     
-    // ADAPTIVE RADIUS based on genre size
-    // More books = larger radius to give them room to spread
+    // AGGRESSIVE ADAPTIVE RADIUS based on genre size
+    // Densely populated genres need MUCH more space
     const itemCount = zoneItems.length;
-    const radiusScale = 1 + Math.log2(Math.max(1, itemCount)) * 0.25; // 1 book=1x, 4 books=1.5x, 8 books=1.75x, 16 books=2x
+    
+    // EXTREME scaling for popular genres:
+    // 1-3 books: 1.0x (compact)
+    // 4-6 books: 1.4x 
+    // 7-10 books: 1.8x
+    // 11-15 books: 2.3x
+    // 16+ books: 2.8x+
+    let radiusScale: number;
+    if (itemCount <= 3) {
+      radiusScale = 1.0;
+    } else if (itemCount <= 6) {
+      radiusScale = 1.0 + (itemCount - 3) * 0.13; // 1.13 to 1.4
+    } else if (itemCount <= 10) {
+      radiusScale = 1.4 + (itemCount - 6) * 0.1; // 1.5 to 1.8
+    } else if (itemCount <= 15) {
+      radiusScale = 1.8 + (itemCount - 10) * 0.1; // 1.9 to 2.3
+    } else {
+      radiusScale = 2.3 + (itemCount - 15) * 0.1; // 2.4+
+    }
+    
     const adaptiveMaxRadius = baseMaxRadius * radiusScale;
     
     // ZERO horizontal margins - let items use full width
-    // Only the final clamp prevents going off-screen
-    const safeMarginX = 1; // Minimal - just prevent clipping
+    const safeMarginX = 1;
     const safeMarginY = isMobile ? 1 : 2;
     
-    // Generate clock positions based on number of items for even distribution
+    // Generate clock positions - use ALL 8 cardinal+diagonal for dense clusters
     const clockPositions = isMobile ? generateClockPositions(zoneItems.length) : CLOCK_POSITIONS_DESKTOP;
     
-    // FIXED DISTANCE TIERS with DRAMATIC separation
-    // Each tier is a fixed distance from anchor - no randomization for consistency
-    const distanceTiers = [0.35, 0.55, 0.78, 1.0]; // Clear visual rings
+    // DYNAMIC DISTANCE TIERS based on cluster density
+    // More items = more tiers for better distribution
+    // Tiers spread items across multiple "rings" around the star
+    let distanceTiers: number[];
+    if (itemCount <= 4) {
+      // Small cluster: 2 rings
+      distanceTiers = [0.45, 0.9];
+    } else if (itemCount <= 8) {
+      // Medium cluster: 3 rings
+      distanceTiers = [0.35, 0.65, 0.95];
+    } else if (itemCount <= 12) {
+      // Large cluster: 4 rings with wide spacing
+      distanceTiers = [0.28, 0.50, 0.72, 0.95];
+    } else {
+      // Very large cluster: 5 rings for maximum spread
+      distanceTiers = [0.22, 0.42, 0.60, 0.78, 0.96];
+    }
     
     // Assign items to tiers in round-robin for even distribution
     // This ensures items spread across all tiers, not bunched in one
