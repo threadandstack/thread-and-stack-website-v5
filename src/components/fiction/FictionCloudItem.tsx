@@ -10,9 +10,16 @@ interface FictionCloudItemProps {
   count: number;
   position: { x: number; y: number };
   genreColor?: string; // HSL color from constellation
+  spiralIndex?: number; // Position in spiral for z-index layering
   onClick: () => void;
   onPositionChange?: (id: string, newPosition: { x: number; y: number }) => void;
 }
+
+// Generate a deterministic rotation based on ID (-8° to +8°)
+const getRotationFromId = (id: string): number => {
+  const hash = id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  return ((hash % 17) - 8); // Range: -8 to +8 degrees
+};
 
 
 // Parse HSL color and generate celestial styling for book pills
@@ -104,6 +111,7 @@ export function FictionCloudItem({
   count,
   position,
   genreColor,
+  spiralIndex = 0,
   onClick,
   onPositionChange
 }: FictionCloudItemProps) {
@@ -112,6 +120,10 @@ export function FictionCloudItem({
   const badgeColors = getCountBadgeColor(count);
   const showBadge = count > 1;
   const popularityScale = getPopularityScale(count);
+  const rotation = getRotationFromId(id);
+  
+  // Z-index based on spiral position - later items layer on top
+  const baseZIndex = 10 + spiralIndex;
   
   const containerRef = useRef<HTMLDivElement>(null);
   const dragStartPos = useRef<{ x: number; y: number } | null>(null);
@@ -221,8 +233,8 @@ export function FictionCloudItem({
       style={{
         left: `${position.x + visualOffsetX}%`,
         top: `${position.y + visualOffsetY}%`,
-        transform: 'translate(-50%, -50%)',
-        zIndex: isDragEnabled ? 100 : isNew ? 50 : 10,
+        transform: `translate(-50%, -50%) rotate(${isDragEnabled ? 0 : rotation}deg)`,
+        zIndex: isDragEnabled ? 200 : isNew ? 150 : baseZIndex,
         backgroundColor: colors.background,
         borderWidth: 2,
         borderStyle: 'solid',
