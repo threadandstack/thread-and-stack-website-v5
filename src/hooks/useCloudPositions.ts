@@ -15,9 +15,9 @@ interface PositionedItem {
 // Approximate item dimensions in percentage of viewport
 const ITEM_WIDTH_DESKTOP = 12;
 const ITEM_HEIGHT_DESKTOP = 4;
-const ITEM_WIDTH_MOBILE = 28; // Wider on mobile (items take more relative space)
-const ITEM_HEIGHT_MOBILE = 5;
-const MIN_SPACING = 1.5;
+const ITEM_WIDTH_MOBILE = 35; // Wider on mobile (items take more relative space)
+const ITEM_HEIGHT_MOBILE = 6;
+const MIN_SPACING = 2;
 
 // Desktop edge zones (avoid center CTA and navigation)
 const DESKTOP_ZONES = [
@@ -38,24 +38,49 @@ const DESKTOP_ZONES = [
   { xMin: 60, xMax: 75, yMin: 82, yMax: 92 },
 ];
 
-// Mobile zones: Stack above and below the central CTA
+// Mobile/Tablet zones: Vertical stacking below the input
+// Items spread across the full width but stack vertically
 const MOBILE_ZONES = [
-  // Top zone (above CTA, below nav)
-  { xMin: 5, xMax: 70, yMin: 10, yMax: 18 },
-  { xMin: 30, xMax: 95, yMin: 18, yMax: 26 },
-  // Bottom zone (below CTA)
-  { xMin: 5, xMax: 70, yMin: 78, yMax: 86 },
-  { xMin: 30, xMax: 95, yMin: 86, yMax: 94 },
+  // Row 1 (closest to input)
+  { xMin: 5, xMax: 50, yMin: 3, yMax: 12 },
+  { xMin: 45, xMax: 95, yMin: 3, yMax: 12 },
+  // Row 2
+  { xMin: 3, xMax: 55, yMin: 12, yMax: 21 },
+  { xMin: 40, xMax: 97, yMin: 12, yMax: 21 },
+  // Row 3
+  { xMin: 5, xMax: 50, yMin: 21, yMax: 30 },
+  { xMin: 45, xMax: 95, yMin: 21, yMax: 30 },
+  // Row 4
+  { xMin: 3, xMax: 55, yMin: 30, yMax: 39 },
+  { xMin: 40, xMax: 97, yMin: 30, yMax: 39 },
+  // Row 5
+  { xMin: 5, xMax: 50, yMin: 39, yMax: 48 },
+  { xMin: 45, xMax: 95, yMin: 39, yMax: 48 },
+  // Row 6
+  { xMin: 3, xMax: 55, yMin: 48, yMax: 57 },
+  { xMin: 40, xMax: 97, yMin: 48, yMax: 57 },
+  // Row 7
+  { xMin: 5, xMax: 50, yMin: 57, yMax: 66 },
+  { xMin: 45, xMax: 95, yMin: 57, yMax: 66 },
+  // Row 8
+  { xMin: 3, xMax: 55, yMin: 66, yMax: 75 },
+  { xMin: 40, xMax: 97, yMin: 66, yMax: 75 },
+  // Row 9
+  { xMin: 5, xMax: 50, yMin: 75, yMax: 84 },
+  { xMin: 45, xMax: 95, yMin: 75, yMax: 84 },
+  // Row 10
+  { xMin: 3, xMax: 55, yMin: 84, yMax: 93 },
+  { xMin: 40, xMax: 97, yMin: 84, yMax: 93 },
 ];
 
-const getIsMobile = () => typeof window !== 'undefined' && window.innerWidth < 768;
+const getIsMobile = () => typeof window !== 'undefined' && window.innerWidth < 1024;
 
 const getEdgeZones = () => getIsMobile() ? MOBILE_ZONES : DESKTOP_ZONES;
 const getItemWidth = () => getIsMobile() ? ITEM_WIDTH_MOBILE : ITEM_WIDTH_DESKTOP;
 const getItemHeight = () => getIsMobile() ? ITEM_HEIGHT_MOBILE : ITEM_HEIGHT_DESKTOP;
 
 // Generate initial position for a cluster
-const getInitialPosition = (clusterKey: string, index: number): Position => {
+const getInitialPosition = (clusterKey: string, index: number, itemIndex: number): Position => {
   const hash = clusterKey.split('').reduce((a, b) => {
     a = ((a << 5) - a) + b.charCodeAt(0);
     return a & a;
@@ -65,7 +90,11 @@ const getInitialPosition = (clusterKey: string, index: number): Position => {
   const itemWidth = getItemWidth();
   const itemHeight = getItemHeight();
   
-  const zoneIndex = Math.abs(hash) % zones.length;
+  // Use itemIndex to distribute across zones sequentially on mobile
+  const isMobile = getIsMobile();
+  const zoneIndex = isMobile 
+    ? itemIndex % zones.length 
+    : Math.abs(hash) % zones.length;
   const zone = zones[zoneIndex];
   
   const xRange = zone.xMax - zone.xMin - itemWidth;
@@ -124,8 +153,8 @@ const resolveCollisions = (items: PositionedItem[]): PositionedItem[] => {
   if (items.length <= 1) return items;
   
   const resolved = items.map(item => ({ ...item, position: { ...item.position } }));
-  const iterations = 8;
-  const pushStrength = 2.5;
+  const iterations = 12;
+  const pushStrength = 3;
   
   for (let iter = 0; iter < iterations; iter++) {
     for (let i = 0; i < resolved.length; i++) {
@@ -206,12 +235,13 @@ export function useCloudPositions(items: CloudItem[]): Map<string, Position> {
   useEffect(() => {
     // Build positioned items with initial positions
     const allItems: PositionedItem[] = [];
+    let globalIndex = 0;
     
     Object.entries(clusteredItems).forEach(([clusterKey, clusterItems]) => {
       clusterItems.forEach((item, idx) => {
         // Check if we already have a position for this item
         const existingPos = positions.get(item.id);
-        const initialPos = existingPos || getInitialPosition(clusterKey, idx);
+        const initialPos = existingPos || getInitialPosition(clusterKey, idx, globalIndex);
         
         allItems.push({
           id: item.id,
@@ -219,6 +249,7 @@ export function useCloudPositions(items: CloudItem[]): Map<string, Position> {
           clusterIndex: idx,
           position: initialPos
         });
+        globalIndex++;
       });
     });
 
