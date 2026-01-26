@@ -502,11 +502,6 @@ export default function FictionFavoritesPage() {
                 <p>⭐️ If you enter a book that's already in the sky, it will add a +1 to it!</p>
               </div>
 
-              {favorites.length > 0 && (
-                <p className="text-muted-foreground/70 text-sm text-center mt-4">
-                  💡 Click any book title to learn more about it
-                </p>
-              )}
 
               {favorites.length === 0 && (
                 <p className="text-muted-foreground text-sm italic mt-6">
