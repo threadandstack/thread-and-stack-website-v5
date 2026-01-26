@@ -70,14 +70,16 @@ serve(async (req) => {
             messages: [
               {
                 role: "system",
-                content: `You are enriching fiction book/story titles with emojis and generating cluster keys.
-            
-Given a fiction title or description, return:
-1. emojis: EXACTLY 2 relevant emojis that represent the story's themes, genre, or mood. No more, no less.
-2. cluster_key: A normalized, lowercase key for grouping similar works (e.g., "sherlock holmes", "harry potter", "lord of the rings")
+            content: `You enrich fiction book/story titles with emojis and generate cluster keys.
 
-Be creative with emojis - consider the genre, setting, themes, characters.
-For cluster_key, extract the core work/series name to group variations together.`
+CRITICAL RULES:
+1. emojis: Return EXACTLY 2 emojis (no more, no less). Pick the 2 most iconic emojis representing the story's genre, themes, setting, or characters.
+2. cluster_key: A normalized, lowercase key for grouping similar works (e.g., "the great gatsby", "harry potter", "lord of the rings").
+
+Examples:
+- "1984" → emojis: "👁️📺", cluster_key: "1984"
+- "The Great Gatsby" → emojis: "🥂💚", cluster_key: "the great gatsby"
+- "Harry Potter" → emojis: "⚡🧙", cluster_key: "harry potter"`
               },
               {
                 role: "user",
@@ -95,7 +97,7 @@ For cluster_key, extract the core work/series name to group variations together.
                     properties: {
                       emojis: {
                         type: "string",
-                        description: "Exactly 2 emojis representing the story"
+                        description: "Exactly 2 emojis (e.g. '📚🔮'). Must be precisely 2 emoji characters, no spaces."
                       },
                       cluster_key: {
                         type: "string",
@@ -164,7 +166,7 @@ For cluster_key, extract the core work/series name to group variations together.
     if (!response || !response.ok) {
       console.log("AI enrichment failed after retries, using fallback values");
       
-      const fallbackEmojis = "📚";
+      const fallbackEmojis = "📚✨";
       const fallbackClusterKey = answer.toLowerCase().trim().replace(/[^a-z0-9\s]/g, '').slice(0, 50);
 
       await supabase
@@ -195,9 +197,15 @@ For cluster_key, extract the core work/series name to group variations together.
         emojis = args.emojis || emojis;
         cluster_key = args.cluster_key || cluster_key;
         
-        // Ensure max 2 emojis by taking first 8 characters (2 emojis = ~8 bytes)
-        if (emojis.length > 8) {
-          emojis = [...emojis].slice(0, 2).join('');
+        // Ensure EXACTLY 2 emojis by extracting emoji characters and taking first 2
+        const emojiRegex = /\p{Emoji_Presentation}|\p{Emoji}\uFE0F/gu;
+        const emojiMatches = emojis.match(emojiRegex) || [];
+        if (emojiMatches.length >= 2) {
+          emojis = emojiMatches.slice(0, 2).join('');
+        } else if (emojiMatches.length === 1) {
+          emojis = emojiMatches[0] + "📖"; // Pad with book emoji if only 1
+        } else {
+          emojis = "📚✨"; // Fallback if no emojis extracted
         }
       } catch (e) {
         console.error("Failed to parse tool call:", e);
