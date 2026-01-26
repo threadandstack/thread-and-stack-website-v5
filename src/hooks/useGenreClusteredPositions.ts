@@ -575,9 +575,11 @@ export function useGenreClusteredPositions(
             
             // Stronger push when items are very close
             const overlapFactor = 1.5 + (2 / (dist + 0.3));
+            
+            // BALANCED push - no horizontal preference
+            // Equal horizontal and vertical push to preserve diagonal cascade pattern
             const pushX = (dx / dist) * basePushStrength * overlapFactor;
-            // On mobile, prefer horizontal push to stay within zone bounds
-            const pushY = isMobile ? (dy / dist) * basePushStrength * overlapFactor * 0.3 : (dy / dist) * basePushStrength * overlapFactor;
+            const pushY = (dy / dist) * basePushStrength * overlapFactor;
             
             // SYMMETRIC collision resolution - equal weights for both items
             // No edge bias - let items spread naturally in both directions
