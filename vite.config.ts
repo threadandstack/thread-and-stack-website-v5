@@ -14,5 +14,7 @@ export default defineConfig(({ mode }) => ({
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
+    // Prevent duplicate React instances causing animation issues
+    dedupe: ["react", "react-dom", "react/jsx-runtime", "framer-motion"],
   },
 }));

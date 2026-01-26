@@ -302,11 +302,11 @@ export default function FictionFavoritesPage() {
   );
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen bg-background flex flex-col overflow-x-hidden">
       <Navigation variant="dark" />
       
       {/* DESKTOP LAYOUT - scrollable double-height experience */}
-      <main className="hidden lg:block flex-1 relative overflow-y-auto overflow-x-hidden">
+      <main className="hidden lg:block flex-1 relative overflow-hidden">
         {/* Double-height container for scrollable constellation space */}
         <div className="relative" style={{ height: '200vh' }}>
           {/* Starry backdrop - covers full scrollable area */}
