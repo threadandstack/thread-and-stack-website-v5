@@ -235,10 +235,12 @@ export function useGenreClusteredPositions(
   }, [isMobile]);
 
   // Resolve collisions with edge-aware pushing and anchor exclusion
+  // Edge avoidance scales with cluster size - busier clusters push harder
   const resolveCollisions = useCallback((
     allItems: PositionedItem[], 
     anchors: Map<string, Position>,
-    anchorExclusionRadius: number
+    anchorExclusionRadius: number,
+    clusterSizes: Map<string, number> // How many books per genre
   ): PositionedItem[] => {
     if (allItems.length <= 1) return allItems;
     
@@ -247,36 +249,59 @@ export function useGenreClusteredPositions(
       position: { ...item.position } 
     }));
     
-    const iterations = 100; // More iterations for thorough separation
-    const basePushStrength = isMobile ? 4 : 2; // Stronger push on mobile
-    const safeMarginX = isMobile ? 18 : 8; // Increased edge margin on mobile
-    const safeMarginY = isMobile ? 6 : 4;
-    const edgeZone = isMobile ? 25 : 20; // Zone near edge where items get pushed inward
+    const iterations = 150; // More iterations for thorough separation
+    const basePushStrength = isMobile ? 5 : 3; // Increased base push
+    const safeMarginX = isMobile ? 20 : 10; // Stronger edge margins
+    const safeMarginY = isMobile ? 8 : 5;
+    const edgeZone = isMobile ? 30 : 22; // Wider edge zone
+    
+    // Get max cluster size for scaling
+    const maxClusterSize = Math.max(1, ...Array.from(clusterSizes.values()));
     
     for (let iter = 0; iter < iterations; iter++) {
       let hasCollision = false;
       
-      // First pass: Push items away from edges aggressively
+      // First pass: Push items away from edges - strength scales with cluster size
       for (const item of resolved) {
+        const clusterSize = clusterSizes.get(item.genre || '') || 1;
+        // Busier clusters push harder (1.0 to 2.5x multiplier)
+        const clusterMultiplier = 1 + ((clusterSize / maxClusterSize) * 1.5);
+        
         const leftEdgeDist = item.position.x - safeMarginX;
         const rightEdgeDist = (100 - safeMarginX) - item.position.x;
         
         // If too close to left edge, push right
         if (leftEdgeDist < edgeZone && item.position.x < 50) {
-          const pushStrength = ((edgeZone - leftEdgeDist) / edgeZone) * 2;
+          const pushStrength = ((edgeZone - leftEdgeDist) / edgeZone) * 3 * clusterMultiplier;
           item.position.x += pushStrength;
           hasCollision = true;
         }
         
         // If too close to right edge, push left
         if (rightEdgeDist < edgeZone && item.position.x > 50) {
-          const pushStrength = ((edgeZone - rightEdgeDist) / edgeZone) * 2;
+          const pushStrength = ((edgeZone - rightEdgeDist) / edgeZone) * 3 * clusterMultiplier;
           item.position.x -= pushStrength;
+          hasCollision = true;
+        }
+        
+        // Also check top/bottom edges
+        const topEdgeDist = item.position.y - safeMarginY;
+        const bottomEdgeDist = (100 - safeMarginY) - item.position.y;
+        
+        if (topEdgeDist < edgeZone * 0.5) {
+          const pushStrength = ((edgeZone * 0.5 - topEdgeDist) / (edgeZone * 0.5)) * 2;
+          item.position.y += pushStrength;
+          hasCollision = true;
+        }
+        
+        if (bottomEdgeDist < edgeZone * 0.5) {
+          const pushStrength = ((edgeZone * 0.5 - bottomEdgeDist) / (edgeZone * 0.5)) * 2;
+          item.position.y -= pushStrength;
           hasCollision = true;
         }
       }
       
-      // Second pass: Resolve item-to-item collisions
+      // Second pass: Resolve item-to-item collisions with stronger push
       for (let i = 0; i < resolved.length; i++) {
         for (let j = i + 1; j < resolved.length; j++) {
           const a = resolved[i];
@@ -289,14 +314,14 @@ export function useGenreClusteredPositions(
             let dy = b.position.y - a.position.y;
             
             if (dx === 0 && dy === 0) {
-              dx = (Math.random() - 0.5) * 6;
-              dy = (Math.random() - 0.5) * 6;
+              dx = (Math.random() - 0.5) * 8;
+              dy = (Math.random() - 0.5) * 8;
             }
             
             const dist = Math.sqrt(dx * dx + dy * dy) || 1;
             
             // Stronger push when items are very close
-            const overlapFactor = 1 + (1 / (dist + 0.5));
+            const overlapFactor = 1.5 + (2 / (dist + 0.3));
             const pushX = (dx / dist) * basePushStrength * overlapFactor;
             const pushY = (dy / dist) * basePushStrength * overlapFactor;
             
@@ -310,8 +335,8 @@ export function useGenreClusteredPositions(
             let aWeight = 0.5;
             let bWeight = 0.5;
             
-            if (aAtLeftEdge || aAtRightEdge) { aWeight = 0.15; bWeight = 0.85; }
-            if (bAtLeftEdge || bAtRightEdge) { aWeight = 0.85; bWeight = 0.15; }
+            if (aAtLeftEdge || aAtRightEdge) { aWeight = 0.1; bWeight = 0.9; }
+            if (bAtLeftEdge || bAtRightEdge) { aWeight = 0.9; bWeight = 0.1; }
             
             a.position.x -= pushX * aWeight;
             a.position.y -= pushY * aWeight;
@@ -331,7 +356,7 @@ export function useGenreClusteredPositions(
           
           // If too close to anchor, push away
           if (distToAnchor < anchorExclusionRadius && distToAnchor > 0.1) {
-            const pushAway = (anchorExclusionRadius - distToAnchor) * 0.5;
+            const pushAway = (anchorExclusionRadius - distToAnchor) * 0.6;
             item.position.x += (dxToAnchor / distToAnchor) * pushAway;
             item.position.y += (dyToAnchor / distToAnchor) * pushAway;
           }
@@ -342,7 +367,8 @@ export function useGenreClusteredPositions(
         item.position.y = clamp(item.position.y, item.size.h / 2 + safeMarginY, 100 - item.size.h / 2 - safeMarginY);
       }
       
-      if (!hasCollision) break;
+      // Early exit if well-separated
+      if (!hasCollision && iter > 50) break;
     }
     
     return resolved;
@@ -398,8 +424,14 @@ export function useGenreClusteredPositions(
       allPositioned = [...allPositioned, ...positioned];
     });
 
-    // STEP 3: Resolve collisions with anchor exclusion
-    const resolved = resolveCollisions(allPositioned, anchors, anchorExclusionRadius);
+    // STEP 3: Build cluster size map for edge avoidance scaling
+    const clusterSizes = new Map<string, number>();
+    Object.entries(genreGroups).forEach(([genre, groupItems]) => {
+      clusterSizes.set(genre, groupItems.length);
+    });
+    
+    // STEP 4: Resolve collisions with anchor exclusion and cluster-based edge avoidance
+    const resolved = resolveCollisions(allPositioned, anchors, anchorExclusionRadius, clusterSizes);
 
     const newPositions = new Map<string, Position>();
     resolved.forEach(item => {
