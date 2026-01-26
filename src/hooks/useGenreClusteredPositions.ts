@@ -36,6 +36,7 @@ interface GenreClusterResult {
   positions: Map<string, Position>;
   genreAnchors: Map<string, Position>;
   genreZoneBounds: Map<string, { yMin: number; yMax: number }>; // Vertical bounds per genre (mobile)
+  genreCount: number; // Number of unique genres (for container height calculation)
   applyCohesionForce: () => void; // Gradually pull scattered books back toward clusters
 }
 
@@ -188,7 +189,14 @@ export function useGenreClusteredPositions(
     return groups;
   }, [items]);
 
-  const numGenres = Object.keys(genreGroups).length;
+  // Sort genres by popularity (most books first) for consistent ordering
+  const sortedGenresByPopularity = useMemo(() => {
+    return Object.entries(genreGroups)
+      .sort((a, b) => b[1].length - a[1].length) // Descending by count
+      .map(([genre]) => genre);
+  }, [genreGroups]);
+
+  const numGenres = sortedGenresByPopularity.length;
   
   const zones = useMemo(() => 
     isMobile ? generateMobileZones(mobileStartY, numGenres) : GENRE_ZONES_DESKTOP.map(z => ({ ...z, yMin: 0, yMax: 100 })), 
@@ -495,14 +503,12 @@ export function useGenreClusteredPositions(
     // These are the authoritative positions - books will cluster around them
     const anchors = new Map<string, Position>();
     
-    // Sort genres for consistent ordering
-    const sortedGenres = Object.keys(genreGroups).sort();
-    
-    sortedGenres.forEach((genre, idx) => {
-      // Assign zones in order to match sorted genres
+    // Use popularity-sorted genres (most books → zone 0 at top)
+    sortedGenresByPopularity.forEach((genre, idx) => {
+      // Assign zones in order: most popular genre gets zone 0 (top)
       const zone = zones[idx] || zones[zones.length - 1];
       
-      // Anchor is near top of its zone - this is where the constellation label appears
+      // Anchor at center of its zone
       anchors.set(genre, {
         x: zone.xCenter,
         y: zone.yCenter
@@ -515,7 +521,7 @@ export function useGenreClusteredPositions(
     const bookClusterRadius = isMobile ? 10 : 15;
     const anchorExclusionRadius = isMobile ? 3 : 5; // Keep books away from star/label
     
-    sortedGenres.forEach((genre, idx) => {
+    sortedGenresByPopularity.forEach((genre, idx) => {
       const groupItems = genreGroups[genre];
       const anchor = anchors.get(genre);
       if (!anchor || !groupItems) return;
@@ -611,12 +617,11 @@ export function useGenreClusteredPositions(
     // return () => clearInterval(interval);
   }, [applyCohesionForce]);
 
-  // Build zone bounds map for external use
+  // Build zone bounds map for external use (using popularity-sorted genres)
   const genreZoneBounds = useMemo(() => {
     const bounds = new Map<string, { yMin: number; yMax: number }>();
     if (isMobile) {
-      const sortedGenres = Object.keys(genreGroups).sort();
-      sortedGenres.forEach((genre, idx) => {
+      sortedGenresByPopularity.forEach((genre, idx) => {
         const zone = zones[idx] as MobileZone;
         if (zone) {
           bounds.set(genre, { yMin: zone.yMin, yMax: zone.yMax });
@@ -624,7 +629,7 @@ export function useGenreClusteredPositions(
       });
     }
     return bounds;
-  }, [genreGroups, zones, isMobile]);
+  }, [sortedGenresByPopularity, zones, isMobile]);
 
-  return { positions, genreAnchors, genreZoneBounds, applyCohesionForce };
+  return { positions, genreAnchors, genreZoneBounds, genreCount: numGenres, applyCohesionForce };
 }
