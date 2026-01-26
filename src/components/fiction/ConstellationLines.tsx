@@ -106,52 +106,9 @@ export function ConstellationLines({
                   delay: genreIndex * 0.3 + bookIndex * 0.1,
                   ease: "easeOut"
                 }}
-              />
+            />
             ))}
-            
-            {/* Glowing anchor dot (constellation star) - visual only, interaction handled by DraggableConstellationAnchor */}
-            <motion.g
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ 
-                duration: 0.6, 
-                delay: genreIndex * 0.3,
-                type: "spring",
-                bounce: 0.4
-              }}
-            >
-              {/* Outer glow */}
-              <circle
-                cx={`${anchor.x}%`}
-                cy={`${anchor.y}%`}
-                r={isMobile ? 8 : 10}
-                fill={color}
-                opacity={0.2}
-                filter="url(#star-glow)"
-              />
-              
-              {/* Inner bright core */}
-              <circle
-                cx={`${anchor.x}%`}
-                cy={`${anchor.y}%`}
-                r={isMobile ? 3 : 4}
-                fill="white"
-                opacity={0.9}
-                filter="url(#star-glow)"
-              />
-              
-              {/* Static ring */}
-              <circle
-                cx={`${anchor.x}%`}
-                cy={`${anchor.y}%`}
-                r={isMobile ? 5 : 6}
-                fill="none"
-                stroke={color}
-                strokeWidth={1}
-                opacity={0.4}
-              />
-            </motion.g>
-            {/* Genre label removed - now rendered by DraggableConstellationAnchor */}
+            {/* Star and label rendered by DraggableConstellationAnchor */}
           </g>
         );
       })}
