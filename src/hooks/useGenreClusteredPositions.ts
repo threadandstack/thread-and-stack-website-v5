@@ -51,18 +51,27 @@ const estimateItemSize = (text: string, isMobile: boolean): Size => {
 };
 
 // Genre cluster zones - each genre gets its own area on desktop
-// Arranged around the central CTA
+// Arranged around the central CTA, with zones extending into scrollable area
+// Y values now span 0-200% (double height page)
 const GENRE_ZONES_DESKTOP: { xCenter: number; yCenter: number; radius: number }[] = [
-  { xCenter: 12, yCenter: 25, radius: 12 },   // Top-left
-  { xCenter: 88, yCenter: 25, radius: 12 },   // Top-right
-  { xCenter: 10, yCenter: 50, radius: 10 },   // Left-middle
-  { xCenter: 90, yCenter: 50, radius: 10 },   // Right-middle
-  { xCenter: 12, yCenter: 75, radius: 12 },   // Bottom-left
-  { xCenter: 88, yCenter: 75, radius: 12 },   // Bottom-right
-  { xCenter: 30, yCenter: 88, radius: 10 },   // Bottom-center-left
-  { xCenter: 70, yCenter: 88, radius: 10 },   // Bottom-center-right
-  { xCenter: 30, yCenter: 12, radius: 10 },   // Top-center-left
-  { xCenter: 70, yCenter: 12, radius: 10 },   // Top-center-right
+  // First viewport (0-100%) - avoid nav at top (y > 12%)
+  { xCenter: 12, yCenter: 20, radius: 10 },   // Top-left (below nav)
+  { xCenter: 88, yCenter: 20, radius: 10 },   // Top-right (below nav)
+  { xCenter: 10, yCenter: 38, radius: 10 },   // Left upper
+  { xCenter: 90, yCenter: 38, radius: 10 },   // Right upper
+  { xCenter: 10, yCenter: 62, radius: 10 },   // Left lower
+  { xCenter: 90, yCenter: 62, radius: 10 },   // Right lower
+  { xCenter: 12, yCenter: 80, radius: 10 },   // Bottom-left
+  { xCenter: 88, yCenter: 80, radius: 10 },   // Bottom-right
+  // Second viewport (100-200%) - scrollable area
+  { xCenter: 15, yCenter: 110, radius: 12 },  // Scroll area top-left
+  { xCenter: 85, yCenter: 110, radius: 12 },  // Scroll area top-right
+  { xCenter: 12, yCenter: 130, radius: 12 },  // Scroll area mid-left
+  { xCenter: 88, yCenter: 130, radius: 12 },  // Scroll area mid-right
+  { xCenter: 25, yCenter: 150, radius: 12 },  // Scroll area lower-left
+  { xCenter: 75, yCenter: 150, radius: 12 },  // Scroll area lower-right
+  { xCenter: 15, yCenter: 170, radius: 12 },  // Scroll area bottom-left
+  { xCenter: 85, yCenter: 170, radius: 12 },  // Scroll area bottom-right
 ];
 
 // Mobile zones - vertical stacking
