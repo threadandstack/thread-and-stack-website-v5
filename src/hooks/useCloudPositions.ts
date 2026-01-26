@@ -1,4 +1,4 @@
-import { useState, useEffect, useLayoutEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 
 interface Position {
   x: number;
@@ -285,8 +285,23 @@ export function useCloudPositions(items: CloudItem[]): Map<string, Position> {
     return groups;
   }, [items]);
 
-  // Use layout effect to avoid a visible "pile-up" frame before positions resolve.
-  useLayoutEffect(() => {
+  // Use a ref to track which item IDs we've already positioned to avoid re-computing
+  const positionedIdsRef = useRef<Set<string>>(new Set());
+  
+  // Compute positions only when items change
+  useEffect(() => {
+    const itemIds = Object.values(clusteredItems).flat().map(item => item.id);
+    const itemIdsSet = new Set(itemIds);
+    
+    // Check if items have changed
+    const prevIds = positionedIdsRef.current;
+    const hasNewItems = itemIds.some(id => !prevIds.has(id));
+    const hasRemovedItems = [...prevIds].some(id => !itemIdsSet.has(id));
+    
+    if (!hasNewItems && !hasRemovedItems && positions.size > 0) {
+      return; // No changes needed
+    }
+    
     // Build positioned items with initial positions
     const allItems: PositionedItem[] = [];
     let globalIndex = 0;
@@ -318,6 +333,9 @@ export function useCloudPositions(items: CloudItem[]): Map<string, Position> {
     resolved.forEach(item => {
       newPositions.set(item.id, item.position);
     });
+    
+    // Update ref to track positioned IDs
+    positionedIdsRef.current = itemIdsSet;
     
     setPositions(newPositions);
   }, [clusteredItems, isMobile, getInitialPosition, resolveCollisions]);
