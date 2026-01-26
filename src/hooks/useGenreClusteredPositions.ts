@@ -74,23 +74,25 @@ const GENRE_ZONES_DESKTOP: { xCenter: number; yCenter: number; radius: number }[
 ];
 
 // Mobile/Tablet zones are generated dynamically based on header height
+// Zones are spread horizontally in rows to avoid vertical stacking conflicts
 const generateMobileZones = (startYPercent: number): { xCenter: number; yCenter: number; radius: number }[] => {
-  const rowGap = 14; // Percentage gap between rows
+  const rowGap = 18; // Larger percentage gap between rows for clarity
   return [
-    // Row 1 - first visible row below input
-    { xCenter: 20, yCenter: startYPercent, radius: 10 },
-    { xCenter: 50, yCenter: startYPercent + 2, radius: 10 },
-    { xCenter: 80, yCenter: startYPercent, radius: 10 },
-    // Row 2
-    { xCenter: 15, yCenter: startYPercent + rowGap, radius: 10 },
-    { xCenter: 50, yCenter: startYPercent + rowGap + 2, radius: 10 },
-    { xCenter: 85, yCenter: startYPercent + rowGap, radius: 10 },
+    // Row 1 - first visible row below input (alternating left/right)
+    { xCenter: 18, yCenter: startYPercent, radius: 8 },
+    { xCenter: 82, yCenter: startYPercent + 3, radius: 8 },
+    // Row 2 - offset from row 1
+    { xCenter: 75, yCenter: startYPercent + rowGap, radius: 8 },
+    { xCenter: 25, yCenter: startYPercent + rowGap + 3, radius: 8 },
     // Row 3
-    { xCenter: 25, yCenter: startYPercent + rowGap * 2, radius: 10 },
-    { xCenter: 75, yCenter: startYPercent + rowGap * 2 + 2, radius: 10 },
+    { xCenter: 15, yCenter: startYPercent + rowGap * 2, radius: 8 },
+    { xCenter: 85, yCenter: startYPercent + rowGap * 2 + 3, radius: 8 },
     // Row 4
-    { xCenter: 20, yCenter: startYPercent + rowGap * 3, radius: 10 },
-    { xCenter: 80, yCenter: startYPercent + rowGap * 3 + 2, radius: 10 },
+    { xCenter: 70, yCenter: startYPercent + rowGap * 3, radius: 8 },
+    { xCenter: 30, yCenter: startYPercent + rowGap * 3 + 3, radius: 8 },
+    // Row 5 (overflow)
+    { xCenter: 20, yCenter: startYPercent + rowGap * 4, radius: 8 },
+    { xCenter: 80, yCenter: startYPercent + rowGap * 4 + 3, radius: 8 },
   ];
 };
 

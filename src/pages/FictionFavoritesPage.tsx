@@ -260,7 +260,7 @@ export default function FictionFavoritesPage() {
   
   // Use genre-clustered positioning - books of the same genre cluster together
   const { positions, genreAnchors } = useGenreClusteredPositions(aggregatedFavorites, {
-    mobileHeaderHeightPx: 300 // Account for nav + title card + input on mobile
+    mobileHeaderHeightPx: 420 // Larger value to ensure constellations start well below input
   });
   
   // Build book positions with genre info for constellation lines
