@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import campfireImage from "@/assets/campfire-transparent.png";
+import treesImage from "@/assets/trees-silhouette.png";
 
 // Generate smoke particles
 const SmokeParticle = ({ delay, x }: { delay: number; x: number }) => (
@@ -30,44 +31,16 @@ export function CampfireScene() {
     <div className="relative w-full" style={{ height: '200px' }}>
       {/* Transparent container - stars show through */}
       
-      {/* Tree silhouettes layer - behind everything, transparent gaps show stars */}
-      <svg 
-        viewBox="0 0 1200 150" 
-        className="absolute inset-x-0 bottom-0 w-full h-40 z-10"
-        preserveAspectRatio="xMidYMax slice"
-        style={{ pointerEvents: 'none' }}
-      >
-        {/* Generate varied pine tree silhouettes */}
-        {Array.from({ length: 25 }).map((_, i) => {
-          const xPos = i * 50 - 25;
-          const height = 60 + (i % 4) * 25;
-          const width = 30 + (i % 3) * 10;
-          const yOffset = (i % 2) * 8;
-          
-          return (
-            <g key={i} transform={`translate(${xPos}, ${150 - height + yOffset})`}>
-              {/* Pine tree shape */}
-              <path
-                d={`
-                  M ${width / 2} 0
-                  L ${width * 0.85} ${height * 0.4}
-                  L ${width * 0.7} ${height * 0.35}
-                  L ${width * 0.95} ${height * 0.65}
-                  L ${width * 0.75} ${height * 0.6}
-                  L ${width} ${height}
-                  L 0 ${height}
-                  L ${width * 0.25} ${height * 0.6}
-                  L ${width * 0.05} ${height * 0.65}
-                  L ${width * 0.3} ${height * 0.35}
-                  L ${width * 0.15} ${height * 0.4}
-                  Z
-                `}
-                fill="hsl(234, 40%, 3%)"
-              />
-            </g>
-          );
-        })}
-      </svg>
+      {/* Tree silhouettes layer - tiling image with transparent background */}
+      <div 
+        className="absolute inset-x-0 bottom-0 h-24 z-10 pointer-events-none"
+        style={{
+          backgroundImage: `url(${treesImage})`,
+          backgroundRepeat: 'repeat-x',
+          backgroundPosition: 'bottom center',
+          backgroundSize: 'auto 100%',
+        }}
+      />
 
       {/* Ambient fire glow - large soft glow behind everything */}
       <div className="absolute left-1/2 bottom-8 -translate-x-1/2 z-20 pointer-events-none">
