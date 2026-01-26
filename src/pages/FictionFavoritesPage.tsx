@@ -579,11 +579,11 @@ export default function FictionFavoritesPage() {
             </motion.div>
           </div>
 
-          {/* Cloud zone - relative container for positioned items */}
+          {/* Cloud zone - relative container for positioned items with dynamic height */}
           {favorites.length > 0 && (
             <div 
               className="relative flex-1 mt-4"
-              style={{ minHeight: `${Math.max(400, Math.min(800, aggregatedFavorites.length * 50))}px` }}
+              style={{ minHeight: `${Math.max(600, aggregatedFavorites.length * 80)}px` }}
             >
               {/* Constellation lines for mobile */}
               <ConstellationLines 
