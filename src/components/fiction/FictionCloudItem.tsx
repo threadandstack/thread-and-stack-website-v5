@@ -76,6 +76,15 @@ const getCountBadgeColor = (count: number): { bg: string; text: string } => {
   }
 };
 
+// Scale pills based on popularity - less popular = smaller
+// Popular books stay full size, new entries are compact
+const getPopularityScale = (count: number): number => {
+  if (count >= 5) return 1;        // Very popular - full size
+  if (count >= 3) return 0.92;     // Popular - slightly smaller
+  if (count >= 2) return 0.85;     // Some votes - smaller
+  return 0.78;                      // New entry - compact
+};
+
 // Get float animation class based on vertical position (parallax effect)
 // Items higher on screen float slower (distant), items lower float faster (closer)
 const getFloatClass = (yPosition: number): string => {
@@ -102,6 +111,7 @@ export function FictionCloudItem({
   const colors = getGenreBasedColors(genreColor);
   const badgeColors = getCountBadgeColor(count);
   const showBadge = count > 1;
+  const popularityScale = getPopularityScale(count);
   
   const containerRef = useRef<HTMLDivElement>(null);
   const dragStartPos = useRef<{ x: number; y: number } | null>(null);
@@ -184,14 +194,14 @@ export function FictionCloudItem({
       key={id}
       initial={isNew ? { 
         opacity: 0, 
-        scale: 0.5,
+        scale: 0.5 * popularityScale,
       } : { 
         opacity: 0, 
-        scale: 0.8,
+        scale: 0.8 * popularityScale,
       }}
       animate={{ 
         opacity: 1, 
-        scale: isDragEnabled ? 1.1 : 1,
+        scale: isDragEnabled ? 1.1 * popularityScale : popularityScale,
       }}
       exit={{ opacity: 0, scale: 0.8 }}
       transition={{ 

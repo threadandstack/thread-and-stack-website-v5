@@ -223,9 +223,9 @@ export function useGenreClusteredPositions(
       
       if (isMobile && zoneBounds) {
         // MOBILE: Stack books vertically below anchor, one per row
-        // Fixed vertical spacing regardless of text size
-        const fixedRowSpacing = 6; // 6% vh between each book
-        const startY = anchor.y + anchorExclusionRadius + 5;
+        // Compact spacing since pills now scale by popularity
+        const fixedRowSpacing = 5; // 5% vh between each book
+        const startY = anchor.y + anchorExclusionRadius + 4;
         let y = startY + (idx * fixedRowSpacing);
         
         // Center all books horizontally
