@@ -83,7 +83,6 @@ export function ConstellationLines({
         if (!anchor) return null;
         
         const color = getGenreColor(genre);
-        const anchorId = `anchor-${genre.replace(/\s+/g, '-')}`;
 
         return (
           <g key={genre}>
@@ -141,7 +140,7 @@ export function ConstellationLines({
                 filter="url(#star-glow)"
               />
               
-              {/* Static ring instead of animated pulse to prevent movement */}
+              {/* Static ring */}
               <circle
                 cx={`${anchor.x}%`}
                 cy={`${anchor.y}%`}

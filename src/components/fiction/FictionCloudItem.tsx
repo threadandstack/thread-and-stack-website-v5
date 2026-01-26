@@ -1,4 +1,6 @@
-import { motion } from "framer-motion";
+import { motion, useDragControls, PanInfo } from "framer-motion";
+import { useHoldToDrag } from "@/hooks/useHoldToDrag";
+import { useRef, useCallback } from "react";
 
 interface FictionCloudItemProps {
   id: string;
@@ -8,6 +10,7 @@ interface FictionCloudItemProps {
   count: number;
   position: { x: number; y: number };
   onClick: () => void;
+  onPositionChange?: (id: string, newPosition: { x: number; y: number }) => void;
 }
 
 // Generate unique float animation parameters for each item
@@ -83,16 +86,59 @@ export function FictionCloudItem({
   isNew,
   count,
   position,
-  onClick
+  onClick,
+  onPositionChange
 }: FictionCloudItemProps) {
   const floatAnim = getFloatAnimation(id);
   const colors = getPositionBasedColors(position.y);
   const badgeColors = getCountBadgeColor(count);
   const showBadge = count > 1;
+  
+  const dragControls = useDragControls();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const dragStartPos = useRef<{ x: number; y: number } | null>(null);
+  
+  const { isDragEnabled, isHolding, handlers } = useHoldToDrag({
+    holdDuration: 400, // 400ms hold to activate drag
+  });
+  
+  const handleDragStart = useCallback(() => {
+    dragStartPos.current = { ...position };
+  }, [position]);
+  
+  const handleDragEnd = useCallback((event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+    if (!onPositionChange || !containerRef.current) return;
+    
+    // Convert pixel offset to percentage of viewport
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    
+    const deltaXPercent = (info.offset.x / vw) * 100;
+    const deltaYPercent = (info.offset.y / vh) * 100;
+    
+    const newX = Math.max(5, Math.min(95, position.x + deltaXPercent));
+    const newY = Math.max(5, Math.min(95, position.y + deltaYPercent));
+    
+    onPositionChange(id, { x: newX, y: newY });
+  }, [id, position, onPositionChange]);
+  
+  const handleClick = useCallback(() => {
+    // Only trigger click if we weren't dragging
+    if (!isDragEnabled) {
+      onClick();
+    }
+  }, [isDragEnabled, onClick]);
 
   return (
-    <motion.button
+    <motion.div
+      ref={containerRef}
       key={id}
+      drag={isDragEnabled}
+      dragControls={dragControls}
+      dragMomentum={false}
+      dragElastic={0}
+      onDragStart={handleDragStart}
+      onDragEnd={handleDragEnd}
       initial={isNew ? { 
         opacity: 0, 
         scale: 0.5,
@@ -106,41 +152,46 @@ export function FictionCloudItem({
       }}
       animate={{ 
         opacity: 1, 
-        scale: 1,
+        scale: isDragEnabled ? 1.1 : 1,
         x: "-50%",
         y: "-50%",
       }}
       exit={{ opacity: 0, scale: 0.8 }}
       transition={{ 
         opacity: { duration: 0.5 },
-        scale: { duration: isNew ? 0.8 : 0.4, type: "spring", bounce: 0.3 },
+        scale: { duration: isNew ? 0.8 : 0.2, type: "spring", bounce: 0.3 },
       }}
-      onClick={onClick}
+      onClick={handleClick}
+      onPointerDown={handlers.onPointerDown}
+      onPointerUp={handlers.onPointerUp}
+      onPointerCancel={handlers.onPointerCancel}
       className={`
-        absolute px-4 py-2 rounded-full text-left
+        absolute px-4 py-2 rounded-full text-left select-none
         ${isNew ? 'ring-2 ring-accent ring-offset-2 ring-offset-transparent' : ''}
-        shadow-md hover:shadow-lg hover:scale-105 transition-shadow cursor-pointer
+        ${isDragEnabled ? 'ring-2 ring-white/50 cursor-grabbing' : isHolding ? 'cursor-grab' : 'cursor-pointer'}
+        shadow-md hover:shadow-lg transition-shadow
         max-w-[180px] md:max-w-[240px] whitespace-nowrap
       `}
       style={{
         left: `${position.x}%`,
         top: `${position.y}%`,
-        zIndex: isNew ? 50 : 10,
+        zIndex: isDragEnabled ? 100 : isNew ? 50 : 10,
         backgroundColor: colors.background,
         borderWidth: 1,
         borderStyle: 'solid',
-        borderColor: colors.border,
+        borderColor: isDragEnabled ? 'hsla(0, 0%, 100%, 0.6)' : colors.border,
         color: colors.text,
-        // Add gentle floating animation via CSS
-        animation: `float-${Math.abs(id.charCodeAt(0) % 3)} ${floatAnim.duration}s ease-in-out ${floatAnim.delay}s infinite`,
+        touchAction: isDragEnabled ? 'none' : 'auto',
+        // Pause float animation while dragging or holding
+        animation: isDragEnabled || isHolding ? 'none' : `float-${Math.abs(id.charCodeAt(0) % 3)} ${floatAnim.duration}s ease-in-out ${floatAnim.delay}s infinite`,
       }}
     >
-      <span className="text-xs md:text-sm font-medium truncate block">
+      <span className="text-xs md:text-sm font-medium truncate block pointer-events-none">
         {displayText}
       </span>
       {showBadge && (
         <span 
-          className="absolute -top-2 -right-2 text-xs px-2 py-0.5 rounded-full font-semibold shadow-sm"
+          className="absolute -top-2 -right-2 text-xs px-2 py-0.5 rounded-full font-semibold shadow-sm pointer-events-none"
           style={{
             backgroundColor: badgeColors.bg,
             color: badgeColors.text,
@@ -149,6 +200,16 @@ export function FictionCloudItem({
           {count}
         </span>
       )}
-    </motion.button>
+      {/* Hold indicator */}
+      {isHolding && !isDragEnabled && (
+        <motion.span
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          className="absolute -bottom-1 left-1/2 -translate-x-1/2 text-[10px] text-white/70 whitespace-nowrap"
+        >
+          Hold to drag...
+        </motion.span>
+      )}
+    </motion.div>
   );
 }
