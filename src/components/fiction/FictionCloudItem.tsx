@@ -127,7 +127,15 @@ export function FictionCloudItem({
   }, [isDragEnabled, handlers]);
   
   const handlePointerUp = useCallback((e: React.PointerEvent) => {
-    if (isDragEnabled && onPositionChange && dragStartPos.current) {
+    const wasDragging = isDragging;
+    const wasDragEnabled = isDragEnabled;
+    
+    // Reset state first
+    handlers.onPointerUp();
+    setIsDragging(false);
+    setDragOffset({ x: 0, y: 0 });
+    
+    if (wasDragEnabled && onPositionChange && dragStartPos.current) {
       const vw = window.innerWidth;
       const vh = window.innerHeight;
       
@@ -141,14 +149,11 @@ export function FictionCloudItem({
       const newY = Math.max(5, Math.min(95, position.y + deltaYPercent));
       
       onPositionChange(id, { x: newX, y: newY });
-    } else if (!isDragging && !isDragEnabled) {
-      // Only trigger click if we didn't drag
-      onClick();
+    } else if (!wasDragging && !wasDragEnabled) {
+      // Only trigger click if we didn't drag - use a microtask to avoid state conflicts
+      queueMicrotask(() => onClick());
     }
     
-    handlers.onPointerUp();
-    setIsDragging(false);
-    setDragOffset({ x: 0, y: 0 });
     dragStartPos.current = null;
   }, [id, isDragEnabled, isDragging, position, onPositionChange, onClick, handlers]);
   
