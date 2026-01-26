@@ -647,34 +647,6 @@ export default function FictionFavoritesPage() {
                 minHeight: `${Math.max(600, genreCount * 320)}px`
               }}
             >
-              {/* DEBUG: Zone boundaries visualization */}
-              {sortedGenres.map((genre, idx) => {
-                const zoneBounds = genreZoneBounds.get(genre);
-                if (!zoneBounds) return null;
-                const hue = Math.abs(genre.split('').reduce((a, b) => ((a << 5) - a) + b.charCodeAt(0), 0)) % 360;
-                return (
-                  <div
-                    key={`zone-debug-${genre}`}
-                    className="absolute left-0 right-0 pointer-events-none border-2 border-dashed"
-                    style={{
-                      top: `${zoneBounds.yMin}%`,
-                      height: `${zoneBounds.yMax - zoneBounds.yMin}%`,
-                      borderColor: `hsla(${hue}, 70%, 60%, 0.6)`,
-                      backgroundColor: `hsla(${hue}, 70%, 50%, 0.08)`,
-                    }}
-                  >
-                    <span 
-                      className="absolute top-1 left-2 text-[10px] font-mono px-1 rounded"
-                      style={{ 
-                        color: `hsl(${hue}, 70%, 70%)`,
-                        backgroundColor: 'rgba(0,0,0,0.7)'
-                      }}
-                    >
-                      #{idx + 1} {genre} ({zoneBounds.yMin.toFixed(0)}% - {zoneBounds.yMax.toFixed(0)}%)
-                    </span>
-                  </div>
-                );
-              })}
               
               {/* Constellation lines for mobile */}
               <ConstellationLines 
