@@ -340,51 +340,75 @@ export function useGenreClusteredPositions(
       return (hash % 1000) / 1000;
     };
     
+    // CASCADING DIAGONAL PATTERN
+    // Books flow down in a zig-zag pattern, alternating left/right from center
+    // Mimics the organic hand-arranged layout from the user's reference
+    const cascadeConfig = {
+      // Vertical step between each book (as % of zone height)
+      verticalStepBase: isMobile ? 8 : 6,
+      // Horizontal offset amplitude (how far left/right from center)
+      horizontalAmplitude: isMobile ? 18 : 15,
+      // How much to vary the horizontal offset per row
+      horizontalJitter: isMobile ? 8 : 6,
+      // Vertical jitter for organic feel
+      verticalJitter: isMobile ? 2 : 1.5,
+    };
+    
     zoneItems.forEach((item, idx) => {
       const displayText = item.enriched_answer || item.answer;
       const size = estimateItemSize(displayText, isMobile);
       
+      // Seeded random for consistent positioning based on item ID
+      const itemHash = item.id.split('').reduce((a, b) => ((a << 5) - a + b.charCodeAt(0)) & 0x7fffffff, 0);
+      const rand1 = (itemHash % 1000) / 1000; // 0-1
+      const rand2 = ((itemHash * 31) % 1000) / 1000; // Different seed
+      const rand3 = ((itemHash * 17) % 1000) / 1000; // Another seed
+      
       if (isMobile && zoneBounds) {
-        // MOBILE: TRUE CIRCULAR clock-face positioning with PHYLLOTACTIC DISTANCE
-        const clockAngle = clockPositions[idx % clockPositions.length];
-        
-        // Add small angle jitter to prevent perfect alignment
-        const angleJitter = (seededRandom(item.id, idx) - 0.5) * 18; // ±9 degrees for more variation
-        const finalAngle = clockAngle + angleJitter;
-        const angleRad = (finalAngle * Math.PI) / 180;
-        
-        // Calculate available space in the zone
+        // MOBILE: CASCADING DIAGONAL ZIG-ZAG PATTERN
+        // Books cascade down from the anchor, alternating left-right
         const zoneHeight = zoneBounds.yMax - zoneBounds.yMin;
+        const itemCount = zoneItems.length;
         
-        // Available room from anchor to zone edges (anchor is centered)
-        const roomAbove = anchor.y - zoneBounds.yMin;
-        const roomBelow = zoneBounds.yMax - anchor.y;
-        const roomLeft = anchor.x - safeMarginX;
-        const roomRight = 100 - anchor.x - safeMarginX;
+        // Start position: slightly above anchor for first few items
+        const startY = anchor.y - zoneHeight * 0.35;
         
-        // Use full available space - no artificial limits
-        const maxRadiusY = Math.min(roomAbove, roomBelow) * 0.88; // Use 88% of available vertical
-        const maxRadiusX = Math.min(roomLeft, roomRight) * 0.88; // Use 88% of available horizontal
+        // Calculate vertical step - compress if many items, expand if few
+        const adaptiveVerticalStep = Math.max(
+          cascadeConfig.verticalStepBase * 0.6,
+          Math.min(cascadeConfig.verticalStepBase * 1.4, zoneHeight / (itemCount + 1))
+        );
         
-        // PHYLLOTACTIC TIER ASSIGNMENT - Fibonacci-based distribution
-        const tierInfo = fibonacciTiers[idx];
-        const tierMultiplier = tierInfo.distance;
+        // Base Y position: cascade downward
+        let y = startY + idx * adaptiveVerticalStep;
+        // Add vertical jitter for organic feel
+        y += (rand1 - 0.5) * cascadeConfig.verticalJitter * 2;
         
-        // Scale radius with adaptive factor
-        const scaledRadiusX = maxRadiusX * tierMultiplier * (adaptiveMaxRadius / baseMaxRadius);
-        const scaledRadiusY = maxRadiusY * tierMultiplier * (adaptiveMaxRadius / baseMaxRadius);
+        // ZIG-ZAG horizontal pattern
+        // Odd indices go right, even indices go left (relative to center)
+        const zigZagDirection = idx % 2 === 0 ? -1 : 1;
         
-        // Clamp to reasonable bounds
-        const radiusX = clamp(scaledRadiusX, 8, 45);
-        const radiusY = clamp(scaledRadiusY, 6, Math.min(35, zoneHeight * 0.42));
+        // Base horizontal offset with variation
+        const baseOffset = cascadeConfig.horizontalAmplitude;
+        const jitterOffset = (rand2 - 0.5) * cascadeConfig.horizontalJitter * 2;
         
-        // Calculate position using standard circle formula
-        let x = anchor.x + Math.sin(angleRad) * radiusX;
-        let y = anchor.y - Math.cos(angleRad) * radiusY;
+        // Additional progressive offset - items further down spread more
+        const progressiveSpread = (idx / Math.max(1, itemCount - 1)) * 5;
         
-        // Only clamp at absolute boundaries
+        let x = anchor.x + zigZagDirection * (baseOffset + jitterOffset + progressiveSpread * (rand3 - 0.5));
+        
+        // Additional X variation based on row "grouping" - every 2-3 items cluster slightly
+        const rowGroup = Math.floor(idx / 2);
+        x += (rowGroup % 3 - 1) * 4;
+        
+        // Clamp to zone bounds
         x = clamp(x, size.w / 2 + safeMarginX, 100 - size.w / 2 - safeMarginX);
         y = clamp(y, zoneBounds.yMin + size.h / 2 + 0.5, zoneBounds.yMax - size.h / 2 - 0.5);
+        
+        // Calculate angle from anchor for tilt calculation
+        const dx = x - anchor.x;
+        const dy = y - anchor.y;
+        const angleFromAnchor = Math.atan2(dy, dx);
         
         positioned.push({
           id: item.id,
@@ -394,38 +418,47 @@ export function useGenreClusteredPositions(
           anchorX: anchor.x,
           anchorY: anchor.y,
           zoneBounds,
-          angleFromAnchor: angleRad,
-          tierIndex: tierInfo.tier,
+          angleFromAnchor,
+          tierIndex: idx % 6,
         });
       } else {
-        // DESKTOP: Ring layout with PHYLLOTACTIC distance
-        const angle = (idx * 137.5 * Math.PI) / 180; // Golden angle for organic spread
+        // DESKTOP: CASCADING DIAGONAL with more horizontal spread
+        const itemCount = zoneItems.length;
         
-        // PHYLLOTACTIC TIER ASSIGNMENT
-        const tierInfo = fibonacciTiers[idx];
-        const tierMultiplier = tierInfo.distance;
+        // Start from anchor and cascade in a diagonal pattern
+        const startY = anchor.y - adaptiveMaxRadius * 0.4;
+        const adaptiveVerticalStep = Math.max(3, adaptiveMaxRadius * 0.12);
         
-        const minDistance = anchorExclusionRadius + 2;
-        const maxDistance = adaptiveMaxRadius; // Use adaptive radius
-        const distance = minDistance + (maxDistance - minDistance) * tierMultiplier;
+        let y = startY + idx * adaptiveVerticalStep;
+        y += (rand1 - 0.5) * cascadeConfig.verticalJitter * 2;
         
-        let pos: Position = {
-          x: anchor.x + Math.cos(angle) * distance,
-          y: anchor.y + Math.sin(angle) * distance * 0.8
-        };
+        // Zig-zag pattern with golden angle influence for variety
+        const zigZagDirection = idx % 2 === 0 ? -1 : 1;
+        const baseOffset = adaptiveMaxRadius * 0.5;
+        const jitterOffset = (rand2 - 0.5) * cascadeConfig.horizontalJitter * 2;
         
-        pos.x = clamp(pos.x, size.w / 2 + safeMarginX, 100 - size.w / 2 - safeMarginX);
-        pos.y = clamp(pos.y, size.h / 2 + safeMarginY, 100 - size.h / 2 - safeMarginY);
+        // Add Fibonacci-influenced variation
+        const fibInfluence = fibonacciTiers[idx]?.distance ?? 0.5;
+        const fibOffset = (fibInfluence - 0.5) * 8;
+        
+        let x = anchor.x + zigZagDirection * (baseOffset + jitterOffset + fibOffset);
+        
+        x = clamp(x, size.w / 2 + safeMarginX, 100 - size.w / 2 - safeMarginX);
+        y = clamp(y, size.h / 2 + safeMarginY, 100 - size.h / 2 - safeMarginY);
+        
+        const dx = x - anchor.x;
+        const dy = y - anchor.y;
+        const angleFromAnchor = Math.atan2(dy, dx);
         
         positioned.push({
           id: item.id,
           genre: item.genre,
-          position: pos,
+          position: { x, y },
           size,
           anchorX: anchor.x,
           anchorY: anchor.y,
-          angleFromAnchor: angle,
-          tierIndex: tierInfo.tier,
+          angleFromAnchor,
+          tierIndex: idx % 6,
         });
       }
     });
