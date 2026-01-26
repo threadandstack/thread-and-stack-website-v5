@@ -36,15 +36,32 @@ interface SelectedBook {
   clusterKey: string | null;
 }
 
-// Group items by cluster
-const groupByCluster = (items: FictionFavorite[]) => {
+// Aggregate items by cluster - return ONE representative item per cluster with count
+interface AggregatedFavorite extends FictionFavorite {
+  count: number;
+}
+
+const aggregateByCluster = (items: FictionFavorite[]): AggregatedFavorite[] => {
   const groups: Record<string, FictionFavorite[]> = {};
   items.forEach(item => {
     const key = item.cluster_key || item.answer.toLowerCase();
     if (!groups[key]) groups[key] = [];
     groups[key].push(item);
   });
-  return groups;
+  
+  // Return one representative item per cluster (prefer the one with enriched_answer)
+  return Object.values(groups).map(group => {
+    // Sort to prefer items with enriched_answer and emojis
+    const sorted = [...group].sort((a, b) => {
+      if (a.enriched_answer && !b.enriched_answer) return -1;
+      if (!a.enriched_answer && b.enriched_answer) return 1;
+      return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
+    });
+    return {
+      ...sorted[0],
+      count: group.length
+    };
+  });
 };
 
 export default function FictionFavoritesPage() {
@@ -143,45 +160,11 @@ export default function FictionFavoritesPage() {
     const metadata = getDeviceMetadata();
 
     try {
-      // Normalize all titles and check for duplicates
+      // Normalize all titles - duplicates are allowed (they increment the count badge)
       const normalizedTitles = titles.map(normalizeTitle);
-      const uniqueTitles: string[] = [];
-      const skippedDuplicates: string[] = [];
 
-      for (const title of normalizedTitles) {
-        const clusterKey = generateClusterKey(title);
-        
-        // Check if this book already exists in the database
-        const { data: existing } = await supabase
-          .from("fiction_favorites")
-          .select("id")
-          .or(`cluster_key.eq.${clusterKey},answer.ilike.${title}`)
-          .limit(1);
-        
-        if (existing && existing.length > 0) {
-          skippedDuplicates.push(title);
-        } else {
-          uniqueTitles.push(title);
-        }
-      }
-
-      // Notify if duplicates were skipped
-      if (skippedDuplicates.length > 0 && uniqueTitles.length === 0) {
-        toast({
-          title: "Already in the cloud!",
-          description: `"${skippedDuplicates[0]}" has already been added by someone.`,
-        });
-        setIsSubmitting(false);
-        return;
-      }
-
-      if (uniqueTitles.length === 0) {
-        setIsSubmitting(false);
-        return;
-      }
-
-      // Insert unique titles with cluster keys
-      const insertPromises = uniqueTitles.map(title => 
+      // Insert all titles (duplicates will be aggregated in display)
+      const insertPromises = normalizedTitles.map(title => 
         supabase
           .from("fiction_favorites")
           .insert({ 
@@ -269,42 +252,35 @@ export default function FictionFavoritesPage() {
     setCelebration(null);
   };
 
-  const clusteredGroups = groupByCluster(favorites);
-  const clusterKeys = Object.keys(clusteredGroups);
+  // Aggregate to show one pill per unique book
+  const aggregatedFavorites = aggregateByCluster(favorites);
   
-  // Use collision-aware positioning
-  const positions = useCloudPositions(favorites);
+  // Use collision-aware positioning with aggregated items
+  const positions = useCloudPositions(aggregatedFavorites);
 
   // Render cloud items helper
   const renderCloudItems = () => (
     <AnimatePresence>
-      {clusterKeys.map((clusterKey) => {
-        const items = clusteredGroups[clusterKey];
-        const isCluster = items.length > 1;
+      {aggregatedFavorites.map((item) => {
+        const pos = positions.get(item.id) || { x: 50, y: 20 };
+        const isNew = item.id === newItemId;
+        const displayText = item.enriched_answer || item.answer;
         
-        return items.map((item, idx) => {
-          const pos = positions.get(item.id) || { x: 50, y: 20 };
-          const isNew = item.id === newItemId;
-          const displayText = item.enriched_answer || item.answer;
-          
-          return (
-            <FictionCloudItem
-              key={item.id}
-              id={item.id}
-              displayText={displayText}
-              clusterKey={clusterKey}
-              isNew={isNew}
-              isCluster={isCluster}
-              clusterCount={items.length}
-              isFirst={idx === 0}
-              position={pos}
-              onClick={() => setSelectedBook({ 
-                title: item.answer, 
-                clusterKey: item.cluster_key 
-              })}
-            />
-          );
-        });
+        return (
+          <FictionCloudItem
+            key={item.id}
+            id={item.id}
+            displayText={displayText}
+            clusterKey={item.cluster_key || item.answer.toLowerCase()}
+            isNew={isNew}
+            count={item.count}
+            position={pos}
+            onClick={() => setSelectedBook({ 
+              title: item.answer, 
+              clusterKey: item.cluster_key 
+            })}
+          />
+        );
       })}
     </AnimatePresence>
   );
