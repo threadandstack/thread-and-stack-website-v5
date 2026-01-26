@@ -52,11 +52,25 @@ serve(async (req) => {
       }
     }
 
-    // Call AI to enrich the answer with emojis only
+    // Call AI to enrich the answer with emojis and genre classification
     // cluster_key is already set on insert - we don't want AI to override it
     // Retry logic for transient errors
     let response: Response | null = null;
     let lastError = "";
+    
+    // Genre categories for constellation groupings
+    const GENRE_OPTIONS = [
+      "Epic Fantasy",
+      "Science Fiction", 
+      "Literary Classics",
+      "Dystopian Tales",
+      "Mystery & Thriller",
+      "Romance & Drama",
+      "Horror & Gothic",
+      "Children's Adventures",
+      "Historical Fiction",
+      "Contemporary Fiction"
+    ];
     
     for (let attempt = 0; attempt < 3; attempt++) {
       try {
@@ -71,22 +85,25 @@ serve(async (req) => {
             messages: [
               {
                 role: "system",
-            content: `You enrich fiction book/story titles with emojis.
+            content: `You enrich fiction book/story titles with emojis and classify their genre.
 
 CRITICAL RULES:
 1. Return EXACTLY 2 emojis (no more, no less)
-2. Pick the 2 most iconic emojis representing the story's genre, themes, setting, or characters
+2. Pick the 2 most iconic emojis representing the story's themes, setting, or characters
+3. Classify the book into ONE of these genres: ${GENRE_OPTIONS.join(", ")}
 
 Examples:
-- "1984" → "👁️📺"
-- "The Great Gatsby" → "🥂💚"
-- "Harry Potter" → "⚡🧙"
-- "Pride and Prejudice" → "💕📜"
-- "The Hunger Games" → "🔥🏹"`
+- "1984" → emojis: "👁️📺", genre: "Dystopian Tales"
+- "The Great Gatsby" → emojis: "🥂💚", genre: "Literary Classics"
+- "Harry Potter" → emojis: "⚡🧙", genre: "Epic Fantasy"
+- "Pride and Prejudice" → emojis: "💕📜", genre: "Romance & Drama"
+- "The Hunger Games" → emojis: "🔥🏹", genre: "Dystopian Tales"
+- "Lord of the Rings" → emojis: "💍🧙", genre: "Epic Fantasy"
+- "Dune" → emojis: "🏜️🪱", genre: "Science Fiction"`
               },
               {
                 role: "user",
-                content: `Return exactly 2 emojis for this fiction title: "${answer}"`
+                content: `Classify this fiction title: "${answer}"`
               }
             ],
             tools: [
@@ -94,16 +111,21 @@ Examples:
                 type: "function",
                 function: {
                   name: "enrich_fiction",
-                  description: "Return 2 emojis for a fiction title",
+                  description: "Return 2 emojis and genre for a fiction title",
                   parameters: {
                     type: "object",
                     properties: {
                       emojis: {
                         type: "string",
                         description: "Exactly 2 emojis (e.g. '📚🔮'). Must be precisely 2 emoji characters, no spaces."
+                      },
+                      genre: {
+                        type: "string",
+                        enum: GENRE_OPTIONS,
+                        description: "The primary genre category for this book"
                       }
                     },
-                    required: ["emojis"],
+                    required: ["emojis", "genre"],
                     additionalProperties: false
                   }
                 }
@@ -166,18 +188,20 @@ Examples:
       console.log("AI enrichment failed after retries, using fallback values");
       
       const fallbackEmojis = "📚✨";
+      const fallbackGenre = "Contemporary Fiction";
 
       await supabase
         .from("fiction_favorites")
         .update({
           emojis: fallbackEmojis,
           enriched_answer: `${fallbackEmojis} ${answer}`,
+          genre: fallbackGenre,
           ...metadataUpdate
         })
         .eq("id", id);
 
       return new Response(
-        JSON.stringify({ success: true, emojis: fallbackEmojis, fallback: true }),
+        JSON.stringify({ success: true, emojis: fallbackEmojis, genre: fallbackGenre, fallback: true }),
         { headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
@@ -186,11 +210,13 @@ Examples:
     const toolCall = data.choices?.[0]?.message?.tool_calls?.[0];
     
     let emojis = "📚✨";
+    let genre = "Contemporary Fiction";
     
     if (toolCall?.function?.arguments) {
       try {
         const args = JSON.parse(toolCall.function.arguments);
         emojis = args.emojis || emojis;
+        genre = args.genre || genre;
         
         // Ensure EXACTLY 2 emojis by extracting emoji characters and taking first 2
         const emojiRegex = /\p{Emoji_Presentation}|\p{Emoji}\uFE0F/gu;
@@ -207,13 +233,14 @@ Examples:
       }
     }
 
-    // Update only emojis and enriched_answer - DO NOT update cluster_key
+    // Update emojis, enriched_answer, and genre - DO NOT update cluster_key
     // cluster_key is set on insert and should not be overwritten by AI
     const { error: updateError } = await supabase
       .from("fiction_favorites")
       .update({
         emojis,
         enriched_answer: `${emojis} ${answer}`,
+        genre,
         ...metadataUpdate
       })
       .eq("id", id);
@@ -224,7 +251,7 @@ Examples:
     }
 
     return new Response(
-      JSON.stringify({ success: true, emojis, geo: geoData }),
+      JSON.stringify({ success: true, emojis, genre, geo: geoData }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   } catch (e) {
