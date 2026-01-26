@@ -408,7 +408,7 @@ export default function FictionFavoritesPage() {
   // Render cloud items helper
   const renderCloudItems = () => (
     <AnimatePresence>
-      {aggregatedFavorites.map((item, index) => {
+      {aggregatedFavorites.map((item) => {
         const pos = positions.get(item.id) || { x: 50, y: 20 };
         const isNew = item.id === newItemId;
         const displayText = item.enriched_answer || item.answer;
@@ -424,7 +424,6 @@ export default function FictionFavoritesPage() {
             count={item.count}
             position={pos}
             genreColor={genreColor}
-            spiralIndex={index}
             onClick={() => setSelectedBook({ 
               title: item.answer, 
               clusterKey: item.cluster_key,
@@ -633,21 +632,17 @@ export default function FictionFavoritesPage() {
           {/* Cloud zone - relative container for positioned items with calculated height */}
           {favorites.length > 0 && (() => {
             // Use genreCount from the positioning hook for accurate height calculation
-            // Mobile needs MUCH more physical space per genre to keep clusters truly circular.
-            // Requirement: increase per-genre band height from ~40vh → minimum 120vh.
-            // Also scale aggressively with dense genres (10–30 books) to avoid row overlaps.
-            const maxGenreSize = Math.max(1, ...Array.from(genreBookCounts.values()));
-            const perGenreVh = Math.min(320, Math.max(120, maxGenreSize * 10));
-            const calculatedHeight = Math.max(100, genreCount * perGenreVh);
+            // Each genre needs ~40vh for full circular clock-face layout with comfortable spacing
+            const calculatedHeight = Math.max(100, genreCount * 40);
             // Get sorted genres from the zone bounds (already popularity-sorted by the hook)
             const sortedGenres = Array.from(genreZoneBounds.keys());
             return (
             <div 
               className="relative mt-4"
               style={{ 
-                // Height based on number of genres - each genre gets a large vertical band
+                // Height based on number of genres - each genre gets 40vh for full circular layout
                 height: `${calculatedHeight}vh`,
-                minHeight: `${Math.max(600, Math.round(genreCount * (320 * (perGenreVh / 40))))}px`
+                minHeight: `${Math.max(600, genreCount * 320)}px`
               }}
             >
               {/* DEBUG: Zone boundaries visualization */}

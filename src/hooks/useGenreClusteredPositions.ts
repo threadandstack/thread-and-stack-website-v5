@@ -49,16 +49,15 @@ const estimateItemSize = (text: string, isMobile: boolean): Size => {
   const textLen = (text?.length ?? 0) + 4; // Account for emojis/padding
   
   // Calculate width based on text - no max truncation
-  // Mobile: keep pills narrower so collisions are solvable within 0–100% X bounds.
-  const charWidth = isMobile ? 6.1 : 7.5;
-  const basePadding = isMobile ? 26 : 40;
+  const charWidth = isMobile ? 7 : 7.5;
+  const basePadding = isMobile ? 32 : 40;
   const calculatedWidth = basePadding + textLen * charWidth;
   
   // Reasonable limits but generous enough for most titles
-  const maxWidthPx = isMobile ? 140 : 280;
-  const minWidthPx = isMobile ? 70 : 100;
+  const maxWidthPx = isMobile ? 180 : 280; // Slightly narrower on mobile to help edge spacing
+  const minWidthPx = isMobile ? 80 : 100;
   const widthPx = clamp(calculatedWidth, minWidthPx, maxWidthPx);
-  const heightPx = isMobile ? 34 : 38;
+  const heightPx = isMobile ? 36 : 38;
 
   return {
     w: (widthPx / Math.max(1, vw)) * 100,
@@ -219,11 +218,7 @@ export function useGenreClusteredPositions(
     isMobile ? generateMobileZones(mobileStartY, numGenres) : GENRE_ZONES_DESKTOP.map(z => ({ ...z, yMin: 0, yMax: 100 })), 
     [isMobile, mobileStartY, numGenres]
   );
-
-  // Mobile needs dramatically more separation to avoid the "horizontal row" collapse.
-  // Positions are 0–100 (% of container). X maps to viewport width; Y maps to container height.
-  const minSpacing = isMobile ? 2.5 : 1.5;
-  const minRowHorizontalSpacing = isMobile ? 15 : 0; // 15% of screen width (user requirement)
+  const minSpacing = isMobile ? 1.5 : 1.5; // 1.5% vh minimum gap between items
 
   // Assign zones to genres - ensure each genre gets a unique zone
   const genreZoneAssignments = useMemo(() => {
@@ -253,122 +248,99 @@ export function useGenreClusteredPositions(
 
   // Check overlap between two items
   const checkOverlap = useCallback((a: PositionedItem, b: PositionedItem): boolean => {
-    const dy = Math.abs(a.position.y - b.position.y);
-    const overlapY = dy < (a.size.h / 2 + b.size.h / 2 + minSpacing);
-
-    // If two items are on the same visual "row" (overlapping in Y), enforce a hard
-    // minimum horizontal spacing to prevent row clustering.
-    const requiredXGap = overlapY && minRowHorizontalSpacing > 0
-      ? Math.max(a.size.w / 2 + b.size.w / 2 + minSpacing, minRowHorizontalSpacing)
-      : (a.size.w / 2 + b.size.w / 2 + minSpacing);
-
-    const overlapX = Math.abs(a.position.x - b.position.x) < requiredXGap;
+    const overlapX = Math.abs(a.position.x - b.position.x) < (a.size.w / 2 + b.size.w / 2 + minSpacing);
+    const overlapY = Math.abs(a.position.y - b.position.y) < (a.size.h / 2 + b.size.h / 2 + minSpacing);
     return overlapX && overlapY;
-  }, [minSpacing, minRowHorizontalSpacing]);
+  }, [minSpacing]);
 
-  // ==========================================================================
-  // FIBONACCI / PHYLLOTACTIC SPIRAL (Golden Angle)
-  // ==========================================================================
-  // Inspired by sunflower seed patterns - optimal packing with no overlaps.
-  // angle = index * 137.5° (golden angle)
-  // radius = sqrt(index) * baseRadius
-  // This creates the most aesthetically pleasing and efficient distribution.
-  // ==========================================================================
-  
-  const GOLDEN_ANGLE = 137.5 * (Math.PI / 180); // ~2.399 radians
-  
+  // Position items around their genre's anchor point using TRUE CIRCULAR clock-face pattern
+  // Books are distributed evenly around the star in a full 360° circle
+  // ADAPTIVE RADIUS: Larger genres get more space to prevent crowding
   const positionItemsAroundAnchor = useCallback((
     zoneItems: CloudItem[],
     anchor: { x: number; y: number },
     baseMaxRadius: number,
-    anchorExclusionRadius: number,
-    zoneBounds?: { yMin: number; yMax: number }
+    anchorExclusionRadius: number, // Keep items away from anchor center
+    zoneBounds?: { yMin: number; yMax: number } // Mobile only - strict vertical limits
   ): PositionedItem[] => {
     const positioned: PositionedItem[] = [];
+    
+    // ADAPTIVE RADIUS based on genre size
+    // More books = larger radius to give them room to spread
     const itemCount = zoneItems.length;
-
-    if (itemCount === 0) return positioned;
-
-    // ---------- FIBONACCI SPIRAL PARAMETERS ----------
-    // Starting offset from anchor (keeps items away from star center)
-    const minRadius = anchorExclusionRadius + (isMobile ? 5 : 6);
+    const radiusScale = 1 + Math.log2(Math.max(1, itemCount)) * 0.25; // 1 book=1x, 4 books=1.5x, 8 books=1.75x, 16 books=2x
+    const adaptiveMaxRadius = baseMaxRadius * radiusScale;
     
-    // Base radius scaling - controls spacing between items
-    // Smaller value = tighter spiral, larger = more spread
-    const baseRadiusScale = isMobile ? 3.5 : 4.0;
+    // ZERO horizontal margins - let items use full width
+    // Only the final clamp prevents going off-screen
+    const safeMarginX = 1; // Minimal - just prevent clipping
+    const safeMarginY = isMobile ? 1 : 2;
     
-    // Calculate the maximum radius the outermost item would reach
-    const maxTheoreticalRadius = minRadius + Math.sqrt(itemCount) * baseRadiusScale;
+    // Generate clock positions based on number of items for even distribution
+    const clockPositions = isMobile ? generateClockPositions(zoneItems.length) : CLOCK_POSITIONS_DESKTOP;
     
-    // Determine available space for scaling
-    const getMaxAvailableRadius = () => {
-      if (isMobile && zoneBounds) {
-        const roomUp = anchor.y - zoneBounds.yMin - 3;
-        const roomDown = zoneBounds.yMax - anchor.y - 3;
-        const roomLeft = anchor.x - 4;
-        const roomRight = 100 - anchor.x - 4;
-        return Math.min(roomUp, roomDown, roomLeft, roomRight, 45);
-      }
-      // Desktop
-      const roomUp = anchor.y - 4;
-      const roomDown = 100 - anchor.y - 4;
-      const roomLeft = anchor.x - 4;
-      const roomRight = 100 - anchor.x - 4;
-      return Math.min(roomUp, roomDown, roomLeft, roomRight, baseMaxRadius * 1.6);
+    // FIXED DISTANCE TIERS with DRAMATIC separation
+    // Each tier is a fixed distance from anchor - no randomization for consistency
+    const distanceTiers = [0.35, 0.55, 0.78, 1.0]; // Clear visual rings
+    
+    // Assign items to tiers in round-robin for even distribution
+    // This ensures items spread across all tiers, not bunched in one
+    
+    // Seeded random based on item ID for angle jitter only
+    const seededRandom = (seed: string, index: number): number => {
+      const hash = seed.split('').reduce((a, b, i) => {
+        return ((a << 5) - a + b.charCodeAt(0) + index * 17) & 0x7fffffff;
+      }, 0);
+      return (hash % 1000) / 1000;
     };
-
-    const maxAvailable = getMaxAvailableRadius();
-    const scaleFactor = maxTheoreticalRadius > maxAvailable 
-      ? (maxAvailable - minRadius) / (maxTheoreticalRadius - minRadius) 
-      : 1;
-
-    // Starting angle offset for visual variety
-    const startAngleOffset = Math.PI * 0.5; // Start from 3 o'clock position
     
-    const edgeMargin = 2;
-
     zoneItems.forEach((item, idx) => {
       const displayText = item.enriched_answer || item.answer;
       const size = estimateItemSize(displayText, isMobile);
-      const halfW = size.w / 2;
-      const halfH = size.h / 2;
-
-      // ---------- GOLDEN ANGLE SPIRAL FORMULA ----------
-      // Each item gets a unique angle based on the golden ratio
-      // θ = index * 137.5° (the golden angle)
-      const theta = startAngleOffset + (idx + 1) * GOLDEN_ANGLE;
       
-      // Radius grows with sqrt(index) - creates Fibonacci spiral
-      // r = sqrt(index) * scale
-      const sqrtRadius = Math.sqrt(idx + 1) * baseRadiusScale * scaleFactor;
-      let radius = minRadius + sqrtRadius;
-
-      // Unit direction vector (0° = right = +X, 90° = down = +Y)
-      const cosA = Math.cos(theta);
-      const sinA = Math.sin(theta);
-
       if (isMobile && zoneBounds) {
-        // ---------- MOBILE: ZONE-AWARE CLAMPING ----------
-        const roomUp = anchor.y - zoneBounds.yMin - halfH - 1;
-        const roomDown = zoneBounds.yMax - anchor.y - halfH - 1;
-        const roomLeft = anchor.x - halfW - edgeMargin;
-        const roomRight = 100 - anchor.x - halfW - edgeMargin;
-
-        // Calculate max safe radius for this specific angle
-        let maxSafeR = 100;
-        if (Math.abs(cosA) > 0.01) {
-          maxSafeR = Math.min(maxSafeR, cosA > 0 ? roomRight / cosA : roomLeft / Math.abs(cosA));
-        }
-        if (Math.abs(sinA) > 0.01) {
-          maxSafeR = Math.min(maxSafeR, sinA > 0 ? roomDown / sinA : roomUp / Math.abs(sinA));
-        }
-        maxSafeR = clamp(maxSafeR, minRadius, 50);
-
-        radius = clamp(radius, minRadius, maxSafeR * 0.94);
-
-        const x = anchor.x + cosA * radius;
-        const y = anchor.y + sinA * radius;
-
+        // MOBILE: TRUE CIRCULAR clock-face positioning with TIERED DISTANCE
+        const clockAngle = clockPositions[idx % clockPositions.length];
+        
+        // Add small angle jitter to prevent perfect alignment
+        const angleJitter = (seededRandom(item.id, idx) - 0.5) * 15; // ±7.5 degrees
+        const finalAngle = clockAngle + angleJitter;
+        const angleRad = (finalAngle * Math.PI) / 180;
+        
+        // Calculate available space in the zone
+        const zoneHeight = zoneBounds.yMax - zoneBounds.yMin;
+        
+        // Available room from anchor to zone edges (anchor is centered)
+        const roomAbove = anchor.y - zoneBounds.yMin;
+        const roomBelow = zoneBounds.yMax - anchor.y;
+        const roomLeft = anchor.x - safeMarginX;
+        const roomRight = 100 - anchor.x - safeMarginX;
+        
+        // Use full available space - no artificial limits
+        const maxRadiusY = Math.min(roomAbove, roomBelow) * 0.85; // Use 85% of available vertical
+        const maxRadiusX = Math.min(roomLeft, roomRight) * 0.85; // Use 85% of available horizontal
+        
+        // ROUND-ROBIN TIER ASSIGNMENT for even distribution
+        // First 4 items go to tiers 0,1,2,3, then repeat
+        const tierIndex = idx % distanceTiers.length;
+        const tierMultiplier = distanceTiers[tierIndex];
+        
+        // Scale radius with adaptive factor
+        const scaledRadiusX = maxRadiusX * tierMultiplier * (adaptiveMaxRadius / baseMaxRadius);
+        const scaledRadiusY = maxRadiusY * tierMultiplier * (adaptiveMaxRadius / baseMaxRadius);
+        
+        // Clamp to reasonable bounds
+        const radiusX = clamp(scaledRadiusX, 8, 45);
+        const radiusY = clamp(scaledRadiusY, 6, Math.min(35, zoneHeight * 0.42));
+        
+        // Calculate position using standard circle formula
+        let x = anchor.x + Math.sin(angleRad) * radiusX;
+        let y = anchor.y - Math.cos(angleRad) * radiusY;
+        
+        // Only clamp at absolute boundaries
+        x = clamp(x, size.w / 2 + safeMarginX, 100 - size.w / 2 - safeMarginX);
+        y = clamp(y, zoneBounds.yMin + size.h / 2 + 0.5, zoneBounds.yMax - size.h / 2 - 0.5);
+        
         positioned.push({
           id: item.id,
           genre: item.genre,
@@ -376,40 +348,39 @@ export function useGenreClusteredPositions(
           size,
           anchorX: anchor.x,
           anchorY: anchor.y,
-          zoneBounds,
+          zoneBounds
         });
       } else {
-        // ---------- DESKTOP ----------
-        const roomUp = anchor.y - halfH - edgeMargin;
-        const roomDown = 100 - anchor.y - halfH - edgeMargin;
-        const roomLeft = anchor.x - halfW - edgeMargin;
-        const roomRight = 100 - anchor.x - halfW - edgeMargin;
-
-        let maxSafeR = 100;
-        if (Math.abs(cosA) > 0.01) {
-          maxSafeR = Math.min(maxSafeR, cosA > 0 ? roomRight / cosA : roomLeft / Math.abs(cosA));
-        }
-        if (Math.abs(sinA) > 0.01) {
-          maxSafeR = Math.min(maxSafeR, sinA > 0 ? roomDown / sinA : roomUp / Math.abs(sinA));
-        }
-        maxSafeR = clamp(maxSafeR, minRadius, baseMaxRadius * 1.8);
-
-        radius = clamp(radius, minRadius, maxSafeR * 0.92);
-
-        const x = anchor.x + cosA * radius;
-        const y = anchor.y + sinA * radius * 0.85; // Slight vertical compression for widescreen
-
+        // DESKTOP: Ring layout with tiered distance
+        const angle = (idx * 137.5 * Math.PI) / 180; // Golden angle for organic spread
+        
+        // ROUND-ROBIN TIER ASSIGNMENT
+        const tierIndex = idx % distanceTiers.length;
+        const tierMultiplier = distanceTiers[tierIndex];
+        
+        const minDistance = anchorExclusionRadius + 2;
+        const maxDistance = adaptiveMaxRadius; // Use adaptive radius
+        const distance = minDistance + (maxDistance - minDistance) * tierMultiplier;
+        
+        let pos: Position = {
+          x: anchor.x + Math.cos(angle) * distance,
+          y: anchor.y + Math.sin(angle) * distance * 0.8
+        };
+        
+        pos.x = clamp(pos.x, size.w / 2 + safeMarginX, 100 - size.w / 2 - safeMarginX);
+        pos.y = clamp(pos.y, size.h / 2 + safeMarginY, 100 - size.h / 2 - safeMarginY);
+        
         positioned.push({
           id: item.id,
           genre: item.genre,
-          position: { x, y },
+          position: pos,
           size,
           anchorX: anchor.x,
-          anchorY: anchor.y,
+          anchorY: anchor.y
         });
       }
     });
-
+    
     return positioned;
   }, [isMobile]);
 
@@ -428,8 +399,8 @@ export function useGenreClusteredPositions(
       position: { ...item.position } 
     }));
     
-    const iterations = isMobile ? 180 : 100;
-    const basePushStrength = isMobile ? 7 : 2;
+    const iterations = 100;
+    const basePushStrength = isMobile ? 3 : 2;
     
     // CRITICAL: Edge pushback should ONLY happen at TRUE viewport boundaries
     // Within zones, items should use the FULL available space
@@ -523,10 +494,8 @@ export function useGenreClusteredPositions(
             // Stronger push when items are very close
             const overlapFactor = 1.5 + (2 / (dist + 0.3));
             const pushX = (dx / dist) * basePushStrength * overlapFactor;
-            // On mobile, allow strong vertical separation now that zones have far more physical height.
-            const pushY = isMobile
-              ? (dy / dist) * basePushStrength * overlapFactor * 0.85
-              : (dy / dist) * basePushStrength * overlapFactor;
+            // On mobile, prefer horizontal push to stay within zone bounds
+            const pushY = isMobile ? (dy / dist) * basePushStrength * overlapFactor * 0.3 : (dy / dist) * basePushStrength * overlapFactor;
             
             // SYMMETRIC collision resolution - equal weights for both items
             // No edge bias - let items spread naturally in both directions
