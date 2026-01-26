@@ -166,7 +166,7 @@ export function useGenreClusteredPositions(
     isMobile ? generateMobileZones(mobileStartY, numGenres) : GENRE_ZONES_DESKTOP.map(z => ({ ...z, yMin: 0, yMax: 100 })), 
     [isMobile, mobileStartY, numGenres]
   );
-  const minSpacing = isMobile ? 8 : 1.5; // Larger gap on mobile to prevent overlap
+  const minSpacing = isMobile ? 1.5 : 1.5; // 1.5% vh minimum gap between items
 
   // Assign zones to genres - ensure each genre gets a unique zone
   const genreZoneAssignments = useMemo(() => {
@@ -223,7 +223,7 @@ export function useGenreClusteredPositions(
       if (isMobile && zoneBounds) {
         // MOBILE: Stack books vertically below anchor, one per row
         // This prevents horizontal overlap entirely
-        const rowSpacing = size.h + 4; // Good vertical spacing between items
+        const rowSpacing = size.h + 1.5; // 1% vh minimum gap between rows
         const startY = anchor.y + anchorExclusionRadius + 4;
         let y = startY + (idx * rowSpacing);
         
