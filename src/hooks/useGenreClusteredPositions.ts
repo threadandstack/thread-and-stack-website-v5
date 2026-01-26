@@ -557,12 +557,14 @@ export function useGenreClusteredPositions(
   }, [items, positions, genreAnchors, isMobile]);
 
   // Cohesion force disabled for now - was causing layout complications
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     applyCohesionForce();
-  //   }, 3000);
-  //   return () => clearInterval(interval);
-  // }, [applyCohesionForce]);
+  // Keep the useEffect structure to maintain consistent hook count
+  useEffect(() => {
+    // Disabled: cohesion force was causing layout issues
+    // const interval = setInterval(() => {
+    //   applyCohesionForce();
+    // }, 3000);
+    // return () => clearInterval(interval);
+  }, [applyCohesionForce]);
 
   // Build zone bounds map for external use
   const genreZoneBounds = useMemo(() => {
