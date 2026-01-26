@@ -1,168 +1,180 @@
 import { useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-interface ConstellationLabelsProps {
-  genreCounts: Map<string, number>;
-  minCount?: number; // Minimum books needed for a constellation to appear
+interface BookPosition {
+  id: string;
+  genre: string | null;
+  x: number;
+  y: number;
 }
 
-// Genre to visual configuration mapping
-const GENRE_CONFIG: Record<string, { 
-  curve: string; // SVG path for the text to follow
-  viewBox: string;
-  x: number; // Position as percentage
-  y: number;
-  textAnchor: "start" | "middle" | "end";
-}> = {
-  "Epic Fantasy": {
-    curve: "M 10 80 Q 100 20 190 80",
-    viewBox: "0 0 200 100",
-    x: 8, y: 18,
-    textAnchor: "start"
-  },
-  "Science Fiction": {
-    curve: "M 10 20 Q 100 90 190 30",
-    viewBox: "0 0 200 100",
-    x: 85, y: 15,
-    textAnchor: "end"
-  },
-  "Literary Classics": {
-    curve: "M 20 70 Q 100 30 180 70",
-    viewBox: "0 0 200 100",
-    x: 12, y: 75,
-    textAnchor: "start"
-  },
-  "Dystopian Tales": {
-    curve: "M 10 30 Q 100 80 190 40",
-    viewBox: "0 0 200 100",
-    x: 82, y: 72,
-    textAnchor: "end"
-  },
-  "Mystery & Thriller": {
-    curve: "M 20 60 Q 100 20 180 55",
-    viewBox: "0 0 200 100",
-    x: 5, y: 45,
-    textAnchor: "start"
-  },
-  "Romance & Drama": {
-    curve: "M 10 40 Q 100 80 190 45",
-    viewBox: "0 0 200 100",
-    x: 88, y: 42,
-    textAnchor: "end"
-  },
-  "Horror & Gothic": {
-    curve: "M 20 50 Q 100 90 180 50",
-    viewBox: "0 0 200 100",
-    x: 6, y: 58,
-    textAnchor: "start"
-  },
-  "Children's Adventures": {
-    curve: "M 10 65 Q 100 30 190 60",
-    viewBox: "0 0 200 100",
-    x: 78, y: 55,
-    textAnchor: "end"
-  },
-  "Historical Fiction": {
-    curve: "M 20 35 Q 100 70 180 40",
-    viewBox: "0 0 200 100",
-    x: 10, y: 85,
-    textAnchor: "start"
-  },
-  "Contemporary Fiction": {
-    curve: "M 10 55 Q 100 20 190 50",
-    viewBox: "0 0 200 100",
-    x: 75, y: 88,
-    textAnchor: "end"
-  }
-};
+interface ConstellationLabelsProps {
+  genreCounts: Map<string, number>;
+  bookPositions: BookPosition[];
+  minCount?: number;
+  isMobile?: boolean;
+}
 
-export function ConstellationLabels({ genreCounts, minCount = 3 }: ConstellationLabelsProps) {
+// Genre curve configurations - different curve shapes for variety
+const CURVE_VARIANTS = [
+  { curve: "M 0 50 Q 75 10 150 50", startOffset: "50%" }, // gentle arc up
+  { curve: "M 0 30 Q 75 70 150 35", startOffset: "50%" }, // gentle arc down
+  { curve: "M 0 40 Q 50 15 100 40 Q 150 65 150 40", startOffset: "50%" }, // wave
+];
+
+export function ConstellationLabels({ 
+  genreCounts, 
+  bookPositions, 
+  minCount = 3,
+  isMobile = false 
+}: ConstellationLabelsProps) {
+  // Calculate centroid positions for each genre based on book positions
+  const genreCentroids = useMemo(() => {
+    const centroids = new Map<string, { x: number; y: number; count: number }>();
+    
+    bookPositions.forEach(book => {
+      if (!book.genre) return;
+      
+      const existing = centroids.get(book.genre);
+      if (existing) {
+        centroids.set(book.genre, {
+          x: existing.x + book.x,
+          y: existing.y + book.y,
+          count: existing.count + 1
+        });
+      } else {
+        centroids.set(book.genre, { x: book.x, y: book.y, count: 1 });
+      }
+    });
+    
+    // Convert sums to averages
+    centroids.forEach((value, key) => {
+      centroids.set(key, {
+        x: value.x / value.count,
+        y: value.y / value.count,
+        count: value.count
+      });
+    });
+    
+    return centroids;
+  }, [bookPositions]);
+  
   // Filter genres that have enough books to form a constellation
   const activeGenres = useMemo(() => {
-    const genres: { name: string; count: number; config: typeof GENRE_CONFIG[string] }[] = [];
+    const genres: { 
+      name: string; 
+      count: number; 
+      centroid: { x: number; y: number };
+      curveIndex: number;
+    }[] = [];
     
+    let curveIndex = 0;
     genreCounts.forEach((count, genre) => {
-      if (count >= minCount && GENRE_CONFIG[genre]) {
-        genres.push({
-          name: genre,
-          count,
-          config: GENRE_CONFIG[genre]
-        });
+      if (count >= minCount) {
+        const centroid = genreCentroids.get(genre);
+        if (centroid) {
+          genres.push({
+            name: genre,
+            count,
+            centroid: { x: centroid.x, y: centroid.y },
+            curveIndex: curveIndex % CURVE_VARIANTS.length
+          });
+          curveIndex++;
+        }
       }
     });
     
     return genres;
-  }, [genreCounts, minCount]);
+  }, [genreCounts, genreCentroids, minCount]);
 
   if (activeGenres.length === 0) return null;
 
+  // Adjust label position to be slightly above the centroid
+  const getLabelPosition = (centroid: { x: number; y: number }, index: number) => {
+    // Offset vertically above the cluster, with slight horizontal variation
+    const yOffset = isMobile ? -8 : -12;
+    const xOffset = (index % 2 === 0 ? -5 : 5);
+    
+    return {
+      x: Math.max(10, Math.min(90, centroid.x + xOffset)),
+      y: Math.max(5, Math.min(85, centroid.y + yOffset))
+    };
+  };
+
   return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden z-5">
+    <div className="absolute inset-0 pointer-events-none overflow-visible z-5">
       <AnimatePresence>
-        {activeGenres.map((genre, index) => (
-          <motion.div
-            key={genre.name}
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            transition={{ 
-              duration: 1.2, 
-              delay: index * 0.3,
-              ease: "easeOut"
-            }}
-            className="absolute"
-            style={{
-              left: `${genre.config.x}%`,
-              top: `${genre.config.y}%`,
-              transform: "translate(-50%, -50%)"
-            }}
-          >
-            <svg
-              viewBox={genre.config.viewBox}
-              className="w-48 md:w-64 lg:w-80 h-auto"
-              style={{ overflow: "visible" }}
+        {activeGenres.map((genre, index) => {
+          const position = getLabelPosition(genre.centroid, index);
+          const curveVariant = CURVE_VARIANTS[genre.curveIndex];
+          const labelId = `curve-${genre.name.replace(/\s+/g, '-')}-${index}`;
+          const glowId = `glow-${genre.name.replace(/\s+/g, '-')}-${index}`;
+          
+          return (
+            <motion.div
+              key={genre.name}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ 
+                duration: 1.5, 
+                delay: index * 0.4,
+                ease: "easeOut"
+              }}
+              className="absolute"
+              style={{
+                left: `${position.x}%`,
+                top: `${position.y}%`,
+                transform: "translate(-50%, -50%)"
+              }}
             >
-              <defs>
-                <path
-                  id={`curve-${genre.name.replace(/\s+/g, '-')}`}
-                  d={genre.config.curve}
-                  fill="transparent"
-                />
-                {/* Glow filter */}
-                <filter id={`glow-${genre.name.replace(/\s+/g, '-')}`}>
-                  <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
-                  <feMerge>
-                    <feMergeNode in="coloredBlur"/>
-                    <feMergeNode in="SourceGraphic"/>
-                  </feMerge>
-                </filter>
-              </defs>
-              
-              {/* Curved constellation name */}
-              <text
-                fill="hsla(0, 0%, 100%, 0.6)"
-                fontSize="14"
-                fontFamily="'Crimson Pro', serif"
-                fontStyle="italic"
-                fontWeight="400"
-                letterSpacing="0.15em"
-                filter={`url(#glow-${genre.name.replace(/\s+/g, '-')})`}
+              <svg
+                viewBox="-10 -10 170 80"
+                className={isMobile ? "w-36 h-auto" : "w-48 md:w-56 lg:w-64 h-auto"}
+                style={{ overflow: "visible" }}
               >
-                <textPath
-                  href={`#curve-${genre.name.replace(/\s+/g, '-')}`}
-                  startOffset="50%"
-                  textAnchor="middle"
+                <defs>
+                  <path
+                    id={labelId}
+                    d={curveVariant.curve}
+                    fill="transparent"
+                  />
+                  {/* Glow filter */}
+                  <filter id={glowId} x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                    <feMerge>
+                      <feMergeNode in="coloredBlur"/>
+                      <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                  </filter>
+                </defs>
+                
+                {/* Curved constellation name */}
+                <text
+                  fill="hsla(0, 0%, 100%, 0.7)"
+                  fontSize={isMobile ? "11" : "13"}
+                  fontFamily="'Crimson Pro', serif"
+                  fontStyle="italic"
+                  fontWeight="500"
+                  letterSpacing="0.12em"
+                  filter={`url(#${glowId})`}
                 >
-                  {genre.name.toUpperCase()}
-                </textPath>
-              </text>
-              
-              {/* Small star decorations at curve ends */}
-              <circle cx="15" cy="65" r="1.5" fill="hsla(0, 0%, 100%, 0.4)" />
-              <circle cx="185" cy="60" r="1" fill="hsla(0, 0%, 100%, 0.3)" />
-            </svg>
-          </motion.div>
-        ))}
+                  <textPath
+                    href={`#${labelId}`}
+                    startOffset={curveVariant.startOffset}
+                    textAnchor="middle"
+                  >
+                    {genre.name.toUpperCase()}
+                  </textPath>
+                </text>
+                
+                {/* Small star decorations */}
+                <circle cx="5" cy="45" r="1.5" fill="hsla(0, 0%, 100%, 0.5)" />
+                <circle cx="145" cy="40" r="1" fill="hsla(0, 0%, 100%, 0.4)" />
+              </svg>
+            </motion.div>
+          );
+        })}
       </AnimatePresence>
     </div>
   );
