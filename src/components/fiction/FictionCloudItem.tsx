@@ -17,7 +17,8 @@ const getFloatAnimation = (id: string) => {
   const hash = id.split('').reduce((a, b) => ((a << 5) - a) + b.charCodeAt(0), 0);
   const duration = 4 + (Math.abs(hash) % 4);
   const delay = (Math.abs(hash * 2) % 20) / 10;
-  const yAmount = 8 + (Math.abs(hash * 3) % 8);
+  // Keep the float subtle so it can't re-introduce overlaps after positions are resolved.
+  const yAmount = 2 + (Math.abs(hash * 3) % 3);
   
   return { duration, delay, yAmount };
 };

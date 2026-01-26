@@ -1,8 +1,15 @@
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useLayoutEffect, useMemo, useCallback } from "react";
 
 interface Position {
   x: number;
   y: number;
+}
+
+interface Size {
+  // Width/height expressed as % of the positioning container.
+  // (We approximate this using viewport dimensions.)
+  w: number;
+  h: number;
 }
 
 interface PositionedItem {
@@ -10,15 +17,42 @@ interface PositionedItem {
   clusterKey: string;
   clusterIndex: number;
   position: Position;
+  size: Size;
 }
 
-// Approximate item dimensions in percentage of container
-const ITEM_WIDTH_DESKTOP = 12;
+// Approximate item dimensions in percentage of container (fallbacks)
+// NOTE: actual collision math uses per-item sizing derived from text length.
 const ITEM_HEIGHT_DESKTOP = 4;
-const ITEM_WIDTH_MOBILE = 38;
 const ITEM_HEIGHT_MOBILE = 7;
 const MIN_SPACING_DESKTOP = 2;
 const MIN_SPACING_MOBILE = 3;
+
+const clamp = (n: number, min: number, max: number) => Math.max(min, Math.min(max, n));
+
+// Estimate each item's on-screen footprint (in %) so collision avoidance works
+// even when titles are long (max-w differs across breakpoints).
+const estimateItemSize = (text: string, isMobile: boolean): Size => {
+  const vw = typeof window !== "undefined" ? window.innerWidth : 1200;
+  const vh = typeof window !== "undefined" ? window.innerHeight : 800;
+
+  // Account for emoji prefix in the rendered label (and truncation differences)
+  const effectiveLen = clamp((text?.length ?? 0) + 6, 0, 60);
+
+  // Important: on small screens our mobile zones are ~half width; keep max pill width
+  // below that so items can be placed without forcing an overlap.
+  const maxWidthPx = isMobile ? 160 : 240;
+  const minWidthPx = isMobile ? 130 : 160;
+  const basePx = isMobile ? 86 : 110;
+  const perCharPx = isMobile ? 6.2 : 6.5;
+  const widthPx = clamp(basePx + effectiveLen * perCharPx, minWidthPx, maxWidthPx);
+
+  const heightPx = isMobile ? 44 : 40;
+
+  return {
+    w: (widthPx / Math.max(1, vw)) * 100,
+    h: (heightPx / Math.max(1, vh)) * 100,
+  };
+};
 
 // Desktop edge zones (avoid center CTA and navigation)
 const DESKTOP_ZONES = [
@@ -75,6 +109,7 @@ interface CloudItem {
   id: string;
   cluster_key: string | null;
   answer: string;
+  enriched_answer?: string | null;
 }
 
 export function useCloudPositions(items: CloudItem[]): Map<string, Position> {
@@ -100,19 +135,17 @@ export function useCloudPositions(items: CloudItem[]): Map<string, Position> {
   // Memoize config based on isMobile
   const config = useMemo(() => ({
     zones: isMobile ? MOBILE_ZONES : DESKTOP_ZONES,
-    itemWidth: isMobile ? ITEM_WIDTH_MOBILE : ITEM_WIDTH_DESKTOP,
-    itemHeight: isMobile ? ITEM_HEIGHT_MOBILE : ITEM_HEIGHT_DESKTOP,
     minSpacing: isMobile ? MIN_SPACING_MOBILE : MIN_SPACING_DESKTOP,
   }), [isMobile]);
 
   // Generate initial position for a cluster
-  const getInitialPosition = useCallback((clusterKey: string, index: number, itemIndex: number): Position => {
+  const getInitialPosition = useCallback((clusterKey: string, index: number, itemIndex: number, size: Size): Position => {
     const hash = clusterKey.split('').reduce((a, b) => {
       a = ((a << 5) - a) + b.charCodeAt(0);
       return a & a;
     }, 0);
     
-    const { zones, itemWidth, itemHeight } = config;
+    const { zones } = config;
     
     // Use itemIndex to distribute across zones sequentially on mobile
     const zoneIndex = isMobile 
@@ -120,22 +153,34 @@ export function useCloudPositions(items: CloudItem[]): Map<string, Position> {
       : Math.abs(hash) % zones.length;
     const zone = zones[zoneIndex];
     
-    const xRange = zone.xMax - zone.xMin - itemWidth;
-    const yRange = zone.yMax - zone.yMin - itemHeight;
+    // Positions are used as CENTER coordinates (because items are translated -50%/-50%).
+    // So the allowed center range must account for half the item size.
+    const xMin = zone.xMin + size.w / 2;
+    const xMax = zone.xMax - size.w / 2;
+    const yMin = zone.yMin + size.h / 2;
+    const yMax = zone.yMax - size.h / 2;
+
+    const xRange = Math.max(0, xMax - xMin);
+    const yRange = Math.max(0, yMax - yMin);
     const offsetX = (Math.abs(hash * (index + 1)) % 100) / 100 * Math.max(xRange, 0);
     const offsetY = (Math.abs(hash * (index + 2)) % 100) / 100 * Math.max(yRange, 0);
     
     return {
-      x: zone.xMin + offsetX,
-      y: zone.yMin + offsetY
+      x: xMin + offsetX,
+      y: yMin + offsetY
     };
   }, [config, isMobile]);
 
   // Check if two items overlap
-  const checkOverlap = useCallback((a: Position, b: Position): boolean => {
-    const { itemWidth, itemHeight, minSpacing } = config;
-    const overlapX = Math.abs(a.x - b.x) < (itemWidth + minSpacing);
-    const overlapY = Math.abs(a.y - b.y) < (itemHeight + minSpacing);
+  const checkOverlap = useCallback((a: PositionedItem, b: PositionedItem): boolean => {
+    const { minSpacing } = config;
+
+    // Using center-based coordinates: overlap if distance between centers is less than
+    // half-widths/half-heights + spacing.
+    const overlapX =
+      Math.abs(a.position.x - b.position.x) < (a.size.w / 2 + b.size.w / 2 + minSpacing);
+    const overlapY =
+      Math.abs(a.position.y - b.position.y) < (a.size.h / 2 + b.size.h / 2 + minSpacing);
     return overlapX && overlapY;
   }, [config]);
 
@@ -145,8 +190,8 @@ export function useCloudPositions(items: CloudItem[]): Map<string, Position> {
   }, []);
 
   // Clamp position to valid zones
-  const clampToZones = useCallback((pos: Position): Position => {
-    const { zones, itemWidth, itemHeight } = config;
+  const clampToZones = useCallback((pos: Position, size: Size): Position => {
+    const { zones } = config;
     
     // Find the nearest zone
     let bestZone = zones[0];
@@ -162,9 +207,14 @@ export function useCloudPositions(items: CloudItem[]): Map<string, Position> {
       }
     }
     
+    const minX = bestZone.xMin + size.w / 2;
+    const maxX = bestZone.xMax - size.w / 2;
+    const minY = bestZone.yMin + size.h / 2;
+    const maxY = bestZone.yMax - size.h / 2;
+
     return {
-      x: Math.max(bestZone.xMin, Math.min(bestZone.xMax - itemWidth, pos.x)),
-      y: Math.max(bestZone.yMin, Math.min(bestZone.yMax - itemHeight, pos.y))
+      x: minX <= maxX ? clamp(pos.x, minX, maxX) : (bestZone.xMin + bestZone.xMax) / 2,
+      y: minY <= maxY ? clamp(pos.y, minY, maxY) : (bestZone.yMin + bestZone.yMax) / 2,
     };
   }, [config, getDistance]);
 
@@ -184,7 +234,7 @@ export function useCloudPositions(items: CloudItem[]): Map<string, Position> {
           const a = resolved[i];
           const b = resolved[j];
           
-          if (checkOverlap(a.position, b.position)) {
+          if (checkOverlap(a, b)) {
             hasCollision = true;
             
             // Calculate push direction
@@ -211,8 +261,8 @@ export function useCloudPositions(items: CloudItem[]): Map<string, Position> {
             b.position.y += pushY * bWeight;
             
             // Clamp to valid zones
-            a.position = clampToZones(a.position);
-            b.position = clampToZones(b.position);
+            a.position = clampToZones(a.position, a.size);
+            b.position = clampToZones(b.position, b.size);
           }
         }
       }
@@ -235,7 +285,8 @@ export function useCloudPositions(items: CloudItem[]): Map<string, Position> {
     return groups;
   }, [items]);
 
-  useEffect(() => {
+  // Use layout effect to avoid a visible "pile-up" frame before positions resolve.
+  useLayoutEffect(() => {
     // Build positioned items with initial positions
     const allItems: PositionedItem[] = [];
     let globalIndex = 0;
@@ -244,13 +295,16 @@ export function useCloudPositions(items: CloudItem[]): Map<string, Position> {
       clusterItems.forEach((item, idx) => {
         // Check if we already have a position for this item
         const existingPos = positions.get(item.id);
-        const initialPos = existingPos || getInitialPosition(clusterKey, idx, globalIndex);
+        const displayText = item.enriched_answer || item.answer;
+        const size = estimateItemSize(displayText, isMobile);
+        const initialPos = existingPos || getInitialPosition(clusterKey, idx, globalIndex, size);
         
         allItems.push({
           id: item.id,
           clusterKey,
           clusterIndex: idx,
-          position: initialPos
+          position: initialPos,
+          size,
         });
         globalIndex++;
       });
