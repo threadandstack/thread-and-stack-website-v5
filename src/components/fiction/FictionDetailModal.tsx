@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, BookOpen, Users, TrendingUp } from "lucide-react";
+import { X, BookOpen, Users, TrendingUp, Sparkles } from "lucide-react";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { supabase } from "@/integrations/supabase/client";
 import { BookShuffleLoader } from "./BookShuffleLoader";
@@ -17,6 +17,7 @@ interface BookDetails {
   author: string | null;
   cover_url: string | null;
   audience_fact: string | null;
+  recommendation: string | null;
 }
 
 export function FictionDetailModal({ isOpen, onClose, title, clusterKey }: FictionDetailModalProps) {
@@ -63,7 +64,8 @@ export function FictionDetailModal({ isOpen, onClose, title, clusterKey }: Ficti
           summary: "Unable to fetch details for this title.",
           author: null,
           cover_url: null,
-          audience_fact: null
+          audience_fact: null,
+          recommendation: null
         });
       }
 
@@ -173,11 +175,30 @@ export function FictionDetailModal({ isOpen, onClose, title, clusterKey }: Ficti
                     className="bg-accent/10 border border-accent/20 rounded-xl p-4"
                   >
                     <div className="flex items-start gap-3">
-                      <div className="p-2 rounded-full bg-accent/20">
+                      <div className="p-2 rounded-full bg-accent/20 flex-shrink-0">
                         <TrendingUp className="h-4 w-4 text-accent" />
                       </div>
                       <p className="text-sm text-foreground leading-relaxed">
                         {details.audience_fact}
+                      </p>
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* Recommendation callout */}
+                {details?.recommendation && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.35 }}
+                    className="bg-muted/50 border border-border rounded-xl p-4"
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="p-2 rounded-full bg-muted flex-shrink-0">
+                        <Sparkles className="h-4 w-4 text-foreground/70" />
+                      </div>
+                      <p className="text-sm text-muted-foreground leading-relaxed">
+                        {details.recommendation}
                       </p>
                     </div>
                   </motion.div>

@@ -76,7 +76,7 @@ serve(async (req) => {
       throw new Error("LOVABLE_API_KEY is not configured");
     }
 
-    // Use AI to generate book summary and audience fact
+    // Use AI to generate book summary, audience fact, and recommendation
     const aiResponse = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -88,7 +88,7 @@ serve(async (req) => {
         messages: [
           {
             role: "system",
-            content: `You provide brief, engaging summaries of fiction books/stories and fascinating audience statistics. Be accurate about author and plot details. If you don't know the work, say so honestly.`
+            content: `You provide brief, engaging summaries of fiction books/stories, fascinating audience statistics, and personalized recommendations. Be accurate about author and plot details. If you don't know the work, say so honestly.`
           },
           {
             role: "user",
@@ -100,7 +100,7 @@ serve(async (req) => {
             type: "function",
             function: {
               name: "book_details",
-              description: "Return book/story details with an audience fact",
+              description: "Return book/story details with audience facts and recommendation",
               parameters: {
                 type: "object",
                 properties: {
@@ -114,10 +114,14 @@ serve(async (req) => {
                   },
                   audience_fact: {
                     type: "string",
-                    description: "A fascinating statistic or fact about the book's AUDIENCE or cultural impact (NOT about the plot). Must include a specific number/statistic. Examples: 'Over 150 million copies sold worldwide', 'Translated into 80 languages', 'The #1 bestseller for 52 consecutive weeks', 'Sparked a 400% increase in visitors to the Scottish Highlands'. Keep it under 25 words."
+                    description: "A fascinating statistic or fact about the book's AUDIENCE or cultural impact (NOT about the plot). Must include a specific number/statistic. Examples: 'Over 150 million copies sold worldwide', 'Translated into 80 languages', 'The #1 bestseller for 52 consecutive weeks'. Keep it under 25 words."
+                  },
+                  recommendation: {
+                    type: "string",
+                    description: "A 'If you liked this, you'll love...' recommendation with a SPECIFIC statistic about the recommended book. Format: 'If you loved [this book], try [recommended book] by [author] — [stat about the recommendation, e.g., rated 4.5 stars by 2 million readers on Goodreads]'. Keep it under 30 words."
                   }
                 },
-                required: ["summary", "audience_fact"],
+                required: ["summary", "audience_fact", "recommendation"],
                 additionalProperties: false
               }
             }
@@ -130,6 +134,7 @@ serve(async (req) => {
     let summary = "A beloved work of fiction that has captured readers' imaginations.";
     let author: string | null = null;
     let audience_fact = "Beloved by readers around the world.";
+    let recommendation: string | null = null;
 
     if (aiResponse.ok) {
       const aiData = await aiResponse.json();
@@ -141,6 +146,7 @@ serve(async (req) => {
           summary = args.summary || summary;
           author = args.author || null;
           audience_fact = args.audience_fact || audience_fact;
+          recommendation = args.recommendation || null;
         } catch (e) {
           console.error("Failed to parse tool call:", e);
         }
@@ -153,7 +159,7 @@ serve(async (req) => {
     const cover_url = await fetchBookCover(title, author);
 
     return new Response(
-      JSON.stringify({ summary, author, cover_url, audience_fact }),
+      JSON.stringify({ summary, author, cover_url, audience_fact, recommendation }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   } catch (e) {
@@ -163,7 +169,8 @@ serve(async (req) => {
         summary: "Unable to fetch details at this time.",
         author: null,
         cover_url: null,
-        audience_fact: null
+        audience_fact: null,
+        recommendation: null
       }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
