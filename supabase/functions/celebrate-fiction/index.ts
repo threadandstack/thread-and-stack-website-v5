@@ -37,7 +37,14 @@ serve(async (req) => {
         messages: [
           {
             role: "system",
-            content: `You celebrate someone's fiction choice with ONE witty sentence that references something specific from the book/story (a character, quote, or iconic moment). Be warm and clever, not generic.`
+            content: `You celebrate someone's fiction choice with ONE witty sentence referencing something specific (character, quote, iconic moment). Be warm and clever.
+
+For gif_search: Use the MAIN CHARACTER NAME or MOVIE/BOOK TITLE that would have actual GIFs on Tenor. For example:
+- "Lord of the Rings" → "gandalf" or "frodo"
+- "Pride and Prejudice" → "mr darcy"
+- "Harry Potter" → "harry potter"
+- "The Office" → "michael scott"
+Pick the most iconic, GIF-able character or title.`
           },
           {
             role: "user",
@@ -59,7 +66,7 @@ serve(async (req) => {
                   },
                   gif_search: {
                     type: "string",
-                    description: "Character or scene name for GIF search (e.g. 'frodo celebration', 'pride prejudice')"
+                    description: "Main character name or famous title for GIF search (e.g. 'gandalf', 'mr darcy', 'harry potter')"
                   }
                 },
                 required: ["message", "gif_search"],
