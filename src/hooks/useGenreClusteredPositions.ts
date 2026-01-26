@@ -93,17 +93,37 @@ interface MobileZone {
   radius: number;
 }
 
+// Clock-face positioning order: 6, 12, 3, 9, 2, 11, 7, 5, then continue pattern
+// Angles in degrees (0 = 3 o'clock, 90 = 6 o'clock, etc.)
+const CLOCK_POSITIONS = [
+  180,  // 6 o'clock (bottom)
+  0,    // 12 o'clock (top)
+  90,   // 3 o'clock (right)
+  270,  // 9 o'clock (left)
+  30,   // 2 o'clock
+  330,  // 11 o'clock
+  210,  // 7 o'clock
+  150,  // 5 o'clock
+  // Second ring (slightly inward)
+  60,   // 1 o'clock
+  300,  // 10 o'clock
+  240,  // 8 o'clock
+  120,  // 4 o'clock
+  // Third ring fills gaps
+  15, 45, 75, 105, 135, 165, 195, 225, 255, 285, 315, 345
+];
+
 const generateMobileZones = (startYPercent: number, numGenres: number): MobileZone[] => {
-  // Each genre gets a fixed-height band - generous spacing to fit books
-  // Use a minimum band height to ensure books don't get cramped
-  const minBandHeight = 18; // At least 18% per genre band
+  // Each genre gets a fixed-height band - generous spacing to fit books in clock pattern
+  const minBandHeight = 22; // At least 22% per genre band for clock layout
   const bandHeight = Math.max(minBandHeight, 100 / Math.max(1, numGenres));
   const zones: MobileZone[] = [];
   
   for (let i = 0; i < Math.max(12, numGenres); i++) {
     const yMin = i * bandHeight;
     const yMax = (i + 1) * bandHeight;
-    const yCenter = yMin + 6; // Anchor near top of band
+    // Star at exact center of zone
+    const yCenter = yMin + (bandHeight / 2);
     
     zones.push({
       xCenter: 50,
@@ -202,7 +222,7 @@ export function useGenreClusteredPositions(
     return overlapX && overlapY;
   }, [minSpacing]);
 
-  // Position items around their genre's anchor point (but not ON the anchor)
+  // Position items around their genre's anchor point using clock-face pattern on mobile
   // On mobile, strictly enforce vertical zone bounds
   const positionItemsAroundAnchor = useCallback((
     zoneItems: CloudItem[],
@@ -214,7 +234,7 @@ export function useGenreClusteredPositions(
     const positioned: PositionedItem[] = [];
     
     // Safe margins - generous but not excessive
-    const safeMarginX = isMobile ? 18 : 8;
+    const safeMarginX = isMobile ? 15 : 8;
     const safeMarginY = isMobile ? 2 : 4;
     
     zoneItems.forEach((item, idx) => {
@@ -222,20 +242,36 @@ export function useGenreClusteredPositions(
       const size = estimateItemSize(displayText, isMobile);
       
       if (isMobile && zoneBounds) {
-        // MOBILE ONLY: Stack books vertically, centered
-        // Each book on its own row, all centered for clean vertical flow
-        const fixedRowSpacing = 7; // 7% vh between each book row
-        const startY = anchor.y + anchorExclusionRadius + 5;
-        let y = startY + (idx * fixedRowSpacing);
+        // MOBILE: Clock-face positioning around centered star
+        // Use clock positions in order: 6, 12, 3, 9, 2, 11, 7, 5, etc.
+        const clockAngle = CLOCK_POSITIONS[idx % CLOCK_POSITIONS.length];
+        const angleRad = (clockAngle * Math.PI) / 180;
         
-        // All books centered horizontally
-        let x = 50;
+        // Calculate zone dimensions to determine radius
+        const zoneHeight = zoneBounds.yMax - zoneBounds.yMin;
+        const zoneWidth = 100 - (safeMarginX * 2); // Available width
+        
+        // Base radius - fit within zone bounds, smaller for crowded clusters
+        const numItems = zoneItems.length;
+        // Pull items closer when there are more of them
+        const crowdingFactor = numItems > 8 ? 0.7 : numItems > 4 ? 0.85 : 1.0;
+        const baseRadiusY = (zoneHeight / 2 - 3) * crowdingFactor; // Leave padding from edges
+        const baseRadiusX = Math.min(35, zoneWidth / 3) * crowdingFactor; // Horizontal spread
+        
+        // For items beyond first 8, use a smaller inner ring
+        const ringIndex = Math.floor(idx / 8);
+        const ringScale = 1 - (ringIndex * 0.25); // Each ring 25% smaller
+        
+        const radiusX = baseRadiusX * ringScale;
+        const radiusY = baseRadiusY * ringScale;
+        
+        // Calculate position from center (anchor is at center of zone)
+        let x = anchor.x + Math.sin(angleRad) * radiusX;
+        let y = anchor.y + Math.cos(angleRad) * radiusY;
         
         // Clamp to zone bounds
-        const minY = anchor.y + anchorExclusionRadius + 2;
-        const maxY = zoneBounds.yMax - 4;
-        y = clamp(y, minY, maxY);
         x = clamp(x, size.w / 2 + safeMarginX, 100 - size.w / 2 - safeMarginX);
+        y = clamp(y, zoneBounds.yMin + size.h / 2 + 1, zoneBounds.yMax - size.h / 2 - 1);
         
         positioned.push({
           id: item.id,
