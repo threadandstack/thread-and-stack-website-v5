@@ -488,13 +488,19 @@ export default function FictionFavoritesPage() {
               </h1>
               
               <p className="text-muted-foreground text-lg mb-6">
-                Share the stories that shaped you. Watch them join the cloud of narratives we all carry with us.
+                Populate the night sky with the stories that shaped you!<br />
+                Add any title you want to our constellation of narratives.
               </p>
 
               <FictionTagInput 
                 onSubmit={handleSubmit}
                 isSubmitting={isSubmitting}
               />
+
+              <div className="text-muted-foreground/80 text-sm text-center mt-4 space-y-1">
+                <p>💡 Tap any title to learn more and vote your love for it!</p>
+                <p>⭐️ If you enter a book that's already in the sky, it will add a +1 to it!</p>
+              </div>
 
               {favorites.length > 0 && (
                 <p className="text-muted-foreground/70 text-sm text-center mt-4">
@@ -550,7 +556,8 @@ export default function FictionFavoritesPage() {
                 </h1>
                 
                 <p className="text-muted-foreground text-xs leading-relaxed">
-                  Share the stories that shaped you. Watch them join the cloud of narratives we all carry with us.
+                  Populate the night sky with the stories that shaped you!<br />
+                  Add any title you want to our constellation of narratives.
                 </p>
               </div>
             </motion.div>
@@ -569,11 +576,10 @@ export default function FictionFavoritesPage() {
                 isSubmitting={isSubmitting}
               />
               
-              {favorites.length > 0 && (
-                <p className="text-white/60 text-xs text-center mt-3">
-                  💡 Tap any title to learn more
-                </p>
-              )}
+              <div className="text-white/70 text-xs text-center mt-3 space-y-0.5">
+                <p>💡 Tap any title to learn more and vote your love for it!</p>
+                <p>⭐️ If you enter a book that's already in the sky, it will add a +1 to it!</p>
+              </div>
 
               {favorites.length === 0 && (
                 <p className="text-white/70 text-sm italic mt-4 text-center">

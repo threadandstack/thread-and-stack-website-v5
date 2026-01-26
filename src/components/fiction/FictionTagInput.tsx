@@ -106,7 +106,7 @@ export function FictionTagInput({ onSubmit, isSubmitting }: FictionTagInputProps
           onKeyDown={handleKeyDown}
           onPaste={handlePaste}
           disabled={isSubmitting}
-          placeholder={tags.length === 0 ? "The Great Gatsby, Dune, Harry Potter..." : "Add another..."}
+          placeholder={tags.length === 0 ? "Enter your favourite book here" : "Add another..."}
           className="flex-1 min-w-[150px] bg-transparent border-none outline-none text-base md:text-lg placeholder:text-muted-foreground/60"
         />
 
