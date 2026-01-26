@@ -28,7 +28,7 @@ const SmokeParticle = ({ delay, x }: { delay: number; x: number }) => (
 
 export function CampfireScene() {
   return (
-    <div className="relative w-full" style={{ height: '200px' }}>
+    <div className="relative w-full" style={{ height: '120px', marginBottom: '-1px' }}>
       {/* Transparent container - stars show through */}
       
       {/* Tree silhouettes layer - tiling image with transparent background */}
@@ -43,7 +43,7 @@ export function CampfireScene() {
       />
 
       {/* Ambient fire glow - large soft glow behind everything */}
-      <div className="absolute left-1/2 bottom-8 -translate-x-1/2 z-20 pointer-events-none">
+      <div className="absolute left-1/2 bottom-0 -translate-x-1/2 z-20 pointer-events-none">
         {/* Outer warm glow */}
         <motion.div
           className="absolute left-1/2 bottom-0 -translate-x-1/2 w-64 h-40 rounded-full"
@@ -82,7 +82,7 @@ export function CampfireScene() {
       </div>
 
       {/* Campfire container - centered, above glow */}
-      <div className="absolute left-1/2 bottom-6 -translate-x-1/2 z-30">
+      <div className="absolute left-1/2 bottom-0 -translate-x-1/2 z-30">
         {/* Smoke particles - rise above fire */}
         <div className="absolute left-1/2 -translate-x-1/2 bottom-16 z-40">
           <SmokeParticle delay={0} x={-8} />
@@ -105,13 +105,6 @@ export function CampfireScene() {
         />
       </div>
 
-      {/* Ground shadow line */}
-      <div 
-        className="absolute inset-x-0 bottom-0 h-3 z-5"
-        style={{ 
-          background: 'linear-gradient(to top, hsl(234, 40%, 3%), transparent)'
-        }}
-      />
     </div>
   );
 }
