@@ -83,15 +83,21 @@ export function ConstellationLines({
         if (!anchor) return null;
         
         const color = getGenreColor(genre);
+        
+        // Star center is offset below the anchor (label position)
+        // Label ~12px + margin ~6px + half star ~12px = ~30px below anchor
+        // Convert to vh percentage (assuming ~800px viewport height)
+        const starOffsetY = isMobile ? 3.5 : 3.8;
+        const starCenterY = anchor.y + starOffsetY;
 
         return (
           <g key={genre}>
-            {/* Lines from anchor to each book */}
+            {/* Lines from star center to each book */}
             {books.map((book, bookIndex) => (
               <motion.line
                 key={`line-${book.id}`}
                 x1={`${anchor.x}%`}
-                y1={`${anchor.y}%`}
+                y1={`${starCenterY}%`}
                 x2={`${book.x}%`}
                 y2={`${book.y}%`}
                 stroke={color}
