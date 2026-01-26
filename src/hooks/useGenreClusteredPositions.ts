@@ -267,12 +267,11 @@ export function useGenreClusteredPositions(
   }, [minSpacing, minRowHorizontalSpacing]);
 
   // ==========================================================================
-  // TRUE CIRCULAR CLOCK-FACE DISTRIBUTION
+  // ARCHIMEDEAN SPIRAL DISTRIBUTION
   // ==========================================================================
-  // Each book gets a UNIQUE angle: angle = (index / totalBooks) * 360°
-  // Distance alternates between 4 rings: 40%, 60%, 80%, 95%
-  // CRITICAL: No axis clamping that destroys circular pattern!
-  // Instead, we calculate max safe radius for each angle and scale down if needed.
+  // r = a + b * θ  —  radius increases linearly with angle.
+  // Each book gets a unique (θ, r) so items spiral outward from the anchor.
+  // This provides natural, even separation without explicit rings.
   // ==========================================================================
   const positionItemsAroundAnchor = useCallback((
     zoneItems: CloudItem[],
@@ -283,127 +282,94 @@ export function useGenreClusteredPositions(
   ): PositionedItem[] => {
     const positioned: PositionedItem[] = [];
     const itemCount = zoneItems.length;
-    
+
     if (itemCount === 0) return positioned;
-    
 
-    // Desktop: 4-ring distribution
-    const DESKTOP_RING_FRACTIONS = [0.40, 0.60, 0.80, 0.95];
+    // ---------- SPIRAL PARAMETERS ----------
+    // "a" = starting radius (keeps items away from anchor)
+    // "b" = growth rate per radian
+    // "turnsForN" = how many full rotations we spread N items across
+    const minRadius = anchorExclusionRadius + (isMobile ? 4 : 5);
 
-    // Mobile: 5 rings with explicit slot counts and a 60° offset between rings
-    // Ring 1 = 3 slots, Ring 2 = 6, Ring 3 = 9, Ring 4 = 12, Ring 5 = 15
-    const MOBILE_RING_SLOT_COUNTS = [3, 6, 9, 12, 15];
-    const MOBILE_RING_FRACTIONS = [0.26, 0.42, 0.58, 0.74, 0.90];
-    const MOBILE_RING_OFFSET_DEGREES = 60;
+    // Growth rate: controls how quickly the spiral expands outward.
+    // Larger b → looser spiral; smaller b → tighter spiral.
+    // Mobile needs a tighter spiral within the tall vertical bands.
+    const spiralGrowth = isMobile ? 2.8 : 2.0;
 
-    // User requirement: for mobile dense genres (9+ books), use a 4.0× radius multiplier.
-    // IMPORTANT: Apply this to baseMaxRadius (not maxSafeRadius) so the multiplier actually matters.
-    const getRadiusScale = (n: number) => {
-      if (isMobile) {
-        if (n >= 9) return 4.0;
-        if (n >= 6) return 3.0;
-        if (n >= 4) return 2.2;
-        return 1.6;
+    // Total angle span: spread items over ~2-4 full turns depending on count.
+    // More items → more turns to keep radial separation.
+    const turnsForCount = isMobile
+      ? Math.max(1.5, Math.min(5, itemCount / 6))
+      : Math.max(1.2, Math.min(4, itemCount / 8));
+    const maxTheta = turnsForCount * 2 * Math.PI;
+
+    // Starting angle offset (so first item isn't always at 12 o'clock)
+    const startAngle = Math.PI * 0.25; // 45° offset
+
+    // Compute max theoretical radius at maxTheta
+    const theoreticalMaxR = minRadius + spiralGrowth * maxTheta;
+
+    // Determine scale factor so spiral fits within available space
+    const getMaxAvailableRadius = () => {
+      if (isMobile && zoneBounds) {
+        const roomUp = anchor.y - zoneBounds.yMin - 2;
+        const roomDown = zoneBounds.yMax - anchor.y - 2;
+        const roomLeft = anchor.x - 3;
+        const roomRight = 100 - anchor.x - 3;
+        return Math.min(roomUp, roomDown, roomLeft, roomRight, 42);
       }
-      if (n <= 3) return 0.85;
-      if (n <= 6) return 1.0;
-      if (n <= 10) return 1.3;
-      if (n <= 15) return 1.6;
-      if (n <= 20) return 1.9;
-      return 2.2 + (n - 20) * 0.05;
+      // Desktop
+      const roomUp = anchor.y - 3;
+      const roomDown = 100 - anchor.y - 3;
+      const roomLeft = anchor.x - 3;
+      const roomRight = 100 - anchor.x - 3;
+      return Math.min(roomUp, roomDown, roomLeft, roomRight, baseMaxRadius * 1.5);
     };
 
-    const radiusScale = getRadiusScale(itemCount);
-    
-    // Minimal margin from absolute screen edge
+    const maxAvailable = getMaxAvailableRadius();
+    const scaleFactor = theoreticalMaxR > maxAvailable ? maxAvailable / theoreticalMaxR : 1;
+
     const edgeMargin = 2;
-    
+
     zoneItems.forEach((item, idx) => {
       const displayText = item.enriched_answer || item.answer;
       const size = estimateItemSize(displayText, isMobile);
       const halfW = size.w / 2;
       const halfH = size.h / 2;
-      
-      // ========== ANGLE + RING ASSIGNMENT ==========
-      let angleDegrees: number;
-      let ringFraction: number;
-      let ringIndex: number;
 
-      if (isMobile) {
-        const totalSlots = MOBILE_RING_SLOT_COUNTS.reduce((a, b) => a + b, 0);
-        const wrappedIdx = idx % totalSlots;
+      // ---------- SPIRAL FORMULA ----------
+      // θ linearly distributed across [0, maxTheta]
+      const theta = startAngle + (idx / Math.max(1, itemCount - 1)) * maxTheta;
+      // r = a + b * θ, then scaled to fit
+      const rawRadius = minRadius + spiralGrowth * (theta - startAngle);
+      let radius = rawRadius * scaleFactor;
 
-        let remaining = wrappedIdx;
-        ringIndex = 0;
-        for (let r = 0; r < MOBILE_RING_SLOT_COUNTS.length; r++) {
-          if (remaining < MOBILE_RING_SLOT_COUNTS[r]) {
-            ringIndex = r;
-            break;
-          }
-          remaining -= MOBILE_RING_SLOT_COUNTS[r];
-        }
+      // Unit vector (0° = up = -Y)
+      const sinA = Math.sin(theta);
+      const cosA = Math.cos(theta);
 
-        const slotsInRing = MOBILE_RING_SLOT_COUNTS[ringIndex];
-        const slotIndex = remaining;
-
-        angleDegrees = (slotIndex / slotsInRing) * 360 + ringIndex * MOBILE_RING_OFFSET_DEGREES;
-        ringFraction = MOBILE_RING_FRACTIONS[ringIndex];
-      } else {
-        angleDegrees = (idx / itemCount) * 360;
-        const ringPattern = [0, 2, 1, 3];
-        ringIndex = ringPattern[idx % 4];
-        ringFraction = DESKTOP_RING_FRACTIONS[ringIndex];
-      }
-
-      const angleRad = (angleDegrees * Math.PI) / 180;
-
-      // Unit vector for this angle (0° = up = -Y in screen coords)
-      const sinA = Math.sin(angleRad);
-      const cosA = Math.cos(angleRad);
-      
       if (isMobile && zoneBounds) {
-        // ========== MOBILE: PRESERVE CIRCULAR PATTERN ==========
-        
-        // Calculate available space in each direction from anchor
+        // ---------- MOBILE: ZONE-AWARE CLAMPING ----------
         const roomUp = anchor.y - zoneBounds.yMin - halfH - 0.5;
         const roomDown = zoneBounds.yMax - anchor.y - halfH - 0.5;
         const roomLeft = anchor.x - halfW - edgeMargin;
         const roomRight = 100 - anchor.x - halfW - edgeMargin;
-        
-        // For this specific angle, calculate max safe radius
-        // that keeps the item within bounds WITHOUT clamping axes separately
-        let maxSafeRadius = 100; // Start with large number
-        
-        // Check X constraint
+
+        // Calculate max safe radius for this specific angle
+        let maxSafeR = 100;
         if (Math.abs(sinA) > 0.01) {
-          const maxRadiusForX = sinA > 0 
-            ? roomRight / sinA 
-            : roomLeft / Math.abs(sinA);
-          maxSafeRadius = Math.min(maxSafeRadius, maxRadiusForX);
+          maxSafeR = Math.min(maxSafeR, sinA > 0 ? roomRight / sinA : roomLeft / Math.abs(sinA));
         }
-        
-        // Check Y constraint (cosA > 0 means going UP = negative screen Y)
         if (Math.abs(cosA) > 0.01) {
-          const maxRadiusForY = cosA > 0 
-            ? roomUp / cosA 
-            : roomDown / Math.abs(cosA);
-          maxSafeRadius = Math.min(maxSafeRadius, maxRadiusForY);
+          maxSafeR = Math.min(maxSafeR, cosA > 0 ? roomUp / cosA : roomDown / Math.abs(cosA));
         }
-        
-        // NOTE: Scaling relative to maxSafeRadius causes outer rings to collapse to the boundary
-        // (and visually form rows). Instead, scale baseMaxRadius and cap per-angle by maxSafeRadius.
-        maxSafeRadius = clamp(maxSafeRadius, 5, 55);
+        maxSafeR = clamp(maxSafeR, minRadius, 50);
 
-        const targetMaxRadius = baseMaxRadius * radiusScale;
-        const maxAllowedRadius = Math.min(targetMaxRadius, maxSafeRadius * 0.98);
+        radius = clamp(radius, minRadius, maxSafeR * 0.96);
 
-        const minDistance = anchorExclusionRadius + 2;
-        const actualRadius = clamp(maxAllowedRadius * ringFraction, minDistance, maxAllowedRadius);
-        
-        // Calculate final position using SINGLE radius (true circle)
-        const x = anchor.x + sinA * actualRadius;
-        const y = anchor.y - cosA * actualRadius;
-        
+        const x = anchor.x + sinA * radius;
+        const y = anchor.y - cosA * radius;
+
         positioned.push({
           id: item.id,
           genre: item.genre,
@@ -411,57 +377,40 @@ export function useGenreClusteredPositions(
           size,
           anchorX: anchor.x,
           anchorY: anchor.y,
-          zoneBounds
+          zoneBounds,
         });
-        
       } else {
-        // ========== DESKTOP: PRESERVE CIRCULAR PATTERN ==========
-        
-        // Calculate available space in each direction
+        // ---------- DESKTOP ----------
         const roomUp = anchor.y - halfH - edgeMargin;
         const roomDown = 100 - anchor.y - halfH - edgeMargin;
         const roomLeft = anchor.x - halfW - edgeMargin;
         const roomRight = 100 - anchor.x - halfW - edgeMargin;
-        
-        // Calculate max safe radius for this angle
-        let maxSafeRadius = 100;
-        
+
+        let maxSafeR = 100;
         if (Math.abs(sinA) > 0.01) {
-          const maxRadiusForX = sinA > 0 
-            ? roomRight / sinA 
-            : roomLeft / Math.abs(sinA);
-          maxSafeRadius = Math.min(maxSafeRadius, maxRadiusForX);
+          maxSafeR = Math.min(maxSafeR, sinA > 0 ? roomRight / sinA : roomLeft / Math.abs(sinA));
         }
-        
         if (Math.abs(cosA) > 0.01) {
-          const maxRadiusForY = cosA > 0 
-            ? roomUp / cosA 
-            : roomDown / Math.abs(cosA);
-          maxSafeRadius = Math.min(maxSafeRadius, maxRadiusForY);
+          maxSafeR = Math.min(maxSafeR, cosA > 0 ? roomUp / cosA : roomDown / Math.abs(cosA));
         }
-        
-        maxSafeRadius = clamp(maxSafeRadius, 5, baseMaxRadius * radiusScale);
-        
-        // Apply ring fraction
-        const minDistance = anchorExclusionRadius + 2;
-        const desiredDistance = minDistance + (maxSafeRadius - minDistance) * ringFraction;
-        const actualDistance = Math.min(desiredDistance, maxSafeRadius * 0.95);
-        
-        // Calculate final position
-        const x = anchor.x + sinA * actualDistance;
-        const y = anchor.y - cosA * actualDistance * 0.85; // Slight Y compression for aesthetics
-        
+        maxSafeR = clamp(maxSafeR, minRadius, baseMaxRadius * 1.8);
+
+        radius = clamp(radius, minRadius, maxSafeR * 0.95);
+
+        const x = anchor.x + sinA * radius;
+        const y = anchor.y - cosA * radius * 0.88; // Slight vertical compression
+
         positioned.push({
           id: item.id,
           genre: item.genre,
           position: { x, y },
           size,
           anchorX: anchor.x,
-          anchorY: anchor.y
+          anchorY: anchor.y,
         });
       }
     });
-    
+
     return positioned;
   }, [isMobile]);
 
