@@ -398,8 +398,9 @@ export default function FictionFavoritesPage() {
         genreCounts.set(item.genre, (genreCounts.get(item.genre) || 0) + 1);
       }
     });
+    // Show constellation for every genre (no minimum)
     return Array.from(genreCounts.entries())
-      .filter(([_, count]) => count >= 2)
+      .filter(([_, count]) => count >= 1)
       .map(([genre]) => genre);
   }, [aggregatedFavorites]);
 
@@ -478,7 +479,7 @@ export default function FictionFavoritesPage() {
           <ConstellationLines 
             genreAnchors={genreAnchors} 
             bookPositions={bookPositionsWithGenre} 
-            minCount={2} 
+            minCount={1} 
           />
           
           {/* Draggable constellation anchors - layered above lines */}
@@ -676,7 +677,7 @@ export default function FictionFavoritesPage() {
               <ConstellationLines 
                 genreAnchors={genreAnchors} 
                 bookPositions={bookPositionsWithGenre} 
-                minCount={2}
+                minCount={1}
                 isMobile={true}
               />
               
