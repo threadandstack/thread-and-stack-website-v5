@@ -10,6 +10,8 @@ import { FictionCloudItem } from "@/components/fiction/FictionCloudItem";
 import { FictionDetailModal } from "@/components/fiction/FictionDetailModal";
 import { AddedCountBadge } from "@/components/fiction/AddedCountBadge";
 import { FictionTagInput } from "@/components/fiction/FictionTagInput";
+import { StarryBackdrop } from "@/components/fiction/StarryBackdrop";
+import { filterProfanity } from "@/lib/profanityFilter";
 
 interface FictionFavorite {
   id: string;
@@ -31,22 +33,33 @@ interface SelectedBook {
   clusterKey: string | null;
 }
 
-// Generate a consistent position for each cluster - avoiding center area
+// Generate a consistent position for each cluster - avoiding center and nav areas
 const getClusterPosition = (clusterKey: string, index: number) => {
   const hash = clusterKey.split('').reduce((a, b) => {
     a = ((a << 5) - a) + b.charCodeAt(0);
     return a & a;
   }, 0);
   
+  // Edge zones that avoid:
+  // - Center area (for the main CTA)
+  // - Top navigation area (y < 12%)
+  // - Footer area
   const edgeZones = [
-    { xMin: 3, xMax: 25, yMin: 8, yMax: 30 },
-    { xMin: 30, xMax: 70, yMin: 5, yMax: 20 },
-    { xMin: 75, xMax: 97, yMin: 8, yMax: 30 },
-    { xMin: 3, xMax: 22, yMin: 35, yMax: 65 },
-    { xMin: 78, xMax: 97, yMin: 35, yMax: 65 },
-    { xMin: 3, xMax: 25, yMin: 70, yMax: 92 },
-    { xMin: 30, xMax: 70, yMin: 80, yMax: 95 },
-    { xMin: 75, xMax: 97, yMin: 70, yMax: 92 },
+    // Top corners (below nav)
+    { xMin: 2, xMax: 18, yMin: 14, yMax: 28 },
+    { xMin: 82, xMax: 98, yMin: 14, yMax: 28 },
+    // Left edge (avoiding center)
+    { xMin: 2, xMax: 15, yMin: 32, yMax: 48 },
+    { xMin: 2, xMax: 15, yMin: 55, yMax: 72 },
+    // Right edge (avoiding center)
+    { xMin: 85, xMax: 98, yMin: 32, yMax: 48 },
+    { xMin: 85, xMax: 98, yMin: 55, yMax: 72 },
+    // Bottom corners
+    { xMin: 2, xMax: 20, yMin: 76, yMax: 88 },
+    { xMin: 80, xMax: 98, yMin: 76, yMax: 88 },
+    // Far bottom edges
+    { xMin: 25, xMax: 40, yMin: 82, yMax: 92 },
+    { xMin: 60, xMax: 75, yMin: 82, yMax: 92 },
   ];
   
   const zoneIndex = Math.abs(hash) % edgeZones.length;
@@ -130,6 +143,19 @@ export default function FictionFavoritesPage() {
 
   const handleSubmit = async (titles: string[]) => {
     if (titles.length === 0) return;
+
+    // Check for profanity in all titles
+    for (const title of titles) {
+      const { isClean, reason } = filterProfanity(title);
+      if (!isClean) {
+        toast({
+          title: "Whoops!",
+          description: reason,
+          variant: "destructive"
+        });
+        return;
+      }
+    }
 
     setIsSubmitting(true);
 
@@ -228,6 +254,9 @@ export default function FictionFavoritesPage() {
       <Navigation />
       
       <main className="flex-1 relative">
+        {/* Starry backdrop */}
+        <StarryBackdrop />
+
         {/* Added count badge */}
         <AddedCountBadge count={addedCount} show={showAddedBadge} />
 
