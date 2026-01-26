@@ -2,23 +2,51 @@ import { motion } from "framer-motion";
 import campfireGif from "@/assets/campfire.gif";
 import treesImage from "@/assets/trees-silhouette.png";
 
-// Generate smoke particles
-const SmokeParticle = ({ delay, x }: { delay: number; x: number }) => (
+// Generate smoke particles that rise high up the page
+const SmokeParticle = ({ delay, x, size = 3 }: { delay: number; x: number; size?: number }) => (
   <motion.div
-    className="absolute w-3 h-3 rounded-full"
+    className="absolute rounded-full"
     style={{ 
       left: `calc(50% + ${x}px)`,
-      background: 'radial-gradient(circle, hsla(0, 0%, 80%, 0.4), transparent 70%)'
+      width: size * 4,
+      height: size * 4,
+      background: 'radial-gradient(circle, hsla(0, 0%, 80%, 0.3), transparent 70%)'
     }}
-    initial={{ y: 0, opacity: 0.5, scale: 0.5 }}
+    initial={{ y: 0, opacity: 0.4, scale: 0.5 }}
     animate={{ 
-      y: -120, 
-      opacity: 0, 
-      scale: 2,
-      x: [0, x * 0.5, x * -0.3, x * 0.2]
+      y: '-80vh', 
+      opacity: [0.4, 0.3, 0.2, 0],
+      scale: [0.5, 1.5, 2.5, 3],
+      x: [0, x * 2, x * -1.5, x * 3, x * -0.5]
     }}
     transition={{
-      duration: 4,
+      duration: 12,
+      delay,
+      repeat: Infinity,
+      ease: "easeOut"
+    }}
+  />
+);
+
+// Smaller, faster smoke for variety
+const SmallSmokeParticle = ({ delay, x }: { delay: number; x: number }) => (
+  <motion.div
+    className="absolute rounded-full"
+    style={{ 
+      left: `calc(50% + ${x}px)`,
+      width: 8,
+      height: 8,
+      background: 'radial-gradient(circle, hsla(0, 0%, 90%, 0.25), transparent 70%)'
+    }}
+    initial={{ y: 0, opacity: 0.3, scale: 0.3 }}
+    animate={{ 
+      y: '-60vh', 
+      opacity: [0.3, 0.2, 0.1, 0],
+      scale: [0.3, 1, 1.8, 2.5],
+      x: [0, x * 1.5, x * -1, x * 2]
+    }}
+    transition={{
+      duration: 8,
       delay,
       repeat: Infinity,
       ease: "easeOut"
@@ -83,14 +111,25 @@ export function CampfireScene() {
 
       {/* Campfire container - centered, above glow */}
       <div className="absolute left-1/2 bottom-0 -translate-x-1/2 z-20">
-        {/* Smoke particles - rise above fire */}
-        <div className="absolute left-1/2 -translate-x-1/2 bottom-16 z-40">
-          <SmokeParticle delay={0} x={-8} />
-          <SmokeParticle delay={0.6} x={5} />
-          <SmokeParticle delay={1.2} x={-12} />
-          <SmokeParticle delay={1.8} x={8} />
-          <SmokeParticle delay={2.4} x={-3} />
-          <SmokeParticle delay={3} x={6} />
+        {/* Smoke particles - rise high up to the CTA box */}
+        <div className="absolute left-1/2 -translate-x-1/2 bottom-12 z-40 overflow-visible">
+          {/* Large slow-rising smoke puffs */}
+          <SmokeParticle delay={0} x={-10} size={4} />
+          <SmokeParticle delay={1.5} x={8} size={3} />
+          <SmokeParticle delay={3} x={-5} size={5} />
+          <SmokeParticle delay={4.5} x={12} size={3} />
+          <SmokeParticle delay={6} x={-15} size={4} />
+          <SmokeParticle delay={7.5} x={5} size={4} />
+          <SmokeParticle delay={9} x={-8} size={3} />
+          <SmokeParticle delay={10.5} x={10} size={5} />
+          
+          {/* Smaller faster smoke for variety */}
+          <SmallSmokeParticle delay={0.5} x={-6} />
+          <SmallSmokeParticle delay={2} x={10} />
+          <SmallSmokeParticle delay={3.5} x={-12} />
+          <SmallSmokeParticle delay={5} x={4} />
+          <SmallSmokeParticle delay={6.5} x={-3} />
+          <SmallSmokeParticle delay={8} x={8} />
         </div>
 
         {/* Campfire GIF - smaller to match trees */}
