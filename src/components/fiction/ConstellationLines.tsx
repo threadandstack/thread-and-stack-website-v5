@@ -109,7 +109,7 @@ export function ConstellationLines({
               />
             ))}
             
-            {/* Glowing anchor dot (constellation star) */}
+            {/* Glowing anchor dot (constellation star) - visual only, interaction handled by DraggableConstellationAnchor */}
             <motion.g
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
@@ -151,29 +151,7 @@ export function ConstellationLines({
                 opacity={0.4}
               />
             </motion.g>
-
-            {/* Genre label - curved text above the star */}
-            <motion.text
-              x={`${anchor.x}%`}
-              y={`${anchor.y - (isMobile ? 4 : 5)}%`}
-              textAnchor="middle"
-              fill="hsla(0, 0%, 100%, 0.8)"
-              fontSize={isMobile ? 10 : 12}
-              fontFamily="'Crimson Pro', serif"
-              fontStyle="italic"
-              fontWeight="500"
-              letterSpacing="0.1em"
-              filter="url(#constellation-glow)"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ 
-                duration: 1, 
-                delay: genreIndex * 0.3 + 0.5,
-                ease: "easeOut"
-              }}
-            >
-              {genre.toUpperCase()}
-            </motion.text>
+            {/* Genre label removed - now rendered by DraggableConstellationAnchor */}
           </g>
         );
       })}

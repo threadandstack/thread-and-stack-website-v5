@@ -1,13 +1,13 @@
 import { motion, PanInfo } from "framer-motion";
 import { useHoldToDrag } from "@/hooks/useHoldToDrag";
-import { useCallback } from "react";
+import { useCallback, useRef, useState, useEffect } from "react";
 
 interface DraggableConstellationAnchorProps {
   genre: string;
   position: { x: number; y: number };
   color: string;
   isMobile?: boolean;
-  onPositionChange?: (genre: string, newPosition: { x: number; y: number }) => void;
+  onPositionChange?: (genre: string, delta: { x: number; y: number }, newPosition: { x: number; y: number }) => void;
 }
 
 export function DraggableConstellationAnchor({
@@ -17,52 +17,89 @@ export function DraggableConstellationAnchor({
   isMobile = false,
   onPositionChange
 }: DraggableConstellationAnchorProps) {
-  const { isDragEnabled, isHolding, handlers } = useHoldToDrag({
+  const { isDragEnabled, isHolding, handlers, resetDrag } = useHoldToDrag({
     holdDuration: 400,
   });
   
-  const handleDragEnd = useCallback((event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-    if (!onPositionChange) return;
+  const containerRef = useRef<HTMLDivElement>(null);
+  const dragStartPos = useRef<{ x: number; y: number } | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+  
+  // Manual drag implementation for immediate response after hold
+  const handlePointerDown = useCallback((e: React.PointerEvent) => {
+    handlers.onPointerDown(e);
+    dragStartPos.current = { x: e.clientX, y: e.clientY };
+  }, [handlers]);
+  
+  const handlePointerMove = useCallback((e: React.PointerEvent) => {
+    handlers.onPointerMove(e);
     
-    const vw = window.innerWidth;
-    const vh = window.innerHeight;
+    // If drag is enabled, track the offset
+    if (isDragEnabled && dragStartPos.current) {
+      setIsDragging(true);
+      const dx = e.clientX - dragStartPos.current.x;
+      const dy = e.clientY - dragStartPos.current.y;
+      setDragOffset({ x: dx, y: dy });
+    }
+  }, [isDragEnabled, handlers]);
+  
+  const handlePointerUp = useCallback((e: React.PointerEvent) => {
+    if (isDragEnabled && onPositionChange && dragStartPos.current) {
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      
+      const dx = e.clientX - dragStartPos.current.x;
+      const dy = e.clientY - dragStartPos.current.y;
+      
+      const deltaXPercent = (dx / vw) * 100;
+      const deltaYPercent = (dy / vh) * 100;
+      
+      const newX = Math.max(5, Math.min(95, position.x + deltaXPercent));
+      const newY = Math.max(5, Math.min(95, position.y + deltaYPercent));
+      
+      onPositionChange(genre, { x: deltaXPercent, y: deltaYPercent }, { x: newX, y: newY });
+    }
     
-    const deltaXPercent = (info.offset.x / vw) * 100;
-    const deltaYPercent = (info.offset.y / vh) * 100;
-    
-    const newX = Math.max(5, Math.min(95, position.x + deltaXPercent));
-    const newY = Math.max(5, Math.min(95, position.y + deltaYPercent));
-    
-    onPositionChange(genre, { x: newX, y: newY });
-  }, [genre, position, onPositionChange]);
+    handlers.onPointerUp();
+    setIsDragging(false);
+    setDragOffset({ x: 0, y: 0 });
+    dragStartPos.current = null;
+  }, [isDragEnabled, genre, position, onPositionChange, handlers]);
+  
+  const handlePointerCancel = useCallback(() => {
+    handlers.onPointerCancel();
+    setIsDragging(false);
+    setDragOffset({ x: 0, y: 0 });
+    dragStartPos.current = null;
+  }, [handlers]);
+
+  // Convert drag offset to percentage for visual feedback
+  const visualOffsetX = isDragging ? (dragOffset.x / window.innerWidth) * 100 : 0;
+  const visualOffsetY = isDragging ? (dragOffset.y / window.innerHeight) * 100 : 0;
 
   return (
-    <motion.div
-      drag={isDragEnabled}
-      dragMomentum={false}
-      dragElastic={0}
-      onDragEnd={handleDragEnd}
-      onPointerDown={handlers.onPointerDown}
-      onPointerUp={handlers.onPointerUp}
-      onPointerCancel={handlers.onPointerCancel}
-      animate={{
-        scale: isDragEnabled ? 1.2 : 1,
-      }}
-      transition={{ scale: { duration: 0.2 } }}
+    <div
+      ref={containerRef}
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
+      onPointerCancel={handlePointerCancel}
       className={`
-        absolute flex flex-col items-center
+        absolute flex flex-col items-center select-none
         ${isDragEnabled ? 'cursor-grabbing z-[100]' : isHolding ? 'cursor-grab z-[60]' : 'cursor-pointer z-[5]'}
       `}
       style={{
-        left: `${position.x}%`,
-        top: `${position.y}%`,
-        transform: 'translate(-50%, -50%)',
-        touchAction: isDragEnabled ? 'none' : 'auto',
+        left: `${position.x + visualOffsetX}%`,
+        top: `${position.y + visualOffsetY}%`,
+        transform: `translate(-50%, -50%) scale(${isDragEnabled ? 1.2 : 1})`,
+        transition: isDragging ? 'none' : 'transform 0.2s ease',
+        touchAction: 'none',
       }}
     >
       {/* Genre label */}
       <span 
-        className="text-[10px] md:text-xs font-serif italic font-medium tracking-wider whitespace-nowrap pointer-events-none select-none"
+        className="text-[10px] md:text-xs font-serif italic font-medium tracking-wider whitespace-nowrap pointer-events-none"
         style={{ 
           color: 'hsla(0, 0%, 100%, 0.8)',
           textShadow: `0 0 10px ${color}`,
@@ -74,7 +111,7 @@ export function DraggableConstellationAnchor({
       
       {/* Star visual */}
       <div 
-        className="relative"
+        className="relative pointer-events-none"
         style={{
           width: isMobile ? 20 : 24,
           height: isMobile ? 20 : 24,
@@ -107,7 +144,7 @@ export function DraggableConstellationAnchor({
         
         {/* Ring */}
         <div 
-          className="absolute rounded-full pointer-events-none"
+          className="absolute rounded-full"
           style={{
             border: `1px solid ${color}`,
             opacity: isDragEnabled ? 0.8 : 0.4,
@@ -130,6 +167,6 @@ export function DraggableConstellationAnchor({
           Hold...
         </motion.span>
       )}
-    </motion.div>
+    </div>
   );
 }
