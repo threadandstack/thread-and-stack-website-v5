@@ -23,3 +23,6 @@ verify_jwt = false
 
 [functions.celebrate-fiction]
 verify_jwt = false
+
+[functions.fetch-book-details]
+verify_jwt = false
