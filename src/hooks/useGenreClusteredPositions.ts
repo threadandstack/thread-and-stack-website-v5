@@ -136,14 +136,15 @@ const generateMobileZones = (startYPercent: number, numGenres: number): MobileZo
     const yMinRaw = i * bandHeight;
     const yMaxRaw = (i + 1) * bandHeight;
 
-    // Padding inside the band - need enough room for circular distribution
-    const padding = Math.min(2, bandHeight * 0.08);
+    // MINIMAL padding - let books use nearly the full zone height
+    // Only 1% padding to prevent items from literally touching zone edges
+    const padding = 1;
     const yMin = clamp(yMinRaw + padding, 0, 100);
     const yMax = clamp(yMaxRaw - padding, 0, 100);
 
     // Position anchor in the CENTER of the zone for true circular distribution
     // Books will be placed evenly around this point
-    const yCenter = clamp(yMinRaw + bandHeight * 0.5, 5, 95);
+    const yCenter = clamp(yMinRaw + bandHeight * 0.5, 2, 98);
 
     zones.push({
       xCenter: 50,
@@ -260,9 +261,10 @@ export function useGenreClusteredPositions(
   ): PositionedItem[] => {
     const positioned: PositionedItem[] = [];
     
-    // Safe margins
-    const safeMarginX = isMobile ? 12 : 8;
-    const safeMarginY = isMobile ? 2 : 4;
+    // MINIMAL safe margins - only prevent going off-screen
+    // Let items use the FULL available space within zones
+    const safeMarginX = isMobile ? 4 : 4;
+    const safeMarginY = isMobile ? 1 : 2;
     
     // Generate clock positions based on number of items for even distribution
     const clockPositions = isMobile ? generateClockPositions(zoneItems.length) : CLOCK_POSITIONS_DESKTOP;
@@ -398,11 +400,15 @@ export function useGenreClusteredPositions(
       position: { ...item.position } 
     }));
     
-    const iterations = 100; // Reduced iterations - less aggressive pushing
-    const basePushStrength = isMobile ? 3 : 2; // Reduced push strength
-    const safeMarginX = isMobile ? 8 : 6; // Smaller edge margins - allow left side!
-    const safeMarginY = isMobile ? 4 : 3;
-    const edgeZone = isMobile ? 12 : 10; // Much smaller edge zone - was causing right-bias
+    const iterations = 100;
+    const basePushStrength = isMobile ? 3 : 2;
+    
+    // CRITICAL: Edge pushback should ONLY happen at TRUE viewport boundaries
+    // Within zones, items should use the FULL available space
+    // On mobile: zone bounds already handle vertical limits - no extra top/bottom push needed
+    // Only push back if item would literally go off-screen (< 2% from edge)
+    const hardEdgeMargin = 2; // Absolute minimum - only prevents going off-screen
+    const softEdgeZone = isMobile ? 6 : 5; // Very small soft zone for gentle nudging
     
     // Get max cluster size for scaling
     const maxClusterSize = Math.max(1, ...Array.from(clusterSizes.values()));
@@ -410,43 +416,56 @@ export function useGenreClusteredPositions(
     for (let iter = 0; iter < iterations; iter++) {
       let hasCollision = false;
       
-      // First pass: SYMMETRIC edge avoidance - push away from BOTH edges equally
-      // No position.x < 50 / > 50 checks - treat left and right the same
+      // First pass: Edge avoidance ONLY at true screen boundaries
+      // Items within their zones should NOT be pushed away from zone edges
       for (const item of resolved) {
         const clusterSize = clusterSizes.get(item.genre || '') || 1;
-        const clusterMultiplier = 1 + ((clusterSize / maxClusterSize) * 0.5); // Reduced multiplier
+        const clusterMultiplier = 1 + ((clusterSize / maxClusterSize) * 0.3);
         
-        const leftEdgeDist = item.position.x - safeMarginX;
-        const rightEdgeDist = (100 - safeMarginX) - item.position.x;
+        const halfW = item.size.w / 2;
+        const halfH = item.size.h / 2;
         
-        // Push away from left edge - NO position check, just distance
-        if (leftEdgeDist < edgeZone) {
-          const pushStrength = ((edgeZone - leftEdgeDist) / edgeZone) * 1.5 * clusterMultiplier;
+        // Only push from TRUE screen edges - items need room for their own width/height
+        const leftEdgeDist = item.position.x - halfW;
+        const rightEdgeDist = 100 - item.position.x - halfW;
+        const topEdgeDist = item.position.y - halfH;
+        const bottomEdgeDist = 100 - item.position.y - halfH;
+        
+        // Push from left screen edge only if crossing boundary
+        if (leftEdgeDist < hardEdgeMargin) {
+          const pushStrength = (hardEdgeMargin - leftEdgeDist) * 0.8 * clusterMultiplier;
           item.position.x += pushStrength;
           hasCollision = true;
+        } else if (leftEdgeDist < softEdgeZone) {
+          // Very gentle nudge in soft zone
+          const pushStrength = ((softEdgeZone - leftEdgeDist) / softEdgeZone) * 0.3 * clusterMultiplier;
+          item.position.x += pushStrength;
         }
         
-        // Push away from right edge - NO position check, just distance
-        if (rightEdgeDist < edgeZone) {
-          const pushStrength = ((edgeZone - rightEdgeDist) / edgeZone) * 1.5 * clusterMultiplier;
+        // Push from right screen edge
+        if (rightEdgeDist < hardEdgeMargin) {
+          const pushStrength = (hardEdgeMargin - rightEdgeDist) * 0.8 * clusterMultiplier;
           item.position.x -= pushStrength;
           hasCollision = true;
+        } else if (rightEdgeDist < softEdgeZone) {
+          const pushStrength = ((softEdgeZone - rightEdgeDist) / softEdgeZone) * 0.3 * clusterMultiplier;
+          item.position.x -= pushStrength;
         }
         
-        // Top/bottom edges - symmetric
-        const topEdgeDist = item.position.y - safeMarginY;
-        const bottomEdgeDist = (100 - safeMarginY) - item.position.y;
-        
-        if (topEdgeDist < edgeZone * 0.4) {
-          const pushStrength = ((edgeZone * 0.4 - topEdgeDist) / (edgeZone * 0.4)) * 1.5;
-          item.position.y += pushStrength;
-          hasCollision = true;
-        }
-        
-        if (bottomEdgeDist < edgeZone * 0.4) {
-          const pushStrength = ((edgeZone * 0.4 - bottomEdgeDist) / (edgeZone * 0.4)) * 1.5;
-          item.position.y -= pushStrength;
-          hasCollision = true;
+        // For vertical edges: on mobile, zone bounds handle this - skip extra push
+        // Only apply at TRUE screen boundaries (0% and 100%)
+        if (!isMobile || !item.zoneBounds) {
+          if (topEdgeDist < hardEdgeMargin) {
+            const pushStrength = (hardEdgeMargin - topEdgeDist) * 0.8;
+            item.position.y += pushStrength;
+            hasCollision = true;
+          }
+          
+          if (bottomEdgeDist < hardEdgeMargin) {
+            const pushStrength = (hardEdgeMargin - bottomEdgeDist) * 0.8;
+            item.position.y -= pushStrength;
+            hasCollision = true;
+          }
         }
       }
       
@@ -510,18 +529,21 @@ export function useGenreClusteredPositions(
           }
         }
         
-        // Final clamp - on mobile, use strict zone bounds but allow full circle
-        item.position.x = clamp(item.position.x, item.size.w / 2 + safeMarginX, 100 - item.size.w / 2 - safeMarginX);
+        // Final clamp - use minimal margins, just prevent going off-screen
+        const finalMarginX = 2;
+        const finalMarginY = 1;
+        item.position.x = clamp(item.position.x, item.size.w / 2 + finalMarginX, 100 - item.size.w / 2 - finalMarginX);
         
         if (isMobile && item.zoneBounds) {
           // Zone bounds - allow items above AND below anchor for circular layout
+          // Use minimal padding - let items use full zone space
           item.position.y = clamp(
             item.position.y, 
-            item.zoneBounds.yMin + item.size.h / 2 + 1, 
-            item.zoneBounds.yMax - item.size.h / 2 - 1
+            item.zoneBounds.yMin + item.size.h / 2 + 0.5, 
+            item.zoneBounds.yMax - item.size.h / 2 - 0.5
           );
         } else {
-          item.position.y = clamp(item.position.y, item.size.h / 2 + safeMarginY, 100 - item.size.h / 2 - safeMarginY);
+          item.position.y = clamp(item.position.y, item.size.h / 2 + finalMarginY, 100 - item.size.h / 2 - finalMarginY);
         }
       }
       
