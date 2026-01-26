@@ -327,7 +327,7 @@ export default function FictionFavoritesPage() {
                   alt="Open book with letters floating around it" 
                   className="w-16 h-auto mx-auto mb-2"
                 />
-                <h1 className="text-lg font-serif mb-1.5">
+                <h1 className="text-2xl md:text-3xl font-serif mb-1.5">
                   What's your favourite <span className="italic text-accent">work of fiction?</span>
                 </h1>
                 
