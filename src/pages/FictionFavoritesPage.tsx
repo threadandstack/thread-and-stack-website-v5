@@ -12,6 +12,7 @@ import { AddedCountBadge } from "@/components/fiction/AddedCountBadge";
 import { FictionTagInput } from "@/components/fiction/FictionTagInput";
 import { StarryBackdrop } from "@/components/fiction/StarryBackdrop";
 import { filterProfanity } from "@/lib/profanityFilter";
+import { normalizeTitle, generateClusterKey } from "@/lib/titleNormalizer";
 import { useCloudPositions } from "@/hooks/useCloudPositions";
 import fictionHeroImage from "@/assets/fiction-hero.png";
 
@@ -142,11 +143,51 @@ export default function FictionFavoritesPage() {
     const metadata = getDeviceMetadata();
 
     try {
-      // Insert all titles
-      const insertPromises = titles.map(title => 
+      // Normalize all titles and check for duplicates
+      const normalizedTitles = titles.map(normalizeTitle);
+      const uniqueTitles: string[] = [];
+      const skippedDuplicates: string[] = [];
+
+      for (const title of normalizedTitles) {
+        const clusterKey = generateClusterKey(title);
+        
+        // Check if this book already exists in the database
+        const { data: existing } = await supabase
+          .from("fiction_favorites")
+          .select("id")
+          .or(`cluster_key.eq.${clusterKey},answer.ilike.${title}`)
+          .limit(1);
+        
+        if (existing && existing.length > 0) {
+          skippedDuplicates.push(title);
+        } else {
+          uniqueTitles.push(title);
+        }
+      }
+
+      // Notify if duplicates were skipped
+      if (skippedDuplicates.length > 0 && uniqueTitles.length === 0) {
+        toast({
+          title: "Already in the cloud!",
+          description: `"${skippedDuplicates[0]}" has already been added by someone.`,
+        });
+        setIsSubmitting(false);
+        return;
+      }
+
+      if (uniqueTitles.length === 0) {
+        setIsSubmitting(false);
+        return;
+      }
+
+      // Insert unique titles with cluster keys
+      const insertPromises = uniqueTitles.map(title => 
         supabase
           .from("fiction_favorites")
-          .insert({ answer: title })
+          .insert({ 
+            answer: title,
+            cluster_key: generateClusterKey(title)
+          })
           .select()
           .single()
       );
@@ -313,6 +354,12 @@ export default function FictionFavoritesPage() {
                 isSubmitting={isSubmitting}
               />
 
+              {favorites.length > 0 && (
+                <p className="text-muted-foreground/70 text-sm text-center mt-4">
+                  💡 Click any book title to learn more about it
+                </p>
+              )}
+
               {favorites.length === 0 && (
                 <p className="text-muted-foreground text-sm italic mt-6">
                   Be the first to share your favorite fiction...
@@ -374,6 +421,12 @@ export default function FictionFavoritesPage() {
                 isSubmitting={isSubmitting}
               />
               
+              {favorites.length > 0 && (
+                <p className="text-white/60 text-xs text-center mt-3">
+                  💡 Tap any title to learn more
+                </p>
+              )}
+
               {favorites.length === 0 && (
                 <p className="text-white/70 text-sm italic mt-4 text-center">
                   Be the first to share your favorite fiction...

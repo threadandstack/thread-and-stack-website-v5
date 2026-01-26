@@ -29,13 +29,11 @@ export function FictionDetailModal({ isOpen, onClose, title, clusterKey }: Ficti
   useEffect(() => {
     if (!isOpen) return;
     
-    // Reset state when opening
     setCoverError(false);
 
     const fetchData = async () => {
       setLoading(true);
       
-      // Fetch count of similar entries and book details in parallel
       const [countResult, detailsResult] = await Promise.all([
         supabase
           .from("fiction_favorites")
@@ -90,121 +88,125 @@ export function FictionDetailModal({ isOpen, onClose, title, clusterKey }: Ficti
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0, y: 20 }}
             transition={{ type: "spring", bounce: 0.3 }}
-            className="bg-background rounded-2xl p-8 max-w-lg w-full shadow-2xl border border-border relative max-h-[80vh] overflow-y-auto"
+            className="bg-background rounded-2xl max-w-lg w-full shadow-2xl border border-border relative max-h-[80vh] flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
+            {/* Sticky close button - always visible */}
             <button
               onClick={onClose}
-              className="absolute top-4 right-4 text-muted-foreground hover:text-foreground transition-colors"
+              className="sticky top-0 z-10 ml-auto mr-4 mt-4 p-2 text-muted-foreground hover:text-foreground transition-colors bg-background/80 backdrop-blur-sm rounded-full hover:bg-muted"
             >
               <X className="h-5 w-5" />
             </button>
 
-            {/* Header with cover art */}
-            <div className="flex gap-4 mb-6">
-              {/* Book cover */}
-              <div className="flex-shrink-0 w-24 md:w-28">
-                {loading ? (
-                  <div className="w-full aspect-[2/3] rounded-lg flex items-center justify-center p-4">
-                    <BookShuffleLoader />
-                  </div>
-                ) : details?.cover_url && !coverError ? (
-                  <AspectRatio ratio={2/3} className="overflow-hidden rounded-lg shadow-md">
-                    <img
-                      src={details.cover_url}
-                      alt={`Cover of ${title}`}
-                      className="w-full h-full object-cover"
-                      onError={() => setCoverError(true)}
-                    />
-                  </AspectRatio>
-                ) : (
-                  <div className="w-full aspect-[2/3] bg-accent/10 rounded-lg flex items-center justify-center">
-                    <BookOpen className="h-10 w-10 text-accent" />
-                  </div>
-                )}
-              </div>
-
-              {/* Title and author */}
-              <div className="flex-1 min-w-0">
-                <h2 className="text-xl font-serif italic text-foreground leading-tight">
-                  {title}
-                </h2>
-                {loading ? (
-                  <div className="h-4 w-24 bg-muted rounded animate-pulse mt-2" />
-                ) : details?.author && (
-                  <p className="text-muted-foreground text-sm mt-1">
-                    by {details.author}
-                  </p>
-                )}
-                
-                {/* Added count badge */}
-                {!loading && (
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground mt-3">
-                    <Users className="h-4 w-4" />
-                    <span>
-                      {addedCount === 1 
-                        ? "You're the first to add this!" 
-                        : `Added by ${addedCount} ${addedCount === 1 ? 'person' : 'people'} here`}
-                    </span>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {loading ? (
-              <div className="space-y-3">
-                <div className="h-4 bg-muted rounded animate-pulse w-full" />
-                <div className="h-4 bg-muted rounded animate-pulse w-5/6" />
-                <div className="h-4 bg-muted rounded animate-pulse w-4/6" />
-              </div>
-            ) : (
-              <div className="space-y-4">
-                <div>
-                  <h3 className="text-sm font-medium text-foreground mb-2">About this book</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
-                    {details?.summary}
-                  </p>
+            {/* Scrollable content */}
+            <div className="overflow-y-auto px-8 pb-8 -mt-6">
+              {/* Header with cover art */}
+              <div className="flex gap-4 mb-6">
+                {/* Book cover */}
+                <div className="flex-shrink-0 w-24 md:w-28">
+                  {loading ? (
+                    <div className="w-full aspect-[2/3] rounded-lg flex items-center justify-center p-4">
+                      <BookShuffleLoader />
+                    </div>
+                  ) : details?.cover_url && !coverError ? (
+                    <AspectRatio ratio={2/3} className="overflow-hidden rounded-lg shadow-md">
+                      <img
+                        src={details.cover_url}
+                        alt={`Cover of ${title}`}
+                        className="w-full h-full object-cover"
+                        onError={() => setCoverError(true)}
+                      />
+                    </AspectRatio>
+                  ) : (
+                    <div className="w-full aspect-[2/3] bg-accent/10 rounded-lg flex items-center justify-center">
+                      <BookOpen className="h-10 w-10 text-accent" />
+                    </div>
+                  )}
                 </div>
 
-                {/* Audience fact callout */}
-                {details?.audience_fact && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 }}
-                    className="bg-accent/10 border border-accent/20 rounded-xl p-4"
-                  >
-                    <div className="flex items-start gap-3">
-                      <div className="p-2 rounded-full bg-accent/20 flex-shrink-0">
-                        <TrendingUp className="h-4 w-4 text-accent" />
-                      </div>
-                      <p className="text-sm text-foreground leading-relaxed">
-                        {details.audience_fact}
-                      </p>
+                {/* Title and author */}
+                <div className="flex-1 min-w-0">
+                  <h2 className="text-xl font-serif italic text-foreground leading-tight">
+                    {title}
+                  </h2>
+                  {loading ? (
+                    <div className="h-4 w-24 bg-muted rounded animate-pulse mt-2" />
+                  ) : details?.author && (
+                    <p className="text-muted-foreground text-sm mt-1">
+                      by {details.author}
+                    </p>
+                  )}
+                  
+                  {/* Added count badge */}
+                  {!loading && (
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground mt-3">
+                      <Users className="h-4 w-4" />
+                      <span>
+                        {addedCount === 1 
+                          ? "You're the first to add this!" 
+                          : `Added by ${addedCount} ${addedCount === 1 ? 'person' : 'people'} here`}
+                      </span>
                     </div>
-                  </motion.div>
-                )}
-
-                {/* Recommendation callout */}
-                {details?.recommendation && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.35 }}
-                    className="bg-muted/50 border border-border rounded-xl p-4"
-                  >
-                    <div className="flex items-start gap-3">
-                      <div className="p-2 rounded-full bg-muted flex-shrink-0">
-                        <Sparkles className="h-4 w-4 text-foreground/70" />
-                      </div>
-                      <p className="text-sm text-muted-foreground leading-relaxed">
-                        {details.recommendation}
-                      </p>
-                    </div>
-                  </motion.div>
-                )}
+                  )}
+                </div>
               </div>
-            )}
+
+              {loading ? (
+                <div className="space-y-3">
+                  <div className="h-4 bg-muted rounded animate-pulse w-full" />
+                  <div className="h-4 bg-muted rounded animate-pulse w-5/6" />
+                  <div className="h-4 bg-muted rounded animate-pulse w-4/6" />
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  <div>
+                    <h3 className="text-sm font-medium text-foreground mb-2">About this book</h3>
+                    <p className="text-muted-foreground text-sm leading-relaxed">
+                      {details?.summary}
+                    </p>
+                  </div>
+
+                  {/* Audience fact callout */}
+                  {details?.audience_fact && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.2 }}
+                      className="bg-accent/10 border border-accent/20 rounded-xl p-4"
+                    >
+                      <div className="flex items-start gap-3">
+                        <div className="p-2 rounded-full bg-accent/20 flex-shrink-0">
+                          <TrendingUp className="h-4 w-4 text-accent" />
+                        </div>
+                        <p className="text-sm text-foreground leading-relaxed">
+                          {details.audience_fact}
+                        </p>
+                      </div>
+                    </motion.div>
+                  )}
+
+                  {/* Recommendation callout */}
+                  {details?.recommendation && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.35 }}
+                      className="bg-muted/50 border border-border rounded-xl p-4"
+                    >
+                      <div className="flex items-start gap-3">
+                        <div className="p-2 rounded-full bg-muted flex-shrink-0">
+                          <Sparkles className="h-4 w-4 text-foreground/70" />
+                        </div>
+                        <p className="text-sm text-muted-foreground leading-relaxed">
+                          {details.recommendation}
+                        </p>
+                      </div>
+                    </motion.div>
+                  )}
+                </div>
+              )}
+            </div>
           </motion.div>
         </motion.div>
       )}
