@@ -255,30 +255,38 @@ export function useGenreClusteredPositions(
 
   // Position items around their genre's anchor point using TRUE CIRCULAR clock-face pattern
   // Books are distributed evenly around the star in a full 360° circle
+  // ADAPTIVE RADIUS: Larger genres get more space to prevent crowding
   const positionItemsAroundAnchor = useCallback((
     zoneItems: CloudItem[],
     anchor: { x: number; y: number },
-    maxRadius: number,
+    baseMaxRadius: number,
     anchorExclusionRadius: number, // Keep items away from anchor center
     zoneBounds?: { yMin: number; yMax: number } // Mobile only - strict vertical limits
   ): PositionedItem[] => {
     const positioned: PositionedItem[] = [];
     
-    // MINIMAL safe margins - only prevent going off-screen
-    // Let items use the FULL available space within zones
-    const safeMarginX = isMobile ? 4 : 2;
+    // ADAPTIVE RADIUS based on genre size
+    // More books = larger radius to give them room to spread
+    const itemCount = zoneItems.length;
+    const radiusScale = 1 + Math.log2(Math.max(1, itemCount)) * 0.25; // 1 book=1x, 4 books=1.5x, 8 books=1.75x, 16 books=2x
+    const adaptiveMaxRadius = baseMaxRadius * radiusScale;
+    
+    // ZERO horizontal margins - let items use full width
+    // Only the final clamp prevents going off-screen
+    const safeMarginX = 1; // Minimal - just prevent clipping
     const safeMarginY = isMobile ? 1 : 2;
     
     // Generate clock positions based on number of items for even distribution
     const clockPositions = isMobile ? generateClockPositions(zoneItems.length) : CLOCK_POSITIONS_DESKTOP;
     
-    // RANDOMIZED DISTANCE TIERS: Break radius into 4 chunks with DRAMATIC separation
-    // Tiers are spread apart for clear visual distinction
-    // Constraint: if last item was in tier 4 (outer), next can't be in tier 4
-    const distanceTiers = [0.30, 0.50, 0.72, 0.95]; // More spread between tiers
-    let lastTierIndex = -1;
+    // FIXED DISTANCE TIERS with DRAMATIC separation
+    // Each tier is a fixed distance from anchor - no randomization for consistency
+    const distanceTiers = [0.35, 0.55, 0.78, 1.0]; // Clear visual rings
     
-    // Seeded random based on item ID for consistency across re-renders
+    // Assign items to tiers in round-robin for even distribution
+    // This ensures items spread across all tiers, not bunched in one
+    
+    // Seeded random based on item ID for angle jitter only
     const seededRandom = (seed: string, index: number): number => {
       const hash = seed.split('').reduce((a, b, i) => {
         return ((a << 5) - a + b.charCodeAt(0) + index * 17) & 0x7fffffff;
@@ -291,51 +299,47 @@ export function useGenreClusteredPositions(
       const size = estimateItemSize(displayText, isMobile);
       
       if (isMobile && zoneBounds) {
-        // MOBILE: TRUE CIRCULAR clock-face positioning with RANDOMIZED DISTANCE
+        // MOBILE: TRUE CIRCULAR clock-face positioning with TIERED DISTANCE
         const clockAngle = clockPositions[idx % clockPositions.length];
-        const angleRad = (clockAngle * Math.PI) / 180;
+        
+        // Add small angle jitter to prevent perfect alignment
+        const angleJitter = (seededRandom(item.id, idx) - 0.5) * 15; // ±7.5 degrees
+        const finalAngle = clockAngle + angleJitter;
+        const angleRad = (finalAngle * Math.PI) / 180;
         
         // Calculate available space in the zone
         const zoneHeight = zoneBounds.yMax - zoneBounds.yMin;
-        const zoneWidth = 100 - (safeMarginX * 2);
         
-        // Available room from anchor to zone edges
+        // Available room from anchor to zone edges (anchor is centered)
         const roomAbove = anchor.y - zoneBounds.yMin;
         const roomBelow = zoneBounds.yMax - anchor.y;
+        const roomLeft = anchor.x - safeMarginX;
+        const roomRight = 100 - anchor.x - safeMarginX;
         
-        // Use the smaller of the two to ensure full circle fits
-        const maxRadiusY = Math.min(roomAbove, roomBelow) - 4;
-        const maxRadiusX = Math.min(38, zoneWidth / 2.5);
+        // Use full available space - no artificial limits
+        const maxRadiusY = Math.min(roomAbove, roomBelow) * 0.85; // Use 85% of available vertical
+        const maxRadiusX = Math.min(roomLeft, roomRight) * 0.85; // Use 85% of available horizontal
         
-        // RANDOMIZED TIER SELECTION with constraint
-        // Pick a random tier, but if last was tier 4 (outer), exclude it
-        let availableTiers = [0, 1, 2, 3];
-        if (lastTierIndex === 3) {
-          availableTiers = [0, 1, 2]; // Exclude outer tier if last was outer
-        }
-        
-        // Use seeded random for consistent positioning
-        const rand = seededRandom(item.id, idx);
-        const tierIndex = availableTiers[Math.floor(rand * availableTiers.length)];
-        lastTierIndex = tierIndex;
-        
-        // Get the tier's distance multiplier (0.35, 0.55, 0.75, or 0.95)
+        // ROUND-ROBIN TIER ASSIGNMENT for even distribution
+        // First 4 items go to tiers 0,1,2,3, then repeat
+        const tierIndex = idx % distanceTiers.length;
         const tierMultiplier = distanceTiers[tierIndex];
         
-        // Add small jitter within the tier (±10% of tier range)
-        const jitter = (seededRandom(item.id, idx + 100) - 0.5) * 0.15;
-        const finalMultiplier = clamp(tierMultiplier + jitter, 0.25, 1.0);
+        // Scale radius with adaptive factor
+        const scaledRadiusX = maxRadiusX * tierMultiplier * (adaptiveMaxRadius / baseMaxRadius);
+        const scaledRadiusY = maxRadiusY * tierMultiplier * (adaptiveMaxRadius / baseMaxRadius);
         
-        const radiusX = Math.max(10, maxRadiusX * finalMultiplier);
-        const radiusY = Math.max(8, maxRadiusY * finalMultiplier);
+        // Clamp to reasonable bounds
+        const radiusX = clamp(scaledRadiusX, 8, 45);
+        const radiusY = clamp(scaledRadiusY, 6, Math.min(35, zoneHeight * 0.42));
         
         // Calculate position using standard circle formula
         let x = anchor.x + Math.sin(angleRad) * radiusX;
         let y = anchor.y - Math.cos(angleRad) * radiusY;
         
-        // Gentle clamp to zone bounds
+        // Only clamp at absolute boundaries
         x = clamp(x, size.w / 2 + safeMarginX, 100 - size.w / 2 - safeMarginX);
-        y = clamp(y, zoneBounds.yMin + size.h / 2 + 1, zoneBounds.yMax - size.h / 2 - 1);
+        y = clamp(y, zoneBounds.yMin + size.h / 2 + 0.5, zoneBounds.yMax - size.h / 2 - 0.5);
         
         positioned.push({
           id: item.id,
@@ -347,24 +351,16 @@ export function useGenreClusteredPositions(
           zoneBounds
         });
       } else {
-        // DESKTOP: Ring layout with randomized distance tiers
-        const angle = (idx * 137.5 * Math.PI) / 180;
+        // DESKTOP: Ring layout with tiered distance
+        const angle = (idx * 137.5 * Math.PI) / 180; // Golden angle for organic spread
         
-        // Apply same tier logic for desktop
-        let availableTiers = [0, 1, 2, 3];
-        if (lastTierIndex === 3) {
-          availableTiers = [0, 1, 2];
-        }
-        const rand = seededRandom(item.id, idx);
-        const tierIndex = availableTiers[Math.floor(rand * availableTiers.length)];
-        lastTierIndex = tierIndex;
-        
+        // ROUND-ROBIN TIER ASSIGNMENT
+        const tierIndex = idx % distanceTiers.length;
         const tierMultiplier = distanceTiers[tierIndex];
-        const jitter = (seededRandom(item.id, idx + 100) - 0.5) * 0.1;
-        const finalMultiplier = clamp(tierMultiplier + jitter, 0.3, 1.0);
         
         const minDistance = anchorExclusionRadius + 2;
-        const distance = minDistance + (maxRadius - minDistance) * finalMultiplier;
+        const maxDistance = adaptiveMaxRadius; // Use adaptive radius
+        const distance = minDistance + (maxDistance - minDistance) * tierMultiplier;
         
         let pos: Position = {
           x: anchor.x + Math.cos(angle) * distance,
@@ -589,10 +585,10 @@ export function useGenreClusteredPositions(
     });
 
     // STEP 2: Position books around their genre's anchor (not on top of it)
-    // On mobile, pass strict zone bounds to prevent cross-constellation overlap
+    // ADAPTIVE RADIUS: Base radius is scaled up inside positionItemsAroundAnchor based on item count
     let allPositioned: PositionedItem[] = [];
-    const bookClusterRadius = isMobile ? 10 : 15;
-    const anchorExclusionRadius = isMobile ? 3 : 5; // Keep books away from star/label
+    const baseClusterRadius = isMobile ? 12 : 18; // Base radius - will be scaled by genre size
+    const anchorExclusionRadius = isMobile ? 4 : 6; // Keep books away from star/label
     
     sortedGenresByPopularity.forEach((genre, idx) => {
       const groupItems = genreGroups[genre];
@@ -603,7 +599,8 @@ export function useGenreClusteredPositions(
       const zone = zones[idx % zones.length];
       const zoneBounds = isMobile ? { yMin: zone.yMin, yMax: zone.yMax } : undefined;
       
-      const positioned = positionItemsAroundAnchor(groupItems, anchor, bookClusterRadius, anchorExclusionRadius, zoneBounds);
+      // Pass base radius - adaptive scaling happens inside positionItemsAroundAnchor
+      const positioned = positionItemsAroundAnchor(groupItems, anchor, baseClusterRadius, anchorExclusionRadius, zoneBounds);
       allPositioned = [...allPositioned, ...positioned];
     });
 
