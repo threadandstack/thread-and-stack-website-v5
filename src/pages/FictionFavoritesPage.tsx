@@ -304,29 +304,35 @@ export default function FictionFavoritesPage() {
     <div className="min-h-screen bg-background flex flex-col">
       <Navigation variant="dark" />
       
-      {/* DESKTOP LAYOUT - centered experience */}
-      <main className="hidden lg:flex flex-1 relative overflow-hidden">
-        {/* Starry backdrop */}
-        <StarryBackdrop />
+      {/* DESKTOP LAYOUT - scrollable double-height experience */}
+      <main className="hidden lg:block flex-1 relative overflow-y-auto overflow-x-hidden">
+        {/* Double-height container for scrollable constellation space */}
+        <div className="relative" style={{ height: '200vh' }}>
+          {/* Starry backdrop - covers full scrollable area */}
+          <div className="absolute inset-0">
+            <StarryBackdrop />
+          </div>
 
-        {/* Added count badge */}
-        <AddedCountBadge count={addedCount} show={showAddedBadge} />
+          {/* Added count badge - fixed position */}
+          <div className="fixed top-20 right-4 z-50">
+            <AddedCountBadge count={addedCount} show={showAddedBadge} />
+          </div>
 
-        {/* Constellation lines - connecting stars to book clusters */}
-        <ConstellationLines 
-          genreAnchors={genreAnchors} 
-          bookPositions={bookPositionsWithGenre} 
-          minCount={3} 
-        />
+          {/* Constellation lines - connecting stars to book clusters */}
+          <ConstellationLines 
+            genreAnchors={genreAnchors} 
+            bookPositions={bookPositionsWithGenre} 
+            minCount={3} 
+          />
 
-        {/* Full-page cloud container */}
-        <div className="absolute inset-0 overflow-hidden">
-          {favorites.length > 0 && renderCloudItems()}
-        </div>
+          {/* Full-page cloud container - spans double height */}
+          <div className="absolute inset-0">
+            {favorites.length > 0 && renderCloudItems()}
+          </div>
 
-        {/* Centered CTA - floating above the cloud */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-30">
-          <motion.div
+          {/* Centered CTA - sticky to stay visible while scrolling */}
+          <div className="sticky top-0 h-screen flex items-center justify-center pointer-events-none z-30">
+            <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -365,6 +371,7 @@ export default function FictionFavoritesPage() {
               )}
             </div>
           </motion.div>
+          </div>
         </div>
       </main>
 
