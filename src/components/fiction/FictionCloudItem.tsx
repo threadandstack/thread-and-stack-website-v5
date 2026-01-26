@@ -14,16 +14,6 @@ interface FictionCloudItemProps {
   onPositionChange?: (id: string, newPosition: { x: number; y: number }) => void;
 }
 
-// Generate unique float animation parameters for each item
-const getFloatAnimation = (id: string) => {
-  const hash = id.split('').reduce((a, b) => ((a << 5) - a) + b.charCodeAt(0), 0);
-  const duration = 5 + (Math.abs(hash) % 4);
-  const delay = (Math.abs(hash * 2) % 20) / 10;
-  // Keep the float subtle so it can't re-introduce overlaps after positions are resolved.
-  const yAmount = 3 + (Math.abs(hash * 3) % 4);
-  
-  return { duration, delay, yAmount };
-};
 
 // Parse HSL color and generate celestial styling for book pills
 // White fill with colored outline and glow effect
@@ -96,7 +86,7 @@ export function FictionCloudItem({
   onClick,
   onPositionChange
 }: FictionCloudItemProps) {
-  const floatAnim = getFloatAnimation(id);
+  
   const colors = getGenreBasedColors(genreColor);
   const badgeColors = getCountBadgeColor(count);
   const showBadge = count > 1;
@@ -210,8 +200,6 @@ export function FictionCloudItem({
         color: colors.text,
         boxShadow: isDragEnabled ? `0 0 20px hsla(0, 0%, 100%, 0.8)` : colors.glow,
         touchAction: 'none',
-        // Pause float animation while dragging or holding
-        animation: isDragEnabled || isHolding || isDragging ? 'none' : `float-${Math.abs(id.charCodeAt(0) % 3)} ${floatAnim.duration}s ease-in-out ${floatAnim.delay}s infinite`,
       }}
     >
       <span className="text-xs font-medium pointer-events-none">
