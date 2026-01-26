@@ -6,6 +6,24 @@
 All colors MUST be HSL.
 */
 
+/* Floating animation keyframes for fiction cloud items */
+@keyframes float-0 {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+  50% { transform: translate(-50%, -50%) translateY(-4px); }
+}
+
+@keyframes float-1 {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+  33% { transform: translate(-50%, -50%) translateY(-3px); }
+  66% { transform: translate(-50%, -50%) translateY(2px); }
+}
+
+@keyframes float-2 {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+  25% { transform: translate(-50%, -50%) translateY(-2px); }
+  75% { transform: translate(-50%, -50%) translateY(3px); }
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

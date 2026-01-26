@@ -15,47 +15,37 @@ interface FictionCloudItemProps {
 // Generate unique float animation parameters for each item
 const getFloatAnimation = (id: string) => {
   const hash = id.split('').reduce((a, b) => ((a << 5) - a) + b.charCodeAt(0), 0);
-  const duration = 4 + (Math.abs(hash) % 4);
+  const duration = 5 + (Math.abs(hash) % 4);
   const delay = (Math.abs(hash * 2) % 20) / 10;
   // Keep the float subtle so it can't re-introduce overlaps after positions are resolved.
-  const yAmount = 2 + (Math.abs(hash * 3) % 3);
+  const yAmount = 3 + (Math.abs(hash * 3) % 4);
   
   return { duration, delay, yAmount };
 };
 
 // Calculate color based on vertical position for contrast against gradient
-// Top of page = darker gradient, so need high contrast (white bg or very light)
-// Bottom of page = lighter gradient, so use navy bg with white text
 const getPositionBasedColors = (yPercent: number) => {
-  // Normalize y to 0-1 range (0 = top, 1 = bottom)
   const normalized = Math.max(0, Math.min(100, yPercent)) / 100;
   
-  // Top items (0-40%): Light/white backgrounds for contrast against dark sky
-  // Bottom items (60-100%): Navy backgrounds with light text
-  
   if (normalized < 0.35) {
-    // Top zone: white/very light backgrounds, dark text
     return {
       background: `hsla(0, 0%, 100%, 0.95)`,
       text: `hsl(234, 50%, 20%)`,
       border: `hsla(234, 50%, 70%, 0.5)`,
     };
   } else if (normalized < 0.55) {
-    // Middle-upper zone: slightly tinted
     return {
       background: `hsla(234, 40%, 92%, 0.92)`,
       text: `hsl(234, 50%, 25%)`,
       border: `hsla(234, 50%, 60%, 0.4)`,
     };
   } else if (normalized < 0.75) {
-    // Middle-lower zone: transitional navy-ish
     return {
       background: `hsla(234, 50%, 35%, 0.9)`,
       text: `hsl(0, 0%, 95%)`,
       border: `hsla(234, 40%, 50%, 0.5)`,
     };
   } else {
-    // Bottom zone: deep navy with white text
     return {
       background: `hsla(234, 60%, 22%, 0.95)`,
       text: `hsl(0, 0%, 98%)`,
@@ -79,49 +69,47 @@ export function FictionCloudItem({
 
   return (
     <motion.button
-      layout
-      layoutId={id}
+      key={id}
       initial={isNew ? { 
         opacity: 0, 
         scale: 0.5,
-        left: "50%",
-        top: "50%"
-      } : { opacity: 0, scale: 0.8 }}
+        x: "-50%",
+        y: "-50%"
+      } : { 
+        opacity: 0, 
+        scale: 0.8,
+        x: "-50%",
+        y: "-50%"
+      }}
       animate={{ 
         opacity: 1, 
         scale: 1,
-        left: `${position.x}%`,
-        top: `${position.y}%`,
-        y: [0, -floatAnim.yAmount, 0, floatAnim.yAmount / 2, 0],
+        x: "-50%",
+        y: "-50%",
       }}
       exit={{ opacity: 0, scale: 0.8 }}
       transition={{ 
         opacity: { duration: 0.5 },
-        scale: { duration: isNew ? 1.2 : 0.5, type: "spring", bounce: 0.3 },
-        left: { duration: 0.8, type: "spring", bounce: 0.2 },
-        top: { duration: 0.8, type: "spring", bounce: 0.2 },
-        y: { 
-          duration: floatAnim.duration,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: floatAnim.delay
-        }
+        scale: { duration: isNew ? 0.8 : 0.4, type: "spring", bounce: 0.3 },
       }}
       onClick={onClick}
       className={`
         absolute px-4 py-2 rounded-full text-left
         ${isNew ? 'ring-2 ring-accent ring-offset-2 ring-offset-transparent' : ''}
-        shadow-md hover:shadow-lg hover:scale-105 transition-all cursor-pointer
+        shadow-md hover:shadow-lg hover:scale-105 transition-shadow cursor-pointer
         max-w-[180px] md:max-w-[240px] whitespace-nowrap
       `}
       style={{
-        transform: 'translate(-50%, -50%)',
+        left: `${position.x}%`,
+        top: `${position.y}%`,
         zIndex: isNew ? 50 : 10,
         backgroundColor: colors.background,
         borderWidth: 1,
         borderStyle: 'solid',
         borderColor: colors.border,
         color: colors.text,
+        // Add gentle floating animation via CSS
+        animation: `float-${Math.abs(id.charCodeAt(0) % 3)} ${floatAnim.duration}s ease-in-out ${floatAnim.delay}s infinite`,
       }}
     >
       <span className="text-xs md:text-sm font-medium truncate block">
