@@ -37,19 +37,11 @@ serve(async (req) => {
         messages: [
           {
             role: "system",
-            content: `You are a literary enthusiast celebrating someone's favorite fiction choice. 
-            
-Generate a brief, enthusiastic celebration message (1-2 sentences max) that:
-- References something specific about the book/story they mentioned
-- Could reference a character, quote, theme, or iconic moment
-- Feels personal and knowledgeable, not generic
-- Is warm and celebratory in tone
-
-Also provide a simple search term (2-3 words max) to find a relevant celebratory GIF from the story/book.`
+            content: `You celebrate someone's fiction choice with ONE witty sentence that references something specific from the book/story (a character, quote, or iconic moment). Be warm and clever, not generic.`
           },
           {
             role: "user",
-            content: `Someone just shared that their favorite fiction is: "${answer}". Generate a tailored celebration message and GIF search term.`
+            content: `Favorite fiction: "${answer}". Write ONE celebratory sentence with a specific reference.`
           }
         ],
         tools: [
@@ -63,11 +55,11 @@ Also provide a simple search term (2-3 words max) to find a relevant celebratory
                 properties: {
                   message: {
                     type: "string",
-                    description: "The tailored celebration message (1-2 sentences)"
+                    description: "ONE witty sentence celebrating their choice with a specific reference"
                   },
                   gif_search: {
                     type: "string",
-                    description: "Simple search term for finding a relevant GIF (2-3 words)"
+                    description: "Character or scene name for GIF search (e.g. 'frodo celebration', 'pride prejudice')"
                   }
                 },
                 required: ["message", "gif_search"],
@@ -110,38 +102,34 @@ Also provide a simple search term (2-3 words max) to find a relevant celebratory
       }
     }
 
-    // Search Giphy for a relevant GIF using their public API
-    // Using Giphy's public beta key for demo purposes
-    const giphyApiKey = "dc6zaTOxFJmzC"; // Giphy's public beta key
-    const giphyUrl = `https://api.giphy.com/v1/gifs/search?api_key=${giphyApiKey}&q=${encodeURIComponent(gifSearch + " celebrate")}&limit=5&rating=g`;
+    // Search Tenor for a relevant GIF
+    const tenorUrl = `https://tenor.googleapis.com/v2/search?q=${encodeURIComponent(gifSearch)}&key=AIzaSyAyimkuYQYF_FXVALexPuGQctUWRURdCYQ&limit=5&media_filter=gif`;
     
     let gifUrl = null;
     try {
-      const giphyResponse = await fetch(giphyUrl);
-      if (giphyResponse.ok) {
-        const giphyData = await giphyResponse.json();
-        if (giphyData.data && giphyData.data.length > 0) {
-          // Pick a random GIF from the results for variety
-          const randomIndex = Math.floor(Math.random() * Math.min(giphyData.data.length, 5));
-          gifUrl = giphyData.data[randomIndex]?.images?.downsized_medium?.url || 
-                   giphyData.data[randomIndex]?.images?.fixed_height?.url;
+      const tenorResponse = await fetch(tenorUrl);
+      if (tenorResponse.ok) {
+        const tenorData = await tenorResponse.json();
+        if (tenorData.results && tenorData.results.length > 0) {
+          const randomIndex = Math.floor(Math.random() * Math.min(tenorData.results.length, 5));
+          gifUrl = tenorData.results[randomIndex]?.media_formats?.gif?.url ||
+                   tenorData.results[randomIndex]?.media_formats?.tinygif?.url;
         }
       }
-    } catch (giphyError) {
-      console.error("Giphy error:", giphyError);
-      // Continue without GIF
+    } catch (tenorError) {
+      console.error("Tenor error:", tenorError);
     }
 
-    // If no specific GIF found, try a general celebration GIF
+    // Fallback to celebration GIF if none found
     if (!gifUrl) {
       try {
-        const fallbackUrl = `https://api.giphy.com/v1/gifs/search?api_key=${giphyApiKey}&q=book+celebration&limit=5&rating=g`;
+        const fallbackUrl = `https://tenor.googleapis.com/v2/search?q=celebration&key=AIzaSyAyimkuYQYF_FXVALexPuGQctUWRURdCYQ&limit=5&media_filter=gif`;
         const fallbackResponse = await fetch(fallbackUrl);
         if (fallbackResponse.ok) {
           const fallbackData = await fallbackResponse.json();
-          if (fallbackData.data && fallbackData.data.length > 0) {
-            const randomIndex = Math.floor(Math.random() * Math.min(fallbackData.data.length, 5));
-            gifUrl = fallbackData.data[randomIndex]?.images?.downsized_medium?.url;
+          if (fallbackData.results && fallbackData.results.length > 0) {
+            const randomIndex = Math.floor(Math.random() * Math.min(fallbackData.results.length, 5));
+            gifUrl = fallbackData.results[randomIndex]?.media_formats?.gif?.url;
           }
         }
       } catch (e) {
