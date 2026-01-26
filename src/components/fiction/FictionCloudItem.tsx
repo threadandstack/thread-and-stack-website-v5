@@ -9,6 +9,7 @@ interface FictionCloudItemProps {
   isNew: boolean;
   count: number;
   position: { x: number; y: number };
+  genreColor?: string; // HSL color from constellation
   onClick: () => void;
   onPositionChange?: (id: string, newPosition: { x: number; y: number }) => void;
 }
@@ -24,35 +25,37 @@ const getFloatAnimation = (id: string) => {
   return { duration, delay, yAmount };
 };
 
-// Calculate color based on vertical position for contrast against gradient
-const getPositionBasedColors = (yPercent: number) => {
-  const normalized = Math.max(0, Math.min(100, yPercent)) / 100;
-  
-  if (normalized < 0.35) {
+// Parse HSL color and generate themed colors for book pills
+const getGenreBasedColors = (genreColor?: string) => {
+  if (!genreColor) {
+    // Fallback for uncategorized items
     return {
-      background: `hsla(0, 0%, 100%, 0.95)`,
-      text: `hsl(234, 50%, 20%)`,
-      border: `hsla(234, 50%, 70%, 0.5)`,
-    };
-  } else if (normalized < 0.55) {
-    return {
-      background: `hsla(234, 40%, 92%, 0.92)`,
-      text: `hsl(234, 50%, 25%)`,
-      border: `hsla(234, 50%, 60%, 0.4)`,
-    };
-  } else if (normalized < 0.75) {
-    return {
-      background: `hsla(234, 50%, 35%, 0.9)`,
-      text: `hsl(0, 0%, 95%)`,
-      border: `hsla(234, 40%, 50%, 0.5)`,
-    };
-  } else {
-    return {
-      background: `hsla(234, 60%, 22%, 0.95)`,
+      background: `hsla(234, 40%, 25%, 0.9)`,
       text: `hsl(0, 0%, 98%)`,
-      border: `hsla(234, 50%, 40%, 0.6)`,
+      border: `hsla(234, 50%, 50%, 0.5)`,
     };
   }
+  
+  // Parse the HSL color: hsl(hue, saturation%, lightness%)
+  const match = genreColor.match(/hsl\((\d+),\s*(\d+)%,\s*(\d+)%\)/);
+  if (!match) {
+    return {
+      background: `hsla(234, 40%, 25%, 0.9)`,
+      text: `hsl(0, 0%, 98%)`,
+      border: `hsla(234, 50%, 50%, 0.5)`,
+    };
+  }
+  
+  const hue = parseInt(match[1]);
+  const saturation = parseInt(match[2]);
+  
+  // Create a darker, more saturated version for the background
+  // and ensure good contrast with white text
+  return {
+    background: `hsla(${hue}, ${Math.min(saturation + 15, 85)}%, 28%, 0.92)`,
+    text: `hsl(${hue}, 20%, 98%)`,
+    border: `hsla(${hue}, ${saturation}%, 55%, 0.6)`,
+  };
 };
 
 // Get badge color based on count - progresses through a spectrum as popularity increases
@@ -86,11 +89,12 @@ export function FictionCloudItem({
   isNew,
   count,
   position,
+  genreColor,
   onClick,
   onPositionChange
 }: FictionCloudItemProps) {
   const floatAnim = getFloatAnimation(id);
-  const colors = getPositionBasedColors(position.y);
+  const colors = getGenreBasedColors(genreColor);
   const badgeColors = getCountBadgeColor(count);
   const showBadge = count > 1;
   
