@@ -66,6 +66,8 @@ const App = () => (
           <Route path="/admin/images" element={<ImageLibraryPage />} />
           <Route path="/admin/geo" element={<GeoAdminPage />} />
           <Route path="/admin/analytics" element={<AdminAnalyticsPage />} />
+          <Route path="/favourite-fiction" element={<FictionFavoritesPage />} />
+          {/* Legacy route - redirect to new URL */}
           <Route path="/fiction-favorites" element={<FictionFavoritesPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
