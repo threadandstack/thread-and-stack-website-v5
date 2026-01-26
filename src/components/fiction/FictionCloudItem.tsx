@@ -76,6 +76,13 @@ const getCountBadgeColor = (count: number): { bg: string; text: string } => {
   }
 };
 
+// Get a consistent float animation class based on item id
+const getFloatClass = (id: string): string => {
+  const hash = id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  const variant = hash % 3;
+  return `animate-float-${variant}`;
+};
+
 export function FictionCloudItem({
   id,
   displayText,
@@ -95,12 +102,16 @@ export function FictionCloudItem({
   const dragStartPos = useRef<{ x: number; y: number } | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+  const [isInteracting, setIsInteracting] = useState(false);
+  
+  const floatClass = getFloatClass(id);
   
   const { isDragEnabled, isHolding, handlers } = useHoldToDrag({
     holdDuration: 400, // 400ms hold to activate drag
   });
   
   const handlePointerDown = useCallback((e: React.PointerEvent) => {
+    setIsInteracting(true);
     handlers.onPointerDown(e);
     dragStartPos.current = { x: e.clientX, y: e.clientY };
   }, [handlers]);
@@ -140,14 +151,17 @@ export function FictionCloudItem({
       
       onPositionChange(id, { x: newX, y: newY });
     } else if (!wasDragging && !wasDragEnabled) {
-      // Only trigger click if we didn't drag - use a microtask to avoid state conflicts
-      queueMicrotask(() => onClick());
+      // Only trigger click if we didn't drag
+      onClick();
     }
     
+    // Release interaction state after a brief delay to prevent animation jump
+    setTimeout(() => setIsInteracting(false), 50);
     dragStartPos.current = null;
   }, [id, isDragEnabled, isDragging, position, onPositionChange, onClick, handlers]);
   
   const handlePointerCancel = useCallback(() => {
+    setIsInteracting(false);
     handlers.onPointerCancel();
     setIsDragging(false);
     setDragOffset({ x: 0, y: 0 });
@@ -186,7 +200,7 @@ export function FictionCloudItem({
         absolute px-3 py-1.5 rounded-full text-center select-none whitespace-nowrap
         ${isNew ? 'ring-2 ring-accent ring-offset-2 ring-offset-transparent' : ''}
         ${isDragEnabled ? 'ring-2 ring-white/50 cursor-grabbing' : isHolding ? 'cursor-grab' : 'cursor-pointer'}
-        transition-all duration-200
+        ${!isInteracting && !isDragEnabled && !isHolding ? floatClass : ''}
       `}
       style={{
         left: `${position.x + visualOffsetX}%`,
