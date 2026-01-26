@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useHoldToDrag } from "@/hooks/useHoldToDrag";
 import { useCallback, useRef, useState, useEffect } from "react";
+import { ClockPositionGuides } from "./ClockPositionGuides";
 
 interface DraggableConstellationAnchorProps {
   genre: string;
@@ -8,6 +9,7 @@ interface DraggableConstellationAnchorProps {
   color: string;
   isMobile?: boolean;
   isPulsing?: boolean; // Trigger pulse when new book added
+  bookCount?: number; // Number of books in this constellation (for clock guides)
   onPositionChange?: (genre: string, delta: { x: number; y: number }, newPosition: { x: number; y: number }) => void;
 }
 
@@ -17,6 +19,7 @@ export function DraggableConstellationAnchor({
   color,
   isMobile = false,
   isPulsing = false,
+  bookCount = 0,
   onPositionChange
 }: DraggableConstellationAnchorProps) {
   const { isDragEnabled, isHolding, handlers, resetDrag } = useHoldToDrag({
@@ -134,6 +137,13 @@ export function DraggableConstellationAnchor({
           height: starSize,
         }}
       >
+        {/* Clock position guides for empty slots */}
+        <ClockPositionGuides 
+          bookCount={bookCount} 
+          color={color} 
+          starSize={starSize}
+          isMobile={isMobile}
+        />
         {/* Pulse animation ring - appears when new book added */}
         {showPulse && (
           <motion.div
