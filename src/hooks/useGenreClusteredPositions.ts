@@ -81,29 +81,24 @@ const GENRE_ZONES_DESKTOP: { xCenter: number; yCenter: number; radius: number }[
   { xCenter: 82, yCenter: 65, radius: 6 },   // Inner-right lower
 ];
 
-// Mobile/Tablet zones - well-separated grid pattern with stronger edge avoidance
-// Each zone is positioned to avoid overlapping with others and pushed away from edges
+// Mobile/Tablet zones - vertically stacked single-column layout to prevent horizontal overlap
+// Each zone gets its own vertical band with much larger gaps
 const generateMobileZones = (startYPercent: number): { xCenter: number; yCenter: number; radius: number }[] => {
-  const rowGap = 24; // Generous gap between rows for books to spread
+  const rowGap = 35; // Much larger gap between rows to prevent cluster overlap
   return [
-    // Row 1 - pushed further from edges (35/65 instead of 28/72)
-    { xCenter: 35, yCenter: startYPercent, radius: 10 },
-    { xCenter: 65, yCenter: startYPercent + 10, radius: 10 },
-    // Row 2 - offset pattern
-    { xCenter: 65, yCenter: startYPercent + rowGap, radius: 10 },
-    { xCenter: 35, yCenter: startYPercent + rowGap + 10, radius: 10 },
-    // Row 3 - center and left
-    { xCenter: 50, yCenter: startYPercent + rowGap * 2, radius: 10 },
-    { xCenter: 35, yCenter: startYPercent + rowGap * 2 + 12, radius: 10 },
-    // Row 4
-    { xCenter: 65, yCenter: startYPercent + rowGap * 3, radius: 10 },
-    { xCenter: 50, yCenter: startYPercent + rowGap * 3 + 10, radius: 10 },
-    // Row 5 (overflow) - more rows for deeper scrolling
-    { xCenter: 35, yCenter: startYPercent + rowGap * 4, radius: 10 },
-    { xCenter: 65, yCenter: startYPercent + rowGap * 4 + 8, radius: 10 },
-    // Row 6 (additional overflow)
-    { xCenter: 50, yCenter: startYPercent + rowGap * 5, radius: 10 },
-    { xCenter: 35, yCenter: startYPercent + rowGap * 5 + 10, radius: 10 },
+    // Single column layout - all centered, vertically stacked
+    { xCenter: 50, yCenter: startYPercent, radius: 8 },
+    { xCenter: 50, yCenter: startYPercent + rowGap, radius: 8 },
+    { xCenter: 50, yCenter: startYPercent + rowGap * 2, radius: 8 },
+    { xCenter: 50, yCenter: startYPercent + rowGap * 3, radius: 8 },
+    { xCenter: 50, yCenter: startYPercent + rowGap * 4, radius: 8 },
+    { xCenter: 50, yCenter: startYPercent + rowGap * 5, radius: 8 },
+    { xCenter: 50, yCenter: startYPercent + rowGap * 6, radius: 8 },
+    { xCenter: 50, yCenter: startYPercent + rowGap * 7, radius: 8 },
+    { xCenter: 50, yCenter: startYPercent + rowGap * 8, radius: 8 },
+    { xCenter: 50, yCenter: startYPercent + rowGap * 9, radius: 8 },
+    { xCenter: 50, yCenter: startYPercent + rowGap * 10, radius: 8 },
+    { xCenter: 50, yCenter: startYPercent + rowGap * 11, radius: 8 },
   ];
 };
 
@@ -144,7 +139,7 @@ export function useGenreClusteredPositions(
     isMobile ? generateMobileZones(mobileStartY) : GENRE_ZONES_DESKTOP, 
     [isMobile, mobileStartY]
   );
-  const minSpacing = isMobile ? 3 : 1.5; // Minimum gap between items - larger on mobile
+  const minSpacing = isMobile ? 5 : 1.5; // Much larger gap on mobile to prevent overlap
 
   // Group items by genre
   const genreGroups = useMemo(() => {
@@ -207,10 +202,12 @@ export function useGenreClusteredPositions(
       const displayText = item.enriched_answer || item.answer;
       const size = estimateItemSize(displayText, isMobile);
       
-      // Place books in a ring around anchor, starting at exclusion radius
+      // Place books in a tighter ring around anchor on mobile (since zones are more separated)
       const angle = (idx * 137.5 * Math.PI) / 180; // Golden angle
-      const minDistance = anchorExclusionRadius + 2; // Start outside exclusion zone
-      const distance = Math.min(maxRadius, minDistance + idx * 2);
+      const minDistance = anchorExclusionRadius + 1;
+      // On mobile, keep books closer to their anchor since zones are well-separated
+      const mobileRadius = isMobile ? Math.min(maxRadius * 0.7, minDistance + idx * 1.5) : Math.min(maxRadius, minDistance + idx * 2);
+      const distance = mobileRadius;
       
       let pos: Position = {
         x: anchor.x + Math.cos(angle) * distance,
