@@ -270,6 +270,19 @@ export default function FictionFavoritesPage() {
     });
     return counts;
   }, [favorites]);
+  
+  // Build book positions with genre info for constellation placement
+  const bookPositionsWithGenre = useMemo(() => {
+    return aggregatedFavorites.map(item => {
+      const pos = positions.get(item.id) || { x: 50, y: 50 };
+      return {
+        id: item.id,
+        genre: item.genre,
+        x: pos.x,
+        y: pos.y
+      };
+    });
+  }, [aggregatedFavorites, positions]);
 
   // Render cloud items helper
   const renderCloudItems = () => (
@@ -311,7 +324,7 @@ export default function FictionFavoritesPage() {
         <AddedCountBadge count={addedCount} show={showAddedBadge} />
 
         {/* Constellation labels - curved genre names */}
-        <ConstellationLabels genreCounts={genreCounts} minCount={3} />
+        <ConstellationLabels genreCounts={genreCounts} bookPositions={bookPositionsWithGenre} minCount={3} />
 
         {/* Full-page cloud container */}
         <div className="absolute inset-0 overflow-hidden">
@@ -426,6 +439,14 @@ export default function FictionFavoritesPage() {
               )}
             </motion.div>
           </div>
+
+          {/* Constellation labels for mobile */}
+          <ConstellationLabels 
+            genreCounts={genreCounts} 
+            bookPositions={bookPositionsWithGenre} 
+            minCount={3}
+            isMobile={true}
+          />
 
           {/* Cloud zone - entries float here, below the input */}
           <div 
