@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Index from "./pages/Index";
 import AboutPage from "./pages/AboutPage";
 import HowIWorkPage from "./pages/HowIWorkPage";
@@ -67,8 +67,8 @@ const App = () => (
           <Route path="/admin/geo" element={<GeoAdminPage />} />
           <Route path="/admin/analytics" element={<AdminAnalyticsPage />} />
           <Route path="/favourite-fiction" element={<FictionFavoritesPage />} />
-          {/* Legacy route - redirect to new URL */}
-          <Route path="/fiction-favorites" element={<FictionFavoritesPage />} />
+          {/* Legacy route - redirect to new canonical URL */}
+          <Route path="/fiction-favorites" element={<Navigate to="/favourite-fiction" replace />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
