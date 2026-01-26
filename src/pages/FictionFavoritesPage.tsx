@@ -430,7 +430,7 @@ export default function FictionFavoritesPage() {
   );
 
   return (
-    <div className="min-h-screen bg-background flex flex-col overflow-x-hidden">
+    <div className="min-h-screen bg-background flex flex-col">
       <Navigation variant="dark" />
       
       {/* DESKTOP LAYOUT - scrollable double-height experience */}
@@ -514,8 +514,8 @@ export default function FictionFavoritesPage() {
         </div>
       </main>
 
-      {/* MOBILE/TABLET LAYOUT - Vertical scroll experience */}
-      <main className="lg:hidden flex-1 flex flex-col relative overflow-x-hidden">
+      {/* MOBILE/TABLET LAYOUT - Full viewport with fixed footer */}
+      <main className="lg:hidden flex-1 flex flex-col relative">
         {/* Starry backdrop - covers entire scrollable area */}
         <div className="fixed inset-0 z-0">
           <StarryBackdrop />
@@ -524,10 +524,10 @@ export default function FictionFavoritesPage() {
         {/* Added count badge */}
         <AddedCountBadge count={addedCount} show={showAddedBadge} />
 
-        {/* Content container - scrollable vertical layout */}
-        <div className="relative z-10 flex flex-col pt-20">
+        {/* Content container - scrollable vertical layout with safe padding */}
+        <div className="relative z-10 flex flex-col pt-20 pb-36 px-5 md:px-8 min-h-screen">
           {/* Header section with compact CTA card */}
-          <div className="pb-3 px-4">
+          <div className="pb-3">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -553,7 +553,7 @@ export default function FictionFavoritesPage() {
           </div>
 
           {/* Input section - outside the white box, against night sky */}
-          <div className="px-4 py-3">
+          <div className="py-3">
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -579,28 +579,31 @@ export default function FictionFavoritesPage() {
             </motion.div>
           </div>
 
-          {/* Constellation lines for mobile */}
-          <ConstellationLines 
-            genreAnchors={genreAnchors} 
-            bookPositions={bookPositionsWithGenre} 
-            minCount={2}
-            isMobile={true}
-          />
-          
-          {/* Draggable constellation anchors for mobile */}
-          <div className="absolute inset-0 z-[5]">
-            {renderDraggableAnchors(true)}
-          </div>
+          {/* Cloud zone - relative container for positioned items */}
+          {favorites.length > 0 && (
+            <div 
+              className="relative flex-1 mt-4"
+              style={{ minHeight: `${Math.max(400, Math.min(800, aggregatedFavorites.length * 50))}px` }}
+            >
+              {/* Constellation lines for mobile */}
+              <ConstellationLines 
+                genreAnchors={genreAnchors} 
+                bookPositions={bookPositionsWithGenre} 
+                minCount={2}
+                isMobile={true}
+              />
+              
+              {/* Draggable constellation anchors for mobile */}
+              {renderDraggableAnchors(true)}
+              
+              {/* Book items */}
+              {renderCloudItems()}
+            </div>
+          )}
+        </div>
 
-          {/* Cloud zone - entries float here, below the input */}
-          <div 
-            className="relative flex-1"
-            style={{ minHeight: `${Math.max(600, favorites.length * 60)}px` }}
-          >
-            {favorites.length > 0 && renderCloudItems()}
-          </div>
-
-          {/* Campfire scene at bottom of mobile */}
+        {/* Campfire scene - fixed at bottom of viewport */}
+        <div className="fixed bottom-0 left-0 right-0 z-20">
           <CampfireScene />
         </div>
       </main>
