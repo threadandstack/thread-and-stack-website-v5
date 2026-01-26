@@ -632,17 +632,17 @@ export default function FictionFavoritesPage() {
           {/* Cloud zone - relative container for positioned items with calculated height */}
           {favorites.length > 0 && (() => {
             // Use genreCount from the positioning hook for accurate height calculation
-            // Each genre needs ~25vh for clock-face layout with comfortable spacing
-            const calculatedHeight = Math.max(100, genreCount * 25);
+            // Each genre needs ~40vh for full circular clock-face layout with comfortable spacing
+            const calculatedHeight = Math.max(100, genreCount * 40);
             // Get sorted genres from the zone bounds (already popularity-sorted by the hook)
             const sortedGenres = Array.from(genreZoneBounds.keys());
             return (
             <div 
               className="relative mt-4"
               style={{ 
-                // Height based on number of genres - each genre gets 25vh for clock layout
+                // Height based on number of genres - each genre gets 40vh for full circular layout
                 height: `${calculatedHeight}vh`,
-                minHeight: `${Math.max(600, genreCount * 200)}px`
+                minHeight: `${Math.max(600, genreCount * 320)}px`
               }}
             >
               {/* DEBUG: Zone boundaries visualization */}
