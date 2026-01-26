@@ -51,39 +51,42 @@ const estimateItemSize = (text: string, isMobile: boolean): Size => {
 };
 
 // Genre cluster zones - each genre gets its own area on desktop
-// Zones are well-separated to prevent constellation overlap
-// Y values span 0-200% (double height page), with minimum 25% vertical separation
+// Zones are distributed across both sides of the central CTA
+// Compact vertical spacing to avoid large empty areas
 const GENRE_ZONES_DESKTOP: { xCenter: number; yCenter: number; radius: number }[] = [
-  // First viewport - left side (avoid nav at top y > 15%)
-  { xCenter: 12, yCenter: 22, radius: 8 },   // Top-left
-  { xCenter: 12, yCenter: 50, radius: 8 },   // Mid-left
-  { xCenter: 12, yCenter: 78, radius: 8 },   // Bottom-left
-  // First viewport - right side
-  { xCenter: 88, yCenter: 22, radius: 8 },   // Top-right
-  { xCenter: 88, yCenter: 50, radius: 8 },   // Mid-right
-  { xCenter: 88, yCenter: 78, radius: 8 },   // Bottom-right
-  // Second viewport (100-200%) - scrollable area, left side
-  { xCenter: 15, yCenter: 115, radius: 10 }, // Scroll top-left
-  { xCenter: 15, yCenter: 145, radius: 10 }, // Scroll mid-left
-  { xCenter: 15, yCenter: 175, radius: 10 }, // Scroll bottom-left
-  // Second viewport - right side
-  { xCenter: 85, yCenter: 115, radius: 10 }, // Scroll top-right
-  { xCenter: 85, yCenter: 145, radius: 10 }, // Scroll mid-right
-  { xCenter: 85, yCenter: 175, radius: 10 }, // Scroll bottom-right
+  // Upper band (visible in first viewport) - left side
+  { xCenter: 10, yCenter: 25, radius: 7 },   // Top-left
+  { xCenter: 10, yCenter: 50, radius: 7 },   // Mid-left  
+  { xCenter: 10, yCenter: 75, radius: 7 },   // Lower-left
+  // Upper band - right side
+  { xCenter: 90, yCenter: 25, radius: 7 },   // Top-right
+  { xCenter: 90, yCenter: 50, radius: 7 },   // Mid-right
+  { xCenter: 90, yCenter: 75, radius: 7 },   // Lower-right
+  // Additional zones closer to center if needed (staggered)
+  { xCenter: 18, yCenter: 35, radius: 6 },   // Inner-left upper
+  { xCenter: 18, yCenter: 65, radius: 6 },   // Inner-left lower
+  { xCenter: 82, yCenter: 35, radius: 6 },   // Inner-right upper
+  { xCenter: 82, yCenter: 65, radius: 6 },   // Inner-right lower
 ];
 
-// Mobile zones - vertical stacking
+// Mobile/Tablet zones - wide horizontal bands BELOW the input area
+// Start at y=38% to clear the title block and input field
+// Use wide clusters spanning horizontally rather than competing vertically
 const GENRE_ZONES_MOBILE: { xCenter: number; yCenter: number; radius: number }[] = [
-  { xCenter: 25, yCenter: 8, radius: 18 },
-  { xCenter: 75, yCenter: 8, radius: 18 },
-  { xCenter: 25, yCenter: 24, radius: 18 },
-  { xCenter: 75, yCenter: 24, radius: 18 },
-  { xCenter: 25, yCenter: 40, radius: 18 },
-  { xCenter: 75, yCenter: 40, radius: 18 },
-  { xCenter: 25, yCenter: 56, radius: 18 },
-  { xCenter: 75, yCenter: 56, radius: 18 },
-  { xCenter: 25, yCenter: 72, radius: 18 },
-  { xCenter: 75, yCenter: 72, radius: 18 },
+  // Row 1 - first visible row below input (y ~38-42%)
+  { xCenter: 20, yCenter: 40, radius: 12 },
+  { xCenter: 50, yCenter: 42, radius: 12 },
+  { xCenter: 80, yCenter: 40, radius: 12 },
+  // Row 2 - second row (y ~52-56%)
+  { xCenter: 15, yCenter: 54, radius: 12 },
+  { xCenter: 50, yCenter: 56, radius: 12 },
+  { xCenter: 85, yCenter: 54, radius: 12 },
+  // Row 3 - third row (y ~66-70%)
+  { xCenter: 25, yCenter: 68, radius: 12 },
+  { xCenter: 75, yCenter: 70, radius: 12 },
+  // Row 4 - lower area (y ~80-84%)
+  { xCenter: 20, yCenter: 82, radius: 12 },
+  { xCenter: 80, yCenter: 84, radius: 12 },
 ];
 
 export function useGenreClusteredPositions(items: CloudItem[]): GenreClusterResult {
