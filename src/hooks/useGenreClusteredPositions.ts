@@ -94,34 +94,31 @@ interface MobileZone {
   radius: number;
 }
 
-// Clock-face positioning order for MOBILE: prioritize positions BELOW the star
-// Since the star is in the upper portion of each zone, we have more room below.
-// Primary positions: 6 o'clock (directly below), then spread to 4, 5, 7, 8 (lower arc)
-// Secondary: 3, 9 (sides), then finally 12, 1, 2, 10, 11 (above - may get clamped)
+// Clock-face positioning: TRUE circular distribution around the star
+// Books are placed evenly around the constellation anchor in a full 360° circle.
 // Angles in degrees where 0° = 12 o'clock, 90° = 3 o'clock, 180° = 6 o'clock, 270° = 9 o'clock.
-const CLOCK_POSITIONS_MOBILE = [
-  180, // 6 o'clock (directly below) - FIRST
-  150, // 5 o'clock (below-right)
-  210, // 7 o'clock (below-left)
-  120, // 4 o'clock (right-lower)
-  240, // 8 o'clock (left-lower)
-  90,  // 3 o'clock (right)
-  270, // 9 o'clock (left)
-  160, // between 5 and 6
-  200, // between 6 and 7
-  130, // between 4 and 5
-  230, // between 7 and 8
-  170, // closer to 6
-  190, // closer to 6
-  // Upper positions (may get clamped but included for large clusters)
-  60,  // 2 o'clock
-  300, // 10 o'clock
-  30,  // 1 o'clock
-  330, // 11 o'clock
-  0,   // 12 o'clock (directly above - likely clamped)
-];
 
-// Desktop uses golden angle spiral - full circle distribution
+// Generate clock positions for N items - evenly distributed around the circle
+const generateClockPositions = (count: number): number[] => {
+  if (count <= 4) {
+    // For 1-4 items, use cardinal positions: 6, 12, 3, 9 o'clock
+    return [180, 0, 90, 270].slice(0, count);
+  }
+  if (count <= 8) {
+    // For 5-8 items, add diagonal positions
+    return [180, 0, 90, 270, 135, 315, 45, 225].slice(0, count);
+  }
+  // For more items, distribute evenly around the circle
+  const positions: number[] = [];
+  const angleStep = 360 / count;
+  for (let i = 0; i < count; i++) {
+    // Start from 180° (6 o'clock) and go clockwise
+    positions.push((180 + i * angleStep) % 360);
+  }
+  return positions;
+};
+
+// Desktop uses golden angle spiral - creates nice organic distribution
 const CLOCK_POSITIONS_DESKTOP = [
   180, 0, 90, 270, 60, 330, 210, 150, 30, 300, 240, 120,
   15, 45, 75, 105, 135, 165, 195, 225, 255, 285, 315, 345,
@@ -139,20 +136,20 @@ const generateMobileZones = (startYPercent: number, numGenres: number): MobileZo
     const yMinRaw = i * bandHeight;
     const yMaxRaw = (i + 1) * bandHeight;
 
-    // Padding inside the band, proportional but capped.
-    const padding = Math.min(1.2, bandHeight * 0.2);
+    // Padding inside the band - need enough room for circular distribution
+    const padding = Math.min(2, bandHeight * 0.08);
     const yMin = clamp(yMinRaw + padding, 0, 100);
     const yMax = clamp(yMaxRaw - padding, 0, 100);
 
-    // Position anchor in the UPPER THIRD of the zone
-    // This gives more room for books to spread BELOW the star (6 o'clock area)
-    const yCenter = clamp(yMinRaw + bandHeight * 0.3, 2, 98);
+    // Position anchor in the CENTER of the zone for true circular distribution
+    // Books will be placed evenly around this point
+    const yCenter = clamp(yMinRaw + bandHeight * 0.5, 5, 95);
 
     zones.push({
       xCenter: 50,
       yCenter,
       yMin,
-      yMax: Math.max(yMax, yMin + 0.5),
+      yMax: Math.max(yMax, yMin + 2),
       radius: 6,
     });
   }
@@ -252,8 +249,8 @@ export function useGenreClusteredPositions(
     return overlapX && overlapY;
   }, [minSpacing]);
 
-  // Position items around their genre's anchor point using clock-face pattern on mobile
-  // On mobile, strictly enforce vertical zone bounds
+  // Position items around their genre's anchor point using TRUE CIRCULAR clock-face pattern
+  // Books are distributed evenly around the star in a full 360° circle
   const positionItemsAroundAnchor = useCallback((
     zoneItems: CloudItem[],
     anchor: { x: number; y: number },
@@ -263,44 +260,49 @@ export function useGenreClusteredPositions(
   ): PositionedItem[] => {
     const positioned: PositionedItem[] = [];
     
-    // Safe margins - generous but not excessive
-    const safeMarginX = isMobile ? 15 : 8;
+    // Safe margins
+    const safeMarginX = isMobile ? 12 : 8;
     const safeMarginY = isMobile ? 2 : 4;
+    
+    // Generate clock positions based on number of items for even distribution
+    const clockPositions = isMobile ? generateClockPositions(zoneItems.length) : CLOCK_POSITIONS_DESKTOP;
     
     zoneItems.forEach((item, idx) => {
       const displayText = item.enriched_answer || item.answer;
       const size = estimateItemSize(displayText, isMobile);
       
       if (isMobile && zoneBounds) {
-        // MOBILE: Clock-face positioning - prioritize positions BELOW the star
-        // since the anchor is in the upper portion of each zone
-        const clockAngle = CLOCK_POSITIONS_MOBILE[idx % CLOCK_POSITIONS_MOBILE.length];
+        // MOBILE: TRUE CIRCULAR clock-face positioning
+        // Each item gets its own angle for even distribution around the star
+        const clockAngle = clockPositions[idx % clockPositions.length];
         const angleRad = (clockAngle * Math.PI) / 180;
         
-        // Calculate zone dimensions to determine radius
+        // Calculate available space in the zone
         const zoneHeight = zoneBounds.yMax - zoneBounds.yMin;
-        const zoneWidth = 100 - (safeMarginX * 2); // Available width
+        const zoneWidth = 100 - (safeMarginX * 2);
         
-        // Base radius - fit within zone bounds, smaller for crowded clusters
-        const numItems = zoneItems.length;
-        // Pull items closer when there are more of them
-        const crowdingFactor = numItems > 8 ? 0.7 : numItems > 4 ? 0.85 : 1.0;
-        const baseRadiusY = (zoneHeight / 2 - 3) * crowdingFactor; // Leave padding from edges
-        const baseRadiusX = Math.min(35, zoneWidth / 3) * crowdingFactor; // Horizontal spread
+        // Available room from anchor to zone edges
+        const roomAbove = anchor.y - zoneBounds.yMin;
+        const roomBelow = zoneBounds.yMax - anchor.y;
         
-        // For items beyond first 8, use a smaller inner ring
-        const ringIndex = Math.floor(idx / 8);
-        const ringScale = 1 - (ringIndex * 0.25); // Each ring 25% smaller
+        // Use the smaller of the two to ensure full circle fits
+        const baseRadiusY = Math.min(roomAbove, roomBelow) - 3; // Leave padding
+        const baseRadiusX = Math.min(35, zoneWidth / 3);
         
-        const radiusX = baseRadiusX * ringScale;
-        const radiusY = baseRadiusY * ringScale;
+        // For many items, use multiple concentric rings
+        const itemsPerRing = 8;
+        const ringIndex = Math.floor(idx / itemsPerRing);
+        const ringScale = 1 - (ringIndex * 0.3); // Each ring 30% smaller radius
         
-        // Calculate position from center (anchor is at center of zone)
-        // (0° = 12 o'clock => above the star)
+        const radiusX = Math.max(8, baseRadiusX * ringScale);
+        const radiusY = Math.max(6, baseRadiusY * ringScale);
+        
+        // Calculate position using standard circle formula
+        // sin for X (0° = top, positive right), -cos for Y (0° = top, negative = up)
         let x = anchor.x + Math.sin(angleRad) * radiusX;
         let y = anchor.y - Math.cos(angleRad) * radiusY;
         
-        // Clamp to zone bounds
+        // Gentle clamp to zone bounds (but allow circular distribution)
         x = clamp(x, size.w / 2 + safeMarginX, 100 - size.w / 2 - safeMarginX);
         y = clamp(y, zoneBounds.yMin + size.h / 2 + 1, zoneBounds.yMax - size.h / 2 - 1);
         
@@ -314,8 +316,8 @@ export function useGenreClusteredPositions(
           zoneBounds
         });
       } else {
-        // DESKTOP: Ring layout around anchor
-        const angle = (idx * 137.5 * Math.PI) / 180; // Golden angle
+        // DESKTOP: Ring layout around anchor using golden angle
+        const angle = (idx * 137.5 * Math.PI) / 180;
         const minDistance = anchorExclusionRadius + 2;
         const distance = Math.min(maxRadius, minDistance + idx * 2);
         
@@ -459,7 +461,7 @@ export function useGenreClusteredPositions(
       }
       
       // Third pass: Push items away from their anchor (exclusion zone around star/label)
-      // And enforce strict zone bounds on mobile
+      // PRESERVE circular distribution - push radially outward, not just downward
       for (const item of resolved) {
         const anchor = item.genre ? anchors.get(item.genre) : null;
         if (anchor) {
@@ -467,27 +469,25 @@ export function useGenreClusteredPositions(
           const dyToAnchor = item.position.y - anchor.y;
           const distToAnchor = Math.sqrt(dxToAnchor * dxToAnchor + dyToAnchor * dyToAnchor);
           
-          // If too close to anchor, push away (prefer pushing down on mobile)
+          // If too close to anchor, push RADIALLY away (preserve circle shape)
           if (distToAnchor < anchorExclusionRadius && distToAnchor > 0.1) {
             const pushAway = (anchorExclusionRadius - distToAnchor) * 0.6;
+            // Push in the same direction the item is from anchor (radial push)
             item.position.x += (dxToAnchor / distToAnchor) * pushAway;
-            // On mobile, always push items downward from anchor
-            if (isMobile) {
-              item.position.y = Math.max(item.position.y, anchor.y + anchorExclusionRadius + 1);
-            } else {
-              item.position.y += (dyToAnchor / distToAnchor) * pushAway;
-            }
+            item.position.y += (dyToAnchor / distToAnchor) * pushAway;
           }
         }
         
-        // Final clamp - on mobile, use strict zone bounds
+        // Final clamp - on mobile, use strict zone bounds but allow full circle
         item.position.x = clamp(item.position.x, item.size.w / 2 + safeMarginX, 100 - item.size.w / 2 - safeMarginX);
         
         if (isMobile && item.zoneBounds) {
-          // Strict zone bounds on mobile - NEVER cross into another constellation
-          const anchor = item.genre ? anchors.get(item.genre) : null;
-          const minY = anchor ? anchor.y + anchorExclusionRadius + 1 : item.zoneBounds.yMin + item.size.h / 2;
-          item.position.y = clamp(item.position.y, minY, item.zoneBounds.yMax - item.size.h / 2 - 1);
+          // Zone bounds - allow items above AND below anchor for circular layout
+          item.position.y = clamp(
+            item.position.y, 
+            item.zoneBounds.yMin + item.size.h / 2 + 1, 
+            item.zoneBounds.yMax - item.size.h / 2 - 1
+          );
         } else {
           item.position.y = clamp(item.position.y, item.size.h / 2 + safeMarginY, 100 - item.size.h / 2 - safeMarginY);
         }

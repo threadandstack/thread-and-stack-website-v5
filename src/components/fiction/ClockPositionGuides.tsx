@@ -11,21 +11,13 @@ interface ClockPositionGuidesProps {
   isMobile?: boolean;
 }
 
-// Mobile clock positions prioritize BELOW the star (where there's more room)
-// Shows guides for primary positions: 6, 5, 7, 4, 8 (all below/sides)
-const MOBILE_GUIDE_POSITIONS = [
-  { angle: 180, label: "6" },  // Directly below - 1st book
-  { angle: 150, label: "5" },  // Below-right - 2nd book
-  { angle: 210, label: "7" },  // Below-left - 3rd book
-  { angle: 120, label: "4" },  // Right-lower - 4th book
-];
-
-// Desktop shows traditional 12/3/6/9 positions
-const DESKTOP_GUIDE_POSITIONS = [
-  { angle: 180, label: "6" },  // Below - 1st book
-  { angle: 0, label: "12" },   // Above - 2nd book
-  { angle: 90, label: "3" },   // Right - 3rd book
-  { angle: 270, label: "9" },  // Left - 4th book
+// CIRCULAR clock positions - shows where the next 4 books will be placed
+// Mobile and desktop use the same true circular pattern
+const GUIDE_POSITIONS = [
+  { angle: 180, label: "6" },  // 6 o'clock (below) - 1st book
+  { angle: 0, label: "12" },   // 12 o'clock (above) - 2nd book
+  { angle: 90, label: "3" },   // 3 o'clock (right) - 3rd book
+  { angle: 270, label: "9" },  // 9 o'clock (left) - 4th book
 ];
 
 export function ClockPositionGuides({ 
@@ -34,7 +26,7 @@ export function ClockPositionGuides({
   starSize,
   isMobile = false 
 }: ClockPositionGuidesProps) {
-  const guidePositions = isMobile ? MOBILE_GUIDE_POSITIONS : DESKTOP_GUIDE_POSITIONS;
+  const guidePositions = GUIDE_POSITIONS;
   
   // Only show guides when there are empty slots (< 4 books)
   if (bookCount >= 4) return null;
