@@ -12,6 +12,7 @@ import { AddedCountBadge } from "@/components/fiction/AddedCountBadge";
 import { FictionTagInput } from "@/components/fiction/FictionTagInput";
 import { StarryBackdrop } from "@/components/fiction/StarryBackdrop";
 import { filterProfanity } from "@/lib/profanityFilter";
+import { useCloudPositions } from "@/hooks/useCloudPositions";
 
 interface FictionFavorite {
   id: string;
@@ -32,49 +33,6 @@ interface SelectedBook {
   title: string;
   clusterKey: string | null;
 }
-
-// Generate a consistent position for each cluster - avoiding center and nav areas
-const getClusterPosition = (clusterKey: string, index: number) => {
-  const hash = clusterKey.split('').reduce((a, b) => {
-    a = ((a << 5) - a) + b.charCodeAt(0);
-    return a & a;
-  }, 0);
-  
-  // Edge zones that avoid:
-  // - Center area (for the main CTA)
-  // - Top navigation area (y < 12%)
-  // - Footer area
-  const edgeZones = [
-    // Top corners (below nav)
-    { xMin: 2, xMax: 18, yMin: 14, yMax: 28 },
-    { xMin: 82, xMax: 98, yMin: 14, yMax: 28 },
-    // Left edge (avoiding center)
-    { xMin: 2, xMax: 15, yMin: 32, yMax: 48 },
-    { xMin: 2, xMax: 15, yMin: 55, yMax: 72 },
-    // Right edge (avoiding center)
-    { xMin: 85, xMax: 98, yMin: 32, yMax: 48 },
-    { xMin: 85, xMax: 98, yMin: 55, yMax: 72 },
-    // Bottom corners
-    { xMin: 2, xMax: 20, yMin: 76, yMax: 88 },
-    { xMin: 80, xMax: 98, yMin: 76, yMax: 88 },
-    // Far bottom edges
-    { xMin: 25, xMax: 40, yMin: 82, yMax: 92 },
-    { xMin: 60, xMax: 75, yMin: 82, yMax: 92 },
-  ];
-  
-  const zoneIndex = Math.abs(hash) % edgeZones.length;
-  const zone = edgeZones[zoneIndex];
-  
-  const xRange = zone.xMax - zone.xMin;
-  const yRange = zone.yMax - zone.yMin;
-  const offsetX = (Math.abs(hash * (index + 1)) % 100) / 100 * xRange;
-  const offsetY = (Math.abs(hash * (index + 2)) % 100) / 100 * yRange;
-  
-  return {
-    x: zone.xMin + offsetX,
-    y: zone.yMin + offsetY
-  };
-};
 
 // Group items by cluster
 const groupByCluster = (items: FictionFavorite[]) => {
@@ -248,6 +206,9 @@ export default function FictionFavoritesPage() {
 
   const clusteredGroups = groupByCluster(favorites);
   const clusterKeys = Object.keys(clusteredGroups);
+  
+  // Use collision-aware positioning
+  const positions = useCloudPositions(favorites);
 
   return (
     <div className="min-h-screen bg-background flex flex-col overflow-hidden">
@@ -269,7 +230,7 @@ export default function FictionFavoritesPage() {
                 const isCluster = items.length > 1;
                 
                 return items.map((item, idx) => {
-                  const pos = getClusterPosition(clusterKey, idx);
+                  const pos = positions.get(item.id) || { x: 50, y: 50 };
                   const isNew = item.id === newItemId;
                   const displayText = item.enriched_answer || item.answer;
                   
