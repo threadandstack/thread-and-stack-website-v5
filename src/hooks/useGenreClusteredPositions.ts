@@ -125,12 +125,12 @@ export function useGenreClusteredPositions(
   const [positions, setPositions] = useState<Map<string, Position>>(new Map());
   const [genreAnchors, setGenreAnchors] = useState<Map<string, Position>>(new Map());
   const [isMobile, setIsMobile] = useState(() => 
-    typeof window !== 'undefined' && window.innerWidth < 1024
+    typeof window !== 'undefined' && window.innerWidth < 768 // True mobile only (not tablet)
   );
 
   useEffect(() => {
     const handleResize = () => {
-      const nowMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
+      const nowMobile = typeof window !== 'undefined' && window.innerWidth < 768;
       if (nowMobile !== isMobile) {
         setIsMobile(nowMobile);
         setPositions(new Map());
@@ -222,15 +222,14 @@ export function useGenreClusteredPositions(
       const size = estimateItemSize(displayText, isMobile);
       
       if (isMobile && zoneBounds) {
-        // MOBILE: Stack books vertically with horizontal stagger
-        // Each book on its own row, alternating left/center/right
+        // MOBILE ONLY: Stack books vertically, centered
+        // Each book on its own row, all centered for clean vertical flow
         const fixedRowSpacing = 7; // 7% vh between each book row
         const startY = anchor.y + anchorExclusionRadius + 5;
         let y = startY + (idx * fixedRowSpacing);
         
-        // Horizontal stagger pattern: left, center, right, repeat
-        const staggerPattern = [35, 50, 65]; // Left, center, right positions
-        let x = staggerPattern[idx % 3];
+        // All books centered horizontally
+        let x = 50;
         
         // Clamp to zone bounds
         const minY = anchor.y + anchorExclusionRadius + 2;
