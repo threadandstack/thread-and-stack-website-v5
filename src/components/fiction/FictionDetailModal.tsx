@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, BookOpen, Users, ExternalLink } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { X, BookOpen, Users, TrendingUp } from "lucide-react";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { supabase } from "@/integrations/supabase/client";
 import { BookShuffleLoader } from "./BookShuffleLoader";
@@ -16,8 +15,8 @@ interface FictionDetailModalProps {
 interface BookDetails {
   summary: string;
   author: string | null;
-  goodreads_url: string | null;
   cover_url: string | null;
+  audience_fact: string | null;
 }
 
 export function FictionDetailModal({ isOpen, onClose, title, clusterKey }: FictionDetailModalProps) {
@@ -63,8 +62,8 @@ export function FictionDetailModal({ isOpen, onClose, title, clusterKey }: Ficti
         setDetails({
           summary: "Unable to fetch details for this title.",
           author: null,
-          goodreads_url: null,
-          cover_url: null
+          cover_url: null,
+          audience_fact: null
         });
       }
 
@@ -103,11 +102,11 @@ export function FictionDetailModal({ isOpen, onClose, title, clusterKey }: Ficti
             <div className="flex gap-4 mb-6">
               {/* Book cover */}
               <div className="flex-shrink-0 w-24 md:w-28">
-              {loading ? (
-                <div className="w-full aspect-[2/3] rounded-lg flex items-center justify-center p-4">
-                  <BookShuffleLoader />
-                </div>
-              ) : details?.cover_url && !coverError ? (
+                {loading ? (
+                  <div className="w-full aspect-[2/3] rounded-lg flex items-center justify-center p-4">
+                    <BookShuffleLoader />
+                  </div>
+                ) : details?.cover_url && !coverError ? (
                   <AspectRatio ratio={2/3} className="overflow-hidden rounded-lg shadow-md">
                     <img
                       src={details.cover_url}
@@ -165,22 +164,23 @@ export function FictionDetailModal({ isOpen, onClose, title, clusterKey }: Ficti
                   </p>
                 </div>
 
-                {details?.goodreads_url && (
-                  <Button
-                    variant="outline"
-                    className="w-full"
-                    asChild
+                {/* Audience fact callout */}
+                {details?.audience_fact && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                    className="bg-accent/10 border border-accent/20 rounded-xl p-4"
                   >
-                    <a 
-                      href={details.goodreads_url} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2"
-                    >
-                      <ExternalLink className="h-4 w-4" />
-                      View on Goodreads
-                    </a>
-                  </Button>
+                    <div className="flex items-start gap-3">
+                      <div className="p-2 rounded-full bg-accent/20">
+                        <TrendingUp className="h-4 w-4 text-accent" />
+                      </div>
+                      <p className="text-sm text-foreground leading-relaxed">
+                        {details.audience_fact}
+                      </p>
+                    </div>
+                  </motion.div>
                 )}
               </div>
             )}

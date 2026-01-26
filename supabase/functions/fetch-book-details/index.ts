@@ -6,8 +6,37 @@ const corsHeaders = {
 };
 
 async function fetchBookCover(title: string, author: string | null): Promise<string | null> {
+  // Try Google Books API first (better coverage and quality)
   try {
-    // Try Open Library first (no API key needed)
+    const searchQuery = author ? `${title}+inauthor:${author}` : title;
+    const googleBooksUrl = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(searchQuery)}&maxResults=5`;
+    
+    const response = await fetch(googleBooksUrl);
+    if (response.ok) {
+      const data = await response.json();
+      
+      // Find the best match - prefer items with thumbnail and matching title
+      for (const item of data.items || []) {
+        const imageLinks = item.volumeInfo?.imageLinks;
+        if (imageLinks) {
+          // Prefer larger images, use HTTPS
+          const coverUrl = (imageLinks.thumbnail || imageLinks.smallThumbnail || "")
+            .replace("http://", "https://")
+            .replace("&edge=curl", "") // Remove curl effect
+            .replace("zoom=1", "zoom=2"); // Get larger image
+          
+          if (coverUrl) {
+            return coverUrl;
+          }
+        }
+      }
+    }
+  } catch (e) {
+    console.error("Failed to fetch cover from Google Books:", e);
+  }
+
+  // Fallback to Open Library
+  try {
     const searchQuery = author ? `${title} ${author}` : title;
     const openLibraryUrl = `https://openlibrary.org/search.json?q=${encodeURIComponent(searchQuery)}&limit=1`;
     
@@ -17,13 +46,7 @@ async function fetchBookCover(title: string, author: string | null): Promise<str
       const book = data.docs?.[0];
       
       if (book?.cover_i) {
-        // Medium size cover (M), also available: S, L
         return `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`;
-      }
-      
-      // Fallback to ISBN-based cover if available
-      if (book?.isbn?.[0]) {
-        return `https://covers.openlibrary.org/b/isbn/${book.isbn[0]}-M.jpg`;
       }
     }
   } catch (e) {
@@ -53,7 +76,7 @@ serve(async (req) => {
       throw new Error("LOVABLE_API_KEY is not configured");
     }
 
-    // Use AI to generate a book summary
+    // Use AI to generate book summary and audience fact
     const aiResponse = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -65,7 +88,7 @@ serve(async (req) => {
         messages: [
           {
             role: "system",
-            content: `You provide brief, engaging summaries of fiction books/stories. Be accurate about author and plot details. If you don't know the work, say so honestly.`
+            content: `You provide brief, engaging summaries of fiction books/stories and fascinating audience statistics. Be accurate about author and plot details. If you don't know the work, say so honestly.`
           },
           {
             role: "user",
@@ -77,7 +100,7 @@ serve(async (req) => {
             type: "function",
             function: {
               name: "book_details",
-              description: "Return book/story details",
+              description: "Return book/story details with an audience fact",
               parameters: {
                 type: "object",
                 properties: {
@@ -89,12 +112,12 @@ serve(async (req) => {
                     type: "string",
                     description: "The author's name, or null if unknown"
                   },
-                  goodreads_search: {
+                  audience_fact: {
                     type: "string",
-                    description: "Search term for Goodreads URL (e.g. 'lord-of-rings-tolkien')"
+                    description: "A fascinating statistic or fact about the book's AUDIENCE or cultural impact (NOT about the plot). Must include a specific number/statistic. Examples: 'Over 150 million copies sold worldwide', 'Translated into 80 languages', 'The #1 bestseller for 52 consecutive weeks', 'Sparked a 400% increase in visitors to the Scottish Highlands'. Keep it under 25 words."
                   }
                 },
-                required: ["summary"],
+                required: ["summary", "audience_fact"],
                 additionalProperties: false
               }
             }
@@ -106,7 +129,7 @@ serve(async (req) => {
 
     let summary = "A beloved work of fiction that has captured readers' imaginations.";
     let author: string | null = null;
-    let goodreadsSearch = title;
+    let audience_fact = "Beloved by readers around the world.";
 
     if (aiResponse.ok) {
       const aiData = await aiResponse.json();
@@ -117,7 +140,7 @@ serve(async (req) => {
           const args = JSON.parse(toolCall.function.arguments);
           summary = args.summary || summary;
           author = args.author || null;
-          goodreadsSearch = args.goodreads_search || title;
+          audience_fact = args.audience_fact || audience_fact;
         } catch (e) {
           console.error("Failed to parse tool call:", e);
         }
@@ -126,12 +149,11 @@ serve(async (req) => {
       console.error("AI gateway error:", aiResponse.status);
     }
 
-    // Fetch cover art in parallel with returning the response
+    // Fetch cover art
     const cover_url = await fetchBookCover(title, author);
-    const goodreads_url = `https://www.goodreads.com/search?q=${encodeURIComponent(goodreadsSearch)}`;
 
     return new Response(
-      JSON.stringify({ summary, author, goodreads_url, cover_url }),
+      JSON.stringify({ summary, author, cover_url, audience_fact }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   } catch (e) {
@@ -140,8 +162,8 @@ serve(async (req) => {
       JSON.stringify({ 
         summary: "Unable to fetch details at this time.",
         author: null,
-        goodreads_url: null,
-        cover_url: null
+        cover_url: null,
+        audience_fact: null
       }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
