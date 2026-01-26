@@ -632,13 +632,15 @@ export default function FictionFavoritesPage() {
             const uniqueGenres = new Set(aggregatedFavorites.map(f => f.genre || 'Uncategorized'));
             const numGenres = uniqueGenres.size;
             const sortedGenres = Array.from(uniqueGenres).sort();
+            // Each genre needs ~22vh for clock-face layout, ensure minimum
+            const calculatedHeight = Math.max(80, numGenres * 22);
             return (
             <div 
               className="relative mt-4"
               style={{ 
-                // Calculate height based on number of genres - each genre gets ~25vh
-                height: `${Math.max(60, numGenres * 25)}vh`,
-                minHeight: '400px'
+                // Height based on number of genres - each genre gets 22vh for clock layout
+                height: `${calculatedHeight}vh`,
+                minHeight: `${Math.max(500, numGenres * 180)}px`
               }}
             >
               {/* DEBUG: Zone boundaries visualization */}
