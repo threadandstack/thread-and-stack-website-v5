@@ -12,6 +12,7 @@ import { ConstellationLines } from "@/components/fiction/ConstellationLines";
 import { AddedCountBadge } from "@/components/fiction/AddedCountBadge";
 import { FictionTagInput } from "@/components/fiction/FictionTagInput";
 import { StarryBackdrop } from "@/components/fiction/StarryBackdrop";
+import { CampfireScene } from "@/components/fiction/CampfireScene";
 import { filterProfanity } from "@/lib/profanityFilter";
 import { normalizeTitle, generateClusterKey } from "@/lib/titleNormalizer";
 import { useGenreClusteredPositions } from "@/hooks/useGenreClusteredPositions";
@@ -322,7 +323,7 @@ export default function FictionFavoritesPage() {
           <ConstellationLines 
             genreAnchors={genreAnchors} 
             bookPositions={bookPositionsWithGenre} 
-            minCount={3} 
+            minCount={2} 
           />
 
           {/* Full-page cloud container - spans double height */}
@@ -371,6 +372,11 @@ export default function FictionFavoritesPage() {
               )}
             </div>
           </motion.div>
+          </div>
+
+          {/* Campfire scene at the bottom of scrollable area */}
+          <div className="absolute bottom-0 left-0 right-0 z-20">
+            <CampfireScene />
           </div>
         </div>
       </main>
@@ -444,7 +450,7 @@ export default function FictionFavoritesPage() {
           <ConstellationLines 
             genreAnchors={genreAnchors} 
             bookPositions={bookPositionsWithGenre} 
-            minCount={3}
+            minCount={2}
             isMobile={true}
           />
 
@@ -455,6 +461,9 @@ export default function FictionFavoritesPage() {
           >
             {favorites.length > 0 && renderCloudItems()}
           </div>
+
+          {/* Campfire scene at bottom of mobile */}
+          <CampfireScene />
         </div>
       </main>
 
