@@ -181,7 +181,7 @@ export function FictionCloudItem({
       onPointerUp={handlePointerUp}
       onPointerCancel={handlePointerCancel}
       className={`
-        absolute px-4 py-2 rounded-full text-left select-none
+        absolute px-3 py-1.5 rounded-full text-center select-none
         ${isNew ? 'ring-2 ring-accent ring-offset-2 ring-offset-transparent' : ''}
         ${isDragEnabled ? 'ring-2 ring-white/50 cursor-grabbing' : isHolding ? 'cursor-grab' : 'cursor-pointer'}
         shadow-md hover:shadow-lg transition-shadow
@@ -197,12 +197,20 @@ export function FictionCloudItem({
         borderColor: isDragEnabled ? 'hsla(0, 0%, 100%, 0.6)' : colors.border,
         color: colors.text,
         touchAction: 'none',
-        maxWidth: 'calc(100vw - 40px)', // Prevent extending beyond viewport
+        maxWidth: '180px',
         // Pause float animation while dragging or holding
         animation: isDragEnabled || isHolding || isDragging ? 'none' : `float-${Math.abs(id.charCodeAt(0) % 3)} ${floatAnim.duration}s ease-in-out ${floatAnim.delay}s infinite`,
       }}
     >
-      <span className="text-xs md:text-sm font-medium block pointer-events-none" style={{ wordBreak: 'break-word' }}>
+      <span 
+        className="text-xs font-medium block pointer-events-none overflow-hidden text-ellipsis"
+        style={{ 
+          display: '-webkit-box',
+          WebkitLineClamp: 2,
+          WebkitBoxOrient: 'vertical',
+          lineHeight: '1.3',
+        }}
+      >
         {displayText}
       </span>
       {showBadge && (
