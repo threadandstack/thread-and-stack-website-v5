@@ -253,123 +253,224 @@ export function useGenreClusteredPositions(
     return overlapX && overlapY;
   }, [minSpacing]);
 
-  // Position items around their genre's anchor point using TRUE CIRCULAR clock-face pattern
-  // Books are distributed evenly around the star in a full 360° circle
-  // ADAPTIVE RADIUS: Larger genres get more space to prevent crowding
+  // ==========================================================================
+  // TRUE DETERMINISTIC CLOCK-FACE DISTRIBUTION
+  // ==========================================================================
+  // Books are placed on CONCENTRIC RINGS around the star anchor.
+  // Each ring has a fixed number of angular slots (evenly spaced).
+  // We fill inner rings first, then expand outward.
+  // This guarantees:
+  //   1. Even angular distribution (no clustering)
+  //   2. Predictable, deterministic placement
+  //   3. Optimal use of available space
+  // ==========================================================================
   const positionItemsAroundAnchor = useCallback((
     zoneItems: CloudItem[],
     anchor: { x: number; y: number },
     baseMaxRadius: number,
-    anchorExclusionRadius: number, // Keep items away from anchor center
-    zoneBounds?: { yMin: number; yMax: number } // Mobile only - strict vertical limits
+    anchorExclusionRadius: number,
+    zoneBounds?: { yMin: number; yMax: number }
   ): PositionedItem[] => {
     const positioned: PositionedItem[] = [];
-    
-    // AGGRESSIVE ADAPTIVE RADIUS based on genre size
-    // Densely populated genres need MUCH more space
     const itemCount = zoneItems.length;
     
-    // EXTREME scaling for popular genres:
-    // 1-3 books: 1.0x (compact)
-    // 4-6 books: 1.4x 
-    // 7-10 books: 1.8x
-    // 11-15 books: 2.3x
-    // 16+ books: 2.8x+
+    if (itemCount === 0) return positioned;
+    
+    // ========== RING CONFIGURATION ==========
+    // Define how many slots each ring has and at what distance
+    // Inner rings have fewer slots, outer rings have more
+    // This creates natural spacing that expands as we go outward
+    
+    interface RingConfig {
+      slotCount: number;      // Number of angular positions on this ring
+      radiusFraction: number; // 0-1, fraction of max radius
+    }
+    
+    // Ring definitions - designed to fill uniformly
+    // Ring 1 (closest): 4 slots at cardinal directions
+    // Ring 2: 6 slots for slightly more coverage  
+    // Ring 3: 8 slots (all cardinal + diagonal)
+    // Ring 4+: 10-12 slots for dense genres
+    const RING_CONFIGS: RingConfig[] = [
+      { slotCount: 4, radiusFraction: 0.30 },   // Ring 1: N, E, S, W
+      { slotCount: 6, radiusFraction: 0.50 },   // Ring 2: 60° apart
+      { slotCount: 8, radiusFraction: 0.70 },   // Ring 3: 45° apart
+      { slotCount: 10, radiusFraction: 0.85 },  // Ring 4: 36° apart
+      { slotCount: 12, radiusFraction: 1.00 },  // Ring 5: 30° apart (max spread)
+    ];
+    
+    // Calculate total capacity of all rings
+    const getTotalCapacity = (ringCount: number): number => {
+      let total = 0;
+      for (let i = 0; i < ringCount && i < RING_CONFIGS.length; i++) {
+        total += RING_CONFIGS[i].slotCount;
+      }
+      return total;
+    };
+    
+    // Determine how many rings we need
+    let ringsNeeded = 1;
+    while (getTotalCapacity(ringsNeeded) < itemCount && ringsNeeded < RING_CONFIGS.length) {
+      ringsNeeded++;
+    }
+    
+    // If we have MORE items than ring capacity, we'll need to double-up on outer rings
+    const totalCapacity = getTotalCapacity(ringsNeeded);
+    const needsOverflow = itemCount > totalCapacity;
+    
+    // ========== RADIUS SCALING ==========
+    // Larger genres need more space - scale the base radius
     let radiusScale: number;
     if (itemCount <= 3) {
-      radiusScale = 1.0;
+      radiusScale = 0.9;
     } else if (itemCount <= 6) {
-      radiusScale = 1.0 + (itemCount - 3) * 0.13; // 1.13 to 1.4
+      radiusScale = 1.0;
     } else if (itemCount <= 10) {
-      radiusScale = 1.4 + (itemCount - 6) * 0.1; // 1.5 to 1.8
+      radiusScale = 1.2;
     } else if (itemCount <= 15) {
-      radiusScale = 1.8 + (itemCount - 10) * 0.1; // 1.9 to 2.3
+      radiusScale = 1.5;
+    } else if (itemCount <= 20) {
+      radiusScale = 1.8;
     } else {
-      radiusScale = 2.3 + (itemCount - 15) * 0.1; // 2.4+
+      radiusScale = 2.0 + (itemCount - 20) * 0.05; // Keep scaling for huge genres
     }
     
-    const adaptiveMaxRadius = baseMaxRadius * radiusScale;
+    // ========== SLOT ASSIGNMENT ==========
+    // Assign each item to a specific ring and angular slot
+    // We fill rings from inside out, and within each ring, distribute evenly
     
-    // ZERO horizontal margins - let items use full width
+    interface SlotAssignment {
+      ringIndex: number;
+      slotIndex: number;
+      angle: number;       // Degrees, 0 = 12 o'clock
+      radiusFraction: number;
+    }
+    
+    const assignments: SlotAssignment[] = [];
+    let itemIndex = 0;
+    
+    // First pass: fill rings normally
+    for (let ringIdx = 0; ringIdx < ringsNeeded && itemIndex < itemCount; ringIdx++) {
+      const ring = RING_CONFIGS[ringIdx];
+      const slotsToFill = Math.min(ring.slotCount, itemCount - itemIndex);
+      
+      // Offset angle for this ring to stagger between rings
+      // Ring 0: starts at 0° (12 o'clock)
+      // Ring 1: starts at 30° offset
+      // Ring 2: starts at 22.5° offset, etc.
+      const ringOffset = ringIdx * 22.5;
+      
+      for (let slotIdx = 0; slotIdx < slotsToFill; slotIdx++) {
+        const anglePerSlot = 360 / ring.slotCount;
+        const angle = ringOffset + (slotIdx * anglePerSlot);
+        
+        assignments.push({
+          ringIndex: ringIdx,
+          slotIndex: slotIdx,
+          angle: angle % 360,
+          radiusFraction: ring.radiusFraction
+        });
+        itemIndex++;
+      }
+    }
+    
+    // Overflow handling: if we have more items than slots, add them to outer rings
+    // with interpolated angles between existing slots
+    if (needsOverflow && itemIndex < itemCount) {
+      const outerRing = RING_CONFIGS[RING_CONFIGS.length - 1];
+      const remaining = itemCount - itemIndex;
+      
+      // Create additional slots at slightly larger radius
+      for (let i = 0; i < remaining; i++) {
+        const overflowAngle = (i * 360 / remaining) + 15; // 15° offset from main grid
+        assignments.push({
+          ringIndex: RING_CONFIGS.length, // Overflow ring
+          slotIndex: i,
+          angle: overflowAngle % 360,
+          radiusFraction: 1.15 // Beyond the normal max
+        });
+      }
+    }
+    
+    // ========== POSITION CALCULATION ==========
     const safeMarginX = 1;
     const safeMarginY = isMobile ? 1 : 2;
-    
-    // Generate clock positions - use ALL 8 cardinal+diagonal for dense clusters
-    const clockPositions = isMobile ? generateClockPositions(zoneItems.length) : CLOCK_POSITIONS_DESKTOP;
-    
-    // DYNAMIC DISTANCE TIERS based on cluster density
-    // More items = more tiers for better distribution
-    // Tiers spread items across multiple "rings" around the star
-    let distanceTiers: number[];
-    if (itemCount <= 4) {
-      // Small cluster: 2 rings
-      distanceTiers = [0.45, 0.9];
-    } else if (itemCount <= 8) {
-      // Medium cluster: 3 rings
-      distanceTiers = [0.35, 0.65, 0.95];
-    } else if (itemCount <= 12) {
-      // Large cluster: 4 rings with wide spacing
-      distanceTiers = [0.28, 0.50, 0.72, 0.95];
-    } else {
-      // Very large cluster: 5 rings for maximum spread
-      distanceTiers = [0.22, 0.42, 0.60, 0.78, 0.96];
-    }
-    
-    // Assign items to tiers in round-robin for even distribution
-    // This ensures items spread across all tiers, not bunched in one
-    
-    // Seeded random based on item ID for angle jitter only
-    const seededRandom = (seed: string, index: number): number => {
-      const hash = seed.split('').reduce((a, b, i) => {
-        return ((a << 5) - a + b.charCodeAt(0) + index * 17) & 0x7fffffff;
-      }, 0);
-      return (hash % 1000) / 1000;
-    };
     
     zoneItems.forEach((item, idx) => {
       const displayText = item.enriched_answer || item.answer;
       const size = estimateItemSize(displayText, isMobile);
+      const assignment = assignments[idx];
+      
+      if (!assignment) {
+        // Fallback - shouldn't happen but safety first
+        positioned.push({
+          id: item.id,
+          genre: item.genre,
+          position: { x: anchor.x, y: anchor.y + 5 },
+          size,
+          anchorX: anchor.x,
+          anchorY: anchor.y,
+          zoneBounds
+        });
+        return;
+      }
+      
+      // Convert angle to radians (0° = up/north, clockwise positive)
+      const angleRad = (assignment.angle * Math.PI) / 180;
       
       if (isMobile && zoneBounds) {
-        // MOBILE: TRUE CIRCULAR clock-face positioning with TIERED DISTANCE
-        const clockAngle = clockPositions[idx % clockPositions.length];
-        
-        // Add small angle jitter to prevent perfect alignment
-        const angleJitter = (seededRandom(item.id, idx) - 0.5) * 15; // ±7.5 degrees
-        const finalAngle = clockAngle + angleJitter;
-        const angleRad = (finalAngle * Math.PI) / 180;
-        
-        // Calculate available space in the zone
+        // ========== MOBILE POSITIONING ==========
         const zoneHeight = zoneBounds.yMax - zoneBounds.yMin;
         
-        // Available room from anchor to zone edges (anchor is centered)
+        // Calculate available space from anchor to zone edges
         const roomAbove = anchor.y - zoneBounds.yMin;
         const roomBelow = zoneBounds.yMax - anchor.y;
         const roomLeft = anchor.x - safeMarginX;
         const roomRight = 100 - anchor.x - safeMarginX;
         
-        // Use full available space - no artificial limits
-        const maxRadiusY = Math.min(roomAbove, roomBelow) * 0.85; // Use 85% of available vertical
-        const maxRadiusX = Math.min(roomLeft, roomRight) * 0.85; // Use 85% of available horizontal
+        // Max radius in each direction (use 90% of available space)
+        const maxRadiusUp = roomAbove * 0.90;
+        const maxRadiusDown = roomBelow * 0.90;
+        const maxRadiusLeft = roomLeft * 0.90;
+        const maxRadiusRight = roomRight * 0.90;
         
-        // ROUND-ROBIN TIER ASSIGNMENT for even distribution
-        // First 4 items go to tiers 0,1,2,3, then repeat
-        const tierIndex = idx % distanceTiers.length;
-        const tierMultiplier = distanceTiers[tierIndex];
+        // Apply radius scaling and assignment fraction
+        const effectiveRadiusFraction = assignment.radiusFraction * radiusScale;
         
-        // Scale radius with adaptive factor
-        const scaledRadiusX = maxRadiusX * tierMultiplier * (adaptiveMaxRadius / baseMaxRadius);
-        const scaledRadiusY = maxRadiusY * tierMultiplier * (adaptiveMaxRadius / baseMaxRadius);
+        // Calculate the unit vector for this angle
+        const sinA = Math.sin(angleRad);
+        const cosA = Math.cos(angleRad);
         
-        // Clamp to reasonable bounds
-        const radiusX = clamp(scaledRadiusX, 8, 45);
-        const radiusY = clamp(scaledRadiusY, 6, Math.min(35, zoneHeight * 0.42));
+        // Determine max radius based on direction
+        // Top-right quadrant: use maxRadiusUp and maxRadiusRight
+        // etc.
+        let maxRadiusX: number, maxRadiusY: number;
         
-        // Calculate position using standard circle formula
-        let x = anchor.x + Math.sin(angleRad) * radiusX;
-        let y = anchor.y - Math.cos(angleRad) * radiusY;
+        if (sinA >= 0) {
+          // Going right
+          maxRadiusX = maxRadiusRight;
+        } else {
+          // Going left
+          maxRadiusX = maxRadiusLeft;
+        }
         
-        // Only clamp at absolute boundaries
+        if (cosA >= 0) {
+          // Going up (negative Y in screen coords)
+          maxRadiusY = maxRadiusUp;
+        } else {
+          // Going down (positive Y in screen coords)
+          maxRadiusY = maxRadiusDown;
+        }
+        
+        // Calculate actual radius (clamped)
+        const radiusX = clamp(maxRadiusX * effectiveRadiusFraction, 6, 45);
+        const radiusY = clamp(maxRadiusY * effectiveRadiusFraction, 4, Math.min(35, zoneHeight * 0.45));
+        
+        // Calculate position (0° = up = negative Y)
+        let x = anchor.x + sinA * radiusX;
+        let y = anchor.y - cosA * radiusY;
+        
+        // Final clamp to hard boundaries
         x = clamp(x, size.w / 2 + safeMarginX, 100 - size.w / 2 - safeMarginX);
         y = clamp(y, zoneBounds.yMin + size.h / 2 + 0.5, zoneBounds.yMax - size.h / 2 - 0.5);
         
@@ -382,30 +483,31 @@ export function useGenreClusteredPositions(
           anchorY: anchor.y,
           zoneBounds
         });
+        
       } else {
-        // DESKTOP: Ring layout with tiered distance
-        const angle = (idx * 137.5 * Math.PI) / 180; // Golden angle for organic spread
+        // ========== DESKTOP POSITIONING ==========
+        // Desktop has more room - use full circular distribution
         
-        // ROUND-ROBIN TIER ASSIGNMENT
-        const tierIndex = idx % distanceTiers.length;
-        const tierMultiplier = distanceTiers[tierIndex];
-        
+        const adaptiveMaxRadius = baseMaxRadius * radiusScale;
         const minDistance = anchorExclusionRadius + 2;
-        const maxDistance = adaptiveMaxRadius; // Use adaptive radius
-        const distance = minDistance + (maxDistance - minDistance) * tierMultiplier;
+        const maxDistance = adaptiveMaxRadius;
         
-        let pos: Position = {
-          x: anchor.x + Math.cos(angle) * distance,
-          y: anchor.y + Math.sin(angle) * distance * 0.8
-        };
+        // Calculate actual distance for this ring
+        const distance = minDistance + (maxDistance - minDistance) * assignment.radiusFraction;
         
-        pos.x = clamp(pos.x, size.w / 2 + safeMarginX, 100 - size.w / 2 - safeMarginX);
-        pos.y = clamp(pos.y, size.h / 2 + safeMarginY, 100 - size.h / 2 - safeMarginY);
+        // Desktop uses standard trig (cos for X, sin for Y)
+        // But we want 0° to be "up", so we rotate 90°
+        let x = anchor.x + Math.sin(angleRad) * distance;
+        let y = anchor.y - Math.cos(angleRad) * distance * 0.8; // Slightly compress Y
+        
+        // Clamp to screen
+        x = clamp(x, size.w / 2 + safeMarginX, 100 - size.w / 2 - safeMarginX);
+        y = clamp(y, size.h / 2 + safeMarginY, 100 - size.h / 2 - safeMarginY);
         
         positioned.push({
           id: item.id,
           genre: item.genre,
-          position: pos,
+          position: { x, y },
           size,
           anchorX: anchor.x,
           anchorY: anchor.y
