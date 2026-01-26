@@ -267,12 +267,16 @@ export function useGenreClusteredPositions(
   }, [minSpacing, minRowHorizontalSpacing]);
 
   // ==========================================================================
-  // ARCHIMEDEAN SPIRAL DISTRIBUTION
+  // FIBONACCI / PHYLLOTACTIC SPIRAL (Golden Angle)
   // ==========================================================================
-  // r = a + b * θ  —  radius increases linearly with angle.
-  // Each book gets a unique (θ, r) so items spiral outward from the anchor.
-  // This provides natural, even separation without explicit rings.
+  // Inspired by sunflower seed patterns - optimal packing with no overlaps.
+  // angle = index * 137.5° (golden angle)
+  // radius = sqrt(index) * baseRadius
+  // This creates the most aesthetically pleasing and efficient distribution.
   // ==========================================================================
+  
+  const GOLDEN_ANGLE = 137.5 * (Math.PI / 180); // ~2.399 radians
+  
   const positionItemsAroundAnchor = useCallback((
     zoneItems: CloudItem[],
     anchor: { x: number; y: number },
@@ -285,50 +289,42 @@ export function useGenreClusteredPositions(
 
     if (itemCount === 0) return positioned;
 
-    // ---------- SPIRAL PARAMETERS ----------
-    // "a" = starting radius (keeps items away from anchor)
-    // "b" = growth rate per radian
-    // "turnsForN" = how many full rotations we spread N items across
-    const minRadius = anchorExclusionRadius + (isMobile ? 4 : 5);
-
-    // Growth rate: controls how quickly the spiral expands outward.
-    // Larger b → looser spiral; smaller b → tighter spiral.
-    // Mobile needs a tighter spiral within the tall vertical bands.
-    const spiralGrowth = isMobile ? 2.8 : 2.0;
-
-    // Total angle span: spread items over ~2-4 full turns depending on count.
-    // More items → more turns to keep radial separation.
-    const turnsForCount = isMobile
-      ? Math.max(1.5, Math.min(5, itemCount / 6))
-      : Math.max(1.2, Math.min(4, itemCount / 8));
-    const maxTheta = turnsForCount * 2 * Math.PI;
-
-    // Starting angle offset (so first item isn't always at 12 o'clock)
-    const startAngle = Math.PI * 0.25; // 45° offset
-
-    // Compute max theoretical radius at maxTheta
-    const theoreticalMaxR = minRadius + spiralGrowth * maxTheta;
-
-    // Determine scale factor so spiral fits within available space
+    // ---------- FIBONACCI SPIRAL PARAMETERS ----------
+    // Starting offset from anchor (keeps items away from star center)
+    const minRadius = anchorExclusionRadius + (isMobile ? 5 : 6);
+    
+    // Base radius scaling - controls spacing between items
+    // Smaller value = tighter spiral, larger = more spread
+    const baseRadiusScale = isMobile ? 3.5 : 4.0;
+    
+    // Calculate the maximum radius the outermost item would reach
+    const maxTheoreticalRadius = minRadius + Math.sqrt(itemCount) * baseRadiusScale;
+    
+    // Determine available space for scaling
     const getMaxAvailableRadius = () => {
       if (isMobile && zoneBounds) {
-        const roomUp = anchor.y - zoneBounds.yMin - 2;
-        const roomDown = zoneBounds.yMax - anchor.y - 2;
-        const roomLeft = anchor.x - 3;
-        const roomRight = 100 - anchor.x - 3;
-        return Math.min(roomUp, roomDown, roomLeft, roomRight, 42);
+        const roomUp = anchor.y - zoneBounds.yMin - 3;
+        const roomDown = zoneBounds.yMax - anchor.y - 3;
+        const roomLeft = anchor.x - 4;
+        const roomRight = 100 - anchor.x - 4;
+        return Math.min(roomUp, roomDown, roomLeft, roomRight, 45);
       }
       // Desktop
-      const roomUp = anchor.y - 3;
-      const roomDown = 100 - anchor.y - 3;
-      const roomLeft = anchor.x - 3;
-      const roomRight = 100 - anchor.x - 3;
-      return Math.min(roomUp, roomDown, roomLeft, roomRight, baseMaxRadius * 1.5);
+      const roomUp = anchor.y - 4;
+      const roomDown = 100 - anchor.y - 4;
+      const roomLeft = anchor.x - 4;
+      const roomRight = 100 - anchor.x - 4;
+      return Math.min(roomUp, roomDown, roomLeft, roomRight, baseMaxRadius * 1.6);
     };
 
     const maxAvailable = getMaxAvailableRadius();
-    const scaleFactor = theoreticalMaxR > maxAvailable ? maxAvailable / theoreticalMaxR : 1;
+    const scaleFactor = maxTheoreticalRadius > maxAvailable 
+      ? (maxAvailable - minRadius) / (maxTheoreticalRadius - minRadius) 
+      : 1;
 
+    // Starting angle offset for visual variety
+    const startAngleOffset = Math.PI * 0.5; // Start from 3 o'clock position
+    
     const edgeMargin = 2;
 
     zoneItems.forEach((item, idx) => {
@@ -337,38 +333,41 @@ export function useGenreClusteredPositions(
       const halfW = size.w / 2;
       const halfH = size.h / 2;
 
-      // ---------- SPIRAL FORMULA ----------
-      // θ linearly distributed across [0, maxTheta]
-      const theta = startAngle + (idx / Math.max(1, itemCount - 1)) * maxTheta;
-      // r = a + b * θ, then scaled to fit
-      const rawRadius = minRadius + spiralGrowth * (theta - startAngle);
-      let radius = rawRadius * scaleFactor;
+      // ---------- GOLDEN ANGLE SPIRAL FORMULA ----------
+      // Each item gets a unique angle based on the golden ratio
+      // θ = index * 137.5° (the golden angle)
+      const theta = startAngleOffset + (idx + 1) * GOLDEN_ANGLE;
+      
+      // Radius grows with sqrt(index) - creates Fibonacci spiral
+      // r = sqrt(index) * scale
+      const sqrtRadius = Math.sqrt(idx + 1) * baseRadiusScale * scaleFactor;
+      let radius = minRadius + sqrtRadius;
 
-      // Unit vector (0° = up = -Y)
-      const sinA = Math.sin(theta);
+      // Unit direction vector (0° = right = +X, 90° = down = +Y)
       const cosA = Math.cos(theta);
+      const sinA = Math.sin(theta);
 
       if (isMobile && zoneBounds) {
         // ---------- MOBILE: ZONE-AWARE CLAMPING ----------
-        const roomUp = anchor.y - zoneBounds.yMin - halfH - 0.5;
-        const roomDown = zoneBounds.yMax - anchor.y - halfH - 0.5;
+        const roomUp = anchor.y - zoneBounds.yMin - halfH - 1;
+        const roomDown = zoneBounds.yMax - anchor.y - halfH - 1;
         const roomLeft = anchor.x - halfW - edgeMargin;
         const roomRight = 100 - anchor.x - halfW - edgeMargin;
 
         // Calculate max safe radius for this specific angle
         let maxSafeR = 100;
-        if (Math.abs(sinA) > 0.01) {
-          maxSafeR = Math.min(maxSafeR, sinA > 0 ? roomRight / sinA : roomLeft / Math.abs(sinA));
-        }
         if (Math.abs(cosA) > 0.01) {
-          maxSafeR = Math.min(maxSafeR, cosA > 0 ? roomUp / cosA : roomDown / Math.abs(cosA));
+          maxSafeR = Math.min(maxSafeR, cosA > 0 ? roomRight / cosA : roomLeft / Math.abs(cosA));
+        }
+        if (Math.abs(sinA) > 0.01) {
+          maxSafeR = Math.min(maxSafeR, sinA > 0 ? roomDown / sinA : roomUp / Math.abs(sinA));
         }
         maxSafeR = clamp(maxSafeR, minRadius, 50);
 
-        radius = clamp(radius, minRadius, maxSafeR * 0.96);
+        radius = clamp(radius, minRadius, maxSafeR * 0.94);
 
-        const x = anchor.x + sinA * radius;
-        const y = anchor.y - cosA * radius;
+        const x = anchor.x + cosA * radius;
+        const y = anchor.y + sinA * radius;
 
         positioned.push({
           id: item.id,
@@ -387,18 +386,18 @@ export function useGenreClusteredPositions(
         const roomRight = 100 - anchor.x - halfW - edgeMargin;
 
         let maxSafeR = 100;
-        if (Math.abs(sinA) > 0.01) {
-          maxSafeR = Math.min(maxSafeR, sinA > 0 ? roomRight / sinA : roomLeft / Math.abs(sinA));
-        }
         if (Math.abs(cosA) > 0.01) {
-          maxSafeR = Math.min(maxSafeR, cosA > 0 ? roomUp / cosA : roomDown / Math.abs(cosA));
+          maxSafeR = Math.min(maxSafeR, cosA > 0 ? roomRight / cosA : roomLeft / Math.abs(cosA));
+        }
+        if (Math.abs(sinA) > 0.01) {
+          maxSafeR = Math.min(maxSafeR, sinA > 0 ? roomDown / sinA : roomUp / Math.abs(sinA));
         }
         maxSafeR = clamp(maxSafeR, minRadius, baseMaxRadius * 1.8);
 
-        radius = clamp(radius, minRadius, maxSafeR * 0.95);
+        radius = clamp(radius, minRadius, maxSafeR * 0.92);
 
-        const x = anchor.x + sinA * radius;
-        const y = anchor.y - cosA * radius * 0.88; // Slight vertical compression
+        const x = anchor.x + cosA * radius;
+        const y = anchor.y + sinA * radius * 0.85; // Slight vertical compression for widescreen
 
         positioned.push({
           id: item.id,
