@@ -76,6 +76,7 @@ export default function FictionFavoritesPage() {
   const [selectedBook, setSelectedBook] = useState<SelectedBook | null>(null);
   const [addedCount, setAddedCount] = useState(0);
   const [showAddedBadge, setShowAddedBadge] = useState(false);
+  const [pulsingGenres, setPulsingGenres] = useState<Set<string>>(new Set());
   
   // Manual position overrides from dragging
   const [manualBookPositions, setManualBookPositions] = useState<Map<string, { x: number; y: number }>>(new Map());
@@ -112,11 +113,37 @@ export default function FictionFavoritesPage() {
         },
         (payload) => {
           if (payload.eventType === "INSERT") {
-            setFavorites(prev => [payload.new as FictionFavorite, ...prev]);
+            const newItem = payload.new as FictionFavorite;
+            setFavorites(prev => [newItem, ...prev]);
+            
+            // Trigger pulse animation for this genre
+            if (newItem.genre) {
+              setPulsingGenres(prev => new Set([...prev, newItem.genre!]));
+              setTimeout(() => {
+                setPulsingGenres(prev => {
+                  const next = new Set(prev);
+                  next.delete(newItem.genre!);
+                  return next;
+                });
+              }, 2500);
+            }
           } else if (payload.eventType === "UPDATE") {
+            const updatedItem = payload.new as FictionFavorite;
             setFavorites(prev => 
-              prev.map(f => f.id === payload.new.id ? payload.new as FictionFavorite : f)
+              prev.map(f => f.id === updatedItem.id ? updatedItem : f)
             );
+            
+            // Also pulse on update (when genre is assigned via enrichment)
+            if (updatedItem.genre) {
+              setPulsingGenres(prev => new Set([...prev, updatedItem.genre!]));
+              setTimeout(() => {
+                setPulsingGenres(prev => {
+                  const next = new Set(prev);
+                  next.delete(updatedItem.genre!);
+                  return next;
+                });
+              }, 2500);
+            }
           }
         }
       )
@@ -394,6 +421,7 @@ export default function FictionFavoritesPage() {
             position={anchor}
             color={getGenreColor(genre)}
             isMobile={isMobile}
+            isPulsing={pulsingGenres.has(genre)}
             onPositionChange={handleAnchorPositionChange}
           />
         );
