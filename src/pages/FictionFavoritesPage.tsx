@@ -311,9 +311,9 @@ export default function FictionFavoritesPage() {
         <AddedCountBadge count={addedCount} show={showAddedBadge} />
 
         {/* Content container - scrollable vertical layout */}
-        <div className="relative z-10 flex flex-col">
+        <div className="relative z-10 flex flex-col pt-20">
           {/* Header section with compact CTA card */}
-          <div className="pt-6 pb-4 px-4">
+          <div className="pb-3 px-4">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -321,17 +321,17 @@ export default function FictionFavoritesPage() {
               className="text-center max-w-md mx-auto"
             >
               {/* Compact white box - just image, title, and description */}
-              <div className="bg-background/95 backdrop-blur-sm rounded-2xl p-5 border border-primary/20 shadow-lg">
+              <div className="bg-background/95 backdrop-blur-sm rounded-2xl px-4 py-4 border border-primary/20 shadow-lg">
                 <img 
                   src={fictionHeroImage} 
                   alt="Open book with letters floating around it" 
-                  className="w-20 h-auto mx-auto mb-3"
+                  className="w-16 h-auto mx-auto mb-2"
                 />
-                <h1 className="text-xl font-serif mb-2">
+                <h1 className="text-lg font-serif mb-1.5">
                   What's your favourite <span className="italic text-accent">work of fiction?</span>
                 </h1>
                 
-                <p className="text-muted-foreground text-sm">
+                <p className="text-muted-foreground text-xs leading-relaxed">
                   Share the stories that shaped you. Watch them join the cloud of narratives we all carry with us.
                 </p>
               </div>
