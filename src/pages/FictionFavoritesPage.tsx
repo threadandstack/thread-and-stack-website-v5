@@ -142,23 +142,47 @@ export default function FictionFavoritesPage() {
       return;
     }
 
-    const submittedAnswer = input.trim();
+    // Parse comma-separated titles
+    const titles = input.split(',').map(t => t.trim()).filter(t => t.length > 0);
+    if (titles.length === 0) return;
+
     setIsSubmitting(true);
 
     try {
-      // Insert the answer
-      const { data, error } = await supabase
-        .from("fiction_favorites")
-        .insert({ answer: submittedAnswer })
-        .select()
-        .single();
+      // Insert all titles
+      const insertPromises = titles.map(title => 
+        supabase
+          .from("fiction_favorites")
+          .insert({ answer: title })
+          .select()
+          .single()
+      );
+      
+      const results = await Promise.all(insertPromises);
+      const insertedItems = results.filter(r => !r.error).map(r => r.data!);
+      
+      if (insertedItems.length === 0) throw new Error("Failed to insert any items");
 
-      if (error) throw error;
-
-      setNewItemId(data.id);
+      // Highlight the first inserted item
+      setNewItemId(insertedItems[0].id);
       setInput("");
 
-      // Fetch celebration data and trigger enrichment in parallel
+      // Celebrate the FIRST title only, enrich all titles
+      const firstTitle = titles[0];
+      const enrichPromises = insertedItems.map(item => 
+        fetch(
+          `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/enrich-fiction`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`
+            },
+            body: JSON.stringify({ answer: item.answer, id: item.id })
+          }
+        )
+      );
+
       const [celebrateResponse] = await Promise.all([
         fetch(
           `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/celebrate-fiction`,
@@ -168,28 +192,21 @@ export default function FictionFavoritesPage() {
               "Content-Type": "application/json",
               Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`
             },
-            body: JSON.stringify({ answer: submittedAnswer })
+            body: JSON.stringify({ answer: firstTitle })
           }
         ),
-        fetch(
-          `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/enrich-fiction`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`
-            },
-            body: JSON.stringify({ answer: submittedAnswer, id: data.id })
-          }
-        )
+        ...enrichPromises
       ]);
 
       if (celebrateResponse.ok) {
         const celebrateData = await celebrateResponse.json();
+        const displayAnswer = titles.length > 1 
+          ? `${firstTitle} (+${titles.length - 1} more)`
+          : firstTitle;
         setCelebration({
           message: celebrateData.message,
           gif_url: celebrateData.gif_url,
-          answer: submittedAnswer
+          answer: displayAnswer
         });
       }
 
@@ -313,7 +330,7 @@ export default function FictionFavoritesPage() {
                 <Input
                   ref={inputRef}
                   type="text"
-                  placeholder="The Great Gatsby, 1984, Pride and Prejudice..."
+                  placeholder="Enter one or more titles, separated by commas..."
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   disabled={isSubmitting}
