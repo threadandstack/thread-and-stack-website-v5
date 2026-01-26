@@ -25,6 +25,10 @@ interface CloudItem {
   genre: string | null;
 }
 
+interface UseGenreClusteredOptions {
+  mobileHeaderHeightPx?: number; // Height of fixed header content in pixels
+}
+
 interface GenreClusterResult {
   positions: Map<string, Position>;
   genreAnchors: Map<string, Position>;
@@ -69,27 +73,32 @@ const GENRE_ZONES_DESKTOP: { xCenter: number; yCenter: number; radius: number }[
   { xCenter: 82, yCenter: 65, radius: 6 },   // Inner-right lower
 ];
 
-// Mobile/Tablet zones - wide horizontal bands BELOW the input area
-// Start at y=38% to clear the title block and input field
-// Use wide clusters spanning horizontally rather than competing vertically
-const GENRE_ZONES_MOBILE: { xCenter: number; yCenter: number; radius: number }[] = [
-  // Row 1 - first visible row below input (y ~38-42%)
-  { xCenter: 20, yCenter: 40, radius: 12 },
-  { xCenter: 50, yCenter: 42, radius: 12 },
-  { xCenter: 80, yCenter: 40, radius: 12 },
-  // Row 2 - second row (y ~52-56%)
-  { xCenter: 15, yCenter: 54, radius: 12 },
-  { xCenter: 50, yCenter: 56, radius: 12 },
-  { xCenter: 85, yCenter: 54, radius: 12 },
-  // Row 3 - third row (y ~66-70%)
-  { xCenter: 25, yCenter: 68, radius: 12 },
-  { xCenter: 75, yCenter: 70, radius: 12 },
-  // Row 4 - lower area (y ~80-84%)
-  { xCenter: 20, yCenter: 82, radius: 12 },
-  { xCenter: 80, yCenter: 84, radius: 12 },
-];
+// Mobile/Tablet zones are generated dynamically based on header height
+const generateMobileZones = (startYPercent: number): { xCenter: number; yCenter: number; radius: number }[] => {
+  const rowGap = 14; // Percentage gap between rows
+  return [
+    // Row 1 - first visible row below input
+    { xCenter: 20, yCenter: startYPercent, radius: 10 },
+    { xCenter: 50, yCenter: startYPercent + 2, radius: 10 },
+    { xCenter: 80, yCenter: startYPercent, radius: 10 },
+    // Row 2
+    { xCenter: 15, yCenter: startYPercent + rowGap, radius: 10 },
+    { xCenter: 50, yCenter: startYPercent + rowGap + 2, radius: 10 },
+    { xCenter: 85, yCenter: startYPercent + rowGap, radius: 10 },
+    // Row 3
+    { xCenter: 25, yCenter: startYPercent + rowGap * 2, radius: 10 },
+    { xCenter: 75, yCenter: startYPercent + rowGap * 2 + 2, radius: 10 },
+    // Row 4
+    { xCenter: 20, yCenter: startYPercent + rowGap * 3, radius: 10 },
+    { xCenter: 80, yCenter: startYPercent + rowGap * 3 + 2, radius: 10 },
+  ];
+};
 
-export function useGenreClusteredPositions(items: CloudItem[]): GenreClusterResult {
+export function useGenreClusteredPositions(
+  items: CloudItem[], 
+  options: UseGenreClusteredOptions = {}
+): GenreClusterResult {
+  const { mobileHeaderHeightPx = 280 } = options; // Default header height ~280px
   const [positions, setPositions] = useState<Map<string, Position>>(new Map());
   const [genreAnchors, setGenreAnchors] = useState<Map<string, Position>>(new Map());
   const [isMobile, setIsMobile] = useState(() => 
@@ -109,7 +118,18 @@ export function useGenreClusteredPositions(items: CloudItem[]): GenreClusterResu
     return () => window.removeEventListener('resize', handleResize);
   }, [isMobile]);
 
-  const zones = useMemo(() => isMobile ? GENRE_ZONES_MOBILE : GENRE_ZONES_DESKTOP, [isMobile]);
+  // Calculate mobile start position based on header height and viewport
+  const mobileStartY = useMemo(() => {
+    if (typeof window === 'undefined') return 38;
+    const vh = window.innerHeight;
+    // Convert header height to percentage of viewport, add 5% buffer
+    return Math.max(35, Math.min(50, (mobileHeaderHeightPx / vh) * 100 + 5));
+  }, [mobileHeaderHeightPx]);
+
+  const zones = useMemo(() => 
+    isMobile ? generateMobileZones(mobileStartY) : GENRE_ZONES_DESKTOP, 
+    [isMobile, mobileStartY]
+  );
   const minSpacing = isMobile ? 3 : 2;
 
   // Group items by genre
