@@ -141,25 +141,15 @@ export function ConstellationLines({
                 filter="url(#star-glow)"
               />
               
-              {/* Animated pulse ring */}
-              <motion.circle
+              {/* Static ring instead of animated pulse to prevent movement */}
+              <circle
                 cx={`${anchor.x}%`}
                 cy={`${anchor.y}%`}
                 r={isMobile ? 5 : 6}
                 fill="none"
                 stroke={color}
                 strokeWidth={1}
-                initial={{ scale: 0.8, opacity: 0.8 }}
-                animate={{ 
-                  scale: [0.8, 1.5, 0.8], 
-                  opacity: [0.8, 0, 0.8] 
-                }}
-                transition={{ 
-                  duration: 3, 
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: genreIndex * 0.5
-                }}
+                opacity={0.4}
               />
             </motion.g>
 
