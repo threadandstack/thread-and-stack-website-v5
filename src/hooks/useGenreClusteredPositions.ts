@@ -18,6 +18,8 @@ interface PositionedItem {
   anchorX?: number; // Reference to genre anchor for collision resolution
   anchorY?: number;
   zoneBounds?: { yMin: number; yMax: number }; // Hard bounds for this item's zone (mobile only)
+  angleFromAnchor?: number; // Radians - used for tilt calculation
+  tierIndex?: number; // Which distance tier (for debugging)
 }
 
 interface CloudItem {
@@ -38,6 +40,7 @@ interface GenreClusterResult {
   genreZoneBounds: Map<string, { yMin: number; yMax: number }>; // Vertical bounds per genre (mobile)
   genreCount: number; // Number of unique genres (for container height calculation)
   applyCohesionForce: () => void; // Gradually pull scattered books back toward clusters
+  itemTilts: Map<string, number>; // Calculated tilt for each item (degrees)
 }
 
 const clamp = (n: number, min: number, max: number) => Math.max(min, Math.min(max, n));
@@ -119,6 +122,51 @@ const generateClockPositions = (count: number): number[] => {
     positions.push((180 + i * angleStep) % 360);
   }
   return positions;
+};
+
+// PHYLLOTACTIC (Fibonacci-based) TIER GENERATION
+// Creates organic spiral-like distance distribution that avoids clustering
+// Uses Fibonacci sequence for tier assignment - creates natural visual rhythm
+interface TierInfo {
+  tier: number;
+  distance: number; // 0.0 to 1.0 normalized distance from center
+}
+
+const generateFibonacciTiers = (count: number): TierInfo[] => {
+  if (count === 0) return [];
+  
+  // Distance tiers with more granular separation
+  // 6 tiers for nuanced spacing: very close, close, mid-close, mid-far, far, very far
+  const tierDistances = [0.28, 0.42, 0.56, 0.72, 0.86, 1.0];
+  
+  // Fibonacci-based assignment - creates natural spiral pattern
+  // Items are assigned to tiers based on their position in Fibonacci sequence mod tier count
+  const fibonacci = [1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987];
+  
+  const result: TierInfo[] = [];
+  
+  for (let i = 0; i < count; i++) {
+    // Use Fibonacci-influenced tier selection
+    // This creates a pattern: 1,2,3,5,8... mod tierCount for organic spread
+    const fibIndex = i % fibonacci.length;
+    const fibValue = fibonacci[fibIndex];
+    
+    // Add index-based variation for uniqueness
+    const tierIndex = (fibValue + Math.floor(i / 3)) % tierDistances.length;
+    
+    // Add micro-variation based on item's absolute position
+    // This prevents items in same tier from having identical distances
+    const microVariation = ((i * 137.5) % 10) / 100; // ±0.05 based on golden angle
+    const baseDistance = tierDistances[tierIndex];
+    const distance = clamp(baseDistance + (microVariation - 0.05), 0.2, 1.0);
+    
+    result.push({
+      tier: tierIndex,
+      distance,
+    });
+  }
+  
+  return result;
 };
 
 // Desktop uses golden angle spiral - creates nice organic distribution
@@ -279,14 +327,12 @@ export function useGenreClusteredPositions(
     // Generate clock positions based on number of items for even distribution
     const clockPositions = isMobile ? generateClockPositions(zoneItems.length) : CLOCK_POSITIONS_DESKTOP;
     
-    // FIXED DISTANCE TIERS with DRAMATIC separation
-    // Each tier is a fixed distance from anchor - no randomization for consistency
-    const distanceTiers = [0.35, 0.55, 0.78, 1.0]; // Clear visual rings
+    // PHYLLOTACTIC (Fibonacci-based) TIER ASSIGNMENT
+    // Instead of simple round-robin, use Fibonacci sequence for more organic distribution
+    // This creates natural spiral-like patterns that avoid clustering
+    const fibonacciTiers = generateFibonacciTiers(zoneItems.length);
     
-    // Assign items to tiers in round-robin for even distribution
-    // This ensures items spread across all tiers, not bunched in one
-    
-    // Seeded random based on item ID for angle jitter only
+    // Seeded random based on item ID for angle jitter
     const seededRandom = (seed: string, index: number): number => {
       const hash = seed.split('').reduce((a, b, i) => {
         return ((a << 5) - a + b.charCodeAt(0) + index * 17) & 0x7fffffff;
@@ -299,11 +345,11 @@ export function useGenreClusteredPositions(
       const size = estimateItemSize(displayText, isMobile);
       
       if (isMobile && zoneBounds) {
-        // MOBILE: TRUE CIRCULAR clock-face positioning with TIERED DISTANCE
+        // MOBILE: TRUE CIRCULAR clock-face positioning with PHYLLOTACTIC DISTANCE
         const clockAngle = clockPositions[idx % clockPositions.length];
         
         // Add small angle jitter to prevent perfect alignment
-        const angleJitter = (seededRandom(item.id, idx) - 0.5) * 15; // ±7.5 degrees
+        const angleJitter = (seededRandom(item.id, idx) - 0.5) * 18; // ±9 degrees for more variation
         const finalAngle = clockAngle + angleJitter;
         const angleRad = (finalAngle * Math.PI) / 180;
         
@@ -317,13 +363,12 @@ export function useGenreClusteredPositions(
         const roomRight = 100 - anchor.x - safeMarginX;
         
         // Use full available space - no artificial limits
-        const maxRadiusY = Math.min(roomAbove, roomBelow) * 0.85; // Use 85% of available vertical
-        const maxRadiusX = Math.min(roomLeft, roomRight) * 0.85; // Use 85% of available horizontal
+        const maxRadiusY = Math.min(roomAbove, roomBelow) * 0.88; // Use 88% of available vertical
+        const maxRadiusX = Math.min(roomLeft, roomRight) * 0.88; // Use 88% of available horizontal
         
-        // ROUND-ROBIN TIER ASSIGNMENT for even distribution
-        // First 4 items go to tiers 0,1,2,3, then repeat
-        const tierIndex = idx % distanceTiers.length;
-        const tierMultiplier = distanceTiers[tierIndex];
+        // PHYLLOTACTIC TIER ASSIGNMENT - Fibonacci-based distribution
+        const tierInfo = fibonacciTiers[idx];
+        const tierMultiplier = tierInfo.distance;
         
         // Scale radius with adaptive factor
         const scaledRadiusX = maxRadiusX * tierMultiplier * (adaptiveMaxRadius / baseMaxRadius);
@@ -348,15 +393,17 @@ export function useGenreClusteredPositions(
           size,
           anchorX: anchor.x,
           anchorY: anchor.y,
-          zoneBounds
+          zoneBounds,
+          angleFromAnchor: angleRad,
+          tierIndex: tierInfo.tier,
         });
       } else {
-        // DESKTOP: Ring layout with tiered distance
+        // DESKTOP: Ring layout with PHYLLOTACTIC distance
         const angle = (idx * 137.5 * Math.PI) / 180; // Golden angle for organic spread
         
-        // ROUND-ROBIN TIER ASSIGNMENT
-        const tierIndex = idx % distanceTiers.length;
-        const tierMultiplier = distanceTiers[tierIndex];
+        // PHYLLOTACTIC TIER ASSIGNMENT
+        const tierInfo = fibonacciTiers[idx];
+        const tierMultiplier = tierInfo.distance;
         
         const minDistance = anchorExclusionRadius + 2;
         const maxDistance = adaptiveMaxRadius; // Use adaptive radius
@@ -376,7 +423,9 @@ export function useGenreClusteredPositions(
           position: pos,
           size,
           anchorX: anchor.x,
-          anchorY: anchor.y
+          anchorY: anchor.y,
+          angleFromAnchor: angle,
+          tierIndex: tierInfo.tier,
         });
       }
     });
@@ -701,5 +750,83 @@ export function useGenreClusteredPositions(
     return bounds;
   }, [sortedGenresByPopularity, zones, isMobile]);
 
-  return { positions, genreAnchors, genreZoneBounds, genreCount: numGenres, applyCohesionForce };
+  // Calculate dynamic tilts based on neighboring positions to avoid overlaps
+  // Items tilt away from their closest neighbor in the same genre
+  const itemTilts = useMemo(() => {
+    const tilts = new Map<string, number>();
+    
+    // Group positions by genre for neighbor detection
+    const positionsByGenre = new Map<string, { id: string; pos: Position }[]>();
+    items.forEach(item => {
+      const pos = positions.get(item.id);
+      if (!pos) return;
+      
+      const genre = item.genre || 'Uncategorized';
+      if (!positionsByGenre.has(genre)) {
+        positionsByGenre.set(genre, []);
+      }
+      positionsByGenre.get(genre)!.push({ id: item.id, pos });
+    });
+    
+    // For each item, calculate tilt based on closest neighbor
+    items.forEach(item => {
+      const pos = positions.get(item.id);
+      if (!pos) {
+        tilts.set(item.id, 0);
+        return;
+      }
+      
+      const genre = item.genre || 'Uncategorized';
+      const genreItems = positionsByGenre.get(genre) || [];
+      
+      // Find closest neighbor
+      let closestDist = Infinity;
+      let closestDx = 0;
+      let closestDy = 0;
+      
+      genreItems.forEach(other => {
+        if (other.id === item.id) return;
+        
+        const dx = other.pos.x - pos.x;
+        const dy = other.pos.y - pos.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        
+        if (dist < closestDist) {
+          closestDist = dist;
+          closestDx = dx;
+          closestDy = dy;
+        }
+      });
+      
+      // Calculate tilt: tilt away from closest neighbor
+      // Max tilt of ±12 degrees, stronger when items are closer
+      if (closestDist < 25 && closestDist > 0.1) {
+        // Tilt perpendicular to the direction of closest neighbor
+        // If neighbor is to the right, tilt clockwise (positive)
+        // If neighbor is to the left, tilt counter-clockwise (negative)
+        const proximityFactor = 1 - (closestDist / 25); // 1 when very close, 0 when far
+        const maxTilt = 12;
+        
+        // Determine tilt direction based on relative position
+        // Horizontal neighbors cause vertical tilting, vertical neighbors cause horizontal tilting
+        const tiltAngle = closestDx > 0 
+          ? maxTilt * proximityFactor 
+          : -maxTilt * proximityFactor;
+        
+        // Add vertical influence - items above tilt one way, below tilt other
+        const verticalInfluence = closestDy > 0 ? 2 : -2;
+        
+        tilts.set(item.id, clamp(tiltAngle + verticalInfluence * proximityFactor, -15, 15));
+      } else {
+        // No close neighbors - apply subtle deterministic rotation based on ID
+        const hash = item.id.split('').reduce((a, b) => ((a << 3) - a) + b.charCodeAt(0), 0);
+        const subtleTilt = ((hash % 10) - 5) * 0.8; // ±4 degrees
+        tilts.set(item.id, subtleTilt);
+      }
+    });
+    
+    return tilts;
+  }, [items, positions]);
+
+  return { positions, genreAnchors, genreZoneBounds, genreCount: numGenres, applyCohesionForce, itemTilts };
 }
