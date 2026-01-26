@@ -254,12 +254,12 @@ export function useGenreClusteredPositions(
   }, [minSpacing]);
 
   // ==========================================================================
-  // SIMPLE DETERMINISTIC CLOCK-FACE DISTRIBUTION
+  // TRUE CIRCULAR CLOCK-FACE DISTRIBUTION
   // ==========================================================================
   // Each book gets a UNIQUE angle: angle = (index / totalBooks) * 360°
   // Distance alternates between 4 rings: 40%, 60%, 80%, 95%
-  // Ring assignment is OFFSET so consecutive angles don't share the same ring
-  // This guarantees maximum angular AND radial separation
+  // CRITICAL: No axis clamping that destroys circular pattern!
+  // Instead, we calculate max safe radius for each angle and scale down if needed.
   // ==========================================================================
   const positionItemsAroundAnchor = useCallback((
     zoneItems: CloudItem[],
@@ -274,11 +274,9 @@ export function useGenreClusteredPositions(
     if (itemCount === 0) return positioned;
     
     // ========== 4-TIER RING SYSTEM ==========
-    // Fixed distance fractions for each ring
     const RING_DISTANCES = [0.40, 0.60, 0.80, 0.95];
     
-    // ========== RADIUS SCALING ==========
-    // Larger genres need more space
+    // ========== RADIUS SCALING FOR DENSE GENRES ==========
     let radiusScale: number;
     if (itemCount <= 3) {
       radiusScale = 0.85;
@@ -294,62 +292,71 @@ export function useGenreClusteredPositions(
       radiusScale = 2.2 + (itemCount - 20) * 0.05;
     }
     
-    const safeMarginX = 1;
-    const safeMarginY = isMobile ? 1 : 2;
+    // Minimal margin from absolute screen edge
+    const edgeMargin = 2;
     
     zoneItems.forEach((item, idx) => {
       const displayText = item.enriched_answer || item.answer;
       const size = estimateItemSize(displayText, isMobile);
+      const halfW = size.w / 2;
+      const halfH = size.h / 2;
       
       // ========== UNIQUE ANGLE FOR EACH BOOK ==========
-      // Evenly distribute all books around 360°
-      // Each book gets its own angular slice
+      // Evenly distribute all books around 360° (0° = 12 o'clock / up)
       const angleDegrees = (idx / itemCount) * 360;
       const angleRad = (angleDegrees * Math.PI) / 180;
       
-      // ========== ALTERNATING RING ASSIGNMENT WITH OFFSET ==========
-      // To prevent clustering, we use a 2-step offset pattern:
-      // Book 0 → Ring 0 (40%)
-      // Book 1 → Ring 2 (80%)  ← skip one ring
-      // Book 2 → Ring 1 (60%)
-      // Book 3 → Ring 3 (95%)  ← skip one ring
-      // This ensures consecutive books (adjacent angles) are on DIFFERENT rings
-      const ringPattern = [0, 2, 1, 3]; // Offset pattern to maximize separation
+      // Unit vector for this angle (0° = up = -Y in screen coords)
+      const sinA = Math.sin(angleRad); // X component
+      const cosA = Math.cos(angleRad); // Y component (inverted for screen)
+      
+      // ========== ALTERNATING RING PATTERN ==========
+      // [0,2,1,3] ensures consecutive angles are on different rings
+      const ringPattern = [0, 2, 1, 3];
       const ringIndex = ringPattern[idx % 4];
       const ringFraction = RING_DISTANCES[ringIndex];
       
       if (isMobile && zoneBounds) {
-        // ========== MOBILE POSITIONING ==========
-        const zoneHeight = zoneBounds.yMax - zoneBounds.yMin;
+        // ========== MOBILE: PRESERVE CIRCULAR PATTERN ==========
         
-        // Available space from anchor to zone edges
-        const roomAbove = anchor.y - zoneBounds.yMin;
-        const roomBelow = zoneBounds.yMax - anchor.y;
-        const roomLeft = anchor.x - safeMarginX;
-        const roomRight = 100 - anchor.x - safeMarginX;
+        // Calculate available space in each direction from anchor
+        const roomUp = anchor.y - zoneBounds.yMin - halfH - 0.5;
+        const roomDown = zoneBounds.yMax - anchor.y - halfH - 0.5;
+        const roomLeft = anchor.x - halfW - edgeMargin;
+        const roomRight = 100 - anchor.x - halfW - edgeMargin;
         
-        // Calculate unit vector for angle (0° = up/north)
-        const sinA = Math.sin(angleRad);
-        const cosA = Math.cos(angleRad);
+        // For this specific angle, calculate max safe radius
+        // that keeps the item within bounds WITHOUT clamping axes separately
+        let maxSafeRadius = 100; // Start with large number
         
-        // Pick max radius based on direction
-        const maxRadiusX = sinA >= 0 ? roomRight : roomLeft;
-        const maxRadiusY = cosA >= 0 ? roomAbove : roomBelow;
+        // Check X constraint
+        if (Math.abs(sinA) > 0.01) {
+          const maxRadiusForX = sinA > 0 
+            ? roomRight / sinA 
+            : roomLeft / Math.abs(sinA);
+          maxSafeRadius = Math.min(maxSafeRadius, maxRadiusForX);
+        }
         
-        // Apply ring fraction and scaling (use 90% of available space)
-        const effectiveFraction = ringFraction * radiusScale * 0.90;
+        // Check Y constraint (cosA > 0 means going UP = negative screen Y)
+        if (Math.abs(cosA) > 0.01) {
+          const maxRadiusForY = cosA > 0 
+            ? roomUp / cosA 
+            : roomDown / Math.abs(cosA);
+          maxSafeRadius = Math.min(maxSafeRadius, maxRadiusForY);
+        }
         
-        // Calculate actual radii (clamped)
-        const radiusX = clamp(maxRadiusX * effectiveFraction, 6, 45);
-        const radiusY = clamp(maxRadiusY * effectiveFraction, 4, Math.min(35, zoneHeight * 0.45));
+        // Clamp to reasonable bounds
+        maxSafeRadius = clamp(maxSafeRadius, 5, 50);
         
-        // Calculate position (0° = up = negative Y)
-        let x = anchor.x + sinA * radiusX;
-        let y = anchor.y - cosA * radiusY;
+        // Apply ring fraction and scaling
+        const desiredRadius = maxSafeRadius * ringFraction * radiusScale;
         
-        // Final clamp to hard boundaries
-        x = clamp(x, size.w / 2 + safeMarginX, 100 - size.w / 2 - safeMarginX);
-        y = clamp(y, zoneBounds.yMin + size.h / 2 + 0.5, zoneBounds.yMax - size.h / 2 - 0.5);
+        // Use the smaller of desired vs max safe (preserves circular pattern)
+        const actualRadius = Math.min(desiredRadius, maxSafeRadius * 0.95);
+        
+        // Calculate final position using SINGLE radius (true circle)
+        const x = anchor.x + sinA * actualRadius;
+        const y = anchor.y - cosA * actualRadius;
         
         positioned.push({
           id: item.id,
@@ -362,21 +369,41 @@ export function useGenreClusteredPositions(
         });
         
       } else {
-        // ========== DESKTOP POSITIONING ==========
-        const adaptiveMaxRadius = baseMaxRadius * radiusScale;
+        // ========== DESKTOP: PRESERVE CIRCULAR PATTERN ==========
+        
+        // Calculate available space in each direction
+        const roomUp = anchor.y - halfH - edgeMargin;
+        const roomDown = 100 - anchor.y - halfH - edgeMargin;
+        const roomLeft = anchor.x - halfW - edgeMargin;
+        const roomRight = 100 - anchor.x - halfW - edgeMargin;
+        
+        // Calculate max safe radius for this angle
+        let maxSafeRadius = 100;
+        
+        if (Math.abs(sinA) > 0.01) {
+          const maxRadiusForX = sinA > 0 
+            ? roomRight / sinA 
+            : roomLeft / Math.abs(sinA);
+          maxSafeRadius = Math.min(maxSafeRadius, maxRadiusForX);
+        }
+        
+        if (Math.abs(cosA) > 0.01) {
+          const maxRadiusForY = cosA > 0 
+            ? roomUp / cosA 
+            : roomDown / Math.abs(cosA);
+          maxSafeRadius = Math.min(maxSafeRadius, maxRadiusForY);
+        }
+        
+        maxSafeRadius = clamp(maxSafeRadius, 5, baseMaxRadius * radiusScale);
+        
+        // Apply ring fraction
         const minDistance = anchorExclusionRadius + 2;
-        const maxDistance = adaptiveMaxRadius;
+        const desiredDistance = minDistance + (maxSafeRadius - minDistance) * ringFraction;
+        const actualDistance = Math.min(desiredDistance, maxSafeRadius * 0.95);
         
-        // Calculate distance for this ring
-        const distance = minDistance + (maxDistance - minDistance) * ringFraction;
-        
-        // Position (0° = up)
-        let x = anchor.x + Math.sin(angleRad) * distance;
-        let y = anchor.y - Math.cos(angleRad) * distance * 0.8;
-        
-        // Clamp to screen
-        x = clamp(x, size.w / 2 + safeMarginX, 100 - size.w / 2 - safeMarginX);
-        y = clamp(y, size.h / 2 + safeMarginY, 100 - size.h / 2 - safeMarginY);
+        // Calculate final position
+        const x = anchor.x + sinA * actualDistance;
+        const y = anchor.y - cosA * actualDistance * 0.85; // Slight Y compression for aesthetics
         
         positioned.push({
           id: item.id,
