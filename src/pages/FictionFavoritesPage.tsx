@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { motion, AnimatePresence } from "framer-motion";
-import { Send, Sparkles } from "lucide-react";
+import { Send, Sparkles, X } from "lucide-react";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 
@@ -17,6 +17,12 @@ interface FictionFavorite {
   created_at: string;
 }
 
+interface CelebrationData {
+  message: string;
+  gif_url: string | null;
+  answer: string;
+}
+
 // Generate a consistent position for each cluster - avoiding center area
 const getClusterPosition = (clusterKey: string, index: number, total: number) => {
   const hash = clusterKey.split('').reduce((a, b) => {
@@ -25,7 +31,6 @@ const getClusterPosition = (clusterKey: string, index: number, total: number) =>
   }, 0);
   
   // Define zones around the edges (avoiding center 30-70% area)
-  // Zones: top-left, top, top-right, left, right, bottom-left, bottom, bottom-right
   const edgeZones = [
     { xMin: 3, xMax: 25, yMin: 8, yMax: 30 },   // top-left
     { xMin: 30, xMax: 70, yMin: 5, yMax: 20 },  // top
@@ -37,11 +42,9 @@ const getClusterPosition = (clusterKey: string, index: number, total: number) =>
     { xMin: 75, xMax: 97, yMin: 70, yMax: 92 }, // bottom-right
   ];
   
-  // Pick zone based on hash
   const zoneIndex = Math.abs(hash) % edgeZones.length;
   const zone = edgeZones[zoneIndex];
   
-  // Add variance within the zone based on index
   const xRange = zone.xMax - zone.xMin;
   const yRange = zone.yMax - zone.yMin;
   const offsetX = (Math.abs(hash * (index + 1)) % 100) / 100 * xRange;
@@ -51,6 +54,17 @@ const getClusterPosition = (clusterKey: string, index: number, total: number) =>
     x: zone.xMin + offsetX,
     y: zone.yMin + offsetY
   };
+};
+
+// Generate unique float animation parameters for each item
+const getFloatAnimation = (id: string) => {
+  const hash = id.split('').reduce((a, b) => ((a << 5) - a) + b.charCodeAt(0), 0);
+  const duration = 4 + (Math.abs(hash) % 4); // 4-8 seconds
+  const delay = (Math.abs(hash * 2) % 20) / 10; // 0-2 second delay
+  const yAmount = 8 + (Math.abs(hash * 3) % 8); // 8-16px movement
+  const xAmount = 4 + (Math.abs(hash * 4) % 6); // 4-10px movement
+  
+  return { duration, delay, yAmount, xAmount };
 };
 
 // Group items by cluster
@@ -69,6 +83,7 @@ export default function FictionFavoritesPage() {
   const [input, setInput] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [newItemId, setNewItemId] = useState<string | null>(null);
+  const [celebration, setCelebration] = useState<CelebrationData | null>(null);
   const { toast } = useToast();
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -127,13 +142,14 @@ export default function FictionFavoritesPage() {
       return;
     }
 
+    const submittedAnswer = input.trim();
     setIsSubmitting(true);
 
     try {
       // Insert the answer
       const { data, error } = await supabase
         .from("fiction_favorites")
-        .insert({ answer: input.trim() })
+        .insert({ answer: submittedAnswer })
         .select()
         .single();
 
@@ -141,27 +157,40 @@ export default function FictionFavoritesPage() {
 
       setNewItemId(data.id);
       setInput("");
-      
-      toast({
-        title: "Thank you!",
-        description: "Your favorite is being enriched with magic ✨"
-      });
 
-      // Trigger enrichment
-      const enrichResponse = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/enrich-fiction`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`
-          },
-          body: JSON.stringify({ answer: data.answer, id: data.id })
-        }
-      );
+      // Fetch celebration data and trigger enrichment in parallel
+      const [celebrateResponse] = await Promise.all([
+        fetch(
+          `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/celebrate-fiction`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`
+            },
+            body: JSON.stringify({ answer: submittedAnswer })
+          }
+        ),
+        fetch(
+          `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/enrich-fiction`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`
+            },
+            body: JSON.stringify({ answer: submittedAnswer, id: data.id })
+          }
+        )
+      ]);
 
-      if (!enrichResponse.ok) {
-        console.error("Enrichment failed");
+      if (celebrateResponse.ok) {
+        const celebrateData = await celebrateResponse.json();
+        setCelebration({
+          message: celebrateData.message,
+          gif_url: celebrateData.gif_url,
+          answer: submittedAnswer
+        });
       }
 
       // Clear the animation highlight after a delay
@@ -177,6 +206,10 @@ export default function FictionFavoritesPage() {
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const closeCelebration = () => {
+    setCelebration(null);
   };
 
   const clusteredGroups = groupByCluster(favorites);
@@ -199,6 +232,7 @@ export default function FictionFavoritesPage() {
                   const pos = getClusterPosition(clusterKey, idx, items.length);
                   const isNew = item.id === newItemId;
                   const displayText = item.enriched_answer || item.answer;
+                  const floatAnim = getFloatAnimation(item.id);
                   
                   return (
                     <motion.div
@@ -213,13 +247,19 @@ export default function FictionFavoritesPage() {
                         opacity: 1, 
                         scale: 1,
                         x: 0,
-                        y: 0
+                        y: [0, -floatAnim.yAmount, 0, floatAnim.yAmount / 2, 0],
                       }}
                       exit={{ opacity: 0, scale: 0.8 }}
                       transition={{ 
-                        duration: isNew ? 1.2 : 0.5,
-                        type: "spring",
-                        bounce: 0.3
+                        opacity: { duration: 0.5 },
+                        scale: { duration: isNew ? 1.2 : 0.5, type: "spring", bounce: 0.3 },
+                        x: { duration: isNew ? 1.2 : 0.5 },
+                        y: { 
+                          duration: floatAnim.duration,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                          delay: floatAnim.delay
+                        }
                       }}
                       className={`
                         absolute px-4 py-2 rounded-full
@@ -301,6 +341,76 @@ export default function FictionFavoritesPage() {
             </div>
           </motion.div>
         </div>
+
+        {/* Celebration Modal */}
+        <AnimatePresence>
+          {celebration && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-background/80 backdrop-blur-sm"
+              onClick={closeCelebration}
+            >
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0, y: 20 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                exit={{ scale: 0.8, opacity: 0, y: 20 }}
+                transition={{ type: "spring", bounce: 0.4 }}
+                className="bg-background rounded-2xl p-8 max-w-md w-full shadow-2xl border border-border relative"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button
+                  onClick={closeCelebration}
+                  className="absolute top-4 right-4 text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+
+                <div className="text-center">
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ delay: 0.2, type: "spring", bounce: 0.5 }}
+                    className="text-4xl mb-4"
+                  >
+                    🎉
+                  </motion.div>
+
+                  <h2 className="text-xl font-serif italic text-accent mb-2">
+                    "{celebration.answer}"
+                  </h2>
+
+                  <p className="text-foreground text-lg mb-6">
+                    {celebration.message}
+                  </p>
+
+                  {celebration.gif_url && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.3 }}
+                      className="rounded-xl overflow-hidden mb-4"
+                    >
+                      <img
+                        src={celebration.gif_url}
+                        alt="Celebration GIF"
+                        className="w-full h-auto max-h-64 object-cover"
+                      />
+                    </motion.div>
+                  )}
+
+                  <Button
+                    onClick={closeCelebration}
+                    className="bg-accent hover:bg-accent/90 text-accent-foreground"
+                  >
+                    Back to the cloud
+                  </Button>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </main>
 
       <div className="relative z-40">

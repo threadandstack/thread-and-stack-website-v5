@@ -20,3 +20,6 @@ verify_jwt = false
 
 [functions.enrich-fiction]
 verify_jwt = false
+
+[functions.celebrate-fiction]
+verify_jwt = false
