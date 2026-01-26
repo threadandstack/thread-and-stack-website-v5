@@ -477,54 +477,38 @@ export function useGenreClusteredPositions(
     for (let iter = 0; iter < iterations; iter++) {
       let hasCollision = false;
       
-      // First pass: Edge avoidance ONLY at true screen boundaries
-      // Items within their zones should NOT be pushed away from zone edges
-      for (const item of resolved) {
-        const clusterSize = clusterSizes.get(item.genre || '') || 1;
-        const clusterMultiplier = 1 + ((clusterSize / maxClusterSize) * 0.3);
-        
-        const halfW = item.size.w / 2;
-        const halfH = item.size.h / 2;
-        
-        // Only push from TRUE screen edges - items need room for their own width/height
-        const leftEdgeDist = item.position.x - halfW;
-        const rightEdgeDist = 100 - item.position.x - halfW;
-        const topEdgeDist = item.position.y - halfH;
-        const bottomEdgeDist = 100 - item.position.y - halfH;
-        
-        // Push from left screen edge only if crossing boundary
-        if (leftEdgeDist < hardEdgeMargin) {
-          const pushStrength = (hardEdgeMargin - leftEdgeDist) * 0.8 * clusterMultiplier;
-          item.position.x += pushStrength;
-          hasCollision = true;
-        } else if (leftEdgeDist < softEdgeZone) {
-          // Very gentle nudge in soft zone
-          const pushStrength = ((softEdgeZone - leftEdgeDist) / softEdgeZone) * 0.3 * clusterMultiplier;
-          item.position.x += pushStrength;
-        }
-        
-        // Push from right screen edge
-        if (rightEdgeDist < hardEdgeMargin) {
-          const pushStrength = (hardEdgeMargin - rightEdgeDist) * 0.8 * clusterMultiplier;
-          item.position.x -= pushStrength;
-          hasCollision = true;
-        } else if (rightEdgeDist < softEdgeZone) {
-          const pushStrength = ((softEdgeZone - rightEdgeDist) / softEdgeZone) * 0.3 * clusterMultiplier;
-          item.position.x -= pushStrength;
-        }
-        
-        // For vertical edges: on mobile, zone bounds handle this - skip extra push
-        // Only apply at TRUE screen boundaries (0% and 100%)
-        if (!isMobile || !item.zoneBounds) {
+      // MOBILE: Skip edge avoidance entirely - let items float freely
+      // Only apply edge logic on desktop/tablet
+      if (!isMobile) {
+        for (const item of resolved) {
+          const clusterSize = clusterSizes.get(item.genre || '') || 1;
+          const clusterMultiplier = 1 + ((clusterSize / maxClusterSize) * 0.3);
+          
+          const halfW = item.size.w / 2;
+          const halfH = item.size.h / 2;
+          
+          const leftEdgeDist = item.position.x - halfW;
+          const rightEdgeDist = 100 - item.position.x - halfW;
+          const topEdgeDist = item.position.y - halfH;
+          const bottomEdgeDist = 100 - item.position.y - halfH;
+          
+          if (leftEdgeDist < hardEdgeMargin) {
+            item.position.x += (hardEdgeMargin - leftEdgeDist) * 0.8 * clusterMultiplier;
+            hasCollision = true;
+          }
+          
+          if (rightEdgeDist < hardEdgeMargin) {
+            item.position.x -= (hardEdgeMargin - rightEdgeDist) * 0.8 * clusterMultiplier;
+            hasCollision = true;
+          }
+          
           if (topEdgeDist < hardEdgeMargin) {
-            const pushStrength = (hardEdgeMargin - topEdgeDist) * 0.8;
-            item.position.y += pushStrength;
+            item.position.y += (hardEdgeMargin - topEdgeDist) * 0.8;
             hasCollision = true;
           }
           
           if (bottomEdgeDist < hardEdgeMargin) {
-            const pushStrength = (hardEdgeMargin - bottomEdgeDist) * 0.8;
-            item.position.y -= pushStrength;
+            item.position.y -= (hardEdgeMargin - bottomEdgeDist) * 0.8;
             hasCollision = true;
           }
         }
@@ -574,44 +558,45 @@ export function useGenreClusteredPositions(
         }
       }
       
-      // Third pass: Push items away from their anchor (exclusion zone around star/label)
-      // PRESERVE circular distribution - push radially outward, not just downward
-      for (const item of resolved) {
-        const anchor = item.genre ? anchors.get(item.genre) : null;
-        if (anchor) {
-          const dxToAnchor = item.position.x - anchor.x;
-          const dyToAnchor = item.position.y - anchor.y;
-          const distToAnchor = Math.sqrt(dxToAnchor * dxToAnchor + dyToAnchor * dyToAnchor);
-          
-          // If too close to anchor, push RADIALLY away (preserve circle shape)
-          if (distToAnchor < anchorExclusionRadius && distToAnchor > 0.1) {
-            const pushAway = (anchorExclusionRadius - distToAnchor) * 0.6;
-            // Push in the same direction the item is from anchor (radial push)
-            item.position.x += (dxToAnchor / distToAnchor) * pushAway;
-            item.position.y += (dyToAnchor / distToAnchor) * pushAway;
+      // Third pass: Push items away from anchor (exclusion zone)
+      // SKIP on mobile - let books overlap the star if needed
+      if (!isMobile) {
+        for (const item of resolved) {
+          const anchor = item.genre ? anchors.get(item.genre) : null;
+          if (anchor) {
+            const dxToAnchor = item.position.x - anchor.x;
+            const dyToAnchor = item.position.y - anchor.y;
+            const distToAnchor = Math.sqrt(dxToAnchor * dxToAnchor + dyToAnchor * dyToAnchor);
+            
+            if (distToAnchor < anchorExclusionRadius && distToAnchor > 0.1) {
+              const pushAway = (anchorExclusionRadius - distToAnchor) * 0.6;
+              item.position.x += (dxToAnchor / distToAnchor) * pushAway;
+              item.position.y += (dyToAnchor / distToAnchor) * pushAway;
+            }
           }
         }
-        
-        // Final clamp - use minimal margins, just prevent going off-screen
-        const finalMarginX = 2;
-        const finalMarginY = 1;
-        item.position.x = clamp(item.position.x, item.size.w / 2 + finalMarginX, 100 - item.size.w / 2 - finalMarginX);
-        
-        if (isMobile && item.zoneBounds) {
-          // Zone bounds - allow items above AND below anchor for circular layout
-          // Use minimal padding - let items use full zone space
-          item.position.y = clamp(
-            item.position.y, 
-            item.zoneBounds.yMin + item.size.h / 2 + 0.5, 
-            item.zoneBounds.yMax - item.size.h / 2 - 0.5
-          );
+      }
+      
+      // Final clamp - ONLY prevent going off-screen, no extra margins on mobile
+      for (const item of resolved) {
+        if (isMobile) {
+          // Minimal clamp - just prevent clipping
+          item.position.x = clamp(item.position.x, item.size.w / 2, 100 - item.size.w / 2);
+          if (item.zoneBounds) {
+            item.position.y = clamp(
+              item.position.y, 
+              item.zoneBounds.yMin + item.size.h / 2, 
+              item.zoneBounds.yMax - item.size.h / 2
+            );
+          }
         } else {
-          item.position.y = clamp(item.position.y, item.size.h / 2 + finalMarginY, 100 - item.size.h / 2 - finalMarginY);
+          item.position.x = clamp(item.position.x, item.size.w / 2 + 2, 100 - item.size.w / 2 - 2);
+          item.position.y = clamp(item.position.y, item.size.h / 2 + 1, 100 - item.size.h / 2 - 1);
         }
       }
       
       // Early exit if well-separated
-      if (!hasCollision && iter > 50) break;
+      if (!hasCollision && iter > 10) break;
     }
     
     return resolved;
