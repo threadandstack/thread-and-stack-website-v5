@@ -29,6 +29,7 @@ import AdminResetPassword from "./pages/AdminResetPassword";
 import ImageLibraryPage from "./pages/ImageLibraryPage";
 import GeoAdminPage from "./pages/GeoAdminPage";
 import AdminAnalyticsPage from "./pages/AdminAnalyticsPage";
+import FictionFavoritesPage from "./pages/FictionFavoritesPage";
 
 const queryClient = new QueryClient();
 
@@ -65,8 +66,8 @@ const App = () => (
           <Route path="/admin/images" element={<ImageLibraryPage />} />
           <Route path="/admin/geo" element={<GeoAdminPage />} />
           <Route path="/admin/analytics" element={<AdminAnalyticsPage />} />
+          <Route path="/fiction-favorites" element={<FictionFavoritesPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

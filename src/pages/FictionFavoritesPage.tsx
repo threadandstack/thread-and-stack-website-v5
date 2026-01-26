@@ -1,0 +1,298 @@
+import { useState, useEffect, useRef } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
+import { motion, AnimatePresence } from "framer-motion";
+import { Send, Sparkles } from "lucide-react";
+import { Navigation } from "@/components/Navigation";
+import { Footer } from "@/components/Footer";
+
+interface FictionFavorite {
+  id: string;
+  answer: string;
+  enriched_answer: string | null;
+  emojis: string | null;
+  cluster_key: string | null;
+  created_at: string;
+}
+
+// Generate a consistent position for each cluster
+const getClusterPosition = (clusterKey: string, index: number, total: number) => {
+  const hash = clusterKey.split('').reduce((a, b) => {
+    a = ((a << 5) - a) + b.charCodeAt(0);
+    return a & a;
+  }, 0);
+  
+  // Create zones based on hash
+  const zone = Math.abs(hash) % 9;
+  const zoneX = (zone % 3) * 33 + 5;
+  const zoneY = Math.floor(zone / 3) * 28 + 10;
+  
+  // Add some variance within the zone
+  const offsetX = (Math.abs(hash * (index + 1)) % 25);
+  const offsetY = (Math.abs(hash * (index + 2)) % 20);
+  
+  return {
+    x: Math.min(85, Math.max(5, zoneX + offsetX)),
+    y: Math.min(80, Math.max(10, zoneY + offsetY))
+  };
+};
+
+// Group items by cluster
+const groupByCluster = (items: FictionFavorite[]) => {
+  const groups: Record<string, FictionFavorite[]> = {};
+  items.forEach(item => {
+    const key = item.cluster_key || item.answer.toLowerCase();
+    if (!groups[key]) groups[key] = [];
+    groups[key].push(item);
+  });
+  return groups;
+};
+
+export default function FictionFavoritesPage() {
+  const [favorites, setFavorites] = useState<FictionFavorite[]>([]);
+  const [input, setInput] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [newItemId, setNewItemId] = useState<string | null>(null);
+  const { toast } = useToast();
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  // Fetch existing favorites
+  useEffect(() => {
+    const fetchFavorites = async () => {
+      const { data, error } = await supabase
+        .from("fiction_favorites")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        console.error("Error fetching favorites:", error);
+      } else {
+        setFavorites(data || []);
+      }
+    };
+
+    fetchFavorites();
+
+    // Subscribe to realtime updates
+    const channel = supabase
+      .channel("fiction_favorites_changes")
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "fiction_favorites"
+        },
+        (payload) => {
+          if (payload.eventType === "INSERT") {
+            setFavorites(prev => [payload.new as FictionFavorite, ...prev]);
+          } else if (payload.eventType === "UPDATE") {
+            setFavorites(prev => 
+              prev.map(f => f.id === payload.new.id ? payload.new as FictionFavorite : f)
+            );
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!input.trim()) {
+      toast({
+        title: "Please enter your favorite fiction",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      // Insert the answer
+      const { data, error } = await supabase
+        .from("fiction_favorites")
+        .insert({ answer: input.trim() })
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      setNewItemId(data.id);
+      setInput("");
+      
+      toast({
+        title: "Thank you!",
+        description: "Your favorite is being enriched with magic ✨"
+      });
+
+      // Trigger enrichment
+      const enrichResponse = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/enrich-fiction`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`
+          },
+          body: JSON.stringify({ answer: data.answer, id: data.id })
+        }
+      );
+
+      if (!enrichResponse.ok) {
+        console.error("Enrichment failed");
+      }
+
+      // Clear the animation highlight after a delay
+      setTimeout(() => setNewItemId(null), 3000);
+
+    } catch (error) {
+      console.error("Error submitting:", error);
+      toast({
+        title: "Something went wrong",
+        description: "Please try again",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const clusteredGroups = groupByCluster(favorites);
+  const clusterKeys = Object.keys(clusteredGroups);
+
+  return (
+    <div className="min-h-screen bg-background flex flex-col">
+      <Navigation />
+      
+      <main className="flex-1 flex flex-col">
+        {/* Hero section with form */}
+        <section className="py-16 md:py-24 px-6">
+          <div className="max-w-2xl mx-auto text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <h1 className="text-4xl md:text-5xl font-serif mb-6">
+                What's your favourite<br />
+                <span className="italic text-accent">work of fiction?</span>
+              </h1>
+              
+              <p className="text-muted-foreground text-lg mb-8">
+                Share the stories that shaped you. Watch them join the cloud of narratives we all carry with us.
+              </p>
+
+              <form onSubmit={handleSubmit} className="relative max-w-xl mx-auto">
+                <Input
+                  ref={inputRef}
+                  type="text"
+                  placeholder="The Great Gatsby, 1984, Pride and Prejudice..."
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  disabled={isSubmitting}
+                  className="h-14 pr-14 text-lg rounded-full border-2 border-accent/20 focus:border-accent transition-colors"
+                />
+                <Button
+                  type="submit"
+                  disabled={isSubmitting}
+                  size="icon"
+                  className="absolute right-2 top-2 h-10 w-10 rounded-full bg-accent hover:bg-accent/90"
+                >
+                  {isSubmitting ? (
+                    <Sparkles className="h-5 w-5 animate-pulse" />
+                  ) : (
+                    <Send className="h-5 w-5" />
+                  )}
+                </Button>
+              </form>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Cloud of answers */}
+        <section className="flex-1 relative min-h-[500px] md:min-h-[600px] px-6 pb-16">
+          <div className="max-w-6xl mx-auto relative h-full">
+            {favorites.length === 0 ? (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <p className="text-muted-foreground text-lg italic">
+                  Be the first to share your favorite fiction...
+                </p>
+              </div>
+            ) : (
+              <div className="relative w-full h-[500px] md:h-[600px]">
+                <AnimatePresence>
+                  {clusterKeys.map((clusterKey) => {
+                    const items = clusteredGroups[clusterKey];
+                    const isCluster = items.length > 1;
+                    
+                    return items.map((item, idx) => {
+                      const pos = getClusterPosition(clusterKey, idx, items.length);
+                      const isNew = item.id === newItemId;
+                      const displayText = item.enriched_answer || item.answer;
+                      
+                      return (
+                        <motion.div
+                          key={item.id}
+                          initial={isNew ? { 
+                            opacity: 0, 
+                            scale: 0.5,
+                            y: -100,
+                            x: "50%"
+                          } : { opacity: 0, scale: 0.8 }}
+                          animate={{ 
+                            opacity: 1, 
+                            scale: 1,
+                            y: 0,
+                            x: 0
+                          }}
+                          exit={{ opacity: 0, scale: 0.8 }}
+                          transition={{ 
+                            duration: isNew ? 1.2 : 0.5,
+                            type: "spring",
+                            bounce: 0.3
+                          }}
+                          className={`
+                            absolute px-4 py-2 rounded-full
+                            ${isCluster ? 'bg-accent/10 border border-accent/20' : 'bg-muted/50 border border-border/50'}
+                            ${isNew ? 'ring-2 ring-accent ring-offset-2 ring-offset-background animate-pulse' : ''}
+                            shadow-sm hover:shadow-md transition-shadow cursor-default
+                            max-w-[280px] md:max-w-[320px]
+                          `}
+                          style={{
+                            left: `${pos.x}%`,
+                            top: `${pos.y}%`,
+                            transform: 'translate(-50%, -50%)',
+                            zIndex: isNew ? 50 : 10
+                          }}
+                        >
+                          <span className="text-sm md:text-base font-medium line-clamp-2">
+                            {displayText}
+                          </span>
+                          {isCluster && idx === 0 && items.length > 1 && (
+                            <span className="absolute -top-2 -right-2 bg-accent text-accent-foreground text-xs px-2 py-0.5 rounded-full">
+                              {items.length}
+                            </span>
+                          )}
+                        </motion.div>
+                      );
+                    });
+                  })}
+                </AnimatePresence>
+              </div>
+            )}
+          </div>
+        </section>
+      </main>
+
+      <Footer />
+    </div>
+  );
+}
