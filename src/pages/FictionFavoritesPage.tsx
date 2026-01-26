@@ -390,8 +390,8 @@ export default function FictionFavoritesPage() {
     return `hsl(${hue}, 70%, 70%)`;
   }, []);
   
-  // Get visible genres (those with enough books)
-  const visibleGenres = useMemo(() => {
+  // Get visible genres (those with enough books) and their counts
+  const { visibleGenres, genreBookCounts } = useMemo(() => {
     const genreCounts = new Map<string, number>();
     aggregatedFavorites.forEach(item => {
       if (item.genre) {
@@ -399,9 +399,10 @@ export default function FictionFavoritesPage() {
       }
     });
     // Show constellation for every genre (no minimum)
-    return Array.from(genreCounts.entries())
+    const genres = Array.from(genreCounts.entries())
       .filter(([_, count]) => count >= 1)
       .map(([genre]) => genre);
+    return { visibleGenres: genres, genreBookCounts: genreCounts };
   }, [aggregatedFavorites]);
 
   // Render cloud items helper
@@ -450,6 +451,7 @@ export default function FictionFavoritesPage() {
             color={getGenreColor(genre)}
             isMobile={isMobile}
             isPulsing={pulsingGenres.has(genre)}
+            bookCount={genreBookCounts.get(genre) || 0}
             onPositionChange={handleAnchorPositionChange}
           />
         );
