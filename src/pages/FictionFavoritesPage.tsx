@@ -13,6 +13,7 @@ import { FictionTagInput } from "@/components/fiction/FictionTagInput";
 import { StarryBackdrop } from "@/components/fiction/StarryBackdrop";
 import { filterProfanity } from "@/lib/profanityFilter";
 import { useCloudPositions } from "@/hooks/useCloudPositions";
+import fictionHeroImage from "@/assets/fiction-hero.png";
 
 interface FictionFavorite {
   id: string;
@@ -266,6 +267,11 @@ export default function FictionFavoritesPage() {
             className="text-center px-6 pointer-events-auto"
           >
             <div className="bg-background/90 backdrop-blur-sm rounded-2xl p-8 md:p-12 max-w-2xl">
+              <img 
+                src={fictionHeroImage} 
+                alt="Open book with letters floating around it" 
+                className="w-32 md:w-40 h-auto mx-auto mb-4"
+              />
               <h1 className="text-3xl md:text-5xl font-serif mb-4">
                 What's your favourite<br />
                 <span className="italic text-accent">work of fiction?</span>
