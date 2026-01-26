@@ -266,7 +266,7 @@ export default function FictionFavoritesPage() {
             transition={{ duration: 0.6 }}
             className="text-center px-6 pointer-events-auto"
           >
-            <div className="bg-background/90 backdrop-blur-sm rounded-2xl p-8 md:p-12 max-w-2xl">
+            <div className="bg-background/95 backdrop-blur-sm rounded-2xl p-8 md:p-12 max-w-2xl border border-primary/20 shadow-lg">
               <img 
                 src={fictionHeroImage} 
                 alt="Open book with letters floating around it" 
