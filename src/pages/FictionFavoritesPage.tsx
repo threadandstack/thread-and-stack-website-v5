@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { motion, AnimatePresence } from "framer-motion";
@@ -9,6 +9,7 @@ import { Footer } from "@/components/Footer";
 import { FictionCloudItem } from "@/components/fiction/FictionCloudItem";
 import { FictionDetailModal } from "@/components/fiction/FictionDetailModal";
 import { ConstellationLines } from "@/components/fiction/ConstellationLines";
+import { DraggableConstellationAnchor } from "@/components/fiction/DraggableConstellationAnchor";
 import { AddedCountBadge } from "@/components/fiction/AddedCountBadge";
 import { FictionTagInput } from "@/components/fiction/FictionTagInput";
 import { StarryBackdrop } from "@/components/fiction/StarryBackdrop";
@@ -75,6 +76,11 @@ export default function FictionFavoritesPage() {
   const [selectedBook, setSelectedBook] = useState<SelectedBook | null>(null);
   const [addedCount, setAddedCount] = useState(0);
   const [showAddedBadge, setShowAddedBadge] = useState(false);
+  
+  // Manual position overrides from dragging
+  const [manualBookPositions, setManualBookPositions] = useState<Map<string, { x: number; y: number }>>(new Map());
+  const [manualAnchorPositions, setManualAnchorPositions] = useState<Map<string, { x: number; y: number }>>(new Map());
+  
   const { toast } = useToast();
 
   // Fetch existing favorites
@@ -259,9 +265,43 @@ export default function FictionFavoritesPage() {
   const aggregatedFavorites = aggregateByCluster(favorites);
   
   // Use genre-clustered positioning - books of the same genre cluster together
-  const { positions, genreAnchors } = useGenreClusteredPositions(aggregatedFavorites, {
+  const { positions: autoPositions, genreAnchors: autoGenreAnchors } = useGenreClusteredPositions(aggregatedFavorites, {
     mobileHeaderHeightPx: 420 // Larger value to ensure constellations start well below input
   });
+  
+  // Merge auto positions with manual overrides
+  const positions = useMemo(() => {
+    const merged = new Map(autoPositions);
+    manualBookPositions.forEach((pos, id) => {
+      merged.set(id, pos);
+    });
+    return merged;
+  }, [autoPositions, manualBookPositions]);
+  
+  const genreAnchors = useMemo(() => {
+    const merged = new Map(autoGenreAnchors);
+    manualAnchorPositions.forEach((pos, genre) => {
+      merged.set(genre, pos);
+    });
+    return merged;
+  }, [autoGenreAnchors, manualAnchorPositions]);
+  
+  // Handlers for drag position updates
+  const handleBookPositionChange = useCallback((id: string, newPosition: { x: number; y: number }) => {
+    setManualBookPositions(prev => {
+      const next = new Map(prev);
+      next.set(id, newPosition);
+      return next;
+    });
+  }, []);
+  
+  const handleAnchorPositionChange = useCallback((genre: string, newPosition: { x: number; y: number }) => {
+    setManualAnchorPositions(prev => {
+      const next = new Map(prev);
+      next.set(genre, newPosition);
+      return next;
+    });
+  }, []);
   
   // Build book positions with genre info for constellation lines
   const bookPositionsWithGenre = useMemo(() => {
@@ -275,6 +315,26 @@ export default function FictionFavoritesPage() {
       };
     });
   }, [aggregatedFavorites, positions]);
+  
+  // Generate genre color for anchors
+  const getGenreColor = useCallback((genre: string): string => {
+    const hash = genre.split('').reduce((a, b) => ((a << 5) - a) + b.charCodeAt(0), 0);
+    const hue = Math.abs(hash) % 360;
+    return `hsl(${hue}, 70%, 70%)`;
+  }, []);
+  
+  // Get visible genres (those with enough books)
+  const visibleGenres = useMemo(() => {
+    const genreCounts = new Map<string, number>();
+    aggregatedFavorites.forEach(item => {
+      if (item.genre) {
+        genreCounts.set(item.genre, (genreCounts.get(item.genre) || 0) + 1);
+      }
+    });
+    return Array.from(genreCounts.entries())
+      .filter(([_, count]) => count >= 2)
+      .map(([genre]) => genre);
+  }, [aggregatedFavorites]);
 
   // Render cloud items helper
   const renderCloudItems = () => (
@@ -297,10 +357,32 @@ export default function FictionFavoritesPage() {
               title: item.answer, 
               clusterKey: item.cluster_key 
             })}
+            onPositionChange={handleBookPositionChange}
           />
         );
       })}
     </AnimatePresence>
+  );
+  
+  // Render draggable constellation anchors
+  const renderDraggableAnchors = (isMobile: boolean = false) => (
+    <>
+      {visibleGenres.map(genre => {
+        const anchor = genreAnchors.get(genre);
+        if (!anchor) return null;
+        
+        return (
+          <DraggableConstellationAnchor
+            key={genre}
+            genre={genre}
+            position={anchor}
+            color={getGenreColor(genre)}
+            isMobile={isMobile}
+            onPositionChange={handleAnchorPositionChange}
+          />
+        );
+      })}
+    </>
   );
 
   return (
@@ -327,6 +409,11 @@ export default function FictionFavoritesPage() {
             bookPositions={bookPositionsWithGenre} 
             minCount={2} 
           />
+          
+          {/* Draggable constellation anchors - layered above lines */}
+          <div className="absolute inset-0 z-[5]">
+            {renderDraggableAnchors(false)}
+          </div>
 
           {/* Full-page cloud container - spans double height */}
           <div className="absolute inset-0">
@@ -455,6 +542,11 @@ export default function FictionFavoritesPage() {
             minCount={2}
             isMobile={true}
           />
+          
+          {/* Draggable constellation anchors for mobile */}
+          <div className="absolute inset-0 z-[5]">
+            {renderDraggableAnchors(true)}
+          </div>
 
           {/* Cloud zone - entries float here, below the input */}
           <div 
