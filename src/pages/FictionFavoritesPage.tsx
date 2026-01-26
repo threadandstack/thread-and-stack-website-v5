@@ -457,7 +457,7 @@ export default function FictionFavoritesPage() {
   );
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen bg-background flex flex-col overflow-x-hidden">
       <Navigation variant="dark" />
       
       {/* DESKTOP LAYOUT - scrollable double-height experience */}
@@ -649,9 +649,10 @@ export default function FictionFavoritesPage() {
           )}
         </div>
 
-        {/* Campfire scene - fixed at bottom of viewport */}
-        <div className="fixed bottom-0 left-0 right-0 z-20">
+        {/* Campfire scene and footer anchored at bottom */}
+        <div className="relative z-20 mt-auto">
           <CampfireScene />
+          <Footer />
         </div>
       </main>
 
@@ -737,7 +738,8 @@ export default function FictionFavoritesPage() {
         }}
       />
 
-      <div className="relative z-40">
+      {/* Desktop footer only - mobile footer is in mobile layout */}
+      <div className="hidden lg:block relative z-40">
         <Footer />
       </div>
     </div>
