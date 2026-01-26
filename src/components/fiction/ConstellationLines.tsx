@@ -66,16 +66,6 @@ export function ConstellationLines({
             <feMergeNode in="SourceGraphic"/>
           </feMerge>
         </filter>
-        
-        {/* Star glow filter */}
-        <filter id="star-glow" x="-100%" y="-100%" width="300%" height="300%">
-          <feGaussianBlur stdDeviation="3" result="blur"/>
-          <feMerge>
-            <feMergeNode in="blur"/>
-            <feMergeNode in="blur"/>
-            <feMergeNode in="SourceGraphic"/>
-          </feMerge>
-        </filter>
       </defs>
 
       {Array.from(genreBookGroups.entries()).map(([genre, books], genreIndex) => {
@@ -83,38 +73,50 @@ export function ConstellationLines({
         if (!anchor) return null;
         
         const color = getGenreColor(genre);
-        
-        // Star center is offset below the anchor (label position)
-        // Label ~12px + margin ~6px + half star ~12px = ~30px below anchor
-        // Convert to vh percentage (assuming ~800px viewport height)
-        const starOffsetY = isMobile ? 3.5 : 3.8;
-        const starCenterY = anchor.y + starOffsetY;
 
         return (
           <g key={genre}>
-            {/* Lines from star center to each book */}
+            {/* Lines from star center (anchor position) to each book with twinkling */}
             {books.map((book, bookIndex) => (
               <motion.line
                 key={`line-${book.id}`}
                 x1={`${anchor.x}%`}
-                y1={`${starCenterY}%`}
+                y1={`${anchor.y}%`}
                 x2={`${book.x}%`}
                 y2={`${book.y}%`}
                 stroke={color}
                 strokeWidth={isMobile ? 0.5 : 0.75}
-                strokeOpacity={0.4}
                 strokeDasharray="4 4"
                 filter="url(#constellation-glow)"
                 initial={{ pathLength: 0, opacity: 0 }}
-                animate={{ pathLength: 1, opacity: 1 }}
-                transition={{ 
-                  duration: 1.5, 
-                  delay: genreIndex * 0.3 + bookIndex * 0.1,
-                  ease: "easeOut"
+                animate={{ 
+                  pathLength: 1, 
+                  opacity: [0.3, 0.6, 0.3], // Twinkling effect
+                  strokeOpacity: [0.3, 0.5, 0.3]
                 }}
-            />
+                transition={{ 
+                  pathLength: {
+                    duration: 1.5, 
+                    delay: genreIndex * 0.3 + bookIndex * 0.1,
+                    ease: "easeOut"
+                  },
+                  opacity: {
+                    duration: 3 + Math.random() * 2, // Vary duration for organic feel
+                    delay: genreIndex * 0.3 + bookIndex * 0.1,
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                    ease: "easeInOut"
+                  },
+                  strokeOpacity: {
+                    duration: 3 + Math.random() * 2,
+                    delay: genreIndex * 0.3 + bookIndex * 0.1,
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                    ease: "easeInOut"
+                  }
+                }}
+              />
             ))}
-            {/* Star and label rendered by DraggableConstellationAnchor */}
           </g>
         );
       })}

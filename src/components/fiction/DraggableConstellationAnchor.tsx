@@ -1,4 +1,4 @@
-import { motion, PanInfo } from "framer-motion";
+import { motion } from "framer-motion";
 import { useHoldToDrag } from "@/hooks/useHoldToDrag";
 import { useCallback, useRef, useState, useEffect } from "react";
 
@@ -7,6 +7,7 @@ interface DraggableConstellationAnchorProps {
   position: { x: number; y: number };
   color: string;
   isMobile?: boolean;
+  isPulsing?: boolean; // Trigger pulse when new book added
   onPositionChange?: (genre: string, delta: { x: number; y: number }, newPosition: { x: number; y: number }) => void;
 }
 
@@ -15,6 +16,7 @@ export function DraggableConstellationAnchor({
   position,
   color,
   isMobile = false,
+  isPulsing = false,
   onPositionChange
 }: DraggableConstellationAnchorProps) {
   const { isDragEnabled, isHolding, handlers, resetDrag } = useHoldToDrag({
@@ -25,6 +27,16 @@ export function DraggableConstellationAnchor({
   const dragStartPos = useRef<{ x: number; y: number } | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+  const [showPulse, setShowPulse] = useState(false);
+  
+  // Trigger pulse animation when isPulsing changes to true
+  useEffect(() => {
+    if (isPulsing) {
+      setShowPulse(true);
+      const timer = setTimeout(() => setShowPulse(false), 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [isPulsing]);
   
   // Manual drag implementation for immediate response after hold
   const handlePointerDown = useCallback((e: React.PointerEvent) => {
@@ -78,6 +90,8 @@ export function DraggableConstellationAnchor({
   const visualOffsetX = isDragging ? (dragOffset.x / window.innerWidth) * 100 : 0;
   const visualOffsetY = isDragging ? (dragOffset.y / window.innerHeight) * 100 : 0;
 
+  const starSize = isMobile ? 20 : 24;
+
   return (
     <div
       ref={containerRef}
@@ -86,7 +100,7 @@ export function DraggableConstellationAnchor({
       onPointerUp={handlePointerUp}
       onPointerCancel={handlePointerCancel}
       className={`
-        absolute flex flex-col items-center select-none
+        absolute select-none
         ${isDragEnabled ? 'cursor-grabbing z-[100]' : isHolding ? 'cursor-grab z-[60]' : 'cursor-pointer z-[5]'}
       `}
       style={{
@@ -97,26 +111,48 @@ export function DraggableConstellationAnchor({
         touchAction: 'none',
       }}
     >
-      {/* Genre label */}
+      {/* Genre label - positioned ABOVE the star */}
       <span 
-        className="text-[10px] md:text-xs font-serif italic font-medium tracking-wider whitespace-nowrap pointer-events-none"
+        className="absolute text-[10px] md:text-xs font-serif italic font-medium tracking-wider whitespace-nowrap pointer-events-none"
         style={{ 
           color: 'hsla(0, 0%, 100%, 0.8)',
           textShadow: `0 0 10px ${color}`,
-          marginBottom: isMobile ? 4 : 6,
+          bottom: '100%',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          marginBottom: isMobile ? 8 : 10,
         }}
       >
         {genre.toUpperCase()}
       </span>
       
-      {/* Star visual */}
+      {/* Star visual - THIS is now at the exact anchor position (center of container) */}
       <div 
         className="relative pointer-events-none"
         style={{
-          width: isMobile ? 20 : 24,
-          height: isMobile ? 20 : 24,
+          width: starSize,
+          height: starSize,
         }}
       >
+        {/* Pulse animation ring - appears when new book added */}
+        {showPulse && (
+          <motion.div
+            className="absolute rounded-full"
+            style={{
+              border: `2px solid ${color}`,
+              top: '50%',
+              left: '50%',
+            }}
+            initial={{ width: 0, height: 0, x: '-50%', y: '-50%', opacity: 1 }}
+            animate={{ 
+              width: [0, 60, 80], 
+              height: [0, 60, 80], 
+              opacity: [1, 0.5, 0] 
+            }}
+            transition={{ duration: 1.5, ease: "easeOut" }}
+          />
+        )}
+        
         {/* Outer glow */}
         <div 
           className="absolute inset-0 rounded-full"
@@ -162,7 +198,7 @@ export function DraggableConstellationAnchor({
         <motion.span
           initial={{ opacity: 0, y: -5 }}
           animate={{ opacity: 1, y: 0 }}
-          className="absolute -bottom-5 text-[9px] text-white/60 whitespace-nowrap pointer-events-none"
+          className="absolute -bottom-5 left-1/2 -translate-x-1/2 text-[9px] text-white/60 whitespace-nowrap pointer-events-none"
         >
           Hold...
         </motion.span>
