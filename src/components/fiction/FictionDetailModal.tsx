@@ -4,6 +4,7 @@ import { X, BookOpen, Users, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { supabase } from "@/integrations/supabase/client";
+import { BookShuffleLoader } from "./BookShuffleLoader";
 
 interface FictionDetailModalProps {
   isOpen: boolean;
@@ -102,9 +103,11 @@ export function FictionDetailModal({ isOpen, onClose, title, clusterKey }: Ficti
             <div className="flex gap-4 mb-6">
               {/* Book cover */}
               <div className="flex-shrink-0 w-24 md:w-28">
-                {loading ? (
-                  <div className="w-full aspect-[2/3] bg-muted rounded-lg animate-pulse" />
-                ) : details?.cover_url && !coverError ? (
+              {loading ? (
+                <div className="w-full aspect-[2/3] bg-muted/30 rounded-lg overflow-hidden">
+                  <BookShuffleLoader />
+                </div>
+              ) : details?.cover_url && !coverError ? (
                   <AspectRatio ratio={2/3} className="overflow-hidden rounded-lg shadow-md">
                     <img
                       src={details.cover_url}
