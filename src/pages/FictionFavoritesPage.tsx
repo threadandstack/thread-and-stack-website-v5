@@ -295,13 +295,29 @@ export default function FictionFavoritesPage() {
     });
   }, []);
   
-  const handleAnchorPositionChange = useCallback((genre: string, newPosition: { x: number; y: number }) => {
+  // When anchor moves, move all books in that genre by the same delta
+  const handleAnchorPositionChange = useCallback((genre: string, delta: { x: number; y: number }, newPosition: { x: number; y: number }) => {
+    // Update anchor position
     setManualAnchorPositions(prev => {
       const next = new Map(prev);
       next.set(genre, newPosition);
       return next;
     });
-  }, []);
+    
+    // Move all books in this genre by the same delta
+    setManualBookPositions(prev => {
+      const next = new Map(prev);
+      aggregatedFavorites.forEach(item => {
+        if (item.genre === genre) {
+          const currentPos = positions.get(item.id) || { x: 50, y: 50 };
+          const newBookX = Math.max(5, Math.min(95, currentPos.x + delta.x));
+          const newBookY = Math.max(5, Math.min(95, currentPos.y + delta.y));
+          next.set(item.id, { x: newBookX, y: newBookY });
+        }
+      });
+      return next;
+    });
+  }, [aggregatedFavorites, positions]);
   
   // Build book positions with genre info for constellation lines
   const bookPositionsWithGenre = useMemo(() => {

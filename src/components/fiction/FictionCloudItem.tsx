@@ -1,6 +1,6 @@
-import { motion, useDragControls, PanInfo } from "framer-motion";
+import { motion } from "framer-motion";
 import { useHoldToDrag } from "@/hooks/useHoldToDrag";
-import { useRef, useCallback } from "react";
+import { useRef, useCallback, useState } from "react";
 
 interface FictionCloudItemProps {
   id: string;
@@ -94,77 +94,92 @@ export function FictionCloudItem({
   const badgeColors = getCountBadgeColor(count);
   const showBadge = count > 1;
   
-  const dragControls = useDragControls();
   const containerRef = useRef<HTMLDivElement>(null);
   const dragStartPos = useRef<{ x: number; y: number } | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   
   const { isDragEnabled, isHolding, handlers } = useHoldToDrag({
     holdDuration: 400, // 400ms hold to activate drag
   });
   
-  const handleDragStart = useCallback(() => {
-    dragStartPos.current = { ...position };
-  }, [position]);
+  const handlePointerDown = useCallback((e: React.PointerEvent) => {
+    handlers.onPointerDown(e);
+    dragStartPos.current = { x: e.clientX, y: e.clientY };
+  }, [handlers]);
   
-  const handleDragEnd = useCallback((event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-    if (!onPositionChange || !containerRef.current) return;
+  const handlePointerMove = useCallback((e: React.PointerEvent) => {
+    handlers.onPointerMove(e);
     
-    // Convert pixel offset to percentage of viewport
-    const vw = window.innerWidth;
-    const vh = window.innerHeight;
-    
-    const deltaXPercent = (info.offset.x / vw) * 100;
-    const deltaYPercent = (info.offset.y / vh) * 100;
-    
-    const newX = Math.max(5, Math.min(95, position.x + deltaXPercent));
-    const newY = Math.max(5, Math.min(95, position.y + deltaYPercent));
-    
-    onPositionChange(id, { x: newX, y: newY });
-  }, [id, position, onPositionChange]);
+    if (isDragEnabled && dragStartPos.current) {
+      setIsDragging(true);
+      const dx = e.clientX - dragStartPos.current.x;
+      const dy = e.clientY - dragStartPos.current.y;
+      setDragOffset({ x: dx, y: dy });
+    }
+  }, [isDragEnabled, handlers]);
   
-  const handleClick = useCallback(() => {
-    // Only trigger click if we weren't dragging
-    if (!isDragEnabled) {
+  const handlePointerUp = useCallback((e: React.PointerEvent) => {
+    if (isDragEnabled && onPositionChange && dragStartPos.current) {
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      
+      const dx = e.clientX - dragStartPos.current.x;
+      const dy = e.clientY - dragStartPos.current.y;
+      
+      const deltaXPercent = (dx / vw) * 100;
+      const deltaYPercent = (dy / vh) * 100;
+      
+      const newX = Math.max(5, Math.min(95, position.x + deltaXPercent));
+      const newY = Math.max(5, Math.min(95, position.y + deltaYPercent));
+      
+      onPositionChange(id, { x: newX, y: newY });
+    } else if (!isDragging && !isDragEnabled) {
+      // Only trigger click if we didn't drag
       onClick();
     }
-  }, [isDragEnabled, onClick]);
+    
+    handlers.onPointerUp();
+    setIsDragging(false);
+    setDragOffset({ x: 0, y: 0 });
+    dragStartPos.current = null;
+  }, [id, isDragEnabled, isDragging, position, onPositionChange, onClick, handlers]);
+  
+  const handlePointerCancel = useCallback(() => {
+    handlers.onPointerCancel();
+    setIsDragging(false);
+    setDragOffset({ x: 0, y: 0 });
+    dragStartPos.current = null;
+  }, [handlers]);
+
+  // Convert drag offset to percentage for visual feedback
+  const visualOffsetX = isDragging ? (dragOffset.x / window.innerWidth) * 100 : 0;
+  const visualOffsetY = isDragging ? (dragOffset.y / window.innerHeight) * 100 : 0;
 
   return (
     <motion.div
       ref={containerRef}
       key={id}
-      drag={isDragEnabled}
-      dragControls={dragControls}
-      dragMomentum={false}
-      dragElastic={0}
-      onDragStart={handleDragStart}
-      onDragEnd={handleDragEnd}
       initial={isNew ? { 
         opacity: 0, 
         scale: 0.5,
-        x: "-50%",
-        y: "-50%"
       } : { 
         opacity: 0, 
         scale: 0.8,
-        x: "-50%",
-        y: "-50%"
       }}
       animate={{ 
         opacity: 1, 
         scale: isDragEnabled ? 1.1 : 1,
-        x: "-50%",
-        y: "-50%",
       }}
       exit={{ opacity: 0, scale: 0.8 }}
       transition={{ 
         opacity: { duration: 0.5 },
         scale: { duration: isNew ? 0.8 : 0.2, type: "spring", bounce: 0.3 },
       }}
-      onClick={handleClick}
-      onPointerDown={handlers.onPointerDown}
-      onPointerUp={handlers.onPointerUp}
-      onPointerCancel={handlers.onPointerCancel}
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
+      onPointerCancel={handlePointerCancel}
       className={`
         absolute px-4 py-2 rounded-full text-left select-none
         ${isNew ? 'ring-2 ring-accent ring-offset-2 ring-offset-transparent' : ''}
@@ -173,17 +188,18 @@ export function FictionCloudItem({
         max-w-[180px] md:max-w-[240px] whitespace-nowrap
       `}
       style={{
-        left: `${position.x}%`,
-        top: `${position.y}%`,
+        left: `${position.x + visualOffsetX}%`,
+        top: `${position.y + visualOffsetY}%`,
+        transform: 'translate(-50%, -50%)',
         zIndex: isDragEnabled ? 100 : isNew ? 50 : 10,
         backgroundColor: colors.background,
         borderWidth: 1,
         borderStyle: 'solid',
         borderColor: isDragEnabled ? 'hsla(0, 0%, 100%, 0.6)' : colors.border,
         color: colors.text,
-        touchAction: isDragEnabled ? 'none' : 'auto',
+        touchAction: 'none',
         // Pause float animation while dragging or holding
-        animation: isDragEnabled || isHolding ? 'none' : `float-${Math.abs(id.charCodeAt(0) % 3)} ${floatAnim.duration}s ease-in-out ${floatAnim.delay}s infinite`,
+        animation: isDragEnabled || isHolding || isDragging ? 'none' : `float-${Math.abs(id.charCodeAt(0) % 3)} ${floatAnim.duration}s ease-in-out ${floatAnim.delay}s infinite`,
       }}
     >
       <span className="text-xs md:text-sm font-medium truncate block pointer-events-none">
@@ -205,9 +221,9 @@ export function FictionCloudItem({
         <motion.span
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          className="absolute -bottom-1 left-1/2 -translate-x-1/2 text-[10px] text-white/70 whitespace-nowrap"
+          className="absolute -bottom-1 left-1/2 -translate-x-1/2 text-[10px] text-white/70 whitespace-nowrap pointer-events-none"
         >
-          Hold to drag...
+          Hold...
         </motion.span>
       )}
     </motion.div>
