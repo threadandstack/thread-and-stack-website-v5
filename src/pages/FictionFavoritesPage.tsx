@@ -8,13 +8,13 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { FictionCloudItem } from "@/components/fiction/FictionCloudItem";
 import { FictionDetailModal } from "@/components/fiction/FictionDetailModal";
-import { ConstellationLabels } from "@/components/fiction/ConstellationLabels";
+import { ConstellationLines } from "@/components/fiction/ConstellationLines";
 import { AddedCountBadge } from "@/components/fiction/AddedCountBadge";
 import { FictionTagInput } from "@/components/fiction/FictionTagInput";
 import { StarryBackdrop } from "@/components/fiction/StarryBackdrop";
 import { filterProfanity } from "@/lib/profanityFilter";
 import { normalizeTitle, generateClusterKey } from "@/lib/titleNormalizer";
-import { useCloudPositions } from "@/hooks/useCloudPositions";
+import { useGenreClusteredPositions } from "@/hooks/useGenreClusteredPositions";
 import fictionHeroImage from "@/assets/fiction-hero.png";
 
 interface FictionFavorite {
@@ -257,21 +257,10 @@ export default function FictionFavoritesPage() {
   // Aggregate to show one pill per unique book
   const aggregatedFavorites = aggregateByCluster(favorites);
   
-  // Use collision-aware positioning with aggregated items
-  const positions = useCloudPositions(aggregatedFavorites);
+  // Use genre-clustered positioning - books of the same genre cluster together
+  const { positions, genreAnchors } = useGenreClusteredPositions(aggregatedFavorites);
   
-  // Calculate genre counts for constellation labels
-  const genreCounts = useMemo(() => {
-    const counts = new Map<string, number>();
-    favorites.forEach(item => {
-      if (item.genre) {
-        counts.set(item.genre, (counts.get(item.genre) || 0) + 1);
-      }
-    });
-    return counts;
-  }, [favorites]);
-  
-  // Build book positions with genre info for constellation placement
+  // Build book positions with genre info for constellation lines
   const bookPositionsWithGenre = useMemo(() => {
     return aggregatedFavorites.map(item => {
       const pos = positions.get(item.id) || { x: 50, y: 50 };
@@ -323,8 +312,12 @@ export default function FictionFavoritesPage() {
         {/* Added count badge */}
         <AddedCountBadge count={addedCount} show={showAddedBadge} />
 
-        {/* Constellation labels - curved genre names */}
-        <ConstellationLabels genreCounts={genreCounts} bookPositions={bookPositionsWithGenre} minCount={3} />
+        {/* Constellation lines - connecting stars to book clusters */}
+        <ConstellationLines 
+          genreAnchors={genreAnchors} 
+          bookPositions={bookPositionsWithGenre} 
+          minCount={3} 
+        />
 
         {/* Full-page cloud container */}
         <div className="absolute inset-0 overflow-hidden">
@@ -440,9 +433,9 @@ export default function FictionFavoritesPage() {
             </motion.div>
           </div>
 
-          {/* Constellation labels for mobile */}
-          <ConstellationLabels 
-            genreCounts={genreCounts} 
+          {/* Constellation lines for mobile */}
+          <ConstellationLines 
+            genreAnchors={genreAnchors} 
             bookPositions={bookPositionsWithGenre} 
             minCount={3}
             isMobile={true}
