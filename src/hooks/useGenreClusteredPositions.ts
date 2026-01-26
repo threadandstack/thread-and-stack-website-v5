@@ -175,34 +175,82 @@ const CLOCK_POSITIONS_DESKTOP = [
   15, 45, 75, 105, 135, 165, 195, 225, 255, 285, 315, 345,
 ];
 
-const generateMobileZones = (startYPercent: number, numGenres: number): MobileZone[] => {
-  // IMPORTANT: Positions are % within the cloud container (0–100).
-  // Zone bounds MUST stay within 0–100. We create *physical* room by increasing
-  // the container height (vh/px), not by letting yMin/yMax exceed 100.
+// Generate mobile zones with sizes PROPORTIONAL to book count
+// Larger genres get more vertical space
+const generateMobileZones = (
+  startYPercent: number, 
+  numGenres: number,
+  genreBookCounts?: Map<string, number> // Optional: book counts per genre for proportional sizing
+): MobileZone[] => {
   const zoneCount = Math.max(1, numGenres);
-  const bandHeight = 100 / zoneCount;
   const zones: MobileZone[] = [];
 
-  for (let i = 0; i < zoneCount; i++) {
-    const yMinRaw = i * bandHeight;
-    const yMaxRaw = (i + 1) * bandHeight;
+  if (!genreBookCounts || genreBookCounts.size === 0) {
+    // Fallback: equal zones if no book counts provided
+    const bandHeight = 100 / zoneCount;
+    for (let i = 0; i < zoneCount; i++) {
+      const yMin = i * bandHeight;
+      const yMax = (i + 1) * bandHeight;
+      zones.push({
+        xCenter: 50,
+        yCenter: yMin + bandHeight * 0.3, // Anchor in upper third
+        yMin,
+        yMax,
+        radius: 6,
+      });
+    }
+    return zones;
+  }
 
-    // MINIMAL padding - let books use nearly the full zone height
-    // Only 1% padding to prevent items from literally touching zone edges
-    const padding = 1;
-    const yMin = clamp(yMinRaw + padding, 0, 100);
-    const yMax = clamp(yMaxRaw - padding, 0, 100);
+  // PROPORTIONAL sizing: genres with more books get more space
+  const totalBooks = Array.from(genreBookCounts.values()).reduce((a, b) => a + b, 0);
+  const sortedGenres = Array.from(genreBookCounts.entries())
+    .sort((a, b) => b[1] - a[1]) // Sort by count descending
+    .map(([genre]) => genre);
 
-    // Position anchor in the CENTER of the zone for true circular distribution
-    // Books will be placed evenly around this point
-    const yCenter = clamp(yMinRaw + bandHeight * 0.5, 2, 98);
-
+  let currentY = 0;
+  
+  sortedGenres.forEach((genre) => {
+    const bookCount = genreBookCounts.get(genre) || 1;
+    
+    // Calculate proportional height with minimum and maximum bounds
+    // Base: proportional to book count, but ensure minimum space for small genres
+    const proportionalHeight = (bookCount / totalBooks) * 100;
+    const minHeight = 12; // Minimum 12% for any genre
+    const maxHeight = 45; // Maximum 45% for any single genre
+    const bandHeight = clamp(proportionalHeight, minHeight, maxHeight);
+    
+    const yMin = currentY;
+    const yMax = currentY + bandHeight;
+    
+    // Position anchor in upper portion - more room below for books to cascade
+    // Larger genres: anchor higher (25% down) to maximize downward spread
+    // Smaller genres: anchor more centered (35% down)
+    const anchorRatio = bookCount > 8 ? 0.22 : bookCount > 4 ? 0.28 : 0.35;
+    const yCenter = yMin + bandHeight * anchorRatio;
+    
     zones.push({
       xCenter: 50,
       yCenter,
       yMin,
-      yMax: Math.max(yMax, yMin + 2),
+      yMax,
       radius: 6,
+    });
+    
+    currentY = yMax;
+  });
+
+  // Normalize to fill exactly 100% (in case of rounding)
+  if (zones.length > 0 && currentY !== 100) {
+    const scale = 100 / currentY;
+    let runningY = 0;
+    zones.forEach(zone => {
+      const height = (zone.yMax - zone.yMin) * scale;
+      zone.yMin = runningY;
+      zone.yMax = runningY + height;
+      zone.yCenter = zone.yMin + height * (zone.yCenter - zone.yMin) / (zone.yMax - zone.yMin) * scale;
+      // Recalculate yCenter based on book count
+      runningY = zone.yMax;
     });
   }
 
@@ -262,9 +310,20 @@ export function useGenreClusteredPositions(
 
   const numGenres = sortedGenresByPopularity.length;
   
+  // Build book counts map for proportional zone sizing
+  const genreBookCounts = useMemo(() => {
+    const counts = new Map<string, number>();
+    Object.entries(genreGroups).forEach(([genre, items]) => {
+      counts.set(genre, items.length);
+    });
+    return counts;
+  }, [genreGroups]);
+  
   const zones = useMemo(() => 
-    isMobile ? generateMobileZones(mobileStartY, numGenres) : GENRE_ZONES_DESKTOP.map(z => ({ ...z, yMin: 0, yMax: 100 })), 
-    [isMobile, mobileStartY, numGenres]
+    isMobile 
+      ? generateMobileZones(mobileStartY, numGenres, genreBookCounts) 
+      : GENRE_ZONES_DESKTOP.map(z => ({ ...z, yMin: 0, yMax: 100 })), 
+    [isMobile, mobileStartY, numGenres, genreBookCounts]
   );
   const minSpacing = isMobile ? 1.5 : 1.5; // 1.5% vh minimum gap between items
 
@@ -365,31 +424,48 @@ export function useGenreClusteredPositions(
       const rand3 = ((itemHash * 17) % 1000) / 1000; // Another seed
       
       if (isMobile && zoneBounds) {
-        // MOBILE: SIMPLE ORGANIC SCATTER
-        // Books scatter naturally around anchor - minimal structure
+        // MOBILE: ORGANIC SCATTER using FULL zone space
+        // Anchor is positioned in upper portion of zone - books spread mostly below but also above
         const zoneHeight = zoneBounds.yMax - zoneBounds.yMin;
+        const itemCount = zoneItems.length;
         
-        // Scatter radius based on zone size and item count
-        const scatterRadiusX = 32 + rand1 * 12; // 32-44% horizontal spread
-        const scatterRadiusY = zoneHeight * 0.38 + rand2 * (zoneHeight * 0.1); // Use ~40-48% of zone height
+        // Calculate available space above and below anchor
+        const spaceAbove = anchor.y - zoneBounds.yMin;
+        const spaceBelow = zoneBounds.yMax - anchor.y;
         
-        // Random angle for each item (full 360°)
-        const angle = rand1 * Math.PI * 2;
+        // Scatter radius - use nearly full zone space
+        const scatterRadiusX = 38 + rand1 * 8; // 38-46% horizontal spread
         
-        // Random distance from center (with slight bias toward middle)
-        const distanceFactor = 0.3 + rand2 * 0.7; // 30-100% of radius
+        // Vertical radius: asymmetric - more space below anchor for cascading
+        // But still use space above for some books
+        const radiusAbove = spaceAbove * 0.85; // Use 85% of space above
+        const radiusBelow = spaceBelow * 0.9;  // Use 90% of space below
         
-        // Calculate position
-        let x = anchor.x + Math.cos(angle) * scatterRadiusX * distanceFactor;
-        let y = anchor.y + Math.sin(angle) * scatterRadiusY * distanceFactor;
+        // Random angle - full 360° but bias slightly downward for natural cascade
+        const baseAngle = rand1 * Math.PI * 2;
+        // Slight downward bias for larger clusters
+        const downwardBias = itemCount > 6 ? 0.15 : 0;
+        const angle = baseAngle + (rand2 < 0.4 ? downwardBias : 0);
         
-        // Add extra jitter for uniqueness
-        x += (rand3 - 0.5) * 10;
-        y += (rand1 * rand2 - 0.25) * 6;
+        // Distance from anchor - use more of the radius
+        const distanceFactor = 0.2 + rand2 * 0.8; // 20-100% of radius
         
-        // Soft clamp - only prevent going off-screen
-        x = clamp(x, size.w / 2 + 2, 100 - size.w / 2 - 2);
-        y = clamp(y, zoneBounds.yMin + size.h / 2 + 1, zoneBounds.yMax - size.h / 2 - 1);
+        // Calculate position with asymmetric vertical radius
+        const xOffset = Math.cos(angle) * scatterRadiusX * distanceFactor;
+        const yDirection = Math.sin(angle);
+        const yRadius = yDirection < 0 ? radiusAbove : radiusBelow;
+        const yOffset = yDirection * yRadius * distanceFactor;
+        
+        let x = anchor.x + xOffset;
+        let y = anchor.y + yOffset;
+        
+        // Add jitter for uniqueness
+        x += (rand3 - 0.5) * 12;
+        y += (rand1 * rand3 - 0.25) * 8;
+        
+        // Clamp to zone - no extra margins
+        x = clamp(x, size.w / 2, 100 - size.w / 2);
+        y = clamp(y, zoneBounds.yMin + size.h / 2, zoneBounds.yMax - size.h / 2);
         
         positioned.push({
           id: item.id,
