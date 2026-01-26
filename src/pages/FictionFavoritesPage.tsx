@@ -211,11 +211,46 @@ export default function FictionFavoritesPage() {
   // Use collision-aware positioning
   const positions = useCloudPositions(favorites);
 
+  // Render cloud items helper
+  const renderCloudItems = () => (
+    <AnimatePresence>
+      {clusterKeys.map((clusterKey) => {
+        const items = clusteredGroups[clusterKey];
+        const isCluster = items.length > 1;
+        
+        return items.map((item, idx) => {
+          const pos = positions.get(item.id) || { x: 50, y: 20 };
+          const isNew = item.id === newItemId;
+          const displayText = item.enriched_answer || item.answer;
+          
+          return (
+            <FictionCloudItem
+              key={item.id}
+              id={item.id}
+              displayText={displayText}
+              clusterKey={clusterKey}
+              isNew={isNew}
+              isCluster={isCluster}
+              clusterCount={items.length}
+              isFirst={idx === 0}
+              position={pos}
+              onClick={() => setSelectedBook({ 
+                title: item.answer, 
+                clusterKey: item.cluster_key 
+              })}
+            />
+          );
+        });
+      })}
+    </AnimatePresence>
+  );
+
   return (
-    <div className="min-h-screen bg-background flex flex-col overflow-hidden">
+    <div className="min-h-screen bg-background flex flex-col">
       <Navigation />
       
-      <main className="flex-1 relative">
+      {/* DESKTOP LAYOUT - centered experience */}
+      <main className="hidden lg:flex flex-1 relative overflow-hidden">
         {/* Starry backdrop */}
         <StarryBackdrop />
 
@@ -224,38 +259,7 @@ export default function FictionFavoritesPage() {
 
         {/* Full-page cloud container */}
         <div className="absolute inset-0 overflow-hidden">
-          {favorites.length > 0 && (
-            <AnimatePresence>
-              {clusterKeys.map((clusterKey) => {
-                const items = clusteredGroups[clusterKey];
-                const isCluster = items.length > 1;
-                
-                return items.map((item, idx) => {
-                  const pos = positions.get(item.id) || { x: 50, y: 50 };
-                  const isNew = item.id === newItemId;
-                  const displayText = item.enriched_answer || item.answer;
-                  
-                  return (
-                    <FictionCloudItem
-                      key={item.id}
-                      id={item.id}
-                      displayText={displayText}
-                      clusterKey={clusterKey}
-                      isNew={isNew}
-                      isCluster={isCluster}
-                      clusterCount={items.length}
-                      isFirst={idx === 0}
-                      position={pos}
-                      onClick={() => setSelectedBook({ 
-                        title: item.answer, 
-                        clusterKey: item.cluster_key 
-                      })}
-                    />
-                  );
-                });
-              })}
-            </AnimatePresence>
-          )}
+          {favorites.length > 0 && renderCloudItems()}
         </div>
 
         {/* Centered CTA - floating above the cloud */}
@@ -264,20 +268,20 @@ export default function FictionFavoritesPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-center px-4 md:px-6 pointer-events-auto w-full max-w-[90vw] md:max-w-2xl"
+            className="text-center px-6 pointer-events-auto max-w-2xl"
           >
-            <div className="bg-background/95 backdrop-blur-sm rounded-2xl p-6 md:p-12 border border-primary/20 shadow-lg">
+            <div className="bg-background/95 backdrop-blur-sm rounded-2xl p-12 border border-primary/20 shadow-lg">
               <img 
                 src={fictionHeroImage} 
                 alt="Open book with letters floating around it" 
-                className="w-32 md:w-40 h-auto mx-auto mb-4"
+                className="w-40 h-auto mx-auto mb-4"
               />
-              <h1 className="text-3xl md:text-5xl font-serif mb-4">
+              <h1 className="text-5xl font-serif mb-4">
                 What's your favourite<br />
                 <span className="italic text-accent">work of fiction?</span>
               </h1>
               
-              <p className="text-muted-foreground text-base md:text-lg mb-6">
+              <p className="text-muted-foreground text-lg mb-6">
                 Share the stories that shaped you. Watch them join the cloud of narratives we all carry with us.
               </p>
 
@@ -294,85 +298,154 @@ export default function FictionFavoritesPage() {
             </div>
           </motion.div>
         </div>
-
-        {/* Celebration Modal */}
-        <AnimatePresence>
-          {celebration && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-background/80 backdrop-blur-sm"
-              onClick={closeCelebration}
-            >
-              <motion.div
-                initial={{ scale: 0.8, opacity: 0, y: 20 }}
-                animate={{ scale: 1, opacity: 1, y: 0 }}
-                exit={{ scale: 0.8, opacity: 0, y: 20 }}
-                transition={{ type: "spring", bounce: 0.4 }}
-                className="bg-background rounded-2xl p-8 max-w-md w-full shadow-2xl border border-border relative"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <button
-                  onClick={closeCelebration}
-                  className="absolute top-4 right-4 text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  <X className="h-5 w-5" />
-                </button>
-
-                <div className="text-center">
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ delay: 0.2, type: "spring", bounce: 0.5 }}
-                    className="text-4xl mb-4"
-                  >
-                    🎉
-                  </motion.div>
-
-                  <h2 className="text-xl font-serif italic text-accent mb-2">
-                    "{celebration.answer}"
-                  </h2>
-
-                  <p className="text-foreground text-lg mb-6">
-                    {celebration.message}
-                  </p>
-
-                  {celebration.gif_url && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.3 }}
-                      className="rounded-xl overflow-hidden mb-4"
-                    >
-                      <img
-                        src={celebration.gif_url}
-                        alt="Celebration GIF"
-                        className="w-full h-auto max-h-64 object-cover"
-                      />
-                    </motion.div>
-                  )}
-
-                  <Button
-                    onClick={closeCelebration}
-                    className="bg-accent hover:bg-accent/90 text-accent-foreground"
-                  >
-                    Back to the cloud
-                  </Button>
-                </div>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Book Detail Modal */}
-        <FictionDetailModal
-          isOpen={!!selectedBook}
-          onClose={() => setSelectedBook(null)}
-          title={selectedBook?.title || ""}
-          clusterKey={selectedBook?.clusterKey || null}
-        />
       </main>
+
+      {/* MOBILE/TABLET LAYOUT - Vertical scroll experience */}
+      <main className="lg:hidden flex-1 flex flex-col relative overflow-x-hidden">
+        {/* Starry backdrop - covers entire scrollable area */}
+        <div className="fixed inset-0 z-0">
+          <StarryBackdrop />
+        </div>
+
+        {/* Added count badge */}
+        <AddedCountBadge count={addedCount} show={showAddedBadge} />
+
+        {/* Content container - scrollable vertical layout */}
+        <div className="relative z-10 flex flex-col">
+          {/* Header section with compact CTA card */}
+          <div className="pt-6 pb-4 px-4">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-center max-w-md mx-auto"
+            >
+              {/* Compact white box - just image, title, and description */}
+              <div className="bg-background/95 backdrop-blur-sm rounded-2xl p-5 border border-primary/20 shadow-lg">
+                <img 
+                  src={fictionHeroImage} 
+                  alt="Open book with letters floating around it" 
+                  className="w-20 h-auto mx-auto mb-3"
+                />
+                <h1 className="text-xl font-serif mb-2">
+                  What's your favourite <span className="italic text-accent">work of fiction?</span>
+                </h1>
+                
+                <p className="text-muted-foreground text-sm">
+                  Share the stories that shaped you. Watch them join the cloud of narratives we all carry with us.
+                </p>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Input section - outside the white box, against night sky */}
+          <div className="px-4 py-3">
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="max-w-md mx-auto"
+            >
+              <FictionTagInput 
+                onSubmit={handleSubmit}
+                isSubmitting={isSubmitting}
+              />
+              
+              {favorites.length === 0 && (
+                <p className="text-white/70 text-sm italic mt-4 text-center">
+                  Be the first to share your favorite fiction...
+                </p>
+              )}
+            </motion.div>
+          </div>
+
+          {/* Cloud zone - entries float here, below the input */}
+          <div 
+            className="relative flex-1"
+            style={{ minHeight: `${Math.max(600, favorites.length * 60)}px` }}
+          >
+            {favorites.length > 0 && renderCloudItems()}
+          </div>
+        </div>
+      </main>
+
+      {/* Celebration Modal */}
+      <AnimatePresence>
+        {celebration && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-background/80 backdrop-blur-sm"
+            onClick={closeCelebration}
+          >
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.8, opacity: 0, y: 20 }}
+              transition={{ type: "spring", bounce: 0.4 }}
+              className="bg-background rounded-2xl p-8 max-w-md w-full shadow-2xl border border-border relative"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                onClick={closeCelebration}
+                className="absolute top-4 right-4 text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <X className="h-5 w-5" />
+              </button>
+
+              <div className="text-center">
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ delay: 0.2, type: "spring", bounce: 0.5 }}
+                  className="text-4xl mb-4"
+                >
+                  🎉
+                </motion.div>
+
+                <h2 className="text-xl font-serif italic text-accent mb-2">
+                  "{celebration.answer}"
+                </h2>
+
+                <p className="text-foreground text-lg mb-6">
+                  {celebration.message}
+                </p>
+
+                {celebration.gif_url && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                    className="rounded-xl overflow-hidden mb-4"
+                  >
+                    <img
+                      src={celebration.gif_url}
+                      alt="Celebration GIF"
+                      className="w-full h-auto max-h-64 object-cover"
+                    />
+                  </motion.div>
+                )}
+
+                <Button
+                  onClick={closeCelebration}
+                  className="bg-accent hover:bg-accent/90 text-accent-foreground"
+                >
+                  Back to the cloud
+                </Button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Book Detail Modal */}
+      <FictionDetailModal
+        isOpen={!!selectedBook}
+        onClose={() => setSelectedBook(null)}
+        title={selectedBook?.title || ""}
+        clusterKey={selectedBook?.clusterKey || null}
+      />
 
       <div className="relative z-40">
         <Footer />
