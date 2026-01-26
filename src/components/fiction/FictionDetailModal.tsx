@@ -104,7 +104,7 @@ export function FictionDetailModal({ isOpen, onClose, title, clusterKey }: Ficti
               {/* Book cover */}
               <div className="flex-shrink-0 w-24 md:w-28">
               {loading ? (
-                <div className="w-full aspect-[2/3] bg-muted/30 rounded-lg overflow-hidden">
+                <div className="w-full aspect-[2/3] rounded-lg flex items-center justify-center p-4">
                   <BookShuffleLoader />
                 </div>
               ) : details?.cover_url && !coverError ? (
