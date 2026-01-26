@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, BookOpen, Users, TrendingUp, Sparkles, Heart } from "lucide-react";
+import { X, BookOpen, Users, TrendingUp, Sparkles, Heart, AlertCircle, Check } from "lucide-react";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 import { BookShuffleLoader } from "./BookShuffleLoader";
 import { generateClusterKey } from "@/lib/titleNormalizer";
@@ -63,6 +64,10 @@ export function FictionDetailModal({ isOpen, onClose, title, clusterKey, genreCo
   const [coverError, setCoverError] = useState(false);
   const [isVoting, setIsVoting] = useState(false);
   const [hasVoted, setHasVoted] = useState(false);
+  const [showAuthorCorrection, setShowAuthorCorrection] = useState(false);
+  const [authorCorrection, setAuthorCorrection] = useState("");
+  const [isSubmittingCorrection, setIsSubmittingCorrection] = useState(false);
+  const [correctionSubmitted, setCorrectionSubmitted] = useState(false);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -70,6 +75,9 @@ export function FictionDetailModal({ isOpen, onClose, title, clusterKey, genreCo
     setCoverError(false);
     setHasVoted(false);
     setDetailsAvailable(true);
+    setShowAuthorCorrection(false);
+    setAuthorCorrection("");
+    setCorrectionSubmitted(false);
 
     const fetchData = async () => {
       setLoading(true);
@@ -154,6 +162,26 @@ export function FictionDetailModal({ isOpen, onClose, title, clusterKey, genreCo
       return "1 person has added this book so far";
     }
     return `${addedCount} people have added this book`;
+  };
+
+  const handleSubmitCorrection = async () => {
+    if (!authorCorrection.trim()) return;
+    
+    setIsSubmittingCorrection(true);
+    try {
+      // For now, we'll log the correction - in future this could be stored/reviewed
+      console.log(`Author correction for "${title}": ${authorCorrection.trim()}`);
+      
+      // Could add a database table for corrections in future
+      setCorrectionSubmitted(true);
+      setShowAuthorCorrection(false);
+      toast.success("Thanks! We'll review this correction.");
+    } catch (error) {
+      console.error("Error submitting correction:", error);
+      toast.error("Couldn't submit correction. Try again?");
+    } finally {
+      setIsSubmittingCorrection(false);
+    }
   };
 
   return (
@@ -262,9 +290,77 @@ export function FictionDetailModal({ isOpen, onClose, title, clusterKey, genreCo
                   
                   {/* Added count badge */}
                   {!loading && (
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground mt-3">
-                      <Users className="h-4 w-4" />
-                      <span>{getCountText()}</span>
+                    <div className="mt-3 space-y-2">
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Users className="h-4 w-4" />
+                        <span>{getCountText()}</span>
+                      </div>
+                      
+                      {/* Author correction CTA */}
+                      {details?.author && !correctionSubmitted && (
+                        <AnimatePresence mode="wait">
+                          {!showAuthorCorrection ? (
+                            <motion.button
+                              key="cta"
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              exit={{ opacity: 0 }}
+                              onClick={() => setShowAuthorCorrection(true)}
+                              className="text-xs text-muted-foreground/60 hover:text-muted-foreground transition-colors flex items-center gap-1"
+                            >
+                              <AlertCircle className="h-3 w-3" />
+                              Wrong author credited?
+                            </motion.button>
+                          ) : (
+                            <motion.div
+                              key="input"
+                              initial={{ opacity: 0, height: 0 }}
+                              animate={{ opacity: 1, height: "auto" }}
+                              exit={{ opacity: 0, height: 0 }}
+                              className="flex gap-2 items-center"
+                            >
+                              <Input
+                                value={authorCorrection}
+                                onChange={(e) => setAuthorCorrection(e.target.value)}
+                                placeholder="Correct author name..."
+                                className="h-7 text-xs flex-1"
+                                onKeyDown={(e) => e.key === "Enter" && handleSubmitCorrection()}
+                              />
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                className="h-7 px-2"
+                                onClick={handleSubmitCorrection}
+                                disabled={isSubmittingCorrection || !authorCorrection.trim()}
+                              >
+                                <Check className="h-3 w-3" />
+                              </Button>
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                className="h-7 px-2"
+                                onClick={() => {
+                                  setShowAuthorCorrection(false);
+                                  setAuthorCorrection("");
+                                }}
+                              >
+                                <X className="h-3 w-3" />
+                              </Button>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      )}
+                      
+                      {correctionSubmitted && (
+                        <motion.p
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          className="text-xs text-muted-foreground/60 flex items-center gap-1"
+                        >
+                          <Check className="h-3 w-3" />
+                          Correction noted, thanks!
+                        </motion.p>
+                      )}
                     </div>
                   )}
                 </div>
