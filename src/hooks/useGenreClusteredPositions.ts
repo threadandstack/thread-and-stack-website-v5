@@ -51,27 +51,25 @@ const estimateItemSize = (text: string, isMobile: boolean): Size => {
 };
 
 // Genre cluster zones - each genre gets its own area on desktop
-// Arranged around the central CTA, with zones extending into scrollable area
-// Y values now span 0-200% (double height page)
+// Zones are well-separated to prevent constellation overlap
+// Y values span 0-200% (double height page), with minimum 25% vertical separation
 const GENRE_ZONES_DESKTOP: { xCenter: number; yCenter: number; radius: number }[] = [
-  // First viewport (0-100%) - avoid nav at top (y > 12%)
-  { xCenter: 12, yCenter: 20, radius: 10 },   // Top-left (below nav)
-  { xCenter: 88, yCenter: 20, radius: 10 },   // Top-right (below nav)
-  { xCenter: 10, yCenter: 38, radius: 10 },   // Left upper
-  { xCenter: 90, yCenter: 38, radius: 10 },   // Right upper
-  { xCenter: 10, yCenter: 62, radius: 10 },   // Left lower
-  { xCenter: 90, yCenter: 62, radius: 10 },   // Right lower
-  { xCenter: 12, yCenter: 80, radius: 10 },   // Bottom-left
-  { xCenter: 88, yCenter: 80, radius: 10 },   // Bottom-right
-  // Second viewport (100-200%) - scrollable area
-  { xCenter: 15, yCenter: 110, radius: 12 },  // Scroll area top-left
-  { xCenter: 85, yCenter: 110, radius: 12 },  // Scroll area top-right
-  { xCenter: 12, yCenter: 130, radius: 12 },  // Scroll area mid-left
-  { xCenter: 88, yCenter: 130, radius: 12 },  // Scroll area mid-right
-  { xCenter: 25, yCenter: 150, radius: 12 },  // Scroll area lower-left
-  { xCenter: 75, yCenter: 150, radius: 12 },  // Scroll area lower-right
-  { xCenter: 15, yCenter: 170, radius: 12 },  // Scroll area bottom-left
-  { xCenter: 85, yCenter: 170, radius: 12 },  // Scroll area bottom-right
+  // First viewport - left side (avoid nav at top y > 15%)
+  { xCenter: 12, yCenter: 22, radius: 8 },   // Top-left
+  { xCenter: 12, yCenter: 50, radius: 8 },   // Mid-left
+  { xCenter: 12, yCenter: 78, radius: 8 },   // Bottom-left
+  // First viewport - right side
+  { xCenter: 88, yCenter: 22, radius: 8 },   // Top-right
+  { xCenter: 88, yCenter: 50, radius: 8 },   // Mid-right
+  { xCenter: 88, yCenter: 78, radius: 8 },   // Bottom-right
+  // Second viewport (100-200%) - scrollable area, left side
+  { xCenter: 15, yCenter: 115, radius: 10 }, // Scroll top-left
+  { xCenter: 15, yCenter: 145, radius: 10 }, // Scroll mid-left
+  { xCenter: 15, yCenter: 175, radius: 10 }, // Scroll bottom-left
+  // Second viewport - right side
+  { xCenter: 85, yCenter: 115, radius: 10 }, // Scroll top-right
+  { xCenter: 85, yCenter: 145, radius: 10 }, // Scroll mid-right
+  { xCenter: 85, yCenter: 175, radius: 10 }, // Scroll bottom-right
 ];
 
 // Mobile zones - vertical stacking
@@ -122,15 +120,26 @@ export function useGenreClusteredPositions(items: CloudItem[]): GenreClusterResu
     return groups;
   }, [items]);
 
-  // Assign zones to genres (deterministically based on genre name hash)
+  // Assign zones to genres - ensure each genre gets a unique zone
   const genreZoneAssignments = useMemo(() => {
     const assignments = new Map<string, number>();
     const genres = Object.keys(genreGroups);
+    const usedZones = new Set<number>();
     
     genres.forEach((genre, idx) => {
-      // Hash the genre name for consistent zone assignment
+      // Hash the genre name for initial zone preference
       const hash = genre.split('').reduce((a, b) => ((a << 5) - a) + b.charCodeAt(0), 0);
-      const zoneIdx = Math.abs(hash + idx) % zones.length;
+      let preferredZone = Math.abs(hash) % zones.length;
+      
+      // Find an unused zone, starting from preferred
+      let zoneIdx = preferredZone;
+      let attempts = 0;
+      while (usedZones.has(zoneIdx) && attempts < zones.length) {
+        zoneIdx = (zoneIdx + 1) % zones.length;
+        attempts++;
+      }
+      
+      usedZones.add(zoneIdx);
       assignments.set(genre, zoneIdx);
     });
     
