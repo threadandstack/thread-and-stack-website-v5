@@ -15,6 +15,8 @@ interface PositionedItem {
   genre: string | null;
   position: Position;
   size: Size;
+  anchorX?: number; // Reference to genre anchor for collision resolution
+  anchorY?: number;
 }
 
 interface CloudItem {
@@ -178,10 +180,12 @@ export function useGenreClusteredPositions(
     return overlapX && overlapY;
   }, [minSpacing]);
 
-  // Position items within their genre cluster zone
-  const positionItemsInZone = useCallback((
+  // Position items tightly around their genre's anchor point
+  // Anchor is offset below the constellation label
+  const positionItemsAroundAnchor = useCallback((
     zoneItems: CloudItem[],
-    zone: { xCenter: number; yCenter: number; radius: number }
+    anchor: { x: number; y: number },
+    maxRadius: number
   ): PositionedItem[] => {
     const positioned: PositionedItem[] = [];
     
@@ -189,13 +193,14 @@ export function useGenreClusteredPositions(
       const displayText = item.enriched_answer || item.answer;
       const size = estimateItemSize(displayText, isMobile);
       
-      // Spiral placement around zone center
-      const angle = (idx * 137.5 * Math.PI) / 180; // Golden angle
-      const distance = Math.min(zone.radius * 0.8, 3 + idx * 2);
+      // Tight spiral placement around anchor - books orbit close to their constellation
+      const angle = (idx * 137.5 * Math.PI) / 180; // Golden angle for even distribution
+      // Start closer to anchor, grow slowly - keeps cluster tight
+      const distance = Math.min(maxRadius, 2 + idx * 1.5);
       
       let pos: Position = {
-        x: zone.xCenter + Math.cos(angle) * distance,
-        y: zone.yCenter + Math.sin(angle) * distance
+        x: anchor.x + Math.cos(angle) * distance,
+        y: anchor.y + Math.sin(angle) * distance
       };
       
       // Clamp to valid screen area
@@ -206,15 +211,17 @@ export function useGenreClusteredPositions(
         id: item.id,
         genre: item.genre,
         position: pos,
-        size
+        size,
+        anchorX: anchor.x, // Store anchor for collision resolution
+        anchorY: anchor.y
       });
     });
     
     return positioned;
   }, [isMobile]);
 
-  // Resolve collisions with iterative relaxation
-  const resolveCollisions = useCallback((allItems: PositionedItem[]): PositionedItem[] => {
+  // Resolve collisions while keeping items close to their anchor
+  const resolveCollisions = useCallback((allItems: PositionedItem[], maxDriftFromAnchor: number): PositionedItem[] => {
     if (allItems.length <= 1) return allItems;
     
     const resolved = allItems.map(item => ({ 
@@ -222,12 +229,14 @@ export function useGenreClusteredPositions(
       position: { ...item.position } 
     }));
     
-    const iterations = 25;
-    const pushStrength = isMobile ? 4 : 3;
+    const iterations = 30;
+    const pushStrength = isMobile ? 3 : 2.5;
+    const anchorPull = 0.15; // Pull items back toward their anchor each iteration
     
     for (let iter = 0; iter < iterations; iter++) {
       let hasCollision = false;
       
+      // First, resolve collisions
       for (let i = 0; i < resolved.length; i++) {
         for (let j = i + 1; j < resolved.length; j++) {
           const a = resolved[i];
@@ -248,18 +257,31 @@ export function useGenreClusteredPositions(
             const pushX = (dx / dist) * pushStrength;
             const pushY = (dy / dist) * pushStrength;
             
-            a.position.x -= pushX * 0.3;
-            a.position.y -= pushY * 0.3;
-            b.position.x += pushX * 0.7;
-            b.position.y += pushY * 0.7;
-            
-            // Clamp to valid areas
-            a.position.x = clamp(a.position.x, a.size.w / 2 + 2, 100 - a.size.w / 2 - 2);
-            a.position.y = clamp(a.position.y, a.size.h / 2 + 2, 100 - a.size.h / 2 - 2);
-            b.position.x = clamp(b.position.x, b.size.w / 2 + 2, 100 - b.size.w / 2 - 2);
-            b.position.y = clamp(b.position.y, b.size.h / 2 + 2, 100 - b.size.h / 2 - 2);
+            a.position.x -= pushX * 0.4;
+            a.position.y -= pushY * 0.4;
+            b.position.x += pushX * 0.6;
+            b.position.y += pushY * 0.6;
           }
         }
+      }
+      
+      // Then, pull items back toward their anchors (keeps clusters cohesive)
+      for (const item of resolved) {
+        if (item.anchorX !== undefined && item.anchorY !== undefined) {
+          const dxToAnchor = item.anchorX - item.position.x;
+          const dyToAnchor = item.anchorY - item.position.y;
+          const distToAnchor = Math.sqrt(dxToAnchor * dxToAnchor + dyToAnchor * dyToAnchor);
+          
+          // Only pull if drifted beyond max allowed distance
+          if (distToAnchor > maxDriftFromAnchor) {
+            item.position.x += dxToAnchor * anchorPull;
+            item.position.y += dyToAnchor * anchorPull;
+          }
+        }
+        
+        // Clamp to valid areas
+        item.position.x = clamp(item.position.x, item.size.w / 2 + 2, 100 - item.size.w / 2 - 2);
+        item.position.y = clamp(item.position.y, item.size.h / 2 + 2, 100 - item.size.h / 2 - 2);
       }
       
       if (!hasCollision) break;
@@ -282,45 +304,45 @@ export function useGenreClusteredPositions(
       return;
     }
 
-    // Position all items by genre cluster
-    let allPositioned: PositionedItem[] = [];
+    // STEP 1: Establish fixed anchor positions for each genre (constellation labels)
+    // These are the authoritative positions - books will cluster around them
     const anchors = new Map<string, Position>();
+    const minAnchorY = isMobile ? 12 : 14; // Ensure labels don't overlap navigation
     
-    Object.entries(genreGroups).forEach(([genre, groupItems]) => {
+    Object.keys(genreGroups).forEach(genre => {
       const zoneIdx = genreZoneAssignments.get(genre) || 0;
       const zone = zones[zoneIdx];
       
-      // Store anchor point for constellation label (above the cluster)
-      // Minimum Y of 12% ensures labels don't overlap with navigation
-      const minAnchorY = isMobile ? 10 : 12;
+      // Anchor is at the zone center - this is where the constellation label appears
       anchors.set(genre, {
         x: zone.xCenter,
-        y: Math.max(minAnchorY, zone.yCenter - zone.radius - (isMobile ? 6 : 10))
+        y: Math.max(minAnchorY, zone.yCenter)
       });
+    });
+
+    // STEP 2: Position books tightly around their genre's anchor
+    // Books appear below/around the constellation label
+    let allPositioned: PositionedItem[] = [];
+    const bookClusterRadius = isMobile ? 10 : 12; // How far books can spread from anchor
+    const bookOffsetY = isMobile ? 6 : 8; // Books start below the label
+    
+    Object.entries(genreGroups).forEach(([genre, groupItems]) => {
+      const anchor = anchors.get(genre);
+      if (!anchor) return;
       
-      const positioned = positionItemsInZone(groupItems, zone);
+      // Books cluster below and around the anchor point
+      const bookAnchor = {
+        x: anchor.x,
+        y: Math.min(95, anchor.y + bookOffsetY) // Offset books below the label
+      };
+      
+      const positioned = positionItemsAroundAnchor(groupItems, bookAnchor, bookClusterRadius);
       allPositioned = [...allPositioned, ...positioned];
     });
 
-    // Resolve any collisions
-    const resolved = resolveCollisions(allPositioned);
-    
-    // Recalculate anchors based on actual book positions (centroid + offset above)
-    const finalAnchors = new Map<string, Position>();
-    Object.keys(genreGroups).forEach(genre => {
-      const genreItems = resolved.filter(item => (item.genre || "Uncategorized") === genre);
-      if (genreItems.length === 0) return;
-      
-      const avgX = genreItems.reduce((sum, item) => sum + item.position.x, 0) / genreItems.length;
-      const minY = Math.min(...genreItems.map(item => item.position.y - item.size.h / 2));
-      
-      // Minimum Y of 12% ensures labels don't overlap with navigation
-      const minAnchorY = isMobile ? 10 : 12;
-      finalAnchors.set(genre, {
-        x: avgX,
-        y: Math.max(minAnchorY, minY - (isMobile ? 8 : 12))
-      });
-    });
+    // STEP 3: Resolve collisions while keeping books near their anchors
+    const maxDrift = isMobile ? 15 : 18; // Max distance books can drift from anchor
+    const resolved = resolveCollisions(allPositioned, maxDrift);
 
     const newPositions = new Map<string, Position>();
     resolved.forEach(item => {
@@ -329,8 +351,8 @@ export function useGenreClusteredPositions(
     
     positionedIdsRef.current = itemIdsSet;
     setPositions(newPositions);
-    setGenreAnchors(finalAnchors);
-  }, [items, genreGroups, genreZoneAssignments, zones, positionItemsInZone, resolveCollisions, isMobile, positions.size]);
+    setGenreAnchors(anchors); // Use the fixed anchors, not recalculated ones
+  }, [items, genreGroups, genreZoneAssignments, zones, positionItemsAroundAnchor, resolveCollisions, isMobile, positions.size]);
 
   return { positions, genreAnchors };
 }
