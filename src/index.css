@@ -7,36 +7,39 @@ All colors MUST be HSL.
 */
 
 /* Floating animation keyframes for fiction cloud items - uses relative positioning to avoid click jumps */
-@keyframes float-0 {
+/* Slow float - for items near the top (distant, dreamy) */
+@keyframes float-slow {
   0%, 100% { margin-top: 0; }
-  50% { margin-top: -4px; }
+  50% { margin-top: -3px; }
 }
 
-@keyframes float-1 {
+/* Medium float - for items in the middle zone */
+@keyframes float-medium {
   0%, 100% { margin-top: 0; }
-  33% { margin-top: -3px; }
+  33% { margin-top: -4px; }
   66% { margin-top: 2px; }
 }
 
-@keyframes float-2 {
+/* Fast float - for items near the bottom (closer, more active) */
+@keyframes float-fast {
   0%, 100% { margin-top: 0; }
-  25% { margin-top: -2px; }
+  25% { margin-top: -5px; }
   75% { margin-top: 3px; }
 }
 
-/* Animation classes for floating effect */
-.animate-float-0 {
-  animation: float-0 4s ease-in-out infinite;
+/* Animation classes for parallax floating effect - speed based on vertical position */
+.animate-float-slow {
+  animation: float-slow 7s ease-in-out infinite;
 }
 
-.animate-float-1 {
-  animation: float-1 5s ease-in-out infinite;
+.animate-float-medium {
+  animation: float-medium 5s ease-in-out infinite;
   animation-delay: -1s;
 }
 
-.animate-float-2 {
-  animation: float-2 6s ease-in-out infinite;
-  animation-delay: -2s;
+.animate-float-fast {
+  animation: float-fast 3.5s ease-in-out infinite;
+  animation-delay: -0.5s;
 }
 
 @layer base {

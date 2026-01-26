@@ -78,6 +78,7 @@ export default function FictionFavoritesPage() {
   const [addedCount, setAddedCount] = useState(0);
   const [showAddedBadge, setShowAddedBadge] = useState(false);
   const [pulsingGenres, setPulsingGenres] = useState<Set<string>>(new Set());
+  const [liveReaderCount, setLiveReaderCount] = useState(0);
   
   // Manual position overrides from dragging
   const [manualBookPositions, setManualBookPositions] = useState<Map<string, { x: number; y: number }>>(new Map());
@@ -102,7 +103,7 @@ export default function FictionFavoritesPage() {
 
     fetchFavorites();
 
-    // Subscribe to realtime updates
+    // Subscribe to realtime updates for new favorites
     const channel = supabase
       .channel("fiction_favorites_changes")
       .on(
@@ -152,6 +153,28 @@ export default function FictionFavoritesPage() {
 
     return () => {
       supabase.removeChannel(channel);
+    };
+  }, []);
+
+  // Presence tracking for live reader count
+  useEffect(() => {
+    const uniqueId = `user_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
+    
+    const presenceChannel = supabase
+      .channel('fiction_presence')
+      .on('presence', { event: 'sync' }, () => {
+        const state = presenceChannel.presenceState();
+        const count = Object.keys(state).reduce((acc, key) => acc + state[key].length, 0);
+        setLiveReaderCount(count);
+      })
+      .subscribe(async (status) => {
+        if (status === 'SUBSCRIBED') {
+          await presenceChannel.track({ user_id: uniqueId });
+        }
+      });
+
+    return () => {
+      supabase.removeChannel(presenceChannel);
     };
   }, []);
 
@@ -501,10 +524,19 @@ export default function FictionFavoritesPage() {
                 <p>💡 Tap any title to learn more and vote your love for it!</p>
                 <p>⭐️ If you enter a book that's already in the sky, it will add a +1 to it!</p>
               </div>
-
+              
+              {/* Live reader count */}
+              <motion.p 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1, duration: 0.8 }}
+                className="text-muted-foreground/60 text-sm italic mt-6"
+              >
+                ✨ {Math.max(2, liveReaderCount)} {Math.max(2, liveReaderCount) === 1 ? 'person is' : 'people are'} reading the sky tonight
+              </motion.p>
 
               {favorites.length === 0 && (
-                <p className="text-muted-foreground text-sm italic mt-6">
+                <p className="text-muted-foreground text-sm italic mt-4">
                   Be the first to share your favorite fiction...
                 </p>
               )}
@@ -575,6 +607,16 @@ export default function FictionFavoritesPage() {
                 <p>💡 Tap any title to learn more and vote your love for it!</p>
                 <p>⭐️ If you enter a book that's already in the sky, it will add a +1 to it!</p>
               </div>
+              
+              {/* Live reader count - mobile */}
+              <motion.p 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1, duration: 0.8 }}
+                className="text-white/50 text-xs italic mt-3 text-center"
+              >
+                ✨ {Math.max(2, liveReaderCount)} {Math.max(2, liveReaderCount) === 1 ? 'person is' : 'people are'} reading the sky tonight
+              </motion.p>
 
               {favorites.length === 0 && (
                 <p className="text-white/70 text-sm italic mt-4 text-center">

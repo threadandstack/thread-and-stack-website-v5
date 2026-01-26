@@ -76,11 +76,16 @@ const getCountBadgeColor = (count: number): { bg: string; text: string } => {
   }
 };
 
-// Get a consistent float animation class based on item id
-const getFloatClass = (id: string): string => {
-  const hash = id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-  const variant = hash % 3;
-  return `animate-float-${variant}`;
+// Get float animation class based on vertical position (parallax effect)
+// Items higher on screen float slower (distant), items lower float faster (closer)
+const getFloatClass = (yPosition: number): string => {
+  if (yPosition < 35) {
+    return 'animate-float-slow'; // Top zone - slow, dreamy
+  } else if (yPosition < 65) {
+    return 'animate-float-medium'; // Middle zone - moderate
+  } else {
+    return 'animate-float-fast'; // Bottom zone - faster, closer feel
+  }
 };
 
 export function FictionCloudItem({
@@ -104,7 +109,8 @@ export function FictionCloudItem({
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const [isInteracting, setIsInteracting] = useState(false);
   
-  const floatClass = getFloatClass(id);
+  // Float class based on vertical position for parallax effect
+  const floatClass = getFloatClass(position.y);
   
   const { isDragEnabled, isHolding, handlers } = useHoldToDrag({
     holdDuration: 400, // 400ms hold to activate drag
