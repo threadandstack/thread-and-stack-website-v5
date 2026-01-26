@@ -1,16 +1,15 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { motion, AnimatePresence } from "framer-motion";
-import { Send, X } from "lucide-react";
+import { X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { FictionCloudItem } from "@/components/fiction/FictionCloudItem";
 import { FictionDetailModal } from "@/components/fiction/FictionDetailModal";
-import { BookLoadingIcon } from "@/components/fiction/BookLoadingIcon";
 import { AddedCountBadge } from "@/components/fiction/AddedCountBadge";
+import { FictionTagInput } from "@/components/fiction/FictionTagInput";
 
 interface FictionFavorite {
   id: string;
@@ -77,7 +76,6 @@ const groupByCluster = (items: FictionFavorite[]) => {
 
 export default function FictionFavoritesPage() {
   const [favorites, setFavorites] = useState<FictionFavorite[]>([]);
-  const [input, setInput] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [newItemId, setNewItemId] = useState<string | null>(null);
   const [celebration, setCelebration] = useState<CelebrationData | null>(null);
@@ -85,7 +83,6 @@ export default function FictionFavoritesPage() {
   const [addedCount, setAddedCount] = useState(0);
   const [showAddedBadge, setShowAddedBadge] = useState(false);
   const { toast } = useToast();
-  const inputRef = useRef<HTMLInputElement>(null);
 
   // Fetch existing favorites
   useEffect(() => {
@@ -131,19 +128,7 @@ export default function FictionFavoritesPage() {
     };
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!input.trim()) {
-      toast({
-        title: "Please enter your favorite fiction",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    // Parse comma-separated titles
-    const titles = input.split(',').map(t => t.trim()).filter(t => t.length > 0);
+  const handleSubmit = async (titles: string[]) => {
     if (titles.length === 0) return;
 
     setIsSubmitting(true);
@@ -165,7 +150,6 @@ export default function FictionFavoritesPage() {
 
       // Highlight the first inserted item
       setNewItemId(insertedItems[0].id);
-      setInput("");
 
       // Celebrate the FIRST title only, enrich all titles
       const firstTitle = titles[0];
@@ -301,29 +285,10 @@ export default function FictionFavoritesPage() {
                 Share the stories that shaped you. Watch them join the cloud of narratives we all carry with us.
               </p>
 
-              <form onSubmit={handleSubmit} className="relative max-w-xl mx-auto">
-                <Input
-                  ref={inputRef}
-                  type="text"
-                  placeholder="Enter one or more titles, separated by commas..."
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  disabled={isSubmitting}
-                  className="h-12 md:h-14 pr-14 text-base md:text-lg rounded-full border-2 border-accent/20 focus:border-accent transition-colors bg-background"
-                />
-                <Button
-                  type="submit"
-                  disabled={isSubmitting}
-                  size="icon"
-                  className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 md:h-10 md:w-10 rounded-full bg-accent hover:bg-accent/90"
-                >
-                  {isSubmitting ? (
-                    <BookLoadingIcon className="h-4 w-4 md:h-5 md:w-5" />
-                  ) : (
-                    <Send className="h-4 w-4 md:h-5 md:w-5" />
-                  )}
-                </Button>
-              </form>
+              <FictionTagInput 
+                onSubmit={handleSubmit}
+                isSubmitting={isSubmitting}
+              />
 
               {favorites.length === 0 && (
                 <p className="text-muted-foreground text-sm italic mt-6">
