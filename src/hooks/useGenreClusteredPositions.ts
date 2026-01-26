@@ -166,7 +166,7 @@ export function useGenreClusteredPositions(
     isMobile ? generateMobileZones(mobileStartY, numGenres) : GENRE_ZONES_DESKTOP.map(z => ({ ...z, yMin: 0, yMax: 100 })), 
     [isMobile, mobileStartY, numGenres]
   );
-  const minSpacing = isMobile ? 5 : 1.5; // Much larger gap on mobile to prevent overlap
+  const minSpacing = isMobile ? 8 : 1.5; // Larger gap on mobile to prevent overlap
 
   // Assign zones to genres - ensure each genre gets a unique zone
   const genreZoneAssignments = useMemo(() => {
@@ -213,7 +213,7 @@ export function useGenreClusteredPositions(
     const positioned: PositionedItem[] = [];
     
     // Safe margins - generous but not excessive
-    const safeMarginX = isMobile ? 12 : 8;
+    const safeMarginX = isMobile ? 18 : 8;
     const safeMarginY = isMobile ? 2 : 4;
     
     zoneItems.forEach((item, idx) => {
@@ -221,27 +221,14 @@ export function useGenreClusteredPositions(
       const size = estimateItemSize(displayText, isMobile);
       
       if (isMobile && zoneBounds) {
-        // MOBILE: Tight cluster around anchor within zone
-        // Books arranged in a compact pattern below and around the anchor
-        const itemsPerRow = Math.min(2, zoneItems.length);
-        const row = Math.floor(idx / itemsPerRow);
-        const col = idx % itemsPerRow;
+        // MOBILE: Stack books vertically below anchor, one per row
+        // This prevents horizontal overlap entirely
+        const rowSpacing = size.h + 4; // Good vertical spacing between items
+        const startY = anchor.y + anchorExclusionRadius + 4;
+        let y = startY + (idx * rowSpacing);
         
-        // Start books just below the anchor star
-        const rowSpacing = size.h + 2; // Tight vertical spacing
-        const startY = anchor.y + anchorExclusionRadius + 3;
-        let y = startY + (row * rowSpacing);
-        
-        // Horizontal: stagger left/right of center, staying close
-        const horizontalOffset = 18; // Reduced spread to stay centered
-        let x: number;
-        if (itemsPerRow === 1) {
-          x = 50;
-        } else {
-          // Alternate: first item left, second right, with row stagger
-          const stagger = (row % 2) * 5;
-          x = col === 0 ? (50 - horizontalOffset + stagger) : (50 + horizontalOffset - stagger);
-        }
+        // Center all books horizontally
+        let x = 50;
         
         // Strict clamp to zone bounds - items MUST stay in their zone
         const minY = zoneBounds.yMin + size.h / 2 + 1;
@@ -569,14 +556,13 @@ export function useGenreClusteredPositions(
     }
   }, [items, positions, genreAnchors, isMobile]);
 
-  // Set up periodic cohesion force
-  useEffect(() => {
-    const interval = setInterval(() => {
-      applyCohesionForce();
-    }, 3000); // Apply every 3 seconds
-    
-    return () => clearInterval(interval);
-  }, [applyCohesionForce]);
+  // Cohesion force disabled for now - was causing layout complications
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     applyCohesionForce();
+  //   }, 3000);
+  //   return () => clearInterval(interval);
+  // }, [applyCohesionForce]);
 
   // Build zone bounds map for external use
   const genreZoneBounds = useMemo(() => {
