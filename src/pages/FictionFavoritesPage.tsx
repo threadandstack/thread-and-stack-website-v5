@@ -316,7 +316,7 @@ export default function FictionFavoritesPage() {
   const aggregatedFavorites = aggregateByCluster(favorites);
   
   // Use genre-clustered positioning - books of the same genre cluster together
-  const { positions: autoPositions, genreAnchors: autoGenreAnchors, genreZoneBounds } = useGenreClusteredPositions(aggregatedFavorites, {
+  const { positions: autoPositions, genreAnchors: autoGenreAnchors, genreZoneBounds, genreCount } = useGenreClusteredPositions(aggregatedFavorites, {
     mobileHeaderHeightPx: 420 // Larger value to ensure constellations start well below input
   });
   
@@ -629,19 +629,18 @@ export default function FictionFavoritesPage() {
 
           {/* Cloud zone - relative container for positioned items with calculated height */}
           {favorites.length > 0 && (() => {
-            // Calculate unique genres for height
-            const uniqueGenres = new Set(aggregatedFavorites.map(f => f.genre || 'Uncategorized'));
-            const numGenres = uniqueGenres.size;
-            const sortedGenres = Array.from(uniqueGenres).sort();
-            // Each genre needs ~22vh for clock-face layout, ensure minimum
-            const calculatedHeight = Math.max(80, numGenres * 22);
+            // Use genreCount from the positioning hook for accurate height calculation
+            // Each genre needs ~25vh for clock-face layout with comfortable spacing
+            const calculatedHeight = Math.max(100, genreCount * 25);
+            // Get sorted genres from the zone bounds (already popularity-sorted by the hook)
+            const sortedGenres = Array.from(genreZoneBounds.keys());
             return (
             <div 
               className="relative mt-4"
               style={{ 
-                // Height based on number of genres - each genre gets 22vh for clock layout
+                // Height based on number of genres - each genre gets 25vh for clock layout
                 height: `${calculatedHeight}vh`,
-                minHeight: `${Math.max(500, numGenres * 180)}px`
+                minHeight: `${Math.max(600, genreCount * 200)}px`
               }}
             >
               {/* DEBUG: Zone boundaries visualization */}
@@ -667,7 +666,7 @@ export default function FictionFavoritesPage() {
                         backgroundColor: 'rgba(0,0,0,0.7)'
                       }}
                     >
-                      {genre} ({zoneBounds.yMin.toFixed(0)}% - {zoneBounds.yMax.toFixed(0)}%)
+                      #{idx + 1} {genre} ({zoneBounds.yMin.toFixed(0)}% - {zoneBounds.yMax.toFixed(0)}%)
                     </span>
                   </div>
                 );
