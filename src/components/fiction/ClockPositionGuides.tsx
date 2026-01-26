@@ -11,18 +11,22 @@ interface ClockPositionGuidesProps {
   isMobile?: boolean;
 }
 
-// Clock positions in degrees (0° = 12 o'clock, clockwise)
-// Shows guides for 12, 3, 6, 9 positions
-const MAIN_CLOCK_ANGLES = [0, 90, 180, 270]; // 12, 3, 6, 9 o'clock
+// Mobile clock positions prioritize BELOW the star (where there's more room)
+// Shows guides for primary positions: 6, 5, 7, 4, 8 (all below/sides)
+const MOBILE_GUIDE_POSITIONS = [
+  { angle: 180, label: "6" },  // Directly below - 1st book
+  { angle: 150, label: "5" },  // Below-right - 2nd book
+  { angle: 210, label: "7" },  // Below-left - 3rd book
+  { angle: 120, label: "4" },  // Right-lower - 4th book
+];
 
-// Map from angle to which position index fills it (based on CLOCK_POSITIONS order)
-// CLOCK_POSITIONS = [180, 0, 90, 270, ...] => 6 is idx 0, 12 is idx 1, 3 is idx 2, 9 is idx 3
-const ANGLE_TO_FILL_INDEX: Record<number, number> = {
-  180: 0, // 6 o'clock - filled by 1st book
-  0: 1,   // 12 o'clock - filled by 2nd book
-  90: 2,  // 3 o'clock - filled by 3rd book
-  270: 3, // 9 o'clock - filled by 4th book
-};
+// Desktop shows traditional 12/3/6/9 positions
+const DESKTOP_GUIDE_POSITIONS = [
+  { angle: 180, label: "6" },  // Below - 1st book
+  { angle: 0, label: "12" },   // Above - 2nd book
+  { angle: 90, label: "3" },   // Right - 3rd book
+  { angle: 270, label: "9" },  // Left - 4th book
+];
 
 export function ClockPositionGuides({ 
   bookCount, 
@@ -30,7 +34,9 @@ export function ClockPositionGuides({
   starSize,
   isMobile = false 
 }: ClockPositionGuidesProps) {
-  // Only show guides when there are empty main slots (< 4 books)
+  const guidePositions = isMobile ? MOBILE_GUIDE_POSITIONS : DESKTOP_GUIDE_POSITIONS;
+  
+  // Only show guides when there are empty slots (< 4 books)
   if (bookCount >= 4) return null;
 
   // Radius for guide dots - positioned outside the star ring
@@ -39,21 +45,18 @@ export function ClockPositionGuides({
 
   return (
     <>
-      {MAIN_CLOCK_ANGLES.map((angle) => {
-        const fillIndex = ANGLE_TO_FILL_INDEX[angle];
-        const isFilled = bookCount > fillIndex;
-        
-        // Don't show dot if position is filled
-        if (isFilled) return null;
+      {guidePositions.map((pos, index) => {
+        // Don't show dot if this position is already filled
+        if (bookCount > index) return null;
 
         // Calculate position (0° = 12 o'clock, above center)
-        const angleRad = (angle * Math.PI) / 180;
+        const angleRad = (pos.angle * Math.PI) / 180;
         const x = Math.sin(angleRad) * guideRadius;
         const y = -Math.cos(angleRad) * guideRadius;
 
         return (
           <motion.div
-            key={angle}
+            key={pos.angle}
             className="absolute rounded-full pointer-events-none"
             initial={{ opacity: 0, scale: 0 }}
             animate={{ 
@@ -65,11 +68,11 @@ export function ClockPositionGuides({
                 duration: 3,
                 repeat: Infinity,
                 repeatType: "reverse",
-                delay: angle / 360, // Stagger animation start
+                delay: index * 0.2, // Stagger animation start
               },
               scale: {
                 duration: 0.5,
-                delay: 0.3 + (angle / 360) * 0.5,
+                delay: 0.3 + index * 0.1,
               },
             }}
             style={{
