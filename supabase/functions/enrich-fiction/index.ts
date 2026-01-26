@@ -12,7 +12,7 @@ serve(async (req) => {
   }
 
   try {
-    const { answer, id } = await req.json();
+    const { answer, id, metadata } = await req.json();
     
     if (!answer || !id) {
       return new Response(
@@ -24,6 +24,32 @@ serve(async (req) => {
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) {
       throw new Error("LOVABLE_API_KEY is not configured");
+    }
+
+    // Get IP address from request headers for geolocation
+    const clientIP = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() 
+      || req.headers.get("x-real-ip") 
+      || req.headers.get("cf-connecting-ip")
+      || null;
+
+    let geoData: { country?: string; city?: string } = {};
+    
+    // Try to get geolocation from IP using ip-api.com (free, no API key needed)
+    if (clientIP && clientIP !== "127.0.0.1" && !clientIP.startsWith("192.168.")) {
+      try {
+        const geoResponse = await fetch(`http://ip-api.com/json/${clientIP}?fields=status,country,city`);
+        if (geoResponse.ok) {
+          const geoJson = await geoResponse.json();
+          if (geoJson.status === "success") {
+            geoData = {
+              country: geoJson.country,
+              city: geoJson.city
+            };
+          }
+        }
+      } catch (geoError) {
+        console.error("Geolocation lookup failed:", geoError);
+      }
     }
 
     // Call AI to enrich the answer with emojis and generate a cluster key
@@ -47,7 +73,7 @@ serve(async (req) => {
                 content: `You are enriching fiction book/story titles with emojis and generating cluster keys.
             
 Given a fiction title or description, return:
-1. emojis: 2-4 relevant emojis that represent the story's themes, genre, or mood
+1. emojis: EXACTLY 2 relevant emojis that represent the story's themes, genre, or mood. No more, no less.
 2. cluster_key: A normalized, lowercase key for grouping similar works (e.g., "sherlock holmes", "harry potter", "lord of the rings")
 
 Be creative with emojis - consider the genre, setting, themes, characters.
@@ -69,7 +95,7 @@ For cluster_key, extract the core work/series name to group variations together.
                     properties: {
                       emojis: {
                         type: "string",
-                        description: "2-4 emojis representing the story"
+                        description: "Exactly 2 emojis representing the story"
                       },
                       cluster_key: {
                         type: "string",
@@ -120,15 +146,24 @@ For cluster_key, extract the core work/series name to group variations together.
       }
     }
 
+    // Initialize Supabase client
+    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+    const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    // Prepare metadata update
+    const metadataUpdate: Record<string, unknown> = {};
+    if (metadata?.device_type) metadataUpdate.device_type = metadata.device_type;
+    if (metadata?.timezone) metadataUpdate.timezone = metadata.timezone;
+    if (metadata?.is_repeat_visitor !== undefined) metadataUpdate.is_repeat_visitor = metadata.is_repeat_visitor;
+    if (metadata?.user_agent) metadataUpdate.user_agent = metadata.user_agent;
+    if (geoData.country) metadataUpdate.country = geoData.country;
+    if (geoData.city) metadataUpdate.city = geoData.city;
+
     // If all retries failed, use fallback values instead of erroring
     if (!response || !response.ok) {
       console.log("AI enrichment failed after retries, using fallback values");
       
-      // Update with fallback values
-      const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-      const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-      const supabase = createClient(supabaseUrl, supabaseKey);
-
       const fallbackEmojis = "📚";
       const fallbackClusterKey = answer.toLowerCase().trim().replace(/[^a-z0-9\s]/g, '').slice(0, 50);
 
@@ -137,7 +172,8 @@ For cluster_key, extract the core work/series name to group variations together.
         .update({
           emojis: fallbackEmojis,
           cluster_key: fallbackClusterKey,
-          enriched_answer: `${fallbackEmojis} ${answer}`
+          enriched_answer: `${fallbackEmojis} ${answer}`,
+          ...metadataUpdate
         })
         .eq("id", id);
 
@@ -158,22 +194,23 @@ For cluster_key, extract the core work/series name to group variations together.
         const args = JSON.parse(toolCall.function.arguments);
         emojis = args.emojis || emojis;
         cluster_key = args.cluster_key || cluster_key;
+        
+        // Ensure max 2 emojis by taking first 8 characters (2 emojis = ~8 bytes)
+        if (emojis.length > 8) {
+          emojis = [...emojis].slice(0, 2).join('');
+        }
       } catch (e) {
         console.error("Failed to parse tool call:", e);
       }
     }
-
-    // Update the record in the database
-    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-    const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-    const supabase = createClient(supabaseUrl, supabaseKey);
 
     const { error: updateError } = await supabase
       .from("fiction_favorites")
       .update({
         emojis,
         cluster_key,
-        enriched_answer: `${emojis} ${answer}`
+        enriched_answer: `${emojis} ${answer}`,
+        ...metadataUpdate
       })
       .eq("id", id);
 
@@ -183,7 +220,7 @@ For cluster_key, extract the core work/series name to group variations together.
     }
 
     return new Response(
-      JSON.stringify({ success: true, emojis, cluster_key }),
+      JSON.stringify({ success: true, emojis, cluster_key, geo: geoData }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   } catch (e) {

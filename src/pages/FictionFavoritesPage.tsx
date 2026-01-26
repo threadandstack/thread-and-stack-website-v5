@@ -100,6 +100,28 @@ export default function FictionFavoritesPage() {
     };
   }, []);
 
+  // Get device metadata for tracking
+  const getDeviceMetadata = () => {
+    const ua = navigator.userAgent;
+    let deviceType = 'desktop';
+    if (/Mobi|Android/i.test(ua)) deviceType = 'mobile';
+    else if (/Tablet|iPad/i.test(ua)) deviceType = 'tablet';
+    
+    // Check repeat visitor
+    const hasVisited = localStorage.getItem('fiction_visitor');
+    const isRepeat = !!hasVisited;
+    if (!hasVisited) {
+      localStorage.setItem('fiction_visitor', 'true');
+    }
+    
+    return {
+      device_type: deviceType,
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      is_repeat_visitor: isRepeat,
+      user_agent: ua.slice(0, 255) // Truncate user agent
+    };
+  };
+
   const handleSubmit = async (titles: string[]) => {
     if (titles.length === 0) return;
 
@@ -117,6 +139,7 @@ export default function FictionFavoritesPage() {
     }
 
     setIsSubmitting(true);
+    const metadata = getDeviceMetadata();
 
     try {
       // Insert all titles
@@ -147,7 +170,7 @@ export default function FictionFavoritesPage() {
               "Content-Type": "application/json",
               Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`
             },
-            body: JSON.stringify({ answer: item.answer, id: item.id })
+            body: JSON.stringify({ answer: item.answer, id: item.id, metadata })
           }
         )
       );
