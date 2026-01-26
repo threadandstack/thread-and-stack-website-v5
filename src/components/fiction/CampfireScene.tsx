@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import campfireImage from "@/assets/campfire-transparent.png";
+import campfireGif from "@/assets/campfire.gif";
 import treesImage from "@/assets/trees-silhouette.png";
 
 // Generate smoke particles
@@ -93,22 +93,14 @@ export function CampfireScene() {
           <SmokeParticle delay={3} x={6} />
         </div>
 
-        {/* Campfire image with flicker animation */}
-        <motion.img
-          src={campfireImage}
+        {/* Campfire GIF - smaller to match trees */}
+        <img
+          src={campfireGif}
           alt="Pixelated campfire"
-          className="w-24 h-24 object-contain relative"
+          className="w-12 h-12 object-contain relative"
           style={{ 
             imageRendering: 'pixelated',
-            filter: 'drop-shadow(0 0 8px hsla(35, 100%, 50%, 0.6))'
-          }}
-          animate={{
-            scale: [1, 1.03, 0.97, 1.02, 1],
-          }}
-          transition={{
-            duration: 0.6,
-            repeat: Infinity,
-            ease: "easeInOut"
+            filter: 'drop-shadow(0 0 6px hsla(35, 100%, 50%, 0.5))'
           }}
         />
       </div>
