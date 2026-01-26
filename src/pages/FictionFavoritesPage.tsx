@@ -686,6 +686,9 @@ export default function FictionFavoritesPage() {
         onClose={() => setSelectedBook(null)}
         title={selectedBook?.title || ""}
         clusterKey={selectedBook?.clusterKey || null}
+        onVoteAdded={() => {
+          // Realtime subscription will handle the update automatically
+        }}
       />
 
       <div className="relative z-40">

@@ -1,15 +1,19 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, BookOpen, Users, TrendingUp, Sparkles } from "lucide-react";
+import { X, BookOpen, Users, TrendingUp, Sparkles, Heart } from "lucide-react";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { BookShuffleLoader } from "./BookShuffleLoader";
+import { generateClusterKey } from "@/lib/titleNormalizer";
+import { toast } from "sonner";
 
 interface FictionDetailModalProps {
   isOpen: boolean;
   onClose: () => void;
   title: string;
   clusterKey: string | null;
+  onVoteAdded?: () => void; // Callback to refresh the list
 }
 
 interface BookDetails {
@@ -20,25 +24,32 @@ interface BookDetails {
   recommendation: string | null;
 }
 
-export function FictionDetailModal({ isOpen, onClose, title, clusterKey }: FictionDetailModalProps) {
+export function FictionDetailModal({ isOpen, onClose, title, clusterKey, onVoteAdded }: FictionDetailModalProps) {
   const [loading, setLoading] = useState(true);
   const [details, setDetails] = useState<BookDetails | null>(null);
+  const [detailsAvailable, setDetailsAvailable] = useState(true);
   const [addedCount, setAddedCount] = useState(0);
   const [coverError, setCoverError] = useState(false);
+  const [isVoting, setIsVoting] = useState(false);
+  const [hasVoted, setHasVoted] = useState(false);
 
   useEffect(() => {
     if (!isOpen) return;
     
     setCoverError(false);
+    setHasVoted(false);
+    setDetailsAvailable(true);
 
     const fetchData = async () => {
       setLoading(true);
+      
+      const effectiveClusterKey = clusterKey || generateClusterKey(title);
       
       const [countResult, detailsResult] = await Promise.all([
         supabase
           .from("fiction_favorites")
           .select("id", { count: "exact" })
-          .or(`cluster_key.eq.${clusterKey},answer.ilike.%${title}%`),
+          .eq("cluster_key", effectiveClusterKey),
         fetch(
           `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/fetch-book-details`,
           {
@@ -56,15 +67,17 @@ export function FictionDetailModal({ isOpen, onClose, title, clusterKey }: Ficti
 
       if (detailsResult.ok) {
         const data = await detailsResult.json();
-        setDetails(data);
+        // Check if we got real data or just a fallback
+        if (data.summary && !data.summary.includes("Unable to fetch")) {
+          setDetails(data);
+          setDetailsAvailable(true);
+        } else {
+          setDetails(null);
+          setDetailsAvailable(false);
+        }
       } else {
-        setDetails({
-          summary: "Unable to fetch details for this title.",
-          author: null,
-          cover_url: null,
-          audience_fact: null,
-          recommendation: null
-        });
+        setDetails(null);
+        setDetailsAvailable(false);
       }
 
       setLoading(false);
@@ -72,6 +85,45 @@ export function FictionDetailModal({ isOpen, onClose, title, clusterKey }: Ficti
 
     fetchData();
   }, [isOpen, title, clusterKey]);
+
+  const handleVote = async () => {
+    setIsVoting(true);
+    
+    try {
+      const effectiveClusterKey = clusterKey || generateClusterKey(title);
+      
+      // Insert a new entry for this book
+      const { error } = await supabase
+        .from("fiction_favorites")
+        .insert({
+          answer: title,
+          cluster_key: effectiveClusterKey,
+          enriched_answer: title, // Use plain title for votes
+          emojis: "📚✨",
+          is_repeat_visitor: true,
+          device_type: /Mobile|Android|iPhone/i.test(navigator.userAgent) ? "mobile" : "desktop"
+        });
+
+      if (error) throw error;
+
+      setAddedCount(prev => prev + 1);
+      setHasVoted(true);
+      toast.success("Your vote has been added!");
+      onVoteAdded?.();
+    } catch (error) {
+      console.error("Error voting:", error);
+      toast.error("Couldn't add your vote. Try again?");
+    } finally {
+      setIsVoting(false);
+    }
+  };
+
+  const getCountText = () => {
+    if (addedCount === 1) {
+      return "1 person has added this book so far";
+    }
+    return `${addedCount} people have added this book`;
+  };
 
   return (
     <AnimatePresence>
@@ -142,11 +194,7 @@ export function FictionDetailModal({ isOpen, onClose, title, clusterKey }: Ficti
                   {!loading && (
                     <div className="flex items-center gap-2 text-sm text-muted-foreground mt-3">
                       <Users className="h-4 w-4" />
-                      <span>
-                        {addedCount === 1 
-                          ? "You're the first to add this!" 
-                          : `Added by ${addedCount} ${addedCount === 1 ? 'person' : 'people'} here`}
-                      </span>
+                      <span>{getCountText()}</span>
                     </div>
                   )}
                 </div>
@@ -158,17 +206,17 @@ export function FictionDetailModal({ isOpen, onClose, title, clusterKey }: Ficti
                   <div className="h-4 bg-muted rounded animate-pulse w-5/6" />
                   <div className="h-4 bg-muted rounded animate-pulse w-4/6" />
                 </div>
-              ) : (
+              ) : detailsAvailable && details ? (
                 <div className="space-y-4">
                   <div>
                     <h3 className="text-sm font-medium text-foreground mb-2">About this book</h3>
                     <p className="text-muted-foreground text-sm leading-relaxed">
-                      {details?.summary}
+                      {details.summary}
                     </p>
                   </div>
 
                   {/* Audience fact callout */}
-                  {details?.audience_fact && (
+                  {details.audience_fact && (
                     <motion.div
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -187,7 +235,7 @@ export function FictionDetailModal({ isOpen, onClose, title, clusterKey }: Ficti
                   )}
 
                   {/* Recommendation callout */}
-                  {details?.recommendation && (
+                  {details.recommendation && (
                     <motion.div
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -205,6 +253,44 @@ export function FictionDetailModal({ isOpen, onClose, title, clusterKey }: Ficti
                     </motion.div>
                   )}
                 </div>
+              ) : (
+                /* Fallback when no details available - just show vote prompt */
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="text-center py-4"
+                >
+                  <p className="text-muted-foreground text-sm mb-2">
+                    This is a beloved favorite in our constellation.
+                  </p>
+                </motion.div>
+              )}
+
+              {/* Vote button */}
+              {!loading && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 }}
+                  className="mt-6 pt-4 border-t border-border"
+                >
+                  {hasVoted ? (
+                    <div className="flex items-center justify-center gap-2 text-accent">
+                      <Heart className="h-5 w-5 fill-current" />
+                      <span className="text-sm font-medium">Thanks for your vote!</span>
+                    </div>
+                  ) : (
+                    <Button
+                      onClick={handleVote}
+                      disabled={isVoting}
+                      className="w-full gap-2"
+                      variant="outline"
+                    >
+                      <Heart className={`h-4 w-4 ${isVoting ? 'animate-pulse' : ''}`} />
+                      {isVoting ? "Adding your vote..." : "I love this book too!"}
+                    </Button>
+                  )}
+                </motion.div>
               )}
             </div>
           </motion.div>
