@@ -42,8 +42,8 @@ export function CampfireScene() {
         }}
       />
 
-      {/* Ambient fire glow - large soft glow behind everything */}
-      <div className="absolute left-1/2 bottom-0 -translate-x-1/2 z-20 pointer-events-none">
+      {/* Ambient fire glow - behind campfire GIF */}
+      <div className="absolute left-1/2 bottom-0 -translate-x-1/2 z-5 pointer-events-none">
         {/* Outer warm glow */}
         <motion.div
           className="absolute left-1/2 bottom-0 -translate-x-1/2 w-64 h-40 rounded-full"
@@ -82,7 +82,7 @@ export function CampfireScene() {
       </div>
 
       {/* Campfire container - centered, above glow */}
-      <div className="absolute left-1/2 bottom-0 -translate-x-1/2 z-30">
+      <div className="absolute left-1/2 bottom-0 -translate-x-1/2 z-20">
         {/* Smoke particles - rise above fire */}
         <div className="absolute left-1/2 -translate-x-1/2 bottom-16 z-40">
           <SmokeParticle delay={0} x={-8} />
