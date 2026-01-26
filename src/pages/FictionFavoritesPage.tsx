@@ -270,7 +270,7 @@ export default function FictionFavoritesPage() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <Navigation />
+      <Navigation variant="dark" />
       
       {/* DESKTOP LAYOUT - centered experience */}
       <main className="hidden lg:flex flex-1 relative overflow-hidden">

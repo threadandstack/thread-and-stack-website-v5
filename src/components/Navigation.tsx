@@ -9,9 +9,15 @@ import {
 } from "@/components/ui/dropdown-menu";
 import GreyStacked from "@/assets/logos/Grey_TS_Stacked.svg";
 import IndigoStacked from "@/assets/logos/Indigo_TS_Stacked.svg";
+import WhiteStacked from "@/assets/logos/White_TS_Stacked.svg";
 import { trackNavClick, trackCtaClick } from "@/hooks/useAnalytics";
 
-export const Navigation = () => {
+interface NavigationProps {
+  variant?: "default" | "dark";
+}
+
+export const Navigation = ({ variant = "default" }: NavigationProps) => {
+  const isDark = variant === "dark";
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLogoHovered, setIsLogoHovered] = useState(false);
@@ -44,7 +50,7 @@ export const Navigation = () => {
             onMouseLeave={() => setIsLogoHovered(false)}
           >
             <img 
-              src={GreyStacked}
+              src={isDark ? WhiteStacked : GreyStacked}
               alt="Thread & Stack" 
               className="h-12 md:h-14 w-auto transition-opacity duration-500 ease-in-out"
               style={{ opacity: isLogoHovered ? 0 : 1 }}
@@ -60,7 +66,9 @@ export const Navigation = () => {
           <div className="hidden md:flex items-center gap-8">
             <a 
               href="/about" 
-              className="text-base font-sans text-foreground/80 hover:text-foreground transition-colors not-italic"
+              className={`text-base font-sans transition-colors not-italic ${
+                isDark ? "text-white/90 hover:text-white" : "text-foreground/80 hover:text-foreground"
+              }`}
               onClick={() => trackNavClick('About', 'header')}
             >
               About
@@ -68,7 +76,9 @@ export const Navigation = () => {
 
             <a 
               href="/how-i-work" 
-              className="text-base font-sans text-foreground/80 hover:text-foreground transition-colors not-italic"
+              className={`text-base font-sans transition-colors not-italic ${
+                isDark ? "text-white/90 hover:text-white" : "text-foreground/80 hover:text-foreground"
+              }`}
               onClick={() => trackNavClick('How I Work', 'header')}
             >
               How I Work
@@ -76,7 +86,9 @@ export const Navigation = () => {
             
             {/* Services Dropdown */}
             <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center gap-1 text-base font-sans text-foreground/80 hover:text-foreground transition-colors not-italic">
+              <DropdownMenuTrigger className={`flex items-center gap-1 text-base font-sans transition-colors not-italic ${
+                isDark ? "text-white/90 hover:text-white" : "text-foreground/80 hover:text-foreground"
+              }`}>
                 Services
                 <ChevronDown className="w-4 h-4" />
               </DropdownMenuTrigger>
@@ -93,7 +105,9 @@ export const Navigation = () => {
 
             <a 
               href="/blog" 
-              className="text-base font-serif-pro text-foreground/80 hover:text-foreground transition-colors italic"
+              className={`text-base font-serif-pro transition-colors italic ${
+                isDark ? "text-white/90 hover:text-white" : "text-foreground/80 hover:text-foreground"
+              }`}
               onClick={() => trackNavClick('Stacked Behaviours', 'header')}
             >
               Stacked Behaviours
@@ -113,7 +127,7 @@ export const Navigation = () => {
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden"
+            className={`md:hidden ${isDark ? "text-white hover:bg-white/10" : ""}`}
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? <X /> : <Menu />}
