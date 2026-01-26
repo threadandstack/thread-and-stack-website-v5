@@ -38,6 +38,7 @@ interface CelebrationData {
 interface SelectedBook {
   title: string;
   clusterKey: string | null;
+  genre: string | null;
 }
 
 // Aggregate items by cluster - return ONE representative item per cluster with count
@@ -400,7 +401,8 @@ export default function FictionFavoritesPage() {
             genreColor={genreColor}
             onClick={() => setSelectedBook({ 
               title: item.answer, 
-              clusterKey: item.cluster_key 
+              clusterKey: item.cluster_key,
+              genre: item.genre
             })}
             onPositionChange={handleBookPositionChange}
           />
@@ -686,6 +688,7 @@ export default function FictionFavoritesPage() {
         onClose={() => setSelectedBook(null)}
         title={selectedBook?.title || ""}
         clusterKey={selectedBook?.clusterKey || null}
+        genreColor={selectedBook?.genre ? getGenreColor(selectedBook.genre) : undefined}
         onVoteAdded={() => {
           // Realtime subscription will handle the update automatically
         }}

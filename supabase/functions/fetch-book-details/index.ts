@@ -6,19 +6,33 @@ const corsHeaders = {
 };
 
 async function fetchBookCover(title: string, author: string | null): Promise<string | null> {
-  // Try Open Library first - more reliable image availability
+  // Build a search query that explicitly targets novels, not study guides
+  const novelSearchTerms = author 
+    ? `${title} ${author} novel fiction` 
+    : `${title} novel fiction -sparknotes -cliffsnotes -study -guide -summary -analysis`;
+  
+  // Try Open Library first - more reliable and less likely to return study guides
   try {
-    const searchQuery = author ? `${title} ${author}` : title;
-    const openLibraryUrl = `https://openlibrary.org/search.json?q=${encodeURIComponent(searchQuery)}&limit=5`;
+    const openLibraryUrl = `https://openlibrary.org/search.json?q=${encodeURIComponent(novelSearchTerms)}&limit=10`;
     
     const response = await fetch(openLibraryUrl);
     if (response.ok) {
       const data = await response.json();
       
-      // Find the first book with a cover
+      // Find the first book with a cover that's likely the actual novel
       for (const book of data.docs || []) {
+        // Skip if it looks like a study guide or summary
+        const bookTitle = (book.title || '').toLowerCase();
+        if (bookTitle.includes('sparknotes') || 
+            bookTitle.includes('cliffsnotes') || 
+            bookTitle.includes('study guide') ||
+            bookTitle.includes('literature guide') ||
+            bookTitle.includes('summary') ||
+            bookTitle.includes('analysis')) {
+          continue;
+        }
+        
         if (book?.cover_i) {
-          // Use larger image size (L instead of M)
           return `https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`;
         }
       }
@@ -27,24 +41,37 @@ async function fetchBookCover(title: string, author: string | null): Promise<str
     console.error("Failed to fetch cover from Open Library:", e);
   }
 
-  // Fallback to Google Books API
+  // Fallback to Google Books API with filtered query
   try {
-    const searchQuery = author ? `${title}+inauthor:${author}` : title;
-    const googleBooksUrl = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(searchQuery)}&maxResults=5`;
+    const googleQuery = author 
+      ? `intitle:${title}+inauthor:${author}` 
+      : `intitle:${title}+-sparknotes+-cliffsnotes+-study+-guide`;
+    const googleBooksUrl = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(googleQuery)}&maxResults=10`;
     
     const response = await fetch(googleBooksUrl);
     if (response.ok) {
       const data = await response.json();
       
-      // Find the best match with a thumbnail
       for (const item of data.items || []) {
+        const bookTitle = (item.volumeInfo?.title || '').toLowerCase();
+        const publisher = (item.volumeInfo?.publisher || '').toLowerCase();
+        
+        // Skip study guides and summaries
+        if (bookTitle.includes('sparknotes') || 
+            bookTitle.includes('cliffsnotes') || 
+            bookTitle.includes('study guide') ||
+            bookTitle.includes('literature guide') ||
+            publisher.includes('sparknotes') ||
+            publisher.includes('cliffsnotes')) {
+          continue;
+        }
+        
         const imageLinks = item.volumeInfo?.imageLinks;
         if (imageLinks) {
-          // Prefer larger images, use HTTPS
           const coverUrl = (imageLinks.large || imageLinks.medium || imageLinks.thumbnail || imageLinks.smallThumbnail || "")
             .replace("http://", "https://")
             .replace("&edge=curl", "")
-            .replace("zoom=1", "zoom=3"); // Request larger zoom
+            .replace("zoom=1", "zoom=3");
           
           if (coverUrl) {
             return coverUrl;

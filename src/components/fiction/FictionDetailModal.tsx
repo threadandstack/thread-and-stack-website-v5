@@ -13,8 +13,38 @@ interface FictionDetailModalProps {
   onClose: () => void;
   title: string;
   clusterKey: string | null;
+  genreColor?: string; // HSL color from constellation for styling
   onVoteAdded?: () => void; // Callback to refresh the list
 }
+
+// Parse HSL color and generate celestial styling
+const getModalColors = (genreColor?: string) => {
+  if (!genreColor) {
+    return {
+      border: `hsl(234, 70%, 70%)`,
+      glow: `0 0 20px hsla(234, 70%, 70%, 0.4), 0 0 40px hsla(234, 70%, 70%, 0.2)`,
+      accent: `hsl(234, 70%, 60%)`,
+    };
+  }
+  
+  const match = genreColor.match(/hsl\((\d+),\s*(\d+)%,\s*(\d+)%\)/);
+  if (!match) {
+    return {
+      border: `hsl(234, 70%, 70%)`,
+      glow: `0 0 20px hsla(234, 70%, 70%, 0.4), 0 0 40px hsla(234, 70%, 70%, 0.2)`,
+      accent: `hsl(234, 70%, 60%)`,
+    };
+  }
+  
+  const hue = parseInt(match[1]);
+  const saturation = parseInt(match[2]);
+  
+  return {
+    border: `hsl(${hue}, ${saturation}%, 65%)`,
+    glow: `0 0 20px hsla(${hue}, ${saturation}%, 70%, 0.5), 0 0 40px hsla(${hue}, ${saturation}%, 70%, 0.25)`,
+    accent: `hsl(${hue}, ${saturation}%, 55%)`,
+  };
+};
 
 interface BookDetails {
   summary: string;
@@ -24,7 +54,8 @@ interface BookDetails {
   recommendation: string | null;
 }
 
-export function FictionDetailModal({ isOpen, onClose, title, clusterKey, onVoteAdded }: FictionDetailModalProps) {
+export function FictionDetailModal({ isOpen, onClose, title, clusterKey, genreColor, onVoteAdded }: FictionDetailModalProps) {
+  const modalColors = getModalColors(genreColor);
   const [loading, setLoading] = useState(true);
   const [details, setDetails] = useState<BookDetails | null>(null);
   const [detailsAvailable, setDetailsAvailable] = useState(true);
@@ -140,7 +171,13 @@ export function FictionDetailModal({ isOpen, onClose, title, clusterKey, onVoteA
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0, y: 20 }}
             transition={{ type: "spring", bounce: 0.3 }}
-            className="bg-background rounded-2xl max-w-lg w-full shadow-2xl border border-border relative max-h-[80vh] flex flex-col"
+            className="bg-background rounded-2xl max-w-lg w-full shadow-2xl relative max-h-[80vh] flex flex-col"
+            style={{
+              borderWidth: 2,
+              borderStyle: 'solid',
+              borderColor: modalColors.border,
+              boxShadow: modalColors.glow,
+            }}
             onClick={(e) => e.stopPropagation()}
           >
             {/* Sticky close button - always visible */}
@@ -153,10 +190,10 @@ export function FictionDetailModal({ isOpen, onClose, title, clusterKey, onVoteA
 
             {/* Scrollable content */}
             <div className="overflow-y-auto px-8 pb-8 -mt-6">
-              {/* Header with cover art */}
+              {/* Header with cover art and vote button */}
               <div className="flex gap-4 mb-6">
-                {/* Book cover */}
-                <div className="flex-shrink-0 w-24 md:w-28">
+                {/* Book cover with vote button below */}
+                <div className="flex-shrink-0 w-24 md:w-28 flex flex-col gap-3">
                   {loading ? (
                     <div className="w-full aspect-[2/3] rounded-lg flex items-center justify-center p-4">
                       <BookShuffleLoader />
@@ -171,13 +208,46 @@ export function FictionDetailModal({ isOpen, onClose, title, clusterKey, onVoteA
                       />
                     </AspectRatio>
                   ) : (
-                    <div className="w-full aspect-[2/3] bg-accent/10 rounded-lg flex items-center justify-center">
-                      <BookOpen className="h-10 w-10 text-accent" />
+                    <div 
+                      className="w-full aspect-[2/3] rounded-lg flex items-center justify-center"
+                      style={{ 
+                        backgroundColor: `${modalColors.border}20`,
+                        borderWidth: 1,
+                        borderStyle: 'dashed',
+                        borderColor: modalColors.border,
+                      }}
+                    >
+                      <BookOpen className="h-10 w-10" style={{ color: modalColors.accent }} />
                     </div>
+                  )}
+                  
+                  {/* Vote button next to cover */}
+                  {!loading && (
+                    hasVoted ? (
+                      <div className="flex items-center justify-center gap-1 py-2" style={{ color: modalColors.accent }}>
+                        <Heart className="h-4 w-4 fill-current" />
+                        <span className="text-xs font-medium">Voted!</span>
+                      </div>
+                    ) : (
+                      <Button
+                        onClick={handleVote}
+                        disabled={isVoting}
+                        size="sm"
+                        variant="outline"
+                        className="gap-1 text-xs"
+                        style={{
+                          borderColor: modalColors.border,
+                          color: modalColors.accent,
+                        }}
+                      >
+                        <Heart className={`h-3 w-3 ${isVoting ? 'animate-pulse' : ''}`} />
+                        {isVoting ? "..." : "Love it!"}
+                      </Button>
+                    )
                   )}
                 </div>
 
-                {/* Title and author */}
+                {/* Title, author, and count */}
                 <div className="flex-1 min-w-0">
                   <h2 className="text-xl font-serif italic text-foreground leading-tight">
                     {title}
@@ -263,33 +333,6 @@ export function FictionDetailModal({ isOpen, onClose, title, clusterKey, onVoteA
                   <p className="text-muted-foreground text-sm mb-2">
                     This is a beloved favorite in our constellation.
                   </p>
-                </motion.div>
-              )}
-
-              {/* Vote button */}
-              {!loading && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4 }}
-                  className="mt-6 pt-4 border-t border-border"
-                >
-                  {hasVoted ? (
-                    <div className="flex items-center justify-center gap-2 text-accent">
-                      <Heart className="h-5 w-5 fill-current" />
-                      <span className="text-sm font-medium">Thanks for your vote!</span>
-                    </div>
-                  ) : (
-                    <Button
-                      onClick={handleVote}
-                      disabled={isVoting}
-                      className="w-full gap-2"
-                      variant="outline"
-                    >
-                      <Heart className={`h-4 w-4 ${isVoting ? 'animate-pulse' : ''}`} />
-                      {isVoting ? "Adding your vote..." : "I love this book too!"}
-                    </Button>
-                  )}
                 </motion.div>
               )}
             </div>
