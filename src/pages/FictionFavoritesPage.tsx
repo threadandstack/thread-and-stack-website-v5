@@ -264,9 +264,9 @@ export default function FictionFavoritesPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-center px-6 pointer-events-auto"
+            className="text-center px-4 md:px-6 pointer-events-auto w-full max-w-[90vw] md:max-w-2xl"
           >
-            <div className="bg-background/95 backdrop-blur-sm rounded-2xl p-8 md:p-12 max-w-2xl border border-primary/20 shadow-lg">
+            <div className="bg-background/95 backdrop-blur-sm rounded-2xl p-6 md:p-12 border border-primary/20 shadow-lg">
               <img 
                 src={fictionHeroImage} 
                 alt="Open book with letters floating around it" 
