@@ -266,9 +266,11 @@ export function useGenreClusteredPositions(items: CloudItem[]): GenreClusterResu
       const zone = zones[zoneIdx];
       
       // Store anchor point for constellation label (above the cluster)
+      // Minimum Y of 12% ensures labels don't overlap with navigation
+      const minAnchorY = isMobile ? 10 : 12;
       anchors.set(genre, {
         x: zone.xCenter,
-        y: Math.max(5, zone.yCenter - zone.radius - (isMobile ? 6 : 10))
+        y: Math.max(minAnchorY, zone.yCenter - zone.radius - (isMobile ? 6 : 10))
       });
       
       const positioned = positionItemsInZone(groupItems, zone);
@@ -287,9 +289,11 @@ export function useGenreClusteredPositions(items: CloudItem[]): GenreClusterResu
       const avgX = genreItems.reduce((sum, item) => sum + item.position.x, 0) / genreItems.length;
       const minY = Math.min(...genreItems.map(item => item.position.y - item.size.h / 2));
       
+      // Minimum Y of 12% ensures labels don't overlap with navigation
+      const minAnchorY = isMobile ? 10 : 12;
       finalAnchors.set(genre, {
         x: avgX,
-        y: Math.max(3, minY - (isMobile ? 8 : 12))
+        y: Math.max(minAnchorY, minY - (isMobile ? 8 : 12))
       });
     });
 
