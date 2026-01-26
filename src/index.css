@@ -6,22 +6,37 @@
 All colors MUST be HSL.
 */
 
-/* Floating animation keyframes for fiction cloud items */
+/* Floating animation keyframes for fiction cloud items - uses relative positioning to avoid click jumps */
 @keyframes float-0 {
-  0%, 100% { transform: translate(-50%, -50%) translateY(0); }
-  50% { transform: translate(-50%, -50%) translateY(-4px); }
+  0%, 100% { margin-top: 0; }
+  50% { margin-top: -4px; }
 }
 
 @keyframes float-1 {
-  0%, 100% { transform: translate(-50%, -50%) translateY(0); }
-  33% { transform: translate(-50%, -50%) translateY(-3px); }
-  66% { transform: translate(-50%, -50%) translateY(2px); }
+  0%, 100% { margin-top: 0; }
+  33% { margin-top: -3px; }
+  66% { margin-top: 2px; }
 }
 
 @keyframes float-2 {
-  0%, 100% { transform: translate(-50%, -50%) translateY(0); }
-  25% { transform: translate(-50%, -50%) translateY(-2px); }
-  75% { transform: translate(-50%, -50%) translateY(3px); }
+  0%, 100% { margin-top: 0; }
+  25% { margin-top: -2px; }
+  75% { margin-top: 3px; }
+}
+
+/* Animation classes for floating effect */
+.animate-float-0 {
+  animation: float-0 4s ease-in-out infinite;
+}
+
+.animate-float-1 {
+  animation: float-1 5s ease-in-out infinite;
+  animation-delay: -1s;
+}
+
+.animate-float-2 {
+  animation: float-2 6s ease-in-out infinite;
+  animation-delay: -2s;
 }
 
 @layer base {
