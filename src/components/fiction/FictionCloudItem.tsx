@@ -23,27 +23,44 @@ const getFloatAnimation = (id: string) => {
 };
 
 // Calculate color based on vertical position for contrast against gradient
-// Top of page = darker gradient, so lighter text
-// Bottom of page = lighter gradient, so darker text
+// Top of page = darker gradient, so need high contrast (white bg or very light)
+// Bottom of page = lighter gradient, so use navy bg with white text
 const getPositionBasedColors = (yPercent: number) => {
   // Normalize y to 0-1 range (0 = top, 1 = bottom)
   const normalized = Math.max(0, Math.min(100, yPercent)) / 100;
   
-  // Background: lighter at top (more visible against dark), darker at bottom
-  const bgLightness = 95 - (normalized * 40); // 95% at top, 55% at bottom
-  const bgAlpha = 0.85 + (normalized * 0.1); // slightly more opaque at bottom
+  // Top items (0-40%): Light/white backgrounds for contrast against dark sky
+  // Bottom items (60-100%): Navy backgrounds with light text
   
-  // Text: lighter at top, darker at bottom
-  const textLightness = 100 - (normalized * 80); // 100% (white) at top, 20% (dark) at bottom
-  
-  // Border: adapt similarly
-  const borderAlpha = 0.3 + (normalized * 0.3);
-  
-  return {
-    background: `hsla(234, 30%, ${bgLightness}%, ${bgAlpha})`,
-    text: `hsl(234, 20%, ${textLightness}%)`,
-    border: `hsla(234, 50%, ${50 + (1 - normalized) * 30}%, ${borderAlpha})`,
-  };
+  if (normalized < 0.35) {
+    // Top zone: white/very light backgrounds, dark text
+    return {
+      background: `hsla(0, 0%, 100%, 0.95)`,
+      text: `hsl(234, 50%, 20%)`,
+      border: `hsla(234, 50%, 70%, 0.5)`,
+    };
+  } else if (normalized < 0.55) {
+    // Middle-upper zone: slightly tinted
+    return {
+      background: `hsla(234, 40%, 92%, 0.92)`,
+      text: `hsl(234, 50%, 25%)`,
+      border: `hsla(234, 50%, 60%, 0.4)`,
+    };
+  } else if (normalized < 0.75) {
+    // Middle-lower zone: transitional navy-ish
+    return {
+      background: `hsla(234, 50%, 35%, 0.9)`,
+      text: `hsl(0, 0%, 95%)`,
+      border: `hsla(234, 40%, 50%, 0.5)`,
+    };
+  } else {
+    // Bottom zone: deep navy with white text
+    return {
+      background: `hsla(234, 60%, 22%, 0.95)`,
+      text: `hsl(0, 0%, 98%)`,
+      border: `hsla(234, 50%, 40%, 0.6)`,
+    };
+  }
 };
 
 export function FictionCloudItem({

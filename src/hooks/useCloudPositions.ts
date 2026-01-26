@@ -13,12 +13,14 @@ interface PositionedItem {
 }
 
 // Approximate item dimensions in percentage of viewport
-const ITEM_WIDTH = 12; // ~12% of viewport width
-const ITEM_HEIGHT = 4; // ~4% of viewport height
-const MIN_SPACING = 1.5; // Minimum spacing between items
+const ITEM_WIDTH_DESKTOP = 12;
+const ITEM_HEIGHT_DESKTOP = 4;
+const ITEM_WIDTH_MOBILE = 28; // Wider on mobile (items take more relative space)
+const ITEM_HEIGHT_MOBILE = 5;
+const MIN_SPACING = 1.5;
 
-// Edge zones that avoid center CTA and navigation
-const EDGE_ZONES = [
+// Desktop edge zones (avoid center CTA and navigation)
+const DESKTOP_ZONES = [
   // Top corners (below nav)
   { xMin: 2, xMax: 18, yMin: 14, yMax: 28 },
   { xMin: 82, xMax: 98, yMin: 14, yMax: 28 },
@@ -36,6 +38,22 @@ const EDGE_ZONES = [
   { xMin: 60, xMax: 75, yMin: 82, yMax: 92 },
 ];
 
+// Mobile zones: Stack above and below the central CTA
+const MOBILE_ZONES = [
+  // Top zone (above CTA, below nav)
+  { xMin: 5, xMax: 70, yMin: 10, yMax: 18 },
+  { xMin: 30, xMax: 95, yMin: 18, yMax: 26 },
+  // Bottom zone (below CTA)
+  { xMin: 5, xMax: 70, yMin: 78, yMax: 86 },
+  { xMin: 30, xMax: 95, yMin: 86, yMax: 94 },
+];
+
+const getIsMobile = () => typeof window !== 'undefined' && window.innerWidth < 768;
+
+const getEdgeZones = () => getIsMobile() ? MOBILE_ZONES : DESKTOP_ZONES;
+const getItemWidth = () => getIsMobile() ? ITEM_WIDTH_MOBILE : ITEM_WIDTH_DESKTOP;
+const getItemHeight = () => getIsMobile() ? ITEM_HEIGHT_MOBILE : ITEM_HEIGHT_DESKTOP;
+
 // Generate initial position for a cluster
 const getInitialPosition = (clusterKey: string, index: number): Position => {
   const hash = clusterKey.split('').reduce((a, b) => {
@@ -43,11 +61,15 @@ const getInitialPosition = (clusterKey: string, index: number): Position => {
     return a & a;
   }, 0);
   
-  const zoneIndex = Math.abs(hash) % EDGE_ZONES.length;
-  const zone = EDGE_ZONES[zoneIndex];
+  const zones = getEdgeZones();
+  const itemWidth = getItemWidth();
+  const itemHeight = getItemHeight();
   
-  const xRange = zone.xMax - zone.xMin - ITEM_WIDTH;
-  const yRange = zone.yMax - zone.yMin - ITEM_HEIGHT;
+  const zoneIndex = Math.abs(hash) % zones.length;
+  const zone = zones[zoneIndex];
+  
+  const xRange = zone.xMax - zone.xMin - itemWidth;
+  const yRange = zone.yMax - zone.yMin - itemHeight;
   const offsetX = (Math.abs(hash * (index + 1)) % 100) / 100 * Math.max(xRange, 0);
   const offsetY = (Math.abs(hash * (index + 2)) % 100) / 100 * Math.max(yRange, 0);
   
@@ -59,8 +81,10 @@ const getInitialPosition = (clusterKey: string, index: number): Position => {
 
 // Check if two items overlap
 const checkOverlap = (a: Position, b: Position): boolean => {
-  const overlapX = Math.abs(a.x - b.x) < (ITEM_WIDTH + MIN_SPACING);
-  const overlapY = Math.abs(a.y - b.y) < (ITEM_HEIGHT + MIN_SPACING);
+  const itemWidth = getItemWidth();
+  const itemHeight = getItemHeight();
+  const overlapX = Math.abs(a.x - b.x) < (itemWidth + MIN_SPACING);
+  const overlapY = Math.abs(a.y - b.y) < (itemHeight + MIN_SPACING);
   return overlapX && overlapY;
 };
 
@@ -71,11 +95,15 @@ const getDistance = (a: Position, b: Position): number => {
 
 // Clamp position to valid zones
 const clampToZones = (pos: Position): Position => {
+  const zones = getEdgeZones();
+  const itemWidth = getItemWidth();
+  const itemHeight = getItemHeight();
+  
   // Find the nearest zone
-  let bestZone = EDGE_ZONES[0];
+  let bestZone = zones[0];
   let bestDist = Infinity;
   
-  for (const zone of EDGE_ZONES) {
+  for (const zone of zones) {
     const centerX = (zone.xMin + zone.xMax) / 2;
     const centerY = (zone.yMin + zone.yMax) / 2;
     const dist = getDistance(pos, { x: centerX, y: centerY });
@@ -86,8 +114,8 @@ const clampToZones = (pos: Position): Position => {
   }
   
   return {
-    x: Math.max(bestZone.xMin, Math.min(bestZone.xMax - ITEM_WIDTH, pos.x)),
-    y: Math.max(bestZone.yMin, Math.min(bestZone.yMax - ITEM_HEIGHT, pos.y))
+    x: Math.max(bestZone.xMin, Math.min(bestZone.xMax - itemWidth, pos.x)),
+    y: Math.max(bestZone.yMin, Math.min(bestZone.yMax - itemHeight, pos.y))
   };
 };
 
@@ -148,6 +176,21 @@ interface CloudItem {
 
 export function useCloudPositions(items: CloudItem[]): Map<string, Position> {
   const [positions, setPositions] = useState<Map<string, Position>>(new Map());
+  const [isMobile, setIsMobile] = useState(getIsMobile());
+
+  // Listen for resize to recalculate on orientation/size change
+  useEffect(() => {
+    const handleResize = () => {
+      const nowMobile = getIsMobile();
+      if (nowMobile !== isMobile) {
+        setIsMobile(nowMobile);
+        setPositions(new Map()); // Force recalculation
+      }
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [isMobile]);
 
   // Group items by cluster
   const clusteredItems = useMemo(() => {
@@ -189,7 +232,7 @@ export function useCloudPositions(items: CloudItem[]): Map<string, Position> {
     });
     
     setPositions(newPositions);
-  }, [clusteredItems]);
+  }, [clusteredItems, isMobile]);
 
   return positions;
 }
