@@ -6,7 +6,28 @@ const corsHeaders = {
 };
 
 async function fetchBookCover(title: string, author: string | null): Promise<string | null> {
-  // Try Google Books API first (better coverage and quality)
+  // Try Open Library first - more reliable image availability
+  try {
+    const searchQuery = author ? `${title} ${author}` : title;
+    const openLibraryUrl = `https://openlibrary.org/search.json?q=${encodeURIComponent(searchQuery)}&limit=5`;
+    
+    const response = await fetch(openLibraryUrl);
+    if (response.ok) {
+      const data = await response.json();
+      
+      // Find the first book with a cover
+      for (const book of data.docs || []) {
+        if (book?.cover_i) {
+          // Use larger image size (L instead of M)
+          return `https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`;
+        }
+      }
+    }
+  } catch (e) {
+    console.error("Failed to fetch cover from Open Library:", e);
+  }
+
+  // Fallback to Google Books API
   try {
     const searchQuery = author ? `${title}+inauthor:${author}` : title;
     const googleBooksUrl = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(searchQuery)}&maxResults=5`;
@@ -15,15 +36,15 @@ async function fetchBookCover(title: string, author: string | null): Promise<str
     if (response.ok) {
       const data = await response.json();
       
-      // Find the best match - prefer items with thumbnail and matching title
+      // Find the best match with a thumbnail
       for (const item of data.items || []) {
         const imageLinks = item.volumeInfo?.imageLinks;
         if (imageLinks) {
           // Prefer larger images, use HTTPS
-          const coverUrl = (imageLinks.thumbnail || imageLinks.smallThumbnail || "")
+          const coverUrl = (imageLinks.large || imageLinks.medium || imageLinks.thumbnail || imageLinks.smallThumbnail || "")
             .replace("http://", "https://")
-            .replace("&edge=curl", "") // Remove curl effect
-            .replace("zoom=1", "zoom=2"); // Get larger image
+            .replace("&edge=curl", "")
+            .replace("zoom=1", "zoom=3"); // Request larger zoom
           
           if (coverUrl) {
             return coverUrl;
@@ -33,24 +54,6 @@ async function fetchBookCover(title: string, author: string | null): Promise<str
     }
   } catch (e) {
     console.error("Failed to fetch cover from Google Books:", e);
-  }
-
-  // Fallback to Open Library
-  try {
-    const searchQuery = author ? `${title} ${author}` : title;
-    const openLibraryUrl = `https://openlibrary.org/search.json?q=${encodeURIComponent(searchQuery)}&limit=1`;
-    
-    const response = await fetch(openLibraryUrl);
-    if (response.ok) {
-      const data = await response.json();
-      const book = data.docs?.[0];
-      
-      if (book?.cover_i) {
-        return `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`;
-      }
-    }
-  } catch (e) {
-    console.error("Failed to fetch cover from Open Library:", e);
   }
   
   return null;
