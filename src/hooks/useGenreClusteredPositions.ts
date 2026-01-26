@@ -76,25 +76,26 @@ const GENRE_ZONES_DESKTOP: { xCenter: number; yCenter: number; radius: number }[
 ];
 
 // Mobile/Tablet zones are generated dynamically based on header height
-// Zones are spread horizontally in rows to avoid vertical stacking conflicts
+// Compact vertical spacing - constellations should be close together, not spread across 200vh
 const generateMobileZones = (startYPercent: number): { xCenter: number; yCenter: number; radius: number }[] => {
-  const rowGap = 18; // Larger percentage gap between rows for clarity
+  const rowGap = 14; // Tighter gap between constellation rows
+  const safeMarginX = 18; // Safe margin from edges to prevent clipping
   return [
-    // Row 1 - first visible row below input (alternating left/right)
-    { xCenter: 18, yCenter: startYPercent, radius: 8 },
-    { xCenter: 82, yCenter: startYPercent + 3, radius: 8 },
-    // Row 2 - offset from row 1
-    { xCenter: 75, yCenter: startYPercent + rowGap, radius: 8 },
-    { xCenter: 25, yCenter: startYPercent + rowGap + 3, radius: 8 },
+    // Row 1 - first visible row below input (alternating left/right with safe margins)
+    { xCenter: safeMarginX + 5, yCenter: startYPercent, radius: 6 },
+    { xCenter: 100 - safeMarginX - 5, yCenter: startYPercent + 5, radius: 6 },
+    // Row 2 - staggered positions
+    { xCenter: 100 - safeMarginX - 12, yCenter: startYPercent + rowGap, radius: 6 },
+    { xCenter: safeMarginX + 12, yCenter: startYPercent + rowGap + 4, radius: 6 },
     // Row 3
-    { xCenter: 15, yCenter: startYPercent + rowGap * 2, radius: 8 },
-    { xCenter: 85, yCenter: startYPercent + rowGap * 2 + 3, radius: 8 },
+    { xCenter: safeMarginX + 8, yCenter: startYPercent + rowGap * 2, radius: 6 },
+    { xCenter: 100 - safeMarginX - 8, yCenter: startYPercent + rowGap * 2 + 3, radius: 6 },
     // Row 4
-    { xCenter: 70, yCenter: startYPercent + rowGap * 3, radius: 8 },
-    { xCenter: 30, yCenter: startYPercent + rowGap * 3 + 3, radius: 8 },
-    // Row 5 (overflow)
-    { xCenter: 20, yCenter: startYPercent + rowGap * 4, radius: 8 },
-    { xCenter: 80, yCenter: startYPercent + rowGap * 4 + 3, radius: 8 },
+    { xCenter: 50, yCenter: startYPercent + rowGap * 3, radius: 6 }, // Center for variety
+    { xCenter: safeMarginX + 15, yCenter: startYPercent + rowGap * 3 + 5, radius: 6 },
+    // Row 5 (overflow - only used if many genres)
+    { xCenter: 100 - safeMarginX - 15, yCenter: startYPercent + rowGap * 4, radius: 6 },
+    { xCenter: 50, yCenter: startYPercent + rowGap * 4 + 4, radius: 6 },
   ];
 };
 
@@ -123,12 +124,13 @@ export function useGenreClusteredPositions(
   }, [isMobile]);
 
   // Calculate mobile start position based on header height and viewport
+  // Start constellations at a reasonable position - not too far down
   const mobileStartY = useMemo(() => {
-    if (typeof window === 'undefined') return 38;
-    const vh = window.innerHeight;
-    // Convert header height to percentage of viewport, add 5% buffer
-    return Math.max(35, Math.min(50, (mobileHeaderHeightPx / vh) * 100 + 5));
-  }, [mobileHeaderHeightPx]);
+    if (typeof window === 'undefined') return 12;
+    // Start at a fixed percentage that works well below the header content
+    // The container already has pt-20 + header content, so we start items from ~10-15% of the cloud zone
+    return 12;
+  }, []);
 
   const zones = useMemo(() => 
     isMobile ? generateMobileZones(mobileStartY) : GENRE_ZONES_DESKTOP, 
@@ -203,9 +205,11 @@ export function useGenreClusteredPositions(
         y: anchor.y + Math.sin(angle) * distance
       };
       
-      // Clamp to valid screen area
-      pos.x = clamp(pos.x, size.w / 2 + 2, 100 - size.w / 2 - 2);
-      pos.y = clamp(pos.y, size.h / 2 + 2, 100 - size.h / 2 - 2);
+      // Clamp to valid screen area with safe margins to prevent edge clipping
+      const safeMarginX = isMobile ? 8 : 5; // More margin on mobile to prevent edge clipping
+      const safeMarginY = isMobile ? 6 : 4;
+      pos.x = clamp(pos.x, size.w / 2 + safeMarginX, 100 - size.w / 2 - safeMarginX);
+      pos.y = clamp(pos.y, size.h / 2 + safeMarginY, 100 - size.h / 2 - safeMarginY);
       
       positioned.push({
         id: item.id,
@@ -279,9 +283,11 @@ export function useGenreClusteredPositions(
           }
         }
         
-        // Clamp to valid areas
-        item.position.x = clamp(item.position.x, item.size.w / 2 + 2, 100 - item.size.w / 2 - 2);
-        item.position.y = clamp(item.position.y, item.size.h / 2 + 2, 100 - item.size.h / 2 - 2);
+        // Clamp to valid areas with safe margins
+        const safeMarginX = isMobile ? 8 : 5;
+        const safeMarginY = isMobile ? 6 : 4;
+        item.position.x = clamp(item.position.x, item.size.w / 2 + safeMarginX, 100 - item.size.w / 2 - safeMarginX);
+        item.position.y = clamp(item.position.y, item.size.h / 2 + safeMarginY, 100 - item.size.h / 2 - safeMarginY);
       }
       
       if (!hasCollision) break;
