@@ -94,21 +94,22 @@ interface MobileZone {
 }
 
 const generateMobileZones = (startYPercent: number, numGenres: number): MobileZone[] => {
-  // Each genre gets a fixed-height band - compact but readable
-  // The container height is calculated based on numGenres, so 100% is divided evenly
-  const bandHeight = 100 / Math.max(1, numGenres); // Equal distribution
+  // Each genre gets a fixed-height band - generous spacing to fit books
+  // Use a minimum band height to ensure books don't get cramped
+  const minBandHeight = 18; // At least 18% per genre band
+  const bandHeight = Math.max(minBandHeight, 100 / Math.max(1, numGenres));
   const zones: MobileZone[] = [];
   
   for (let i = 0; i < Math.max(12, numGenres); i++) {
     const yMin = i * bandHeight;
     const yMax = (i + 1) * bandHeight;
-    const yCenter = yMin + 8; // Anchor near top of band (8% into band)
+    const yCenter = yMin + 6; // Anchor near top of band
     
     zones.push({
       xCenter: 50,
-      yCenter: Math.min(yCenter, 95), // Never go past 95%
-      yMin: yMin + 2, // 2% padding at top
-      yMax: Math.min(yMax - 2, 96), // 2% padding at bottom, never past 96%
+      yCenter: Math.min(yCenter, 95),
+      yMin: yMin + 1,
+      yMax: Math.min(yMax - 1, 98),
       radius: 6,
     });
   }
@@ -222,18 +223,18 @@ export function useGenreClusteredPositions(
       
       if (isMobile && zoneBounds) {
         // MOBILE: Stack books vertically below anchor, one per row
-        // This prevents horizontal overlap entirely
-        const rowSpacing = size.h + 1.5; // 1% vh minimum gap between rows
-        const startY = anchor.y + anchorExclusionRadius + 4;
-        let y = startY + (idx * rowSpacing);
+        // Fixed vertical spacing regardless of text size
+        const fixedRowSpacing = 6; // 6% vh between each book
+        const startY = anchor.y + anchorExclusionRadius + 5;
+        let y = startY + (idx * fixedRowSpacing);
         
         // Center all books horizontally
         let x = 50;
         
-        // Strict clamp to zone bounds - items MUST stay in their zone
-        const minY = zoneBounds.yMin + size.h / 2 + 1;
-        const maxY = zoneBounds.yMax - size.h / 2 - 1;
-        y = clamp(y, Math.max(minY, anchor.y + anchorExclusionRadius + 1), maxY);
+        // Clamp to zone bounds - but warn if running out of space
+        const minY = anchor.y + anchorExclusionRadius + 2;
+        const maxY = zoneBounds.yMax - 3;
+        y = clamp(y, minY, maxY);
         x = clamp(x, size.w / 2 + safeMarginX, 100 - size.w / 2 - safeMarginX);
         
         positioned.push({
