@@ -75,27 +75,26 @@ const GENRE_ZONES_DESKTOP: { xCenter: number; yCenter: number; radius: number }[
   { xCenter: 82, yCenter: 65, radius: 6 },   // Inner-right lower
 ];
 
-// Mobile/Tablet zones are generated dynamically based on header height
-// Compact vertical spacing - constellations should be close together, not spread across 200vh
+// Mobile/Tablet zones - well-separated grid pattern
+// Each zone is positioned to avoid overlapping with others
 const generateMobileZones = (startYPercent: number): { xCenter: number; yCenter: number; radius: number }[] => {
-  const rowGap = 14; // Tighter gap between constellation rows
-  const safeMarginX = 18; // Safe margin from edges to prevent clipping
+  const rowGap = 22; // Generous gap between rows for books to spread
   return [
-    // Row 1 - first visible row below input (alternating left/right with safe margins)
-    { xCenter: safeMarginX + 5, yCenter: startYPercent, radius: 6 },
-    { xCenter: 100 - safeMarginX - 5, yCenter: startYPercent + 5, radius: 6 },
-    // Row 2 - staggered positions
-    { xCenter: 100 - safeMarginX - 12, yCenter: startYPercent + rowGap, radius: 6 },
-    { xCenter: safeMarginX + 12, yCenter: startYPercent + rowGap + 4, radius: 6 },
+    // Row 1 - clearly separated left/right
+    { xCenter: 28, yCenter: startYPercent, radius: 8 },
+    { xCenter: 72, yCenter: startYPercent + 8, radius: 8 },
+    // Row 2 - offset pattern
+    { xCenter: 72, yCenter: startYPercent + rowGap, radius: 8 },
+    { xCenter: 28, yCenter: startYPercent + rowGap + 8, radius: 8 },
     // Row 3
-    { xCenter: safeMarginX + 8, yCenter: startYPercent + rowGap * 2, radius: 6 },
-    { xCenter: 100 - safeMarginX - 8, yCenter: startYPercent + rowGap * 2 + 3, radius: 6 },
+    { xCenter: 50, yCenter: startYPercent + rowGap * 2, radius: 8 },
+    { xCenter: 28, yCenter: startYPercent + rowGap * 2 + 10, radius: 8 },
     // Row 4
-    { xCenter: 50, yCenter: startYPercent + rowGap * 3, radius: 6 }, // Center for variety
-    { xCenter: safeMarginX + 15, yCenter: startYPercent + rowGap * 3 + 5, radius: 6 },
-    // Row 5 (overflow - only used if many genres)
-    { xCenter: 100 - safeMarginX - 15, yCenter: startYPercent + rowGap * 4, radius: 6 },
-    { xCenter: 50, yCenter: startYPercent + rowGap * 4 + 4, radius: 6 },
+    { xCenter: 72, yCenter: startYPercent + rowGap * 3, radius: 8 },
+    { xCenter: 50, yCenter: startYPercent + rowGap * 3 + 8, radius: 8 },
+    // Row 5 (overflow)
+    { xCenter: 28, yCenter: startYPercent + rowGap * 4, radius: 8 },
+    { xCenter: 72, yCenter: startYPercent + rowGap * 4 + 6, radius: 8 },
   ];
 };
 
@@ -136,7 +135,7 @@ export function useGenreClusteredPositions(
     isMobile ? generateMobileZones(mobileStartY) : GENRE_ZONES_DESKTOP, 
     [isMobile, mobileStartY]
   );
-  const minSpacing = isMobile ? 3 : 2;
+  const minSpacing = isMobile ? 4 : 2.5; // More spacing on mobile
 
   // Group items by genre
   const genreGroups = useMemo(() => {
@@ -195,14 +194,14 @@ export function useGenreClusteredPositions(
       const displayText = item.enriched_answer || item.answer;
       const size = estimateItemSize(displayText, isMobile);
       
-      // Tight spiral placement around anchor - books orbit close to their constellation
+      // Spread books in expanding rings around anchor
       const angle = (idx * 137.5 * Math.PI) / 180; // Golden angle for even distribution
-      // Start closer to anchor, grow slowly - keeps cluster tight
-      const distance = Math.min(maxRadius, 2 + idx * 1.5);
+      // More gradual expansion on mobile to use space better
+      const distance = Math.min(maxRadius, isMobile ? 4 + idx * 2.5 : 2 + idx * 1.5);
       
       let pos: Position = {
         x: anchor.x + Math.cos(angle) * distance,
-        y: anchor.y + Math.sin(angle) * distance
+        y: anchor.y + Math.sin(angle) * distance * 0.7 // Compress vertically
       };
       
       // Clamp to valid screen area with safe margins to prevent edge clipping
@@ -233,8 +232,8 @@ export function useGenreClusteredPositions(
       position: { ...item.position } 
     }));
     
-    const iterations = 30;
-    const pushStrength = isMobile ? 3 : 2.5;
+    const iterations = 50; // More iterations for cleaner layout
+    const pushStrength = isMobile ? 5 : 3; // Stronger push on mobile
     const anchorPull = 0.15; // Pull items back toward their anchor each iteration
     
     for (let iter = 0; iter < iterations; iter++) {
@@ -329,8 +328,8 @@ export function useGenreClusteredPositions(
     // STEP 2: Position books tightly around their genre's anchor
     // Books appear below/around the constellation label
     let allPositioned: PositionedItem[] = [];
-    const bookClusterRadius = isMobile ? 10 : 12; // How far books can spread from anchor
-    const bookOffsetY = isMobile ? 6 : 8; // Books start below the label
+    const bookClusterRadius = isMobile ? 14 : 12; // Larger radius on mobile
+    const bookOffsetY = isMobile ? 8 : 8; // Books start below the label
     
     Object.entries(genreGroups).forEach(([genre, groupItems]) => {
       const anchor = anchors.get(genre);
@@ -347,7 +346,7 @@ export function useGenreClusteredPositions(
     });
 
     // STEP 3: Resolve collisions while keeping books near their anchors
-    const maxDrift = isMobile ? 15 : 18; // Max distance books can drift from anchor
+    const maxDrift = isMobile ? 20 : 18; // Allow more drift on mobile for spacing
     const resolved = resolveCollisions(allPositioned, maxDrift);
 
     const newPositions = new Map<string, Position>();
