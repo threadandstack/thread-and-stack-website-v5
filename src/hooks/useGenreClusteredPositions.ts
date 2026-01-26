@@ -365,50 +365,31 @@ export function useGenreClusteredPositions(
       const rand3 = ((itemHash * 17) % 1000) / 1000; // Another seed
       
       if (isMobile && zoneBounds) {
-        // MOBILE: CASCADING DIAGONAL ZIG-ZAG PATTERN
-        // Books cascade down from the anchor, alternating left-right
+        // MOBILE: SIMPLE ORGANIC SCATTER
+        // Books scatter naturally around anchor - minimal structure
         const zoneHeight = zoneBounds.yMax - zoneBounds.yMin;
-        const itemCount = zoneItems.length;
         
-        // Start position: slightly above anchor for first few items
-        const startY = anchor.y - zoneHeight * 0.35;
+        // Scatter radius based on zone size and item count
+        const scatterRadiusX = 32 + rand1 * 12; // 32-44% horizontal spread
+        const scatterRadiusY = zoneHeight * 0.38 + rand2 * (zoneHeight * 0.1); // Use ~40-48% of zone height
         
-        // Calculate vertical step - compress if many items, expand if few
-        const adaptiveVerticalStep = Math.max(
-          cascadeConfig.verticalStepBase * 0.6,
-          Math.min(cascadeConfig.verticalStepBase * 1.4, zoneHeight / (itemCount + 1))
-        );
+        // Random angle for each item (full 360°)
+        const angle = rand1 * Math.PI * 2;
         
-        // Base Y position: cascade downward
-        let y = startY + idx * adaptiveVerticalStep;
-        // Add vertical jitter for organic feel
-        y += (rand1 - 0.5) * cascadeConfig.verticalJitter * 2;
+        // Random distance from center (with slight bias toward middle)
+        const distanceFactor = 0.3 + rand2 * 0.7; // 30-100% of radius
         
-        // ZIG-ZAG horizontal pattern
-        // Odd indices go right, even indices go left (relative to center)
-        const zigZagDirection = idx % 2 === 0 ? -1 : 1;
+        // Calculate position
+        let x = anchor.x + Math.cos(angle) * scatterRadiusX * distanceFactor;
+        let y = anchor.y + Math.sin(angle) * scatterRadiusY * distanceFactor;
         
-        // Base horizontal offset with variation
-        const baseOffset = cascadeConfig.horizontalAmplitude;
-        const jitterOffset = (rand2 - 0.5) * cascadeConfig.horizontalJitter * 2;
+        // Add extra jitter for uniqueness
+        x += (rand3 - 0.5) * 10;
+        y += (rand1 * rand2 - 0.25) * 6;
         
-        // Additional progressive offset - items further down spread more
-        const progressiveSpread = (idx / Math.max(1, itemCount - 1)) * 5;
-        
-        let x = anchor.x + zigZagDirection * (baseOffset + jitterOffset + progressiveSpread * (rand3 - 0.5));
-        
-        // Additional X variation based on row "grouping" - every 2-3 items cluster slightly
-        const rowGroup = Math.floor(idx / 2);
-        x += (rowGroup % 3 - 1) * 4;
-        
-        // Clamp to zone bounds
-        x = clamp(x, size.w / 2 + safeMarginX, 100 - size.w / 2 - safeMarginX);
-        y = clamp(y, zoneBounds.yMin + size.h / 2 + 0.5, zoneBounds.yMax - size.h / 2 - 0.5);
-        
-        // Calculate angle from anchor for tilt calculation
-        const dx = x - anchor.x;
-        const dy = y - anchor.y;
-        const angleFromAnchor = Math.atan2(dy, dx);
+        // Soft clamp - only prevent going off-screen
+        x = clamp(x, size.w / 2 + 2, 100 - size.w / 2 - 2);
+        y = clamp(y, zoneBounds.yMin + size.h / 2 + 1, zoneBounds.yMax - size.h / 2 - 1);
         
         positioned.push({
           id: item.id,
@@ -418,7 +399,7 @@ export function useGenreClusteredPositions(
           anchorX: anchor.x,
           anchorY: anchor.y,
           zoneBounds,
-          angleFromAnchor,
+          angleFromAnchor: angle,
           tierIndex: idx % 6,
         });
       } else {
@@ -481,15 +462,14 @@ export function useGenreClusteredPositions(
       position: { ...item.position } 
     }));
     
-    const iterations = 100;
-    const basePushStrength = isMobile ? 3 : 2;
+    // Mobile: fewer iterations, let positions "breathe" more naturally
+    // Desktop: more iterations for tighter packing
+    const iterations = isMobile ? 25 : 80;
+    const basePushStrength = isMobile ? 2 : 2;
     
-    // CRITICAL: Edge pushback should ONLY happen at TRUE viewport boundaries
-    // Within zones, items should use the FULL available space
-    // On mobile: zone bounds already handle vertical limits - no extra top/bottom push needed
-    // Only push back if item would literally go off-screen (< 2% from edge)
-    const hardEdgeMargin = 2; // Absolute minimum - only prevents going off-screen
-    const softEdgeZone = isMobile ? 6 : 5; // Very small soft zone for gentle nudging
+    // Edge pushback - minimal on mobile to preserve organic scatter
+    const hardEdgeMargin = 2;
+    const softEdgeZone = isMobile ? 0 : 5; // NO soft zone on mobile - just hard boundary
     
     // Get max cluster size for scaling
     const maxClusterSize = Math.max(1, ...Array.from(clusterSizes.values()));
