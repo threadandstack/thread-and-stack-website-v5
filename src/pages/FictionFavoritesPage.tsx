@@ -17,25 +17,39 @@ interface FictionFavorite {
   created_at: string;
 }
 
-// Generate a consistent position for each cluster
+// Generate a consistent position for each cluster - avoiding center area
 const getClusterPosition = (clusterKey: string, index: number, total: number) => {
   const hash = clusterKey.split('').reduce((a, b) => {
     a = ((a << 5) - a) + b.charCodeAt(0);
     return a & a;
   }, 0);
   
-  // Create zones based on hash
-  const zone = Math.abs(hash) % 9;
-  const zoneX = (zone % 3) * 33 + 5;
-  const zoneY = Math.floor(zone / 3) * 28 + 10;
+  // Define zones around the edges (avoiding center 30-70% area)
+  // Zones: top-left, top, top-right, left, right, bottom-left, bottom, bottom-right
+  const edgeZones = [
+    { xMin: 3, xMax: 25, yMin: 8, yMax: 30 },   // top-left
+    { xMin: 30, xMax: 70, yMin: 5, yMax: 20 },  // top
+    { xMin: 75, xMax: 97, yMin: 8, yMax: 30 },  // top-right
+    { xMin: 3, xMax: 22, yMin: 35, yMax: 65 },  // left
+    { xMin: 78, xMax: 97, yMin: 35, yMax: 65 }, // right
+    { xMin: 3, xMax: 25, yMin: 70, yMax: 92 },  // bottom-left
+    { xMin: 30, xMax: 70, yMin: 80, yMax: 95 }, // bottom
+    { xMin: 75, xMax: 97, yMin: 70, yMax: 92 }, // bottom-right
+  ];
   
-  // Add some variance within the zone
-  const offsetX = (Math.abs(hash * (index + 1)) % 25);
-  const offsetY = (Math.abs(hash * (index + 2)) % 20);
+  // Pick zone based on hash
+  const zoneIndex = Math.abs(hash) % edgeZones.length;
+  const zone = edgeZones[zoneIndex];
+  
+  // Add variance within the zone based on index
+  const xRange = zone.xMax - zone.xMin;
+  const yRange = zone.yMax - zone.yMin;
+  const offsetX = (Math.abs(hash * (index + 1)) % 100) / 100 * xRange;
+  const offsetY = (Math.abs(hash * (index + 2)) % 100) / 100 * yRange;
   
   return {
-    x: Math.min(85, Math.max(5, zoneX + offsetX)),
-    y: Math.min(80, Math.max(10, zoneY + offsetY))
+    x: zone.xMin + offsetX,
+    y: zone.yMin + offsetY
   };
 };
 
@@ -245,7 +259,7 @@ export default function FictionFavoritesPage() {
             transition={{ duration: 0.6 }}
             className="text-center px-6 pointer-events-auto"
           >
-            <div className="bg-background/80 backdrop-blur-sm rounded-2xl p-8 md:p-12 shadow-xl border border-border/50 max-w-2xl">
+            <div className="bg-background/90 backdrop-blur-sm rounded-2xl p-8 md:p-12 max-w-2xl">
               <h1 className="text-3xl md:text-5xl font-serif mb-4">
                 What's your favourite<br />
                 <span className="italic text-accent">work of fiction?</span>
