@@ -222,18 +222,19 @@ export function useGenreClusteredPositions(
       const size = estimateItemSize(displayText, isMobile);
       
       if (isMobile && zoneBounds) {
-        // MOBILE: Stack books vertically below anchor, one per row
-        // Compact spacing since pills now scale by popularity
-        const fixedRowSpacing = 5; // 5% vh between each book
-        const startY = anchor.y + anchorExclusionRadius + 4;
+        // MOBILE: Stack books vertically with horizontal stagger
+        // Each book on its own row, alternating left/center/right
+        const fixedRowSpacing = 7; // 7% vh between each book row
+        const startY = anchor.y + anchorExclusionRadius + 5;
         let y = startY + (idx * fixedRowSpacing);
         
-        // Center all books horizontally
-        let x = 50;
+        // Horizontal stagger pattern: left, center, right, repeat
+        const staggerPattern = [35, 50, 65]; // Left, center, right positions
+        let x = staggerPattern[idx % 3];
         
-        // Clamp to zone bounds - but warn if running out of space
+        // Clamp to zone bounds
         const minY = anchor.y + anchorExclusionRadius + 2;
-        const maxY = zoneBounds.yMax - 3;
+        const maxY = zoneBounds.yMax - 4;
         y = clamp(y, minY, maxY);
         x = clamp(x, size.w / 2 + safeMarginX, 100 - size.w / 2 - safeMarginX);
         
