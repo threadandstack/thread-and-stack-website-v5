@@ -51,7 +51,7 @@ const estimateItemSize = (text: string, isMobile: boolean): Size => {
   const calculatedWidth = basePadding + textLen * charWidth;
   
   // Reasonable limits but generous enough for most titles
-  const maxWidthPx = isMobile ? 200 : 280;
+  const maxWidthPx = isMobile ? 180 : 280; // Slightly narrower on mobile to help edge spacing
   const minWidthPx = isMobile ? 80 : 100;
   const widthPx = clamp(calculatedWidth, minWidthPx, maxWidthPx);
   const heightPx = isMobile ? 36 : 38;
@@ -81,26 +81,29 @@ const GENRE_ZONES_DESKTOP: { xCenter: number; yCenter: number; radius: number }[
   { xCenter: 82, yCenter: 65, radius: 6 },   // Inner-right lower
 ];
 
-// Mobile/Tablet zones - well-separated grid pattern
-// Each zone is positioned to avoid overlapping with others
+// Mobile/Tablet zones - well-separated grid pattern with stronger edge avoidance
+// Each zone is positioned to avoid overlapping with others and pushed away from edges
 const generateMobileZones = (startYPercent: number): { xCenter: number; yCenter: number; radius: number }[] => {
-  const rowGap = 22; // Generous gap between rows for books to spread
+  const rowGap = 24; // Generous gap between rows for books to spread
   return [
-    // Row 1 - clearly separated left/right
-    { xCenter: 28, yCenter: startYPercent, radius: 8 },
-    { xCenter: 72, yCenter: startYPercent + 8, radius: 8 },
+    // Row 1 - pushed further from edges (35/65 instead of 28/72)
+    { xCenter: 35, yCenter: startYPercent, radius: 10 },
+    { xCenter: 65, yCenter: startYPercent + 10, radius: 10 },
     // Row 2 - offset pattern
-    { xCenter: 72, yCenter: startYPercent + rowGap, radius: 8 },
-    { xCenter: 28, yCenter: startYPercent + rowGap + 8, radius: 8 },
-    // Row 3
-    { xCenter: 50, yCenter: startYPercent + rowGap * 2, radius: 8 },
-    { xCenter: 28, yCenter: startYPercent + rowGap * 2 + 10, radius: 8 },
+    { xCenter: 65, yCenter: startYPercent + rowGap, radius: 10 },
+    { xCenter: 35, yCenter: startYPercent + rowGap + 10, radius: 10 },
+    // Row 3 - center and left
+    { xCenter: 50, yCenter: startYPercent + rowGap * 2, radius: 10 },
+    { xCenter: 35, yCenter: startYPercent + rowGap * 2 + 12, radius: 10 },
     // Row 4
-    { xCenter: 72, yCenter: startYPercent + rowGap * 3, radius: 8 },
-    { xCenter: 50, yCenter: startYPercent + rowGap * 3 + 8, radius: 8 },
-    // Row 5 (overflow)
-    { xCenter: 28, yCenter: startYPercent + rowGap * 4, radius: 8 },
-    { xCenter: 72, yCenter: startYPercent + rowGap * 4 + 6, radius: 8 },
+    { xCenter: 65, yCenter: startYPercent + rowGap * 3, radius: 10 },
+    { xCenter: 50, yCenter: startYPercent + rowGap * 3 + 10, radius: 10 },
+    // Row 5 (overflow) - more rows for deeper scrolling
+    { xCenter: 35, yCenter: startYPercent + rowGap * 4, radius: 10 },
+    { xCenter: 65, yCenter: startYPercent + rowGap * 4 + 8, radius: 10 },
+    // Row 6 (additional overflow)
+    { xCenter: 50, yCenter: startYPercent + rowGap * 5, radius: 10 },
+    { xCenter: 35, yCenter: startYPercent + rowGap * 5 + 10, radius: 10 },
   ];
 };
 
@@ -141,7 +144,7 @@ export function useGenreClusteredPositions(
     isMobile ? generateMobileZones(mobileStartY) : GENRE_ZONES_DESKTOP, 
     [isMobile, mobileStartY]
   );
-  const minSpacing = isMobile ? 2 : 1.5; // Minimum gap between items
+  const minSpacing = isMobile ? 3 : 1.5; // Minimum gap between items - larger on mobile
 
   // Group items by genre
   const genreGroups = useMemo(() => {
@@ -196,6 +199,10 @@ export function useGenreClusteredPositions(
   ): PositionedItem[] => {
     const positioned: PositionedItem[] = [];
     
+    // Stronger edge margins on mobile to prevent cutoff
+    const safeMarginX = isMobile ? 18 : 8; // Increased from 12 to 18 for mobile
+    const safeMarginY = isMobile ? 6 : 4;
+    
     zoneItems.forEach((item, idx) => {
       const displayText = item.enriched_answer || item.answer;
       const size = estimateItemSize(displayText, isMobile);
@@ -210,9 +217,7 @@ export function useGenreClusteredPositions(
         y: anchor.y + Math.sin(angle) * distance * 0.8 // Slightly compress vertically
       };
       
-      // Safe margins for edges
-      const safeMarginX = isMobile ? 12 : 8;
-      const safeMarginY = isMobile ? 5 : 4;
+      // Clamp to safe bounds - stronger edge avoidance
       pos.x = clamp(pos.x, size.w / 2 + safeMarginX, 100 - size.w / 2 - safeMarginX);
       pos.y = clamp(pos.y, size.h / 2 + safeMarginY, 100 - size.h / 2 - safeMarginY);
       
@@ -242,15 +247,36 @@ export function useGenreClusteredPositions(
       position: { ...item.position } 
     }));
     
-    const iterations = 80; // More iterations for clean separation
-    const basePushStrength = isMobile ? 3 : 2;
-    const safeMarginX = isMobile ? 12 : 8;
-    const safeMarginY = isMobile ? 5 : 4;
+    const iterations = 100; // More iterations for thorough separation
+    const basePushStrength = isMobile ? 4 : 2; // Stronger push on mobile
+    const safeMarginX = isMobile ? 18 : 8; // Increased edge margin on mobile
+    const safeMarginY = isMobile ? 6 : 4;
+    const edgeZone = isMobile ? 25 : 20; // Zone near edge where items get pushed inward
     
     for (let iter = 0; iter < iterations; iter++) {
       let hasCollision = false;
       
-      // Resolve item-to-item collisions
+      // First pass: Push items away from edges aggressively
+      for (const item of resolved) {
+        const leftEdgeDist = item.position.x - safeMarginX;
+        const rightEdgeDist = (100 - safeMarginX) - item.position.x;
+        
+        // If too close to left edge, push right
+        if (leftEdgeDist < edgeZone && item.position.x < 50) {
+          const pushStrength = ((edgeZone - leftEdgeDist) / edgeZone) * 2;
+          item.position.x += pushStrength;
+          hasCollision = true;
+        }
+        
+        // If too close to right edge, push left
+        if (rightEdgeDist < edgeZone && item.position.x > 50) {
+          const pushStrength = ((edgeZone - rightEdgeDist) / edgeZone) * 2;
+          item.position.x -= pushStrength;
+          hasCollision = true;
+        }
+      }
+      
+      // Second pass: Resolve item-to-item collisions
       for (let i = 0; i < resolved.length; i++) {
         for (let j = i + 1; j < resolved.length; j++) {
           const a = resolved[i];
@@ -275,17 +301,17 @@ export function useGenreClusteredPositions(
             const pushY = (dy / dist) * basePushStrength * overlapFactor;
             
             // Check if pushing toward edge - if so, push the other item more
-            const aAtLeftEdge = a.position.x < 20;
-            const aAtRightEdge = a.position.x > 80;
-            const bAtLeftEdge = b.position.x < 20;
-            const bAtRightEdge = b.position.x > 80;
+            const aAtLeftEdge = a.position.x < edgeZone;
+            const aAtRightEdge = a.position.x > (100 - edgeZone);
+            const bAtLeftEdge = b.position.x < edgeZone;
+            const bAtRightEdge = b.position.x > (100 - edgeZone);
             
-            // Bias push away from edges
+            // Bias push away from edges - items near edges move less, others move more
             let aWeight = 0.5;
             let bWeight = 0.5;
             
-            if (aAtLeftEdge || aAtRightEdge) { aWeight = 0.2; bWeight = 0.8; }
-            if (bAtLeftEdge || bAtRightEdge) { aWeight = 0.8; bWeight = 0.2; }
+            if (aAtLeftEdge || aAtRightEdge) { aWeight = 0.15; bWeight = 0.85; }
+            if (bAtLeftEdge || bAtRightEdge) { aWeight = 0.85; bWeight = 0.15; }
             
             a.position.x -= pushX * aWeight;
             a.position.y -= pushY * aWeight;
@@ -295,7 +321,7 @@ export function useGenreClusteredPositions(
         }
       }
       
-      // Push items away from their anchor (exclusion zone around star/label)
+      // Third pass: Push items away from their anchor (exclusion zone around star/label)
       for (const item of resolved) {
         const anchor = item.genre ? anchors.get(item.genre) : null;
         if (anchor) {
@@ -311,7 +337,7 @@ export function useGenreClusteredPositions(
           }
         }
         
-        // Clamp to safe bounds
+        // Final clamp to safe bounds
         item.position.x = clamp(item.position.x, item.size.w / 2 + safeMarginX, 100 - item.size.w / 2 - safeMarginX);
         item.position.y = clamp(item.position.y, item.size.h / 2 + safeMarginY, 100 - item.size.h / 2 - safeMarginY);
       }

@@ -630,7 +630,7 @@ export default function FictionFavoritesPage() {
           {favorites.length > 0 && (
             <div 
               className="relative flex-1 mt-4"
-              style={{ minHeight: `${Math.max(600, aggregatedFavorites.length * 80)}px` }}
+              style={{ minHeight: `${Math.max(700, aggregatedFavorites.length * 100)}px` }}
             >
               {/* Constellation lines for mobile */}
               <ConstellationLines 
