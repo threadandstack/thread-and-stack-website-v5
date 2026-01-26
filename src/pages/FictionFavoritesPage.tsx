@@ -169,24 +169,89 @@ export default function FictionFavoritesPage() {
   const clusterKeys = Object.keys(clusteredGroups);
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen bg-background flex flex-col overflow-hidden">
       <Navigation />
       
-      <main className="flex-1 flex flex-col">
-        {/* Hero section with form */}
-        <section className="py-16 md:py-24 px-6">
-          <div className="max-w-2xl mx-auto text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              <h1 className="text-4xl md:text-5xl font-serif mb-6">
+      <main className="flex-1 relative">
+        {/* Full-page cloud container */}
+        <div className="absolute inset-0 overflow-hidden">
+          {favorites.length > 0 && (
+            <AnimatePresence>
+              {clusterKeys.map((clusterKey) => {
+                const items = clusteredGroups[clusterKey];
+                const isCluster = items.length > 1;
+                
+                return items.map((item, idx) => {
+                  const pos = getClusterPosition(clusterKey, idx, items.length);
+                  const isNew = item.id === newItemId;
+                  const displayText = item.enriched_answer || item.answer;
+                  
+                  return (
+                    <motion.div
+                      key={item.id}
+                      initial={isNew ? { 
+                        opacity: 0, 
+                        scale: 0.5,
+                        x: "50vw",
+                        y: "50vh"
+                      } : { opacity: 0, scale: 0.8 }}
+                      animate={{ 
+                        opacity: 1, 
+                        scale: 1,
+                        x: 0,
+                        y: 0
+                      }}
+                      exit={{ opacity: 0, scale: 0.8 }}
+                      transition={{ 
+                        duration: isNew ? 1.2 : 0.5,
+                        type: "spring",
+                        bounce: 0.3
+                      }}
+                      className={`
+                        absolute px-4 py-2 rounded-full
+                        ${isCluster ? 'bg-accent/10 border border-accent/20' : 'bg-muted/50 border border-border/50'}
+                        ${isNew ? 'ring-2 ring-accent ring-offset-2 ring-offset-background' : ''}
+                        shadow-sm hover:shadow-md transition-shadow cursor-default
+                        max-w-[200px] md:max-w-[280px]
+                      `}
+                      style={{
+                        left: `${pos.x}%`,
+                        top: `${pos.y}%`,
+                        transform: 'translate(-50%, -50%)',
+                        zIndex: isNew ? 50 : 10
+                      }}
+                    >
+                      <span className="text-xs md:text-sm font-medium line-clamp-2">
+                        {displayText}
+                      </span>
+                      {isCluster && idx === 0 && items.length > 1 && (
+                        <span className="absolute -top-2 -right-2 bg-accent text-accent-foreground text-xs px-2 py-0.5 rounded-full">
+                          {items.length}
+                        </span>
+                      )}
+                    </motion.div>
+                  );
+                });
+              })}
+            </AnimatePresence>
+          )}
+        </div>
+
+        {/* Centered CTA - floating above the cloud */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-30">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center px-6 pointer-events-auto"
+          >
+            <div className="bg-background/80 backdrop-blur-sm rounded-2xl p-8 md:p-12 shadow-xl border border-border/50 max-w-2xl">
+              <h1 className="text-3xl md:text-5xl font-serif mb-4">
                 What's your favourite<br />
                 <span className="italic text-accent">work of fiction?</span>
               </h1>
               
-              <p className="text-muted-foreground text-lg mb-8">
+              <p className="text-muted-foreground text-base md:text-lg mb-6">
                 Share the stories that shaped you. Watch them join the cloud of narratives we all carry with us.
               </p>
 
@@ -198,101 +263,35 @@ export default function FictionFavoritesPage() {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   disabled={isSubmitting}
-                  className="h-14 pr-14 text-lg rounded-full border-2 border-accent/20 focus:border-accent transition-colors"
+                  className="h-12 md:h-14 pr-14 text-base md:text-lg rounded-full border-2 border-accent/20 focus:border-accent transition-colors bg-background"
                 />
                 <Button
                   type="submit"
                   disabled={isSubmitting}
                   size="icon"
-                  className="absolute right-2 top-2 h-10 w-10 rounded-full bg-accent hover:bg-accent/90"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 md:h-10 md:w-10 rounded-full bg-accent hover:bg-accent/90"
                 >
                   {isSubmitting ? (
-                    <Sparkles className="h-5 w-5 animate-pulse" />
+                    <Sparkles className="h-4 w-4 md:h-5 md:w-5 animate-pulse" />
                   ) : (
-                    <Send className="h-5 w-5" />
+                    <Send className="h-4 w-4 md:h-5 md:w-5" />
                   )}
                 </Button>
               </form>
-            </motion.div>
-          </div>
-        </section>
 
-        {/* Cloud of answers */}
-        <section className="flex-1 relative min-h-[500px] md:min-h-[600px] px-6 pb-16">
-          <div className="max-w-6xl mx-auto relative h-full">
-            {favorites.length === 0 ? (
-              <div className="absolute inset-0 flex items-center justify-center">
-                <p className="text-muted-foreground text-lg italic">
+              {favorites.length === 0 && (
+                <p className="text-muted-foreground text-sm italic mt-6">
                   Be the first to share your favorite fiction...
                 </p>
-              </div>
-            ) : (
-              <div className="relative w-full h-[500px] md:h-[600px]">
-                <AnimatePresence>
-                  {clusterKeys.map((clusterKey) => {
-                    const items = clusteredGroups[clusterKey];
-                    const isCluster = items.length > 1;
-                    
-                    return items.map((item, idx) => {
-                      const pos = getClusterPosition(clusterKey, idx, items.length);
-                      const isNew = item.id === newItemId;
-                      const displayText = item.enriched_answer || item.answer;
-                      
-                      return (
-                        <motion.div
-                          key={item.id}
-                          initial={isNew ? { 
-                            opacity: 0, 
-                            scale: 0.5,
-                            y: -100,
-                            x: "50%"
-                          } : { opacity: 0, scale: 0.8 }}
-                          animate={{ 
-                            opacity: 1, 
-                            scale: 1,
-                            y: 0,
-                            x: 0
-                          }}
-                          exit={{ opacity: 0, scale: 0.8 }}
-                          transition={{ 
-                            duration: isNew ? 1.2 : 0.5,
-                            type: "spring",
-                            bounce: 0.3
-                          }}
-                          className={`
-                            absolute px-4 py-2 rounded-full
-                            ${isCluster ? 'bg-accent/10 border border-accent/20' : 'bg-muted/50 border border-border/50'}
-                            ${isNew ? 'ring-2 ring-accent ring-offset-2 ring-offset-background animate-pulse' : ''}
-                            shadow-sm hover:shadow-md transition-shadow cursor-default
-                            max-w-[280px] md:max-w-[320px]
-                          `}
-                          style={{
-                            left: `${pos.x}%`,
-                            top: `${pos.y}%`,
-                            transform: 'translate(-50%, -50%)',
-                            zIndex: isNew ? 50 : 10
-                          }}
-                        >
-                          <span className="text-sm md:text-base font-medium line-clamp-2">
-                            {displayText}
-                          </span>
-                          {isCluster && idx === 0 && items.length > 1 && (
-                            <span className="absolute -top-2 -right-2 bg-accent text-accent-foreground text-xs px-2 py-0.5 rounded-full">
-                              {items.length}
-                            </span>
-                          )}
-                        </motion.div>
-                      );
-                    });
-                  })}
-                </AnimatePresence>
-              </div>
-            )}
-          </div>
-        </section>
+              )}
+            </div>
+          </motion.div>
+        </div>
       </main>
 
-      <Footer />
+      <div className="relative z-40">
+        <Footer />
+      </div>
     </div>
   );
 }
