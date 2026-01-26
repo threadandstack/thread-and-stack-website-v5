@@ -4,9 +4,13 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { motion, AnimatePresence } from "framer-motion";
-import { Send, Sparkles, X } from "lucide-react";
+import { Send, X } from "lucide-react";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
+import { FictionCloudItem } from "@/components/fiction/FictionCloudItem";
+import { FictionDetailModal } from "@/components/fiction/FictionDetailModal";
+import { BookLoadingIcon } from "@/components/fiction/BookLoadingIcon";
+import { AddedCountBadge } from "@/components/fiction/AddedCountBadge";
 
 interface FictionFavorite {
   id: string;
@@ -23,23 +27,27 @@ interface CelebrationData {
   answer: string;
 }
 
+interface SelectedBook {
+  title: string;
+  clusterKey: string | null;
+}
+
 // Generate a consistent position for each cluster - avoiding center area
-const getClusterPosition = (clusterKey: string, index: number, total: number) => {
+const getClusterPosition = (clusterKey: string, index: number) => {
   const hash = clusterKey.split('').reduce((a, b) => {
     a = ((a << 5) - a) + b.charCodeAt(0);
     return a & a;
   }, 0);
   
-  // Define zones around the edges (avoiding center 30-70% area)
   const edgeZones = [
-    { xMin: 3, xMax: 25, yMin: 8, yMax: 30 },   // top-left
-    { xMin: 30, xMax: 70, yMin: 5, yMax: 20 },  // top
-    { xMin: 75, xMax: 97, yMin: 8, yMax: 30 },  // top-right
-    { xMin: 3, xMax: 22, yMin: 35, yMax: 65 },  // left
-    { xMin: 78, xMax: 97, yMin: 35, yMax: 65 }, // right
-    { xMin: 3, xMax: 25, yMin: 70, yMax: 92 },  // bottom-left
-    { xMin: 30, xMax: 70, yMin: 80, yMax: 95 }, // bottom
-    { xMin: 75, xMax: 97, yMin: 70, yMax: 92 }, // bottom-right
+    { xMin: 3, xMax: 25, yMin: 8, yMax: 30 },
+    { xMin: 30, xMax: 70, yMin: 5, yMax: 20 },
+    { xMin: 75, xMax: 97, yMin: 8, yMax: 30 },
+    { xMin: 3, xMax: 22, yMin: 35, yMax: 65 },
+    { xMin: 78, xMax: 97, yMin: 35, yMax: 65 },
+    { xMin: 3, xMax: 25, yMin: 70, yMax: 92 },
+    { xMin: 30, xMax: 70, yMin: 80, yMax: 95 },
+    { xMin: 75, xMax: 97, yMin: 70, yMax: 92 },
   ];
   
   const zoneIndex = Math.abs(hash) % edgeZones.length;
@@ -54,17 +62,6 @@ const getClusterPosition = (clusterKey: string, index: number, total: number) =>
     x: zone.xMin + offsetX,
     y: zone.yMin + offsetY
   };
-};
-
-// Generate unique float animation parameters for each item
-const getFloatAnimation = (id: string) => {
-  const hash = id.split('').reduce((a, b) => ((a << 5) - a) + b.charCodeAt(0), 0);
-  const duration = 4 + (Math.abs(hash) % 4); // 4-8 seconds
-  const delay = (Math.abs(hash * 2) % 20) / 10; // 0-2 second delay
-  const yAmount = 8 + (Math.abs(hash * 3) % 8); // 8-16px movement
-  const xAmount = 4 + (Math.abs(hash * 4) % 6); // 4-10px movement
-  
-  return { duration, delay, yAmount, xAmount };
 };
 
 // Group items by cluster
@@ -84,6 +81,9 @@ export default function FictionFavoritesPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [newItemId, setNewItemId] = useState<string | null>(null);
   const [celebration, setCelebration] = useState<CelebrationData | null>(null);
+  const [selectedBook, setSelectedBook] = useState<SelectedBook | null>(null);
+  const [addedCount, setAddedCount] = useState(0);
+  const [showAddedBadge, setShowAddedBadge] = useState(false);
   const { toast } = useToast();
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -210,6 +210,13 @@ export default function FictionFavoritesPage() {
         });
       }
 
+      // Show added count badge
+      if (insertedItems.length > 0) {
+        setAddedCount(insertedItems.length);
+        setShowAddedBadge(true);
+        setTimeout(() => setShowAddedBadge(false), 3000);
+      }
+
       // Clear the animation highlight after a delay
       setTimeout(() => setNewItemId(null), 3000);
 
@@ -237,6 +244,9 @@ export default function FictionFavoritesPage() {
       <Navigation />
       
       <main className="flex-1 relative">
+        {/* Added count badge */}
+        <AddedCountBadge count={addedCount} show={showAddedBadge} />
+
         {/* Full-page cloud container */}
         <div className="absolute inset-0 overflow-hidden">
           {favorites.length > 0 && (
@@ -246,61 +256,26 @@ export default function FictionFavoritesPage() {
                 const isCluster = items.length > 1;
                 
                 return items.map((item, idx) => {
-                  const pos = getClusterPosition(clusterKey, idx, items.length);
+                  const pos = getClusterPosition(clusterKey, idx);
                   const isNew = item.id === newItemId;
                   const displayText = item.enriched_answer || item.answer;
-                  const floatAnim = getFloatAnimation(item.id);
                   
                   return (
-                    <motion.div
+                    <FictionCloudItem
                       key={item.id}
-                      initial={isNew ? { 
-                        opacity: 0, 
-                        scale: 0.5,
-                        x: "50vw",
-                        y: "50vh"
-                      } : { opacity: 0, scale: 0.8 }}
-                      animate={{ 
-                        opacity: 1, 
-                        scale: 1,
-                        x: 0,
-                        y: [0, -floatAnim.yAmount, 0, floatAnim.yAmount / 2, 0],
-                      }}
-                      exit={{ opacity: 0, scale: 0.8 }}
-                      transition={{ 
-                        opacity: { duration: 0.5 },
-                        scale: { duration: isNew ? 1.2 : 0.5, type: "spring", bounce: 0.3 },
-                        x: { duration: isNew ? 1.2 : 0.5 },
-                        y: { 
-                          duration: floatAnim.duration,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                          delay: floatAnim.delay
-                        }
-                      }}
-                      className={`
-                        absolute px-4 py-2 rounded-full
-                        ${isCluster ? 'bg-accent/10 border border-accent/20' : 'bg-muted/50 border border-border/50'}
-                        ${isNew ? 'ring-2 ring-accent ring-offset-2 ring-offset-background' : ''}
-                        shadow-sm hover:shadow-md transition-shadow cursor-default
-                        max-w-[200px] md:max-w-[280px]
-                      `}
-                      style={{
-                        left: `${pos.x}%`,
-                        top: `${pos.y}%`,
-                        transform: 'translate(-50%, -50%)',
-                        zIndex: isNew ? 50 : 10
-                      }}
-                    >
-                      <span className="text-xs md:text-sm font-medium line-clamp-2">
-                        {displayText}
-                      </span>
-                      {isCluster && idx === 0 && items.length > 1 && (
-                        <span className="absolute -top-2 -right-2 bg-accent text-accent-foreground text-xs px-2 py-0.5 rounded-full">
-                          {items.length}
-                        </span>
-                      )}
-                    </motion.div>
+                      id={item.id}
+                      displayText={displayText}
+                      clusterKey={clusterKey}
+                      isNew={isNew}
+                      isCluster={isCluster}
+                      clusterCount={items.length}
+                      isFirst={idx === 0}
+                      position={pos}
+                      onClick={() => setSelectedBook({ 
+                        title: item.answer, 
+                        clusterKey: item.cluster_key 
+                      })}
+                    />
                   );
                 });
               })}
@@ -343,7 +318,7 @@ export default function FictionFavoritesPage() {
                   className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 md:h-10 md:w-10 rounded-full bg-accent hover:bg-accent/90"
                 >
                   {isSubmitting ? (
-                    <Sparkles className="h-4 w-4 md:h-5 md:w-5 animate-pulse" />
+                    <BookLoadingIcon className="h-4 w-4 md:h-5 md:w-5" />
                   ) : (
                     <Send className="h-4 w-4 md:h-5 md:w-5" />
                   )}
@@ -428,6 +403,14 @@ export default function FictionFavoritesPage() {
             </motion.div>
           )}
         </AnimatePresence>
+
+        {/* Book Detail Modal */}
+        <FictionDetailModal
+          isOpen={!!selectedBook}
+          onClose={() => setSelectedBook(null)}
+          title={selectedBook?.title || ""}
+          clusterKey={selectedBook?.clusterKey || null}
+        />
       </main>
 
       <div className="relative z-40">
