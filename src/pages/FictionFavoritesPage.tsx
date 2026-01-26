@@ -408,7 +408,7 @@ export default function FictionFavoritesPage() {
   // Render cloud items helper
   const renderCloudItems = () => (
     <AnimatePresence>
-      {aggregatedFavorites.map((item) => {
+      {aggregatedFavorites.map((item, index) => {
         const pos = positions.get(item.id) || { x: 50, y: 20 };
         const isNew = item.id === newItemId;
         const displayText = item.enriched_answer || item.answer;
@@ -424,6 +424,7 @@ export default function FictionFavoritesPage() {
             count={item.count}
             position={pos}
             genreColor={genreColor}
+            spiralIndex={index}
             onClick={() => setSelectedBook({ 
               title: item.answer, 
               clusterKey: item.cluster_key,
