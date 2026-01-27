@@ -243,14 +243,18 @@ const generateMobileZones = (
   // Normalize to fill exactly 100% (in case of rounding)
   if (zones.length > 0 && currentY !== 100) {
     const scale = 100 / currentY;
-    let runningY = 0;
     zones.forEach(zone => {
-      const height = (zone.yMax - zone.yMin) * scale;
-      zone.yMin = runningY;
-      zone.yMax = runningY + height;
-      zone.yCenter = zone.yMin + height * (zone.yCenter - zone.yMin) / (zone.yMax - zone.yMin) * scale;
-      // Recalculate yCenter based on book count
-      runningY = zone.yMax;
+      // Calculate anchor's relative position within original zone (0-1)
+      const originalHeight = zone.yMax - zone.yMin;
+      const anchorRatio = (zone.yCenter - zone.yMin) / originalHeight;
+      
+      // Scale zone bounds
+      zone.yMin = zone.yMin * scale;
+      zone.yMax = zone.yMax * scale;
+      
+      // Recalculate yCenter maintaining the same relative position
+      const newHeight = zone.yMax - zone.yMin;
+      zone.yCenter = zone.yMin + newHeight * anchorRatio;
     });
   }
 
