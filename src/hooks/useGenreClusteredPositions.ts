@@ -230,7 +230,7 @@ const generateMobileZones = (
     const yCenter = yMin + bandHeight * anchorRatio;
     
     zones.push({
-      xCenter: 50,
+      xCenter: 25, // Anchor stars positioned at 25% from left
       yCenter,
       yMin,
       yMax,
