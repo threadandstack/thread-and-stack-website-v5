@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowLeft, Loader2, Users, Eye, FileText, LogOut as BounceIcon, RefreshCw, Globe, Monitor, MapPin } from "lucide-react";
 import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import {
   Select,
@@ -76,27 +77,18 @@ const AdminAnalyticsPage = () => {
           break;
       }
 
-      const response = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/get-analytics`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
-          },
-          body: JSON.stringify({
-            startDate: startDate.toISOString().split("T")[0],
-            endDate: endDate.toISOString().split("T")[0],
-            granularity: dateRange === "7d" ? "hourly" : "daily",
-          }),
-        }
-      );
+      const { data, error } = await supabase.functions.invoke("get-analytics", {
+        body: {
+          startDate: startDate.toISOString().split("T")[0],
+          endDate: endDate.toISOString().split("T")[0],
+          granularity: dateRange === "7d" ? "hourly" : "daily",
+        },
+      });
 
-      if (!response.ok) {
-        throw new Error("Failed to fetch analytics");
+      if (error) {
+        throw error;
       }
 
-      const data = await response.json();
       setAnalytics(data);
     } catch (error) {
       console.error("Error fetching analytics:", error);
