@@ -26,3 +26,12 @@ verify_jwt = false
 
 [functions.fetch-book-details]
 verify_jwt = false
+
+[functions.geo-ai-test]
+verify_jwt = false
+
+[functions.geo-scan-page]
+verify_jwt = false
+
+[functions.get-analytics]
+verify_jwt = false
