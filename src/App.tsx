@@ -30,6 +30,7 @@ import ImageLibraryPage from "./pages/ImageLibraryPage";
 import GeoAdminPage from "./pages/GeoAdminPage";
 import AdminAnalyticsPage from "./pages/AdminAnalyticsPage";
 import FictionFavoritesPage from "./pages/FictionFavoritesPage";
+import CVPage from "./pages/CVPage";
 
 const queryClient = new QueryClient();
 
@@ -67,6 +68,7 @@ const App = () => (
           <Route path="/admin/geo" element={<GeoAdminPage />} />
           <Route path="/admin/analytics" element={<AdminAnalyticsPage />} />
           <Route path="/favourite-fiction" element={<FictionFavoritesPage />} />
+          <Route path="/private/brendan-rodgers-cv" element={<CVPage />} />
           {/* Legacy route - redirect to new canonical URL */}
           <Route path="/fiction-favorites" element={<Navigate to="/favourite-fiction" replace />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

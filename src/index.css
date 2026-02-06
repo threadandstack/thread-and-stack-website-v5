@@ -498,6 +498,122 @@ All colors MUST be HSL.
   }
 }
 
+/* CV page styles */
+.cv-experience h3 {
+  font-family: 'Crimson Pro', 'Crimson Text', Georgia, serif;
+  font-weight: 600;
+  font-style: italic;
+  font-size: 1.2rem;
+  margin-top: 2rem;
+  margin-bottom: 0.15rem;
+  color: hsl(var(--foreground));
+}
+
+.cv-experience h3:first-child {
+  margin-top: 0;
+}
+
+.cv-experience > p {
+  font-size: 0.8rem;
+  color: hsl(var(--muted-foreground));
+  margin-bottom: 0.6rem;
+  letter-spacing: 0.02em;
+}
+
+.cv-experience ul.cv-bullets {
+  list-style: none;
+  padding-left: 0;
+  margin: 0 0 1.5rem 0;
+}
+
+.cv-experience ul.cv-bullets li {
+  position: relative;
+  padding-left: 1.25rem;
+  margin-bottom: 0.4rem;
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: hsl(var(--foreground) / 0.85);
+}
+
+.cv-experience ul.cv-bullets li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 6px;
+  height: 6px;
+  border: 1.5px solid hsl(var(--accent));
+  border-radius: 50%;
+}
+
+.cv-skills p {
+  font-size: 0.9rem;
+  line-height: 1.75;
+  margin-bottom: 0.75rem;
+  color: hsl(var(--foreground) / 0.85);
+}
+
+.cv-skills strong {
+  color: hsl(var(--foreground));
+}
+
+.cv-education p {
+  font-size: 0.9rem;
+  line-height: 1.65;
+  margin-bottom: 0.4rem;
+  color: hsl(var(--foreground) / 0.85);
+}
+
+.cv-education strong {
+  color: hsl(var(--foreground));
+}
+
+.cv-education em {
+  color: hsl(var(--muted-foreground));
+}
+
+.cv-sidebar-content p {
+  margin-bottom: 0.75rem;
+}
+
+.cv-sidebar-content p:last-child {
+  margin-bottom: 0;
+}
+
+.cv-sidebar-content strong {
+  color: white;
+  font-weight: 600;
+}
+
+.cv-sidebar-content a {
+  color: white;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: rgba(255, 255, 255, 0.3);
+}
+
+.cv-sidebar-expertise ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cv-sidebar-expertise li {
+  position: relative;
+  padding-left: 1.25rem;
+  margin-bottom: 0.35rem;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.5;
+}
+
+.cv-sidebar-expertise li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: rgba(255, 255, 255, 0.35);
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
