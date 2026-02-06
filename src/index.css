@@ -628,3 +628,95 @@ All colors MUST be HSL.
     stroke-dashoffset: 0;
   }
 }
+
+/* CV print styles — single-column, ink-friendly */
+@media print {
+  @page {
+    margin: 1.5cm;
+    size: A4;
+  }
+
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Hide non-essential elements */
+  .cv-print-hide {
+    display: none !important;
+  }
+
+  /* Force single column */
+  .min-h-screen {
+    min-height: auto;
+  }
+
+  /* Flatten the two-column layout */
+  .lg\:flex-row {
+    flex-direction: column !important;
+  }
+
+  .lg\:w-\[62\%\],
+  .lg\:w-\[38\%\] {
+    width: 100% !important;
+  }
+
+  /* Reorder: sidebar first (profile summary), then experience */
+  .order-1 { order: 1 !important; }
+  .order-2 { order: 2 !important; }
+
+  /* Sidebar: light background for print */
+  .bg-\[hsl\(215\,25\%\,12\%\)\] {
+    background: hsl(0, 0%, 95%) !important;
+    color: hsl(0, 0%, 10%) !important;
+    box-shadow: none !important;
+  }
+
+  .bg-\[hsl\(215\,25\%\,9\%\)\] {
+    background: hsl(0, 0%, 90%) !important;
+  }
+
+  /* Fix text colors in sidebar for print */
+  .text-white { color: hsl(0, 0%, 10%) !important; }
+  .text-white\/80 { color: hsl(0, 0%, 25%) !important; }
+  .text-white\/60 { color: hsl(0, 0%, 35%) !important; }
+  .text-white\/40 { color: hsl(0, 0%, 45%) !important; }
+  .text-white\/35 { color: hsl(0, 0%, 50%) !important; }
+  .text-white\/30 { color: hsl(0, 0%, 55%) !important; }
+  .border-white\/10 { border-color: hsl(0, 0%, 80%) !important; }
+
+  .cv-sidebar-content strong { color: hsl(0, 0%, 10%) !important; }
+  .cv-sidebar-expertise li::before { color: hsl(0, 0%, 50%) !important; }
+
+  /* Remove sticky positioning */
+  .lg\:sticky { position: static !important; }
+
+  /* Tighten spacing */
+  .space-y-10 > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 1.5rem !important;
+  }
+
+  /* Remove gradient wash */
+  .bg-gradient-to-br { background: transparent !important; }
+
+  /* Avoid page breaks inside sections */
+  section { break-inside: avoid; }
+  .cv-experience h3 { break-after: avoid; }
+  .cv-experience ul.cv-bullets { break-inside: avoid; }
+
+  /* Links: show URL */
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.7em;
+    color: hsl(0, 0%, 50%);
+  }
+
+  /* But not for internal/icon links */
+  .cv-sidebar-expertise a::after,
+  nav a::after { content: none !important; }
+
+  /* Remove rounded corners and shadows */
+  .rounded-2xl { border-radius: 0 !important; }
+  .shadow-lg, .shadow-md { box-shadow: none !important; }
+  .ring-2 { box-shadow: none !important; }
+}

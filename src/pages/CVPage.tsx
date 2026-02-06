@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import brendanAvatar from "@/assets/brendan-avatar.png";
@@ -30,6 +31,15 @@ const fetchCV = async (): Promise<CVData> => {
 };
 
 const CVPage = () => {
+  // Block all indexing for /private/ pages
+  useEffect(() => {
+    const meta = document.createElement("meta");
+    meta.name = "robots";
+    meta.content = "noindex, nofollow";
+    document.head.appendChild(meta);
+    return () => { document.head.removeChild(meta); };
+  }, []);
+
   const { data, isLoading, error } = useQuery({
     queryKey: ["cv"],
     queryFn: fetchCV,
