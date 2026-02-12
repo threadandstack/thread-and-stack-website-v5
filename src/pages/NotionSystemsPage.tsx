@@ -106,7 +106,7 @@ const NotionSystemsPage = () => {
                   <Zap className="w-5 h-5" />
                 </div>
                 <div>
-                  <h2 className="text-3xl font-semibold italic">Clarity Sessions</h2>
+                  <h2 className="text-3xl font-semibold italic">Notion Sessions</h2>
                   <p className="text-sm font-sans text-accent">Rapid Intervention</p>
                 </div>
               </div>
@@ -121,7 +121,7 @@ const NotionSystemsPage = () => {
                 className="bg-accent text-accent-foreground hover:bg-accent/90 group rounded-xl not-italic font-sans"
                 asChild
               >
-                <a href="#contact" onClick={() => trackCtaClick('Book a Clarity Session', 'notion-clarity')}>
+                <a href="#contact" onClick={() => trackCtaClick('Book a Notion Session', 'notion-sessions')}>
                   Book a Session
                   <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </a>
@@ -153,20 +153,20 @@ const NotionSystemsPage = () => {
                   <Clock className="w-5 h-5" />
                 </div>
                 <div>
-                  <h2 className="text-3xl font-semibold italic">Notion AI Sprint</h2>
-                  <p className="text-sm font-sans opacity-80">6-Week Intensive</p>
+                  <h2 className="text-3xl font-semibold italic">Notion AI Mentorship Sprint</h2>
+                  <p className="text-sm font-sans opacity-80">6 × 1-Hour Sessions Over 6 Weeks</p>
                 </div>
               </div>
 
               <p className="font-sans opacity-90 leading-relaxed mb-4">
-                Transform how you work with Notion and AI without losing your creative edge. Build a custom productivity system that gives you back hours each week.
+                Six one-hour mentorship sessions across six weeks. Transform how you work with Notion and AI without losing your creative edge. Build a custom productivity system that gives you back hours each week.
               </p>
 
               <p className="font-sans opacity-70 text-sm mb-2">
                 <strong>Human-centered. Tool-agnostic. Creativity-first.</strong>
               </p>
 
-              <p className="text-xl font-semibold font-sans mt-4 mb-6">From £1k · 6 Weeks</p>
+              <p className="text-xl font-semibold font-sans mt-4 mb-6">From £1k · 6 × 1hr Sessions</p>
 
               <Button
                 className="bg-accent-foreground text-accent hover:bg-accent-foreground/90 group rounded-xl not-italic font-sans"

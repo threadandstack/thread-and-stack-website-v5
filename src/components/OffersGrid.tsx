@@ -51,8 +51,8 @@ export const OffersGrid = () => {
       tagline: "Workflows, AI & Operational Design",
       description: "Certified Notion administration, AI-powered workflow design, and operational systems that reduce cognitive load. Sessions, sprints, and retained support for teams ready to stop drowning in tabs and start shipping with confidence.",
       services: [
-        "Clarity Sessions — from £300",
-        "Notion AI Sprints — 6 weeks",
+        "Notion Sessions — from £300",
+        "Notion AI Mentorship Sprint — 6 weeks",
         "Retained Systems Support",
       ],
       link: "/notion-systems",
