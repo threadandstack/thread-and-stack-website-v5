@@ -132,7 +132,7 @@ export const HeroAlt = () => {
                       key={i}
                       src={badge}
                       alt="Notion certification badge"
-                      className="w-11 h-auto opacity-70 hover:opacity-100 transition-opacity"
+                      className="w-20 h-auto opacity-70 hover:opacity-100 transition-opacity"
                     />
                   ))}
                 </div>
