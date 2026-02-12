@@ -96,27 +96,24 @@ const HowIWorkPage = () => {
       <Navigation />
       <ContactDrawer open={contactOpen} onOpenChange={setContactOpen} source="how-i-work" />
 
-      {/* Hero - full bleed image with white fade from left */}
+      {/* Hero - full bleed image with overlaid card */}
       <section className="relative mt-16 h-[70vh] min-h-[500px] overflow-hidden">
-        {/* Background image */}
+        {/* Background image with slight dark overlay for depth */}
         <img
           src={heroPhoto}
           alt="Brendan leading a workshop session"
           className="absolute inset-0 w-full h-full object-cover"
         />
-        {/* White gradient overlay from left */}
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent" style={{ width: '65%' }} />
-        {/* Content on the left */}
-        <div className="relative h-full max-w-6xl mx-auto px-6 flex items-center">
-          <div className="max-w-lg">
-            <h1 className="text-5xl md:text-6xl mb-8 text-balance font-light">
+        <div className="absolute inset-0 bg-black/20" />
+        {/* Content card floating on top */}
+        <div className="relative h-full max-w-6xl mx-auto px-6 flex items-end pb-12 md:items-center md:pb-0">
+          <div className="bg-background/95 backdrop-blur-sm rounded-2xl p-8 md:p-10 max-w-lg shadow-[0_8px_30px_rgba(0,0,0,0.12)]">
+            <h1 className="text-5xl md:text-6xl mb-6 text-balance font-light">
               My Approach
             </h1>
-            <div className="space-y-6 text-lg leading-relaxed border-l-4 border-accent/20 pl-8">
-              <p>
-                I believe four fundamental drives form the basis of the human condition. They shape how we work, create, and connect with others.
-              </p>
-            </div>
+            <p className="text-lg leading-relaxed text-muted-foreground">
+              I believe four fundamental drives form the basis of the human condition. They shape how we work, create, and connect with others.
+            </p>
           </div>
         </div>
       </section>
