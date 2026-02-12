@@ -53,7 +53,7 @@ const Index = () => {
   return (
     <main className="min-h-screen relative">
       <ScrollIndicator />
-      <Navigation />
+      <Navigation variant="image-hero" />
       <HeroAlt />
       <div id="what-we-do"><WhatWeDo /></div>
       <div id="who-its-for"><WhoItsFor /></div>
