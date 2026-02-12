@@ -1,0 +1,226 @@
+import { Navigation } from "@/components/Navigation";
+import { Footer } from "@/components/Footer";
+import { Button } from "@/components/ui/button";
+import { ArrowRight, Check, Zap, Clock, Repeat } from "lucide-react";
+import { Emphasis } from "@/components/Emphasis";
+import { trackCtaClick } from "@/hooks/useAnalytics";
+import notionAdmin from "@/assets/notion-certified-admin.png";
+import notionAdvanced from "@/assets/notion-advanced.png";
+import notionWorkflows from "@/assets/notion-workflows.png";
+import notionEssentials from "@/assets/notion-essentials.png";
+
+const NotionSystemsPage = () => {
+  const badges = [
+    { src: notionAdmin, alt: "Notion Certified Admin" },
+    { src: notionAdvanced, alt: "Notion Academy Advanced" },
+    { src: notionWorkflows, alt: "Notion Academy Workflows" },
+    { src: notionEssentials, alt: "Notion Academy Essentials" },
+  ];
+
+  const clarityOutputs = [
+    "Full video/audio recording of the session",
+    "AI transcription and summary of key decisions",
+    "A bulleted action plan — exactly what to do next",
+  ];
+
+  const sprintOutcomes = [
+    "5-10 hours back each week through AI-enabled workflows",
+    "A custom Notion productivity system built for your actual role",
+    "Confidence using AI without second-guessing or quality drops",
+  ];
+
+  return (
+    <main className="min-h-screen relative">
+      <Navigation />
+
+      {/* Hero */}
+      <section className="pt-32 pb-20 px-6">
+        <div className="max-w-5xl mx-auto">
+          <div className="flex flex-wrap items-center gap-3 mb-8">
+            {badges.map((badge, i) => (
+              <img
+                key={i}
+                src={badge.src}
+                alt={badge.alt}
+                className="w-12 h-auto"
+              />
+            ))}
+          </div>
+
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold italic leading-[1.1] mb-6">
+            Notion & Systems{" "}
+            <span className="relative inline-block text-accent">
+              Consultancy
+              <Emphasis className="absolute -bottom-2 left-0 right-0" delay={0.3} />
+            </span>
+          </h1>
+
+          <p className="font-sans text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed mb-8">
+            Certified Notion administration, AI-powered workflow design, and operational systems that cut through the noise. Stop drowning in tabs. Start shipping with confidence.
+          </p>
+
+          <Button
+            size="lg"
+            className="bg-accent text-accent-foreground hover:bg-accent/90 group rounded-xl not-italic font-sans font-semibold"
+            asChild
+          >
+            <a href="#contact" onClick={() => trackCtaClick('Book an Intro Call', 'notion-systems-hero')}>
+              Book an Intro Call
+              <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </a>
+          </Button>
+        </div>
+      </section>
+
+      {/* Clarity Sessions */}
+      <section className="py-20 px-6 bg-card">
+        <div className="max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-12 items-start">
+            <div>
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 bg-accent/10 rounded-xl flex items-center justify-center text-accent">
+                  <Zap className="w-5 h-5" />
+                </div>
+                <div>
+                  <h2 className="text-3xl font-semibold italic">Clarity Sessions</h2>
+                  <p className="text-sm font-sans text-accent">Rapid Intervention</p>
+                </div>
+              </div>
+
+              <p className="font-sans text-muted-foreground leading-relaxed mb-4">
+                60 minutes to unblock a specific problem, validate a decision, or get a second brain on a messy Notion setup. No long-term commitment required.
+              </p>
+
+              <p className="text-xl font-semibold font-sans mb-6">£300 (VAT incl.) · 60 Minutes</p>
+
+              <Button
+                className="bg-accent text-accent-foreground hover:bg-accent/90 group rounded-xl not-italic font-sans"
+                asChild
+              >
+                <a href="#contact" onClick={() => trackCtaClick('Book a Clarity Session', 'notion-clarity')}>
+                  Book a Session
+                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </a>
+              </Button>
+            </div>
+
+            <div>
+              <h3 className="font-semibold font-sans mb-4">What You Leave With</h3>
+              <ul className="space-y-3">
+                {clarityOutputs.map((output, idx) => (
+                  <li key={idx} className="flex items-start gap-3">
+                    <Check className="w-4 h-4 text-accent mt-1 flex-shrink-0" />
+                    <span className="font-sans text-muted-foreground">{output}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Notion AI Sprint */}
+      <section className="py-20 px-6 bg-[hsl(var(--accent))] text-accent-foreground">
+        <div className="max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-12 items-start">
+            <div>
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 bg-accent-foreground/10 rounded-xl flex items-center justify-center text-accent-foreground">
+                  <Clock className="w-5 h-5" />
+                </div>
+                <div>
+                  <h2 className="text-3xl font-semibold italic">Notion AI Sprint</h2>
+                  <p className="text-sm font-sans opacity-80">6-Week Intensive</p>
+                </div>
+              </div>
+
+              <p className="font-sans opacity-90 leading-relaxed mb-4">
+                Transform how you work with Notion and AI without losing your creative edge. Build a custom productivity system that gives you back hours each week.
+              </p>
+
+              <p className="font-sans opacity-70 text-sm mb-2">
+                <strong>Human-centered. Tool-agnostic. Creativity-first.</strong>
+              </p>
+
+              <p className="text-xl font-semibold font-sans mt-4 mb-6">From £1k · 6 Weeks</p>
+
+              <Button
+                className="bg-accent-foreground text-accent hover:bg-accent-foreground/90 group rounded-xl not-italic font-sans"
+                asChild
+              >
+                <a href="#contact" onClick={() => trackCtaClick('Start a Sprint', 'notion-sprint')}>
+                  Start a Sprint
+                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </a>
+              </Button>
+            </div>
+
+            <div>
+              <h3 className="font-semibold font-sans mb-4">What You Leave With</h3>
+              <ul className="space-y-3">
+                {sprintOutcomes.map((outcome, idx) => (
+                  <li key={idx} className="flex items-start gap-3">
+                    <Check className="w-4 h-4 text-accent-foreground mt-1 flex-shrink-0" />
+                    <span className="font-sans opacity-90">{outcome}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Retained Support */}
+      <section className="py-20 px-6 bg-card">
+        <div className="max-w-5xl mx-auto">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-10 h-10 bg-accent/10 rounded-xl flex items-center justify-center text-accent">
+              <Repeat className="w-5 h-5" />
+            </div>
+            <div>
+              <h2 className="text-3xl font-semibold italic">Retained Systems Support</h2>
+              <p className="text-sm font-sans text-accent">Ongoing Partnership</p>
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-12 items-start">
+            <div>
+              <p className="font-sans text-muted-foreground leading-relaxed mb-6">
+                Ongoing Notion administration, workflow optimisation, and systems support as an integrated member of your team. I keep your operational backbone healthy so you can focus on the work that matters.
+              </p>
+
+              <Button
+                className="bg-accent text-accent-foreground hover:bg-accent/90 group rounded-xl not-italic font-sans"
+                asChild
+              >
+                <a href="#contact" onClick={() => trackCtaClick('Discuss Retainer', 'notion-retained')}>
+                  Let's Talk
+                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </a>
+              </Button>
+            </div>
+
+            <div className="space-y-3">
+              {[
+                { title: "Core Support", commitment: "2-3 days/month", price: "From £2k/month" },
+                { title: "Extended Support", commitment: "4-6 days/month", price: "From £4k/month" },
+              ].map((tier, idx) => (
+                <div key={idx} className="bg-muted/30 rounded-xl p-4 flex justify-between items-center">
+                  <div>
+                    <p className="font-sans font-medium">{tier.title}</p>
+                    <p className="text-sm font-sans text-muted-foreground">{tier.commitment}</p>
+                  </div>
+                  <p className="text-sm font-sans font-medium">{tier.price}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
+    </main>
+  );
+};
+
+export default NotionSystemsPage;

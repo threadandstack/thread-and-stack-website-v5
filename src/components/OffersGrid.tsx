@@ -1,12 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { Zap, Users, Target } from "lucide-react";
-import { ServiceDrawer } from "./ServiceDrawer";
+import { Palette, Cog, ArrowRight } from "lucide-react";
 import { Emphasis } from "@/components/Emphasis";
 
 export const OffersGrid = () => {
-  const [selectedOffer, setSelectedOffer] = useState<typeof offers[0] | null>(null);
-  const [drawerOpen, setDrawerOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -24,7 +21,6 @@ export const OffersGrid = () => {
       observer.observe(sectionRef.current);
     }
 
-    // Fallback: make visible after 2 seconds if observer doesn't trigger
     const timeout = setTimeout(() => {
       setIsVisible(true);
     }, 2000);
@@ -35,38 +31,37 @@ export const OffersGrid = () => {
     };
   }, []);
 
-  const offers = [
+  const pillars = [
     {
-      icon: <Zap className="w-6 h-6" />,
-      title: "Sessions & Sprints",
-      tagline: "Focused Strategic Support",
-      description: "One-hour Clarity Sessions for rapid intervention (£300), or six-week Thread AI Sprints to transform how you work with AI (from £1k). Two ways to get unstuck and build momentum.",
-      link: "/sessions-and-sprints",
-      price: "From £300",
-      cta: "Learn More"
-    },
-    {
-      icon: <Users className="w-6 h-6" />,
-      title: "Brand Connection Workshops",
-      tagline: "A Modular Strategy System for Purpose-Driven Brands",
-      description: "Fix the disconnect between your brand and your audience. Modular, co-created workshops that get your team aligned on story, positioning, visual identity direction, and roadmap. Build exactly what you need, from lean sprints to comprehensive overhauls.",
+      icon: <Palette className="w-6 h-6" />,
+      title: "Creative Consultancy",
+      tagline: "Brand Strategy & Fractional Marketing",
+      description: "From workshops that align your team around story and positioning, to ongoing fractional partnerships that embed strategic and creative direction into your operations. For founders and teams who need their marketing to actually reach people.",
+      services: [
+        "Brand Connection Workshops — from £2k",
+        "Fractional Strategy — monthly retainer",
+        "Deep Engagement — 2-6 month projects",
+      ],
       link: "/workshops",
-      price: "From £2k",
-      cta: "Learn More"
+      cta: "Explore Services",
     },
     {
-      icon: <Target className="w-6 h-6" />,
-      title: "Fractional & Deep Engagement",
-      tagline: "Strategic Partnership & Transformation",
-      description: "Two models for sustained partnership. Ongoing monthly retainers for continuous strategic support, or intensive 2-6 month projects for comprehensive transformation. For scale-ups and established organizations (20-100+ people).",
-      link: "/fractional-deep-engagement",
-      price: "Case-by-case",
-      cta: "Learn More"
-    }
+      icon: <Cog className="w-6 h-6" />,
+      title: "Notion & Systems Consultancy",
+      tagline: "Workflows, AI & Operational Design",
+      description: "Certified Notion administration, AI-powered workflow design, and operational systems that reduce cognitive load. Sessions, sprints, and retained support for teams ready to stop drowning in tabs and start shipping with confidence.",
+      services: [
+        "Clarity Sessions — from £300",
+        "Notion AI Sprints — 6 weeks",
+        "Retained Systems Support",
+      ],
+      link: "/notion-systems",
+      cta: "Explore Services",
+    },
   ];
 
   return (
-    <section 
+    <section
       ref={sectionRef}
       className={`py-24 px-6 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-40 translate-y-4'}`}
     >
@@ -78,57 +73,54 @@ export const OffersGrid = () => {
             </span>
           </h2>
           <p className="text-base md:text-lg font-sans text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Clear entry points that protect your time, build trust, and create momentum
+            Two pillars. One goal: marketing and systems that make sense for your team.
           </p>
         </div>
-        
-        <div className="grid md:grid-cols-3 gap-8">
-          {offers.map((offer, index) => (
-            <div 
+
+        <div className="grid md:grid-cols-2 gap-8">
+          {pillars.map((pillar, index) => (
+            <div
               key={index}
-              className="bg-card rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] p-8 transition-all duration-300 flex flex-col"
+              className="bg-card rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] p-8 md:p-10 transition-all duration-300 flex flex-col"
             >
               <div className="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center mb-6 text-accent">
-                {offer.icon}
+                {pillar.icon}
               </div>
-              
-              <h3 className="text-2xl mb-2 font-semibold italic">
-                {offer.title}
+
+              <h3 className="text-2xl md:text-3xl mb-2 font-semibold italic">
+                {pillar.title}
               </h3>
-              
+
               <p className="text-sm font-sans text-accent mb-4">
-                {offer.tagline}
+                {pillar.tagline}
               </p>
-              
-              <p className="font-sans text-muted-foreground leading-relaxed mb-6 flex-grow">
-                {offer.description}
+
+              <p className="font-sans text-muted-foreground leading-relaxed mb-6">
+                {pillar.description}
               </p>
-              
-              <div className="space-y-4 pt-4 border-t border-border/30">
-                <p className="text-sm font-sans font-medium text-foreground/70 not-italic">
-                  {offer.price}
-                </p>
-                
-                <Button 
-                  className="w-full group bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl"
-                  onClick={() => {
-                    setSelectedOffer(offer);
-                    setDrawerOpen(true);
-                  }}
-                >
-                  {offer.cta}
-                </Button>
-              </div>
+
+              <ul className="space-y-2 mb-8 flex-grow">
+                {pillar.services.map((service, idx) => (
+                  <li key={idx} className="text-sm font-sans text-foreground/70 flex items-start gap-2">
+                    <span className="text-accent mt-0.5">•</span>
+                    {service}
+                  </li>
+                ))}
+              </ul>
+
+              <Button
+                className="w-full group bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl"
+                asChild
+              >
+                <a href={pillar.link}>
+                  {pillar.cta}
+                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </a>
+              </Button>
             </div>
           ))}
         </div>
       </div>
-      
-      <ServiceDrawer
-        offer={selectedOffer}
-        open={drawerOpen}
-        onOpenChange={setDrawerOpen}
-      />
     </section>
   );
 };
