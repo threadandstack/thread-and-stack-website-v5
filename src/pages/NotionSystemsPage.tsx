@@ -9,6 +9,8 @@ import notionAdvanced from "@/assets/notion-advanced.png";
 import notionWorkflows from "@/assets/notion-workflows.png";
 import notionEssentials from "@/assets/notion-essentials.png";
 import notionHeroPhoto from "@/assets/notion-certified-hero.png";
+import notionAmbassadorBlack from "@/assets/notion-ambassador-black.png";
+import notionAmbassadorWhite from "@/assets/notion-ambassador-white.png";
 
 const NotionSystemsPage = () => {
   const badges = [
@@ -40,7 +42,7 @@ const NotionSystemsPage = () => {
           <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
             {/* Left: Copy */}
             <div>
-              <div className="flex flex-wrap items-center gap-3 mb-8">
+              <div className="flex flex-wrap items-center gap-3 mb-4">
                 {badges.map((badge, i) => (
                   <img
                     key={i}
@@ -50,6 +52,11 @@ const NotionSystemsPage = () => {
                   />
                 ))}
               </div>
+              <img
+                src={notionAmbassadorBlack}
+                alt="Notion Official Ambassador"
+                className="h-8 w-auto mb-8"
+              />
 
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold italic leading-[1.1] mb-6">
                 Notion & Systems{" "}
