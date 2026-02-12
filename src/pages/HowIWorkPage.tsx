@@ -93,7 +93,7 @@ const HowIWorkPage = () => {
 
   return (
     <main className="min-h-screen">
-      <Navigation />
+      <Navigation variant="image-hero" />
       <ContactDrawer open={contactOpen} onOpenChange={setContactOpen} source="how-i-work" />
 
       {/* Hero - full bleed image with overlaid card */}
