@@ -40,7 +40,7 @@ export const HeroAlt = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const clients = ["Dentsu", "IMMA Collective", "BfB Labs", "Mixergy"];
+  const clients = ["eBay", "Dentsu", "IMMA Collective", "BfB Labs", "Mixergy"];
 
   return (
     <section className="relative min-h-[90vh] flex items-center overflow-hidden px-6 py-20 md:py-24">
