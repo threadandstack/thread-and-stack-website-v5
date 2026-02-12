@@ -2,8 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Palette, Cog, ArrowRight } from "lucide-react";
 import { Emphasis } from "@/components/Emphasis";
-import brendanMural from "@/assets/brendan-mural.jpeg";
-import brendanPostitsClose from "@/assets/brendan-postits-close.jpeg";
+import brendanCafe from "@/assets/brendan-cafe-landscape.jpg";
+import brendanPostits from "@/assets/brendan-postits-landscape.jpg";
 import notionAdmin from "@/assets/notion-certified-admin.png";
 import notionAdvanced from "@/assets/notion-advanced.png";
 import notionWorkflows from "@/assets/notion-workflows.png";
@@ -50,7 +50,7 @@ export const OffersGrid = () => {
       ],
       link: "/workshops",
       cta: "Explore Services",
-      image: brendanMural,
+      image: brendanCafe,
       imageAlt: "Creative strategy and brand direction",
     },
     {
@@ -65,7 +65,7 @@ export const OffersGrid = () => {
       ],
       link: "/notion-systems",
       cta: "Explore Services",
-      image: brendanPostitsClose,
+      image: brendanPostits,
       imageAlt: "Systems and workflow design",
     },
   ];
@@ -94,11 +94,11 @@ export const OffersGrid = () => {
               className="bg-card rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] overflow-hidden transition-all duration-300 flex flex-col"
             >
               {/* Card image header */}
-              <div className="h-72 overflow-hidden">
+              <div className="h-56 overflow-hidden">
                 <img 
                   src={pillar.image} 
                   alt={pillar.imageAlt} 
-                  className="w-full h-full object-cover object-[center_20%]"
+                  className="w-full h-full object-cover"
                 />
               </div>
 
