@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, ChevronDown } from "lucide-react";
 import { Emphasis } from "@/components/Emphasis";
 import { trackCtaClick } from "@/hooks/useAnalytics";
-import heroImage from "@/assets/photos/shoreditch/brendan-34.jpg";
+import heroImage from "@/assets/photos/shoreditch/brendan-33.jpg";
 
 export const HeroAlt = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -44,7 +44,7 @@ export const HeroAlt = () => {
       <img
         src={heroImage}
         alt="Brendan — Thread & Stack founder"
-        className="absolute inset-0 w-full h-full object-cover object-top"
+        className="absolute inset-0 w-full h-full object-cover object-right-top"
       />
       <div className="absolute inset-0 bg-black/20" />
 
