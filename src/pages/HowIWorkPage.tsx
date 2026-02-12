@@ -97,7 +97,7 @@ const HowIWorkPage = () => {
       <ContactDrawer open={contactOpen} onOpenChange={setContactOpen} source="how-i-work" />
 
       {/* Hero - full bleed image with overlaid card */}
-      <section className="relative mt-16 h-[70vh] min-h-[500px] overflow-hidden">
+      <section className="relative h-[80vh] min-h-[560px] overflow-hidden">
         {/* Background image with slight dark overlay for depth */}
         <img
           src={heroPhoto}
@@ -105,8 +105,8 @@ const HowIWorkPage = () => {
           className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-black/20" />
-        {/* Content card floating on top */}
-        <div className="relative h-full max-w-6xl mx-auto px-6 flex items-end pb-12 md:items-center md:pb-0">
+        {/* Content card floating on top, with top padding to clear nav */}
+        <div className="relative h-full max-w-6xl mx-auto px-6 flex items-end pb-12 md:items-center md:pb-0 pt-24">
           <div className="bg-background/95 backdrop-blur-sm rounded-2xl p-8 md:p-10 max-w-lg shadow-[0_8px_30px_rgba(0,0,0,0.12)]">
             <h1 className="text-5xl md:text-6xl mb-6 text-balance font-light">
               My Approach
