@@ -94,11 +94,11 @@ export const OffersGrid = () => {
               className="bg-card rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] overflow-hidden transition-all duration-300 flex flex-col"
             >
               {/* Card image header */}
-              <div className="h-56 overflow-hidden">
+              <div className="h-72 overflow-hidden">
                 <img 
                   src={pillar.image} 
                   alt={pillar.imageAlt} 
-                  className="w-full h-full object-cover object-top"
+                  className="w-full h-full object-cover object-[center_20%]"
                 />
               </div>
 
