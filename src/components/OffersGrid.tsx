@@ -68,7 +68,7 @@ export const OffersGrid = () => {
   return (
     <section 
       ref={sectionRef}
-      className={`py-24 px-6 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+      className={`py-24 px-6 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-40 translate-y-4'}`}
     >
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16 space-y-6">

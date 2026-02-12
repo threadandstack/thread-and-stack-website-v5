@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Navigation } from "@/components/Navigation";
-import { Hero } from "@/components/Hero";
+import { HeroAlt } from "@/components/HeroAlt";
 import { ScrollIndicator } from "@/components/ScrollIndicator";
 import { WhatWeDo } from "@/components/WhatWeDo";
 import { WhoItsFor } from "@/components/WhoItsFor";
@@ -13,7 +13,6 @@ import { Newsletter } from "@/components/Newsletter";
 import { Footer } from "@/components/Footer";
 import { FAQ } from "@/components/FAQ";
 import { useScrollDepthTracking } from "@/hooks/useAnalytics";
-
 
 const Index = () => {
   useEffect(() => {
@@ -55,15 +54,15 @@ const Index = () => {
     <main className="min-h-screen relative">
       <ScrollIndicator />
       <Navigation />
-      <Hero />
+      <HeroAlt />
       <div id="what-we-do"><WhatWeDo /></div>
       <div id="who-its-for"><WhoItsFor /></div>
       <FeaturedProjects />
       <div id="offers"><OffersGrid /></div>
-      <Newsletter />
       <Testimonials />
       <div id="about"><About /></div>
       <Contact />
+      <Newsletter />
       <FAQ items={faqItems} />
       <Footer />
     </main>
