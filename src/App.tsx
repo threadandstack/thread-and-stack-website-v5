@@ -20,6 +20,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import DataGuarantee from "./pages/DataGuarantee";
 import CollectivePage from "./pages/CollectivePage";
 import IndexPhotoHero from "./pages/IndexPhotoHero";
+import IndexAltHero from "./pages/IndexAltHero";
 import ThreadMotifDemo from "./components/ThreadMotifDemo";
 import BrandBook from "./components/BrandBook";
 import SeoAdminPage from "./pages/SeoAdminPage";
@@ -61,6 +62,7 @@ const App = () => (
           <Route path="/thread-demo" element={<ThreadMotifDemo />} />
           <Route path="/brand-book" element={<BrandBook />} />
           <Route path="/v/photo-hero" element={<IndexPhotoHero />} />
+          <Route path="/v/alt-hero" element={<IndexAltHero />} />
           <Route path="/admin/login" element={<AdminLoginPage />} />
           <Route path="/admin/reset-password" element={<AdminResetPassword />} />
           <Route path="/admin" element={<AdminDashboard />} />
