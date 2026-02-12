@@ -8,6 +8,7 @@ import notionAdmin from "@/assets/notion-certified-admin.png";
 import notionAdvanced from "@/assets/notion-advanced.png";
 import notionWorkflows from "@/assets/notion-workflows.png";
 import notionEssentials from "@/assets/notion-essentials.png";
+import notionHeroPhoto from "@/assets/notion-certified-hero.png";
 
 const NotionSystemsPage = () => {
   const badges = [
@@ -35,40 +36,56 @@ const NotionSystemsPage = () => {
 
       {/* Hero */}
       <section className="pt-32 pb-20 px-6">
-        <div className="max-w-5xl mx-auto">
-          <div className="flex flex-wrap items-center gap-3 mb-8">
-            {badges.map((badge, i) => (
-              <img
-                key={i}
-                src={badge.src}
-                alt={badge.alt}
-                className="w-12 h-auto"
-              />
-            ))}
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+            {/* Left: Copy */}
+            <div>
+              <div className="flex flex-wrap items-center gap-3 mb-8">
+                {badges.map((badge, i) => (
+                  <img
+                    key={i}
+                    src={badge.src}
+                    alt={badge.alt}
+                    className="w-10 h-auto"
+                  />
+                ))}
+              </div>
+
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold italic leading-[1.1] mb-6">
+                Notion & Systems{" "}
+                <span className="relative inline-block text-accent">
+                  Consultancy
+                  <Emphasis className="absolute -bottom-2 left-0 right-0" delay={0.3} />
+                </span>
+              </h1>
+
+              <p className="font-sans text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed mb-8">
+                Certified Notion administration, AI-powered workflow design, and operational systems that cut through the noise. Stop drowning in tabs. Start shipping with confidence.
+              </p>
+
+              <Button
+                size="lg"
+                className="bg-accent text-accent-foreground hover:bg-accent/90 group rounded-xl not-italic font-sans font-semibold"
+                asChild
+              >
+                <a href="#contact" onClick={() => trackCtaClick('Book an Intro Call', 'notion-systems-hero')}>
+                  Book an Intro Call
+                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </a>
+              </Button>
+            </div>
+
+            {/* Right: Photo */}
+            <div className="relative hidden md:block">
+              <div className="rounded-2xl overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
+                <img
+                  src={notionHeroPhoto}
+                  alt="Brendan — Notion Certified Admin with all four Notion Academy badges"
+                  className="w-full h-auto"
+                />
+              </div>
+            </div>
           </div>
-
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold italic leading-[1.1] mb-6">
-            Notion & Systems{" "}
-            <span className="relative inline-block text-accent">
-              Consultancy
-              <Emphasis className="absolute -bottom-2 left-0 right-0" delay={0.3} />
-            </span>
-          </h1>
-
-          <p className="font-sans text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed mb-8">
-            Certified Notion administration, AI-powered workflow design, and operational systems that cut through the noise. Stop drowning in tabs. Start shipping with confidence.
-          </p>
-
-          <Button
-            size="lg"
-            className="bg-accent text-accent-foreground hover:bg-accent/90 group rounded-xl not-italic font-sans font-semibold"
-            asChild
-          >
-            <a href="#contact" onClick={() => trackCtaClick('Book an Intro Call', 'notion-systems-hero')}>
-              Book an Intro Call
-              <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </a>
-          </Button>
         </div>
       </section>
 
