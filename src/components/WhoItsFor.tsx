@@ -34,7 +34,7 @@ export const WhoItsFor = () => {
     linkText: "The role of strategic clarity",
     linkUrl: "/blog/why-you-and-your-team-care-about-clarity"
   }];
-  return <section ref={sectionRef} className={`py-24 px-6 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+  return <section ref={sectionRef} className={`py-24 px-6 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-40 translate-y-4'}`}>
       <div className="max-w-6xl mx-auto">
         <h2 className="text-5xl md:text-6xl mb-16 text-balance font-light">For makers, founders, and teams.</h2>
         

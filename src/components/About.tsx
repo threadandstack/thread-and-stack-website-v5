@@ -28,7 +28,7 @@ export const About = () => {
     <section 
       id="about" 
       ref={sectionRef}
-      className={`py-24 px-6 bg-card transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+      className={`py-24 px-6 bg-card transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-40 translate-y-4'}`}
     >
       <div className="max-w-6xl mx-auto">
         <h2 className="text-5xl md:text-6xl mb-16 font-semibold italic">
@@ -74,8 +74,8 @@ export const About = () => {
             className="bg-accent text-accent-foreground hover:bg-accent/90 group rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
             asChild
           >
-            <a href="/about">
-              Learn More About Me
+            <a href="#contact">
+              Book an Intro Call
               <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </a>
           </Button>
@@ -86,8 +86,8 @@ export const About = () => {
             className="group rounded-xl"
             asChild
           >
-            <a href="#contact">
-              Work Together
+            <a href="/about">
+              More About Me
             </a>
           </Button>
         </div>
