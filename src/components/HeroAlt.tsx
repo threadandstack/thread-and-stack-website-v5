@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, ChevronDown } from "lucide-react";
 import { Emphasis } from "@/components/Emphasis";
 import { trackCtaClick } from "@/hooks/useAnalytics";
-import heroImage from "@/assets/photos/shoreditch/brendan-33.jpg";
+import heroImage from "@/assets/hero-heading.png";
 
 export const HeroAlt = () => {
   const [isVisible, setIsVisible] = useState(false);
