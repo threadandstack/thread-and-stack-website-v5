@@ -66,7 +66,7 @@ export const HeroAlt = () => {
                   )}
                 </span>
                 .
-                <br className="md:hidden" />
+                <br />
                 Systems that{" "}
                 <span className="text-accent">stick</span>.
               </h1>
