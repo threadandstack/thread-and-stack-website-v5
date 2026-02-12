@@ -4,6 +4,10 @@ import { Palette, Cog, ArrowRight } from "lucide-react";
 import { Emphasis } from "@/components/Emphasis";
 import brendanMural from "@/assets/brendan-mural.jpeg";
 import brendanPostitsClose from "@/assets/brendan-postits-close.jpeg";
+import notionAdmin from "@/assets/notion-certified-admin.png";
+import notionAdvanced from "@/assets/notion-advanced.png";
+import notionWorkflows from "@/assets/notion-workflows.png";
+import notionEssentials from "@/assets/notion-essentials.png";
 
 export const OffersGrid = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -90,11 +94,11 @@ export const OffersGrid = () => {
               className="bg-card rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] overflow-hidden transition-all duration-300 flex flex-col"
             >
               {/* Card image header */}
-              <div className="h-48 overflow-hidden">
+              <div className="h-56 overflow-hidden">
                 <img 
                   src={pillar.image} 
                   alt={pillar.imageAlt} 
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover object-top"
                 />
               </div>
 
@@ -115,7 +119,7 @@ export const OffersGrid = () => {
                   {pillar.description}
                 </p>
 
-                <ul className="space-y-2 mb-8 flex-grow">
+                <ul className="space-y-2 mb-6 flex-grow">
                   {pillar.services.map((service, idx) => (
                     <li key={idx} className="text-sm font-sans text-foreground/70 flex items-start gap-2">
                       <span className="text-accent mt-0.5">•</span>
@@ -123,6 +127,20 @@ export const OffersGrid = () => {
                     </li>
                   ))}
                 </ul>
+
+                {/* Notion badges for systems card */}
+                {index === 1 && (
+                  <div className="flex items-center gap-2 mb-6 pt-2">
+                    {[notionAdmin, notionAdvanced, notionWorkflows, notionEssentials].map((badge, i) => (
+                      <img
+                        key={i}
+                        src={badge}
+                        alt="Notion certification badge"
+                        className="w-12 h-auto opacity-70 hover:opacity-100 transition-opacity"
+                      />
+                    ))}
+                  </div>
+                )}
 
                 <Button
                   className="w-full group bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl"

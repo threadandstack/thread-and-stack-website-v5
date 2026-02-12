@@ -4,10 +4,6 @@ import { ArrowRight, ChevronDown } from "lucide-react";
 import { Emphasis } from "@/components/Emphasis";
 import { trackCtaClick } from "@/hooks/useAnalytics";
 import heroImage from "@/assets/photos/shoreditch/brendan-34.jpg";
-import notionAdmin from "@/assets/notion-certified-admin.png";
-import notionAdvanced from "@/assets/notion-advanced.png";
-import notionWorkflows from "@/assets/notion-workflows.png";
-import notionEssentials from "@/assets/notion-essentials.png";
 
 export const HeroAlt = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -124,16 +120,6 @@ export const HeroAlt = () => {
                     >
                       {client}
                     </span>
-                  ))}
-                </div>
-                <div className="flex items-center gap-2 mt-4 pt-4 border-t border-border/30">
-                  {[notionAdmin, notionAdvanced, notionWorkflows, notionEssentials].map((badge, i) => (
-                    <img
-                      key={i}
-                      src={badge}
-                      alt="Notion certification badge"
-                      className="w-20 h-auto opacity-70 hover:opacity-100 transition-opacity"
-                    />
                   ))}
                 </div>
               </div>
