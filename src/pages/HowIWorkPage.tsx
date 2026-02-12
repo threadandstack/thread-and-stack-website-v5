@@ -96,26 +96,26 @@ const HowIWorkPage = () => {
       <Navigation />
       <ContactDrawer open={contactOpen} onOpenChange={setContactOpen} source="how-i-work" />
 
-      {/* Hero image */}
-      <section className="px-6 mt-16 pt-24 pb-8">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h1 className="text-5xl md:text-6xl mb-8 text-balance font-light">
-                My Approach
-              </h1>
-              <div className="space-y-6 text-lg leading-relaxed border-l-4 border-accent/20 pl-8">
-                <p>
-                  I believe four fundamental drives form the basis of the human condition. They shape how we work, create, and connect with others.
-                </p>
-              </div>
-            </div>
-            <div className="overflow-hidden rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
-              <img
-                src={heroPhoto}
-                alt="Brendan leading a workshop session"
-                className="w-full h-auto object-cover"
-              />
+      {/* Hero - full bleed image with white fade from left */}
+      <section className="relative mt-16 h-[70vh] min-h-[500px] overflow-hidden">
+        {/* Background image */}
+        <img
+          src={heroPhoto}
+          alt="Brendan leading a workshop session"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        {/* White gradient overlay from left */}
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent" style={{ width: '65%' }} />
+        {/* Content on the left */}
+        <div className="relative h-full max-w-6xl mx-auto px-6 flex items-center">
+          <div className="max-w-lg">
+            <h1 className="text-5xl md:text-6xl mb-8 text-balance font-light">
+              My Approach
+            </h1>
+            <div className="space-y-6 text-lg leading-relaxed border-l-4 border-accent/20 pl-8">
+              <p>
+                I believe four fundamental drives form the basis of the human condition. They shape how we work, create, and connect with others.
+              </p>
             </div>
           </div>
         </div>
