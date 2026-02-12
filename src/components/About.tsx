@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import brendanPhoto from "@/assets/brendan-brick.jpeg";
+import brendanPhoto from "@/assets/photos/shoreditch/brendan-34.jpg";
 import { useEffect, useRef, useState } from "react";
 
 export const About = () => {

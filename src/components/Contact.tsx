@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
+import contactPhoto from "@/assets/photos/shoreditch/brendan-29.jpg";
 
 const contactSchema = z.object({
   name: z.string().max(100, "Name must be less than 100 characters").optional(),
@@ -45,14 +46,12 @@ export const Contact = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Honeypot check - if filled, silently reject (bot detected)
     if (honeypot) {
       return;
     }
     
     setIsSubmitting(true);
 
-    // Validate input with zod
     const validation = contactSchema.safeParse({
       name: name.trim() || undefined,
       email: email.trim(),
@@ -70,7 +69,6 @@ export const Contact = () => {
       return;
     }
 
-    // Combine role and message for storage
     const fullMessage = role.trim() 
       ? `[${role.trim()}]\n\n${message.trim()}` 
       : message.trim();
@@ -87,7 +85,6 @@ export const Contact = () => {
 
       if (error) throw error;
 
-      // Sync to Notion in background
       supabase.functions.invoke('sync-lead-to-notion', {
         body: {
           name: name.trim() || null,
@@ -124,17 +121,22 @@ export const Contact = () => {
       ref={sectionRef}
       className={`py-24 px-6 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-40 translate-y-4'}`}
     >
-      <div className="max-w-2xl mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-5xl md:text-6xl mb-6 font-semibold italic">
+      <div className="max-w-5xl mx-auto grid md:grid-cols-5 gap-12 items-start">
+        <div className="md:col-span-2 space-y-6">
+          <h2 className="text-5xl md:text-6xl font-semibold italic">
             Let's talk
           </h2>
           <p className="text-base md:text-lg font-sans text-muted-foreground leading-relaxed">
             Tell me what you're wrestling with. No pressure, just conversation.
           </p>
+          <img 
+            src={contactPhoto} 
+            alt="Brendan ready to collaborate" 
+            className="rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.06)] w-full h-auto hidden md:block" 
+          />
         </div>
         
-        <form onSubmit={handleSubmit} className="space-y-6 bg-card p-8 rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.06)]">
+        <form onSubmit={handleSubmit} className="md:col-span-3 space-y-6 bg-card p-8 rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.06)] relative">
           <div className="space-y-2">
             <Label htmlFor="name" className="not-italic">Name</Label>
             <Input 
@@ -177,22 +179,22 @@ export const Contact = () => {
               placeholder="Tell me about your challenge, question, or what you're hoping to work on..."
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-            className="min-h-32 bg-background rounded-lg"
-          />
-        </div>
-        
-        {/* Honeypot field - hidden from users, catches bots */}
-        <div className="absolute -left-[9999px]" aria-hidden="true">
-          <Input 
-            type="text"
-            name="website"
-            tabIndex={-1}
-            autoComplete="off"
-            value={honeypot}
-            onChange={(e) => setHoneypot(e.target.value)}
-          />
-        </div>
+              className="min-h-32 bg-background rounded-lg"
+            />
+          </div>
           
+          {/* Honeypot field */}
+          <div className="absolute -left-[9999px]" aria-hidden="true">
+            <Input 
+              type="text"
+              name="website"
+              tabIndex={-1}
+              autoComplete="off"
+              value={honeypot}
+              onChange={(e) => setHoneypot(e.target.value)}
+            />
+          </div>
+            
           <Button 
             type="submit" 
             size="lg" 
