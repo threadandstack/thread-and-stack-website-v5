@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Palette, Cog, ArrowRight } from "lucide-react";
 import { Emphasis } from "@/components/Emphasis";
+import brendanMural from "@/assets/brendan-mural.jpeg";
+import brendanPostitsClose from "@/assets/brendan-postits-close.jpeg";
 
 export const OffersGrid = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -44,6 +46,8 @@ export const OffersGrid = () => {
       ],
       link: "/workshops",
       cta: "Explore Services",
+      image: brendanMural,
+      imageAlt: "Creative strategy and brand direction",
     },
     {
       icon: <Cog className="w-6 h-6" />,
@@ -57,6 +61,8 @@ export const OffersGrid = () => {
       ],
       link: "/notion-systems",
       cta: "Explore Services",
+      image: brendanPostitsClose,
+      imageAlt: "Systems and workflow design",
     },
   ];
 
@@ -81,42 +87,53 @@ export const OffersGrid = () => {
           {pillars.map((pillar, index) => (
             <div
               key={index}
-              className="bg-card rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] p-8 md:p-10 transition-all duration-300 flex flex-col"
+              className="bg-card rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] overflow-hidden transition-all duration-300 flex flex-col"
             >
-              <div className="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center mb-6 text-accent">
-                {pillar.icon}
+              {/* Card image header */}
+              <div className="h-48 overflow-hidden">
+                <img 
+                  src={pillar.image} 
+                  alt={pillar.imageAlt} 
+                  className="w-full h-full object-cover"
+                />
               </div>
 
-              <h3 className="text-2xl md:text-3xl mb-2 font-semibold italic">
-                {pillar.title}
-              </h3>
+              <div className="p-8 md:p-10 flex flex-col flex-grow">
+                <div className="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center mb-6 text-accent">
+                  {pillar.icon}
+                </div>
 
-              <p className="text-sm font-sans text-accent mb-4">
-                {pillar.tagline}
-              </p>
+                <h3 className="text-2xl md:text-3xl mb-2 font-semibold italic">
+                  {pillar.title}
+                </h3>
 
-              <p className="font-sans text-muted-foreground leading-relaxed mb-6">
-                {pillar.description}
-              </p>
+                <p className="text-sm font-sans text-accent mb-4">
+                  {pillar.tagline}
+                </p>
 
-              <ul className="space-y-2 mb-8 flex-grow">
-                {pillar.services.map((service, idx) => (
-                  <li key={idx} className="text-sm font-sans text-foreground/70 flex items-start gap-2">
-                    <span className="text-accent mt-0.5">•</span>
-                    {service}
-                  </li>
-                ))}
-              </ul>
+                <p className="font-sans text-muted-foreground leading-relaxed mb-6">
+                  {pillar.description}
+                </p>
 
-              <Button
-                className="w-full group bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl"
-                asChild
-              >
-                <a href={pillar.link}>
-                  {pillar.cta}
-                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </a>
-              </Button>
+                <ul className="space-y-2 mb-8 flex-grow">
+                  {pillar.services.map((service, idx) => (
+                    <li key={idx} className="text-sm font-sans text-foreground/70 flex items-start gap-2">
+                      <span className="text-accent mt-0.5">•</span>
+                      {service}
+                    </li>
+                  ))}
+                </ul>
+
+                <Button
+                  className="w-full group bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl"
+                  asChild
+                >
+                  <a href={pillar.link}>
+                    {pillar.cta}
+                    <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </a>
+                </Button>
+              </div>
             </div>
           ))}
         </div>

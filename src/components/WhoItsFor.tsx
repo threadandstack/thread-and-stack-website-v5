@@ -1,6 +1,7 @@
 import { Check } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import workshopImage from "@/assets/photos/workshop/brendan-22.jpg";
 
 export const WhoItsFor = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -36,7 +37,14 @@ export const WhoItsFor = () => {
   }];
   return <section ref={sectionRef} className={`py-24 px-6 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-40 translate-y-4'}`}>
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-5xl md:text-6xl mb-16 text-balance font-light">For makers, founders, and teams.</h2>
+        <div className="grid md:grid-cols-5 gap-12 items-start mb-12">
+          <div className="md:col-span-3">
+            <h2 className="text-5xl md:text-6xl mb-6 text-balance font-light">For makers, founders, and teams.</h2>
+          </div>
+          <div className="md:col-span-2 overflow-hidden rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.06)]">
+            <img src={workshopImage} alt="Workshop collaboration in action" className="w-full h-48 md:h-56 object-cover" />
+          </div>
+        </div>
         
         <div className="grid md:grid-cols-3 gap-8">
           {audiences.map((audience, index) => <div key={index} className="bg-card p-8 rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] transition-all duration-300">
