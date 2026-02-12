@@ -4,6 +4,10 @@ import { ArrowRight, ChevronDown } from "lucide-react";
 import { Emphasis } from "@/components/Emphasis";
 import { trackCtaClick } from "@/hooks/useAnalytics";
 import heroImage from "@/assets/brendan-graffiti-portrait.jpg";
+import notionAdmin from "@/assets/notion-certified-admin.png";
+import notionAdvanced from "@/assets/notion-advanced.png";
+import notionWorkflows from "@/assets/notion-workflows.png";
+import notionEssentials from "@/assets/notion-essentials.png";
 
 export const HeroAlt = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -54,14 +58,15 @@ export const HeroAlt = () => {
 
             <div className="space-y-4">
               <h1 className="font-serif-pro text-4xl md:text-5xl lg:text-6xl font-semibold italic leading-[1.1] tracking-tight">
-                Your brand deserves{" "}
+                Stories that{" "}
                 <span className="relative inline-block text-accent">
-                  clarity
+                  land
                   {showUnderline && (
                     <Emphasis className="absolute -bottom-2 left-0 right-0" delay={0} animate={true} />
                   )}
                 </span>
-                , not just content.
+                . Systems that{" "}
+                <span className="text-accent">stick</span>.
               </h1>
             </div>
 
@@ -105,18 +110,32 @@ export const HeroAlt = () => {
               }`}
               style={{ transitionDelay: isVisible ? "600ms" : "0ms" }}
             >
-              <p className="text-xs font-sans text-muted-foreground/60 uppercase tracking-wider mb-3">
-                Trusted by teams at
-              </p>
-              <div className="flex flex-wrap gap-x-6 gap-y-2">
-                {clients.map((client) => (
-                  <span
-                    key={client}
-                    className="text-sm font-sans font-medium text-muted-foreground/50"
-                  >
-                    {client}
-                  </span>
-                ))}
+              <div className="flex items-center gap-6">
+                <div>
+                  <p className="text-xs font-sans text-muted-foreground/60 uppercase tracking-wider mb-3">
+                    Trusted by teams at
+                  </p>
+                  <div className="flex flex-wrap gap-x-6 gap-y-2">
+                    {clients.map((client) => (
+                      <span
+                        key={client}
+                        className="text-sm font-sans font-medium text-muted-foreground/50"
+                      >
+                        {client}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <div className="hidden sm:flex items-center gap-1.5 border-l border-border/50 pl-6">
+                  {[notionAdmin, notionAdvanced, notionWorkflows, notionEssentials].map((badge, i) => (
+                    <img
+                      key={i}
+                      src={badge}
+                      alt="Notion certification badge"
+                      className="w-8 h-auto opacity-70 hover:opacity-100 transition-opacity"
+                    />
+                  ))}
+                </div>
               </div>
             </div>
           </div>
