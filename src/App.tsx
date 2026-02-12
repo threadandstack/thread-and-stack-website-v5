@@ -32,6 +32,7 @@ import GeoAdminPage from "./pages/GeoAdminPage";
 import AdminAnalyticsPage from "./pages/AdminAnalyticsPage";
 import FictionFavoritesPage from "./pages/FictionFavoritesPage";
 import CVPage from "./pages/CVPage";
+import NotionSystemsPage from "./pages/NotionSystemsPage";
 import { CookieConsent } from "./components/CookieConsent";
 
 const queryClient = new QueryClient();
@@ -49,6 +50,7 @@ const App = () => (
           <Route path="/sessions-and-sprints" element={<SessionsAndSprints />} />
           <Route path="/fractional-deep-engagement" element={<FractionalDeepEngagement />} />
           <Route path="/workshops" element={<Workshops />} />
+          <Route path="/notion-systems" element={<NotionSystemsPage />} />
           {/* Legacy routes - redirect to new combined pages */}
           <Route path="/clarity-sessions" element={<SessionsAndSprints />} />
           <Route path="/mentorship-sprint" element={<SessionsAndSprints />} />
