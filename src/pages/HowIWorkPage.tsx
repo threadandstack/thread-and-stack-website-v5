@@ -3,6 +3,7 @@ import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import workshopImage from "@/assets/brendan-collaboration.jpeg";
+import heroPhoto from "@/assets/photos/workshop/brendan-23.jpg";
 import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { ContactDrawer } from "@/components/ContactDrawer";
@@ -95,24 +96,39 @@ const HowIWorkPage = () => {
       <Navigation />
       <ContactDrawer open={contactOpen} onOpenChange={setContactOpen} source="how-i-work" />
 
-      {/* My Approach - Four C's Section */}
+      {/* Hero image */}
+      <section className="px-6 mt-16 pt-24 pb-8">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <h1 className="text-5xl md:text-6xl mb-8 text-balance font-light">
+                My Approach
+              </h1>
+              <div className="space-y-6 text-lg leading-relaxed border-l-4 border-accent/20 pl-8">
+                <p>
+                  I believe four fundamental drives form the basis of the human condition. They shape how we work, create, and connect with others.
+                </p>
+              </div>
+            </div>
+            <div className="overflow-hidden rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
+              <img
+                src={heroPhoto}
+                alt="Brendan leading a workshop session"
+                className="w-full h-auto object-cover"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Four C's */}
       <section
         ref={sectionRef}
-        className={`py-24 px-6 mt-16 transition-all duration-1000 ${
+        className={`py-16 px-6 transition-all duration-1000 ${
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         }`}
       >
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-5xl md:text-6xl mb-8 text-balance font-light">
-            My Approach
-          </h1>
-
-          <div className="prose prose-lg max-w-none space-y-6 text-lg leading-relaxed border-l-4 border-accent/20 pl-8 mb-16">
-            <p>
-              I believe four fundamental drives form the basis of the human condition. They shape how we work, create, and connect with others.
-            </p>
-          </div>
-
           <div className="grid md:grid-cols-2 gap-6">
             {fourCs.map((item, index) => (
               <div
