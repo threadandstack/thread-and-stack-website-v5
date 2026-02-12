@@ -65,7 +65,9 @@ export const HeroAlt = () => {
                     <Emphasis className="absolute -bottom-2 left-0 right-0" delay={0} animate={true} />
                   )}
                 </span>
-                . Systems that{" "}
+                .
+                <br className="md:hidden" />
+                Systems that{" "}
                 <span className="text-accent">stick</span>.
               </h1>
             </div>
