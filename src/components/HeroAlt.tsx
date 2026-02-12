@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, ChevronDown } from "lucide-react";
 import { Emphasis } from "@/components/Emphasis";
 import { trackCtaClick } from "@/hooks/useAnalytics";
-import heroImage from "@/assets/brendan-graffiti-portrait.jpg";
+import heroImage from "@/assets/photos/shoreditch/brendan-34.jpg";
 import notionAdmin from "@/assets/notion-certified-admin.png";
 import notionAdvanced from "@/assets/notion-advanced.png";
 import notionWorkflows from "@/assets/notion-workflows.png";
