@@ -44,7 +44,7 @@ export const HeroAlt = () => {
   const clients = ["eBay", "Dentsu", "IMMA Collective", "BfB Labs", "Mixergy"];
 
   return (
-    <section className="relative h-[90vh] min-h-[600px] flex items-end md:items-end lg:items-center overflow-hidden">
+    <section className="relative h-[180vh] md:h-[160vh] lg:h-[90vh] min-h-[600px] flex items-end lg:items-center overflow-hidden">
       {/* Full-bleed background image */}
       <img
         src={heroImage}
