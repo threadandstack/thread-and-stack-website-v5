@@ -45,21 +45,26 @@ export const HeroAlt = () => {
   const clients = ["eBay", "Dentsu", "IMMA Collective", "BfB Labs", "Mixergy"];
 
   return (
-    <section className="relative h-[92vh] md:h-[82vh] lg:h-[104vh] min-h-[400px] flex items-end lg:items-center overflow-visible lg:overflow-hidden">
-      {/* Full-bleed background image — mobile/tablet uses portrait, desktop uses wide */}
-      <img
-        src={heroImageMobile}
-        alt="Brendan — Thread & Stack founder"
-        className="absolute inset-0 w-full h-full object-cover lg:hidden"
-        style={{ objectPosition: `44% 42%` }}
-      />
-      <img
-        src={heroImage}
-        alt="Brendan — Thread & Stack founder"
-        className="absolute inset-0 w-full h-full object-cover hidden lg:block"
-        style={{ objectPosition: `${focalPoint.x}% ${focalPoint.y}%` }}
-      />
-      <div className="absolute inset-0 bg-black/20" />
+    <section className="relative flex items-end lg:items-center mb-24 md:mb-28 lg:mb-0">
+      {/* Image container with fixed height and clipping */}
+      <div className="absolute inset-0 h-[92vh] md:h-[82vh] lg:h-[104vh] min-h-[400px] overflow-hidden">
+        <img
+          src={heroImageMobile}
+          alt="Brendan — Thread & Stack founder"
+          className="absolute inset-0 w-full h-full object-cover lg:hidden"
+          style={{ objectPosition: `44% 42%` }}
+        />
+        <img
+          src={heroImage}
+          alt="Brendan — Thread & Stack founder"
+          className="absolute inset-0 w-full h-full object-cover hidden lg:block"
+          style={{ objectPosition: `${focalPoint.x}% ${focalPoint.y}%` }}
+        />
+        <div className="absolute inset-0 bg-black/20" />
+      </div>
+
+      {/* Spacer to push content to bottom of image area */}
+      <div className="h-[92vh] md:h-[82vh] lg:h-[104vh] min-h-[400px] w-full" />
 
       {/* Dev-only focal point picker */}
       {DEV_MODE && (
@@ -72,7 +77,7 @@ export const HeroAlt = () => {
       )}
 
       {/* Content card floating on top */}
-      <div className="relative w-full max-w-6xl mx-auto px-4 sm:px-6 pb-6 md:pb-8 lg:pb-0 pt-24 translate-y-[15%] lg:translate-y-0">
+      <div className="absolute bottom-0 lg:top-1/2 lg:-translate-y-1/2 lg:bottom-auto w-full max-w-6xl mx-auto left-0 right-0 px-4 sm:px-6 translate-y-[30%] lg:translate-y-[-50%]">
         <div className="bg-background/95 backdrop-blur-sm rounded-2xl p-6 md:p-8 lg:p-10 max-w-lg shadow-[0_8px_30px_rgba(0,0,0,0.12)]">
           {/* Credibility chip */}
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent/8 border border-accent/15 mb-6">
