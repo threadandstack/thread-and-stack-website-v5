@@ -3,12 +3,17 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, ChevronDown } from "lucide-react";
 import { Emphasis } from "@/components/Emphasis";
 import { trackCtaClick } from "@/hooks/useAnalytics";
+import { FocalPointPicker } from "@/components/FocalPointPicker";
 import heroImage from "@/assets/hero-heading.png";
+
+const DEV_MODE = import.meta.env.DEV;
 
 export const HeroAlt = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [showUnderline, setShowUnderline] = useState(false);
   const [scrollOpacity, setScrollOpacity] = useState(1);
+  const [focalPickerEnabled, setFocalPickerEnabled] = useState(false);
+  const [focalPoint, setFocalPoint] = useState({ x: 72, y: 18 });
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -39,18 +44,29 @@ export const HeroAlt = () => {
   const clients = ["eBay", "Dentsu", "IMMA Collective", "BfB Labs", "Mixergy"];
 
   return (
-    <section className="relative h-[90vh] min-h-[600px] flex items-center overflow-hidden">
+    <section className="relative h-[90vh] min-h-[600px] flex items-end md:items-end lg:items-center overflow-hidden">
       {/* Full-bleed background image */}
       <img
         src={heroImage}
         alt="Brendan — Thread & Stack founder"
-        className="absolute inset-0 w-full h-full object-cover object-right-top"
+        className="absolute inset-0 w-full h-full object-cover"
+        style={{ objectPosition: `${focalPoint.x}% ${focalPoint.y}%` }}
       />
       <div className="absolute inset-0 bg-black/20" />
 
+      {/* Dev-only focal point picker */}
+      {DEV_MODE && (
+        <FocalPointPicker
+          enabled={focalPickerEnabled}
+          onToggle={() => setFocalPickerEnabled(!focalPickerEnabled)}
+          focalPoint={focalPoint}
+          onFocalPointChange={setFocalPoint}
+        />
+      )}
+
       {/* Content card floating on top */}
-      <div className="relative w-full max-w-6xl mx-auto px-6 flex items-end pb-12 md:items-center md:pb-0 pt-24">
-        <div className="bg-background/95 backdrop-blur-sm rounded-2xl p-8 md:p-10 max-w-lg shadow-[0_8px_30px_rgba(0,0,0,0.12)]">
+      <div className="relative w-full max-w-6xl mx-auto px-4 sm:px-6 pb-6 md:pb-8 lg:pb-0 pt-24">
+        <div className="bg-background/95 backdrop-blur-sm rounded-2xl p-6 md:p-8 lg:p-10 max-w-lg shadow-[0_8px_30px_rgba(0,0,0,0.12)]">
           {/* Credibility chip */}
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent/8 border border-accent/15 mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
