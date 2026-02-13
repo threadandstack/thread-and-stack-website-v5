@@ -47,7 +47,7 @@ export const HeroAlt = () => {
   return (
     <section className="relative flex items-end lg:items-center mb-24 md:mb-28 lg:mb-0">
       {/* Image container with fixed height and clipping */}
-      <div className="absolute inset-0 h-[92vh] md:h-[82vh] lg:h-[104vh] min-h-[400px] overflow-hidden">
+      <div className="absolute top-0 left-0 right-0 h-[92vh] md:h-[82vh] lg:h-[104vh] min-h-[400px] overflow-hidden">
         <img
           src={heroImageMobile}
           alt="Brendan — Thread & Stack founder"
