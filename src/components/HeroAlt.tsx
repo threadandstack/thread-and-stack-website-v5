@@ -45,13 +45,13 @@ export const HeroAlt = () => {
   const clients = ["eBay", "Dentsu", "IMMA Collective", "BfB Labs", "Mixergy"];
 
   return (
-    <section className="relative h-[138vh] md:h-[123vh] lg:h-[104vh] min-h-[600px] flex items-end lg:items-center overflow-hidden">
+    <section className="relative h-[92vh] md:h-[82vh] lg:h-[104vh] min-h-[400px] flex items-end lg:items-center overflow-visible lg:overflow-hidden">
       {/* Full-bleed background image — mobile/tablet uses portrait, desktop uses wide */}
       <img
         src={heroImageMobile}
         alt="Brendan — Thread & Stack founder"
         className="absolute inset-0 w-full h-full object-cover lg:hidden"
-        style={{ objectPosition: `50% 15%` }}
+        style={{ objectPosition: `44% 42%` }}
       />
       <img
         src={heroImage}
@@ -72,7 +72,7 @@ export const HeroAlt = () => {
       )}
 
       {/* Content card floating on top */}
-      <div className="relative w-full max-w-6xl mx-auto px-4 sm:px-6 pb-6 md:pb-8 lg:pb-0 pt-24">
+      <div className="relative w-full max-w-6xl mx-auto px-4 sm:px-6 pb-6 md:pb-8 lg:pb-0 pt-24 translate-y-[15%] lg:translate-y-0">
         <div className="bg-background/95 backdrop-blur-sm rounded-2xl p-6 md:p-8 lg:p-10 max-w-lg shadow-[0_8px_30px_rgba(0,0,0,0.12)]">
           {/* Credibility chip */}
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent/8 border border-accent/15 mb-6">
