@@ -5,6 +5,7 @@ import { Emphasis } from "@/components/Emphasis";
 import { trackCtaClick } from "@/hooks/useAnalytics";
 import { FocalPointPicker } from "@/components/FocalPointPicker";
 import heroImage from "@/assets/hero-heading.png";
+import heroImageMobile from "@/assets/photos/shoreditch/brendan-33.jpg";
 
 const DEV_MODE = import.meta.env.DEV;
 
@@ -45,11 +46,17 @@ export const HeroAlt = () => {
 
   return (
     <section className="relative h-[180vh] md:h-[160vh] lg:h-[90vh] min-h-[600px] flex items-end lg:items-center overflow-hidden">
-      {/* Full-bleed background image */}
+      {/* Full-bleed background image — mobile/tablet uses portrait, desktop uses wide */}
+      <img
+        src={heroImageMobile}
+        alt="Brendan — Thread & Stack founder"
+        className="absolute inset-0 w-full h-full object-cover lg:hidden"
+        style={{ objectPosition: `50% 15%` }}
+      />
       <img
         src={heroImage}
         alt="Brendan — Thread & Stack founder"
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 w-full h-full object-cover hidden lg:block"
         style={{ objectPosition: `${focalPoint.x}% ${focalPoint.y}%` }}
       />
       <div className="absolute inset-0 bg-black/20" />
