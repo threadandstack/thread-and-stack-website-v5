@@ -45,7 +45,7 @@ export const HeroAlt = () => {
   const clients = ["eBay", "Dentsu", "IMMA Collective", "BfB Labs", "Mixergy"];
 
   return (
-    <section className="relative h-[180vh] md:h-[160vh] lg:h-[90vh] min-h-[600px] flex items-end lg:items-center overflow-hidden">
+    <section className="relative h-[120vh] md:h-[107vh] lg:h-[90vh] min-h-[600px] flex items-end lg:items-center overflow-hidden">
       {/* Full-bleed background image — mobile/tablet uses portrait, desktop uses wide */}
       <img
         src={heroImageMobile}
