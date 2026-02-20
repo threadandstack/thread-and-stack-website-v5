@@ -166,7 +166,7 @@ const NotionSystemsPage = () => {
                 <strong>Human-centered. Tool-agnostic. Creativity-first.</strong>
               </p>
 
-              <p className="text-xl font-semibold font-sans mt-4 mb-6">From £1k · 6 × 1hr Sessions</p>
+              <p className="text-xl font-semibold font-sans mt-4 mb-6">£1,500 · 6 × 1hr Sessions</p>
 
               <Button
                 className="bg-accent-foreground text-accent hover:bg-accent-foreground/90 group rounded-xl not-italic font-sans"
