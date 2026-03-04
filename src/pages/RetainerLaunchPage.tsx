@@ -101,7 +101,7 @@ const RetainerLaunchPage = () => {
 
           <div className="grid grid-cols-3 max-sm:grid-cols-1 gap-4 mt-2">
             {outcomes.map((o) => (
-              <div key={o.title} className="bg-card border border-border rounded-2xl px-5 py-[22px]">
+              <div key={o.title} className="bg-card rounded-2xl px-5 py-[22px] shadow-[var(--shadow-soft)]">
                 <div className="text-xl mb-2.5">{o.icon}</div>
                 <h4 className="font-serif-pro text-[17px] italic font-semibold text-primary mb-1.5">{o.title}</h4>
                 <p className="text-[13px] leading-relaxed text-muted-foreground">{o.desc}</p>
@@ -133,7 +133,7 @@ const RetainerLaunchPage = () => {
           {/* Section 04 */}
           <SectionLabel num="04" title="Structure and pricing" />
 
-          <div className="rounded-2xl overflow-hidden border border-border mt-2">
+          <div className="rounded-2xl overflow-hidden shadow-[var(--shadow-soft)] mt-2">
             <table className="w-full border-collapse">
               <thead>
                 <tr className="bg-primary text-primary-foreground">
@@ -144,7 +144,7 @@ const RetainerLaunchPage = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr className="bg-muted border-b border-border">
+                <tr className="bg-muted">
                   <td className="px-5 py-4 font-serif-pro italic text-[15px] font-semibold text-primary align-top">Startups & growth-stage brands</td>
                   <td className="px-5 py-4 text-[13.5px] text-foreground align-top"><span className="font-sans text-[15px] font-bold text-primary">£700–£850</span></td>
                   <td className="px-5 py-4 text-[13.5px] text-foreground align-top">1 day / week</td>
