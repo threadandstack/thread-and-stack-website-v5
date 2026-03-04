@@ -33,6 +33,7 @@ import AdminAnalyticsPage from "./pages/AdminAnalyticsPage";
 import FictionFavoritesPage from "./pages/FictionFavoritesPage";
 import CVPage from "./pages/CVPage";
 import NotionSystemsPage from "./pages/NotionSystemsPage";
+import RetainerLaunchPage from "./pages/RetainerLaunchPage";
 import { CookieConsent } from "./components/CookieConsent";
 
 const queryClient = new QueryClient();
@@ -74,6 +75,7 @@ const App = () => (
           <Route path="/admin/analytics" element={<AdminAnalyticsPage />} />
           <Route path="/favourite-fiction" element={<FictionFavoritesPage />} />
           <Route path="/private/brendan-rodgers-cv" element={<CVPage />} />
+          <Route path="/retainer/launch" element={<RetainerLaunchPage />} />
           {/* Legacy route - redirect to new canonical URL */}
           <Route path="/fiction-favorites" element={<Navigate to="/favourite-fiction" replace />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
