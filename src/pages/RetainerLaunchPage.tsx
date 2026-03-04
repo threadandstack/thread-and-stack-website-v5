@@ -1,5 +1,7 @@
 import { Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import WhiteStacked from "@/assets/logos/White_TS_Stacked.svg";
+import GreyStacked from "@/assets/logos/Grey_TS_Stacked.svg";
 
 const outcomes = [
   {
@@ -63,13 +65,15 @@ const RetainerLaunchPage = () => {
       <div className="bg-background w-full max-w-[780px] rounded-2xl shadow-[0_8px_40px_rgba(0,0,0,0.10)] overflow-hidden print:shadow-none print:rounded-none print:max-w-full">
         {/* Header */}
         <div className="bg-primary text-primary-foreground px-14 pt-[52px] pb-11 max-sm:px-7 max-sm:pt-9 max-sm:pb-8">
-          <p className="font-sans text-[11px] font-semibold tracking-[0.12em] uppercase text-muted-foreground mb-5">
-            Thread & Stack · <span className="text-accent">Fractional Narrative & Strategy Retainer</span>
-          </p>
+          <div className="flex items-center gap-3 mb-6">
+            <img src={WhiteStacked} alt="Thread & Stack" className="h-8" />
+            <span className="text-primary-foreground/40">·</span>
+            <span className="font-sans text-[11px] font-semibold tracking-[0.12em] uppercase text-accent">Fractional Narrative & Strategy Retainer</span>
+          </div>
           <h1 className="font-serif-pro text-[42px] max-sm:text-[32px] italic font-bold leading-[1.18] text-primary-foreground mb-5">
             The strategy brain<br />your launch <em className="text-accent italic">actually needs</em>.
           </h1>
-          <p className="font-sans text-[15px] text-muted-foreground leading-relaxed max-w-[520px]">
+          <p className="font-sans text-[15px] text-primary-foreground/60 leading-relaxed max-w-[520px]">
             Senior narrative and messaging leadership on retainer, for teams launching a new brand or sub-brand who need fast, confident decisions without the overhead of a full-time hire.
           </p>
         </div>
@@ -170,9 +174,7 @@ const RetainerLaunchPage = () => {
           <p className="text-[13.5px] text-muted-foreground leading-[1.55] max-w-[380px]">
             If this feels like the right kind of support for where you are, the next step is a short conversation about <strong className="text-foreground font-semibold">what the next six to eight weeks actually need to look like.</strong> No commitment required at that stage.
           </p>
-          <span className="font-serif-pro text-[15px] italic font-semibold text-muted-foreground whitespace-nowrap">
-            Thread <span className="text-accent">&</span> Stack
-          </span>
+          <img src={GreyStacked} alt="Thread & Stack" className="h-8 opacity-50 flex-shrink-0" />
         </div>
       </div>
     </div>
