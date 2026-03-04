@@ -243,16 +243,16 @@ export const BrandBook = () => {
           <div className="space-y-4 pt-4">
             <p className="text-xs text-muted-foreground uppercase tracking-widest">Dark Mode</p>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-              <ColorSwatch name="Background" hex="#1C2533" dark />
-              <ColorSwatch name="Foreground" hex="#F5EDE3" dark />
-              <ColorSwatch name="Card" hex="#212D3D" dark />
-              <ColorSwatch name="Primary" hex="#F5EDE3" dark />
-              <ColorSwatch name="Accent (Ember)" hex="#D95F33" dark />
-              <ColorSwatch name="Muted" hex="#273040" dark />
-              <ColorSwatch name="Muted Foreground" hex="#A89E8F" dark />
-              <ColorSwatch name="Secondary" hex="#5E9E7E" dark />
-              <ColorSwatch name="Border" hex="#2E3845" dark />
-              <ColorSwatch name="Destructive" hex="#B33D3D" dark />
+              <ColorSwatch name="Background" hex="#181B24" dark />
+              <ColorSwatch name="Foreground" hex="#EAEBED" dark />
+              <ColorSwatch name="Card" hex="#1F2330" dark />
+              <ColorSwatch name="Primary" hex="#EAEBED" dark />
+              <ColorSwatch name="Accent (Indigo)" hex="#3D5AF5" dark />
+              <ColorSwatch name="Muted" hex="#262A38" dark />
+              <ColorSwatch name="Muted Foreground" hex="#828795" dark />
+              <ColorSwatch name="Secondary" hex="#6B7CC4" dark />
+              <ColorSwatch name="Border" hex="#2B2F3D" dark />
+              <ColorSwatch name="Destructive" hex="#CC3333" dark />
             </div>
           </div>
         </section>
