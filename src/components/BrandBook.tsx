@@ -84,6 +84,33 @@ const SubstackIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
+// Color swatch with click-to-copy hex
+const ColorSwatch = ({ name, hex, dark }: { name: string; hex: string; dark?: boolean }) => {
+  const [copied, setCopied] = useState(false);
+  
+  const handleCopy = () => {
+    navigator.clipboard.writeText(hex);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
+  };
+
+  return (
+    <button
+      onClick={handleCopy}
+      className="text-left group transition-all hover:scale-[1.02] active:scale-[0.98]"
+    >
+      <div
+        className="w-full aspect-[3/2] rounded-xl border border-border/50 shadow-sm mb-2"
+        style={{ backgroundColor: hex }}
+      />
+      <p className="text-sm font-medium truncate">{name}</p>
+      <p className="text-xs font-mono text-muted-foreground group-hover:text-accent transition-colors">
+        {copied ? "Copied!" : hex}
+      </p>
+    </button>
+  );
+};
+
 // Brand Book - Living reference for Thread & Stack
 export const BrandBook = () => {
   const [showUnderline, setShowUnderline] = useState(false);
@@ -181,6 +208,51 @@ export const BrandBook = () => {
                 <img src={WhiteSocialSq} alt="White SocialSq" className="h-12 w-12" />
                 <p className="text-xs text-background/70 mt-2">White</p>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* COLOR PALETTE */}
+        <section className="space-y-8 py-16 border-b border-border">
+          <div className="flex items-baseline gap-4">
+            <span className="text-xs text-muted-foreground uppercase tracking-widest">01</span>
+            <h2 className="font-serif-pro text-xl font-semibold">Colour Palette</h2>
+          </div>
+          <p className="text-sm text-muted-foreground max-w-xl">
+            Core brand colours with hex codes. Click any swatch to copy the hex value.
+          </p>
+
+          {/* Light Mode */}
+          <div className="space-y-4">
+            <p className="text-xs text-muted-foreground uppercase tracking-widest">Light Mode</p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+              <ColorSwatch name="Background" hex="#FFFFFF" />
+              <ColorSwatch name="Foreground" hex="#0D0D0D" />
+              <ColorSwatch name="Card" hex="#FCFCFC" />
+              <ColorSwatch name="Primary" hex="#1A1A1A" />
+              <ColorSwatch name="Accent (Indigo)" hex="#1026D6" />
+              <ColorSwatch name="Muted" hex="#F5F5F5" />
+              <ColorSwatch name="Muted Foreground" hex="#666666" />
+              <ColorSwatch name="Secondary" hex="#666666" />
+              <ColorSwatch name="Border" hex="#EBEBEB" />
+              <ColorSwatch name="Destructive" hex="#CC2929" />
+            </div>
+          </div>
+
+          {/* Dark Mode */}
+          <div className="space-y-4 pt-4">
+            <p className="text-xs text-muted-foreground uppercase tracking-widest">Dark Mode</p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+              <ColorSwatch name="Background" hex="#1C2533" dark />
+              <ColorSwatch name="Foreground" hex="#F5EDE3" dark />
+              <ColorSwatch name="Card" hex="#212D3D" dark />
+              <ColorSwatch name="Primary" hex="#F5EDE3" dark />
+              <ColorSwatch name="Accent (Ember)" hex="#D95F33" dark />
+              <ColorSwatch name="Muted" hex="#273040" dark />
+              <ColorSwatch name="Muted Foreground" hex="#A89E8F" dark />
+              <ColorSwatch name="Secondary" hex="#5E9E7E" dark />
+              <ColorSwatch name="Border" hex="#2E3845" dark />
+              <ColorSwatch name="Destructive" hex="#B33D3D" dark />
             </div>
           </div>
         </section>
