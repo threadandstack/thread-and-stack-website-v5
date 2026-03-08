@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
@@ -10,6 +10,7 @@ import { Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import brendanAvatar from "@/assets/brendan-avatar.png";
 import { trackBlogRead } from "@/hooks/useAnalytics";
+import { sanitizeHtml } from "@/lib/sanitize";
 
 interface BlogPostDetail {
   title: string;
@@ -240,7 +241,7 @@ const BlogPostPage = () => {
             {/* Content */}
             <div 
               className="blog-content prose prose-lg max-w-none"
-              dangerouslySetInnerHTML={{ __html: post.content }}
+              dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.content) }}
             />
 
             {/* Subtle CTA Callout */}
