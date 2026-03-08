@@ -99,7 +99,7 @@ export const Navigation = ({ variant = "default" }: NavigationProps) => {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <NavItem href="/blog" label="Stacked Behaviours" icon={BookOpen} onClick={() => trackNavClick('Stacked Behaviours', 'header')} />
+            <NavItem href="/blog" label="Journal" icon={BookOpen} onClick={() => trackNavClick('Journal', 'header')} />
 
             <Button size="sm" className="group bg-accent text-accent-foreground hover:bg-accent/90 rounded-full px-5 ml-1 not-italic font-sans text-sm" asChild>
               <a href="/#contact" className="flex items-center" onClick={() => trackCtaClick('Get Started', 'header')}>
@@ -152,7 +152,7 @@ export const Navigation = ({ variant = "default" }: NavigationProps) => {
                 </DropdownMenuContent>
               </DropdownMenu>
 
-              <NavItem href="/blog" label="Stacked Behaviours" icon={BookOpen} onClick={() => trackNavClick('Stacked Behaviours', 'floating')} />
+              <NavItem href="/blog" label="Journal" icon={BookOpen} onClick={() => trackNavClick('Journal', 'floating')} />
 
               <Button size="sm" className="group bg-accent text-accent-foreground hover:bg-accent/90 rounded-full px-5 ml-1 not-italic font-sans text-sm" asChild>
                 <a href="/#contact" className="flex items-center" onClick={() => trackCtaClick('Get Started', 'floating-nav')}>
@@ -202,7 +202,7 @@ export const Navigation = ({ variant = "default" }: NavigationProps) => {
 
             <div className="border-t border-border/50 pt-4">
               <a href="/blog" className="block py-3 text-lg font-sans text-foreground/80 hover:text-foreground transition-colors not-italic" onClick={() => setIsMobileMenuOpen(false)}>
-                Stacked Behaviours
+                Journal
               </a>
             </div>
 
