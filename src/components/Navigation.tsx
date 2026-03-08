@@ -106,7 +106,7 @@ export const Navigation = ({ variant = "default" }: NavigationProps) => {
 
             <a 
               href="/blog" 
-              className={`text-base font-serif-pro transition-colors italic ${
+              className={`text-base font-sans transition-colors not-italic ${
                 isImageHero ? "text-foreground/80 hover:text-foreground" : isDark ? "text-white/90 hover:text-white" : "text-foreground/80 hover:text-foreground"
               }`}
               onClick={() => trackNavClick('Stacked Behaviours', 'header')}
