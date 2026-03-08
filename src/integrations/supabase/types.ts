@@ -184,7 +184,36 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      fiction_favorites_public: {
+        Row: {
+          answer: string | null
+          cluster_key: string | null
+          created_at: string | null
+          emojis: string | null
+          enriched_answer: string | null
+          genre: string | null
+          id: string | null
+        }
+        Insert: {
+          answer?: string | null
+          cluster_key?: string | null
+          created_at?: string | null
+          emojis?: string | null
+          enriched_answer?: string | null
+          genre?: string | null
+          id?: string | null
+        }
+        Update: {
+          answer?: string | null
+          cluster_key?: string | null
+          created_at?: string | null
+          emojis?: string | null
+          enriched_answer?: string | null
+          genre?: string | null
+          id?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       [_ in never]: never
