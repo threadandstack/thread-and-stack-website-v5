@@ -93,9 +93,9 @@ const BlogPage = () => {
       
       <section className="py-24 px-6">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-5xl md:text-6xl mb-6 font-light text-center">
-            Stacked <span className="italic">Behaviours</span>
-          </h1>
+          <div className="flex justify-center mb-6">
+            <img src={journalLogo} alt="Thread & Stack Journal" className="h-32 md:h-40 w-auto" />
+          </div>
           <p className="text-xl text-muted-foreground mb-8 text-center leading-relaxed max-w-2xl mx-auto">
             Thoughts on brand, creativity, and the systems that build our businesses.
           </p>
