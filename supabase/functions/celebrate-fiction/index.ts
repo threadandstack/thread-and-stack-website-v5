@@ -138,7 +138,7 @@ Pick the most iconic, GIF-able character or title.`
     // Fallback to celebration GIF if none found
     if (!gifUrl) {
       try {
-        const fallbackUrl = `https://tenor.googleapis.com/v2/search?q=celebration&key=AIzaSyAyimkuYQYF_FXVALexPuGQctUWRURdCYQ&limit=5&media_filter=gif`;
+        const fallbackUrl = `https://tenor.googleapis.com/v2/search?q=celebration&key=${TENOR_API_KEY}&limit=5&media_filter=gif`;
         const fallbackResponse = await fetch(fallbackUrl);
         if (fallbackResponse.ok) {
           const fallbackData = await fallbackResponse.json();
