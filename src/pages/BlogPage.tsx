@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/card";
 import { Link, useSearchParams } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import journalLogo from "@/assets/journal-logo.png";
 import { BlogNewsletterCTA } from "@/components/BlogNewsletterCTA";
 import { SubscribeLightbox } from "@/components/SubscribeLightbox";
 interface BlogPost {
