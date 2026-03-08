@@ -174,6 +174,22 @@ Examples:
     const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
+    // Validate record exists and was recently created (within 5 minutes)
+    const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000).toISOString();
+    const { data: record } = await supabase
+      .from("fiction_favorites")
+      .select("id, created_at")
+      .eq("id", id)
+      .gt("created_at", fiveMinutesAgo)
+      .single();
+
+    if (!record) {
+      return new Response(
+        JSON.stringify({ error: "Record not found or too old to enrich" }),
+        { status: 404, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
     // Prepare metadata update
     const metadataUpdate: Record<string, unknown> = {};
     if (metadata?.device_type) metadataUpdate.device_type = metadata.device_type;
