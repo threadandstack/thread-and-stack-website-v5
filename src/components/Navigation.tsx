@@ -278,7 +278,7 @@ export const Navigation = ({ variant = "default" }: NavigationProps) => {
             <div className="border-t border-border/50 pt-4">
               <a
                 href="/blog"
-                className="block py-3 text-lg font-serif-pro text-foreground/80 hover:text-foreground transition-colors italic"
+                className="block py-3 text-lg font-sans text-foreground/80 hover:text-foreground transition-colors not-italic"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Stacked Behaviours
