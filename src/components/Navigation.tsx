@@ -201,7 +201,7 @@ export const Navigation = ({ variant = "default" }: NavigationProps) => {
 
               <a
                 href="/blog"
-                className="text-base font-serif-pro text-foreground/80 hover:text-foreground transition-colors italic"
+                className="text-base font-sans text-foreground/80 hover:text-foreground transition-colors not-italic"
                 onClick={() => trackNavClick('Stacked Behaviours', 'floating')}
               >
                 Stacked Behaviours
