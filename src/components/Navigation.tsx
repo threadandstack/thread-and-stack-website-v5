@@ -44,8 +44,8 @@ export const Navigation = ({ variant = "default" }: NavigationProps) => {
       className={`group flex items-center gap-0 ${navLinkClass} ${defaultLinkColor} pl-4 pr-4 py-2 rounded-full hover:bg-muted transition-all ${className}`}
       onClick={onClick}
     >
-      <span className="w-5 h-5 flex items-center justify-center overflow-hidden mr-0 transition-all duration-300 opacity-0 scale-75 -ml-1 group-hover:opacity-100 group-hover:scale-100 group-hover:mr-1.5 group-hover:ml-0">
-        <Icon className="w-4 h-4" />
+      <span className="w-0 h-5 flex items-center justify-center overflow-hidden transition-all duration-300 opacity-0 scale-75 group-hover:w-5 group-hover:opacity-100 group-hover:scale-100 group-hover:mr-1.5">
+        <Icon className="w-4 h-4 shrink-0" />
       </span>
       {label}
     </a>
