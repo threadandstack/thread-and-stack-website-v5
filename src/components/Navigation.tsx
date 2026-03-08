@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, User, Compass, Layers, BookOpen, Rocket } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -24,10 +24,7 @@ export const Navigation = ({ variant = "default" }: NavigationProps) => {
   const [isLogoHovered, setIsLogoHovered] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -38,93 +35,83 @@ export const Navigation = ({ variant = "default" }: NavigationProps) => {
     { href: "/notion-systems", label: "Notion & Systems Consultancy" },
   ];
 
+  const navLinkClass = "text-sm font-sans transition-all not-italic";
+  const defaultLinkColor = "text-foreground/70 hover:text-foreground";
+
+  const NavItem = ({ href, label, icon: Icon, onClick, className = "" }: { href: string; label: string; icon: React.ComponentType<{ className?: string }>; onClick?: () => void; className?: string }) => (
+    <a
+      href={href}
+      className={`group flex items-center gap-0 ${navLinkClass} ${defaultLinkColor} pl-4 pr-4 py-2 rounded-full hover:bg-muted transition-all ${className}`}
+      onClick={onClick}
+    >
+      <span className="w-5 h-5 flex items-center justify-center overflow-hidden mr-0 transition-all duration-300 opacity-0 scale-75 -ml-1 group-hover:opacity-100 group-hover:scale-100 group-hover:mr-1.5 group-hover:ml-0">
+        <Icon className="w-4 h-4" />
+      </span>
+      {label}
+    </a>
+  );
+
   return (
     <>
-      {/* Hero-level Navigation - Subtle, always visible */}
-      <nav className="absolute top-0 left-0 right-0 z-40 py-6 px-6">
+      {/* Hero-level Navigation */}
+      <nav className="absolute top-0 left-0 right-0 z-40 py-5 px-6">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           {/* Logo */}
-          <a 
-            href="/" 
+          <a
+            href="/"
             className="block relative"
             onMouseEnter={() => setIsLogoHovered(true)}
             onMouseLeave={() => setIsLogoHovered(false)}
           >
-            <img 
+            <img
               src={isDark ? WhiteStacked : GreyStacked}
-              alt="Thread & Stack" 
+              alt="Thread & Stack"
               className="h-12 md:h-14 w-auto transition-opacity duration-500 ease-in-out"
               style={{ opacity: isLogoHovered ? 0 : 1 }}
             />
-            <img 
+            <img
               src={IndigoStacked}
-              alt="" 
+              alt=""
               className="h-12 md:h-14 w-auto absolute inset-0 transition-opacity duration-500 ease-in-out"
               style={{ opacity: isLogoHovered ? 1 : 0 }}
             />
           </a>
 
-          <div className={`hidden md:flex items-center gap-6 ${isImageHero ? 'bg-background/90 backdrop-blur-sm rounded-full px-6 py-2.5 shadow-[0_2px_12px_rgba(0,0,0,0.08)]' : 'gap-8'}`}>
-            <a 
-              href="/about" 
-              className={`text-base font-sans transition-colors not-italic ${
-                isImageHero ? "text-foreground/80 hover:text-foreground" : isDark ? "text-white/90 hover:text-white" : "text-foreground/80 hover:text-foreground"
-              }`}
-              onClick={() => trackNavClick('About', 'header')}
-            >
-              About
-            </a>
+          {/* Desktop pill nav */}
+          <div className="hidden md:flex items-center gap-1 bg-background/90 backdrop-blur-md rounded-full px-2 py-1.5 shadow-[0_2px_20px_rgba(0,0,0,0.08)] border border-border/30">
+            <NavItem href="/about" label="About" icon={User} onClick={() => trackNavClick('About', 'header')} />
+            <NavItem href="/how-i-work" label="How I Work" icon={Compass} onClick={() => trackNavClick('How I Work', 'header')} />
 
-            <a 
-              href="/how-i-work" 
-              className={`text-base font-sans transition-colors not-italic ${
-                isImageHero ? "text-foreground/80 hover:text-foreground" : isDark ? "text-white/90 hover:text-white" : "text-foreground/80 hover:text-foreground"
-              }`}
-              onClick={() => trackNavClick('How I Work', 'header')}
-            >
-              How I Work
-            </a>
-            
-            {/* Services Dropdown */}
             <DropdownMenu>
-              <DropdownMenuTrigger className={`flex items-center gap-1 text-base font-sans transition-colors not-italic ${
-                isImageHero ? "text-foreground/80 hover:text-foreground" : isDark ? "text-white/90 hover:text-white" : "text-foreground/80 hover:text-foreground"
-              }`}>
+              <DropdownMenuTrigger className={`group flex items-center gap-0 ${navLinkClass} ${defaultLinkColor} pl-4 pr-4 py-2 rounded-full hover:bg-muted transition-all`}>
+                <span className="w-5 h-5 flex items-center justify-center overflow-hidden mr-0 transition-all duration-300 opacity-0 scale-75 -ml-1 group-hover:opacity-100 group-hover:scale-100 group-hover:mr-1.5 group-hover:ml-0">
+                  <Layers className="w-4 h-4" />
+                </span>
                 Services
-                <ChevronDown className="w-4 h-4" />
+                <ChevronDown className="w-3.5 h-3.5 ml-1" />
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="bg-background border border-border z-50 min-w-[280px]">
-                {services.map((service) => (
-                  <DropdownMenuItem key={service.href} asChild>
-                    <a href={service.href} className="cursor-pointer" onClick={() => trackNavClick(service.label, 'header')}>
-                      {service.label}
-                    </a>
+              <DropdownMenuContent align="center" className="bg-background border border-border z-50 min-w-[280px] rounded-xl">
+                {services.map((s) => (
+                  <DropdownMenuItem key={s.href} asChild>
+                    <a href={s.href} className="cursor-pointer" onClick={() => trackNavClick(s.label, 'header')}>{s.label}</a>
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <a 
-              href="/blog" 
-              className={`text-base font-sans transition-colors not-italic ${
-                isImageHero ? "text-foreground/80 hover:text-foreground" : isDark ? "text-white/90 hover:text-white" : "text-foreground/80 hover:text-foreground"
-              }`}
-              onClick={() => trackNavClick('Stacked Behaviours', 'header')}
-            >
-              Stacked Behaviours
-            </a>
+            <NavItem href="/blog" label="Stacked Behaviours" icon={BookOpen} onClick={() => trackNavClick('Stacked Behaviours', 'header')} />
 
-            {/* Get Started CTA */}
-            <Button 
-              size="sm" 
-              className="bg-accent text-accent-foreground hover:bg-accent/90 rounded-xl not-italic font-sans"
-              asChild
-            >
-              <a href="/#contact" onClick={() => trackCtaClick('Get Started', 'header')}>Get Started</a>
+            <Button size="sm" className="group bg-accent text-accent-foreground hover:bg-accent/90 rounded-full px-5 ml-1 not-italic font-sans text-sm" asChild>
+              <a href="/#contact" className="flex items-center" onClick={() => trackCtaClick('Get Started', 'header')}>
+                <span className="w-5 h-5 flex items-center justify-center overflow-hidden mr-0 transition-all duration-300 opacity-0 scale-75 -ml-1 group-hover:opacity-100 group-hover:scale-100 group-hover:mr-1.5 group-hover:ml-0">
+                  <Rocket className="w-4 h-4" />
+                </span>
+                Get Started
+              </a>
             </Button>
           </div>
 
-          {/* Mobile Menu Button - Hero */}
+          {/* Mobile Menu Button */}
           <Button
             variant="ghost"
             size="icon"
@@ -136,168 +123,95 @@ export const Navigation = ({ variant = "default" }: NavigationProps) => {
         </div>
       </nav>
 
-      {/* Floating Navigation - Appears on scroll */}
-      <nav
-        className={`fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border transition-all duration-300 ${
-          isScrolled ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0 pointer-events-none"
-        }`}
-      >
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex items-center justify-between h-16">
-            {/* Logo */}
-            <a 
-              href="/" 
-              className="block relative"
-              onMouseEnter={() => setIsLogoHovered(true)}
-              onMouseLeave={() => setIsLogoHovered(false)}
-            >
-              <img 
-                src={GreyStacked}
-                alt="Thread & Stack" 
-                className="h-10 md:h-12 w-auto transition-opacity duration-500 ease-in-out"
-                style={{ opacity: isLogoHovered ? 0 : 1 }}
-              />
-              <img 
-                src={IndigoStacked}
-                alt="" 
-                className="h-10 md:h-12 w-auto absolute inset-0 transition-opacity duration-500 ease-in-out"
-                style={{ opacity: isLogoHovered ? 1 : 0 }}
-              />
+      {/* Floating Navigation - pill on scroll */}
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0 pointer-events-none"}`}>
+        <div className="max-w-7xl mx-auto px-6 py-3">
+          <div className="flex items-center justify-between bg-background/95 backdrop-blur-md rounded-full px-4 py-2 shadow-[0_4px_24px_rgba(0,0,0,0.1)] border border-border/30">
+            <a href="/" className="block relative" onMouseEnter={() => setIsLogoHovered(true)} onMouseLeave={() => setIsLogoHovered(false)}>
+              <img src={GreyStacked} alt="Thread & Stack" className="h-8 md:h-10 w-auto transition-opacity duration-500" style={{ opacity: isLogoHovered ? 0 : 1 }} />
+              <img src={IndigoStacked} alt="" className="h-8 md:h-10 w-auto absolute inset-0 transition-opacity duration-500" style={{ opacity: isLogoHovered ? 1 : 0 }} />
             </a>
 
-            <div className="hidden md:flex items-center gap-8">
-              <a
-                href="/about"
-                className="text-base font-sans text-foreground/80 hover:text-foreground transition-colors not-italic"
-                onClick={() => trackNavClick('About', 'floating')}
-              >
-                About
-              </a>
+            <div className="hidden md:flex items-center gap-1">
+              <NavItem href="/about" label="About" icon={User} onClick={() => trackNavClick('About', 'floating')} />
+              <NavItem href="/how-i-work" label="How I Work" icon={Compass} onClick={() => trackNavClick('How I Work', 'floating')} />
 
-              <a
-                href="/how-i-work"
-                className="text-base font-sans text-foreground/80 hover:text-foreground transition-colors not-italic"
-                onClick={() => trackNavClick('How I Work', 'floating')}
-              >
-                How I Work
-              </a>
-
-              {/* Services Dropdown */}
               <DropdownMenu>
-                <DropdownMenuTrigger className="flex items-center gap-1 text-base font-sans text-foreground/80 hover:text-foreground transition-colors not-italic">
-                  Services
-                  <ChevronDown className="w-4 h-4" />
+                <DropdownMenuTrigger className={`group flex items-center gap-0 ${navLinkClass} ${defaultLinkColor} pl-4 pr-4 py-2 rounded-full hover:bg-muted transition-all`}>
+                  <span className="w-5 h-5 flex items-center justify-center overflow-hidden mr-0 transition-all duration-300 opacity-0 scale-75 -ml-1 group-hover:opacity-100 group-hover:scale-100 group-hover:mr-1.5 group-hover:ml-0">
+                    <Layers className="w-4 h-4" />
+                  </span>
+                  Services <ChevronDown className="w-3.5 h-3.5 ml-1" />
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="center" className="bg-background border border-border z-50 min-w-[280px]">
-                  {services.map((service) => (
-                    <DropdownMenuItem key={service.href} asChild>
-                      <a href={service.href} className="cursor-pointer" onClick={() => trackNavClick(service.label, 'floating')}>
-                        {service.label}
-                      </a>
+                <DropdownMenuContent align="center" className="bg-background border border-border z-50 min-w-[280px] rounded-xl">
+                  {services.map((s) => (
+                    <DropdownMenuItem key={s.href} asChild>
+                      <a href={s.href} className="cursor-pointer" onClick={() => trackNavClick(s.label, 'floating')}>{s.label}</a>
                     </DropdownMenuItem>
                   ))}
                 </DropdownMenuContent>
               </DropdownMenu>
 
-              <a
-                href="/blog"
-                className="text-base font-sans text-foreground/80 hover:text-foreground transition-colors not-italic"
-                onClick={() => trackNavClick('Stacked Behaviours', 'floating')}
-              >
-                Stacked Behaviours
-              </a>
+              <NavItem href="/blog" label="Stacked Behaviours" icon={BookOpen} onClick={() => trackNavClick('Stacked Behaviours', 'floating')} />
 
-              <Button 
-                size="sm" 
-                className="bg-accent text-accent-foreground hover:bg-accent/90 rounded-xl not-italic font-sans"
-                asChild
-              >
-                <a href="/#contact" onClick={() => trackCtaClick('Get Started', 'floating-nav')}>Get Started</a>
+              <Button size="sm" className="group bg-accent text-accent-foreground hover:bg-accent/90 rounded-full px-5 ml-1 not-italic font-sans text-sm" asChild>
+                <a href="/#contact" className="flex items-center" onClick={() => trackCtaClick('Get Started', 'floating-nav')}>
+                  <span className="w-5 h-5 flex items-center justify-center overflow-hidden mr-0 transition-all duration-300 opacity-0 scale-75 -ml-1 group-hover:opacity-100 group-hover:scale-100 group-hover:mr-1.5 group-hover:ml-0">
+                    <Rocket className="w-4 h-4" />
+                  </span>
+                  Get Started
+                </a>
               </Button>
             </div>
 
-            {/* Mobile Menu Button - Floating */}
-            <Button
-              variant="ghost"
-              size="icon"
-              className="md:hidden"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            >
+            <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
               {isMobileMenuOpen ? <X /> : <Menu />}
             </Button>
           </div>
         </div>
       </nav>
 
-      {/* Mobile Menu Overlay - Works from any scroll position */}
+      {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
-        <div 
+        <div
           className="fixed inset-0 z-[60] bg-background/95 backdrop-blur-sm md:hidden"
-          style={{ paddingTop: isScrolled ? '64px' : '80px' }}
+          style={{ paddingTop: '80px' }}
         >
           <div className="absolute top-0 right-0 p-6">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
+            <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(false)}>
               <X />
             </Button>
           </div>
-          
+
           <div className="px-6 py-4 space-y-4 overflow-y-auto h-full">
-            <a
-              href="/about"
-              className="block py-3 text-lg font-sans text-foreground/80 hover:text-foreground transition-colors"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
+            <a href="/about" className="block py-3 text-lg font-sans text-foreground/80 hover:text-foreground transition-colors not-italic" onClick={() => setIsMobileMenuOpen(false)}>
               About
             </a>
-            <a
-              href="/how-i-work"
-              className="block py-3 text-lg font-sans text-foreground/80 hover:text-foreground transition-colors"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
+            <a href="/how-i-work" className="block py-3 text-lg font-sans text-foreground/80 hover:text-foreground transition-colors not-italic" onClick={() => setIsMobileMenuOpen(false)}>
               How I Work
             </a>
 
             <div className="border-t border-border/50 pt-4">
               <p className="text-xs text-muted-foreground mb-3 not-italic font-sans">Services</p>
-              {services.map((service) => (
-                <a
-                  key={service.href}
-                  href={service.href}
-                  className="block py-3 text-lg font-sans text-foreground/80 hover:text-foreground transition-colors pl-4"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {service.label}
+              {services.map((s) => (
+                <a key={s.href} href={s.href} className="block py-3 text-lg font-sans text-foreground/80 hover:text-foreground transition-colors pl-4 not-italic" onClick={() => setIsMobileMenuOpen(false)}>
+                  {s.label}
                 </a>
               ))}
             </div>
 
             <div className="border-t border-border/50 pt-4">
-              <a
-                href="/blog"
-                className="block py-3 text-lg font-sans text-foreground/80 hover:text-foreground transition-colors not-italic"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
+              <a href="/blog" className="block py-3 text-lg font-sans text-foreground/80 hover:text-foreground transition-colors not-italic" onClick={() => setIsMobileMenuOpen(false)}>
                 Stacked Behaviours
               </a>
             </div>
 
-            <Button 
-              size="lg" 
-              className="w-full bg-accent text-accent-foreground hover:bg-accent/90 rounded-xl mt-4 font-sans"
-              asChild
-            >
+            <Button size="lg" className="w-full bg-accent text-accent-foreground hover:bg-accent/90 rounded-full mt-4 font-sans not-italic" asChild>
               <a href="/#contact" onClick={() => setIsMobileMenuOpen(false)}>Get Started</a>
             </Button>
           </div>
         </div>
       )}
-
-      {/* Spacer for floating nav */}
-      {isScrolled && <div className="h-16" />}
     </>
   );
 };
