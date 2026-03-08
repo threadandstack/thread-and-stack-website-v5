@@ -91,7 +91,7 @@ export default function FictionFavoritesPage() {
     const fetchFavorites = async () => {
       const { data, error } = await supabase
         .from("fiction_favorites")
-        .select("*")
+        .select("id, answer, enriched_answer, emojis, cluster_key, genre, created_at")
         .order("created_at", { ascending: false });
 
       if (error) {
