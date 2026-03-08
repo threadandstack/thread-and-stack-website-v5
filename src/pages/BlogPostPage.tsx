@@ -10,6 +10,7 @@ import { Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import brendanAvatar from "@/assets/brendan-avatar.png";
 import { trackBlogRead } from "@/hooks/useAnalytics";
+import { sanitizeHtml } from "@/lib/sanitize";
 
 interface BlogPostDetail {
   title: string;
