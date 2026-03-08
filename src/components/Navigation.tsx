@@ -106,7 +106,7 @@ export const Navigation = ({ variant = "default" }: NavigationProps) => {
 
             <a 
               href="/blog" 
-              className={`text-base font-serif-pro transition-colors italic ${
+              className={`text-base font-sans transition-colors not-italic ${
                 isImageHero ? "text-foreground/80 hover:text-foreground" : isDark ? "text-white/90 hover:text-white" : "text-foreground/80 hover:text-foreground"
               }`}
               onClick={() => trackNavClick('Stacked Behaviours', 'header')}
@@ -201,7 +201,7 @@ export const Navigation = ({ variant = "default" }: NavigationProps) => {
 
               <a
                 href="/blog"
-                className="text-base font-serif-pro text-foreground/80 hover:text-foreground transition-colors italic"
+                className="text-base font-sans text-foreground/80 hover:text-foreground transition-colors not-italic"
                 onClick={() => trackNavClick('Stacked Behaviours', 'floating')}
               >
                 Stacked Behaviours
@@ -278,7 +278,7 @@ export const Navigation = ({ variant = "default" }: NavigationProps) => {
             <div className="border-t border-border/50 pt-4">
               <a
                 href="/blog"
-                className="block py-3 text-lg font-serif-pro text-foreground/80 hover:text-foreground transition-colors italic"
+                className="block py-3 text-lg font-sans text-foreground/80 hover:text-foreground transition-colors not-italic"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Stacked Behaviours
