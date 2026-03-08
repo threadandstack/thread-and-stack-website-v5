@@ -152,7 +152,7 @@ export const Navigation = ({ variant = "default" }: NavigationProps) => {
                 </DropdownMenuContent>
               </DropdownMenu>
 
-              <NavItem href="/blog" label="Stacked Behaviours" icon={BookOpen} onClick={() => trackNavClick('Stacked Behaviours', 'floating')} />
+              <NavItem href="/blog" label="Journal" icon={BookOpen} onClick={() => trackNavClick('Journal', 'floating')} />
 
               <Button size="sm" className="group bg-accent text-accent-foreground hover:bg-accent/90 rounded-full px-5 ml-1 not-italic font-sans text-sm" asChild>
                 <a href="/#contact" className="flex items-center" onClick={() => trackCtaClick('Get Started', 'floating-nav')}>
