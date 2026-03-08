@@ -110,7 +110,15 @@ Pick the most iconic, GIF-able character or title.`
     }
 
     // Search Tenor for a relevant GIF
-    const tenorUrl = `https://tenor.googleapis.com/v2/search?q=${encodeURIComponent(gifSearch)}&key=AIzaSyAyimkuYQYF_FXVALexPuGQctUWRURdCYQ&limit=5&media_filter=gif`;
+    const TENOR_API_KEY = Deno.env.get("TENOR_API_KEY");
+    if (!TENOR_API_KEY) {
+      console.error("TENOR_API_KEY is not configured");
+      return new Response(
+        JSON.stringify({ message, gif_url: null }),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+    const tenorUrl = `https://tenor.googleapis.com/v2/search?q=${encodeURIComponent(gifSearch)}&key=${TENOR_API_KEY}&limit=5&media_filter=gif`;
     
     let gifUrl = null;
     try {
