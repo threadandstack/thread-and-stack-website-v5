@@ -92,7 +92,7 @@ const PrivacyPolicy = () => {
                 
                 <div 
                   className="blog-content prose prose-lg max-w-none"
-                  dangerouslySetInnerHTML={{ __html: content }}
+                  dangerouslySetInnerHTML={{ __html: sanitizeHtml(content) }}
                 />
               </div>
             </>

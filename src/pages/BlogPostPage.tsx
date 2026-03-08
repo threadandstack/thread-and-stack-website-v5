@@ -241,7 +241,7 @@ const BlogPostPage = () => {
             {/* Content */}
             <div 
               className="blog-content prose prose-lg max-w-none"
-              dangerouslySetInnerHTML={{ __html: post.content }}
+              dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.content) }}
             />
 
             {/* Subtle CTA Callout */}
