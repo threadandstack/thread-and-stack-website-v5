@@ -349,7 +349,7 @@ const IndexHorizontal = () => {
                 variant="outline"
                 size="lg"
                 className="rounded-xl font-sans"
-                onClick={() => { setActivePanel(1); setIsTransitioning(true); setTimeout(() => setIsTransitioning(false), 800); }}
+onClick={() => scrollToPanel(1)}
               >
                 <ArrowRight className="mr-2 w-4 h-4 rotate-180" />
                 Back to Home
