@@ -30,7 +30,7 @@ const AboutPage = () => {
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-light text-white mb-8">
               Background &amp; Experience
             </h1>
-            <div className="space-y-4 text-base md:text-lg leading-relaxed text-white/90 max-w-3xl">
+            <div className="space-y-4 text-base md:text-lg leading-relaxed text-white/90 max-w-xl md:max-w-2xl">
               <p>
                 I studied Media, Communications &amp; Culture and Philosophy at Keele University, a combination that wasn't common at the time. Media Communications were dismissed as a "Mickey Mouse degree," and Philosophy was seen as a waste of time. I chose it because I saw the impact these two subjects could have together. Now, these disciplines underpin our modern world.
               </p>
