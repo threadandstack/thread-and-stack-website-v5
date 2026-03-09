@@ -256,14 +256,13 @@ const FractionalDeepEngagement = () => {
             <p className="text-lg text-muted-foreground mb-6">
               I work as an integrated member of your team, providing ongoing strategic guidance on brand positioning, campaign development, creative direction, and visual identity systems. You get senior-level strategic thinking and design craft without the full-time salary, benefits, and commitment.
             </p>
-            <Button 
+            <PillButton 
               size="lg" 
-              className="bg-accent text-accent-foreground hover:bg-accent/90 group"
+              icon={MessageCircle}
               onClick={() => setContactOpen(true)}
             >
               Discuss Your Needs
-              <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-            </Button>
+            </PillButton>
           </div>
 
           <div className="space-y-8">
