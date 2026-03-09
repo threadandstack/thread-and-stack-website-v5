@@ -210,14 +210,9 @@ const Workshops = () => {
 
           <div className="bg-card border border-border rounded-lg p-8 mb-12">
             <p className="text-lg mb-4 font-semibold">Total investment: From £2k (lean sprint) to £11k (comprehensive overhaul)</p>
-            <Button 
-              size="lg" 
-              className="bg-accent text-accent-foreground hover:bg-accent/90 group"
-              onClick={() => setContactOpen(true)}
-            >
+            <PillButton size="lg" icon={Rocket} onClick={() => setContactOpen(true)}>
               Book a Scoping Call
-              <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-            </Button>
+            </PillButton>
           </div>
 
           <div className="space-y-16">
