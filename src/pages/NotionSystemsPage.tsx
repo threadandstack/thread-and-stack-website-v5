@@ -26,7 +26,7 @@ const NotionSystemsPage = () => {
     {
       icon: <Zap className="w-6 h-6" />,
       label: "Rapid Intervention",
-      title: "Notion Sense-check Session",
+      title: "Notion Session",
       tagline: "1 System · 1 Discussion · 1 Workflow fixed",
       description:
         "A single focused session to unblock a Notion problem, validate a workspace decision, or fix a broken workflow.",
