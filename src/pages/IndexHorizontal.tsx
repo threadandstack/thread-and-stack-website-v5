@@ -411,7 +411,7 @@ onClick={() => scrollToPanel(1)}
                   <Button
                     size="lg"
                     className="bg-accent text-accent-foreground hover:bg-accent/90 transition-all duration-300 text-base px-7 group rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] not-italic font-sans font-semibold"
-                    onClick={() => { setActivePanel(0); setIsTransitioning(true); setTimeout(() => setIsTransitioning(false), 800); }}
+                    onClick={() => scrollToPanel(0)}
                   >
                     <Palette className="mr-2 w-4 h-4" />
                     Creative Services
