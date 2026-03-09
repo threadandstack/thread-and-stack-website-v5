@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, MessageCircle } from "lucide-react";
+import { PillButton } from "@/components/ui/pill-button";
+import { MessageCircle } from "lucide-react";
 import { ContactDrawer } from "@/components/ContactDrawer";
 
 interface BlogCTACalloutProps {
