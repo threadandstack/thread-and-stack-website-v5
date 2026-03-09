@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Check } from "lucide-react";
+import { PillButton } from "@/components/ui/pill-button";
+import { Check, Rocket } from "lucide-react";
 import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
 import { FAQ } from "@/components/FAQ";
