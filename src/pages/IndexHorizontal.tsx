@@ -421,7 +421,7 @@ onClick={() => scrollToPanel(1)}
                     size="lg"
                     variant="outline"
                     className="text-base px-7 rounded-xl hover:bg-foreground hover:text-background not-italic shadow-[0_2px_8px_rgba(0,0,0,0.04)] font-sans"
-                    onClick={() => { setActivePanel(2); setIsTransitioning(true); setTimeout(() => setIsTransitioning(false), 800); }}
+                    onClick={() => scrollToPanel(2)}
                   >
                     Notion & Systems
                     <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
