@@ -1,7 +1,7 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
-import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { PillButton } from "@/components/ui/pill-button";
+import { Rocket } from "lucide-react";
 import workshopImage from "@/assets/brendan-collaboration.jpeg";
 import heroPhoto from "@/assets/photos/workshop/brendan-23.jpg";
 import { useEffect, useRef, useState } from "react";
