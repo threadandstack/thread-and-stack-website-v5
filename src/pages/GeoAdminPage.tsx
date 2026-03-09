@@ -109,7 +109,7 @@ const SITE_PAGES = [
   { path: "/about", label: "About", type: "site" as const },
   { path: "/how-i-work", label: "How I Work", type: "site" as const },
   { path: "/sessions-and-sprints", label: "Sessions & Sprints", type: "site" as const },
-  { path: "/fractional-deep-engagement", label: "Fractional Deep Engagement", type: "site" as const },
+  { path: "/narratives-strategy", label: "Narratives & Strategy Services", type: "site" as const },
   { path: "/workshops", label: "Workshops", type: "site" as const },
   { path: "/blog", label: "Blog", type: "site" as const },
 ];

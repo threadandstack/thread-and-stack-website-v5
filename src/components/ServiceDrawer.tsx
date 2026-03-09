@@ -260,7 +260,7 @@ export const ServiceDrawer = ({
     if (offer.link === "/workshops") {
       return <WorkshopsContent />;
     }
-    if (offer.link === "/fractional-deep-engagement") {
+    if (offer.link === "/narratives-strategy" || offer.link === "/fractional-deep-engagement") {
       return <FractionalDeepContent />;
     }
     return null;
