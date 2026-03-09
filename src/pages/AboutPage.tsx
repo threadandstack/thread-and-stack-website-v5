@@ -24,12 +24,12 @@ const AboutPage = () => {
             alt="Brendan walking past street art in Shoreditch"
             className="absolute inset-0 w-full h-full object-cover object-[65%_20%]"
           />
-          
-        </div>
-        <div className="bg-background px-6 pb-10 -mt-16 relative z-10">
-          <h1 className="text-4xl font-light text-foreground mb-6">
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+          <h1 className="absolute bottom-6 left-6 z-10 text-5xl font-light text-white w-[50vw] text-left">
             Background &amp; Experience
           </h1>
+        </div>
+        <div className="bg-background px-6 pb-10 pt-6 relative z-10">
           <div className="space-y-3 text-sm leading-relaxed text-muted-foreground">
             <p>
               I studied Media, Communications &amp; Culture and Philosophy at Keele University, a combination that wasn't common at the time. Media Communications were dismissed as a "Mickey Mouse degree," and Philosophy was seen as a waste of time. I chose it because I saw the impact these two subjects could have together. Now, these disciplines underpin our modern world.
