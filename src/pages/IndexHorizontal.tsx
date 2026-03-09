@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Navigation } from "@/components/Navigation";
-import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, ArrowLeft, Check, Palette, Cog, Zap, Clock, Target, Layers, Users, Calendar, Repeat, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight, ArrowLeft, Check, Palette, Cog, Zap, Clock, Target, Layers, Users, Repeat, ChevronLeft, ChevronRight } from "lucide-react";
 import { Emphasis } from "@/components/Emphasis";
 import heroImage from "@/assets/hero-heading.png";
 import heroImageMobile from "@/assets/photos/shoreditch/brendan-33.jpg";
@@ -16,10 +15,13 @@ import notionHeroPhoto from "@/assets/notion-certified-hero.png";
 import notionAmbassadorBlack from "@/assets/notion-ambassador-black.png";
 import { trackCtaClick } from "@/hooks/useAnalytics";
 
+const PANEL_WIDTH = 1200; // px width per content section
+const TOTAL_WIDTH = PANEL_WIDTH * 3; // Creative + Hero + Notion
+
 const IndexHorizontal = () => {
-  // 0 = Creative (left), 1 = Hero (center), 2 = Notion (right)
-  const [activePanel, setActivePanel] = useState(1);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [scrollProgress, setScrollProgress] = useState(0.5); // 0=far left, 0.5=center, 1=far right
+  const [isReady, setIsReady] = useState(false);
 
   // Add noindex
   useEffect(() => {
@@ -30,47 +32,25 @@ const IndexHorizontal = () => {
     return () => { document.head.removeChild(meta); };
   }, []);
 
-  // Set initial scroll position to center panel
+  // Set initial scroll to center
   useEffect(() => {
-    if (scrollContainerRef.current) {
-      // Disable smooth scroll for initial positioning
-      scrollContainerRef.current.style.scrollBehavior = 'auto';
-      scrollContainerRef.current.scrollLeft = window.innerWidth;
-      // Re-enable smooth scroll
-      setTimeout(() => {
-        if (scrollContainerRef.current) {
-          scrollContainerRef.current.style.scrollBehavior = 'smooth';
-        }
-      }, 50);
-    }
+    const container = scrollContainerRef.current;
+    if (!container) return;
+    // Center the hero section
+    const centerScroll = (container.scrollWidth - container.clientWidth) / 2;
+    container.scrollLeft = centerScroll;
+    setIsReady(true);
   }, []);
 
-  // Intercept scroll wheel → horizontal navigation
+  // Map vertical scroll → horizontal
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
       const container = scrollContainerRef.current;
       if (!container) return;
 
-      let target = e.target as HTMLElement | null;
-      let shouldScrollVertically = false;
-      
-      while (target && target !== container) {
-        const style = window.getComputedStyle(target);
-        if (style.overflowY === 'auto' || style.overflowY === 'scroll') {
-          const atTop = target.scrollTop <= 0;
-          const atBottom = Math.abs(target.scrollHeight - target.clientHeight - target.scrollTop) <= 1;
-          
-          if ((e.deltaY < 0 && !atTop) || (e.deltaY > 0 && !atBottom)) {
-            shouldScrollVertically = true;
-            break;
-          }
-        }
-        target = target.parentElement;
-      }
-
-      if (!shouldScrollVertically && Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
         e.preventDefault();
-        container.scrollLeft += e.deltaY;
+        container.scrollLeft += e.deltaY * 1.5;
       }
     };
 
@@ -83,363 +63,200 @@ const IndexHorizontal = () => {
     };
   }, []);
 
+  // Track scroll progress
   const handleScroll = useCallback(() => {
-    if (!scrollContainerRef.current) return;
-    const scrollLeft = scrollContainerRef.current.scrollLeft;
-    const windowWidth = window.innerWidth;
-    const panel = Math.round(scrollLeft / windowWidth);
-    if (panel !== activePanel) {
-      setActivePanel(panel);
+    const container = scrollContainerRef.current;
+    if (!container) return;
+    const maxScroll = container.scrollWidth - container.clientWidth;
+    if (maxScroll > 0) {
+      setScrollProgress(container.scrollLeft / maxScroll);
     }
-  }, [activePanel]);
+  }, []);
 
-  const scrollToPanel = (index: number) => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollTo({ left: index * window.innerWidth, behavior: 'smooth' });
-    }
+  const scrollToSection = (section: 'creative' | 'hero' | 'notion') => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+    const maxScroll = container.scrollWidth - container.clientWidth;
+    const targets = { creative: 0, hero: maxScroll / 2, notion: maxScroll };
+    container.scrollTo({ left: targets[section], behavior: 'smooth' });
   };
 
-  const panelLabels = ['Creative Services', 'Home', 'Notion & Systems'];
   const clients = ["eBay", "Dentsu", "IMMA Collective", "BfB Labs", "Mixergy"];
+
+  // Calculate which zone we're roughly in for indicators
+  const zone = scrollProgress < 0.3 ? 'creative' : scrollProgress > 0.7 ? 'notion' : 'hero';
 
   return (
     <div className="h-screen overflow-hidden relative bg-background">
-      <style>{`.hide-scrollbar::-webkit-scrollbar { display: none; }`}</style>
+      <style>{`
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .horizontal-canvas { scrollbar-width: none; -ms-overflow-style: none; }
+      `}</style>
       <Navigation variant="image-hero" />
 
-      {/* Panel indicator dots */}
-      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3">
-        {panelLabels.map((label, i) => (
-          <button
-            key={i}
-            onClick={() => scrollToPanel(i)}
-            className={`group flex items-center gap-2 transition-all duration-500`}
-          >
-            <span className={`block rounded-full transition-all duration-500 ${
-              activePanel === i 
-                ? 'w-8 h-3 bg-accent' 
-                : 'w-3 h-3 bg-foreground/20 hover:bg-foreground/40'
-            }`} />
-            <span className={`text-xs font-sans transition-all duration-300 whitespace-nowrap ${
-              activePanel === i ? 'opacity-100 text-foreground' : 'opacity-0 group-hover:opacity-60 text-muted-foreground'
-            }`}>
-              {label}
-            </span>
-          </button>
-        ))}
+      {/* Scroll progress bar */}
+      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-4">
+        <button onClick={() => scrollToSection('creative')} className={`text-xs font-sans transition-all duration-300 ${zone === 'creative' ? 'text-accent font-medium' : 'text-muted-foreground/50 hover:text-muted-foreground'}`}>
+          Creative
+        </button>
+        <div className="w-32 h-1 bg-muted rounded-full overflow-hidden relative">
+          <div 
+            className="absolute top-0 left-0 h-full bg-accent rounded-full transition-all duration-150"
+            style={{ width: `${scrollProgress * 100}%` }}
+          />
+        </div>
+        <button onClick={() => scrollToSection('notion')} className={`text-xs font-sans transition-all duration-300 ${zone === 'notion' ? 'text-accent font-medium' : 'text-muted-foreground/50 hover:text-muted-foreground'}`}>
+          Notion
+        </button>
       </div>
 
-      {/* Direction hints */}
-      {activePanel === 1 && (
+      {/* Direction hints when near center */}
+      {zone === 'hero' && isReady && (
         <>
           <div className="fixed left-6 top-1/2 -translate-y-1/2 z-40 flex flex-col items-center gap-2 animate-pulse pointer-events-none">
-            <ChevronLeft className="w-6 h-6 text-accent" />
-            <span className="text-xs font-sans text-muted-foreground writing-mode-vertical [writing-mode:vertical-rl] rotate-180">
-              Creative
-            </span>
+            <ChevronLeft className="w-5 h-5 text-accent/60" />
+            <span className="text-[10px] font-sans text-muted-foreground/40 [writing-mode:vertical-rl] rotate-180">Creative</span>
           </div>
           <div className="fixed right-6 top-1/2 -translate-y-1/2 z-40 flex flex-col items-center gap-2 animate-pulse pointer-events-none">
-            <ChevronRight className="w-6 h-6 text-accent" />
-            <span className="text-xs font-sans text-muted-foreground [writing-mode:vertical-rl]">
-              Notion
-            </span>
+            <ChevronRight className="w-5 h-5 text-accent/60" />
+            <span className="text-[10px] font-sans text-muted-foreground/40 [writing-mode:vertical-rl]">Notion</span>
           </div>
         </>
       )}
 
-      {/* Scroll direction hint on center */}
-      {activePanel === 1 && (
-        <div className="fixed bottom-20 left-1/2 -translate-x-1/2 z-40 text-center pointer-events-none">
-          <p className="text-xs font-sans text-muted-foreground/60 animate-fade-in">
-            Scroll sideways or use trackpad
-          </p>
-        </div>
-      )}
-
-      {/* Three panels in a horizontal strip */}
+      {/* Continuous horizontal canvas */}
       <div
         ref={scrollContainerRef}
         onScroll={handleScroll}
-        className="flex h-full w-full overflow-x-auto overflow-y-hidden snap-x snap-mandatory scroll-smooth hide-scrollbar"
-        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        className="flex h-full overflow-x-auto overflow-y-hidden horizontal-canvas hide-scrollbar scroll-smooth"
+        style={{ opacity: isReady ? 1 : 0, transition: 'opacity 0.3s ease' }}
       >
-        {/* ===== PANEL 0: Creative Services (Left) ===== */}
-        <div className="w-screen h-screen overflow-y-auto flex-shrink-0 snap-center">
-          <div className="min-h-screen">
+        {/* ===== LEFT ZONE: Creative Services ===== */}
+        <div className="flex-shrink-0 h-full flex items-center" style={{ width: `${PANEL_WIDTH}px` }}>
+          <div className="w-full max-w-5xl mx-auto px-12 py-20">
             {/* Creative Hero */}
-            <section className="pt-28 pb-16 px-6">
-              <div className="max-w-6xl mx-auto">
-                <div className="grid md:grid-cols-2 gap-12 items-center">
-                  <div>
-                    <div className="w-14 h-14 bg-accent/10 rounded-2xl flex items-center justify-center mb-6 text-accent">
-                      <Palette className="w-7 h-7" />
-                    </div>
-                    <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold italic leading-[1.1] mb-6">
-                      Creative{" "}
-                      <span className="relative inline-block text-accent">
-                        Consultancy
-                        {activePanel === 0 && <Emphasis className="absolute -bottom-2 left-0 right-0" delay={0.3} />}
-                      </span>
-                    </h1>
-                    <p className="font-sans text-lg md:text-xl text-muted-foreground max-w-xl leading-relaxed mb-4">
-                      Brand strategy, fractional marketing, and creative direction for purpose-led founders who need their marketing to actually reach people.
-                    </p>
-                    <p className="font-sans text-sm text-accent mb-8">Brand Strategy & Fractional Marketing</p>
-                    <Button
-                      size="lg"
-                      className="bg-accent text-accent-foreground hover:bg-accent/90 group rounded-xl not-italic font-sans font-semibold"
-                      asChild
-                    >
-                      <a href="/workshops" onClick={() => trackCtaClick('Explore Creative Services', 'horizontal-creative')}>
-                        Explore Services
-                        <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                      </a>
-                    </Button>
-                  </div>
-                  <div className="hidden md:block">
-                    <img src={brendanCafe} alt="Creative strategy" className="rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.08)] w-full h-auto" />
-                  </div>
+            <div className="grid md:grid-cols-2 gap-12 items-center mb-20">
+              <div>
+                <div className="w-14 h-14 bg-accent/10 rounded-2xl flex items-center justify-center mb-6 text-accent">
+                  <Palette className="w-7 h-7" />
                 </div>
+                <h2 className="text-5xl md:text-6xl font-semibold italic leading-[1.1] mb-6">
+                  Creative{" "}
+                  <span className="relative inline-block text-accent">
+                    Consultancy
+                    <Emphasis className="absolute -bottom-2 left-0 right-0" delay={0.3} />
+                  </span>
+                </h2>
+                <p className="font-sans text-lg text-muted-foreground max-w-xl leading-relaxed mb-4">
+                  Brand strategy, fractional marketing, and creative direction for purpose-led founders who need their marketing to actually reach people.
+                </p>
+                <p className="text-sm font-sans text-accent mb-8">Brand Strategy & Fractional Marketing</p>
+                <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 group rounded-xl not-italic font-sans font-semibold" asChild>
+                  <a href="/workshops" onClick={() => trackCtaClick('Explore Creative Services', 'horizontal-creative')}>
+                    Explore Services <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </a>
+                </Button>
               </div>
-            </section>
-
-            {/* Workshops */}
-            <section className="py-20 px-6 bg-card">
-              <div className="max-w-5xl mx-auto">
-                <div className="grid md:grid-cols-2 gap-12 items-start">
-                  <div>
-                    <div className="flex items-center gap-3 mb-6">
-                      <div className="w-10 h-10 bg-accent/10 rounded-xl flex items-center justify-center text-accent">
-                        <Users className="w-5 h-5" />
-                      </div>
-                      <div>
-                        <h2 className="text-3xl font-semibold italic">Brand Connection Workshops</h2>
-                        <p className="text-sm font-sans text-accent">Modular & Team-Based</p>
-                      </div>
-                    </div>
-                    <p className="font-sans text-muted-foreground leading-relaxed mb-4">
-                      Modular team workshops that align everyone around story, positioning, and creative direction. Build shared language and strategic clarity in one focused engagement.
-                    </p>
-                    <p className="text-xl font-semibold font-sans mb-6">From £2,000</p>
-                    <Button className="bg-accent text-accent-foreground hover:bg-accent/90 group rounded-xl not-italic font-sans" asChild>
-                      <a href="/workshops">
-                        Learn More <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                      </a>
-                    </Button>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold font-sans mb-4">Workshop Outcomes</h3>
-                    <ul className="space-y-3">
-                      {["Aligned team narrative and brand positioning", "Clear creative direction and visual identity framework", "Actionable roadmap for implementation"].map((item, idx) => (
-                        <li key={idx} className="flex items-start gap-3">
-                          <Check className="w-4 h-4 text-accent mt-1 flex-shrink-0" />
-                          <span className="font-sans text-muted-foreground">{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
+              <div className="hidden md:block">
+                <img src={brendanCafe} alt="Creative strategy" className="rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.08)] w-full h-auto" />
               </div>
-            </section>
+            </div>
 
-            {/* Fractional Strategy */}
-            <section className="py-20 px-6 bg-[hsl(var(--accent))] text-accent-foreground">
-              <div className="max-w-5xl mx-auto">
-                <div className="grid md:grid-cols-2 gap-12 items-start">
-                  <div>
-                    <div className="flex items-center gap-3 mb-6">
-                      <div className="w-10 h-10 bg-accent-foreground/10 rounded-xl flex items-center justify-center text-accent-foreground">
-                        <Target className="w-5 h-5" />
-                      </div>
-                      <div>
-                        <h2 className="text-3xl font-semibold italic">Fractional Strategy</h2>
-                        <p className="text-sm font-sans opacity-80">Ongoing Partnership</p>
-                      </div>
-                    </div>
-                    <p className="font-sans opacity-90 leading-relaxed mb-4">
-                      Monthly retainer for ongoing brand and campaign strategy. Senior strategic thinking without the overhead of a full-time hire. I work as an embedded part of your team.
-                    </p>
-                    <div className="space-y-3 mb-6">
-                      {[
-                        { title: "Core Retainer", desc: "2-3 days/month" },
-                        { title: "Extended Retainer", desc: "4-6 days/month" },
-                        { title: "Strategic Leadership", desc: "8-10 days/month" },
-                      ].map((tier, idx) => (
-                        <div key={idx} className="bg-accent-foreground/10 rounded-xl p-3 flex justify-between items-center">
-                          <div>
-                            <p className="font-sans font-medium">{tier.title}</p>
-                            <p className="text-sm font-sans opacity-70">{tier.desc}</p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                    <Button className="bg-accent-foreground text-accent hover:bg-accent-foreground/90 group rounded-xl not-italic font-sans" asChild>
-                      <a href="/fractional-deep-engagement">
-                        Learn More <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                      </a>
-                    </Button>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold font-sans mb-4">What You Get</h3>
-                    <ul className="space-y-3">
-                      {[
-                        "Senior strategic thinking on demand",
-                        "Campaign strategy and creative direction",
-                        "Brand positioning and messaging support",
-                        "Quarterly strategic reviews",
-                      ].map((item, idx) => (
-                        <li key={idx} className="flex items-start gap-3">
-                          <Check className="w-4 h-4 text-accent-foreground mt-1 flex-shrink-0" />
-                          <span className="font-sans opacity-90">{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+            {/* Service cards row */}
+            <div className="grid md:grid-cols-3 gap-6">
+              <div className="bg-card rounded-2xl p-6 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-9 h-9 bg-accent/10 rounded-xl flex items-center justify-center text-accent"><Users className="w-4 h-4" /></div>
+                  <h3 className="text-lg font-semibold italic">Workshops</h3>
                 </div>
+                <p className="font-sans text-sm text-muted-foreground mb-3">Align your team around story, positioning, and creative direction.</p>
+                <p className="text-lg font-semibold font-sans mb-4">From £2,000</p>
+                <Button variant="outline" size="sm" className="rounded-xl font-sans w-full" asChild>
+                  <a href="/workshops">Learn More <ArrowRight className="ml-1 w-3 h-3" /></a>
+                </Button>
               </div>
-            </section>
 
-            {/* Deep Engagement */}
-            <section className="py-20 px-6 bg-card">
-              <div className="max-w-5xl mx-auto">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 bg-accent/10 rounded-xl flex items-center justify-center text-accent">
-                    <Layers className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h2 className="text-3xl font-semibold italic">Deep Engagement</h2>
-                    <p className="text-sm font-sans text-accent">2-6 Month Projects</p>
-                  </div>
+              <div className="bg-[hsl(var(--accent))] text-accent-foreground rounded-2xl p-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-9 h-9 bg-accent-foreground/10 rounded-xl flex items-center justify-center"><Target className="w-4 h-4" /></div>
+                  <h3 className="text-lg font-semibold italic">Fractional Strategy</h3>
                 </div>
-                <div className="grid md:grid-cols-2 gap-12 items-start">
-                  <div>
-                    <p className="font-sans text-muted-foreground leading-relaxed mb-6">
-                      Full brand refreshes, complete narrative transformations, and strategic overhauls. For organizations ready for meaningful change — not surface-level polish.
-                    </p>
-                    <p className="text-xl font-semibold font-sans mb-6">From £10-25k</p>
-                    <Button className="bg-accent text-accent-foreground hover:bg-accent/90 group rounded-xl not-italic font-sans" asChild>
-                      <a href="/fractional-deep-engagement">
-                        Start a Conversation <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                      </a>
-                    </Button>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold font-sans mb-4">Engagement Includes</h3>
-                    <ul className="space-y-3">
-                      {[
-                        "Discovery and strategic audit",
-                        "Brand positioning and narrative development",
-                        "Visual identity and creative direction",
-                        "Implementation roadmap and team handover",
-                      ].map((item, idx) => (
-                        <li key={idx} className="flex items-start gap-3">
-                          <Check className="w-4 h-4 text-accent mt-1 flex-shrink-0" />
-                          <span className="font-sans text-muted-foreground">{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                <p className="font-sans text-sm opacity-85 mb-3">Monthly retainer. Senior strategic thinking without the overhead.</p>
+                <div className="space-y-1.5 mb-4">
+                  {["Core: 2-3 days/mo", "Extended: 4-6 days/mo", "Leadership: 8-10 days/mo"].map((t, i) => (
+                    <p key={i} className="text-xs font-sans opacity-70">{t}</p>
+                  ))}
                 </div>
+                <Button className="bg-accent-foreground text-accent hover:bg-accent-foreground/90 rounded-xl font-sans w-full" size="sm" asChild>
+                  <a href="/fractional-deep-engagement">Learn More <ArrowRight className="ml-1 w-3 h-3" /></a>
+                </Button>
               </div>
-            </section>
 
-            {/* Back to center CTA */}
-            <section className="py-16 px-6 text-center">
-              <Button
-                variant="outline"
-                size="lg"
-                className="rounded-xl font-sans"
-onClick={() => scrollToPanel(1)}
-              >
-                <ArrowRight className="mr-2 w-4 h-4 rotate-180" />
-                Back to Home
-              </Button>
-            </section>
+              <div className="bg-card rounded-2xl p-6 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-9 h-9 bg-accent/10 rounded-xl flex items-center justify-center text-accent"><Layers className="w-4 h-4" /></div>
+                  <h3 className="text-lg font-semibold italic">Deep Engagement</h3>
+                </div>
+                <p className="font-sans text-sm text-muted-foreground mb-3">Full brand refreshes and strategic overhauls. 2-6 month projects.</p>
+                <p className="text-lg font-semibold font-sans mb-4">From £10-25k</p>
+                <Button variant="outline" size="sm" className="rounded-xl font-sans w-full" asChild>
+                  <a href="/fractional-deep-engagement">Learn More <ArrowRight className="ml-1 w-3 h-3" /></a>
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* ===== PANEL 1: Hero (Center) ===== */}
-        <div className="w-screen h-screen flex-shrink-0 relative snap-center">
+        {/* ===== CENTER ZONE: Hero ===== */}
+        <div className="flex-shrink-0 h-full relative" style={{ width: `${PANEL_WIDTH}px` }}>
           {/* Background image */}
           <div className="absolute inset-0 overflow-hidden">
-            <img
-              src={heroImageMobile}
-              alt="Brendan — Thread & Stack founder"
-              className="absolute inset-0 w-full h-full object-cover lg:hidden"
-              style={{ objectPosition: '44% 42%' }}
-            />
-            <img
-              src={heroImage}
-              alt="Brendan — Thread & Stack founder"
-              className="absolute inset-0 w-full h-full object-cover hidden lg:block"
-              style={{ objectPosition: '72% 18%' }}
-            />
+            <img src={heroImageMobile} alt="Brendan" className="absolute inset-0 w-full h-full object-cover lg:hidden" style={{ objectPosition: '44% 42%' }} />
+            <img src={heroImage} alt="Brendan" className="absolute inset-0 w-full h-full object-cover hidden lg:block" style={{ objectPosition: '72% 18%' }} />
             <div className="absolute inset-0 bg-black/20" />
           </div>
 
-          {/* Hero content */}
-          <div className="relative h-full flex items-center">
-            <div className="w-full max-w-6xl mx-auto px-4 sm:px-6">
-              <div className="bg-background/95 backdrop-blur-sm rounded-2xl p-6 md:p-8 lg:p-10 max-w-lg shadow-[0_8px_30px_rgba(0,0,0,0.12)]">
+          <div className="relative h-full flex items-center justify-center">
+            <div className="w-full max-w-lg mx-auto px-6">
+              <div className="bg-background/95 backdrop-blur-sm rounded-2xl p-8 lg:p-10 shadow-[0_8px_30px_rgba(0,0,0,0.12)]">
                 <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent/8 border border-accent/15 mb-6">
                   <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
-                  <span className="text-xs font-sans font-medium text-accent tracking-wide uppercase">
-                    Taking on new clients
-                  </span>
+                  <span className="text-xs font-sans font-medium text-accent tracking-wide uppercase">Taking on new clients</span>
                 </div>
 
                 <h1 className="font-serif-pro text-4xl md:text-5xl lg:text-6xl font-semibold italic leading-[1.1] tracking-tight mb-6">
                   Stories that{" "}
                   <span className="relative inline-block text-accent">
                     land
-                    {activePanel === 1 && <Emphasis className="absolute -bottom-2 left-0 right-0" delay={0} animate />}
+                    <Emphasis className="absolute -bottom-2 left-0 right-0" delay={0} animate />
                   </span>
-                  .
-                  <br />
-                  Systems that{" "}
-                  <span className="text-accent">stick</span>.
+                  .<br />
+                  Systems that <span className="text-accent">stick</span>.
                 </h1>
 
                 <p className="font-sans text-base md:text-lg text-muted-foreground leading-relaxed mb-6">
                   I help purpose-led founders turn messy marketing into{" "}
                   <span className="text-foreground font-medium">clear narratives</span> and{" "}
-                  <span className="text-foreground font-medium">practical workflows</span>{" "}
-                  they can actually sustain.
+                  <span className="text-foreground font-medium">practical workflows</span> they can actually sustain.
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-3 mb-6">
-                  <Button
-                    size="lg"
-                    className="bg-accent text-accent-foreground hover:bg-accent/90 transition-all duration-300 text-base px-7 group rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] not-italic font-sans font-semibold"
-                    onClick={() => scrollToPanel(0)}
-                  >
+                  <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 text-base px-7 group rounded-xl not-italic font-sans font-semibold" onClick={() => scrollToSection('creative')}>
                     <Palette className="mr-2 w-4 h-4" />
-                    Creative Services
+                    Creative
                     <ArrowLeft className="ml-2 w-4 h-4 group-hover:-translate-x-1 transition-transform" />
                   </Button>
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="text-base px-7 rounded-xl hover:bg-foreground hover:text-background not-italic shadow-[0_2px_8px_rgba(0,0,0,0.04)] font-sans"
-                    onClick={() => scrollToPanel(2)}
-                  >
-                    Notion & Systems
+                  <Button size="lg" variant="outline" className="text-base px-7 rounded-xl hover:bg-foreground hover:text-background not-italic font-sans" onClick={() => scrollToSection('notion')}>
+                    Notion
                     <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     <Cog className="ml-1 w-4 h-4" />
                   </Button>
                 </div>
 
-                {/* Social proof */}
                 <div className="pt-4 border-t border-border/50">
-                  <p className="text-xs font-sans text-muted-foreground/60 uppercase tracking-wider mb-2">
-                    Trusted by teams at
-                  </p>
+                  <p className="text-xs font-sans text-muted-foreground/60 uppercase tracking-wider mb-2">Trusted by teams at</p>
                   <div className="flex flex-wrap gap-x-6 gap-y-2">
-                    {clients.map(client => (
-                      <span key={client} className="text-sm font-sans font-medium text-muted-foreground/50">
-                        {client}
-                      </span>
-                    ))}
+                    {clients.map(c => <span key={c} className="text-sm font-sans font-medium text-muted-foreground/50">{c}</span>)}
                   </div>
                 </div>
               </div>
@@ -447,182 +264,82 @@ onClick={() => scrollToPanel(1)}
           </div>
         </div>
 
-        {/* ===== PANEL 2: Notion & Systems (Right) ===== */}
-        <div className="w-screen h-screen overflow-y-auto flex-shrink-0 snap-center">
-          <div className="min-h-screen">
+        {/* ===== RIGHT ZONE: Notion & Systems ===== */}
+        <div className="flex-shrink-0 h-full flex items-center" style={{ width: `${PANEL_WIDTH}px` }}>
+          <div className="w-full max-w-5xl mx-auto px-12 py-20">
             {/* Notion Hero */}
-            <section className="pt-28 pb-16 px-6">
-              <div className="max-w-6xl mx-auto">
-                <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
-                  <div>
-                    <div className="flex flex-wrap items-center gap-3 mb-4">
-                      {[notionAdmin, notionAdvanced, notionWorkflows, notionEssentials].map((badge, i) => (
-                        <img key={i} src={badge} alt="Notion badge" className="w-10 h-auto" />
-                      ))}
-                    </div>
-                    <img src={notionAmbassadorBlack} alt="Notion Official Ambassador" className="h-8 w-auto mb-8" />
-
-                    <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold italic leading-[1.1] mb-6">
-                      Notion & Systems{" "}
-                      <span className="relative inline-block text-accent">
-                        Consultancy
-                        {activePanel === 2 && <Emphasis className="absolute -bottom-2 left-0 right-0" delay={0.3} />}
-                      </span>
-                    </h1>
-                    <p className="font-sans text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed mb-8">
-                      Certified Notion administration, AI-powered workflow design, and operational systems that cut through the noise. Stop drowning in tabs. Start shipping with confidence.
-                    </p>
-                    <Button
-                      size="lg"
-                      className="bg-accent text-accent-foreground hover:bg-accent/90 group rounded-xl not-italic font-sans font-semibold"
-                      asChild
-                    >
-                      <a href="/notion-systems" onClick={() => trackCtaClick('Explore Notion Services', 'horizontal-notion')}>
-                        Explore Services
-                        <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                      </a>
-                    </Button>
-                  </div>
-                  <div className="relative hidden md:block">
-                    <div className="rounded-2xl overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
-                      <img src={notionHeroPhoto} alt="Brendan — Notion Certified Admin" className="w-full h-auto" />
-                    </div>
-                  </div>
+            <div className="grid md:grid-cols-2 gap-12 items-center mb-20">
+              <div>
+                <div className="flex flex-wrap items-center gap-3 mb-4">
+                  {[notionAdmin, notionAdvanced, notionWorkflows, notionEssentials].map((badge, i) => (
+                    <img key={i} src={badge} alt="Notion badge" className="w-10 h-auto" />
+                  ))}
+                </div>
+                <img src={notionAmbassadorBlack} alt="Notion Official Ambassador" className="h-8 w-auto mb-8" />
+                <h2 className="text-5xl md:text-6xl font-semibold italic leading-[1.1] mb-6">
+                  Notion & Systems{" "}
+                  <span className="relative inline-block text-accent">
+                    Consultancy
+                    <Emphasis className="absolute -bottom-2 left-0 right-0" delay={0.3} />
+                  </span>
+                </h2>
+                <p className="font-sans text-lg text-muted-foreground max-w-2xl leading-relaxed mb-8">
+                  Certified Notion administration, AI-powered workflow design, and operational systems that cut through the noise.
+                </p>
+                <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 group rounded-xl not-italic font-sans font-semibold" asChild>
+                  <a href="/notion-systems" onClick={() => trackCtaClick('Explore Notion Services', 'horizontal-notion')}>
+                    Explore Services <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </a>
+                </Button>
+              </div>
+              <div className="hidden md:block">
+                <div className="rounded-2xl overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
+                  <img src={notionHeroPhoto} alt="Brendan — Notion Certified Admin" className="w-full h-auto" />
                 </div>
               </div>
-            </section>
+            </div>
 
-            {/* Notion Sessions */}
-            <section className="py-20 px-6 bg-card">
-              <div className="max-w-5xl mx-auto">
-                <div className="grid md:grid-cols-2 gap-12 items-start">
-                  <div>
-                    <div className="flex items-center gap-3 mb-6">
-                      <div className="w-10 h-10 bg-accent/10 rounded-xl flex items-center justify-center text-accent">
-                        <Zap className="w-5 h-5" />
-                      </div>
-                      <div>
-                        <h2 className="text-3xl font-semibold italic">Notion Sessions</h2>
-                        <p className="text-sm font-sans text-accent">Rapid Intervention</p>
-                      </div>
-                    </div>
-                    <p className="font-sans text-muted-foreground leading-relaxed mb-4">
-                      60 minutes to unblock a specific problem, validate a decision, or get a second brain on a messy Notion setup.
-                    </p>
-                    <p className="text-xl font-semibold font-sans mb-6">£300 (VAT incl.) · 60 Minutes</p>
-                    <Button className="bg-accent text-accent-foreground hover:bg-accent/90 group rounded-xl not-italic font-sans" asChild>
-                      <a href="/sessions-and-sprints">
-                        Book a Session <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                      </a>
-                    </Button>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold font-sans mb-4">What You Leave With</h3>
-                    <ul className="space-y-3">
-                      {["Full video/audio recording of the session", "AI transcription and summary of key decisions", "A bulleted action plan — exactly what to do next"].map((item, idx) => (
-                        <li key={idx} className="flex items-start gap-3">
-                          <Check className="w-4 h-4 text-accent mt-1 flex-shrink-0" />
-                          <span className="font-sans text-muted-foreground">{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+            {/* Service cards row */}
+            <div className="grid md:grid-cols-3 gap-6">
+              <div className="bg-card rounded-2xl p-6 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-9 h-9 bg-accent/10 rounded-xl flex items-center justify-center text-accent"><Zap className="w-4 h-4" /></div>
+                  <h3 className="text-lg font-semibold italic">Sessions</h3>
                 </div>
+                <p className="font-sans text-sm text-muted-foreground mb-3">60 minutes to unblock a specific problem or validate a decision.</p>
+                <p className="text-lg font-semibold font-sans mb-4">£300 · 60 min</p>
+                <Button variant="outline" size="sm" className="rounded-xl font-sans w-full" asChild>
+                  <a href="/sessions-and-sprints">Book <ArrowRight className="ml-1 w-3 h-3" /></a>
+                </Button>
               </div>
-            </section>
 
-            {/* Notion AI Sprint */}
-            <section className="py-20 px-6 bg-[hsl(var(--accent))] text-accent-foreground">
-              <div className="max-w-5xl mx-auto">
-                <div className="grid md:grid-cols-2 gap-12 items-start">
-                  <div>
-                    <div className="flex items-center gap-3 mb-6">
-                      <div className="w-10 h-10 bg-accent-foreground/10 rounded-xl flex items-center justify-center text-accent-foreground">
-                        <Clock className="w-5 h-5" />
-                      </div>
-                      <div>
-                        <h2 className="text-3xl font-semibold italic">Notion AI Mentorship Sprint</h2>
-                        <p className="text-sm font-sans opacity-80">6 × 1-Hour Sessions Over 6 Weeks</p>
-                      </div>
-                    </div>
-                    <p className="font-sans opacity-90 leading-relaxed mb-4">
-                      Transform how you work with Notion and AI without losing your creative edge. Build a custom productivity system that gives you back hours each week.
-                    </p>
-                    <p className="text-xl font-semibold font-sans mt-4 mb-6">£1,500 · 6 × 1hr Sessions</p>
-                    <Button className="bg-accent-foreground text-accent hover:bg-accent-foreground/90 group rounded-xl not-italic font-sans" asChild>
-                      <a href="/sessions-and-sprints#sprint">
-                        Start a Sprint <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                      </a>
-                    </Button>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold font-sans mb-4">What You Leave With</h3>
-                    <ul className="space-y-3">
-                      {["5-10 hours back each week through AI-enabled workflows", "A custom Notion productivity system built for your actual role", "Confidence using AI without second-guessing or quality drops"].map((item, idx) => (
-                        <li key={idx} className="flex items-start gap-3">
-                          <Check className="w-4 h-4 text-accent-foreground mt-1 flex-shrink-0" />
-                          <span className="font-sans opacity-90">{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+              <div className="bg-[hsl(var(--accent))] text-accent-foreground rounded-2xl p-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-9 h-9 bg-accent-foreground/10 rounded-xl flex items-center justify-center"><Clock className="w-4 h-4" /></div>
+                  <h3 className="text-lg font-semibold italic">AI Sprint</h3>
                 </div>
+                <p className="font-sans text-sm opacity-85 mb-3">Transform how you work with Notion and AI. 6 sessions over 6 weeks.</p>
+                <p className="text-lg font-semibold font-sans mb-4">£1,500</p>
+                <Button className="bg-accent-foreground text-accent hover:bg-accent-foreground/90 rounded-xl font-sans w-full" size="sm" asChild>
+                  <a href="/sessions-and-sprints#sprint">Start <ArrowRight className="ml-1 w-3 h-3" /></a>
+                </Button>
               </div>
-            </section>
 
-            {/* Retained Support */}
-            <section className="py-20 px-6 bg-card">
-              <div className="max-w-5xl mx-auto">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 bg-accent/10 rounded-xl flex items-center justify-center text-accent">
-                    <Repeat className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h2 className="text-3xl font-semibold italic">Retained Systems Support</h2>
-                    <p className="text-sm font-sans text-accent">Ongoing Partnership</p>
-                  </div>
+              <div className="bg-card rounded-2xl p-6 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-9 h-9 bg-accent/10 rounded-xl flex items-center justify-center text-accent"><Repeat className="w-4 h-4" /></div>
+                  <h3 className="text-lg font-semibold italic">Retained Support</h3>
                 </div>
-                <div className="grid md:grid-cols-2 gap-12 items-start">
-                  <div>
-                    <p className="font-sans text-muted-foreground leading-relaxed mb-6">
-                      Ongoing Notion administration, workflow optimisation, and systems support as an integrated member of your team.
-                    </p>
-                    <Button className="bg-accent text-accent-foreground hover:bg-accent/90 group rounded-xl not-italic font-sans" asChild>
-                      <a href="/notion-systems">
-                        Let's Talk <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                      </a>
-                    </Button>
-                  </div>
-                  <div className="space-y-3">
-                    {[
-                      { title: "Core Support", commitment: "2-3 days/month", price: "From £2k/month" },
-                      { title: "Extended Support", commitment: "4-6 days/month", price: "From £4k/month" },
-                    ].map((tier, idx) => (
-                      <div key={idx} className="bg-muted/30 rounded-xl p-4 flex justify-between items-center">
-                        <div>
-                          <p className="font-sans font-medium">{tier.title}</p>
-                          <p className="text-sm font-sans text-muted-foreground">{tier.commitment}</p>
-                        </div>
-                        <p className="text-sm font-sans font-medium">{tier.price}</p>
-                      </div>
-                    ))}
-                  </div>
+                <p className="font-sans text-sm text-muted-foreground mb-3">Ongoing Notion admin and workflow optimisation.</p>
+                <div className="space-y-1.5 mb-4">
+                  <p className="text-xs font-sans text-muted-foreground">Core: from £2k/mo</p>
+                  <p className="text-xs font-sans text-muted-foreground">Extended: from £4k/mo</p>
                 </div>
+                <Button variant="outline" size="sm" className="rounded-xl font-sans w-full" asChild>
+                  <a href="/notion-systems">Let's Talk <ArrowRight className="ml-1 w-3 h-3" /></a>
+                </Button>
               </div>
-            </section>
-
-            {/* Back to center */}
-            <section className="py-16 px-6 text-center">
-              <Button
-                variant="outline"
-                size="lg"
-                className="rounded-xl font-sans"
-                onClick={() => scrollToPanel(1)}
-              >
-                <ArrowLeft className="mr-2 w-4 h-4" />
-                Back to Home
-              </Button>
-            </section>
+            </div>
           </div>
         </div>
       </div>
