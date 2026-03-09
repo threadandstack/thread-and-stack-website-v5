@@ -89,12 +89,11 @@ const ClaritySessions = () => {
             <p className="text-lg mb-2 not-italic"><strong>Price:</strong> £300 (VAT incl.)</p>
             <p className="text-lg mb-4 not-italic"><strong>Format:</strong> 60 Minutes (Virtual) + Recording + Action Plan</p>
             <p className="text-sm text-muted-foreground mb-6 italic">Send me your notes in advance, and I'll go over them beforehand.</p>
-            <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 group border thread-border not-italic">
+            <PillButton size="lg" icon={Rocket}>
               <a href="/#contact" className="flex items-center">
                 Book a Clarity Session
-                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
               </a>
-            </Button>
+            </PillButton>
           </div>
 
           <div className="space-y-16">
