@@ -90,37 +90,55 @@ const FractionalDeepEngagement = () => {
       <section className="py-24 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-3 gap-6">
-            {tiers.map((tier, index) => (
-              <div
-                key={index}
-                className="bg-card rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] p-8 transition-all duration-300 flex flex-col"
-              >
-                <div className="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center mb-6 text-accent">
-                  {tier.icon}
+            {tiers.map((tier, index) => {
+              const isRecommended = index === 1;
+              return (
+                <div
+                  key={index}
+                  className={`bg-card rounded-2xl p-8 transition-all duration-300 flex flex-col relative ${
+                    isRecommended
+                      ? "ring-2 ring-accent shadow-[0_8px_24px_rgba(0,0,0,0.08)] scale-[1.02] md:scale-105"
+                      : "shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)]"
+                  }`}
+                >
+                  {isRecommended && (
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                      <span className="bg-accent text-accent-foreground text-xs font-sans font-semibold px-4 py-1 rounded-full whitespace-nowrap">
+                        Recommended
+                      </span>
+                    </div>
+                  )}
+
+                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-6 ${
+                    isRecommended ? "bg-accent text-accent-foreground" : "bg-accent/10 text-accent"
+                  }`}>
+                    {tier.icon}
+                  </div>
+
+                  <h3 className="text-2xl mb-2 font-semibold italic">{tier.title}</h3>
+                  <p className="text-sm font-sans text-accent mb-4">{tier.label}</p>
+                  <p className="font-sans text-muted-foreground leading-relaxed mb-6">{tier.description}</p>
+
+                  <ul className="space-y-2 mb-8 flex-grow">
+                    {tier.includes.map((item, idx) => (
+                      <li key={idx} className="flex items-start gap-2">
+                        <Check className="w-4 h-4 text-accent mt-0.5 flex-shrink-0" />
+                        <span className="text-sm font-sans text-muted-foreground">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <PillButton
+                    className="w-full"
+                    icon={Rocket}
+                    variant={isRecommended ? "indigo" : "default"}
+                    onClick={() => setContactOpen(true)}
+                  >
+                    {tier.cta}
+                  </PillButton>
                 </div>
-
-                <h3 className="text-2xl mb-2 font-semibold italic">{tier.title}</h3>
-
-                <p className="text-sm font-sans text-accent mb-4">{tier.label}</p>
-
-                <p className="font-sans text-muted-foreground leading-relaxed mb-6">
-                  {tier.description}
-                </p>
-
-                <ul className="space-y-2 mb-8 flex-grow">
-                  {tier.includes.map((item, idx) => (
-                    <li key={idx} className="flex items-start gap-2">
-                      <Check className="w-4 h-4 text-accent mt-0.5 flex-shrink-0" />
-                      <span className="text-sm font-sans text-muted-foreground">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <PillButton className="w-full" icon={Rocket} onClick={() => setContactOpen(true)}>
-                  {tier.cta}
-                </PillButton>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
