@@ -209,6 +209,8 @@ export const Navigation = ({ variant = "default" }: NavigationProps) => {
           </div>
         </div>
       )}
+
+      <ContactDrawer open={isContactOpen} onOpenChange={setIsContactOpen} source="nav-get-started" />
     </>
   );
 };
