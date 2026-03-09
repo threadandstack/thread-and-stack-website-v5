@@ -70,16 +70,11 @@ const NotionSystemsPage = () => {
                 Certified Notion administration, AI-powered workflow design, and operational systems that cut through the noise. Stop drowning in tabs. Start shipping with confidence.
               </p>
 
-              <Button
-                size="lg"
-                className="bg-accent text-accent-foreground hover:bg-accent/90 group rounded-xl not-italic font-sans font-semibold"
-                asChild
-              >
+              <PillButton size="lg" icon={Rocket} className="font-semibold" asChild>
                 <a href="#contact" onClick={() => trackCtaClick('Book an Intro Call', 'notion-systems-hero')}>
                   Book an Intro Call
-                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </a>
-              </Button>
+              </PillButton>
             </div>
 
             {/* Right: Photo */}
