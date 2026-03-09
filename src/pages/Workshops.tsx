@@ -410,15 +410,16 @@ const Workshops = () => {
                 </div>
               </div>
 
-              <Button 
+              <PillButton 
                 type="submit" 
                 size="lg" 
-                className="w-full bg-white text-indigo hover:bg-white/90"
+                variant="white"
+                icon={Send}
+                className="w-full"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? "Submitting..." : "Request Quote"}
-                <ArrowRight className="ml-2" />
-              </Button>
+              </PillButton>
             </form>
           </div>
 
