@@ -78,7 +78,7 @@ const AboutPage = () => {
               <img
                 src={notionAmbassadorBlack}
                 alt="Notion Official Ambassador"
-                className="h-7 w-auto"
+                className="h-14 w-auto"
               />
             </div>
 
