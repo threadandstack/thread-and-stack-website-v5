@@ -1,29 +1,33 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
-import { AIPhilosophy } from "@/components/AIPhilosophy";
 import { FAQ } from "@/components/FAQ";
 import { PillButton } from "@/components/ui/pill-button";
-import { Compass, Rocket } from "lucide-react";
+import { Compass, Rocket, Bot, Shield } from "lucide-react";
 import brendanPhoto from "@/assets/brendan-graffiti-portrait.jpg";
-import brendanCollaboration from "@/assets/brendan-collaboration.jpeg";
-import brendanWorkshop from "@/assets/brendan-workshop.jpeg";
 import brendanStreet from "@/assets/photos/shoreditch/brendan-26.jpg";
-import brendanGeometric from "@/assets/photos/shoreditch/brendan-30.jpg";
-import brendanPostits from "@/assets/brendan-postits.jpeg";
+import notionAdmin from "@/assets/notion-certified-admin.png";
+import notionAdvanced from "@/assets/notion-advanced.png";
+import notionWorkflows from "@/assets/notion-workflows.png";
+import notionEssentials from "@/assets/notion-essentials.png";
+import notionAmbassadorBlack from "@/assets/notion-ambassador-black.png";
+
 const AboutPage = () => {
-  return <main className="min-h-screen">
+  return (
+    <main className="min-h-screen">
       <Navigation />
-      
-      {/* Hero - full-width image with overlay */}
+
+      {/* Hero */}
       <section className="pt-24 px-6 mt-16">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
               <h1 className="text-6xl md:text-7xl mb-8 font-light">
-                About Thread & Stack
+                About Thread&nbsp;&amp;&nbsp;Stack
               </h1>
               <div className="space-y-6 text-lg leading-relaxed">
-                <p className="text-3xl font-light not-italic">I'm Brendan, founder of Thread & Stack.</p>
+                <p className="text-3xl font-light not-italic">
+                  I'm Brendan, founder of Thread&nbsp;&amp;&nbsp;Stack.
+                </p>
                 <p>
                   I've spent 12+ years in brand and marketing across global consumer brands, international consultancies, creative agencies, disruptive tech, ambitious start-ups and nonprofits.
                 </p>
@@ -31,68 +35,91 @@ const AboutPage = () => {
                   Now I focus that experience on one thing: helping purpose-led teams turn messy marketing into clear narratives and practical workflows they can sustain.
                 </p>
               </div>
-            </div>
-            <div className="relative">
-              <img src={brendanPhoto} alt="Brendan - Thread & Stack founder" className="rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.06)] w-full h-auto object-cover aspect-[3/4]" />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Problem I Solve - card layout */}
-      <section className="py-24 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="md:col-span-2 bg-card p-10 rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
-              <h2 className="text-3xl font-light not-italic mb-6">The Problem I Solve</h2>
-              <div className="space-y-4 text-lg leading-relaxed">
-                <p>
-                  Most of the founders and teams I work with are already doing meaningful work. The problem isn't a lack of ideas. It's the gap between what they mean and what they're actually saying, showing, and shipping.
-                </p>
-                <p>
-                  There's a pile-up between intention and execution: disconnected visual identity, inconsistent creative direction, tabs full of half-finished drafts, and brand guidelines that don't match what's going out the door.
-                </p>
-                <p>
-                  I call this the <strong>creative tax</strong>: the cognitive load of admin, chaos surrounding your creative work, the context switching between strategy and execution, and the lack of design craft tying it all together. It drags you away from the meaningful creative and strategic work that actually moves the needle.
-                </p>
+              <div className="mt-8">
+                <PillButton variant="outline" size="lg" icon={Compass} asChild>
+                  <a href="/how-i-work">Learn How I Work</a>
+                </PillButton>
               </div>
             </div>
-            <div className="overflow-hidden rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
-              <img src={brendanGeometric} alt="Brendan against geometric street art" className="w-full h-full object-cover" />
+            <div className="relative">
+              <img
+                src={brendanPhoto}
+                alt="Brendan - Thread & Stack founder"
+                className="rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.06)] w-full h-auto object-cover aspect-[3/4]"
+              />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Image strip */}
-      <section className="px-6">
+      {/* Skills & Qualifications — 2-column cards */}
+      <section className="py-24 px-6">
         <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-3 gap-4">
-            <img src={brendanCollaboration} alt="Brendan collaborating with clients" className="rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.06)] w-full h-64 object-cover" />
-            <img src={brendanWorkshop} alt="Brendan leading a workshop" className="rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.06)] w-full h-64 object-cover" />
-            <img src={brendanPostits} alt="Workshop post-it notes and strategy" className="rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.06)] w-full h-64 object-cover" />
+          <div className="grid md:grid-cols-2 gap-6">
+            {/* Notion */}
+            <div className="bg-card rounded-2xl p-10 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-xl bg-accent/10 text-accent flex items-center justify-center">
+                  <Shield className="w-5 h-5" />
+                </div>
+                <h2 className="text-2xl font-semibold italic">Notion Certified</h2>
+              </div>
+
+              <p className="font-sans text-muted-foreground leading-relaxed mb-6">
+                Brendan is a Certified Notion Admin and Official Notion Ambassador — one of a small group globally recognised by Notion for expertise in workspace design, workflow automation, and systems strategy.
+              </p>
+
+              <div className="flex flex-wrap items-center gap-4 mb-4">
+                <img src={notionAdmin} alt="Notion Certified Admin" className="h-12 w-auto" />
+                <img src={notionAdvanced} alt="Notion Academy Advanced" className="h-12 w-auto" />
+                <img src={notionWorkflows} alt="Notion Academy Workflows" className="h-12 w-auto" />
+                <img src={notionEssentials} alt="Notion Academy Essentials" className="h-12 w-auto" />
+              </div>
+              <img
+                src={notionAmbassadorBlack}
+                alt="Notion Official Ambassador"
+                className="h-7 w-auto"
+              />
+            </div>
+
+            {/* AI Fluency */}
+            <div className="bg-card rounded-2xl p-10 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-xl bg-accent/10 text-accent flex items-center justify-center">
+                  <Bot className="w-5 h-5" />
+                </div>
+                <h2 className="text-2xl font-semibold italic">Fluent in AI Frameworks</h2>
+              </div>
+
+              <p className="font-sans text-muted-foreground leading-relaxed mb-6">
+                Brendan holds Anthropic's AI Fluency &amp; Foundations certificate and Notion's AI Workflows badge. Thread&nbsp;&amp;&nbsp;Stack operates as an AI-first business — integrating AI into strategy, operations, and creative workflows to reduce cognitive load and give teams back time, attention, and voice.
+              </p>
+
+              <div className="flex flex-wrap gap-2">
+                <span className="inline-flex items-center rounded-full border border-border px-3 py-1 text-xs font-sans font-medium text-muted-foreground">
+                  Anthropic AI Fluency &amp; Foundations
+                </span>
+                <span className="inline-flex items-center rounded-full border border-border px-3 py-1 text-xs font-sans font-medium text-muted-foreground">
+                  Notion AI Workflows
+                </span>
+                <span className="inline-flex items-center rounded-full border border-border px-3 py-1 text-xs font-sans font-medium text-muted-foreground">
+                  AI-First Business
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* How I Work link */}
-      <section className="py-16 px-6">
-        <div className="max-w-6xl mx-auto text-center">
-          <PillButton variant="outline" size="lg" icon={Compass} asChild>
-            <a href="/how-i-work">Learn How I Work</a>
-          </PillButton>
-        </div>
-      </section>
-
-      {/* Background & Experience - card with image */}
+      {/* Background & Experience */}
       <section className="py-24 px-6 bg-accent text-accent-foreground">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-5 gap-8 items-start">
             <div className="md:col-span-3 space-y-6">
-              <h2 className="text-3xl font-light not-italic">Background & Experience</h2>
+              <h2 className="text-3xl font-light not-italic">Background &amp; Experience</h2>
               <div className="space-y-4 text-lg leading-relaxed opacity-90">
                 <p>
-                  I studied Media, Communications & Culture and Philosophy at Keele University, a combination that wasn't common at the time. Media Communications were dismissed as a "Mickey Mouse degree," and Philosophy was seen as a waste of time. I chose it because I saw the impact these two subjects could have together. Now, these disciplines underpin our modern world.
+                  I studied Media, Communications &amp; Culture and Philosophy at Keele University, a combination that wasn't common at the time. Media Communications were dismissed as a "Mickey Mouse degree," and Philosophy was seen as a waste of time. I chose it because I saw the impact these two subjects could have together. Now, these disciplines underpin our modern world.
                 </p>
                 <p>
                   That golden thread, following the ethics and impact of communications and culture, took me on a path working with a really wide range of clients and products. From international consultancies like Dentsu B2B working with some of the biggest brands in the world, to Global Content Strategy Lead at eBay developing strategy with worldwide impact.
@@ -106,7 +133,11 @@ const AboutPage = () => {
               </div>
             </div>
             <div className="md:col-span-2 space-y-4">
-              <img src={brendanStreet} alt="Brendan walking through Shoreditch street art" className="rounded-2xl w-full h-auto object-cover shadow-[0_4px_16px_rgba(0,0,0,0.12)]" />
+              <img
+                src={brendanStreet}
+                alt="Brendan walking through Shoreditch street art"
+                className="rounded-2xl w-full h-auto object-cover shadow-[0_4px_16px_rgba(0,0,0,0.12)]"
+              />
             </div>
           </div>
 
@@ -117,31 +148,40 @@ const AboutPage = () => {
           </div>
         </div>
       </section>
-      
-      <FAQ items={[{
-      question: "Who is Brendan and what is Thread & Stack?",
-      answer: "I'm Brendan, founder of Thread & Stack - a brand and systems consultancy for purpose-led founders and teams. With 12+ years across global consumer brands, consultancies, creative agencies, tech, startups, and nonprofits, I focus on one thing: helping purpose-led teams turn messy marketing into clear narratives and practical workflows they can sustain."
-    }, {
-      question: "What's the core problem Thread & Stack solves?",
-      answer: "The creative tax - the cognitive load of admin, chaos, and context-switching that drags you away from meaningful creative and strategic work. It's the pile-up between intention and execution: tabs, documents, and half-finished drafts between what you mean to say and what actually ships. I help teams untangle the mess, connect the dots, and keep their best ideas moving."
-    }, {
-      question: "What's unique about Thread & Stack's approach?",
-      answer: "I work at the intersection of brand strategy, creative direction, and systems design - protecting both your brand integrity and your team's creative energy. Being both a designer and a strategist is rare. It means I understand how aesthetic judgement and strategic thinking work together - how visual identity supports narrative, how asset development flows from positioning, how design decisions reinforce or undermine messaging. I create invisible scaffolding that reduces friction and cognitive load without adding more processes. The result: brands that feel alive, teams that feel spacious, and work that actually ships."
-    }, {
-      question: "What's your background and experience?",
-      answer: "I studied Media, Communications & Culture and Philosophy at Keele University - disciplines that now underpin our modern world. I've worked across international consultancies (Dentsu B2B), global brands (eBay), creative agencies (Funraisin, Lightful, Scoota, Aqueduct/Flipside), enterprise to small nonprofits, Hollywood to local ads, tech giants to energy companies. A huge range of products, missions, and audiences taught me one thing: the problem is always clarity."
-    }, {
-      question: "What services does Thread & Stack offer?",
-      answer: "Five core offerings: Clarity Sessions (60-min strategic and creative interventions, from £300), Thread AI Mentorship Sprint (6-week AI workflow building, from £1k), Brand Connection Workshops (modular team strategy with visual direction, from £2k), Fractional Strategy (monthly retainer for ongoing strategic and creative partnership including brand positioning, creative direction, and asset development), and Deep Engagement (2-6 month transformation projects including visual identity development and brand world building, from £10-25k). Each addresses different needs across the strategy-to-execution spectrum."
-    }, {
-      question: "How does Thread & Stack use AI?",
-      answer: "AI is a second brain and operations partner in the background - never a replacement for human creativity or judgment. My Thread AI Philosophy centers on creative empowerment: you feel more capable and confident (not automated), your brand voice remains authentically yours, and AI reduces cognitive load so your calendar feels spacious instead of suffocating. AI gives back time, attention, and voice."
-    }, {
-      question: "Who are Thread & Stack's ideal clients?",
-      answer: "Purpose-led organizations across two main profiles: values-driven founders and small organizations (like B Corps, social enterprises, and nonprofits) who prioritize impact and integrity as they grow, and scaling teams (typically 2-50 people) led by founder-operators who are wearing too many hats and need to cut through unclear positioning and messy operational systems. If you're doing meaningful work but struggling with the gap between intention and execution, we should talk."
-    }]} />
-      
+
+      <FAQ
+        items={[
+          {
+            question: "Who is Brendan and what is Thread & Stack?",
+            answer:
+              "I'm Brendan, founder of Thread & Stack - a brand and systems consultancy for purpose-led founders and teams. With 12+ years across global consumer brands, consultancies, creative agencies, tech, startups, and nonprofits, I focus on one thing: helping purpose-led teams turn messy marketing into clear narratives and practical workflows they can sustain.",
+          },
+          {
+            question: "What's the core problem Thread & Stack solves?",
+            answer:
+              "The creative tax - the cognitive load of admin, chaos, and context-switching that drags you away from meaningful creative and strategic work. It's the pile-up between intention and execution: tabs, documents, and half-finished drafts between what you mean to say and what actually ships. I help teams untangle the mess, connect the dots, and keep their best ideas moving.",
+          },
+          {
+            question: "What's unique about Thread & Stack's approach?",
+            answer:
+              "I work at the intersection of brand strategy, creative direction, and systems design - protecting both your brand integrity and your team's creative energy. Being both a designer and a strategist is rare. It means I understand how aesthetic judgement and strategic thinking work together - how visual identity supports narrative, how asset development flows from positioning, how design decisions reinforce or undermine messaging. I create invisible scaffolding that reduces friction and cognitive load without adding more processes. The result: brands that feel alive, teams that feel spacious, and work that actually ships.",
+          },
+          {
+            question: "What's your background and experience?",
+            answer:
+              "I studied Media, Communications & Culture and Philosophy at Keele University - disciplines that now underpin our modern world. I've worked across international consultancies (Dentsu B2B), global brands (eBay), creative agencies (Funraisin, Lightful, Scoota, Aqueduct/Flipside), enterprise to small nonprofits, Hollywood to local ads, tech giants to energy companies. A huge range of products, missions, and audiences taught me one thing: the problem is always clarity.",
+          },
+          {
+            question: "How does Thread & Stack use AI?",
+            answer:
+              "AI is a second brain and operations partner in the background - never a replacement for human creativity or judgment. My Thread AI Philosophy centers on creative empowerment: you feel more capable and confident (not automated), your brand voice remains authentically yours, and AI reduces cognitive load so your calendar feels spacious instead of suffocating. AI gives back time, attention, and voice.",
+          },
+        ]}
+      />
+
       <Footer />
-    </main>;
+    </main>
+  );
 };
+
 export default AboutPage;
