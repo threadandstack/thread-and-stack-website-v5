@@ -70,10 +70,10 @@ const AboutPage = () => {
               </p>
 
               <div className="flex flex-wrap items-center gap-4 mb-4">
-                <img src={notionAdmin} alt="Notion Certified Admin" className="h-12 w-auto" />
-                <img src={notionAdvanced} alt="Notion Academy Advanced" className="h-12 w-auto" />
-                <img src={notionWorkflows} alt="Notion Academy Workflows" className="h-12 w-auto" />
-                <img src={notionEssentials} alt="Notion Academy Essentials" className="h-12 w-auto" />
+                <img src={notionAdmin} alt="Notion Certified Admin" className="h-24 w-auto" />
+                <img src={notionAdvanced} alt="Notion Academy Advanced" className="h-24 w-auto" />
+                <img src={notionWorkflows} alt="Notion Academy Workflows" className="h-24 w-auto" />
+                <img src={notionEssentials} alt="Notion Academy Essentials" className="h-24 w-auto" />
               </div>
               <img
                 src={notionAmbassadorBlack}
