@@ -257,14 +257,14 @@ const HowIWorkPage = () => {
           </div>
 
           <div className="text-center pt-16">
-            <Button
+            <PillButton
               size="lg"
-              className="bg-accent-foreground text-accent hover:bg-accent-foreground/90 group rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
+              variant="dark"
+              icon={Rocket}
               onClick={() => setContactOpen(true)}
             >
               Let's Work Together
-              <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Button>
+            </PillButton>
           </div>
         </div>
       </section>

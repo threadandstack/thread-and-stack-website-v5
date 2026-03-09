@@ -185,12 +185,11 @@ const MentorshipSprint = () => {
               <p className="text-muted-foreground mb-6">
                 Let's design a system that saves you hours every week and protects your best work.
               </p>
-              <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 group">
+              <PillButton size="lg" icon={Rocket}>
                 <a href="/#contact" className="flex items-center">
                   Explore the Sprint
-                  <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
                 </a>
-              </Button>
+              </PillButton>
             </div>
           </div>
         </div>

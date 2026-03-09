@@ -409,14 +409,14 @@ const FractionalDeepEngagement = () => {
             <p className="text-white/80 mb-6">
               Let's discuss your challenges and find the right engagement model for your team.
             </p>
-            <Button 
+            <PillButton 
               size="lg" 
-              className="bg-white text-indigo hover:bg-white/90 group"
+              variant="white"
+              icon={MessageCircle}
               onClick={() => setContactOpen(true)}
             >
               Start a Conversation
-              <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-            </Button>
+            </PillButton>
           </div>
         </div>
       </section>

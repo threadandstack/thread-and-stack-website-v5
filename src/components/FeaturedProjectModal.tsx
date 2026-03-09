@@ -167,9 +167,9 @@ export const FeaturedProjectModal = ({
             <p className="text-foreground/70 text-lg">
               Ready to transform your brand like this?
             </p>
-            <Button asChild size="lg" className="font-light">
+            <PillButton asChild size="lg">
               <Link to="/contact">Book a Call</Link>
-            </Button>
+            </PillButton>
           </div>
         </div>
       </DialogContent>

@@ -73,13 +73,13 @@ export const BlogCTACallout = ({ theme, title }: BlogCTACalloutProps) => {
             </div>
           </div>
           
-          <Button 
+          <PillButton 
             onClick={() => setContactOpen(true)}
-            className="bg-accent text-accent-foreground hover:bg-accent/90 group whitespace-nowrap"
+            icon={MessageCircle}
+            className="whitespace-nowrap"
           >
             {cta.buttonText}
-            <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </Button>
+          </PillButton>
         </div>
       </div>
     </>
