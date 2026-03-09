@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { PillButton } from "@/components/ui/pill-import { Input } from "@/components/ui/input";
+import { PillButton } from "@/components/ui/pill-button";
+import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { A, SendrrSendlucide-react";
+import { Send } from "lucide-react";
 import { z } from "zod";
 
 const leadSchema = z.object({
