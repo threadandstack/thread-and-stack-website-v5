@@ -16,10 +16,19 @@ import {
   SheetClose,
 } from "@/components/ui/sheet";
 
+const SERVICE_OPTIONS = [
+  { value: "notion", label: "Notion & Systems" },
+  { value: "strategy", label: "Narratives & Strategy" },
+  { value: "both", label: "A Bit of Both" },
+] as const;
+
+type ServiceInterest = typeof SERVICE_OPTIONS[number]["value"];
+
 const contactSchema = z.object({
   name: z.string().max(100, "Name must be less than 100 characters").optional(),
   email: z.string().email("Please enter a valid email address").max(255, "Email must be less than 255 characters"),
   role: z.string().max(100, "Role must be less than 100 characters").optional(),
+  services: z.array(z.string()).optional(),
   message: z.string().max(5000, "Message must be less than 5000 characters").optional(),
 });
 
