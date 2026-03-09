@@ -130,27 +130,28 @@ const SessionsAndSprints = () => {
                 Two ways to get unstuck and build momentum. One-hour Clarity Sessions for rapid intervention, or six-week Sprints to transform how you work with AI.
               </p>
               <div className="flex flex-wrap gap-3 mt-4">
-                <Button 
+                <PillButton 
                   variant="outline"
                   size="sm"
+                  icon={Search}
                   onClick={() => {
                     const element = document.querySelector('.clarity-sessions-section');
                     element?.scrollIntoView({ behavior: 'smooth' });
                   }}
-                  className="group"
                 >
-                  Jump to Clarity Sessions →
-                </Button>
-                <Button 
+                  Jump to Clarity Sessions
+                </PillButton>
+                <PillButton 
                   size="sm"
-                  className="bg-indigo text-white hover:bg-indigo/90 group"
+                  variant="indigo"
+                  icon={Zap}
                   onClick={() => {
                     const element = document.getElementById('thread-ai');
                     element?.scrollIntoView({ behavior: 'smooth' });
                   }}
                 >
-                  Explore Thread AI Sprints →
-                </Button>
+                  Explore Thread AI Sprints
+                </PillButton>
               </div>
             </div>
           </div>
