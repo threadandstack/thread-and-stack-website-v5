@@ -69,27 +69,13 @@ export const About = () => {
         
         
         <div className="mt-12 flex gap-4">
-          <Button 
-            size="lg" 
-            className="bg-accent text-accent-foreground hover:bg-accent/90 group rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
-            asChild
-          >
-            <a href="#contact">
-              Book an Intro Call
-              <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </a>
-          </Button>
+          <PillButton size="lg" icon={Rocket} asChild>
+            <a href="#contact">Book an Intro Call</a>
+          </PillButton>
           
-          <Button 
-            size="lg" 
-            variant="outline"
-            className="group rounded-xl"
-            asChild
-          >
-            <a href="/about">
-              More About Me
-            </a>
-          </Button>
+          <PillButton size="lg" variant="outline" icon={User} asChild>
+            <a href="/about">More About Me</a>
+          </PillButton>
         </div>
       </div>
     </section>

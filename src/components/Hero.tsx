@@ -73,18 +73,17 @@ export const Hero = () => {
         </div>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
-          <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 transition-all duration-300 text-lg px-8 group rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] not-italic font-sans font-semibold" asChild>
+          <PillButton size="lg" icon={Rocket} className="text-lg font-semibold" asChild>
             <a href="#contact" onClick={() => trackCtaClick('Book an Intro Call', 'hero')}>
               Book an Intro Call
-              <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
             </a>
-          </Button>
+          </PillButton>
           
-          <Button size="lg" variant="outline" className="text-lg px-8 rounded-xl hover:bg-foreground hover:text-background not-italic shadow-[0_2px_8px_rgba(0,0,0,0.04)] font-sans" asChild>
+          <PillButton size="lg" variant="outline" icon={Compass} className="text-lg" asChild>
             <a href="/how-i-work" onClick={() => trackCtaClick('How I Work', 'hero')}>
               How I Work
             </a>
-          </Button>
+          </PillButton>
         </div>
       </div>
       
