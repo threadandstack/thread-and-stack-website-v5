@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Check, Target, Layers, FileText, Users, Calendar, Zap, Repeat } from "lucide-react";
+import { PillButton } from "@/components/ui/pill-button";
+import { ArrowRight, Check, Target, Layers, FileText, Users, Calendar, Zap, Repeat, MessageCircle, Rocket, Search } from "lucide-react";
 import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
 import { FAQ } from "@/components/FAQ";
