@@ -16,16 +16,17 @@ const AboutPage = () => {
       <Navigation />
 
       {/* Hero — full-bleed image with overlaid Background & Experience */}
-      <section className="relative min-h-[90vh] flex items-end">
+      <section className="relative min-h-[100vh] md:min-h-[90vh] flex items-end">
         <img
           src={brendanWalking}
           alt="Brendan walking past street art in Shoreditch"
-          className="absolute inset-0 w-full h-full object-cover object-[70%_center]"
+          className="absolute inset-0 w-full h-full object-cover object-[85%_center] md:object-[75%_center]"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 
         <div className="relative z-10 w-full px-6 pb-16 pt-32">
-          <div className="max-w-5xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-light text-white mb-8">
               Background &amp; Experience
             </h1>
