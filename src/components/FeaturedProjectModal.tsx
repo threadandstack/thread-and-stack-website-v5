@@ -5,7 +5,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+import { PillButton } from "@/components/ui/pill-button";
 import { Link } from "react-router-dom";
 
 const ModalImageCarousel = ({ images }: { images: string[] }) => {
