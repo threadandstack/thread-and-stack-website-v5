@@ -332,14 +332,14 @@ const FractionalDeepEngagement = () => {
             <p className="text-lg text-white/90 mb-6">
               This isn't a quick fix or surface-level refresh. It's a comprehensive engagement where we work together intensively over 2-6 months to create fundamental strategic change. You get complete transformation with documented systems that outlive the engagement.
             </p>
-            <Button 
+            <PillButton 
               size="lg" 
-              className="bg-white text-indigo hover:bg-white/90 group"
+              variant="white"
+              icon={Search}
               onClick={() => setContactOpen(true)}
             >
               Explore Projects
-              <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-            </Button>
+            </PillButton>
           </div>
 
           <div className="space-y-8">
