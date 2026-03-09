@@ -44,9 +44,9 @@ export const OffersGrid = () => {
       tagline: "Narratives & Strategy Services",
       description: "From workshops that align your team around story and positioning, to ongoing fractional partnerships that embed strategic and creative direction into your operations. For founders and teams who need their marketing to actually reach people.",
       services: [
-        "Brand Connection Workshops — from £2k",
-        "Fractional Strategy — monthly retainer",
-        "Deep Engagement — 2-6 month projects",
+        "Strategy Session — 1 focus, 1 output",
+        "Project Engagement — scoped strategy block",
+        "Fractional Strategy Director — ongoing retainer",
       ],
       link: "/workshops",
       cta: "Explore Services",
