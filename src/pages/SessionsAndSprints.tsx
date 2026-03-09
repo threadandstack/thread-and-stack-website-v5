@@ -306,14 +306,9 @@ const SessionsAndSprints = () => {
             <p className="text-white/80 mb-6">
               Whether you need a focused hour or a transformative six weeks, let's find the right fit.
             </p>
-            <Button 
-              size="lg" 
-              className="bg-white text-indigo hover:bg-white/90 group"
-              onClick={() => setContactOpen(true)}
-            >
+            <PillButton size="lg" variant="white" icon={MessageCircle} onClick={() => setContactOpen(true)}>
               Start a Conversation
-              <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-            </Button>
+            </PillButton>
           </div>
         </div>
       </section>

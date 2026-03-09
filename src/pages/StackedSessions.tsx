@@ -140,12 +140,11 @@ const ClaritySessions = () => {
               <p className="text-muted-foreground mb-6">
                 Let's tackle your challenge together and get you clarity fast.
               </p>
-              <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 group border thread-border not-italic">
+              <PillButton size="lg" icon={Rocket}>
                 <a href="/#contact" className="flex items-center">
                   Book a Clarity Session
-                  <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
                 </a>
-              </Button>
+              </PillButton>
             </div>
           </div>
         </div>
