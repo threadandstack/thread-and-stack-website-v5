@@ -5,7 +5,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
+import { PillButton } from "@/components/ui/pill-button";
 import { ArrowRight, Check, Zap, Clock, Users, Target, Repeat } from "lucide-react";
 
 interface Offer {
