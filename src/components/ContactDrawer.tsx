@@ -63,6 +63,7 @@ export const ContactDrawer = ({ open, onOpenChange, source = "drawer" }: Contact
       name: name.trim() || undefined,
       email: email.trim(),
       role: role.trim() || undefined,
+      services: selectedServices.length > 0 ? selectedServices : undefined,
       message: message.trim() || undefined,
     });
 
