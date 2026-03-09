@@ -86,6 +86,7 @@ const App = () => (
           <Route path="/retainer/scaleup" element={<RetainerScaleUpPage />} />
           {/* Legacy route - redirect to new canonical URL */}
           <Route path="/fiction-favorites" element={<Navigate to="/favourite-fiction" replace />} />
+          <Route path="/work-with-me" element={<WorkWithMePage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
