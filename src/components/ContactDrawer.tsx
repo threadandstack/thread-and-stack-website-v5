@@ -5,7 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { Send, X } from "lucide-react";
+import { Send, X, Check } from "lucide-react";
 import { z } from "zod";
 import { trackContactFormSubmit } from "@/hooks/useAnalytics";
 import {
@@ -16,10 +16,19 @@ import {
   SheetClose,
 } from "@/components/ui/sheet";
 
+const SERVICE_OPTIONS = [
+  { value: "notion", label: "Notion & Systems" },
+  { value: "strategy", label: "Narratives & Strategy" },
+  { value: "both", label: "A Bit of Both" },
+] as const;
+
+type ServiceInterest = typeof SERVICE_OPTIONS[number]["value"];
+
 const contactSchema = z.object({
   name: z.string().max(100, "Name must be less than 100 characters").optional(),
   email: z.string().email("Please enter a valid email address").max(255, "Email must be less than 255 characters"),
   role: z.string().max(100, "Role must be less than 100 characters").optional(),
+  services: z.array(z.string()).optional(),
   message: z.string().max(5000, "Message must be less than 5000 characters").optional(),
 });
 
@@ -34,6 +43,7 @@ export const ContactDrawer = ({ open, onOpenChange, source = "drawer" }: Contact
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
   const [message, setMessage] = useState("");
+  const [selectedServices, setSelectedServices] = useState<ServiceInterest[]>([]);
   const [honeypot, setHoneypot] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
@@ -53,6 +63,7 @@ export const ContactDrawer = ({ open, onOpenChange, source = "drawer" }: Contact
       name: name.trim() || undefined,
       email: email.trim(),
       role: role.trim() || undefined,
+      services: selectedServices.length > 0 ? selectedServices : undefined,
       message: message.trim() || undefined,
     });
 
@@ -66,9 +77,9 @@ export const ContactDrawer = ({ open, onOpenChange, source = "drawer" }: Contact
       return;
     }
 
-    const fullMessage = role.trim() 
-      ? `[${role.trim()}]\n\n${message.trim()}` 
-      : message.trim();
+    const serviceLabels = selectedServices.map(s => SERVICE_OPTIONS.find(o => o.value === s)?.label).filter(Boolean).join(", ");
+    const serviceLine = serviceLabels ? `Interested in: ${serviceLabels}` : "";
+    const fullMessage = [role.trim() ? `[${role.trim()}]` : "", serviceLine, message.trim()].filter(Boolean).join("\n\n");
 
     try {
       const { error } = await supabase
@@ -102,6 +113,7 @@ export const ContactDrawer = ({ open, onOpenChange, source = "drawer" }: Contact
       setEmail("");
       setRole("");
       setMessage("");
+      setSelectedServices([]);
       onOpenChange(false);
     } catch (error: any) {
       console.error("Lead submission error:", error);
@@ -162,6 +174,37 @@ export const ContactDrawer = ({ open, onOpenChange, source = "drawer" }: Contact
               onChange={(e) => setRole(e.target.value)}
               className="bg-background rounded-lg mt-1"
             />
+          </div>
+
+          <div>
+            <Label className="text-sm text-muted-foreground">What are you interested in?</Label>
+            <div className="flex flex-wrap gap-2 mt-2">
+              {SERVICE_OPTIONS.map((option) => {
+                const isSelected = selectedServices.includes(option.value);
+                const toggleService = () => {
+                  setSelectedServices(prev =>
+                    prev.includes(option.value)
+                      ? prev.filter(s => s !== option.value)
+                      : [...prev, option.value]
+                  );
+                };
+                return (
+                  <button
+                    key={option.value}
+                    type="button"
+                    onClick={toggleService}
+                    className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-sans transition-all border ${
+                      isSelected
+                        ? "bg-accent text-accent-foreground border-accent"
+                        : "bg-background text-muted-foreground border-border hover:border-accent/50"
+                    }`}
+                  >
+                    {isSelected && <Check className="w-3.5 h-3.5" />}
+                    {option.label}
+                  </button>
+                );
+              })}
+            </div>
           </div>
           
           <div>

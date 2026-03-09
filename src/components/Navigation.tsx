@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Menu, X, ChevronDown, User, Compass, Layers, BookOpen, Rocket } from "lucide-react";
+import { ContactDrawer } from "@/components/ContactDrawer";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -22,6 +23,7 @@ export const Navigation = ({ variant = "default" }: NavigationProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLogoHovered, setIsLogoHovered] = useState(false);
+  const [isContactOpen, setIsContactOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -100,13 +102,11 @@ export const Navigation = ({ variant = "default" }: NavigationProps) => {
 
             <NavItem href="/blog" label="Journal" icon={BookOpen} onClick={() => trackNavClick('Journal', 'header')} />
 
-            <Button size="sm" className="group bg-accent text-accent-foreground hover:bg-accent/90 rounded-full px-5 ml-1 not-italic font-sans text-sm" asChild>
-              <a href="/#contact" className="flex items-center" onClick={() => trackCtaClick('Get Started', 'header')}>
-                <span className="w-0 h-5 flex items-center justify-center overflow-hidden transition-all duration-300 opacity-0 scale-75 group-hover:w-5 group-hover:opacity-100 group-hover:scale-100 group-hover:mr-1.5">
-                  <Rocket className="w-4 h-4 shrink-0" />
-                </span>
-                Get Started
-              </a>
+            <Button size="sm" className="group bg-accent text-accent-foreground hover:bg-accent/90 rounded-full px-5 ml-1 not-italic font-sans text-sm" onClick={() => { trackCtaClick('Get Started', 'header'); setIsContactOpen(true); }}>
+              <span className="w-0 h-5 flex items-center justify-center overflow-hidden transition-all duration-300 opacity-0 scale-75 group-hover:w-5 group-hover:opacity-100 group-hover:scale-100 group-hover:mr-1.5">
+                <Rocket className="w-4 h-4 shrink-0" />
+              </span>
+              Get Started
             </Button>
           </div>
 
@@ -153,13 +153,11 @@ export const Navigation = ({ variant = "default" }: NavigationProps) => {
 
               <NavItem href="/blog" label="Journal" icon={BookOpen} onClick={() => trackNavClick('Journal', 'floating')} />
 
-              <Button size="sm" className="group bg-accent text-accent-foreground hover:bg-accent/90 rounded-full px-5 ml-1 not-italic font-sans text-sm" asChild>
-                <a href="/#contact" className="flex items-center" onClick={() => trackCtaClick('Get Started', 'floating-nav')}>
-                  <span className="w-0 h-5 flex items-center justify-center overflow-hidden transition-all duration-300 opacity-0 scale-75 group-hover:w-5 group-hover:opacity-100 group-hover:scale-100 group-hover:mr-1.5">
-                    <Rocket className="w-4 h-4 shrink-0" />
-                  </span>
-                  Get Started
-                </a>
+              <Button size="sm" className="group bg-accent text-accent-foreground hover:bg-accent/90 rounded-full px-5 ml-1 not-italic font-sans text-sm" onClick={() => { trackCtaClick('Get Started', 'floating-nav'); setIsContactOpen(true); }}>
+                <span className="w-0 h-5 flex items-center justify-center overflow-hidden transition-all duration-300 opacity-0 scale-75 group-hover:w-5 group-hover:opacity-100 group-hover:scale-100 group-hover:mr-1.5">
+                  <Rocket className="w-4 h-4 shrink-0" />
+                </span>
+                Get Started
               </Button>
             </div>
 
@@ -205,12 +203,14 @@ export const Navigation = ({ variant = "default" }: NavigationProps) => {
               </a>
             </div>
 
-            <Button size="lg" className="w-full bg-accent text-accent-foreground hover:bg-accent/90 rounded-full mt-4 font-sans not-italic" asChild>
-              <a href="/#contact" onClick={() => setIsMobileMenuOpen(false)}>Get Started</a>
+            <Button size="lg" className="w-full bg-accent text-accent-foreground hover:bg-accent/90 rounded-full mt-4 font-sans not-italic" onClick={() => { setIsMobileMenuOpen(false); setIsContactOpen(true); }}>
+              Get Started
             </Button>
           </div>
         </div>
       )}
+
+      <ContactDrawer open={isContactOpen} onOpenChange={setIsContactOpen} source="nav-get-started" />
     </>
   );
 };
