@@ -175,6 +175,37 @@ export const ContactDrawer = ({ open, onOpenChange, source = "drawer" }: Contact
               className="bg-background rounded-lg mt-1"
             />
           </div>
+
+          <div>
+            <Label className="text-sm text-muted-foreground">What are you interested in?</Label>
+            <div className="flex flex-wrap gap-2 mt-2">
+              {SERVICE_OPTIONS.map((option) => {
+                const isSelected = selectedServices.includes(option.value);
+                const toggleService = () => {
+                  setSelectedServices(prev =>
+                    prev.includes(option.value)
+                      ? prev.filter(s => s !== option.value)
+                      : [...prev, option.value]
+                  );
+                };
+                return (
+                  <button
+                    key={option.value}
+                    type="button"
+                    onClick={toggleService}
+                    className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-sans transition-all border ${
+                      isSelected
+                        ? "bg-accent text-accent-foreground border-accent"
+                        : "bg-background text-muted-foreground border-border hover:border-accent/50"
+                    }`}
+                  >
+                    {isSelected && <Check className="w-3.5 h-3.5" />}
+                    {option.label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
           
           <div>
             <Label htmlFor="drawer-message" className="text-sm text-muted-foreground">What are you working on?</Label>
