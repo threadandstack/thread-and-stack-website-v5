@@ -16,21 +16,24 @@ const AboutPage = () => {
       <Navigation />
 
       {/* Hero — full-bleed image with overlaid Background & Experience */}
-      <section className="relative min-h-[100vh] md:min-h-[90vh] flex items-end">
+      <section className="relative min-h-[130vh] md:min-h-[90vh] flex items-end">
         <img
           src={brendanWalking}
           alt="Brendan walking past street art in Shoreditch"
-          className="absolute inset-0 w-full h-full object-cover object-[85%_center] md:object-[75%_center]"
+          className="absolute inset-0 w-full h-full object-cover object-[65%_20%] md:object-[75%_center]"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+        {/* Mobile: gradient only at bottom half so Brendan is visible at top */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent md:bg-none" />
+        {/* Desktop: left-to-right gradient */}
+        <div className="absolute inset-0 hidden md:block bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
+        <div className="absolute inset-0 hidden md:block bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 
-        <div className="relative z-10 w-full px-6 pb-16 pt-32">
+        <div className="relative z-10 w-full px-6 pb-10 md:pb-16 pt-32">
           <div className="max-w-6xl mx-auto">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-light text-white mb-8">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-light text-white mb-6 md:mb-8">
               Background &amp; Experience
             </h1>
-            <div className="space-y-4 text-base md:text-lg leading-relaxed text-white/90 max-w-xl md:max-w-2xl">
+            <div className="space-y-3 md:space-y-4 text-sm md:text-lg leading-relaxed text-white/90 max-w-xl md:max-w-2xl">
               <p>
                 I studied Media, Communications &amp; Culture and Philosophy at Keele University, a combination that wasn't common at the time. Media Communications were dismissed as a "Mickey Mouse degree," and Philosophy was seen as a waste of time. I chose it because I saw the impact these two subjects could have together. Now, these disciplines underpin our modern world.
               </p>
@@ -44,7 +47,7 @@ const AboutPage = () => {
                 Now I focus on one thing: helping purpose-led teams protect what matters while building brands that actually grow. The problem is always clarity. Strategic positioning paired with strong design craft. That's where I can help.
               </p>
             </div>
-            <div className="mt-8">
+            <div className="mt-6 md:mt-8">
               <PillButton size="lg" variant="dark" icon={Rocket} asChild>
                 <a href="/#contact">Let's Work Together</a>
               </PillButton>
