@@ -13,7 +13,7 @@ import notionAmbassadorBlack from "@/assets/notion-ambassador-black.png";
 const AboutPage = () => {
   return (
     <main className="min-h-screen">
-      <Navigation />
+      <Navigation variant="image-hero" />
 
       {/* Hero — full-bleed image with overlaid Background & Experience */}
       <section className="relative min-h-[130vh] md:min-h-[90vh] flex items-end">
