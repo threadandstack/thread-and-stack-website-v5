@@ -68,7 +68,7 @@ const SITE_PAGES = [
   { path: "/about", label: "About", type: "site" },
   { path: "/how-i-work", label: "How I Work", type: "site" },
   { path: "/sessions-and-sprints", label: "Sessions & Sprints", type: "site" },
-  { path: "/fractional-deep-engagement", label: "Fractional Deep Engagement", type: "site" },
+  { path: "/narratives-strategy", label: "Narratives & Strategy Services", type: "site" },
   { path: "/workshops", label: "Workshops", type: "site" },
   { path: "/blog", label: "Blog", type: "site" },
   { path: "/privacy", label: "Privacy Policy", type: "site" },

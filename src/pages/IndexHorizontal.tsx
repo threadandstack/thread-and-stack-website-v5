@@ -188,7 +188,7 @@ const IndexHorizontal = () => {
                   ))}
                 </div>
                 <Button className="bg-accent-foreground text-accent hover:bg-accent-foreground/90 rounded-xl font-sans w-full" size="sm" asChild>
-                  <a href="/fractional-deep-engagement">Learn More <ArrowRight className="ml-1 w-3 h-3" /></a>
+                  <a href="/narratives-strategy">Learn More <ArrowRight className="ml-1 w-3 h-3" /></a>
                 </Button>
               </div>
 
@@ -200,7 +200,7 @@ const IndexHorizontal = () => {
                 <p className="font-sans text-sm text-muted-foreground mb-3">Full brand refreshes and strategic overhauls. 2-6 month projects.</p>
                 <p className="text-lg font-semibold font-sans mb-4">From £10-25k</p>
                 <Button variant="outline" size="sm" className="rounded-xl font-sans w-full" asChild>
-                  <a href="/fractional-deep-engagement">Learn More <ArrowRight className="ml-1 w-3 h-3" /></a>
+                  <a href="/narratives-strategy">Learn More <ArrowRight className="ml-1 w-3 h-3" /></a>
                 </Button>
               </div>
             </div>

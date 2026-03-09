@@ -11,8 +11,8 @@ const FractionalDeepEngagement = () => {
   const [contactOpen, setContactOpen] = useState(false);
 
   useEffect(() => {
-    trackServiceView('Fractional & Deep Engagement');
-    const cleanup = useScrollDepthTracking('fractional-deep-engagement');
+    trackServiceView('Narratives & Strategy Services');
+    const cleanup = useScrollDepthTracking('narratives-strategy');
     return cleanup;
   }, []);
 
@@ -206,7 +206,7 @@ const FractionalDeepEngagement = () => {
           <div className="mb-12">
             <p className="text-accent mb-2 not-italic">Strategic Partnership & Transformation</p>
             <h1 className="text-5xl md:text-6xl mb-6 text-balance font-light">
-              Fractional & Deep Engagement
+              Narratives & Strategy Services
             </h1>
             <div className="bg-secondary/10 rounded-lg p-6 border-l-4 border-accent mb-6">
               <p className="text-lg text-muted-foreground mb-4">

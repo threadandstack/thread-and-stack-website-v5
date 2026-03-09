@@ -30,7 +30,7 @@ export const Footer = () => {
             <ul className="space-y-2 text-sm font-sans text-primary-foreground/80">
               <li><a href="/sessions-and-sprints" className="hover:text-primary-foreground transition-colors" onClick={() => trackFooterLinkClick('Sessions & Sprints', 'internal')}>Sessions & Sprints</a></li>
               <li><a href="/workshops" className="hover:text-primary-foreground transition-colors" onClick={() => trackFooterLinkClick('Brand Connection Workshops', 'internal')}>Brand Connection Workshops</a></li>
-              <li><a href="/fractional-deep-engagement" className="hover:text-primary-foreground transition-colors" onClick={() => trackFooterLinkClick('Fractional & Deep Engagement', 'internal')}>Fractional & Deep Engagement</a></li>
+              <li><a href="/narratives-strategy" className="hover:text-primary-foreground transition-colors" onClick={() => trackFooterLinkClick('Narratives & Strategy Services', 'internal')}>Narratives & Strategy Services</a></li>
               <li><a href="/blog" className="hover:text-primary-foreground transition-colors font-serif-pro italic" onClick={() => trackFooterLinkClick('Stacked Behaviours Newsletter', 'internal')}>Stacked Behaviours Newsletter</a></li>
             </ul>
           </div>

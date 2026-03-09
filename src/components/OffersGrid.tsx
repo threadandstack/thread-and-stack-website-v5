@@ -41,7 +41,7 @@ export const OffersGrid = () => {
     {
       icon: <Palette className="w-6 h-6" />,
       title: "Creative Consultancy",
-      tagline: "Brand Strategy & Fractional Marketing",
+      tagline: "Narratives & Strategy Services",
       description: "From workshops that align your team around story and positioning, to ongoing fractional partnerships that embed strategic and creative direction into your operations. For founders and teams who need their marketing to actually reach people.",
       services: [
         "Brand Connection Workshops — from £2k",

@@ -52,7 +52,8 @@ const App = () => (
           <Route path="/about" element={<AboutPage />} />
           <Route path="/how-i-work" element={<HowIWorkPage />} />
           <Route path="/sessions-and-sprints" element={<SessionsAndSprints />} />
-          <Route path="/fractional-deep-engagement" element={<FractionalDeepEngagement />} />
+          <Route path="/narratives-strategy" element={<FractionalDeepEngagement />} />
+          <Route path="/fractional-deep-engagement" element={<FractionalDeepEngagement />} /> {/* Legacy redirect */}
           <Route path="/workshops" element={<Workshops />} />
           <Route path="/notion-systems" element={<NotionSystemsPage />} />
           {/* Legacy routes - redirect to new combined pages */}
