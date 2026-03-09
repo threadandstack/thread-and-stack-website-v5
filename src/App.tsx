@@ -37,6 +37,7 @@ import NotionSystemsPage from "./pages/NotionSystemsPage";
 import RetainerLaunchPage from "./pages/RetainerLaunchPage";
 import RetainerStartupPage from "./pages/RetainerStartupPage";
 import RetainerScaleUpPage from "./pages/RetainerScaleUpPage";
+import WorkWithMePage from "./pages/WorkWithMePage";
 import { CookieConsent } from "./components/CookieConsent";
 
 const queryClient = new QueryClient();
