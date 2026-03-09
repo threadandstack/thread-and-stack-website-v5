@@ -188,7 +188,7 @@ const IndexHorizontal = () => {
                   ))}
                 </div>
                 <Button className="bg-accent-foreground text-accent hover:bg-accent-foreground/90 rounded-xl font-sans w-full" size="sm" asChild>
-                  <a href="/fractional-deep-engagement">Learn More <ArrowRight className="ml-1 w-3 h-3" /></a>
+                  <a href="/narratives-strategy">Learn More <ArrowRight className="ml-1 w-3 h-3" /></a>
                 </Button>
               </div>
 
