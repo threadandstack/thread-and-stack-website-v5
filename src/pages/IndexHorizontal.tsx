@@ -19,9 +19,7 @@ import { trackCtaClick } from "@/hooks/useAnalytics";
 const IndexHorizontal = () => {
   // 0 = Creative (left), 1 = Hero (center), 2 = Notion (right)
   const [activePanel, setActivePanel] = useState(1);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const lastScrollTime = useRef(0);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   // Add noindex
   useEffect(() => {
@@ -32,78 +30,81 @@ const IndexHorizontal = () => {
     return () => { document.head.removeChild(meta); };
   }, []);
 
-  const navigatePanel = useCallback((direction: 'left' | 'right') => {
-    if (isTransitioning) return;
-    
-    setIsTransitioning(true);
-    setActivePanel(prev => {
-      if (direction === 'left' && prev > 0) return prev - 1;
-      if (direction === 'right' && prev < 2) return prev + 1;
-      return prev;
-    });
-    
-    setTimeout(() => setIsTransitioning(false), 800);
-  }, [isTransitioning]);
+  // Set initial scroll position to center panel
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      // Disable smooth scroll for initial positioning
+      scrollContainerRef.current.style.scrollBehavior = 'auto';
+      scrollContainerRef.current.scrollLeft = window.innerWidth;
+      // Re-enable smooth scroll
+      setTimeout(() => {
+        if (scrollContainerRef.current) {
+          scrollContainerRef.current.style.scrollBehavior = 'smooth';
+        }
+      }, 50);
+    }
+  }, []);
 
   // Intercept scroll wheel → horizontal navigation
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
-      e.preventDefault();
-      
-      const now = Date.now();
-      if (now - lastScrollTime.current < 800) return;
-      lastScrollTime.current = now;
+      const container = scrollContainerRef.current;
+      if (!container) return;
 
-      if (e.deltaY > 30) {
-        // Scroll down → go left (Creative)
-        navigatePanel('left');
-      } else if (e.deltaY < -30) {
-        // Scroll up → go right (Notion)
-        navigatePanel('right');
+      let target = e.target as HTMLElement | null;
+      let shouldScrollVertically = false;
+      
+      while (target && target !== container) {
+        const style = window.getComputedStyle(target);
+        if (style.overflowY === 'auto' || style.overflowY === 'scroll') {
+          const atTop = target.scrollTop <= 0;
+          const atBottom = Math.abs(target.scrollHeight - target.clientHeight - target.scrollTop) <= 1;
+          
+          if ((e.deltaY < 0 && !atTop) || (e.deltaY > 0 && !atBottom)) {
+            shouldScrollVertically = true;
+            break;
+          }
+        }
+        target = target.parentElement;
+      }
+
+      if (!shouldScrollVertically && Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+        e.preventDefault();
+        container.scrollLeft += e.deltaY;
       }
     };
 
-    const container = containerRef.current;
+    const container = scrollContainerRef.current;
     if (container) {
       container.addEventListener('wheel', handleWheel, { passive: false });
     }
     return () => {
       if (container) container.removeEventListener('wheel', handleWheel);
     };
-  }, [navigatePanel]);
+  }, []);
 
-  // Touch support
-  const touchStartY = useRef(0);
-  useEffect(() => {
-    const handleTouchStart = (e: TouchEvent) => {
-      touchStartY.current = e.touches[0].clientY;
-    };
-    const handleTouchEnd = (e: TouchEvent) => {
-      const deltaY = touchStartY.current - e.changedTouches[0].clientY;
-      if (Math.abs(deltaY) > 50) {
-        if (deltaY > 0) navigatePanel('left');  // swipe up → left
-        else navigatePanel('right');  // swipe down → right
-      }
-    };
-    const container = containerRef.current;
-    if (container) {
-      container.addEventListener('touchstart', handleTouchStart, { passive: true });
-      container.addEventListener('touchend', handleTouchEnd, { passive: true });
+  const handleScroll = useCallback(() => {
+    if (!scrollContainerRef.current) return;
+    const scrollLeft = scrollContainerRef.current.scrollLeft;
+    const windowWidth = window.innerWidth;
+    const panel = Math.round(scrollLeft / windowWidth);
+    if (panel !== activePanel) {
+      setActivePanel(panel);
     }
-    return () => {
-      if (container) {
-        container.removeEventListener('touchstart', handleTouchStart);
-        container.removeEventListener('touchend', handleTouchEnd);
-      }
-    };
-  }, [navigatePanel]);
+  }, [activePanel]);
+
+  const scrollToPanel = (index: number) => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTo({ left: index * window.innerWidth, behavior: 'smooth' });
+    }
+  };
 
   const panelLabels = ['Creative Services', 'Home', 'Notion & Systems'];
-
   const clients = ["eBay", "Dentsu", "IMMA Collective", "BfB Labs", "Mixergy"];
 
   return (
-    <div ref={containerRef} className="h-screen overflow-hidden relative bg-background">
+    <div className="h-screen overflow-hidden relative bg-background">
+      <style>{`.hide-scrollbar::-webkit-scrollbar { display: none; }`}</style>
       <Navigation variant="image-hero" />
 
       {/* Panel indicator dots */}
@@ -111,7 +112,7 @@ const IndexHorizontal = () => {
         {panelLabels.map((label, i) => (
           <button
             key={i}
-            onClick={() => { setActivePanel(i); setIsTransitioning(true); setTimeout(() => setIsTransitioning(false), 800); }}
+            onClick={() => scrollToPanel(i)}
             className={`group flex items-center gap-2 transition-all duration-500`}
           >
             <span className={`block rounded-full transition-all duration-500 ${
@@ -131,13 +132,13 @@ const IndexHorizontal = () => {
       {/* Direction hints */}
       {activePanel === 1 && (
         <>
-          <div className="fixed left-6 top-1/2 -translate-y-1/2 z-40 flex flex-col items-center gap-2 animate-pulse">
+          <div className="fixed left-6 top-1/2 -translate-y-1/2 z-40 flex flex-col items-center gap-2 animate-pulse pointer-events-none">
             <ChevronLeft className="w-6 h-6 text-accent" />
             <span className="text-xs font-sans text-muted-foreground writing-mode-vertical [writing-mode:vertical-rl] rotate-180">
               Creative
             </span>
           </div>
-          <div className="fixed right-6 top-1/2 -translate-y-1/2 z-40 flex flex-col items-center gap-2 animate-pulse">
+          <div className="fixed right-6 top-1/2 -translate-y-1/2 z-40 flex flex-col items-center gap-2 animate-pulse pointer-events-none">
             <ChevronRight className="w-6 h-6 text-accent" />
             <span className="text-xs font-sans text-muted-foreground [writing-mode:vertical-rl]">
               Notion
@@ -148,23 +149,22 @@ const IndexHorizontal = () => {
 
       {/* Scroll direction hint on center */}
       {activePanel === 1 && (
-        <div className="fixed bottom-20 left-1/2 -translate-x-1/2 z-40 text-center">
+        <div className="fixed bottom-20 left-1/2 -translate-x-1/2 z-40 text-center pointer-events-none">
           <p className="text-xs font-sans text-muted-foreground/60 animate-fade-in">
-            Scroll down for Creative · Scroll up for Notion
+            Scroll sideways or use trackpad
           </p>
         </div>
       )}
 
       {/* Three panels in a horizontal strip */}
       <div
-        className="flex h-full transition-transform duration-700 ease-[cubic-bezier(0.25,0.1,0.25,1)]"
-        style={{ 
-          width: '300vw',
-          transform: `translateX(-${activePanel * 100}vw)` 
-        }}
+        ref={scrollContainerRef}
+        onScroll={handleScroll}
+        className="flex h-full w-full overflow-x-auto overflow-y-hidden snap-x snap-mandatory scroll-smooth hide-scrollbar"
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
         {/* ===== PANEL 0: Creative Services (Left) ===== */}
-        <div className="w-screen h-screen overflow-y-auto flex-shrink-0">
+        <div className="w-screen h-screen overflow-y-auto flex-shrink-0 snap-center">
           <div className="min-h-screen">
             {/* Creative Hero */}
             <section className="pt-28 pb-16 px-6">
