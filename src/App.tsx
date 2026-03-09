@@ -21,6 +21,7 @@ import DataGuarantee from "./pages/DataGuarantee";
 import CollectivePage from "./pages/CollectivePage";
 import IndexPhotoHero from "./pages/IndexPhotoHero";
 import IndexAltHero from "./pages/IndexAltHero";
+import IndexHorizontal from "./pages/IndexHorizontal";
 import ThreadMotifDemo from "./components/ThreadMotifDemo";
 import BrandBook from "./components/BrandBook";
 import SeoAdminPage from "./pages/SeoAdminPage";
