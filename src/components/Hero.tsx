@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, ChevronDown } from "lucide-react";
+import { PillButton } from "@/components/ui/pill-button";
+import { ArrowRight, ChevronDown, Compass, Rocket } from "lucide-react";
 import { Emphasis } from "@/components/Emphasis";
 import { trackCtaClick } from "@/hooks/useAnalytics";
 
