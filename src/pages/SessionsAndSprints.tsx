@@ -264,14 +264,9 @@ const SessionsAndSprints = () => {
 
           <div className="bg-white/10 border border-white/20 rounded-lg p-8 mb-8">
             <p className="text-lg mb-4 font-semibold text-white">Investment: From £1k</p>
-            <Button 
-              size="lg" 
-              className="bg-white text-indigo hover:bg-white/90 group"
-              onClick={() => setContactOpen(true)}
-            >
+            <PillButton size="lg" variant="white" icon={Rocket} onClick={() => setContactOpen(true)}>
               Book Engagement Call
-              <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-            </Button>
+            </PillButton>
           </div>
 
           <div className="space-y-8">
