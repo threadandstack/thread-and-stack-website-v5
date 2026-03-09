@@ -112,15 +112,11 @@ const NotionSystemsPage = () => {
 
               <p className="text-xl font-semibold font-sans mb-6">£300 (VAT incl.) · 60 Minutes</p>
 
-              <Button
-                className="bg-accent text-accent-foreground hover:bg-accent/90 group rounded-xl not-italic font-sans"
-                asChild
-              >
+              <PillButton icon={Rocket} asChild>
                 <a href="#contact" onClick={() => trackCtaClick('Book a Notion Session', 'notion-sessions')}>
                   Book a Session
-                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </a>
-              </Button>
+              </PillButton>
             </div>
 
             <div>
