@@ -203,8 +203,8 @@ export const Navigation = ({ variant = "default" }: NavigationProps) => {
               </a>
             </div>
 
-            <Button size="lg" className="w-full bg-accent text-accent-foreground hover:bg-accent/90 rounded-full mt-4 font-sans not-italic" asChild>
-              <a href="/#contact" onClick={() => setIsMobileMenuOpen(false)}>Get Started</a>
+            <Button size="lg" className="w-full bg-accent text-accent-foreground hover:bg-accent/90 rounded-full mt-4 font-sans not-italic" onClick={() => { setIsMobileMenuOpen(false); setIsContactOpen(true); }}>
+              Get Started
             </Button>
           </div>
         </div>
