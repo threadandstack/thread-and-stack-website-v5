@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Check } from "lucide-react";
+import { PillButton } from "@/components/ui/pill-button";
+import { ArrowRight, Check, Rocket, MessageCircle, Send } from "lucide-react";
 import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
 import { FAQ } from "@/components/FAQ";
@@ -210,14 +210,9 @@ const Workshops = () => {
 
           <div className="bg-card border border-border rounded-lg p-8 mb-12">
             <p className="text-lg mb-4 font-semibold">Total investment: From £2k (lean sprint) to £11k (comprehensive overhaul)</p>
-            <Button 
-              size="lg" 
-              className="bg-accent text-accent-foreground hover:bg-accent/90 group"
-              onClick={() => setContactOpen(true)}
-            >
+            <PillButton size="lg" icon={Rocket} onClick={() => setContactOpen(true)}>
               Book a Scoping Call
-              <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-            </Button>
+            </PillButton>
           </div>
 
           <div className="space-y-16">
@@ -415,15 +410,16 @@ const Workshops = () => {
                 </div>
               </div>
 
-              <Button 
+              <PillButton 
                 type="submit" 
                 size="lg" 
-                className="w-full bg-white text-indigo hover:bg-white/90"
+                variant="white"
+                icon={Send}
+                className="w-full"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? "Submitting..." : "Request Quote"}
-                <ArrowRight className="ml-2" />
-              </Button>
+              </PillButton>
             </form>
           </div>
 
@@ -432,14 +428,9 @@ const Workshops = () => {
             <p className="text-white/80 mb-6">
               Book a scoping call to talk through your challenges and see if this is the right fit.
             </p>
-            <Button 
-              size="lg" 
-              className="bg-white text-indigo hover:bg-white/90 group"
-              onClick={() => setContactOpen(true)}
-            >
+            <PillButton size="lg" variant="white" icon={MessageCircle} onClick={() => setContactOpen(true)}>
               Book a Scoping Call
-              <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-            </Button>
+            </PillButton>
           </div>
         </div>
       </section>

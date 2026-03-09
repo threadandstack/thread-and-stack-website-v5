@@ -5,7 +5,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
+import { PillButton } from "@/components/ui/pill-button";
 import { ArrowRight, Check, Zap, Clock, Users, Target, Repeat } from "lucide-react";
 
 interface Offer {
@@ -289,15 +289,9 @@ export const ServiceDrawer = ({
           {getContent()}
           
           <div className="pt-6 border-t border-border/30">
-            <Button 
-              className="w-full group bg-accent text-accent-foreground hover:bg-accent/90 rounded-xl"
-              asChild
-            >
-              <a href={offer.link}>
-                View Full Details
-                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </a>
-            </Button>
+            <PillButton className="w-full" icon={ArrowRight} asChild>
+              <a href={offer.link}>View Full Details</a>
+            </PillButton>
           </div>
         </div>
       </SheetContent>

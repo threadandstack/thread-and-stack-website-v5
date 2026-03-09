@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Check, Target, Layers, FileText, Users, Calendar, Zap, Repeat } from "lucide-react";
+import { PillButton } from "@/components/ui/pill-button";
+import { ArrowRight, Check, Target, Layers, FileText, Users, Calendar, Zap, Repeat, MessageCircle, Rocket, Search } from "lucide-react";
 import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
 import { FAQ } from "@/components/FAQ";
@@ -215,21 +215,22 @@ const FractionalDeepEngagement = () => {
               
               {/* Quick Navigation with CTA language */}
               <div className="flex flex-wrap gap-3 mt-4">
-                <Button 
+                <PillButton 
                   variant="outline"
                   size="sm"
+                  icon={Search}
                   onClick={() => scrollToSection('fractional')}
-                  className="group"
                 >
-                  Explore Fractional Strategy →
-                </Button>
-                <Button 
+                  Explore Fractional Strategy
+                </PillButton>
+                <PillButton 
                   size="sm"
-                  className="bg-indigo text-white hover:bg-indigo/90 group"
+                  variant="indigo"
+                  icon={Layers}
                   onClick={() => scrollToSection('deep-engagement')}
                 >
-                  Learn About Deep Engagement →
-                </Button>
+                  Learn About Deep Engagement
+                </PillButton>
               </div>
             </div>
           </div>
@@ -255,14 +256,13 @@ const FractionalDeepEngagement = () => {
             <p className="text-lg text-muted-foreground mb-6">
               I work as an integrated member of your team, providing ongoing strategic guidance on brand positioning, campaign development, creative direction, and visual identity systems. You get senior-level strategic thinking and design craft without the full-time salary, benefits, and commitment.
             </p>
-            <Button 
+            <PillButton 
               size="lg" 
-              className="bg-accent text-accent-foreground hover:bg-accent/90 group"
+              icon={MessageCircle}
               onClick={() => setContactOpen(true)}
             >
               Discuss Your Needs
-              <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-            </Button>
+            </PillButton>
           </div>
 
           <div className="space-y-8">
@@ -332,14 +332,14 @@ const FractionalDeepEngagement = () => {
             <p className="text-lg text-white/90 mb-6">
               This isn't a quick fix or surface-level refresh. It's a comprehensive engagement where we work together intensively over 2-6 months to create fundamental strategic change. You get complete transformation with documented systems that outlive the engagement.
             </p>
-            <Button 
+            <PillButton 
               size="lg" 
-              className="bg-white text-indigo hover:bg-white/90 group"
+              variant="white"
+              icon={Search}
               onClick={() => setContactOpen(true)}
             >
               Explore Projects
-              <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-            </Button>
+            </PillButton>
           </div>
 
           <div className="space-y-8">
@@ -409,14 +409,14 @@ const FractionalDeepEngagement = () => {
             <p className="text-white/80 mb-6">
               Let's discuss your challenges and find the right engagement model for your team.
             </p>
-            <Button 
+            <PillButton 
               size="lg" 
-              className="bg-white text-indigo hover:bg-white/90 group"
+              variant="white"
+              icon={MessageCircle}
               onClick={() => setContactOpen(true)}
             >
               Start a Conversation
-              <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-            </Button>
+            </PillButton>
           </div>
         </div>
       </section>

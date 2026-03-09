@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Check, Zap, Clock } from "lucide-react";
+import { PillButton } from "@/components/ui/pill-button";
+import { ArrowRight, Check, Zap, Clock, Rocket, MessageCircle, Search } from "lucide-react";
 import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
 import { FAQ } from "@/components/FAQ";
@@ -130,27 +130,28 @@ const SessionsAndSprints = () => {
                 Two ways to get unstuck and build momentum. One-hour Clarity Sessions for rapid intervention, or six-week Sprints to transform how you work with AI.
               </p>
               <div className="flex flex-wrap gap-3 mt-4">
-                <Button 
+                <PillButton 
                   variant="outline"
                   size="sm"
+                  icon={Search}
                   onClick={() => {
                     const element = document.querySelector('.clarity-sessions-section');
                     element?.scrollIntoView({ behavior: 'smooth' });
                   }}
-                  className="group"
                 >
-                  Jump to Clarity Sessions →
-                </Button>
-                <Button 
+                  Jump to Clarity Sessions
+                </PillButton>
+                <PillButton 
                   size="sm"
-                  className="bg-indigo text-white hover:bg-indigo/90 group"
+                  variant="indigo"
+                  icon={Zap}
                   onClick={() => {
                     const element = document.getElementById('thread-ai');
                     element?.scrollIntoView({ behavior: 'smooth' });
                   }}
                 >
-                  Explore Thread AI Sprints →
-                </Button>
+                  Explore Thread AI Sprints
+                </PillButton>
               </div>
             </div>
           </div>
@@ -175,14 +176,9 @@ const SessionsAndSprints = () => {
               <p className="text-lg mb-2 not-italic"><strong>Price:</strong> £300 (VAT incl.)</p>
               <p className="text-lg mb-4 not-italic"><strong>Format:</strong> 60 Minutes (Virtual) + Recording + Action Plan</p>
               <p className="text-sm text-muted-foreground mb-6 italic">Send me your notes in advance, and I'll go over them beforehand.</p>
-              <Button 
-                size="lg" 
-                className="bg-accent text-accent-foreground hover:bg-accent/90 group border thread-border not-italic"
-                onClick={() => setContactOpen(true)}
-              >
+              <PillButton size="lg" icon={Rocket} onClick={() => setContactOpen(true)}>
                 Book a Clarity Session
-                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-              </Button>
+              </PillButton>
             </div>
 
             <div className="space-y-8">
@@ -268,14 +264,9 @@ const SessionsAndSprints = () => {
 
           <div className="bg-white/10 border border-white/20 rounded-lg p-8 mb-8">
             <p className="text-lg mb-4 font-semibold text-white">Investment: From £1k</p>
-            <Button 
-              size="lg" 
-              className="bg-white text-indigo hover:bg-white/90 group"
-              onClick={() => setContactOpen(true)}
-            >
+            <PillButton size="lg" variant="white" icon={Rocket} onClick={() => setContactOpen(true)}>
               Book Engagement Call
-              <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-            </Button>
+            </PillButton>
           </div>
 
           <div className="space-y-8">
@@ -315,14 +306,9 @@ const SessionsAndSprints = () => {
             <p className="text-white/80 mb-6">
               Whether you need a focused hour or a transformative six weeks, let's find the right fit.
             </p>
-            <Button 
-              size="lg" 
-              className="bg-white text-indigo hover:bg-white/90 group"
-              onClick={() => setContactOpen(true)}
-            >
+            <PillButton size="lg" variant="white" icon={MessageCircle} onClick={() => setContactOpen(true)}>
               Start a Conversation
-              <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-            </Button>
+            </PillButton>
           </div>
         </div>
       </section>

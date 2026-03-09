@@ -1,7 +1,7 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
-import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { PillButton } from "@/components/ui/pill-button";
+import { Rocket } from "lucide-react";
 import workshopImage from "@/assets/brendan-collaboration.jpeg";
 import heroPhoto from "@/assets/photos/workshop/brendan-23.jpg";
 import { useEffect, useRef, useState } from "react";
@@ -257,14 +257,14 @@ const HowIWorkPage = () => {
           </div>
 
           <div className="text-center pt-16">
-            <Button
+            <PillButton
               size="lg"
-              className="bg-accent-foreground text-accent hover:bg-accent-foreground/90 group rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
+              variant="dark"
+              icon={Rocket}
               onClick={() => setContactOpen(true)}
             >
               Let's Work Together
-              <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Button>
+            </PillButton>
           </div>
         </div>
       </section>

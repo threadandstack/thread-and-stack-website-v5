@@ -2,8 +2,8 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { AIPhilosophy } from "@/components/AIPhilosophy";
 import { FAQ } from "@/components/FAQ";
-import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { PillButton } from "@/components/ui/pill-button";
+import { Compass, Rocket } from "lucide-react";
 import brendanPhoto from "@/assets/brendan-graffiti-portrait.jpg";
 import brendanCollaboration from "@/assets/brendan-collaboration.jpeg";
 import brendanWorkshop from "@/assets/brendan-workshop.jpeg";
@@ -78,17 +78,9 @@ const AboutPage = () => {
       {/* How I Work link */}
       <section className="py-16 px-6">
         <div className="max-w-6xl mx-auto text-center">
-          <Button
-            variant="outline"
-            size="lg"
-            className="rounded-xl"
-            asChild
-          >
-            <a href="/how-i-work">
-              Learn How I Work
-              <ArrowRight className="ml-2 w-4 h-4" />
-            </a>
-          </Button>
+          <PillButton variant="outline" size="lg" icon={Compass} asChild>
+            <a href="/how-i-work">Learn How I Work</a>
+          </PillButton>
         </div>
       </section>
 
@@ -119,12 +111,9 @@ const AboutPage = () => {
           </div>
 
           <div className="mt-16 text-center">
-            <Button size="lg" className="bg-accent-foreground text-accent hover:bg-accent-foreground/90 group rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)]" asChild>
-              <a href="/#contact">
-                Let's Work Together
-                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </a>
-            </Button>
+            <PillButton size="lg" variant="dark" icon={Rocket} asChild>
+              <a href="/#contact">Let's Work Together</a>
+            </PillButton>
           </div>
         </div>
       </section>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { PillButton } from "@/components/ui/pill-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -86,13 +86,12 @@ export const Newsletter = () => {
                 className="bg-background rounded-lg" 
               />
             </div>
-            <Button 
+            <PillButton 
               type="submit" 
               disabled={isSubmitting || !consent} 
-              className="bg-accent text-accent-foreground hover:bg-accent/90 rounded-xl"
             >
               {isSubmitting ? "Subscribing..." : "Subscribe"}
-            </Button>
+            </PillButton>
           </div>
           
           <div className="flex items-start gap-2 text-left">

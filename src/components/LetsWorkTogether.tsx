@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { PillButton } from "@/components/ui/pill-button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { ArrowRight } from "lucide-react";
+import { Send } from "lucide-react";
 import { z } from "zod";
 
 const leadSchema = z.object({
@@ -173,14 +173,14 @@ export const LetsWorkTogether = ({ source = "blog" }: LetsWorkTogetherProps) => 
           />
         </div>
         
-          <Button 
+          <PillButton 
             type="submit" 
             disabled={isSubmitting}
-            className="w-full bg-accent text-accent-foreground hover:bg-accent/90 rounded-xl group"
+            className="w-full"
+            icon={Send}
           >
             {isSubmitting ? "Sending..." : "Start the Conversation"}
-            <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-          </Button>
+          </PillButton>
         </form>
         
         <p className="text-sm text-muted-foreground mt-6">

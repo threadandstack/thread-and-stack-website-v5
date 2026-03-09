@@ -1,7 +1,7 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Check, Zap, Clock, Repeat } from "lucide-react";
+import { PillButton } from "@/components/ui/pill-button";
+import { ArrowRight, Check, Zap, Clock, Repeat, Rocket, MessageCircle } from "lucide-react";
 import { Emphasis } from "@/components/Emphasis";
 import { trackCtaClick } from "@/hooks/useAnalytics";
 import notionAdmin from "@/assets/notion-certified-admin.png";
@@ -70,16 +70,11 @@ const NotionSystemsPage = () => {
                 Certified Notion administration, AI-powered workflow design, and operational systems that cut through the noise. Stop drowning in tabs. Start shipping with confidence.
               </p>
 
-              <Button
-                size="lg"
-                className="bg-accent text-accent-foreground hover:bg-accent/90 group rounded-xl not-italic font-sans font-semibold"
-                asChild
-              >
+              <PillButton size="lg" icon={Rocket} className="font-semibold" asChild>
                 <a href="#contact" onClick={() => trackCtaClick('Book an Intro Call', 'notion-systems-hero')}>
                   Book an Intro Call
-                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </a>
-              </Button>
+              </PillButton>
             </div>
 
             {/* Right: Photo */}
@@ -117,15 +112,11 @@ const NotionSystemsPage = () => {
 
               <p className="text-xl font-semibold font-sans mb-6">£300 (VAT incl.) · 60 Minutes</p>
 
-              <Button
-                className="bg-accent text-accent-foreground hover:bg-accent/90 group rounded-xl not-italic font-sans"
-                asChild
-              >
+              <PillButton icon={Rocket} asChild>
                 <a href="#contact" onClick={() => trackCtaClick('Book a Notion Session', 'notion-sessions')}>
                   Book a Session
-                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </a>
-              </Button>
+              </PillButton>
             </div>
 
             <div>
@@ -168,15 +159,11 @@ const NotionSystemsPage = () => {
 
               <p className="text-xl font-semibold font-sans mt-4 mb-6">£1,500 · 6 × 1hr Sessions</p>
 
-              <Button
-                className="bg-accent-foreground text-accent hover:bg-accent-foreground/90 group rounded-xl not-italic font-sans"
-                asChild
-              >
+              <PillButton variant="dark" icon={Zap} asChild>
                 <a href="#contact" onClick={() => trackCtaClick('Start a Sprint', 'notion-sprint')}>
                   Start a Sprint
-                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </a>
-              </Button>
+              </PillButton>
             </div>
 
             <div>
@@ -213,15 +200,11 @@ const NotionSystemsPage = () => {
                 Ongoing Notion administration, workflow optimisation, and systems support as an integrated member of your team. I keep your operational backbone healthy so you can focus on the work that matters.
               </p>
 
-              <Button
-                className="bg-accent text-accent-foreground hover:bg-accent/90 group rounded-xl not-italic font-sans"
-                asChild
-              >
+              <PillButton icon={MessageCircle} asChild>
                 <a href="#contact" onClick={() => trackCtaClick('Discuss Retainer', 'notion-retained')}>
                   Let's Talk
-                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </a>
-              </Button>
+              </PillButton>
             </div>
 
             <div className="space-y-3">

@@ -5,7 +5,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+import { PillButton } from "@/components/ui/pill-button";
 import { Link } from "react-router-dom";
 
 const ModalImageCarousel = ({ images }: { images: string[] }) => {
@@ -167,9 +167,9 @@ export const FeaturedProjectModal = ({
             <p className="text-foreground/70 text-lg">
               Ready to transform your brand like this?
             </p>
-            <Button asChild size="lg" className="font-light">
+            <PillButton asChild size="lg">
               <Link to="/contact">Book a Call</Link>
-            </Button>
+            </PillButton>
           </div>
         </div>
       </DialogContent>

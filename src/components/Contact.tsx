@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { PillButton } from "@/components/ui/pill-button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
@@ -195,14 +195,14 @@ export const Contact = () => {
             />
           </div>
             
-          <Button 
+          <PillButton 
             type="submit" 
             size="lg" 
             disabled={isSubmitting}
-            className="w-full bg-accent text-accent-foreground hover:bg-accent/90 rounded-xl"
+            className="w-full"
           >
             {isSubmitting ? "Sending..." : "Send Message"}
-          </Button>
+          </PillButton>
         </form>
       </div>
     </section>

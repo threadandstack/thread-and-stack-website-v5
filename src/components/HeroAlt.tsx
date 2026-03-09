@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, ChevronDown } from "lucide-react";
+import { PillButton } from "@/components/ui/pill-button";
+import { ChevronDown, Rocket, Compass } from "lucide-react";
 import { Emphasis } from "@/components/Emphasis";
 import { trackCtaClick } from "@/hooks/useAnalytics";
 import { FocalPointPicker } from "@/components/FocalPointPicker";
@@ -108,27 +108,17 @@ export const HeroAlt = () => {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3 mb-6">
-            <Button
-              size="lg"
-              className="bg-accent text-accent-foreground hover:bg-accent/90 transition-all duration-300 text-base px-7 group rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] not-italic font-sans font-semibold"
-              asChild
-            >
+            <PillButton size="lg" icon={Rocket} className="font-semibold" asChild>
               <a href="#contact" onClick={() => trackCtaClick('Book an Intro Call', 'hero-alt')}>
                 Book an Intro Call
-                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </a>
-            </Button>
+            </PillButton>
 
-            <Button
-              size="lg"
-              variant="outline"
-              className="text-base px-7 rounded-xl hover:bg-foreground hover:text-background not-italic shadow-[0_2px_8px_rgba(0,0,0,0.04)] font-sans"
-              asChild
-            >
+            <PillButton size="lg" variant="outline" icon={Compass} asChild>
               <a href="/how-i-work" onClick={() => trackCtaClick('How I Work', 'hero-alt')}>
                 How I Work
               </a>
-            </Button>
+            </PillButton>
           </div>
 
           {/* Social proof strip */}

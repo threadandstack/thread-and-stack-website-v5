@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
+import { PillButton } from "@/components/ui/pill-button";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
@@ -96,13 +97,13 @@ export const BlogNewsletterCTA = () => {
             required
             className="bg-background border-border/50"
           />
-          <Button 
+          <PillButton 
             type="submit" 
             disabled={isSubmitting || !consent}
-            className="shrink-0 bg-accent hover:bg-accent/90 text-accent-foreground"
+            className="shrink-0"
           >
             {isSubmitting ? "..." : "Subscribe"}
-          </Button>
+          </PillButton>
         </div>
         
         <div className="flex items-start gap-2 text-left max-w-md mx-auto">

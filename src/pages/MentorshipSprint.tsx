@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Check } from "lucide-react";
+import { PillButton } from "@/components/ui/pill-button";
+import { Check, Rocket } from "lucide-react";
 import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
 import { FAQ } from "@/components/FAQ";
@@ -90,12 +90,11 @@ const MentorshipSprint = () => {
 
           <div className="bg-card border border-border rounded-lg p-8 mb-12">
             <p className="text-lg mb-4 font-semibold">Investment: From £1k</p>
-            <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 group">
+            <PillButton size="lg" icon={Rocket}>
               <a href="/#contact" className="flex items-center">
                 Book Engagement Call
-                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
               </a>
-            </Button>
+            </PillButton>
           </div>
 
           <div className="space-y-16">
@@ -186,12 +185,11 @@ const MentorshipSprint = () => {
               <p className="text-muted-foreground mb-6">
                 Let's design a system that saves you hours every week and protects your best work.
               </p>
-              <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 group">
+              <PillButton size="lg" icon={Rocket}>
                 <a href="/#contact" className="flex items-center">
                   Explore the Sprint
-                  <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
                 </a>
-              </Button>
+              </PillButton>
             </div>
           </div>
         </div>
