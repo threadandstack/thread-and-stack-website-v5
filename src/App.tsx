@@ -37,6 +37,7 @@ import NotionSystemsPage from "./pages/NotionSystemsPage";
 import RetainerLaunchPage from "./pages/RetainerLaunchPage";
 import RetainerStartupPage from "./pages/RetainerStartupPage";
 import RetainerScaleUpPage from "./pages/RetainerScaleUpPage";
+import WorkWithMePage from "./pages/WorkWithMePage";
 import { CookieConsent } from "./components/CookieConsent";
 
 const queryClient = new QueryClient();
@@ -85,6 +86,7 @@ const App = () => (
           <Route path="/retainer/scaleup" element={<RetainerScaleUpPage />} />
           {/* Legacy route - redirect to new canonical URL */}
           <Route path="/fiction-favorites" element={<Navigate to="/favourite-fiction" replace />} />
+          <Route path="/work-with-me" element={<WorkWithMePage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
