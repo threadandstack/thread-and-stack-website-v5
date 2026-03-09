@@ -359,7 +359,7 @@ onClick={() => scrollToPanel(1)}
         </div>
 
         {/* ===== PANEL 1: Hero (Center) ===== */}
-        <div className="w-screen h-screen flex-shrink-0 relative">
+        <div className="w-screen h-screen flex-shrink-0 relative snap-center">
           {/* Background image */}
           <div className="absolute inset-0 overflow-hidden">
             <img
