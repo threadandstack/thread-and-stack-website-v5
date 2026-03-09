@@ -448,7 +448,7 @@ onClick={() => scrollToPanel(1)}
         </div>
 
         {/* ===== PANEL 2: Notion & Systems (Right) ===== */}
-        <div className="w-screen h-screen overflow-y-auto flex-shrink-0">
+        <div className="w-screen h-screen overflow-y-auto flex-shrink-0 snap-center">
           <div className="min-h-screen">
             {/* Notion Hero */}
             <section className="pt-28 pb-16 px-6">
