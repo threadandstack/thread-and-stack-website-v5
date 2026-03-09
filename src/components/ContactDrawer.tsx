@@ -113,6 +113,7 @@ export const ContactDrawer = ({ open, onOpenChange, source = "drawer" }: Contact
       setEmail("");
       setRole("");
       setMessage("");
+      setSelectedServices([]);
       onOpenChange(false);
     } catch (error: any) {
       console.error("Lead submission error:", error);
