@@ -43,6 +43,7 @@ export const ContactDrawer = ({ open, onOpenChange, source = "drawer" }: Contact
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
   const [message, setMessage] = useState("");
+  const [selectedServices, setSelectedServices] = useState<ServiceInterest[]>([]);
   const [honeypot, setHoneypot] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
