@@ -78,17 +78,9 @@ const AboutPage = () => {
       {/* How I Work link */}
       <section className="py-16 px-6">
         <div className="max-w-6xl mx-auto text-center">
-          <Button
-            variant="outline"
-            size="lg"
-            className="rounded-xl"
-            asChild
-          >
-            <a href="/how-i-work">
-              Learn How I Work
-              <ArrowRight className="ml-2 w-4 h-4" />
-            </a>
-          </Button>
+          <PillButton variant="outline" size="lg" icon={Compass} asChild>
+            <a href="/how-i-work">Learn How I Work</a>
+          </PillButton>
         </div>
       </section>
 
