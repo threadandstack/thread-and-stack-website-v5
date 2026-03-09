@@ -77,9 +77,9 @@ export const ContactDrawer = ({ open, onOpenChange, source = "drawer" }: Contact
       return;
     }
 
-    const fullMessage = role.trim() 
-      ? `[${role.trim()}]\n\n${message.trim()}` 
-      : message.trim();
+    const serviceLabels = selectedServices.map(s => SERVICE_OPTIONS.find(o => o.value === s)?.label).filter(Boolean).join(", ");
+    const serviceLine = serviceLabels ? `Interested in: ${serviceLabels}` : "";
+    const fullMessage = [role.trim() ? `[${role.trim()}]` : "", serviceLine, message.trim()].filter(Boolean).join("\n\n");
 
     try {
       const { error } = await supabase
