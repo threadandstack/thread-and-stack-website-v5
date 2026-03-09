@@ -187,14 +187,14 @@ export const ContactDrawer = ({ open, onOpenChange, source = "drawer" }: Contact
           />
         </div>
         
-          <Button 
+          <PillButton 
             type="submit" 
             disabled={isSubmitting}
-            className="w-full bg-accent text-accent-foreground hover:bg-accent/90 rounded-xl group"
+            className="w-full"
+            icon={Send}
           >
             {isSubmitting ? "Sending..." : "Start the Conversation"}
-            <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-          </Button>
+          </PillButton>
         </form>
       </SheetContent>
     </Sheet>
