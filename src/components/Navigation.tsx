@@ -30,7 +30,6 @@ export const Navigation = ({ variant = "default" }: NavigationProps) => {
   }, []);
 
   const services = [
-    { href: "/workshops", label: "Brand Connection Workshops" },
     { href: "/fractional-deep-engagement", label: "Fractional & Deep Engagement" },
     { href: "/notion-systems", label: "Notion & Systems Consultancy" },
   ];
