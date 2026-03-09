@@ -101,15 +101,9 @@ export const OfferModal = ({
               {offer.price}
             </p>
             
-            <Button 
-              className="group bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl"
-              asChild
-            >
-              <a href={offer.link}>
-                {offer.cta}
-                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </a>
-            </Button>
+            <PillButton icon={ArrowRight} asChild>
+              <a href={offer.link}>{offer.cta}</a>
+            </PillButton>
           </div>
         </div>
       </DialogContent>

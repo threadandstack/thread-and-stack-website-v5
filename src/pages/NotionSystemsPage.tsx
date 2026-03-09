@@ -200,15 +200,11 @@ const NotionSystemsPage = () => {
                 Ongoing Notion administration, workflow optimisation, and systems support as an integrated member of your team. I keep your operational backbone healthy so you can focus on the work that matters.
               </p>
 
-              <Button
-                className="bg-accent text-accent-foreground hover:bg-accent/90 group rounded-xl not-italic font-sans"
-                asChild
-              >
+              <PillButton icon={MessageCircle} asChild>
                 <a href="#contact" onClick={() => trackCtaClick('Discuss Retainer', 'notion-retained')}>
                   Let's Talk
-                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </a>
-              </Button>
+              </PillButton>
             </div>
 
             <div className="space-y-3">

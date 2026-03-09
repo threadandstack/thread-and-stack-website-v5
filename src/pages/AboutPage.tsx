@@ -111,12 +111,9 @@ const AboutPage = () => {
           </div>
 
           <div className="mt-16 text-center">
-            <Button size="lg" className="bg-accent-foreground text-accent hover:bg-accent-foreground/90 group rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)]" asChild>
-              <a href="/#contact">
-                Let's Work Together
-                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </a>
-            </Button>
+            <PillButton size="lg" variant="dark" icon={Rocket} asChild>
+              <a href="/#contact">Let's Work Together</a>
+            </PillButton>
           </div>
         </div>
       </section>

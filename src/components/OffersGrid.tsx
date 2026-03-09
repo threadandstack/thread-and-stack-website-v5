@@ -142,15 +142,9 @@ export const OffersGrid = () => {
                   </div>
                 )}
 
-                <Button
-                  className="w-full group bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl"
-                  asChild
-                >
-                  <a href={pillar.link}>
-                    {pillar.cta}
-                    <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </a>
-                </Button>
+                <PillButton className="w-full" icon={ArrowRight} asChild>
+                  <a href={pillar.link}>{pillar.cta}</a>
+                </PillButton>
               </div>
             </div>
           ))}
