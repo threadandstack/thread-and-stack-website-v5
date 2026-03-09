@@ -24,7 +24,7 @@ const AboutPage = () => {
             alt="Brendan walking past street art in Shoreditch"
             className="absolute inset-0 w-full h-full object-cover object-[65%_20%]"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
+          
         </div>
         <div className="bg-background px-6 pb-10 -mt-16 relative z-10">
           <h1 className="text-4xl font-light text-foreground mb-6">
