@@ -617,7 +617,7 @@ onClick={() => scrollToPanel(1)}
                 variant="outline"
                 size="lg"
                 className="rounded-xl font-sans"
-                onClick={() => { setActivePanel(1); setIsTransitioning(true); setTimeout(() => setIsTransitioning(false), 800); }}
+                onClick={() => scrollToPanel(1)}
               >
                 <ArrowLeft className="mr-2 w-4 h-4" />
                 Back to Home
