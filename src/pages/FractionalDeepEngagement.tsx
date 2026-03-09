@@ -215,21 +215,22 @@ const FractionalDeepEngagement = () => {
               
               {/* Quick Navigation with CTA language */}
               <div className="flex flex-wrap gap-3 mt-4">
-                <Button 
+                <PillButton 
                   variant="outline"
                   size="sm"
+                  icon={Search}
                   onClick={() => scrollToSection('fractional')}
-                  className="group"
                 >
-                  Explore Fractional Strategy →
-                </Button>
-                <Button 
+                  Explore Fractional Strategy
+                </PillButton>
+                <PillButton 
                   size="sm"
-                  className="bg-indigo text-white hover:bg-indigo/90 group"
+                  variant="indigo"
+                  icon={Layers}
                   onClick={() => scrollToSection('deep-engagement')}
                 >
-                  Learn About Deep Engagement →
-                </Button>
+                  Learn About Deep Engagement
+                </PillButton>
               </div>
             </div>
           </div>
