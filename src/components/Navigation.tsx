@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Menu, X, ChevronDown, User, Compass, Layers, BookOpen, Rocket } from "lucide-react";
+import { ContactDrawer } from "@/components/ContactDrawer";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
