@@ -76,13 +76,13 @@ const NotionSystemsPage = () => {
       <ContactDrawer open={contactOpen} onOpenChange={setContactOpen} source="notion-systems" />
 
       {/* Hero */}
-      <section className="relative min-h-[75vh] flex items-end overflow-hidden px-6">
+      <section className="relative min-h-[75vh] flex items-center overflow-hidden px-6">
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url(${heroImage})` }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/60 to-background/95" />
-        <div className="relative max-w-6xl mx-auto pt-32 pb-8">
+        <div className="absolute inset-0 bg-black/50" />
+        <div className="relative max-w-6xl mx-auto pt-32 pb-48">
           <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
             <div>
               <div className="flex flex-wrap items-center gap-3 mb-4">
@@ -93,10 +93,10 @@ const NotionSystemsPage = () => {
               <img
                 src={notionAmbassadorBlack}
                 alt="Notion Official Ambassador"
-                className="h-8 w-auto mb-8"
+                className="h-8 w-auto mb-8 invert"
               />
 
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold italic leading-[1.1] mb-6">
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold italic leading-[1.1] mb-6 text-white">
                 Notion &{" "}
                 <span className="relative inline-block text-accent">
                   Systems
@@ -105,7 +105,7 @@ const NotionSystemsPage = () => {
                 Consultancy
               </h1>
 
-              <p className="font-sans text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed">
+              <p className="font-sans text-lg md:text-xl text-white/70 max-w-2xl leading-relaxed">
                 Solve workspace chaos, save time, cut the busywork, and make the most of AI & Custom Agents.
               </p>
             </div>
@@ -123,8 +123,8 @@ const NotionSystemsPage = () => {
         </div>
       </section>
 
-      {/* 3-Column Product Cards — bridging hero and white */}
-      <section className="relative z-10 -mt-4 pb-24 px-6">
+      {/* 3-Column Product Cards — bridging into hero */}
+      <section className="relative z-10 -mt-24 pb-24 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-3 gap-6">
             {tiers.map((tier, index) => {
