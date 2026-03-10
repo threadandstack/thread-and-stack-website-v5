@@ -262,7 +262,7 @@ const NotionSystemsPage = () => {
             <p className="font-sans text-white/70 text-lg mb-8">
               Start with a conversation. We'll figure out the right shape together.
             </p>
-            <PillButton size="lg" icon={MessageCircle} variant="outline" className="border-white text-white hover:bg-white/10 hover:text-white" onClick={() => setContactOpen(true)}>
+            <PillButton size="lg" icon={MessageCircle} variant="outline" className="border-white bg-transparent text-white hover:bg-white/10 hover:text-white" onClick={() => setContactOpen(true)}>
               Start a Conversation
             </PillButton>
           </div>
