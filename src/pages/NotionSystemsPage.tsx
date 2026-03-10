@@ -11,6 +11,7 @@ import notionWorkflows from "@/assets/notion-workflows.png";
 import notionEssentials from "@/assets/notion-essentials.png";
 import notionHeroPhoto from "@/assets/notion-certified-hero.png";
 import notionAmbassadorBlack from "@/assets/notion-ambassador-black.png";
+import heroImage from "@/assets/brendan-postits-landscape.jpg";
 
 const NotionSystemsPage = () => {
   const [contactOpen, setContactOpen] = useState(false);
@@ -75,8 +76,13 @@ const NotionSystemsPage = () => {
       <ContactDrawer open={contactOpen} onOpenChange={setContactOpen} source="notion-systems" />
 
       {/* Hero */}
-      <section className="pt-32 pb-20 px-6">
-        <div className="max-w-6xl mx-auto">
+      <section className="relative pt-32 pb-20 px-6 overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url(${heroImage})` }}
+        />
+        <div className="absolute inset-0 bg-background/88" />
+        <div className="relative max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
             <div>
               <div className="flex flex-wrap items-center gap-3 mb-4">
