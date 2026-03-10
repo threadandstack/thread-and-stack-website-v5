@@ -96,7 +96,7 @@ const NotionSystemsPage = () => {
                 className="h-8 w-auto mb-8 invert"
               />
 
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold italic leading-[1.1] mb-6 text-white">
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold italic leading-[1.1] mb-6 text-white" style={{ textShadow: '0 2px 12px rgba(0,0,0,0.5)' }}>
                 Notion &{" "}
                 <span className="relative inline-block text-accent">
                   Systems
