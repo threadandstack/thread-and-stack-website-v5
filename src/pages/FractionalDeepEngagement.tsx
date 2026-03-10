@@ -4,7 +4,6 @@ import { Check, Zap, Layers, Repeat, MessageCircle, Rocket } from "lucide-react"
 import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
 import { ContactDrawer } from "@/components/ContactDrawer";
-import { Emphasis } from "@/components/Emphasis";
 import { FeaturedProjects } from "@/components/FeaturedProjects";
 import { trackServiceView, useScrollDepthTracking } from "@/hooks/useAnalytics";
 import heroImage from "@/assets/brendan-cafe-landscape.jpg";
@@ -34,21 +33,6 @@ const FractionalDeepEngagement = () => {
       cta: "Book a Session",
     },
     {
-      icon: <Layers className="w-6 h-6" />,
-      label: "Concentrated Project",
-      title: "Project Engagement",
-      tagline: "Scoped block of brand & narrative strategy",
-      description:
-        "A concentrated engagement to tackle a defined strategic challenge — brand refresh, positioning overhaul, or narrative rebuild.",
-      includes: [
-        "Discovery, research & stakeholder alignment",
-        "Positioning, messaging & narrative architecture",
-        "Visual identity direction & brand world building",
-        "Documentation, handover & implementation roadmap",
-      ],
-      cta: "Discuss a Project",
-    },
-    {
       icon: <Repeat className="w-6 h-6" />,
       label: "Ongoing Partnership",
       title: "Fractional Strategy Director",
@@ -63,38 +47,102 @@ const FractionalDeepEngagement = () => {
       ],
       cta: "Explore a Retainer",
     },
+    {
+      icon: <Layers className="w-6 h-6" />,
+      label: "Concentrated Project",
+      title: "Project Engagement",
+      tagline: "Scoped block of brand & narrative strategy",
+      description:
+        "A concentrated engagement to tackle a defined strategic challenge — brand refresh, positioning overhaul, or narrative rebuild.",
+      includes: [
+        "Discovery, research & stakeholder alignment",
+        "Positioning, messaging & narrative architecture",
+        "Visual identity direction & brand world building",
+        "Documentation, handover & implementation roadmap",
+      ],
+      cta: "Discuss a Project",
+    },
   ];
 
   return (
     <div className="min-h-screen">
-      <Navigation />
+      <Navigation variant="image-hero" />
       <ContactDrawer open={contactOpen} onOpenChange={setContactOpen} source="narratives-strategy" />
 
-      {/* Hero */}
-      <section className="relative min-h-[75vh] flex items-center overflow-hidden px-6">
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${heroImage})` }}
+      {/* Mobile hero — stacked */}
+      <section className="md:hidden">
+        <div className="relative h-[60vh]">
+          <img
+            src={heroImage}
+            alt="Brendan in a café discussing creative strategy"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+          <div className="absolute bottom-6 left-6 z-10">
+            <span className="inline-block text-white/90 font-sans text-xs bg-white/15 backdrop-blur-sm px-3 py-1 rounded-full mb-3">Narratives, Strategy & Creative Direction</span>
+            <h1 className="text-4xl font-semibold italic text-white w-[70vw]">
+              Narratives & Strategy Services
+            </h1>
+          </div>
+        </div>
+        <div className="bg-background px-6 pb-10 pt-6 relative z-10">
+          <div className="space-y-3 text-sm leading-relaxed text-muted-foreground">
+            <p>
+              The brands that stick aren't the loudest — they're the ones that know what they stand for and say it clearly. That's what we work on together.
+            </p>
+            <p>
+              From positioning and messaging architecture to full brand narrative rebuilds, I help purpose-led founders and teams find the story underneath the noise. The one that makes people lean in, not scroll past.
+            </p>
+            <p className="font-medium text-foreground">
+              Whether you need a sharp second opinion in a single session, a concentrated project sprint, or an ongoing strategic partner — the goal is always the same: clarity that compounds.
+            </p>
+          </div>
+          <div className="mt-6">
+            <PillButton size="lg" icon={Rocket} onClick={() => setContactOpen(true)}>
+              Book an Intro Call
+            </PillButton>
+          </div>
+        </div>
+      </section>
+
+      {/* Desktop hero — About-style full-bleed */}
+      <section className="relative hidden md:flex min-h-[90vh] items-end">
+        <img
+          src={heroImage}
+          alt="Brendan in a café discussing creative strategy"
+          className="absolute inset-0 w-full h-full object-cover object-center"
         />
-        <div className="absolute inset-0 bg-black/50" />
-        <div className="relative max-w-5xl mx-auto pt-32 pb-56">
-          <span className="inline-block text-white/90 font-sans text-sm bg-white/15 backdrop-blur-sm px-4 py-1.5 rounded-full mb-3">Narratives, Strategy & Creative Direction</span>
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold italic leading-[1.1] mb-6 text-white" style={{ textShadow: '0 2px 12px rgba(0,0,0,0.5)' }}>
-            Narratives &{" "}
-            <span className="relative inline-block text-accent">
-              Strategy
-              <Emphasis className="absolute -bottom-2 left-0 right-0" delay={0.3} />
-            </span>{" "}
-            Services
-          </h1>
-          <p className="font-sans text-lg md:text-xl text-white/70 max-w-3xl leading-relaxed">
-            We work on the stuff underneath. What you stand for, how you talk about it, and why it lands. We find the message. We find the narrative.
-          </p>
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+
+        <div className="relative z-10 w-full px-6 pb-16 pt-32">
+          <div className="max-w-6xl mx-auto">
+            <span className="inline-block text-white/90 font-sans text-sm bg-white/15 backdrop-blur-sm px-4 py-1.5 rounded-full mb-4">Narratives, Strategy & Creative Direction</span>
+            <h1 className="text-6xl lg:text-7xl font-semibold italic text-white mb-8" style={{ textShadow: '0 2px 12px rgba(0,0,0,0.3)' }}>
+              Narratives & Strategy Services
+            </h1>
+            <div className="space-y-4 text-lg leading-relaxed text-white/90 max-w-2xl">
+              <p>
+                The brands that stick aren't the loudest — they're the ones that know what they stand for and say it clearly. That's what we work on together.
+              </p>
+              <p>
+                From positioning and messaging architecture to full brand narrative rebuilds, I help purpose-led founders and teams find the story underneath the noise. The one that makes people lean in, not scroll past.
+              </p>
+              <p className="font-light text-white">
+                Whether you need a sharp second opinion in a single session, a concentrated project sprint, or an ongoing strategic partner — the goal is always the same: clarity that compounds.
+              </p>
+            </div>
+            <div className="mt-8">
+              <PillButton size="lg" variant="dark" icon={Rocket} onClick={() => setContactOpen(true)}>
+                Book an Intro Call
+              </PillButton>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* 3-Column Product Cards — bridging into hero */}
-      <section className="relative z-10 -mt-80 pb-24 px-6">
+      <section className="relative z-10 -mt-80 md:-mt-8 pb-24 px-6 pt-0 md:pt-16">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-3 gap-6">
             {tiers.map((tier, index) => {
