@@ -160,6 +160,9 @@ interface ImageItem {
   categoryLabel: string;
 }
 
+// Eagerly import all assets so Vite resolves their URLs
+const assetModules = import.meta.glob<string>('/src/assets/**/*.{jpg,jpeg,png,svg,gif}', { eager: true, import: 'default' });
+
 const ImageLibraryPage = () => {
   const navigate = useNavigate();
   const { user, loading: authLoading, isAdmin, signOut } = useAdminAuth();
