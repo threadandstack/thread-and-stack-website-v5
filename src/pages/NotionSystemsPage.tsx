@@ -4,7 +4,6 @@ import { Footer } from "@/components/Footer";
 import { ContactDrawer } from "@/components/ContactDrawer";
 import { PillButton } from "@/components/ui/pill-button";
 import { Check, Zap, Layers, Repeat, Rocket, MessageCircle } from "lucide-react";
-import { Emphasis } from "@/components/Emphasis";
 import notionAdmin from "@/assets/notion-certified-admin.png";
 import notionAdvanced from "@/assets/notion-advanced.png";
 import notionWorkflows from "@/assets/notion-workflows.png";
@@ -39,21 +38,6 @@ const NotionSystemsPage = () => {
       cta: "Book a Session",
     },
     {
-      icon: <Layers className="w-6 h-6" />,
-      label: "Concentrated Project",
-      title: "System Build Engagement",
-      tagline: "Workflows, CRM, marketing ops — scoped & built",
-      description:
-        "A scoped engagement to build or rebuild your Notion workspace. CRM migration, content pipelines, or operational untangling.",
-      includes: [
-        "Workspace audit & workflow mapping",
-        "Custom Notion system design & build",
-        "CRM migration, marketing ops, or team workflows",
-        "Documentation, training & handover",
-      ],
-      cta: "Discuss a Build",
-    },
-    {
       icon: <Repeat className="w-6 h-6" />,
       label: "Ongoing Partnership",
       title: "Fractional Ops & Automations Director",
@@ -68,63 +52,115 @@ const NotionSystemsPage = () => {
       ],
       cta: "Explore a Retainer",
     },
+    {
+      icon: <Layers className="w-6 h-6" />,
+      label: "Concentrated Project",
+      title: "System Build Engagement",
+      tagline: "Workflows, CRM, marketing ops — scoped & built",
+      description:
+        "A scoped engagement to build or rebuild your Notion workspace. CRM migration, content pipelines, or operational untangling.",
+      includes: [
+        "Workspace audit & workflow mapping",
+        "Custom Notion system design & build",
+        "CRM migration, marketing ops, or team workflows",
+        "Documentation, training & handover",
+      ],
+      cta: "Discuss a Build",
+    },
   ];
 
   return (
     <main className="min-h-screen relative">
-      <Navigation />
+      <Navigation variant="image-hero" />
       <ContactDrawer open={contactOpen} onOpenChange={setContactOpen} source="notion-systems" />
 
-      {/* Hero */}
-      <section className="relative min-h-[75vh] flex items-center overflow-hidden px-6">
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${heroImage})` }}
+      {/* Mobile hero — stacked */}
+      <section className="md:hidden">
+        <div className="relative h-[60vh]">
+          <img
+            src={heroImage}
+            alt="Brendan working with post-its and workflow planning"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+          <div className="absolute bottom-6 left-6 z-10">
+            <div className="flex flex-wrap items-center gap-2 mb-3">
+              {badges.map((badge, i) => (
+                <img key={i} src={badge.src} alt={badge.alt} className="w-8 h-auto" />
+              ))}
+            </div>
+            <h1 className="text-4xl font-semibold italic text-white w-[70vw]">
+              Notion & Systems Consultancy
+            </h1>
+          </div>
+        </div>
+        <div className="bg-background px-6 pb-10 pt-6 relative z-10">
+          <div className="space-y-3 text-sm leading-relaxed text-muted-foreground">
+            <p>
+              Most teams don't have a productivity problem — they have a systems problem. Too many tabs, too many tools, too many processes that nobody fully understands.
+            </p>
+            <p>
+              As a Certified Notion Admin and Official Notion Ambassador, I help teams untangle their workspaces, design workflows that reduce cognitive load, and build AI-powered automations that give time back.
+            </p>
+            <p className="font-medium text-foreground">
+              Whether it's a single workflow fix, a full workspace rebuild, or ongoing operational partnership — the goal is always systems that serve people, not the other way around.
+            </p>
+          </div>
+          <div className="mt-6">
+            <PillButton size="lg" icon={Rocket} onClick={() => setContactOpen(true)}>
+              Book an Intro Call
+            </PillButton>
+          </div>
+        </div>
+      </section>
+
+      {/* Desktop hero — About-style full-bleed */}
+      <section className="relative hidden md:flex min-h-[90vh] items-end">
+        <img
+          src={heroImage}
+          alt="Brendan working with post-its and workflow planning"
+          className="absolute inset-0 w-full h-full object-cover object-center"
         />
-        <div className="absolute inset-0 bg-black/50" />
-        <div className="relative max-w-6xl mx-auto pt-32 pb-56">
-          <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
-            <div>
-              <div className="flex flex-wrap items-center gap-3 mb-4">
-                {badges.map((badge, i) => (
-                  <img key={i} src={badge.src} alt={badge.alt} className="w-10 h-auto" />
-                ))}
-              </div>
-              <img
-                src={notionAmbassadorBlack}
-                alt="Notion Official Ambassador"
-                className="h-8 w-auto mb-8 invert"
-              />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold italic leading-[1.1] mb-6 text-white" style={{ textShadow: '0 2px 12px rgba(0,0,0,0.5)' }}>
-                Notion &{" "}
-                <span className="relative inline-block text-accent">
-                  Systems
-                  <Emphasis className="absolute -bottom-2 left-0 right-0" delay={0.3} />
-                </span>{" "}
-                Consultancy
-              </h1>
-
-              <p className="font-sans text-lg md:text-xl text-white/70 max-w-2xl leading-relaxed">
-                Solve workspace chaos, save time, cut the busywork, and make the most of AI & Custom Agents.
+        <div className="relative z-10 w-full px-6 pb-16 pt-32">
+          <div className="max-w-6xl mx-auto">
+            <div className="flex flex-wrap items-center gap-3 mb-3">
+              {badges.map((badge, i) => (
+                <img key={i} src={badge.src} alt={badge.alt} className="w-10 h-auto" />
+              ))}
+            </div>
+            <img
+              src={notionAmbassadorBlack}
+              alt="Notion Official Ambassador"
+              className="h-8 w-auto mb-6 invert"
+            />
+            <h1 className="text-6xl lg:text-7xl font-semibold italic text-white mb-8" style={{ textShadow: '0 2px 12px rgba(0,0,0,0.3)' }}>
+              Notion & Systems Consultancy
+            </h1>
+            <div className="space-y-4 text-lg leading-relaxed text-white/90 max-w-2xl">
+              <p>
+                Most teams don't have a productivity problem — they have a systems problem. Too many tabs, too many tools, too many processes that nobody fully understands.
+              </p>
+              <p>
+                As a Certified Notion Admin and Official Notion Ambassador, I help teams untangle their workspaces, design workflows that reduce cognitive load, and build AI-powered automations that give time back.
+              </p>
+              <p className="font-light text-white">
+                Whether it's a single workflow fix, a full workspace rebuild, or ongoing operational partnership — the goal is always systems that serve people, not the other way around.
               </p>
             </div>
-
-            <div className="relative hidden md:block">
-              <div className="rounded-2xl overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
-                <img
-                  src={notionHeroPhoto}
-                  alt="Brendan — Notion Certified Admin with all four Notion Academy badges"
-                  className="w-full h-auto"
-                />
-              </div>
+            <div className="mt-8">
+              <PillButton size="lg" variant="dark" icon={Rocket} onClick={() => setContactOpen(true)}>
+                Book an Intro Call
+              </PillButton>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 3-Column Product Cards — bridging into hero */}
-      <section className="relative z-10 -mt-80 pb-24 px-6">
+      {/* 3-Column Product Cards */}
+      <section className="relative z-10 -mt-80 md:-mt-8 pb-24 px-6 pt-0 md:pt-16">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-3 gap-6">
             {tiers.map((tier, index) => {
@@ -180,17 +216,17 @@ const NotionSystemsPage = () => {
         </div>
       </section>
 
-      {/* Indigo CTA */}
-      <section className="py-24 px-6 bg-indigo text-indigo-foreground">
+      {/* CTA */}
+      <section className="py-24 px-6">
         <div className="max-w-5xl mx-auto">
-          <div className="bg-white rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.15)] p-10 md:p-12 text-center max-w-2xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-semibold italic mb-4 text-foreground">
+          <div className="bg-indigo rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.15)] p-10 md:p-12 text-center max-w-2xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-semibold italic mb-4 text-white">
               Not sure which is right?
             </h2>
-            <p className="font-sans text-muted-foreground text-lg mb-8">
+            <p className="font-sans text-white/70 text-lg mb-8">
               Start with a conversation. We'll figure out the right shape together.
             </p>
-            <PillButton size="lg" icon={MessageCircle} onClick={() => setContactOpen(true)}>
+            <PillButton size="lg" icon={MessageCircle} variant="outline" className="border-white text-white hover:bg-white/10" onClick={() => setContactOpen(true)}>
               Start a Conversation
             </PillButton>
           </div>
