@@ -11,6 +11,7 @@ import notionWorkflows from "@/assets/notion-workflows.png";
 import notionEssentials from "@/assets/notion-essentials.png";
 import notionHeroPhoto from "@/assets/notion-certified-hero.png";
 import notionAmbassadorBlack from "@/assets/notion-ambassador-black.png";
+import heroImage from "@/assets/brendan-postits-landscape.jpg";
 
 const NotionSystemsPage = () => {
   const [contactOpen, setContactOpen] = useState(false);
