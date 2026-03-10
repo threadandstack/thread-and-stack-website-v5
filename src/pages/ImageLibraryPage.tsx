@@ -215,9 +215,10 @@ const ImageLibraryPage = () => {
     if (img.path.startsWith("/images/")) {
       return img.path;
     }
-    // For src/assets, we need to construct the URL for preview
-    // In dev, Vite serves these as static assets
-    return img.path.replace("/src/assets/", "/src/assets/");
+    // Resolve via Vite's glob import
+    const resolved = assetModules[img.path];
+    if (resolved) return resolved;
+    return img.path;
   };
 
   if (authLoading) {
