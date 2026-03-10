@@ -9,7 +9,7 @@ import notionAdvanced from "@/assets/notion-advanced.png";
 import notionWorkflows from "@/assets/notion-workflows.png";
 import notionEssentials from "@/assets/notion-essentials.png";
 import notionAmbassadorBlack from "@/assets/notion-ambassador-black.png";
-import heroImage from "@/assets/brendan-street.jpeg";
+import heroImage from "@/assets/photos/shoreditch/brendan-36.jpg";
 
 const NotionSystemsPage = () => {
   const [contactOpen, setContactOpen] = useState(false);

@@ -78,6 +78,7 @@ const IMAGE_CATEGORIES = {
       { name: "brendan-33.jpg", path: "/src/assets/photos/shoreditch/brendan-33.jpg", importPath: "@/assets/photos/shoreditch/brendan-33.jpg" },
       { name: "brendan-34.jpg", path: "/src/assets/photos/shoreditch/brendan-34.jpg", importPath: "@/assets/photos/shoreditch/brendan-34.jpg" },
       { name: "brendan-35.jpg", path: "/src/assets/photos/shoreditch/brendan-35.jpg", importPath: "@/assets/photos/shoreditch/brendan-35.jpg" },
+      { name: "brendan-36.jpg", path: "/src/assets/photos/shoreditch/brendan-36.jpg", importPath: "@/assets/photos/shoreditch/brendan-36.jpg" },
       { name: "brendan-37.jpg", path: "/src/assets/photos/shoreditch/brendan-37.jpg", importPath: "@/assets/photos/shoreditch/brendan-37.jpg" },
     ],
   },
