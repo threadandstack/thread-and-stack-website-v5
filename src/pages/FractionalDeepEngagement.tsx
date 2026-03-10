@@ -115,7 +115,7 @@ const FractionalDeepEngagement = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 
-        <div className="relative z-10 w-full px-6 pb-16 pt-32">
+        <div className="relative z-10 w-full px-6 pb-44 pt-32">
           <div className="max-w-6xl mx-auto">
             <span className="inline-block text-white/90 font-sans text-sm bg-white/15 backdrop-blur-sm px-4 py-1.5 rounded-full mb-4">Narratives, Strategy & Creative Direction</span>
             <h1 className="text-6xl lg:text-7xl font-semibold italic text-white mb-8" style={{ textShadow: '0 2px 12px rgba(0,0,0,0.3)' }}>

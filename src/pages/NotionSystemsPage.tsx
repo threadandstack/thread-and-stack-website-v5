@@ -124,7 +124,7 @@ const NotionSystemsPage = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 
-        <div className="relative z-10 w-full px-6 pb-16 pt-32">
+        <div className="relative z-10 w-full px-6 pb-44 pt-32">
           <div className="max-w-6xl mx-auto">
             <div className="flex flex-wrap items-center gap-3 mb-3">
               {badges.map((badge, i) => (
