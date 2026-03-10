@@ -70,13 +70,13 @@ const FractionalDeepEngagement = () => {
       <ContactDrawer open={contactOpen} onOpenChange={setContactOpen} source="narratives-strategy" />
 
       {/* Hero */}
-      <section className="relative pt-32 pb-20 px-6 overflow-hidden">
+      <section className="relative min-h-[75vh] flex items-center overflow-hidden px-6">
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url(${heroImage})` }}
         />
-        <div className="absolute inset-0 bg-background/88" />
-        <div className="relative max-w-5xl mx-auto">
+        <div className="absolute inset-0 bg-background/80" />
+        <div className="relative max-w-5xl mx-auto pt-32 pb-48">
           <p className="text-accent font-sans text-sm mb-3">Narratives, Strategy & Creative Direction</p>
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold italic leading-[1.1] mb-6">
             Narratives &{" "}
@@ -92,8 +92,8 @@ const FractionalDeepEngagement = () => {
         </div>
       </section>
 
-      {/* 3-Column Product Cards */}
-      <section className="py-24 px-6">
+      {/* 3-Column Product Cards — bridging hero and white */}
+      <section className="relative z-10 -mt-32 pb-24 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-3 gap-6">
             {tiers.map((tier, index) => {
@@ -103,8 +103,8 @@ const FractionalDeepEngagement = () => {
                   key={index}
                   className={`bg-card rounded-2xl p-8 transition-all duration-300 flex flex-col relative ${
                     isRecommended
-                      ? "ring-2 ring-accent shadow-[0_8px_24px_rgba(0,0,0,0.08)] scale-[1.02] md:scale-105"
-                      : "shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)]"
+                      ? "ring-2 ring-accent shadow-[0_8px_30px_rgba(0,0,0,0.12)] scale-[1.02] md:scale-105"
+                      : "shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.12)]"
                   }`}
                 >
                   {isRecommended && (
