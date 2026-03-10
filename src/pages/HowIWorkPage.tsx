@@ -2,31 +2,69 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { PillButton } from "@/components/ui/pill-button";
 import { Rocket } from "lucide-react";
-import workshopImage from "@/assets/brendan-collaboration.jpeg";
 import heroPhoto from "@/assets/photos/workshop/brendan-23.jpg";
 import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { ContactDrawer } from "@/components/ContactDrawer";
 
+const fourCs = [
+  {
+    word: "Connection",
+    description:
+      "The need to belong, relate, and build trust. AI can scale reach, but it can't manufacture genuine rapport. Connection is where brand loyalty actually lives.",
+  },
+  {
+    word: "Creativity",
+    description:
+      "The drive to make, shape, and express. AI can generate options, but creative judgment, taste, and the courage to commit to a direction? That's irreplaceably human.",
+  },
+  {
+    word: "Curiosity",
+    description:
+      "The pull to explore, question, and reframe. AI can retrieve and summarise, but the instinct to ask a better question, or challenge a brief, is what produces breakthrough work.",
+  },
+  {
+    word: "Contribution",
+    description:
+      "The desire to matter and leave something behind. AI optimises for metrics; humans optimise for meaning. The best brands are built on purpose, not just performance.",
+  },
+];
+
+const fourDs = [
+  {
+    letter: "Delegation",
+    description:
+      "Knowing whether, when, and how to engage AI. Not every task benefits from automation. The skill is in choosing wisely, protecting the work that deserves human attention.",
+  },
+  {
+    letter: "Description",
+    description:
+      "Articulating goals clearly enough to prompt useful AI behaviour. This is where strategic thinking meets practical fluency — vague inputs produce vague outputs.",
+  },
+  {
+    letter: "Discernment",
+    description:
+      "Accurately assessing AI outputs. Knowing what's good enough, what needs reworking, and what should be thrown away entirely. This is taste, applied to a new medium.",
+  },
+  {
+    letter: "Diligence",
+    description:
+      "Taking responsibility for what we do with AI and how we do it. Ethics, transparency, and accountability aren't optional extras — they're the foundation of trust.",
+  },
+];
+
 const HowIWorkPage = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const [realityVisible, setRealityVisible] = useState(false);
-  const [aiVisible, setAiVisible] = useState(false);
   const [contactOpen, setContactOpen] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
-  const realityRef = useRef<HTMLElement>(null);
-  const aiRef = useRef<HTMLElement>(null);
+  const [fourCsVisible, setFourCsVisible] = useState(false);
+  const [fourDsVisible, setFourDsVisible] = useState(false);
+  const fourCsRef = useRef<HTMLElement>(null);
+  const fourDsRef = useRef<HTMLElement>(null);
   const location = useLocation();
 
-  // Handle hash scroll on page load
   useEffect(() => {
     if (location.hash) {
-      const element = document.querySelector(location.hash);
-      if (element) {
-        setTimeout(() => {
-          element.scrollIntoView({ behavior: "smooth" });
-        }, 100);
-      }
+      const el = document.querySelector(location.hash);
+      if (el) setTimeout(() => el.scrollIntoView({ behavior: "smooth" }), 100);
     }
   }, [location.hash]);
 
@@ -35,237 +73,150 @@ const HowIWorkPage = () => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            if (entry.target === sectionRef.current) setIsVisible(true);
-            if (entry.target === realityRef.current) setRealityVisible(true);
-            if (entry.target === aiRef.current) setAiVisible(true);
+            if (entry.target === fourCsRef.current) setFourCsVisible(true);
+            if (entry.target === fourDsRef.current) setFourDsVisible(true);
           }
         });
       },
-      { threshold: 0.2 }
+      { threshold: 0.15 }
     );
-
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    if (realityRef.current) observer.observe(realityRef.current);
-    if (aiRef.current) observer.observe(aiRef.current);
-
+    if (fourCsRef.current) observer.observe(fourCsRef.current);
+    if (fourDsRef.current) observer.observe(fourDsRef.current);
     return () => observer.disconnect();
   }, []);
-
-  const fourCs = [
-    { word: "Creativity", description: "The drive to make, shape, and express." },
-    { word: "Connection", description: "The need to belong and relate to others." },
-    { word: "Curiosity", description: "The pull to explore, question, and understand." },
-    { word: "Contribution", description: "The desire to matter and leave something behind." },
-  ];
-
-  const principles = [
-    {
-      number: "01",
-      title: "Start with your reality",
-      description:
-        "No generic playbooks or cookie-cutter processes. Every engagement begins with understanding your specific context, ethics, and working style.",
-    },
-    {
-      number: "02",
-      title: "Co-create visual and strategic systems",
-      description:
-        "You're not outsourcing your thinking to a consultant. We collaborate to build positioning, visual identity, and workflows that are genuinely yours, from brand world building to practical implementation.",
-    },
-    {
-      number: "03",
-      title: "Hunt decisions and tangible outputs",
-      description:
-        "Every session delivers clear language, actionable decisions, and concrete deliverables: creative direction, asset development, strategic frameworks. Not vague concepts.",
-    },
-    {
-      number: "04",
-      title: "Protect what matters",
-      description:
-        "We design workflows that reduce friction and cognitive load while preserving human judgement, aesthetic taste, and the creative work you care about.",
-    },
-    {
-      number: "05",
-      title: "Design craft meets strategic thinking",
-      description:
-        "Rare combination of strategic positioning and design execution means your brand doesn't just sound right; it looks and feels right across every touchpoint.",
-    },
-  ];
 
   return (
     <main className="min-h-screen">
       <Navigation variant="image-hero" />
       <ContactDrawer open={contactOpen} onOpenChange={setContactOpen} source="how-i-work" />
 
-      {/* Hero - full bleed image with overlaid card */}
-      <section className="relative h-[80vh] min-h-[560px] overflow-hidden">
-        {/* Background image with slight dark overlay for depth */}
+      {/* Hero */}
+      <section className="relative h-[70vh] min-h-[480px] overflow-hidden">
         <img
           src={heroPhoto}
           alt="Brendan leading a workshop session"
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-black/20" />
-        {/* Content card floating on top, with top padding to clear nav */}
+        <div className="absolute inset-0 bg-black/25" />
         <div className="relative h-full max-w-6xl mx-auto px-6 flex items-end pb-12 md:items-center md:pb-0 pt-24">
           <div className="bg-background/95 backdrop-blur-sm rounded-2xl p-8 md:p-10 max-w-lg shadow-[0_8px_30px_rgba(0,0,0,0.12)]">
             <h1 className="text-5xl md:text-6xl mb-6 text-balance font-light">
               My Approach
             </h1>
             <p className="text-lg leading-relaxed text-muted-foreground">
-              I believe four fundamental drives form the basis of the human condition. They shape how we work, create, and connect with others.
+              A map to building human connection in the age of AI — and protecting the creativity, judgment, and meaning that no model can replace.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Four C's */}
+      {/* The 4 C's Framework */}
       <section
-        ref={sectionRef}
-        className={`py-16 px-6 transition-all duration-1000 ${
-          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+        ref={fourCsRef}
+        className={`py-24 px-6 transition-all duration-1000 ${
+          fourCsVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         }`}
       >
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-5xl mx-auto">
+          <p className="text-accent text-sm font-light tracking-wide uppercase mb-4">
+            The 4 C's Framework
+          </p>
+          <h2 className="text-4xl md:text-5xl mb-6 text-balance font-light">
+            What AI must never replace.
+          </h2>
+          <p className="text-lg text-muted-foreground leading-relaxed max-w-3xl mb-16">
+            As AI becomes more capable, the question isn't <em>what it can do</em> — it's <em>what it should leave alone</em>. These four drives form the foundation of the human condition. They shape how we work, create, and connect. Any AI strategy worth its salt protects them.
+          </p>
+
           <div className="grid md:grid-cols-2 gap-6">
-            {fourCs.map((item, index) => (
+            {fourCs.map((item, i) => (
               <div
-                key={index}
-                className="p-6 rounded-xl bg-muted/30 border border-border/30"
+                key={item.word}
+                className="p-8 rounded-2xl bg-muted/30 border border-border/30 transition-all duration-500"
+                style={{ transitionDelay: `${i * 100}ms` }}
               >
-                <h3 className="text-2xl md:text-3xl font-light mb-2">{item.word}</h3>
-                <p className="text-muted-foreground">{item.description}</p>
+                <h3 className="text-2xl md:text-3xl font-light mb-3">{item.word}</h3>
+                <p className="text-muted-foreground leading-relaxed">{item.description}</p>
               </div>
             ))}
           </div>
 
-          <p className="text-muted-foreground mt-8 text-lg leading-relaxed">
-            These aren't just abstract ideas. They're the lens through which I approach every engagement, ensuring that the work we do together honours what makes you human.
+          <p className="text-muted-foreground mt-12 text-lg leading-relaxed max-w-3xl">
+            These aren't abstract ideals. They're the lens through which I evaluate every AI integration, every workflow, and every creative decision. If it diminishes any of the four, it doesn't ship.
           </p>
         </div>
       </section>
 
-      {/* We Start With Your Reality Section */}
+      {/* Anthropic's 4D Framework */}
       <section
-        ref={realityRef}
-        className={`py-24 px-6 bg-muted/30 transition-all duration-1000 ${
-          realityVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+        id="ai-fluency"
+        ref={fourDsRef}
+        className={`py-24 px-6 bg-card transition-all duration-1000 ${
+          fourDsVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         }`}
       >
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl md:text-5xl mb-16 text-balance font-light">
-            We start with your reality.
+        <div className="max-w-5xl mx-auto">
+          <p className="text-accent text-sm font-light tracking-wide uppercase mb-4">
+            Practitioner Perspective
+          </p>
+          <h2 className="text-4xl md:text-5xl mb-6 text-balance font-light">
+            The discipline behind the tools.
           </h2>
+          <p className="text-lg text-muted-foreground leading-relaxed max-w-3xl mb-6">
+            Knowing <em>what</em> to protect is only half the picture. The other half is knowing how to use AI with skill, intention, and accountability.
+          </p>
+          <p className="text-lg text-muted-foreground leading-relaxed max-w-3xl mb-16">
+            Anthropic's <strong className="text-foreground font-medium">4D AI Fluency Framework</strong> — developed by Rick Dakan, Joseph Feller, and Anthropic — defines four interconnected competencies for effective, efficient, ethical, and safe AI interaction. It's a framework I've studied, been certified in, and apply across every client engagement.
+          </p>
 
-          <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
-            <div className="order-2 md:order-1">
-              <img
-                src={workshopImage}
-                alt="Collaborative workshop session"
-                className="rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.06)] w-full h-auto"
-              />
-            </div>
-
-            <div className="order-1 md:order-2 space-y-8">
-              {principles.slice(0, 2).map((principle, index) => (
-                <div
-                  key={index}
-                  className="space-y-3 group border-l-4 border-accent/20 pl-6"
-                >
-                  <div className="text-accent text-sm not-italic font-light">
-                    {principle.number}
-                  </div>
-
-                  <h3 className="text-2xl md:text-3xl group-hover:text-accent transition-colors font-light not-italic">
-                    {principle.title}
-                  </h3>
-
-                  <p className="text-muted-foreground leading-relaxed text-lg">
-                    {principle.description}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8 mt-8">
-            {principles.slice(2).map((principle, index) => (
+          <div className="grid md:grid-cols-2 gap-6">
+            {fourDs.map((item, i) => (
               <div
-                key={index + 2}
-                className="space-y-3 group border-l-4 border-accent/20 pl-6"
+                key={item.letter}
+                className="p-8 rounded-2xl border border-accent/20 bg-accent/5 transition-all duration-500"
+                style={{ transitionDelay: `${i * 100}ms` }}
               >
-                <div className="text-accent text-sm not-italic font-light">
-                  {principle.number}
-                </div>
-
-                <h3 className="text-2xl md:text-3xl group-hover:text-accent transition-colors font-light not-italic">
-                  {principle.title}
+                <h3 className="text-2xl md:text-3xl font-light mb-3 text-accent">
+                  {item.letter}
                 </h3>
-
-                <p className="text-muted-foreground leading-relaxed text-lg">
-                  {principle.description}
-                </p>
+                <p className="text-muted-foreground leading-relaxed">{item.description}</p>
               </div>
             ))}
           </div>
+
+          <div className="mt-16 p-8 rounded-2xl bg-muted/30 border border-border/30">
+            <h3 className="text-2xl font-light mb-4">Where the frameworks meet.</h3>
+            <p className="text-lg text-muted-foreground leading-relaxed mb-4">
+              The 4 C's tell us what to protect. The 4 D's tell us how to operate. Together, they form a complete picture: AI that serves human connection, applied with professional rigour.
+            </p>
+            <p className="text-muted-foreground leading-relaxed">
+              This is what separates thoughtful AI adoption from the rush to automate everything. And it's the foundation of every system, workflow, and strategy I build with clients.
+            </p>
+          </div>
+
+          <p className="text-xs text-muted-foreground/60 mt-8">
+            The 4D AI Fluency Framework is © 2025 Rick Dakan, Joseph Feller, and Anthropic, released under CC BY-NC-SA 4.0. Referenced here with attribution.
+          </p>
         </div>
       </section>
 
-      {/* Thread AI Philosophy Section - Purple Background */}
-      <section
-        id="thread-ai-philosophy"
-        ref={aiRef}
-        className={`py-24 px-6 bg-accent scroll-mt-24 transition-all duration-1000 ${
-          aiVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-        }`}
-      >
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl md:text-5xl mb-8 text-balance font-light text-accent-foreground">
-            The Thread AI Philosophy
+      {/* CTA */}
+      <section className="py-24 px-6 bg-accent">
+        <div className="max-w-3xl mx-auto text-center">
+          <h2 className="text-4xl md:text-5xl font-light mb-6 text-accent-foreground">
+            Ready to work with intention?
           </h2>
-
-          <p className="text-accent-foreground/70 text-sm mb-8 italic">
-            Particularly relevant for those exploring{" "}
-            <a
-              href="/sessions-and-sprints#thread-ai"
-              className="underline hover:text-accent-foreground transition-colors"
-            >
-              Thread AI Sprints
-            </a>
+          <p className="text-lg text-accent-foreground/80 leading-relaxed mb-12">
+            Whether you need brand strategy, creative direction, or AI-informed systems that protect what matters — let's talk about what's possible.
           </p>
-
-          <div className="prose prose-lg max-w-none space-y-6 text-lg leading-relaxed text-accent-foreground">
-            <p>
-              When it comes to AI, I see it as a second brain and operations partner in the background, never a replacement for human creativity or judgment.
-            </p>
-
-            <p>
-              My approach centers on creative empowerment: helping you feel more capable (not automated), ensuring your brand voice remains authentically yours, and using AI to reduce cognitive load so your calendar feels spacious instead of suffocating.
-            </p>
-
-            <div className="my-12 py-8 border-t border-b border-accent-foreground/20">
-              <p className="text-xl font-light mb-6">
-                The four pillars of the human condition: Connection, Creativity, Curiosity, and Contribution, must be protected from AI oversupport.
-              </p>
-              <p className="text-accent-foreground/80">
-                We want to prevent human skill atrophy just as much as we want to deliver true connection. AI should give back time, attention, and voice, not replace the meaningful work only you can do.
-              </p>
-            </div>
-
-            <p className="font-medium">
-              The result? Brands that feel alive, teams that feel spacious, and work that actually ships.
-            </p>
-          </div>
-
-          <div className="text-center pt-16">
-            <PillButton
-              size="lg"
-              variant="dark"
-              icon={Rocket}
-              onClick={() => setContactOpen(true)}
-            >
-              Let's Work Together
-            </PillButton>
-          </div>
+          <PillButton
+            size="lg"
+            variant="dark"
+            icon={Rocket}
+            onClick={() => setContactOpen(true)}
+          >
+            Let's Work Together
+          </PillButton>
         </div>
       </section>
 
