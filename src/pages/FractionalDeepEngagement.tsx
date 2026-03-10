@@ -149,17 +149,17 @@ const FractionalDeepEngagement = () => {
         </div>
       </section>
 
-      {/* Indigo CTA */}
-      <section className="py-24 px-6 bg-indigo text-indigo-foreground">
+      {/* CTA */}
+      <section className="py-24 px-6">
         <div className="max-w-5xl mx-auto">
-          <div className="bg-white rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.15)] p-10 md:p-12 text-center max-w-2xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-semibold italic mb-4 text-foreground">
+          <div className="bg-indigo rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.15)] p-10 md:p-12 text-center max-w-2xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-semibold italic mb-4 text-white">
               Not sure which is right?
             </h2>
-            <p className="font-sans text-muted-foreground text-lg mb-8">
+            <p className="font-sans text-white/70 text-lg mb-8">
               Start with a conversation. We'll figure out the right shape together.
             </p>
-            <PillButton size="lg" icon={MessageCircle} onClick={() => setContactOpen(true)}>
+            <PillButton size="lg" icon={MessageCircle} variant="outline" className="border-white text-white hover:bg-white/10" onClick={() => setContactOpen(true)}>
               Start a Conversation
             </PillButton>
           </div>
