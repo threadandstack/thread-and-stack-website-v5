@@ -5,6 +5,7 @@ import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
 import { ContactDrawer } from "@/components/ContactDrawer";
 import { Emphasis } from "@/components/Emphasis";
+import { FeaturedProjects } from "@/components/FeaturedProjects";
 import { trackServiceView, useScrollDepthTracking } from "@/hooks/useAnalytics";
 import heroImage from "@/assets/brendan-cafe-landscape.jpg";
 
@@ -148,6 +149,8 @@ const FractionalDeepEngagement = () => {
           </div>
         </div>
       </section>
+
+      <FeaturedProjects />
 
       {/* CTA */}
       <section className="py-24 px-6">
