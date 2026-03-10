@@ -3,24 +3,16 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { ContactDrawer } from "@/components/ContactDrawer";
 import { PillButton } from "@/components/ui/pill-button";
-import { Check, Zap, Layers, Repeat, Rocket, MessageCircle } from "lucide-react";
+import { Check, Zap, Layers, Repeat, Rocket, MessageCircle, Shield, Bot } from "lucide-react";
 import notionAdmin from "@/assets/notion-certified-admin.png";
 import notionAdvanced from "@/assets/notion-advanced.png";
 import notionWorkflows from "@/assets/notion-workflows.png";
 import notionEssentials from "@/assets/notion-essentials.png";
-import notionHeroPhoto from "@/assets/notion-certified-hero.png";
 import notionAmbassadorBlack from "@/assets/notion-ambassador-black.png";
-import heroImage from "@/assets/brendan-postits-landscape.jpg";
+import heroImage from "@/assets/brendan-street.jpeg";
 
 const NotionSystemsPage = () => {
   const [contactOpen, setContactOpen] = useState(false);
-
-  const badges = [
-    { src: notionAdmin, alt: "Notion Certified Admin" },
-    { src: notionAdvanced, alt: "Notion Academy Advanced" },
-    { src: notionWorkflows, alt: "Notion Academy Workflows" },
-    { src: notionEssentials, alt: "Notion Academy Essentials" },
-  ];
 
   const tiers = [
     {
@@ -79,16 +71,11 @@ const NotionSystemsPage = () => {
         <div className="relative h-[60vh]">
           <img
             src={heroImage}
-            alt="Brendan working with post-its and workflow planning"
+            alt="Brendan working on laptop on the street"
             className="absolute inset-0 w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
           <div className="absolute bottom-6 left-6 z-10">
-            <div className="flex flex-wrap items-center gap-2 mb-3">
-              {badges.map((badge, i) => (
-                <img key={i} src={badge.src} alt={badge.alt} className="w-8 h-auto" />
-              ))}
-            </div>
             <h1 className="text-4xl font-semibold italic text-white w-[70vw]">
               Notion & Systems Consultancy
             </h1>
@@ -118,7 +105,7 @@ const NotionSystemsPage = () => {
       <section className="relative hidden md:flex min-h-[90vh] items-end">
         <img
           src={heroImage}
-          alt="Brendan working with post-its and workflow planning"
+          alt="Brendan working on laptop on the street"
           className="absolute inset-0 w-full h-full object-cover object-center"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
@@ -126,16 +113,6 @@ const NotionSystemsPage = () => {
 
         <div className="relative z-10 w-full px-6 pb-44 pt-32">
           <div className="max-w-6xl mx-auto">
-            <div className="flex flex-wrap items-center gap-3 mb-3">
-              {badges.map((badge, i) => (
-                <img key={i} src={badge.src} alt={badge.alt} className="w-10 h-auto" />
-              ))}
-            </div>
-            <img
-              src={notionAmbassadorBlack}
-              alt="Notion Official Ambassador"
-              className="h-8 w-auto mb-6 invert"
-            />
             <h1 className="text-6xl lg:text-7xl font-semibold italic text-white mb-8" style={{ textShadow: '0 2px 12px rgba(0,0,0,0.3)' }}>
               Notion & Systems Consultancy
             </h1>
@@ -212,6 +189,65 @@ const NotionSystemsPage = () => {
                 </div>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      {/* Credential Cards */}
+      <section className="py-24 px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-6">
+            {/* Notion */}
+            <div className="bg-card rounded-2xl p-10 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-xl bg-accent/10 text-accent flex items-center justify-center">
+                  <Shield className="w-5 h-5" />
+                </div>
+                <h3 className="text-2xl font-semibold italic">Notion Certified</h3>
+              </div>
+
+              <p className="font-sans text-muted-foreground leading-relaxed mb-6">
+                Brendan is a Certified Notion Admin and Official Notion Ambassador — one of a small group globally recognised by Notion for expertise in workspace design, workflow automation, and systems strategy.
+              </p>
+
+              <div className="flex flex-wrap items-center gap-4 mb-4">
+                <img src={notionAdmin} alt="Notion Certified Admin" className="h-24 w-auto" />
+                <img src={notionAdvanced} alt="Notion Academy Advanced" className="h-24 w-auto" />
+                <img src={notionWorkflows} alt="Notion Academy Workflows" className="h-24 w-auto" />
+                <img src={notionEssentials} alt="Notion Academy Essentials" className="h-24 w-auto" />
+              </div>
+              <img
+                src={notionAmbassadorBlack}
+                alt="Notion Official Ambassador"
+                className="h-14 w-auto"
+              />
+            </div>
+
+            {/* AI Fluency */}
+            <div className="bg-card rounded-2xl p-10 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-xl bg-accent/10 text-accent flex items-center justify-center">
+                  <Bot className="w-5 h-5" />
+                </div>
+                <h3 className="text-2xl font-semibold italic">Fluent in AI Frameworks</h3>
+              </div>
+
+              <p className="font-sans text-muted-foreground leading-relaxed mb-6">
+                Brendan holds Anthropic's AI Fluency &amp; Foundations certificate and Notion's AI Workflows badge. Thread&nbsp;&amp;&nbsp;Stack operates as an AI-first business — integrating AI into strategy, operations, and creative workflows to reduce cognitive load and give teams back time, attention, and voice.
+              </p>
+
+              <div className="flex flex-wrap gap-2">
+                <span className="inline-flex items-center rounded-full border border-border px-3 py-1 text-xs font-sans font-medium text-muted-foreground">
+                  Anthropic AI Fluency &amp; Foundations
+                </span>
+                <span className="inline-flex items-center rounded-full border border-border px-3 py-1 text-xs font-sans font-medium text-muted-foreground">
+                  Notion AI Workflows
+                </span>
+                <span className="inline-flex items-center rounded-full border border-border px-3 py-1 text-xs font-sans font-medium text-muted-foreground">
+                  AI-First Business
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
