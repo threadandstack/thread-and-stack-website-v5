@@ -76,7 +76,7 @@ const FractionalDeepEngagement = () => {
           style={{ backgroundImage: `url(${heroImage})` }}
         />
         <div className="absolute inset-0 bg-black/50" />
-        <div className="relative max-w-5xl mx-auto pt-32 pb-48">
+        <div className="relative max-w-5xl mx-auto pt-32 pb-56">
           <p className="text-accent font-sans text-sm mb-3">Narratives, Strategy & Creative Direction</p>
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold italic leading-[1.1] mb-6 text-white">
             Narratives &{" "}

@@ -82,7 +82,7 @@ const NotionSystemsPage = () => {
           style={{ backgroundImage: `url(${heroImage})` }}
         />
         <div className="absolute inset-0 bg-black/50" />
-        <div className="relative max-w-6xl mx-auto pt-32 pb-48">
+        <div className="relative max-w-6xl mx-auto pt-32 pb-56">
           <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
             <div>
               <div className="flex flex-wrap items-center gap-3 mb-4">
