@@ -70,8 +70,13 @@ const FractionalDeepEngagement = () => {
       <ContactDrawer open={contactOpen} onOpenChange={setContactOpen} source="narratives-strategy" />
 
       {/* Hero */}
-      <section className="pt-32 pb-20 px-6">
-        <div className="max-w-5xl mx-auto">
+      <section className="relative pt-32 pb-20 px-6 overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url(${heroImage})` }}
+        />
+        <div className="absolute inset-0 bg-background/88" />
+        <div className="relative max-w-5xl mx-auto">
           <p className="text-accent font-sans text-sm mb-3">Narratives, Strategy & Creative Direction</p>
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold italic leading-[1.1] mb-6">
             Narratives &{" "}
