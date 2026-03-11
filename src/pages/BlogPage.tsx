@@ -94,7 +94,7 @@ const BlogPage = () => {
       <section className="py-24 px-6">
         <div className="max-w-4xl mx-auto">
           <div className="flex justify-center mb-6">
-            <img src={journalLogo} alt="Thread & Stack Journal" className="h-64 md:h-80 w-auto" />
+            <img src={journalLogo} alt="Thread & Stack Journal" className="h-40 sm:h-56 md:h-80 w-auto" />
           </div>
           <p className="text-xl text-muted-foreground mb-8 text-center leading-relaxed max-w-2xl mx-auto">
             Thoughts on brand, creativity, and the systems that build our businesses.
