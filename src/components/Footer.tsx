@@ -32,7 +32,7 @@ export const Footer = () => {
               <li><a href="/narratives-strategy" className="hover:text-primary-foreground transition-colors" onClick={() => trackFooterLinkClick('Narratives & Strategy', 'internal')}>Narratives & Strategy</a></li>
               <li><a href="/notion-systems" className="hover:text-primary-foreground transition-colors" onClick={() => trackFooterLinkClick('Notion Systems', 'internal')}>Notion Systems</a></li>
               <li><a href="/workshops" className="hover:text-primary-foreground transition-colors" onClick={() => trackFooterLinkClick('Brand Connection Workshops', 'internal')}>Brand Connection Workshops</a></li>
-              <li><a href="/blog" className="hover:text-primary-foreground transition-colors font-serif-pro italic" onClick={() => trackFooterLinkClick('Thread & Stack Journal', 'internal')}>Thread & Stack Journal</a></li>
+              <li><a href="/blog" className="hover:text-primary-foreground transition-colors" onClick={() => trackFooterLinkClick('Thread & Stack Journal', 'internal')}>Thread & Stack Journal</a></li>
             </ul>
           </div>
           
