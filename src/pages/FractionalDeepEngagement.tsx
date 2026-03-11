@@ -75,7 +75,7 @@ const FractionalDeepEngagement = () => {
           <img
             src={heroImage}
             alt="Brendan in a café discussing creative strategy"
-            className="absolute inset-0 w-full h-full object-cover object-[50%_30%]"
+            className="absolute inset-0 w-full h-full object-cover object-[50%_60%]"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
           <div className="absolute bottom-6 left-6 z-10">
