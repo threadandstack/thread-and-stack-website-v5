@@ -141,7 +141,7 @@ const NotionSystemsPage = () => {
       </section>
 
       {/* 3-Column Product Cards */}
-      <section className="relative z-10 -mt-80 md:-mt-20 pb-24 px-6 pt-0 md:pt-0">
+      <section className="relative z-10 mt-0 md:-mt-20 pb-24 px-6 pt-0 md:pt-0">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-3 gap-6">
             {tiers.map((tier, index) => {
