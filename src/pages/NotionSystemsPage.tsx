@@ -221,9 +221,6 @@ const NotionSystemsPage = () => {
                   </li>
                 ))}
               </ul>
-              <p className="text-sm font-sans text-muted-foreground/70 italic">
-                This is an example of a System Build Engagement — scoped, built, and handed over.
-              </p>
             </div>
             <div className="rounded-2xl overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.12)]">
               <img
