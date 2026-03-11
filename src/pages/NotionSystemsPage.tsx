@@ -201,7 +201,7 @@ const NotionSystemsPage = () => {
       <section className="py-24 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-10 items-center">
-            <div>
+            <div className="order-2 md:order-1">
               <span className="inline-flex items-center rounded-full bg-accent/10 text-accent text-xs font-sans font-semibold px-3 py-1 mb-4">
                 System Build Example
               </span>
