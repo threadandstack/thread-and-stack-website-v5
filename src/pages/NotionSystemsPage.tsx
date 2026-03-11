@@ -356,6 +356,19 @@ const NotionSystemsPage = () => {
         </div>
       </section>
 
+      {/* Image Zoom Lightbox */}
+      <Dialog open={!!zoomedImage} onOpenChange={() => setZoomedImage(null)}>
+        <DialogContent className="max-w-5xl w-[95vw] p-2 bg-background/95 backdrop-blur-sm border-border/50">
+          {zoomedImage && (
+            <img
+              src={zoomedImage.src}
+              alt={zoomedImage.alt}
+              className="w-full h-auto rounded-lg"
+            />
+          )}
+        </DialogContent>
+      </Dialog>
+
       <Footer />
     </main>
   );
