@@ -7,6 +7,7 @@ import { ContactDrawer } from "@/components/ContactDrawer";
 import { FeaturedProjects } from "@/components/FeaturedProjects";
 import { trackServiceView, useScrollDepthTracking } from "@/hooks/useAnalytics";
 import heroImage from "@/assets/brendan-cafe-landscape.jpg";
+import heroImageMobile from "@/assets/brendan-cafe.jpeg";
 
 const FractionalDeepEngagement = () => {
   const [contactOpen, setContactOpen] = useState(false);
@@ -73,9 +74,9 @@ const FractionalDeepEngagement = () => {
       <section className="md:hidden">
         <div className="relative h-[60vh]">
           <img
-            src={heroImage}
+            src={heroImageMobile}
             alt="Brendan in a café discussing creative strategy"
-            className="absolute inset-0 w-full h-full object-cover object-[50%_15%]"
+            className="absolute inset-0 w-full h-full object-cover object-[50%_25%]"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
           <div className="absolute bottom-6 left-6 z-10">
