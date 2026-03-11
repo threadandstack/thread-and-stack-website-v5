@@ -243,7 +243,10 @@ const NotionSystemsPage = () => {
       <section className="pb-24 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-10 items-center">
-            <div className="rounded-2xl overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.12)]">
+            <div
+              className="rounded-2xl overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.12)] cursor-zoom-in transition-transform hover:scale-[1.02]"
+              onClick={() => setZoomedImage({ src: notionCustomAgents, alt: "Custom Notion AI agent" })}
+            >
               <img
                 src={notionCustomAgents}
                 alt="Custom Notion AI agent 'Email Recapper' with daily email summary delivered to mobile inbox"
