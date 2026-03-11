@@ -16,6 +16,7 @@ import notionCustomAgents from "@/assets/notion-custom-agents.png";
 
 const NotionSystemsPage = () => {
   const [contactOpen, setContactOpen] = useState(false);
+  const [zoomedImage, setZoomedImage] = useState<{ src: string; alt: string } | null>(null);
 
   const tiers = [
     {
