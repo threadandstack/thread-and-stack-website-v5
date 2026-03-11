@@ -225,7 +225,10 @@ const NotionSystemsPage = () => {
                 ))}
               </ul>
             </div>
-            <div className="rounded-2xl overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.12)]">
+            <div
+              className="rounded-2xl overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.12)] cursor-zoom-in transition-transform hover:scale-[1.02]"
+              onClick={() => setZoomedImage({ src: notionCmsBuild, alt: "Three-tier Notion CMS build" })}
+            >
               <img
                 src={notionCmsBuild}
                 alt="Three-tier Notion CMS build showing Content Library, Published Blog Library, and the live Thread & Stack Journal"
