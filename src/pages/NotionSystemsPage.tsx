@@ -3,7 +3,8 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { ContactDrawer } from "@/components/ContactDrawer";
 import { PillButton } from "@/components/ui/pill-button";
-import { Check, Zap, Layers, Repeat, Rocket, MessageCircle, Shield, Bot } from "lucide-react";
+import { Check, Zap, Layers, Repeat, Rocket, MessageCircle, Shield, Bot, X } from "lucide-react";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import notionAdmin from "@/assets/notion-certified-admin.png";
 import notionAdvanced from "@/assets/notion-advanced.png";
 import notionWorkflows from "@/assets/notion-workflows.png";
@@ -15,6 +16,7 @@ import notionCustomAgents from "@/assets/notion-custom-agents.png";
 
 const NotionSystemsPage = () => {
   const [contactOpen, setContactOpen] = useState(false);
+  const [zoomedImage, setZoomedImage] = useState<{ src: string; alt: string } | null>(null);
 
   const tiers = [
     {
@@ -223,7 +225,10 @@ const NotionSystemsPage = () => {
                 ))}
               </ul>
             </div>
-            <div className="rounded-2xl overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.12)]">
+            <div
+              className="rounded-2xl overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.12)] cursor-zoom-in transition-transform hover:scale-[1.02]"
+              onClick={() => setZoomedImage({ src: notionCmsBuild, alt: "Three-tier Notion CMS build" })}
+            >
               <img
                 src={notionCmsBuild}
                 alt="Three-tier Notion CMS build showing Content Library, Published Blog Library, and the live Thread & Stack Journal"
@@ -238,7 +243,10 @@ const NotionSystemsPage = () => {
       <section className="pb-24 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-10 items-center">
-            <div className="rounded-2xl overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.12)]">
+            <div
+              className="rounded-2xl overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.12)] cursor-zoom-in transition-transform hover:scale-[1.02]"
+              onClick={() => setZoomedImage({ src: notionCustomAgents, alt: "Custom Notion AI agent" })}
+            >
               <img
                 src={notionCustomAgents}
                 alt="Custom Notion AI agent 'Email Recapper' with daily email summary delivered to mobile inbox"
@@ -347,6 +355,19 @@ const NotionSystemsPage = () => {
           </div>
         </div>
       </section>
+
+      {/* Image Zoom Lightbox */}
+      <Dialog open={!!zoomedImage} onOpenChange={() => setZoomedImage(null)}>
+        <DialogContent className="max-w-5xl w-[95vw] p-2 bg-background/95 backdrop-blur-sm border-border/50">
+          {zoomedImage && (
+            <img
+              src={zoomedImage.src}
+              alt={zoomedImage.alt}
+              className="w-full h-auto rounded-lg"
+            />
+          )}
+        </DialogContent>
+      </Dialog>
 
       <Footer />
     </main>
