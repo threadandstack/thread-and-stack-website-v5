@@ -75,7 +75,7 @@ const FractionalDeepEngagement = () => {
           <img
             src={heroImage}
             alt="Brendan in a café discussing creative strategy"
-            className="absolute inset-0 w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover object-[50%_30%]"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
           <div className="absolute bottom-6 left-6 z-10">
@@ -142,7 +142,7 @@ const FractionalDeepEngagement = () => {
       </section>
 
       {/* 3-Column Product Cards — bridging into hero */}
-      <section className="relative z-10 -mt-80 md:-mt-20 pb-24 px-6 pt-0 md:pt-0">
+      <section className="relative z-10 mt-0 md:-mt-20 pb-24 px-6 pt-0 md:pt-0">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-3 gap-6">
             {tiers.map((tier, index) => {
