@@ -1,5 +1,6 @@
 import { Linkedin, Mail } from "lucide-react";
 import { trackFooterLinkClick } from "@/hooks/useAnalytics";
+import stackedLogo from "@/assets/logos/White_TS_Stacked.svg";
 
 const BlueskyIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 568 501" className={className} fill="currentColor">
@@ -19,19 +20,19 @@ export const Footer = () => {
       <div className="max-w-6xl mx-auto">
         <div className="grid md:grid-cols-3 gap-8 mb-8">
           <div>
-            <h3 className="text-2xl mb-2 font-semibold italic">Thread & Stack</h3>
+            <img src={stackedLogo} alt="Thread & Stack" className="h-14 mb-3" />
             <p className="font-sans text-primary-foreground/80 text-sm">
-              Marketing that feels more human.
+              Brands that feel human, systems that make sense.
             </p>
           </div>
           
           <div>
             <h4 className="mb-3 font-semibold italic not-italic">Offers</h4>
             <ul className="space-y-2 text-sm font-sans text-primary-foreground/80">
-              <li><a href="/sessions-and-sprints" className="hover:text-primary-foreground transition-colors" onClick={() => trackFooterLinkClick('Sessions & Sprints', 'internal')}>Sessions & Sprints</a></li>
+              <li><a href="/narratives-strategy" className="hover:text-primary-foreground transition-colors" onClick={() => trackFooterLinkClick('Narratives & Strategy', 'internal')}>Narratives & Strategy</a></li>
+              <li><a href="/notion-systems" className="hover:text-primary-foreground transition-colors" onClick={() => trackFooterLinkClick('Notion Systems', 'internal')}>Notion Systems</a></li>
               <li><a href="/workshops" className="hover:text-primary-foreground transition-colors" onClick={() => trackFooterLinkClick('Brand Connection Workshops', 'internal')}>Brand Connection Workshops</a></li>
-              <li><a href="/narratives-strategy" className="hover:text-primary-foreground transition-colors" onClick={() => trackFooterLinkClick('Narratives & Strategy Services', 'internal')}>Narratives & Strategy Services</a></li>
-              <li><a href="/blog" className="hover:text-primary-foreground transition-colors font-serif-pro italic" onClick={() => trackFooterLinkClick('Stacked Behaviours Newsletter', 'internal')}>Stacked Behaviours Newsletter</a></li>
+              <li><a href="/blog" className="hover:text-primary-foreground transition-colors font-serif-pro italic" onClick={() => trackFooterLinkClick('Thread & Stack Journal', 'internal')}>Thread & Stack Journal</a></li>
             </ul>
           </div>
           
