@@ -10,6 +10,7 @@ import notionWorkflows from "@/assets/notion-workflows.png";
 import notionEssentials from "@/assets/notion-essentials.png";
 import notionAmbassadorBlack from "@/assets/notion-ambassador-black.png";
 import heroImage from "@/assets/photos/shoreditch/brendan-36.jpg";
+import notionCmsBuild from "@/assets/notion-cms-build.png";
 
 const NotionSystemsPage = () => {
   const [contactOpen, setContactOpen] = useState(false);
@@ -189,6 +190,48 @@ const NotionSystemsPage = () => {
                 </div>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      {/* System Build Showcase */}
+      <section className="py-24 px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-10 items-center">
+            <div>
+              <span className="inline-flex items-center rounded-full bg-accent/10 text-accent text-xs font-sans font-semibold px-3 py-1 mb-4">
+                System Build Example
+              </span>
+              <h2 className="text-3xl md:text-4xl font-semibold italic mb-4">
+                Notion + Lovable CMS Build
+              </h2>
+              <p className="font-sans text-muted-foreground leading-relaxed mb-4">
+                A three-tier content management system combining Notion as the editorial backend, Supabase Edge Functions as the API layer, and a custom-built Lovable frontend — all working in sync.
+              </p>
+              <ul className="space-y-2 mb-6">
+                {[
+                  "Notion Content Library as the single source of truth",
+                  "API integration via Edge Functions for real-time content sync",
+                  "Custom frontend with category filtering, OG images & SEO",
+                  "Third-party tool orchestration across the full stack",
+                ].map((item, idx) => (
+                  <li key={idx} className="flex items-start gap-2">
+                    <Check className="w-4 h-4 text-accent mt-0.5 flex-shrink-0" />
+                    <span className="text-sm font-sans text-muted-foreground">{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="text-sm font-sans text-muted-foreground/70 italic">
+                This is an example of a System Build Engagement — scoped, built, and handed over.
+              </p>
+            </div>
+            <div className="rounded-2xl overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.12)]">
+              <img
+                src={notionCmsBuild}
+                alt="Three-tier Notion CMS build showing Content Library, Published Blog Library, and the live Thread & Stack Journal"
+                className="w-full h-auto"
+              />
+            </div>
           </div>
         </div>
       </section>
