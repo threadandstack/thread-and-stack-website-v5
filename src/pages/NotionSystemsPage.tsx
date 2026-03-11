@@ -234,7 +234,45 @@ const NotionSystemsPage = () => {
         </div>
       </section>
 
-      {/* Credential Cards */}
+      {/* Fractional Ops Showcase */}
+      <section className="pb-24 px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-10 items-center">
+            <div className="rounded-2xl overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.12)]">
+              <img
+                src={notionCustomAgents}
+                alt="Custom Notion AI agent 'Email Recapper' with daily email summary delivered to mobile inbox"
+                className="w-full h-auto"
+              />
+            </div>
+            <div>
+              <span className="inline-flex items-center rounded-full bg-accent/10 text-accent text-xs font-sans font-semibold px-3 py-1 mb-4">
+                Fractional Ops Example
+              </span>
+              <h2 className="text-3xl md:text-4xl font-semibold italic mb-4">
+                Custom Agents & Automations
+              </h2>
+              <p className="font-sans text-muted-foreground leading-relaxed mb-4">
+                A custom Notion AI agent designed to process and triage a busy inbox every morning — summarising action items, flagging replies, and delivering a structured daily briefing straight to your phone.
+              </p>
+              <ul className="space-y-2">
+                {[
+                  "Custom Notion AI agent built to your workflow",
+                  "Automated daily email triage and summarisation",
+                  "Priority flagging with actionable next steps",
+                  "Delivered as a Notion notification — no extra tools needed",
+                ].map((item, idx) => (
+                  <li key={idx} className="flex items-start gap-2">
+                    <Check className="w-4 h-4 text-accent mt-0.5 flex-shrink-0" />
+                    <span className="text-sm font-sans text-muted-foreground">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="py-24 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-6">
