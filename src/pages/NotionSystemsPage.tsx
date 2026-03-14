@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
+import { FAQ } from "@/components/FAQ";
 import { ContactDrawer } from "@/components/ContactDrawer";
 import { PillButton } from "@/components/ui/pill-button";
 import { Check, Zap, Layers, Repeat, Rocket, MessageCircle, Shield, Bot, X } from "lucide-react";

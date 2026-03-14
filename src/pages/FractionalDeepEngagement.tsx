@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { PillButton } from "@/components/ui/pill-button";
 import { Check, Zap, Layers, Repeat, MessageCircle, Rocket } from "lucide-react";
 import { Footer } from "@/components/Footer";
+import { FAQ } from "@/components/FAQ";
 import { Navigation } from "@/components/Navigation";
 import { ContactDrawer } from "@/components/ContactDrawer";
 import { FeaturedProjects } from "@/components/FeaturedProjects";
