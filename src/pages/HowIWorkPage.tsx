@@ -1,5 +1,6 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
+import { FAQ } from "@/components/FAQ";
 import { PillButton } from "@/components/ui/pill-button";
 import { Rocket } from "lucide-react";
 import heroPhoto from "@/assets/photos/workshop/brendan-23.jpg";
