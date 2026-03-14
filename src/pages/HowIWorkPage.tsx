@@ -221,6 +221,23 @@ const HowIWorkPage = () => {
         </div>
       </section>
 
+      <FAQ
+        items={[
+          {
+            question: "How does Thread & Stack's AI philosophy translate into services?",
+            answer: "The 4 C's and 4 D's frameworks aren't just theory — they inform every engagement. Whether it's a Strategy Session to unblock a positioning challenge, a Fractional Strategy Director retainer for ongoing creative leadership, or a Notion Session to fix a broken workflow, the goal is always the same: protect human creativity and reduce cognitive load.",
+          },
+          {
+            question: "What services does Thread & Stack offer?",
+            answer: "We work across two pillars. Narratives & Strategy Services includes Strategy Sessions, Fractional Strategy Director retainers, and Project Engagements for strategic narratives and messaging. Notion & Systems Consultancy includes Notion Sessions, Fractional Automations Director retainers, and System-Build Engagements. Book an intro call to find the right fit.",
+          },
+          {
+            question: "Who is this approach best suited for?",
+            answer: "Purpose-led founders and teams who want to integrate AI thoughtfully — not just automate everything. If you care about brand integrity, creative energy, and building systems that serve people rather than the other way around, this is the approach for you.",
+          },
+        ]}
+      />
+
       <Footer />
     </main>
   );

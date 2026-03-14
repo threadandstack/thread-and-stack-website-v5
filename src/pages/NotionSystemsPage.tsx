@@ -369,6 +369,27 @@ const NotionSystemsPage = () => {
         </DialogContent>
       </Dialog>
 
+      <FAQ
+        items={[
+          {
+            question: "What's included in a Notion Session?",
+            answer: "A focused 60-minute deep-dive on one system or workflow problem — fixing a broken database, validating a workspace decision, or designing an automation. You'll get a full recording, AI transcription, summary, and a clear action plan. Book an intro call to get started.",
+          },
+          {
+            question: "What does a Fractional Automations Director retainer look like?",
+            answer: "Embedded operational support on a monthly basis. Each month we tackle a new system focus — Notion administration, AI workflow design, automation support — with ongoing Slack access for ops questions and unblocking between sessions.",
+          },
+          {
+            question: "What's a System-Build Engagement?",
+            answer: "A scoped project to build or rebuild your Notion workspace. Whether it's CRM migration, content pipelines, marketing ops, or full operational untangling — includes a workspace audit, custom system design and build, documentation, training, and handover.",
+          },
+          {
+            question: "How do I know which tier is right for me?",
+            answer: "If you have a specific Notion problem blocking you right now, start with a Notion Session. If you need ongoing operational partnership, a Fractional retainer gives you scaleable support. If you're facing a major systems overhaul, a System-Build Engagement is the right shape. Book an intro call and we'll figure it out together.",
+          },
+        ]}
+      />
+
       <Footer />
     </main>
   );
