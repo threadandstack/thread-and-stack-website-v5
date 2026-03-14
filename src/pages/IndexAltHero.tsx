@@ -43,15 +43,15 @@ const IndexAltHero = () => {
     },
     {
       question: "What are your service offerings?",
-      answer: "We offer five core services: Clarity Sessions (60-minute strategic power hours, from £300), Thread AI Mentorship Sprint (6-week 1:1 mentorship, from £1k), Brand Connection Workshops (modular team workshops, from £2k), Fractional Strategy (monthly retainer for ongoing brand and campaign strategy), and Deep Engagement (2-6 month projects for brand refreshes and complete transformations, from £10-25k)."
+      answer: "We work across two pillars. Narratives & Strategy Services covers Strategy Sessions, Fractional Strategy Director retainers, and Project Engagements for strategic narratives and messaging. Notion & Systems Consultancy covers Notion Sessions, Fractional Automations Director retainers, and System-Build Engagements. Book an intro call to find the right fit."
     },
     {
       question: "How do I get started?",
-      answer: "The easiest way to start is with a Clarity Session - a focused 60-minute call where we tackle whatever's stuck. Whether it's messaging that's not landing, a positioning problem, an AI workflow you want to build, or just a second opinion on a big decision, we get it sorted in one session. No long-term commitment required."
+      answer: "The easiest way to start is with a Strategy Session or Notion Session — a focused 60-minute call where we tackle whatever's stuck. Whether it's messaging that's not landing, a positioning problem, a Notion workflow you want to fix, or just a second opinion on a big decision. Book an intro call and we'll figure out the right shape together."
     },
     {
-      question: "What's the Stacked Behaviours newsletter?",
-      answer: "Stacked Behaviours is where I share thoughts on brand, creativity, and the systems that build our businesses. Subscribe and I'll send you monthly signals on building brands that stay true while scaling - covering behavioral strategy, AI in marketing, and honest takes on running a purpose-driven practice."
+      question: "What's the Thread & Stack Journal?",
+      answer: "Thread & Stack Journal is where I share thoughts on brand, creativity, and the systems that build our businesses. Subscribe and I'll send you monthly signals on building brands that stay true while scaling — covering behavioural strategy, AI in marketing, and honest takes on running a purpose-driven practice."
     }
   ];
 
