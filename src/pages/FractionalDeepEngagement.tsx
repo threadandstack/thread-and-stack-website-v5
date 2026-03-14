@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { PillButton } from "@/components/ui/pill-button";
 import { Check, Zap, Layers, Repeat, MessageCircle, Rocket } from "lucide-react";
 import { Footer } from "@/components/Footer";
+import { FAQ } from "@/components/FAQ";
 import { Navigation } from "@/components/Navigation";
 import { ContactDrawer } from "@/components/ContactDrawer";
 import { FeaturedProjects } from "@/components/FeaturedProjects";
@@ -217,6 +218,27 @@ const FractionalDeepEngagement = () => {
           </div>
         </div>
       </section>
+
+      <FAQ
+        items={[
+          {
+            question: "What's included in a Strategy Session?",
+            answer: "A focused 60-minute deep-dive on one strategic challenge — positioning, messaging, creative direction, or a decision you need a second opinion on. You'll get a full recording, AI transcription, summary, and a clear action plan. Book an intro call to get started.",
+          },
+          {
+            question: "What does a Fractional Strategy Director retainer look like?",
+            answer: "Embedded strategic and creative leadership on a monthly basis. You get regular strategy sessions, ongoing Slack access, brand positioning and messaging guidance, campaign direction, and quarterly reviews. The commitment scales around what your team actually needs.",
+          },
+          {
+            question: "What's a Project Engagement?",
+            answer: "A concentrated block of work to tackle a defined strategic challenge — brand refresh, positioning overhaul, or narrative rebuild. Includes discovery, research, stakeholder alignment, messaging architecture, visual identity direction, and a full documentation and implementation roadmap.",
+          },
+          {
+            question: "How do I know which tier is right for me?",
+            answer: "If you have a specific problem blocking you right now, start with a Strategy Session. If you need ongoing strategic partnership, a Fractional retainer gives you scaleable support. If you're facing a major brand moment — launch, rebrand, repositioning — a Project Engagement is the right shape. Book an intro call and we'll figure it out together.",
+          },
+        ]}
+      />
 
       <Footer />
     </div>

@@ -74,7 +74,7 @@ export const SubscribeLightbox = ({ open, onOpenChange }: SubscribeLightboxProps
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="text-2xl font-light">
-            Subscribe to <span className="italic">Stacked Behaviours</span>
+            Subscribe to <span className="italic">Thread & Stack Journal</span>
           </DialogTitle>
           <DialogDescription className="text-base text-muted-foreground">
             Thoughts on brand, creativity, and the systems that build our businesses. Monthly signals on building brands that stay true while scaling.

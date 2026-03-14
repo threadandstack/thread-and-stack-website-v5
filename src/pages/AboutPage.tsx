@@ -158,17 +158,22 @@ const AboutPage = () => {
           {
             question: "Who is Brendan and what is Thread & Stack?",
             answer:
-              "I'm Brendan, founder of Thread & Stack - a brand and systems consultancy for purpose-led founders and teams. With 12+ years across global consumer brands, consultancies, creative agencies, tech, startups, and nonprofits, I focus on one thing: helping purpose-led teams turn messy marketing into clear narratives and practical workflows they can sustain.",
+              "I'm Brendan, founder of Thread & Stack — a brand and systems consultancy for purpose-led founders and teams. With 12+ years across global consumer brands, consultancies, creative agencies, tech, startups, and nonprofits, I focus on one thing: helping purpose-led teams turn messy marketing into clear narratives and practical workflows they can sustain.",
           },
           {
             question: "What's unique about Thread & Stack's approach?",
             answer:
-              "I work at the intersection of brand strategy, creative direction, and systems design - protecting both your brand integrity and your team's creative energy. Being both a designer and a strategist is rare. It means I understand how aesthetic judgement and strategic thinking work together. I create invisible scaffolding that reduces friction and cognitive load without adding more processes.",
+              "I work at the intersection of brand strategy, creative direction, and systems design — protecting both your brand integrity and your team's creative energy. Being both a designer and a strategist is rare. It means I understand how aesthetic judgement and strategic thinking work together. I create invisible scaffolding that reduces friction and cognitive load without adding more processes.",
+          },
+          {
+            question: "What services does Thread & Stack offer?",
+            answer:
+              "We work across two pillars. Narratives & Strategy Services includes Strategy Sessions, Fractional Strategy Director retainers, and Project Engagements for strategic narratives and messaging. Notion & Systems Consultancy includes Notion Sessions, Fractional Automations Director retainers, and System-Build Engagements. Book an intro call to find the right fit.",
           },
           {
             question: "How does Thread & Stack use AI?",
             answer:
-              "AI is a second brain and operations partner in the background - never a replacement for human creativity or judgment. My Thread AI Philosophy centers on creative empowerment: you feel more capable and confident (not automated), your brand voice remains authentically yours, and AI reduces cognitive load so your calendar feels spacious instead of suffocating.",
+              "AI is a second brain and operations partner in the background — never a replacement for human creativity or judgment. Our AI Philosophy centres on creative empowerment: you feel more capable and confident (not automated), your brand voice remains authentically yours, and AI reduces cognitive load so your calendar feels spacious instead of suffocating.",
           },
         ]}
       />

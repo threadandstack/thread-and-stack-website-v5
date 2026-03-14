@@ -255,30 +255,26 @@ const BlogPostPage = () => {
 
       <FAQ items={[
         {
-          question: "What is Stacked Behaviours?",
-          answer: "Stacked Behaviours is Thread & Stack's blog exploring the intersection of brand, creativity, and systems that build our businesses. I share thoughts on behavioral strategy, AI in marketing, and honest takes on running a purpose-driven practice. Subscribe and I'll send you monthly signals on building brands that stay true while scaling."
+          question: "What is the Thread & Stack Journal?",
+          answer: "Thread & Stack Journal is our blog exploring the intersection of brand, creativity, and systems that build our businesses. I share thoughts on behavioural strategy, AI in marketing, and honest takes on running a purpose-driven practice. Subscribe and I'll send you monthly signals on building brands that stay true while scaling."
         },
         {
           question: "What topics do you cover?",
-          answer: "The blog focuses on three core areas: brand strategy and positioning for purpose-led organizations, AI integration in marketing workflows (with a human-centered approach), and practical systems thinking for reducing cognitive load and creative tax. Topics range from behavioral psychology in marketing to Notion workspace design to the ethics of AI in creative work."
+          answer: "The blog focuses on three core areas: brand strategy and positioning for purpose-led organisations, AI integration in marketing workflows (with a human-centred approach), and practical systems thinking for reducing cognitive load and creative tax. Topics range from behavioural psychology in marketing to Notion workspace design to the ethics of AI in creative work."
         },
         {
           question: "How does this relate to Thread & Stack's services?",
-          answer: "The blog extends the thinking behind Thread & Stack's core offerings: Clarity Sessions (rapid strategic intervention), Thread AI Mentorship Sprint (AI workflow building), Brand Connection Workshops (modular strategy system), Fractional Strategy (ongoing partnership), and Deep Engagement (transformation projects). It's where I share the philosophy, frameworks, and learnings that inform the work."
-        },
-        {
-          question: "What is Thread & Stack's approach to AI?",
-          answer: "We see AI as a second brain and operations partner in the background - never a replacement for human creativity or judgment. Our AI Philosophy centers on creative empowerment: helping you feel more capable and confident, ensuring your brand voice remains authentically yours, and reducing cognitive load so your calendar feels spacious instead of suffocating. AI gives back time, attention, and voice."
+          answer: "The blog extends the thinking behind Thread & Stack's two core pillars: Narratives & Strategy Services (Strategy Sessions, Fractional Strategy Director, Project Engagements) and Notion & Systems Consultancy (Notion Sessions, Fractional Automations Director, System-Build Engagements). It's where I share the philosophy, frameworks, and learnings that inform the work."
         },
         {
           question: "Who is Thread & Stack for?",
-          answer: "We work with purpose-led organizations across two main profiles: values-driven founders and small organizations (like B Corps, social enterprises, and nonprofits) who prioritize impact and integrity as they grow, and scaling teams (typically 2-50 people) led by founder-operators who are wearing too many hats and need to cut through unclear positioning and messy operational systems to focus on what matters."
+          answer: "We work with purpose-led organisations across two main profiles: values-driven founders and small organisations (like B Corps, social enterprises, and nonprofits) who prioritise impact and integrity as they grow, and scaling teams (typically 2–50 people) led by founder-operators who need to cut through unclear positioning and messy operational systems to focus on what matters."
         },
         {
           question: "How do I work with Thread & Stack?",
-          answer: "We offer five core services across different levels of commitment: Clarity Sessions (60-minute strategic power hours, from £300), Thread AI Mentorship Sprint (6-week 1:1 mentorship, from £1k), Brand Connection Workshops (modular team workshops, from £2k), Fractional Strategy (monthly retainer for ongoing support), and Deep Engagement (2-6 month transformation projects, from £10-25k). Start with a Clarity Session or book a discovery call."
+          answer: "We work across two pillars. Narratives & Strategy Services covers Strategy Sessions, Fractional Strategy Director retainers, and Project Engagements. Notion & Systems Consultancy covers Notion Sessions, Fractional Automations Director retainers, and System-Build Engagements. Book an intro call to find the right fit."
         }
-      ]} title="About Stacked Behaviours" />
+      ]} title="About Thread & Stack Journal" />
       <Footer />
     </main>
   );
