@@ -620,8 +620,10 @@ const MomentumMapPage = () => {
             </div>
             </div>
 
-            {/* Gap Analysis */}
+            {/* Gap Analysis — inside exportable area */}
             <GapAnalysis tp={tp} />
+            </div> {/* end exportRef */}
+            </div> {/* end relative wrapper */}
 
             {/* Footer bar */}
             <div className="flex items-center justify-between pt-6 mt-8 border-t border-border/50">
