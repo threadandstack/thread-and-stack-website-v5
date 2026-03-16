@@ -376,7 +376,7 @@ const MomentumMapPage = () => {
             {/* Grid wrapper — relative so compass can sit behind */}
             <div className="relative">
               {/* Compass rose — large, tilted, positioned to peek behind the grid */}
-              <div className="hidden lg:block absolute -right-16 xl:-right-8 -top-32 z-0 pointer-events-none" style={{ width: '520px', height: '520px', transform: 'rotate(18deg)' }}>
+              <div className="hidden lg:block absolute -right-32 xl:-right-20 -top-64 z-0 pointer-events-none" style={{ width: '1040px', height: '1040px', transform: 'rotate(18deg)' }}>
                 <svg viewBox="0 0 200 200" fill="none" className="w-full h-full opacity-[0.12]">
                   <circle cx="100" cy="100" r="95" stroke="hsl(var(--accent))" strokeWidth="0.6" />
                   <circle cx="100" cy="100" r="85" stroke="hsl(var(--accent))" strokeWidth="0.4" />
