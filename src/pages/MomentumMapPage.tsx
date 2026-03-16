@@ -311,7 +311,50 @@ const MomentumMapPage = () => {
 
   return (
     <>
-      <div className="bg-background min-h-screen text-foreground relative">
+      <div className="bg-background min-h-screen text-foreground relative overflow-hidden">
+        {/* Cartographic background texture */}
+        <div className="fixed inset-0 z-0 pointer-events-none opacity-[0.035]"
+          style={{
+            backgroundImage: `
+              radial-gradient(circle at 20% 30%, hsl(var(--accent)) 1px, transparent 1px),
+              radial-gradient(circle at 70% 60%, hsl(var(--accent)) 1px, transparent 1px),
+              radial-gradient(circle at 45% 80%, hsl(var(--accent)) 0.5px, transparent 0.5px),
+              linear-gradient(0deg, hsl(var(--border)) 1px, transparent 1px),
+              linear-gradient(90deg, hsl(var(--border)) 1px, transparent 1px)
+            `,
+            backgroundSize: '200px 200px, 300px 300px, 150px 150px, 60px 60px, 60px 60px',
+          }}
+        />
+        {/* Compass rose watermark */}
+        <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0 pointer-events-none opacity-[0.03]">
+          <svg width="800" height="800" viewBox="0 0 200 200" fill="none">
+            {/* Outer ring */}
+            <circle cx="100" cy="100" r="95" stroke="hsl(var(--accent))" strokeWidth="0.5" />
+            <circle cx="100" cy="100" r="85" stroke="hsl(var(--accent))" strokeWidth="0.3" />
+            <circle cx="100" cy="100" r="60" stroke="hsl(var(--accent))" strokeWidth="0.3" strokeDasharray="2,4" />
+            {/* Cardinal points */}
+            <polygon points="100,5 104,40 100,30 96,40" fill="hsl(var(--accent))" />
+            <polygon points="100,195 96,160 100,170 104,160" fill="hsl(var(--foreground))" />
+            <polygon points="5,100 40,96 30,100 40,104" fill="hsl(var(--foreground))" />
+            <polygon points="195,100 160,104 170,100 160,96" fill="hsl(var(--foreground))" />
+            {/* Intercardinals */}
+            <line x1="100" y1="10" x2="100" y2="190" stroke="hsl(var(--accent))" strokeWidth="0.3" />
+            <line x1="10" y1="100" x2="190" y2="100" stroke="hsl(var(--accent))" strokeWidth="0.3" />
+            <line x1="30" y1="30" x2="170" y2="170" stroke="hsl(var(--foreground))" strokeWidth="0.2" />
+            <line x1="170" y1="30" x2="30" y2="170" stroke="hsl(var(--foreground))" strokeWidth="0.2" />
+            {/* Degree ticks */}
+            {Array.from({ length: 36 }).map((_, i) => {
+              const angle = (i * 10 * Math.PI) / 180;
+              const r1 = 92; const r2 = i % 3 === 0 ? 85 : 88;
+              return <line key={i} x1={100 + r1 * Math.sin(angle)} y1={100 - r1 * Math.cos(angle)} x2={100 + r2 * Math.sin(angle)} y2={100 - r2 * Math.cos(angle)} stroke="hsl(var(--accent))" strokeWidth="0.3" />;
+            })}
+            {/* N/S/E/W labels */}
+            <text x="100" y="22" textAnchor="middle" fill="hsl(var(--accent))" fontSize="8" fontWeight="700" fontFamily="Inter, sans-serif">N</text>
+            <text x="100" y="186" textAnchor="middle" fill="hsl(var(--foreground))" fontSize="6" fontFamily="Inter, sans-serif">S</text>
+            <text x="18" y="103" textAnchor="middle" fill="hsl(var(--foreground))" fontSize="6" fontFamily="Inter, sans-serif">W</text>
+            <text x="183" y="103" textAnchor="middle" fill="hsl(var(--foreground))" fontSize="6" fontFamily="Inter, sans-serif">E</text>
+          </svg>
+        </div>
 
         <div className="relative z-10">
           <Navigation />
@@ -321,7 +364,7 @@ const MomentumMapPage = () => {
             <div className="mb-10 animate-fade-in">
               <div className="text-center mb-8">
                 <p className="font-sans text-[11px] font-semibold tracking-[0.2em] uppercase text-accent mb-3">
-                  🚀 Thread & Stack — Original IP
+                  🧭 Thread & Stack — Original IP
                 </p>
                 <h1 className="font-serif-pro text-4xl sm:text-5xl md:text-6xl font-bold italic leading-[1.1] text-foreground mb-3">
                   The <span className="text-accent">Momentum</span> Map
