@@ -182,7 +182,7 @@ const GapAnalysis = ({ tp }: { tp: Record<string, Touchpoint[]> }) => {
 
   return (
     <div className="bg-card/80 backdrop-blur-sm border border-border rounded-2xl p-6 mt-8">
-      <h2 className="font-serif-pro text-xl font-bold italic text-white mb-1">
+      <h2 className="font-serif-pro text-xl font-bold italic text-foreground mb-1">
         Gap <span className="text-accent">Analysis</span>
       </h2>
       <p className="text-[12px] text-foreground/50 mb-5">
