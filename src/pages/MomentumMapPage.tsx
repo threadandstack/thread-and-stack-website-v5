@@ -25,6 +25,21 @@ interface Layer {
   sub: string;
 }
 
+// ── Gate colors ─────────────────────────────────────────────
+const GATE_COLORS = [
+  "hsl(48, 95%, 50%)",   // Gate 1 — yellow
+  "hsl(24, 100%, 50%)",  // Gate 2 — orange
+  "hsl(348, 80%, 45%)",  // Gate 3 — crimson
+  "hsl(270, 50%, 50%)",  // Gate 4 — purple
+];
+
+// ── Layer colors ────────────────────────────────────────────
+const LAYER_COLORS = [
+  "hsl(348, 80%, 45%)",  // Purposeful Intent — crimson
+  "hsl(24, 100%, 50%)",  // Active Discovery — orange
+  "hsl(145, 55%, 42%)",  // Ambient Exposure — green
+];
+
 // ── Constants ───────────────────────────────────────────────
 const STAGES: Stage[] = [
   { id: 0, lbl: "Aware of Your Brand", sub: "Top of Funnel", need: "A reason to click", bar: "hsl(24, 100%, 60%)" },
