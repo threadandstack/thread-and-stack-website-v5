@@ -247,7 +247,7 @@ export const BrandBook = () => {
               <ColorSwatch name="Foreground" hex="#EAEBED" dark />
               <ColorSwatch name="Card" hex="#1F2330" dark />
               <ColorSwatch name="Primary" hex="#EAEBED" dark />
-              <ColorSwatch name="Accent (Indigo)" hex="#3D5AF5" dark />
+              <ColorSwatch name="Accent (Orange)" hex="#FF6200" dark />
               <ColorSwatch name="Muted" hex="#262A38" dark />
               <ColorSwatch name="Muted Foreground" hex="#828795" dark />
               <ColorSwatch name="Secondary" hex="#6B7CC4" dark />
