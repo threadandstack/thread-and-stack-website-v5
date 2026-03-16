@@ -370,45 +370,43 @@ const MomentumMapPage = () => {
                   </div>
                 </div>
 
-                {/* Right: Compass rose */}
-                <div className="hidden lg:flex items-center justify-center shrink-0 w-[280px] xl:w-[340px]">
-                  <svg viewBox="0 0 200 200" fill="none" className="w-full opacity-[0.15]">
-                    <circle cx="100" cy="100" r="95" stroke="hsl(var(--accent))" strokeWidth="0.6" />
-                    <circle cx="100" cy="100" r="85" stroke="hsl(var(--accent))" strokeWidth="0.4" />
-                    <circle cx="100" cy="100" r="60" stroke="hsl(var(--accent))" strokeWidth="0.3" strokeDasharray="2,4" />
-                    <circle cx="100" cy="100" r="35" stroke="hsl(var(--accent))" strokeWidth="0.2" strokeDasharray="1,3" />
-                    {/* Cardinal arrows */}
-                    <polygon points="100,8 105,38 100,28 95,38" fill="hsl(var(--accent))" />
-                    <polygon points="100,192 95,162 100,172 105,162" fill="hsl(var(--foreground))" opacity="0.5" />
-                    <polygon points="8,100 38,95 28,100 38,105" fill="hsl(var(--foreground))" opacity="0.5" />
-                    <polygon points="192,100 162,105 172,100 162,95" fill="hsl(var(--foreground))" opacity="0.5" />
-                    {/* Cross lines */}
-                    <line x1="100" y1="12" x2="100" y2="188" stroke="hsl(var(--accent))" strokeWidth="0.3" />
-                    <line x1="12" y1="100" x2="188" y2="100" stroke="hsl(var(--accent))" strokeWidth="0.3" />
-                    <line x1="30" y1="30" x2="170" y2="170" stroke="hsl(var(--foreground))" strokeWidth="0.2" opacity="0.4" />
-                    <line x1="170" y1="30" x2="30" y2="170" stroke="hsl(var(--foreground))" strokeWidth="0.2" opacity="0.4" />
-                    {/* Degree ticks */}
-                    {Array.from({ length: 72 }).map((_, i) => {
-                      const angle = (i * 5 * Math.PI) / 180;
-                      const r1 = 93;
-                      const r2 = i % 6 === 0 ? 83 : i % 2 === 0 ? 88 : 90;
-                      return <line key={i} x1={100 + r1 * Math.sin(angle)} y1={100 - r1 * Math.cos(angle)} x2={100 + r2 * Math.sin(angle)} y2={100 - r2 * Math.cos(angle)} stroke="hsl(var(--accent))" strokeWidth={i % 6 === 0 ? "0.5" : "0.2"} />;
-                    })}
-                    {/* Labels */}
-                    <text x="100" y="24" textAnchor="middle" fill="hsl(var(--accent))" fontSize="9" fontWeight="800" fontFamily="Inter, sans-serif">N</text>
-                    <text x="100" y="184" textAnchor="middle" fill="hsl(var(--foreground))" fontSize="6" fontFamily="Inter, sans-serif" opacity="0.5">S</text>
-                    <text x="20" y="103" textAnchor="middle" fill="hsl(var(--foreground))" fontSize="6" fontFamily="Inter, sans-serif" opacity="0.5">W</text>
-                    <text x="181" y="103" textAnchor="middle" fill="hsl(var(--foreground))" fontSize="6" fontFamily="Inter, sans-serif" opacity="0.5">E</text>
-                    {/* Centre dot */}
-                    <circle cx="100" cy="100" r="3" fill="hsl(var(--accent))" opacity="0.6" />
-                    <circle cx="100" cy="100" r="1.2" fill="hsl(var(--background))" />
-                  </svg>
-                </div>
               </div>
             </div>
 
-            {/* Grid */}
-            <div className="flex items-stretch bg-card/60 backdrop-blur-sm border border-border rounded-2xl overflow-hidden">
+            {/* Grid wrapper — relative so compass can sit behind */}
+            <div className="relative">
+              {/* Compass rose — large, tilted, positioned to peek behind the grid */}
+              <div className="hidden lg:block absolute -right-16 xl:-right-8 -top-32 z-0 pointer-events-none" style={{ width: '520px', height: '520px', transform: 'rotate(18deg)' }}>
+                <svg viewBox="0 0 200 200" fill="none" className="w-full h-full opacity-[0.12]">
+                  <circle cx="100" cy="100" r="95" stroke="hsl(var(--accent))" strokeWidth="0.6" />
+                  <circle cx="100" cy="100" r="85" stroke="hsl(var(--accent))" strokeWidth="0.4" />
+                  <circle cx="100" cy="100" r="60" stroke="hsl(var(--accent))" strokeWidth="0.3" strokeDasharray="2,4" />
+                  <circle cx="100" cy="100" r="35" stroke="hsl(var(--accent))" strokeWidth="0.2" strokeDasharray="1,3" />
+                  <polygon points="100,8 105,38 100,28 95,38" fill="hsl(var(--accent))" />
+                  <polygon points="100,192 95,162 100,172 105,162" fill="hsl(var(--foreground))" opacity="0.5" />
+                  <polygon points="8,100 38,95 28,100 38,105" fill="hsl(var(--foreground))" opacity="0.5" />
+                  <polygon points="192,100 162,105 172,100 162,95" fill="hsl(var(--foreground))" opacity="0.5" />
+                  <line x1="100" y1="12" x2="100" y2="188" stroke="hsl(var(--accent))" strokeWidth="0.3" />
+                  <line x1="12" y1="100" x2="188" y2="100" stroke="hsl(var(--accent))" strokeWidth="0.3" />
+                  <line x1="30" y1="30" x2="170" y2="170" stroke="hsl(var(--foreground))" strokeWidth="0.2" opacity="0.4" />
+                  <line x1="170" y1="30" x2="30" y2="170" stroke="hsl(var(--foreground))" strokeWidth="0.2" opacity="0.4" />
+                  {Array.from({ length: 72 }).map((_, i) => {
+                    const angle = (i * 5 * Math.PI) / 180;
+                    const r1 = 93;
+                    const r2 = i % 6 === 0 ? 83 : i % 2 === 0 ? 88 : 90;
+                    return <line key={i} x1={100 + r1 * Math.sin(angle)} y1={100 - r1 * Math.cos(angle)} x2={100 + r2 * Math.sin(angle)} y2={100 - r2 * Math.cos(angle)} stroke="hsl(var(--accent))" strokeWidth={i % 6 === 0 ? "0.5" : "0.2"} />;
+                  })}
+                  <text x="100" y="24" textAnchor="middle" fill="hsl(var(--accent))" fontSize="9" fontWeight="800" fontFamily="Inter, sans-serif">N</text>
+                  <text x="100" y="184" textAnchor="middle" fill="hsl(var(--foreground))" fontSize="6" fontFamily="Inter, sans-serif" opacity="0.5">S</text>
+                  <text x="20" y="103" textAnchor="middle" fill="hsl(var(--foreground))" fontSize="6" fontFamily="Inter, sans-serif" opacity="0.5">W</text>
+                  <text x="181" y="103" textAnchor="middle" fill="hsl(var(--foreground))" fontSize="6" fontFamily="Inter, sans-serif" opacity="0.5">E</text>
+                  <circle cx="100" cy="100" r="3" fill="hsl(var(--accent))" opacity="0.6" />
+                  <circle cx="100" cy="100" r="1.2" fill="hsl(var(--background))" />
+                </svg>
+              </div>
+
+              {/* Grid — solid white background, sits above compass */}
+              <div className="relative z-10 flex items-stretch bg-background border border-border rounded-2xl overflow-hidden">
               {/* Y-axis label */}
               <div className="flex items-center justify-center px-2 border-r border-border/50 bg-card/40 shrink-0" style={{ writingMode: "vertical-rl", textOrientation: "mixed", transform: "rotate(180deg)" }}>
                 <span className="text-[11px] font-medium tracking-[0.15em] uppercase text-foreground/40">
