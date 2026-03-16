@@ -37,11 +37,11 @@ export const Footer = () => {
           
           <div>
             <h4 className="mb-3 font-semibold italic">Connect</h4>
-            <ul className="space-y-2 text-sm font-sans text-primary-foreground/80">
-              <li><a href="#contact" className="hover:text-primary-foreground transition-colors" onClick={() => trackFooterLinkClick('Get in Touch', 'internal')}>Get in Touch</a></li>
-              <li><a href="https://www.linkedin.com/in/rodgersbrendan/" target="_blank" rel="noopener noreferrer" className="hover:text-primary-foreground transition-colors flex items-center gap-2" onClick={() => trackFooterLinkClick('LinkedIn', 'social')}><Linkedin className="h-4 w-4" />LinkedIn</a></li>
-              <li><a href="https://bsky.app/profile/threadandstack.com" target="_blank" rel="noopener noreferrer" className="hover:text-primary-foreground transition-colors flex items-center gap-2" onClick={() => trackFooterLinkClick('Bluesky', 'social')}><BlueskyIcon className="h-4 w-4" />Bluesky</a></li>
-              <li><a href="https://stackedbehaviours.substack.com/?utm_campaign=website" target="_blank" rel="noopener noreferrer" className="hover:text-primary-foreground transition-colors flex items-center gap-2" onClick={() => trackFooterLinkClick('Substack', 'social')}><SubstackIcon className="h-4 w-4" />Substack</a></li>
+            <ul className="space-y-2 text-sm font-sans text-white/80">
+              <li><a href="#contact" className="hover:text-white transition-colors" onClick={() => trackFooterLinkClick('Get in Touch', 'internal')}>Get in Touch</a></li>
+              <li><a href="https://www.linkedin.com/in/rodgersbrendan/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors flex items-center gap-2" onClick={() => trackFooterLinkClick('LinkedIn', 'social')}><Linkedin className="h-4 w-4" />LinkedIn</a></li>
+              <li><a href="https://bsky.app/profile/threadandstack.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors flex items-center gap-2" onClick={() => trackFooterLinkClick('Bluesky', 'social')}><BlueskyIcon className="h-4 w-4" />Bluesky</a></li>
+              <li><a href="https://stackedbehaviours.substack.com/?utm_campaign=website" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors flex items-center gap-2" onClick={() => trackFooterLinkClick('Substack', 'social')}><SubstackIcon className="h-4 w-4" />Substack</a></li>
             </ul>
           </div>
         </div>
