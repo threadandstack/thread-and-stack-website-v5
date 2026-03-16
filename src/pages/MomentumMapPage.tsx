@@ -42,11 +42,11 @@ const LAYER_COLORS = [
 
 // ── Constants ───────────────────────────────────────────────
 const STAGES: Stage[] = [
-  { id: 0, lbl: "Aware of Your Brand", sub: "Top of Funnel", need: "A reason to click", bar: "hsl(24, 100%, 60%)" },
-  { id: 1, lbl: "Researching Your Offer", sub: "Middle of Funnel", need: "Clarity on your core value", bar: "hsl(40, 90%, 65%)" },
-  { id: 2, lbl: "Considering Your Offer", sub: "Bottom of Funnel", need: "Unique selling points & personalised experiences", bar: "hsl(90, 50%, 55%)" },
-  { id: 3, lbl: "Adopting Your Product", sub: "Activation & Adoption", need: "Proof that this is the right path & ease of activation", bar: "hsl(160, 50%, 50%)" },
-  { id: 4, lbl: "Becoming Loyal to You", sub: "Integration & Advocacy", need: "A Path to Success", bar: "hsl(250, 40%, 65%)" },
+  { id: 0, lbl: "Aware of Your Brand", sub: "Top of Funnel", need: "A reason to click", bar: "hsl(48, 95%, 50%)" },
+  { id: 1, lbl: "Researching Your Offer", sub: "Middle of Funnel", need: "Clarity on your core value", bar: "hsl(24, 100%, 50%)" },
+  { id: 2, lbl: "Considering Your Offer", sub: "Bottom of Funnel", need: "Unique selling points & personalised experiences", bar: "hsl(348, 80%, 45%)" },
+  { id: 3, lbl: "Adopting Your Product", sub: "Activation & Adoption", need: "Proof that this is the right path & ease of activation", bar: "hsl(270, 50%, 50%)" },
+  { id: 4, lbl: "Becoming Loyal to You", sub: "Integration & Advocacy", need: "A Path to Success", bar: "hsl(234, 89%, 50%)" },
 ];
 
 const LAYERS: Layer[] = [
