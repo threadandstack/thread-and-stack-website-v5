@@ -617,8 +617,7 @@ const MomentumMapPage = () => {
                   ))}
                 </div>
               </div>
-            </div>
-            </div>
+            </div> {/* end grid flex */}
 
             {/* Gap Analysis — inside exportable area */}
             <GapAnalysis tp={tp} />
