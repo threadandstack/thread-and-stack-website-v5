@@ -130,21 +130,25 @@ const CometEffectPage = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  useEffect(() => {
+    document.title = "The Comet Effect Framework — Thread & Stack";
+    const setMeta = (prop: string, content: string) => {
+      let el = document.querySelector(`meta[property="${prop}"], meta[name="${prop}"]`) as HTMLMetaElement;
+      if (!el) { el = document.createElement("meta"); el.setAttribute(prop.startsWith("og:") || prop.startsWith("twitter:") ? (prop.startsWith("og:") ? "property" : "name") : "name", prop); document.head.appendChild(el); }
+      el.content = content;
+    };
+    setMeta("description", "A framework for web experiences that balance conversion velocity with emotional resonance.");
+    setMeta("og:title", "The Comet Effect Framework — Thread & Stack");
+    setMeta("og:description", "A framework for web experiences that balance conversion velocity with emotional resonance.");
+    setMeta("og:image", "https://threadandstack.com/images/og/comet-effect.png");
+    setMeta("og:type", "website");
+    setMeta("twitter:card", "summary_large_image");
+    setMeta("twitter:title", "The Comet Effect Framework — Thread & Stack");
+    setMeta("twitter:image", "https://threadandstack.com/images/og/comet-effect.png");
+  }, []);
+
   return (
     <>
-      <Helmet>
-        <title>The Comet Effect Framework — Thread & Stack</title>
-        <meta name="description" content="A framework for web experiences that balance conversion velocity with emotional resonance — mapping how users actually move, not how narrative theory says they should." />
-        <meta property="og:title" content="The Comet Effect Framework — Thread & Stack" />
-        <meta property="og:description" content="A framework for web experiences that balance conversion velocity with emotional resonance — mapping how users actually move through digital experiences." />
-        <meta property="og:image" content="https://threadandstack.com/images/og/comet-effect.png" />
-        <meta property="og:type" content="website" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="The Comet Effect Framework — Thread & Stack" />
-        <meta name="twitter:description" content="A framework for web experiences that balance conversion velocity with emotional resonance." />
-        <meta name="twitter:image" content="https://threadandstack.com/images/og/comet-effect.png" />
-      </Helmet>
-
       <div className="dark bg-background min-h-screen text-foreground">
         <Navigation variant="dark" />
 
