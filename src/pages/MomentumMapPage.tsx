@@ -192,9 +192,9 @@ const GapAnalysis = ({ tp }: { tp: Record<string, Touchpoint[]> }) => {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
         {[
           { n: total, l: "Total touchpoints", color: "text-accent" },
-          { n: active, l: "Active", color: "text-white" },
+          { n: active, l: "Active", color: "text-foreground" },
           { n: missing, l: "Missing / gaps", color: "text-destructive" },
-          { n: `${pct}%`, l: "Coverage rate", color: "text-white" },
+          { n: `${pct}%`, l: "Coverage rate", color: "text-foreground" },
         ].map((s, i) => (
           <div key={i} className="bg-background/60 border border-border rounded-xl py-3 px-4 text-center">
             <div className={`font-serif-pro text-3xl font-bold leading-none ${s.color}`}>{s.n}</div>
