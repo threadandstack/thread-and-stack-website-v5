@@ -575,6 +575,7 @@ const MomentumMapPage = () => {
                 </div>
               </div>
             </div>
+            </div>
 
             {/* Gap Analysis */}
             <GapAnalysis tp={tp} />
