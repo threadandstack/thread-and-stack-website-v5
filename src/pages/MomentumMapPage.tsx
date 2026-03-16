@@ -631,7 +631,7 @@ const MomentumMapPage = () => {
                           <span className="text-foreground/60">{st.need}</span>
                         </div>
                         {si < 4 && (
-                          <div className="w-[70px] shrink-0" style={{ backgroundColor: `${GATE_COLORS[si]}08`, borderLeft: `1px solid ${GATE_COLORS[si]}20` }} />
+                          <div className="w-[70px] shrink-0 border-l border-r border-border" style={{ backgroundColor: `${GATE_COLORS[si]}12` }} />
                         )}
                       </div>
                     </div>
