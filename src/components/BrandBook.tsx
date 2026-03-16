@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Emphasis } from "@/components/Emphasis";
+import { Button } from "@/components/ui/button";
 import { 
   ArrowRight, 
   Check, 
@@ -13,7 +14,8 @@ import {
   Users,
   Target,
   Repeat,
-  Loader2
+  Loader2,
+  Download
 } from "lucide-react";
 
 // Logo imports
