@@ -403,7 +403,7 @@ const MomentumMapPage = () => {
                         key={`label-${layer.id}`}
                         className={`flex flex-col items-center justify-center p-2 text-center border-r border-border/50 ${li === 2 ? "border-b border-b-border" : "border-b border-border/50"} ${li === 2 ? "bg-card/40" : ""}`}
                       >
-                        <div className="text-[11px] font-medium tracking-wider uppercase text-white leading-snug">{layer.lbl}</div>
+                        <div className="text-[11px] font-medium tracking-wider uppercase text-foreground leading-snug">{layer.lbl}</div>
                         <div className="text-[11px] italic font-serif-pro text-foreground/50 mt-1 leading-tight">{layer.sub}</div>
                       </div>
 
