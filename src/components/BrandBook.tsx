@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Emphasis } from "@/components/Emphasis";
+import { Button } from "@/components/ui/button";
 import { 
   ArrowRight, 
   Check, 
@@ -13,7 +14,8 @@ import {
   Users,
   Target,
   Repeat,
-  Loader2
+  Loader2,
+  Download
 } from "lucide-react";
 
 // Logo imports
@@ -121,9 +123,17 @@ export const BrandBook = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background p-8 md:p-16 space-y-24">
+    <div className="min-h-screen bg-background p-8 md:p-16 space-y-24 print:p-4 print:space-y-12">
+      {/* Download button */}
+      <div className="fixed top-5 right-5 z-50 print:hidden">
+        <Button onClick={() => window.print()} size="sm" className="gap-2 rounded-lg shadow-lg">
+          <Download className="w-3.5 h-3.5" />
+          Download PDF
+        </Button>
+      </div>
+
       <div className="max-w-5xl mx-auto">
-        <header className="mb-16">
+        <header className="mb-16 print:mb-8">
           <p className="text-sm text-muted-foreground uppercase tracking-widest mb-4">Internal Reference</p>
           <h1 className="font-serif-pro text-4xl md:text-5xl font-bold mb-4">
             Brand Book
