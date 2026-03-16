@@ -28,7 +28,7 @@ export const Footer = () => {
           
           <div>
             <h4 className="mb-3 font-semibold italic not-italic">Offers</h4>
-            <ul className="space-y-2 text-sm font-sans text-primary-foreground/80">
+            <ul className="space-y-2 text-sm font-sans text-white/80">
               <li><a href="/narratives-strategy" className="hover:text-primary-foreground transition-colors" onClick={() => trackFooterLinkClick('Narratives & Strategy', 'internal')}>Narratives & Strategy</a></li>
               <li><a href="/notion-systems" className="hover:text-primary-foreground transition-colors" onClick={() => trackFooterLinkClick('Notion Systems', 'internal')}>Notion Systems</a></li>
               <li><a href="/blog" className="hover:text-primary-foreground transition-colors" onClick={() => trackFooterLinkClick('Thread & Stack Journal', 'internal')}>Thread & Stack Journal</a></li>
