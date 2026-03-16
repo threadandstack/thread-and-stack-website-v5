@@ -378,7 +378,7 @@ const MomentumMapPage = () => {
                         {/* Stage header */}
                         <div className="flex-1 py-3 px-3 text-center">
                           <div className="text-[11px] font-semibold text-accent mb-0.5">0{si + 1}</div>
-                          <div className="font-serif-pro italic font-bold text-[13px] text-white leading-tight">{st.lbl}</div>
+                          <div className="font-serif-pro italic font-bold text-[13px] text-foreground leading-tight">{st.lbl}</div>
                           <div className="text-[11px] text-foreground/50 mt-0.5">{st.sub}</div>
                         </div>
                         {/* Gate column (between stages) */}
