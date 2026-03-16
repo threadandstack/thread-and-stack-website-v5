@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
-import { StarryBackdrop } from "@/components/fiction/StarryBackdrop";
 
 // ── Data types ──────────────────────────────────────────────
 interface Touchpoint {
@@ -182,7 +181,7 @@ const GapAnalysis = ({ tp }: { tp: Record<string, Touchpoint[]> }) => {
 
   return (
     <div className="bg-card/80 backdrop-blur-sm border border-border rounded-2xl p-6 mt-8">
-      <h2 className="font-serif-pro text-xl font-bold italic text-white mb-1">
+      <h2 className="font-serif-pro text-xl font-bold italic text-foreground mb-1">
         Gap <span className="text-accent">Analysis</span>
       </h2>
       <p className="text-[12px] text-foreground/50 mb-5">
@@ -192,9 +191,9 @@ const GapAnalysis = ({ tp }: { tp: Record<string, Touchpoint[]> }) => {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
         {[
           { n: total, l: "Total touchpoints", color: "text-accent" },
-          { n: active, l: "Active", color: "text-white" },
+          { n: active, l: "Active", color: "text-foreground" },
           { n: missing, l: "Missing / gaps", color: "text-destructive" },
-          { n: `${pct}%`, l: "Coverage rate", color: "text-white" },
+          { n: `${pct}%`, l: "Coverage rate", color: "text-foreground" },
         ].map((s, i) => (
           <div key={i} className="bg-background/60 border border-border rounded-xl py-3 px-4 text-center">
             <div className={`font-serif-pro text-3xl font-bold leading-none ${s.color}`}>{s.n}</div>
@@ -312,13 +311,10 @@ const MomentumMapPage = () => {
 
   return (
     <>
-      <div className="dark bg-background min-h-screen text-foreground relative">
-        <div className="fixed inset-0 z-0">
-          <StarryBackdrop />
-        </div>
+      <div className="bg-background min-h-screen text-foreground relative">
 
         <div className="relative z-10">
-          <Navigation variant="dark" />
+          <Navigation />
 
           <main className="max-w-[1300px] mx-auto px-4 sm:px-8 pt-28 pb-20">
             {/* Header */}
@@ -328,7 +324,7 @@ const MomentumMapPage = () => {
                   <p className="font-sans text-[11px] font-semibold tracking-[0.2em] uppercase text-accent mb-2">
                     🚀 Thread & Stack — Original IP
                   </p>
-                  <h1 className="font-serif-pro text-3xl sm:text-4xl font-bold italic leading-tight text-white mb-2">
+                  <h1 className="font-serif-pro text-3xl sm:text-4xl font-bold italic leading-tight text-foreground mb-2">
                     The <span className="text-accent">Momentum</span> Map
                   </h1>
                   <p className="font-sans text-[13px] text-foreground/60 max-w-lg leading-relaxed">
@@ -381,7 +377,7 @@ const MomentumMapPage = () => {
                         {/* Stage header */}
                         <div className="flex-1 py-3 px-3 text-center">
                           <div className="text-[11px] font-semibold text-accent mb-0.5">0{si + 1}</div>
-                          <div className="font-serif-pro italic font-bold text-[13px] text-white leading-tight">{st.lbl}</div>
+                          <div className="font-serif-pro italic font-bold text-[13px] text-foreground leading-tight">{st.lbl}</div>
                           <div className="text-[11px] text-foreground/50 mt-0.5">{st.sub}</div>
                         </div>
                         {/* Gate column (between stages) */}
@@ -406,7 +402,7 @@ const MomentumMapPage = () => {
                         key={`label-${layer.id}`}
                         className={`flex flex-col items-center justify-center p-2 text-center border-r border-border/50 ${li === 2 ? "border-b border-b-border" : "border-b border-border/50"} ${li === 2 ? "bg-card/40" : ""}`}
                       >
-                        <div className="text-[11px] font-medium tracking-wider uppercase text-white leading-snug">{layer.lbl}</div>
+                        <div className="text-[11px] font-medium tracking-wider uppercase text-foreground leading-snug">{layer.lbl}</div>
                         <div className="text-[11px] italic font-serif-pro text-foreground/50 mt-1 leading-tight">{layer.sub}</div>
                       </div>
 
@@ -535,7 +531,7 @@ const MomentumMapPage = () => {
 
             {/* Footer bar */}
             <div className="flex items-center justify-between pt-6 mt-8 border-t border-border/50">
-              <p className="font-serif-pro text-lg italic font-bold text-white">
+              <p className="font-serif-pro text-lg italic font-bold text-foreground">
                 Thread & <span className="text-accent">Stack</span>
               </p>
               <p className="font-sans text-xs text-foreground/50">
