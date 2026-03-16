@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
-import { Helmet } from "react-helmet-async";
+
 
 const CometDiagram = () => (
   <svg className="w-full max-w-[900px] mx-auto block" viewBox="0 0 900 320" fill="none" xmlns="http://www.w3.org/2000/svg">
