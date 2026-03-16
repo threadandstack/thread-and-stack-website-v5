@@ -469,7 +469,7 @@ const MomentumMapPage = () => {
                             key={`cell-${key}`}
                             className={`border-r border-border/50 ${li === 2 ? "border-b border-b-border" : "border-b border-border/50"} relative`}
                           >
-                            <div className="flex">
+                            <div className="flex h-full">
                               {/* Cell content */}
                               <div className="flex-1 p-2 flex flex-col gap-1.5 min-h-[120px]">
                                 {tps.map((t) => {
