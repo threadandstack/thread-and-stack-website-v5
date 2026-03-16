@@ -489,7 +489,7 @@ const MomentumMapPage = () => {
 
                   {/* Rows 2-4: Layer rows */}
                   {LAYERS.map((layer, li) => (
-                    <>
+                    <React.Fragment key={layer.id}>
                       {/* Layer label */}
                       <div
                         key={`label-${layer.id}`}
