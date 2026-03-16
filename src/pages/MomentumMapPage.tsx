@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
-import { StarryBackdrop } from "@/components/fiction/StarryBackdrop";
 
 // ── Data types ──────────────────────────────────────────────
 interface Touchpoint {
