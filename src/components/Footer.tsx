@@ -16,7 +16,7 @@ const SubstackIcon = ({ className }: { className?: string }) => (
 
 export const Footer = () => {
   return (
-    <footer className="py-12 px-6 bg-[hsl(234,89%,8%)] text-primary-foreground">
+    <footer className="py-12 px-6 bg-[hsl(234,89%,8%)] text-white">
       <div className="max-w-6xl mx-auto">
         <div className="grid md:grid-cols-3 gap-8 mb-8">
           <div>
