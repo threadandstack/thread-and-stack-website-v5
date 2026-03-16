@@ -318,40 +318,44 @@ const MomentumMapPage = () => {
 
           <main className="max-w-[1300px] mx-auto px-4 sm:px-8 pt-28 pb-20">
             {/* Header */}
-            <div className="mb-8 animate-fade-in">
-              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
-                <div>
-                  <p className="font-sans text-[11px] font-semibold tracking-[0.2em] uppercase text-accent mb-2">
-                    🚀 Thread & Stack — Original IP
-                  </p>
-                  <h1 className="font-serif-pro text-3xl sm:text-4xl font-bold italic leading-tight text-foreground mb-2">
-                    The <span className="text-accent">Momentum</span> Map
-                  </h1>
-                  <p className="font-sans text-[13px] text-foreground/60 max-w-lg leading-relaxed">
-                    Map your touchpoints across each funnel stage. Click any touchpoint to edit, any gate to set its criterion.
-                  </p>
-                </div>
+            <div className="mb-10 animate-fade-in">
+              <div className="text-center mb-8">
+                <p className="font-sans text-[11px] font-semibold tracking-[0.2em] uppercase text-accent mb-3">
+                  🚀 Thread & Stack — Original IP
+                </p>
+                <h1 className="font-serif-pro text-4xl sm:text-5xl md:text-6xl font-bold italic leading-[1.1] text-foreground mb-3">
+                  The <span className="text-accent">Momentum</span> Map
+                </h1>
+                <p className="font-sans text-[15px] text-foreground/60 max-w-xl mx-auto leading-relaxed">
+                  Map your touchpoints across each funnel stage. Click any touchpoint to edit, any gate to set its criterion.
+                </p>
+              </div>
 
-                <div className="flex items-center gap-4 flex-wrap">
-                  {/* Legend */}
-                  <div className="flex gap-3 items-center">
-                    <div className="flex items-center gap-1.5 text-[11px] text-foreground/60">
-                      <div className="w-3 h-3 rounded-sm bg-accent/15 border border-accent/50" /> Touchpoint
-                    </div>
-                    <div className="flex items-center gap-1.5 text-[11px] text-foreground/60">
-                      <div className="w-3 h-3 rounded-sm bg-destructive/15 border border-destructive/50" /> Missing
-                    </div>
-                    <div className="flex items-center gap-1.5 text-[11px] text-foreground/60">
-                      <div className="w-3 h-3 rounded-sm bg-accent/10 border border-accent/40" /> Gate
-                    </div>
+              {/* Explainer callout */}
+              <div className="bg-accent/8 border border-accent/25 border-l-[3px] border-l-accent rounded-xl px-6 py-5 max-w-[720px] mx-auto mb-8">
+                <p className="font-serif-pro italic text-[16px] leading-relaxed text-foreground/80">
+                  <strong className="text-accent not-italic">How it works:</strong> Every customer journey passes through five stages — from first awareness to lasting loyalty. Between each stage sits a <em>gate</em>: a qualifying moment that signals real progression. Plot your touchpoints in the grid below to see where your experience is strong, and where the gaps are costing you momentum.
+                </p>
+              </div>
+
+              <div className="flex items-center justify-center gap-4 flex-wrap">
+                <div className="flex gap-3 items-center">
+                  <div className="flex items-center gap-1.5 text-[11px] text-foreground/60">
+                    <div className="w-3 h-3 rounded-sm bg-accent/15 border border-accent/50" /> Touchpoint
                   </div>
-                  <button
-                    onClick={clearAll}
-                    className="text-[11px] font-medium text-foreground/60 border border-border rounded-lg px-3 py-1.5 hover:bg-card/60 transition"
-                  >
-                    Clear all
-                  </button>
+                  <div className="flex items-center gap-1.5 text-[11px] text-foreground/60">
+                    <div className="w-3 h-3 rounded-sm bg-destructive/15 border border-destructive/50" /> Missing
+                  </div>
+                  <div className="flex items-center gap-1.5 text-[11px] text-foreground/60">
+                    <div className="w-3 h-3 rounded-sm bg-accent/10 border border-accent/40" /> Gate
+                  </div>
                 </div>
+                <button
+                  onClick={clearAll}
+                  className="text-[11px] font-medium text-foreground/60 border border-border rounded-lg px-3 py-1.5 hover:bg-card/60 transition"
+                >
+                  Clear all
+                </button>
               </div>
             </div>
 
