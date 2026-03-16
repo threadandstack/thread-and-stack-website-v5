@@ -491,14 +491,14 @@ const MomentumMapPage = () => {
                         {/* Gate column (between stages) */}
                         {si < 4 && (
                           <div
-                            className="w-[70px] shrink-0 flex flex-col items-center justify-end py-2 cursor-pointer transition"
-                            style={{ backgroundColor: `${GATE_COLORS[si]}10`, borderLeft: `1px solid ${GATE_COLORS[si]}30` }}
+                            className="w-[70px] shrink-0 flex flex-col items-center justify-end py-2 cursor-pointer transition border-l border-r border-border"
+                            style={{ backgroundColor: `${GATE_COLORS[si]}18` }}
                             onClick={() => setEditingGate(si)}
-                            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = `${GATE_COLORS[si]}20`)}
-                            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = `${GATE_COLORS[si]}10`)}
+                            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = `${GATE_COLORS[si]}28`)}
+                            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = `${GATE_COLORS[si]}18`)}
                           >
-                            <div className="text-[10px] font-medium tracking-wider uppercase" style={{ color: `${GATE_COLORS[si]}99` }}>Gate</div>
-                            <div className="font-serif-pro italic text-xl font-bold leading-none" style={{ color: GATE_COLORS[si] }}>{si + 1}</div>
+                            <div className="text-[10px] font-medium tracking-wider uppercase text-foreground/50">Gate</div>
+                            <div className="font-serif-pro italic text-xl font-bold leading-none text-foreground/80">{si + 1}</div>
                           </div>
                         )}
                       </div>
