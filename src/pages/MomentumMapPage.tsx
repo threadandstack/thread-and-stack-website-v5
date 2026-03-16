@@ -312,10 +312,7 @@ const MomentumMapPage = () => {
 
   return (
     <>
-      <div className="dark bg-background min-h-screen text-foreground relative">
-        <div className="fixed inset-0 z-0">
-          <StarryBackdrop />
-        </div>
+      <div className="bg-background min-h-screen text-foreground relative">
 
         <div className="relative z-10">
           <Navigation variant="dark" />
