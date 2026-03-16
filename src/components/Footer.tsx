@@ -21,7 +21,7 @@ export const Footer = () => {
         <div className="grid md:grid-cols-3 gap-8 mb-8">
           <div>
             <img src={stackedLogo} alt="Thread & Stack" className="h-14 mb-3" />
-            <p className="font-sans text-primary-foreground/80 text-sm">
+            <p className="font-sans text-white/80 text-sm">
               Brands that feel human, systems that make sense.
             </p>
           </div>
