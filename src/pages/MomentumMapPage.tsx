@@ -446,6 +446,8 @@ const MomentumMapPage = () => {
                 </svg>
               </div>
 
+              {/* Exportable area */}
+              <div ref={exportRef} className="bg-background">
               {/* Grid — solid white background, sits above compass */}
               <div className="relative z-10 flex items-stretch bg-background border border-border rounded-2xl overflow-hidden">
               {/* Y-axis label */}
