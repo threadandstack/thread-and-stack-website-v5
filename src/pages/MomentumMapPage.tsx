@@ -25,6 +25,21 @@ interface Layer {
   sub: string;
 }
 
+// ── Gate colors ─────────────────────────────────────────────
+const GATE_COLORS = [
+  "hsl(48, 95%, 50%)",   // Gate 1 — yellow
+  "hsl(24, 100%, 50%)",  // Gate 2 — orange
+  "hsl(348, 80%, 45%)",  // Gate 3 — crimson
+  "hsl(270, 50%, 50%)",  // Gate 4 — purple
+];
+
+// ── Layer colors ────────────────────────────────────────────
+const LAYER_COLORS = [
+  "hsl(348, 80%, 45%)",  // Purposeful Intent — crimson
+  "hsl(24, 100%, 50%)",  // Active Discovery — orange
+  "hsl(145, 55%, 42%)",  // Ambient Exposure — green
+];
+
 // ── Constants ───────────────────────────────────────────────
 const STAGES: Stage[] = [
   { id: 0, lbl: "Aware of Your Brand", sub: "Top of Funnel", need: "A reason to click", bar: "hsl(24, 100%, 60%)" },
@@ -476,11 +491,14 @@ const MomentumMapPage = () => {
                         {/* Gate column (between stages) */}
                         {si < 4 && (
                           <div
-                            className="w-[70px] shrink-0 flex flex-col items-center justify-end py-2 bg-accent/5 border-l border-accent/20 cursor-pointer hover:bg-accent/10 transition"
+                            className="w-[70px] shrink-0 flex flex-col items-center justify-end py-2 cursor-pointer transition"
+                            style={{ backgroundColor: `${GATE_COLORS[si]}10`, borderLeft: `1px solid ${GATE_COLORS[si]}30` }}
                             onClick={() => setEditingGate(si)}
+                            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = `${GATE_COLORS[si]}20`)}
+                            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = `${GATE_COLORS[si]}10`)}
                           >
-                            <div className="text-[10px] font-medium tracking-wider uppercase text-accent/60">Gate</div>
-                            <div className="font-serif-pro italic text-xl font-bold text-accent leading-none">{si + 1}</div>
+                            <div className="text-[10px] font-medium tracking-wider uppercase" style={{ color: `${GATE_COLORS[si]}99` }}>Gate</div>
+                            <div className="font-serif-pro italic text-xl font-bold leading-none" style={{ color: GATE_COLORS[si] }}>{si + 1}</div>
                           </div>
                         )}
                       </div>
@@ -495,7 +513,7 @@ const MomentumMapPage = () => {
                         key={`label-${layer.id}`}
                         className={`flex flex-col items-center justify-center p-2 text-center border-r border-border/50 ${li === 2 ? "border-b border-b-border" : "border-b border-border/50"} ${li === 2 ? "bg-card/40" : ""}`}
                       >
-                        <div className="text-[11px] font-medium tracking-wider uppercase text-foreground leading-snug">{layer.lbl}</div>
+                        <div className="text-[11px] font-medium tracking-wider uppercase leading-snug" style={{ color: LAYER_COLORS[li] }}>{layer.lbl}</div>
                         <div className="text-[11px] italic font-serif-pro text-foreground/50 mt-1 leading-tight">{layer.sub}</div>
                       </div>
 
@@ -562,17 +580,21 @@ const MomentumMapPage = () => {
 
                               {/* Gate column spacer (between stages) */}
                               {si < 4 && (
-                                <div className="w-[70px] shrink-0 bg-accent/5 border-l border-accent/20 flex items-center justify-center relative self-stretch">
-                                  <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-px bg-accent/20" />
-                                  <div className="absolute top-2 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-accent/50" />
-                                  <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-accent/50" />
+                                <div
+                                  className="w-[70px] shrink-0 flex items-center justify-center relative self-stretch"
+                                  style={{ backgroundColor: `${GATE_COLORS[si]}08`, borderLeft: `1px solid ${GATE_COLORS[si]}20` }}
+                                >
+                                  <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-px" style={{ backgroundColor: `${GATE_COLORS[si]}30` }} />
+                                  <div className="absolute top-2 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full" style={{ backgroundColor: `${GATE_COLORS[si]}80` }} />
+                                  <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full" style={{ backgroundColor: `${GATE_COLORS[si]}80` }} />
                                   {/* Gate badge (only on middle layer row) */}
                                   {li === 1 && (
                                     editingGate === si ? (
-                                      <div className="z-10 bg-card border border-accent rounded p-1 w-[60px]">
+                                      <div className="z-10 bg-card rounded p-1 w-[60px]" style={{ border: `1px solid ${GATE_COLORS[si]}` }}>
                                         <input
                                           autoFocus
-                                          className="w-full text-[10px] bg-transparent text-accent text-center outline-none font-medium"
+                                          className="w-full text-[10px] bg-transparent text-center outline-none font-medium"
+                                          style={{ color: GATE_COLORS[si] }}
                                           defaultValue={gates[si]}
                                           onBlur={(e) => updateGate(si, e.target.value)}
                                           onKeyDown={(e) => {
@@ -583,7 +605,10 @@ const MomentumMapPage = () => {
                                     ) : (
                                       <div
                                         onClick={(e) => { e.stopPropagation(); setEditingGate(si); }}
-                                        className="z-10 bg-card border border-accent/60 rounded px-1.5 py-1 w-[60px] text-center text-[10px] font-medium text-accent leading-tight cursor-pointer hover:bg-accent/10 transition"
+                                        className="z-10 bg-card rounded px-1.5 py-1 w-[60px] text-center text-[10px] font-medium leading-tight cursor-pointer transition"
+                                        style={{ border: `1px solid ${GATE_COLORS[si]}90`, color: GATE_COLORS[si] }}
+                                        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = `${GATE_COLORS[si]}15`)}
+                                        onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '')}
                                       >
                                         {gates[si]}
                                       </div>
@@ -610,7 +635,7 @@ const MomentumMapPage = () => {
                           <span className="text-foreground/60">{st.need}</span>
                         </div>
                         {si < 4 && (
-                          <div className="w-[70px] shrink-0 bg-accent/5 border-l border-accent/20" />
+                          <div className="w-[70px] shrink-0" style={{ backgroundColor: `${GATE_COLORS[si]}08`, borderLeft: `1px solid ${GATE_COLORS[si]}20` }} />
                         )}
                       </div>
                     </div>
