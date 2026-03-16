@@ -39,6 +39,7 @@ import RetainerStartupPage from "./pages/RetainerStartupPage";
 import RetainerScaleUpPage from "./pages/RetainerScaleUpPage";
 import WorkWithMePage from "./pages/WorkWithMePage";
 import CometEffectPage from "./pages/CometEffectPage";
+import MomentumMapPage from "./pages/MomentumMapPage";
 import { CookieConsent } from "./components/CookieConsent";
 
 const queryClient = new QueryClient();
