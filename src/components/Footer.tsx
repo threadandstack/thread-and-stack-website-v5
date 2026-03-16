@@ -46,11 +46,11 @@ export const Footer = () => {
           </div>
         </div>
         
-        <div className="border-t border-primary-foreground/20 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm font-sans text-primary-foreground/60">
+        <div className="border-t border-white/20 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm font-sans text-white/60">
           <p className="not-italic">© {new Date().getFullYear()} Thread & Stack. All rights reserved.</p>
           <div className="flex gap-6">
-            <a href="/privacy" className="hover:text-primary-foreground transition-colors" onClick={() => trackFooterLinkClick('Privacy Policy', 'legal')}>Privacy Policy</a>
-            <a href="/data-guarantee" className="hover:text-primary-foreground transition-colors" onClick={() => trackFooterLinkClick('Data Guarantee', 'legal')}>Data Guarantee</a>
+            <a href="/privacy" className="hover:text-white transition-colors" onClick={() => trackFooterLinkClick('Privacy Policy', 'legal')}>Privacy Policy</a>
+            <a href="/data-guarantee" className="hover:text-white transition-colors" onClick={() => trackFooterLinkClick('Data Guarantee', 'legal')}>Data Guarantee</a>
           </div>
         </div>
       </div>
