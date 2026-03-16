@@ -314,7 +314,7 @@ const MomentumMapPage = () => {
       <div className="bg-background min-h-screen text-foreground relative">
 
         <div className="relative z-10">
-          <Navigation variant="dark" />
+          <Navigation />
 
           <main className="max-w-[1300px] mx-auto px-4 sm:px-8 pt-28 pb-20">
             {/* Header */}
