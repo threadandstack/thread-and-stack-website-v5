@@ -88,6 +88,7 @@ const App = () => (
           {/* Legacy route - redirect to new canonical URL */}
           <Route path="/fiction-favorites" element={<Navigate to="/favourite-fiction" replace />} />
           <Route path="/work-with-me" element={<WorkWithMePage />} />
+          <Route path="/comet-effect" element={<CometEffectPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
