@@ -1,4 +1,6 @@
-import { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
+import html2canvas from "html2canvas";
+import { jsPDF } from "jspdf";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 
@@ -237,6 +239,31 @@ const MomentumMapPage = () => {
   const [addingCell, setAddingCell] = useState<string | null>(null);
   const [editingTp, setEditingTp] = useState<string | null>(null); // "layerId-stageId-tpId"
   const [nextId, setNextId] = useState(20);
+  const exportRef = useRef<HTMLDivElement>(null);
+
+  const exportAs = useCallback(async (format: "png" | "pdf") => {
+    if (!exportRef.current) return;
+    const canvas = await html2canvas(exportRef.current, {
+      scale: 2,
+      backgroundColor: "#ffffff",
+      useCORS: true,
+    });
+    if (format === "png") {
+      const link = document.createElement("a");
+      link.download = "momentum-map.png";
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    } else {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF({
+        orientation: canvas.width > canvas.height ? "landscape" : "portrait",
+        unit: "px",
+        format: [canvas.width, canvas.height],
+      });
+      pdf.addImage(imgData, "PNG", 0, 0, canvas.width, canvas.height);
+      pdf.save("momentum-map.pdf");
+    }
+  }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -361,12 +388,26 @@ const MomentumMapPage = () => {
                         <div className="w-3 h-3 rounded-sm bg-accent/10 border border-accent/40" /> Gate
                       </div>
                     </div>
-                    <button
-                      onClick={clearAll}
-                      className="text-[11px] font-medium text-foreground/60 border border-border rounded-lg px-3 py-1.5 hover:bg-card/60 transition"
-                    >
-                      Clear all
-                    </button>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => exportAs("png")}
+                        className="text-[11px] font-medium text-accent border border-accent/40 rounded-lg px-3 py-1.5 hover:bg-accent/10 transition"
+                      >
+                        Save PNG
+                      </button>
+                      <button
+                        onClick={() => exportAs("pdf")}
+                        className="text-[11px] font-medium text-accent border border-accent/40 rounded-lg px-3 py-1.5 hover:bg-accent/10 transition"
+                      >
+                        Save PDF
+                      </button>
+                      <button
+                        onClick={clearAll}
+                        className="text-[11px] font-medium text-foreground/60 border border-border rounded-lg px-3 py-1.5 hover:bg-card/60 transition"
+                      >
+                        Clear all
+                      </button>
+                    </div>
                   </div>
                 </div>
 
@@ -405,6 +446,8 @@ const MomentumMapPage = () => {
                 </svg>
               </div>
 
+              {/* Exportable area */}
+              <div ref={exportRef} className="bg-background">
               {/* Grid — solid white background, sits above compass */}
               <div className="relative z-10 flex items-stretch bg-background border border-border rounded-2xl overflow-hidden">
               {/* Y-axis label */}
@@ -446,7 +489,7 @@ const MomentumMapPage = () => {
 
                   {/* Rows 2-4: Layer rows */}
                   {LAYERS.map((layer, li) => (
-                    <>
+                    <React.Fragment key={layer.id}>
                       {/* Layer label */}
                       <div
                         key={`label-${layer.id}`}
@@ -467,7 +510,7 @@ const MomentumMapPage = () => {
                             key={`cell-${key}`}
                             className={`border-r border-border/50 ${li === 2 ? "border-b border-b-border" : "border-b border-border/50"} relative`}
                           >
-                            <div className="flex">
+                            <div className="flex h-full">
                               {/* Cell content */}
                               <div className="flex-1 p-2 flex flex-col gap-1.5 min-h-[120px]">
                                 {tps.map((t) => {
@@ -519,7 +562,7 @@ const MomentumMapPage = () => {
 
                               {/* Gate column spacer (between stages) */}
                               {si < 4 && (
-                                <div className="w-[70px] shrink-0 bg-accent/5 border-l border-accent/20 flex items-center justify-center relative">
+                                <div className="w-[70px] shrink-0 bg-accent/5 border-l border-accent/20 flex items-center justify-center relative self-stretch">
                                   <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-px bg-accent/20" />
                                   <div className="absolute top-2 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-accent/50" />
                                   <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-accent/50" />
@@ -552,7 +595,7 @@ const MomentumMapPage = () => {
                           </div>
                         );
                       })}
-                    </>
+                    </React.Fragment>
                   ))}
 
                   {/* Needs row */}
@@ -574,11 +617,12 @@ const MomentumMapPage = () => {
                   ))}
                 </div>
               </div>
-            </div>
-            </div>
+            </div> {/* end grid flex */}
 
-            {/* Gap Analysis */}
+            {/* Gap Analysis — inside exportable area */}
             <GapAnalysis tp={tp} />
+            </div> {/* end exportRef */}
+            </div> {/* end relative wrapper */}
 
             {/* Footer bar */}
             <div className="flex items-center justify-between pt-6 mt-8 border-t border-border/50">
