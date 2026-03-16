@@ -532,7 +532,7 @@ const MomentumMapPage = () => {
 
             {/* Footer bar */}
             <div className="flex items-center justify-between pt-6 mt-8 border-t border-border/50">
-              <p className="font-serif-pro text-lg italic font-bold text-white">
+              <p className="font-serif-pro text-lg italic font-bold text-foreground">
                 Thread & <span className="text-accent">Stack</span>
               </p>
               <p className="font-sans text-xs text-foreground/50">
