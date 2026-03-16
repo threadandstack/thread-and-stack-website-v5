@@ -521,7 +521,7 @@ const MomentumMapPage = () => {
 
                               {/* Gate column spacer (between stages) */}
                               {si < 4 && (
-                                <div className="w-[70px] shrink-0 bg-accent/5 border-l border-accent/20 flex items-center justify-center relative">
+                                <div className="w-[70px] shrink-0 bg-accent/5 border-l border-accent/20 flex items-center justify-center relative self-stretch">
                                   <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-px bg-accent/20" />
                                   <div className="absolute top-2 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-accent/50" />
                                   <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-accent/50" />
