@@ -595,7 +595,7 @@ const MomentumMapPage = () => {
                           </div>
                         );
                       })}
-                    </>
+                    </React.Fragment>
                   ))}
 
                   {/* Needs row */}
