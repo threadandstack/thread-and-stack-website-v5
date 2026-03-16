@@ -325,7 +325,7 @@ const MomentumMapPage = () => {
                   <p className="font-sans text-[11px] font-semibold tracking-[0.2em] uppercase text-accent mb-2">
                     🚀 Thread & Stack — Original IP
                   </p>
-                  <h1 className="font-serif-pro text-3xl sm:text-4xl font-bold italic leading-tight text-white mb-2">
+                  <h1 className="font-serif-pro text-3xl sm:text-4xl font-bold italic leading-tight text-foreground mb-2">
                     The <span className="text-accent">Momentum</span> Map
                   </h1>
                   <p className="font-sans text-[13px] text-foreground/60 max-w-lg leading-relaxed">
