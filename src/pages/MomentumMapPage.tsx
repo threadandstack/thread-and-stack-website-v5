@@ -388,12 +388,26 @@ const MomentumMapPage = () => {
                         <div className="w-3 h-3 rounded-sm bg-accent/10 border border-accent/40" /> Gate
                       </div>
                     </div>
-                    <button
-                      onClick={clearAll}
-                      className="text-[11px] font-medium text-foreground/60 border border-border rounded-lg px-3 py-1.5 hover:bg-card/60 transition"
-                    >
-                      Clear all
-                    </button>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => exportAs("png")}
+                        className="text-[11px] font-medium text-accent border border-accent/40 rounded-lg px-3 py-1.5 hover:bg-accent/10 transition"
+                      >
+                        Save PNG
+                      </button>
+                      <button
+                        onClick={() => exportAs("pdf")}
+                        className="text-[11px] font-medium text-accent border border-accent/40 rounded-lg px-3 py-1.5 hover:bg-accent/10 transition"
+                      >
+                        Save PDF
+                      </button>
+                      <button
+                        onClick={clearAll}
+                        className="text-[11px] font-medium text-foreground/60 border border-border rounded-lg px-3 py-1.5 hover:bg-card/60 transition"
+                      >
+                        Clear all
+                      </button>
+                    </div>
                   </div>
                 </div>
 
