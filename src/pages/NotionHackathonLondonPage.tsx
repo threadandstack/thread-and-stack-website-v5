@@ -1,13 +1,70 @@
-import { Compass, Linkedin, ArrowRight } from "lucide-react";
+import { useState } from "react";
+import { Compass, Linkedin, ArrowRight, Send } from "lucide-react";
 import { PillButton } from "@/components/ui/pill-button";
+import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 import { Footer } from "@/components/Footer";
+import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+import WhiteLogo from "@/assets/logos/White_TS_Wordmark.svg";
+
+const TEMPLATE_URL = "https://threadandstack.notion.site/c4a1f21560aa42c686c284a4a322f574?v=2329819a37fc4a16b799b32cdfcb7113";
 
 const NotionHackathonLondonPage = () => {
+  const [email, setEmail] = useState("");
+  const [honeypot, setHoneypot] = useState("");
+  const [wantTemplates, setWantTemplates] = useState(false);
+  const [wantCommunity, setWantCommunity] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const { toast } = useToast();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (honeypot) return;
+
+    setIsSubmitting(true);
+    try {
+      const interests: string[] = [];
+      if (wantTemplates) interests.push("future_templates");
+      if (wantCommunity) interests.push("notion_community");
+
+      await supabase.functions.invoke("sync-lead-to-notion", {
+        body: {
+          email,
+          name: "",
+          message: `Hackathon template request. Interests: ${interests.length ? interests.join(", ") : "template only"}`,
+          source: "notion-hackathon-london",
+        },
+      });
+
+      setSubmitted(true);
+      toast({
+        title: "Template link sent! 🚀",
+        description: "Check your inbox — and happy building!",
+      });
+    } catch {
+      toast({
+        title: "Something went wrong",
+        description: "Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <main className="max-w-2xl mx-auto px-6 py-24 space-y-10">
+    <div className="dark min-h-screen bg-background text-foreground">
+      <main className="max-w-2xl mx-auto px-6 py-20 space-y-10">
+        {/* Logo */}
+        <img src={WhiteLogo} alt="Thread & Stack" className="h-7 opacity-80" />
+
         <div className="space-y-2">
-          <p className="text-sm font-sans text-muted-foreground uppercase tracking-widest">Notion Hackathon London · 2026</p>
+          <p className="text-sm font-sans text-muted-foreground uppercase tracking-widest">
+            Notion Hackathon London · 2026
+          </p>
           <h1 className="font-serif-pro text-4xl md:text-5xl font-semibold italic leading-tight">
             Thanks for being there ✨
           </h1>
@@ -15,40 +72,115 @@ const NotionHackathonLondonPage = () => {
 
         <div className="space-y-5 font-sans text-base md:text-lg text-muted-foreground leading-relaxed">
           <p>
-            Thanks so much for attending <span className="text-foreground font-medium">Notion Hackathon London</span>. I'm so excited to have shared space with so many awesome builders and makers — it was genuinely brilliant to meet you all.
+            Thanks so much for attending{" "}
+            <span className="text-foreground font-medium">Notion Hackathon London</span>.
+            It's genuinely brilliant to be here with you all — so many awesome builders and makers in one room.
           </p>
           <p>
-            You can duplicate the <span className="text-foreground font-medium">Agent Knowledge Library</span> template below. Happy building! 🚀
+            You can duplicate the{" "}
+            <span className="text-foreground font-medium">Agent Knowledge Library</span>{" "}
+            template below. Pop in your email and I'll send it straight over. Happy building! 🚀
           </p>
         </div>
 
-        <div className="rounded-xl border bg-card p-6 space-y-3">
-          <h2 className="font-serif-pro text-xl font-semibold italic">Agent Knowledge Library Template</h2>
-          <p className="text-sm text-muted-foreground font-sans">
-            Duplicate this template into your own Notion workspace to get started.
-          </p>
-          <PillButton asChild icon={ArrowRight}>
-            <a href="https://www.notion.so/templates" target="_blank" rel="noopener noreferrer">
-              Duplicate Template
-            </a>
-          </PillButton>
+        {/* Email capture card */}
+        <div className="rounded-xl border bg-card p-6 space-y-5">
+          <h2 className="font-serif-pro text-xl font-semibold italic">
+            Agent Knowledge Library Template
+          </h2>
+
+          {!submitted ? (
+            <form onSubmit={handleSubmit} className="space-y-4 relative">
+              <div className="flex gap-3">
+                <Input
+                  type="email"
+                  placeholder="your@email.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="flex-1 bg-background border-border"
+                />
+                <PillButton type="submit" disabled={isSubmitting} icon={Send}>
+                  {isSubmitting ? "Sending..." : "Send template"}
+                </PillButton>
+              </div>
+
+              <div className="space-y-3">
+                <div className="flex items-start gap-2">
+                  <Checkbox
+                    id="hack-templates"
+                    checked={wantTemplates}
+                    onCheckedChange={(c) => setWantTemplates(c === true)}
+                    className="mt-0.5"
+                  />
+                  <Label
+                    htmlFor="hack-templates"
+                    className="text-sm text-muted-foreground cursor-pointer leading-tight"
+                  >
+                    I'm planning on sharing more templates in the future — tick this if you'd like to hear from me
+                  </Label>
+                </div>
+
+                <div className="flex items-start gap-2">
+                  <Checkbox
+                    id="hack-community"
+                    checked={wantCommunity}
+                    onCheckedChange={(c) => setWantCommunity(c === true)}
+                    className="mt-0.5"
+                  />
+                  <Label
+                    htmlFor="hack-community"
+                    className="text-sm text-muted-foreground cursor-pointer leading-tight"
+                  >
+                    I'm exploring building a community of Notion builders — I'd love to be part of it
+                  </Label>
+                </div>
+              </div>
+
+              {/* Honeypot */}
+              <div className="absolute -left-[9999px]" aria-hidden="true">
+                <Input
+                  type="text"
+                  name="website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
+                />
+              </div>
+            </form>
+          ) : (
+            <div className="space-y-3">
+              <p className="text-sm text-muted-foreground font-sans">
+                The template link has been sent to your inbox. You can also duplicate it directly:
+              </p>
+              <PillButton asChild icon={ArrowRight}>
+                <a href={TEMPLATE_URL} target="_blank" rel="noopener noreferrer">
+                  Open Template
+                </a>
+              </PillButton>
+            </div>
+          )}
         </div>
 
-        <div className="border-t pt-8 space-y-5">
+        {/* Stay connected */}
+        <div className="border-t border-border pt-8 space-y-5">
           <h2 className="font-serif-pro text-2xl font-semibold italic">Let's stay connected</h2>
           <p className="font-sans text-muted-foreground">
             I'd love to connect — whether it's about Notion services, building custom agents, or any other workspace challenge. Let's chat.
           </p>
           <div className="flex flex-wrap gap-4">
             <PillButton variant="indigo" icon={Linkedin} asChild>
-              <a href="https://www.linkedin.com/in/rodgersbrendan/" target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://www.linkedin.com/in/rodgersbrendan/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 Connect on LinkedIn
               </a>
             </PillButton>
             <PillButton variant="outline" icon={Compass} asChild>
-              <a href="/notion-systems">
-                Notion Services
-              </a>
+              <a href="/notion-systems">Notion Services</a>
             </PillButton>
           </div>
         </div>
