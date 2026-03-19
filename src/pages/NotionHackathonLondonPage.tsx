@@ -41,8 +41,8 @@ const NotionHackathonLondonPage = () => {
 
       setSubmitted(true);
       toast({
-        title: "Template link sent! 🚀",
-        description: "Check your inbox — and happy building!",
+        title: "You're in! 🚀",
+        description: "Grab your template below.",
       });
     } catch {
       toast({
@@ -153,13 +153,17 @@ const NotionHackathonLondonPage = () => {
               </div>
             </form>
           ) : (
-            <div className="space-y-3">
+            <div className="space-y-4 text-center py-2">
+              <div className="text-4xl">🎉</div>
+              <h3 className="font-serif-pro text-xl sm:text-2xl font-semibold italic text-foreground">
+                You're all set!
+              </h3>
               <p className="text-sm text-muted-foreground font-sans">
-                The template link has been sent to your inbox. You can also duplicate it directly:
+                Here's your template — duplicate it into your workspace and start building.
               </p>
-              <PillButton asChild icon={ArrowRight} className="w-full sm:w-auto">
+              <PillButton asChild icon={ArrowRight} className="w-full sm:w-auto text-base h-12">
                 <a href={TEMPLATE_URL} target="_blank" rel="noopener noreferrer">
-                  Open Template
+                  Duplicate Template
                 </a>
               </PillButton>
             </div>
