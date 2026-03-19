@@ -40,6 +40,7 @@ import RetainerScaleUpPage from "./pages/RetainerScaleUpPage";
 import WorkWithMePage from "./pages/WorkWithMePage";
 import CometEffectPage from "./pages/CometEffectPage";
 import MomentumMapPage from "./pages/MomentumMapPage";
+import NotionHackathonLondonPage from "./pages/NotionHackathonLondonPage";
 import { CookieConsent } from "./components/CookieConsent";
 
 const queryClient = new QueryClient();
@@ -91,6 +92,7 @@ const App = () => (
           <Route path="/work-with-me" element={<WorkWithMePage />} />
           <Route path="/comet-effect" element={<CometEffectPage />} />
           <Route path="/momentum-map" element={<MomentumMapPage />} />
+          <Route path="/notion-hackathon-london" element={<NotionHackathonLondonPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
