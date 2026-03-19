@@ -41,8 +41,8 @@ const NotionHackathonLondonPage = () => {
 
       setSubmitted(true);
       toast({
-        title: "Template link sent! 🚀",
-        description: "Check your inbox — and happy building!",
+        title: "You're in! 🚀",
+        description: "Grab your template below.",
       });
     } catch {
       toast({
