@@ -59,8 +59,11 @@ const NotionHackathonLondonPage = () => {
   return (
     <div className="dark min-h-screen bg-background text-foreground">
       <main className="max-w-2xl mx-auto px-4 sm:px-6 pt-12 pb-16 sm:py-20 space-y-8 sm:space-y-10">
-        {/* Logo */}
-        <img src={WhiteLogo} alt="Thread & Stack" className="h-12 sm:h-14 opacity-80" />
+        {/* Avatar + Logo */}
+        <div className="flex items-center gap-4">
+          <img src={avatarPhoto} alt="Brendan" className="w-14 h-14 sm:w-16 sm:h-16 rounded-full object-cover border-2 border-border" />
+          <img src={WhiteLogo} alt="Thread & Stack" className="h-12 sm:h-14 opacity-80" />
+        </div>
 
         <div className="space-y-2">
           <p className="text-xs sm:text-sm font-sans text-muted-foreground uppercase tracking-widest">
