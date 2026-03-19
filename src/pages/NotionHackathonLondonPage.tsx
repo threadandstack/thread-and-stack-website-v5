@@ -66,7 +66,7 @@ const NotionHackathonLondonPage = () => {
             Notion Hackathon London · 2026
           </p>
           <h1 className="font-serif-pro text-3xl sm:text-4xl md:text-5xl font-semibold italic leading-tight">
-            Thanks for being there ✨
+            Happy building! 🚀
           </h1>
         </div>
 
