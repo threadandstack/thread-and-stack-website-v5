@@ -77,9 +77,9 @@ const NotionHackathonLondonPage = () => {
             It's genuinely brilliant to be here with you all — so many awesome builders and makers in one room.
           </p>
           <p>
-            You can duplicate the{" "}
+            Grab the{" "}
             <span className="text-foreground font-medium">Agent Knowledge Library</span>{" "}
-            template below. Pop in your email and I'll send it straight over. Happy building! 🚀
+            template below — just drop your email in and it's yours. Happy building! 🚀
           </p>
         </div>
 
@@ -89,7 +89,7 @@ const NotionHackathonLondonPage = () => {
             Agent Knowledge Library Template
           </h2>
           <p className="text-[13px] sm:text-sm text-muted-foreground font-sans leading-relaxed">
-            Pop your email in below and we'll send you the template. I'm hoping to share more templates, agent prompts, and potentially build a community with Notion at its heart — so if you'd like to hear more, tick the boxes. If you just want the template, leave them unticked and it's yours anyway.
+            Drop your email in below to unlock the template. I'm hoping to share more templates, agent prompts, and potentially build a community with Notion at its heart — so if you'd like to hear more, tick the boxes. If you just want the template, leave them unticked and it's yours anyway.
           </p>
 
           {!submitted ? (
@@ -103,8 +103,8 @@ const NotionHackathonLondonPage = () => {
                   required
                   className="flex-1 bg-background border-border h-12 sm:h-10 text-base sm:text-sm"
                 />
-                <PillButton type="submit" disabled={isSubmitting} icon={Send} className="w-full sm:w-auto h-12 sm:h-10">
-                  {isSubmitting ? "Sending..." : "Send template"}
+                <PillButton type="submit" disabled={isSubmitting} icon={Send} className="w-full sm:w-auto h-12 sm:h-10 bg-[hsl(330,85%,55%)] hover:bg-[hsl(330,85%,48%)] text-white">
+                  {isSubmitting ? "Unlocking..." : "Get the template"}
                 </PillButton>
               </div>
 
@@ -161,7 +161,7 @@ const NotionHackathonLondonPage = () => {
               <p className="text-sm text-muted-foreground font-sans">
                 Here's your template — duplicate it into your workspace and start building.
               </p>
-              <PillButton asChild icon={ArrowRight} className="w-full sm:w-auto text-base h-12">
+              <PillButton asChild icon={ArrowRight} className="w-full sm:w-auto text-base h-12 bg-[hsl(330,85%,55%)] hover:bg-[hsl(330,85%,48%)] text-white">
                 <a href={TEMPLATE_URL} target="_blank" rel="noopener noreferrer">
                   Duplicate Template
                 </a>
