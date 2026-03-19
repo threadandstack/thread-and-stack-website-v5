@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Footer } from "@/components/Footer";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import WhiteLogo from "@/assets/logos/White_TS_Wordmark.svg";
+import WhiteLogo from "@/assets/logos/White_TS_Stacked.svg";
 
 const TEMPLATE_URL = "https://threadandstack.notion.site/c4a1f21560aa42c686c284a4a322f574?v=2329819a37fc4a16b799b32cdfcb7113";
 
@@ -59,27 +59,22 @@ const NotionHackathonLondonPage = () => {
     <div className="dark min-h-screen bg-background text-foreground">
       <main className="max-w-2xl mx-auto px-4 sm:px-6 pt-12 pb-16 sm:py-20 space-y-8 sm:space-y-10">
         {/* Logo */}
-        <img src={WhiteLogo} alt="Thread & Stack" className="h-6 sm:h-7 opacity-80" />
+        <img src={WhiteLogo} alt="Thread & Stack" className="h-12 sm:h-14 opacity-80" />
 
         <div className="space-y-2">
           <p className="text-xs sm:text-sm font-sans text-muted-foreground uppercase tracking-widest">
             Notion Hackathon London · 2026
           </p>
           <h1 className="font-serif-pro text-3xl sm:text-4xl md:text-5xl font-semibold italic leading-tight">
-            Thanks for being there ✨
+            Happy building! 🚀
           </h1>
         </div>
 
-        <div className="space-y-4 sm:space-y-5 font-sans text-[15px] sm:text-base md:text-lg text-muted-foreground leading-relaxed">
+        <div className="font-sans text-[15px] sm:text-base md:text-lg text-muted-foreground leading-relaxed">
           <p>
             Thanks so much for attending{" "}
             <span className="text-foreground font-medium">Notion Hackathon London</span>.
-            It's genuinely brilliant to be here with you all — so many awesome builders and makers in one room.
-          </p>
-          <p>
-            Grab the{" "}
-            <span className="text-foreground font-medium">Agent Knowledge Library</span>{" "}
-            template below — just drop your email in and it's yours. Happy building! 🚀
+            It's genuinely brilliant to be here with you all — so many awesome builders and makers in one room. Grab the template below and get started.
           </p>
         </div>
 
@@ -89,7 +84,7 @@ const NotionHackathonLondonPage = () => {
             Agent Knowledge Library Template
           </h2>
           <p className="text-[13px] sm:text-sm text-muted-foreground font-sans leading-relaxed">
-            Drop your email in below to unlock the template. I'm hoping to share more templates, agent prompts, and potentially build a community with Notion at its heart — so if you'd like to hear more, tick the boxes. If you just want the template, leave them unticked and it's yours anyway.
+            Enter your email to unlock the template. I'm planning to share more templates, agent prompts, and build a Notion community — tick the boxes if you're interested, or just grab the template.
           </p>
 
           {!submitted ? (
