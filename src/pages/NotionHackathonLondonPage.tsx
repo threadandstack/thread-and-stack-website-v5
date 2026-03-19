@@ -98,6 +98,7 @@ const NotionHackathonLondonPage = () => {
           <h2 className="font-serif-pro text-lg sm:text-xl font-semibold italic">
             Agent Knowledge Library Template
           </h2>
+          <img src={templatePreview} alt="Agent Knowledge Library preview" className="w-full rounded-lg border border-border" />
           <p className="text-[13px] sm:text-sm text-muted-foreground font-sans leading-relaxed">
             Enter your email to unlock the template. I'm planning to share more templates, agent prompts, and build a Notion community — tick the boxes if you're interested, or just grab the template.
           </p>
