@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Footer } from "@/components/Footer";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import WhiteLogo from "@/assets/logos/White_TS_Wordmark.svg";
+import WhiteLogo from "@/assets/logos/White_TS_Stacked.svg";
 
 const TEMPLATE_URL = "https://threadandstack.notion.site/c4a1f21560aa42c686c284a4a322f574?v=2329819a37fc4a16b799b32cdfcb7113";
 
