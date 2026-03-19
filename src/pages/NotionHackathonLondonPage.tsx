@@ -8,6 +8,7 @@ import { Footer } from "@/components/Footer";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import WhiteLogo from "@/assets/logos/White_TS_Stacked.svg";
+import avatarPhoto from "@/assets/brendan-avatar.png";
 
 const TEMPLATE_URL = "https://threadandstack.notion.site/c4a1f21560aa42c686c284a4a322f574?v=2329819a37fc4a16b799b32cdfcb7113";
 
@@ -58,8 +59,11 @@ const NotionHackathonLondonPage = () => {
   return (
     <div className="dark min-h-screen bg-background text-foreground">
       <main className="max-w-2xl mx-auto px-4 sm:px-6 pt-12 pb-16 sm:py-20 space-y-8 sm:space-y-10">
-        {/* Logo */}
-        <img src={WhiteLogo} alt="Thread & Stack" className="h-12 sm:h-14 opacity-80" />
+        {/* Avatar + Logo */}
+        <div className="flex items-center gap-4">
+          <img src={avatarPhoto} alt="Brendan" className="w-14 h-14 sm:w-16 sm:h-16 rounded-full object-cover border-2 border-border" />
+          <img src={WhiteLogo} alt="Thread & Stack" className="h-12 sm:h-14 opacity-80" />
+        </div>
 
         <div className="space-y-2">
           <p className="text-xs sm:text-sm font-sans text-muted-foreground uppercase tracking-widest">
