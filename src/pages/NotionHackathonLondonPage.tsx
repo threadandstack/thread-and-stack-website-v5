@@ -161,7 +161,7 @@ const NotionHackathonLondonPage = () => {
               <p className="text-sm text-muted-foreground font-sans">
                 Here's your template — duplicate it into your workspace and start building.
               </p>
-              <PillButton asChild icon={ArrowRight} className="w-full sm:w-auto text-base h-12">
+              <PillButton asChild icon={ArrowRight} className="w-full sm:w-auto text-base h-12 bg-[hsl(330,85%,55%)] hover:bg-[hsl(330,85%,48%)] text-white">
                 <a href={TEMPLATE_URL} target="_blank" rel="noopener noreferrer">
                   Duplicate Template
                 </a>
