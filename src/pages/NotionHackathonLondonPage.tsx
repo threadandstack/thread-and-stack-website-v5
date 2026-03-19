@@ -27,18 +27,28 @@ const NotionHackathonLondonPage = () => {
 
     setIsSubmitting(true);
     try {
+      // Store structured data in hackathon_leads table
+      const { error: dbError } = await supabase.from("hackathon_leads").insert({
+        email,
+        source: "notion-hackathon-london",
+        want_future_templates: wantTemplates,
+        want_community: wantCommunity,
+      });
+      if (dbError) throw dbError;
+
+      // Also sync to Notion for CRM visibility
       const interests: string[] = [];
       if (wantTemplates) interests.push("future_templates");
       if (wantCommunity) interests.push("notion_community");
 
-      await supabase.functions.invoke("sync-lead-to-notion", {
+      supabase.functions.invoke("sync-lead-to-notion", {
         body: {
           email,
           name: "",
           message: `Hackathon template request. Interests: ${interests.length ? interests.join(", ") : "template only"}`,
           source: "notion-hackathon-london",
         },
-      });
+      }).catch(() => {}); // fire-and-forget, DB insert is the source of truth
 
       setSubmitted(true);
       toast({

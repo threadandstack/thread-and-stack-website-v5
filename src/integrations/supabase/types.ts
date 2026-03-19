@@ -62,6 +62,33 @@ export type Database = {
         }
         Relationships: []
       }
+      hackathon_leads: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          source: string
+          want_community: boolean
+          want_future_templates: boolean
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          source?: string
+          want_community?: boolean
+          want_future_templates?: boolean
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          source?: string
+          want_community?: boolean
+          want_future_templates?: boolean
+        }
+        Relationships: []
+      }
       leads: {
         Row: {
           created_at: string
