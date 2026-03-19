@@ -57,20 +57,20 @@ const NotionHackathonLondonPage = () => {
 
   return (
     <div className="dark min-h-screen bg-background text-foreground">
-      <main className="max-w-2xl mx-auto px-6 py-20 space-y-10">
+      <main className="max-w-2xl mx-auto px-4 sm:px-6 pt-12 pb-16 sm:py-20 space-y-8 sm:space-y-10">
         {/* Logo */}
-        <img src={WhiteLogo} alt="Thread & Stack" className="h-7 opacity-80" />
+        <img src={WhiteLogo} alt="Thread & Stack" className="h-6 sm:h-7 opacity-80" />
 
         <div className="space-y-2">
-          <p className="text-sm font-sans text-muted-foreground uppercase tracking-widest">
+          <p className="text-xs sm:text-sm font-sans text-muted-foreground uppercase tracking-widest">
             Notion Hackathon London · 2026
           </p>
-          <h1 className="font-serif-pro text-4xl md:text-5xl font-semibold italic leading-tight">
+          <h1 className="font-serif-pro text-3xl sm:text-4xl md:text-5xl font-semibold italic leading-tight">
             Thanks for being there ✨
           </h1>
         </div>
 
-        <div className="space-y-5 font-sans text-base md:text-lg text-muted-foreground leading-relaxed">
+        <div className="space-y-4 sm:space-y-5 font-sans text-[15px] sm:text-base md:text-lg text-muted-foreground leading-relaxed">
           <p>
             Thanks so much for attending{" "}
             <span className="text-foreground font-medium">Notion Hackathon London</span>.
@@ -84,53 +84,53 @@ const NotionHackathonLondonPage = () => {
         </div>
 
         {/* Email capture card */}
-        <div className="rounded-xl border bg-card p-6 space-y-5">
-          <h2 className="font-serif-pro text-xl font-semibold italic">
+        <div className="rounded-xl border bg-card p-4 sm:p-6 space-y-4 sm:space-y-5">
+          <h2 className="font-serif-pro text-lg sm:text-xl font-semibold italic">
             Agent Knowledge Library Template
           </h2>
 
           {!submitted ? (
             <form onSubmit={handleSubmit} className="space-y-4 relative">
-              <div className="flex gap-3">
+              <div className="flex flex-col sm:flex-row gap-3">
                 <Input
                   type="email"
                   placeholder="your@email.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="flex-1 bg-background border-border"
+                  className="flex-1 bg-background border-border h-12 sm:h-10 text-base sm:text-sm"
                 />
-                <PillButton type="submit" disabled={isSubmitting} icon={Send}>
+                <PillButton type="submit" disabled={isSubmitting} icon={Send} className="w-full sm:w-auto h-12 sm:h-10">
                   {isSubmitting ? "Sending..." : "Send template"}
                 </PillButton>
               </div>
 
               <div className="space-y-3">
-                <div className="flex items-start gap-2">
+                <div className="flex items-start gap-2.5">
                   <Checkbox
                     id="hack-templates"
                     checked={wantTemplates}
                     onCheckedChange={(c) => setWantTemplates(c === true)}
-                    className="mt-0.5"
+                    className="mt-0.5 h-5 w-5 sm:h-4 sm:w-4"
                   />
                   <Label
                     htmlFor="hack-templates"
-                    className="text-sm text-muted-foreground cursor-pointer leading-tight"
+                    className="text-[13px] sm:text-sm text-muted-foreground cursor-pointer leading-snug"
                   >
                     I'm planning on sharing more templates in the future — tick this if you'd like to hear from me
                   </Label>
                 </div>
 
-                <div className="flex items-start gap-2">
+                <div className="flex items-start gap-2.5">
                   <Checkbox
                     id="hack-community"
                     checked={wantCommunity}
                     onCheckedChange={(c) => setWantCommunity(c === true)}
-                    className="mt-0.5"
+                    className="mt-0.5 h-5 w-5 sm:h-4 sm:w-4"
                   />
                   <Label
                     htmlFor="hack-community"
-                    className="text-sm text-muted-foreground cursor-pointer leading-tight"
+                    className="text-[13px] sm:text-sm text-muted-foreground cursor-pointer leading-snug"
                   >
                     I'm exploring building a community of Notion builders — I'd love to be part of it
                   </Label>
@@ -154,7 +154,7 @@ const NotionHackathonLondonPage = () => {
               <p className="text-sm text-muted-foreground font-sans">
                 The template link has been sent to your inbox. You can also duplicate it directly:
               </p>
-              <PillButton asChild icon={ArrowRight}>
+              <PillButton asChild icon={ArrowRight} className="w-full sm:w-auto">
                 <a href={TEMPLATE_URL} target="_blank" rel="noopener noreferrer">
                   Open Template
                 </a>
@@ -164,13 +164,13 @@ const NotionHackathonLondonPage = () => {
         </div>
 
         {/* Stay connected */}
-        <div className="border-t border-border pt-8 space-y-5">
-          <h2 className="font-serif-pro text-2xl font-semibold italic">Let's stay connected</h2>
-          <p className="font-sans text-muted-foreground">
+        <div className="border-t border-border pt-6 sm:pt-8 space-y-4 sm:space-y-5">
+          <h2 className="font-serif-pro text-xl sm:text-2xl font-semibold italic">Let's stay connected</h2>
+          <p className="font-sans text-sm sm:text-base text-muted-foreground">
             I'd love to connect — whether it's about Notion services, building custom agents, or any other workspace challenge. Let's chat.
           </p>
-          <div className="flex flex-wrap gap-4">
-            <PillButton variant="indigo" icon={Linkedin} asChild>
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+            <PillButton variant="indigo" icon={Linkedin} asChild className="w-full sm:w-auto">
               <a
                 href="https://www.linkedin.com/in/rodgersbrendan/"
                 target="_blank"
@@ -179,7 +179,7 @@ const NotionHackathonLondonPage = () => {
                 Connect on LinkedIn
               </a>
             </PillButton>
-            <PillButton variant="outline" icon={Compass} asChild>
+            <PillButton variant="outline" icon={Compass} asChild className="w-full sm:w-auto">
               <a href="/notion-systems">Notion Services</a>
             </PillButton>
           </div>
