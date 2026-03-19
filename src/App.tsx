@@ -92,6 +92,7 @@ const App = () => (
           <Route path="/work-with-me" element={<WorkWithMePage />} />
           <Route path="/comet-effect" element={<CometEffectPage />} />
           <Route path="/momentum-map" element={<MomentumMapPage />} />
+          <Route path="/notion-hackathon-london" element={<NotionHackathonLondonPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
