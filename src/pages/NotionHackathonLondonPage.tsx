@@ -88,6 +88,9 @@ const NotionHackathonLondonPage = () => {
           <h2 className="font-serif-pro text-lg sm:text-xl font-semibold italic">
             Agent Knowledge Library Template
           </h2>
+          <p className="text-[13px] sm:text-sm text-muted-foreground font-sans leading-relaxed">
+            Pop your email in below and we'll send you the template. I'm hoping to share more templates, agent prompts, and potentially build a community with Notion at its heart — so if you'd like to hear more, tick the boxes. If you just want the template, leave them unticked and it's yours anyway.
+          </p>
 
           {!submitted ? (
             <form onSubmit={handleSubmit} className="space-y-4 relative">
