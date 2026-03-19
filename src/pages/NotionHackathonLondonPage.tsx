@@ -9,6 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import WhiteLogo from "@/assets/logos/White_TS_Stacked.svg";
 import avatarPhoto from "@/assets/brendan-avatar.png";
+import templatePreview from "@/assets/hackathon-template-preview.png";
 
 const TEMPLATE_URL = "https://threadandstack.notion.site/c4a1f21560aa42c686c284a4a322f574?v=2329819a37fc4a16b799b32cdfcb7113";
 
@@ -97,6 +98,7 @@ const NotionHackathonLondonPage = () => {
           <h2 className="font-serif-pro text-lg sm:text-xl font-semibold italic">
             Agent Knowledge Library Template
           </h2>
+          <img src={templatePreview} alt="Agent Knowledge Library preview" className="w-full rounded-lg border border-border" />
           <p className="text-[13px] sm:text-sm text-muted-foreground font-sans leading-relaxed">
             Enter your email to unlock the template. I'm planning to share more templates, agent prompts, and build a Notion community — tick the boxes if you're interested, or just grab the template.
           </p>
