@@ -103,8 +103,8 @@ const NotionHackathonLondonPage = () => {
                   required
                   className="flex-1 bg-background border-border h-12 sm:h-10 text-base sm:text-sm"
                 />
-                <PillButton type="submit" disabled={isSubmitting} icon={Send} className="w-full sm:w-auto h-12 sm:h-10">
-                  {isSubmitting ? "Sending..." : "Send template"}
+                <PillButton type="submit" disabled={isSubmitting} icon={Send} className="w-full sm:w-auto h-12 sm:h-10 bg-[hsl(330,85%,55%)] hover:bg-[hsl(330,85%,48%)] text-white">
+                  {isSubmitting ? "Unlocking..." : "Get the template"}
                 </PillButton>
               </div>
 
