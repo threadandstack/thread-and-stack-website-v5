@@ -70,16 +70,11 @@ const NotionHackathonLondonPage = () => {
           </h1>
         </div>
 
-        <div className="space-y-4 sm:space-y-5 font-sans text-[15px] sm:text-base md:text-lg text-muted-foreground leading-relaxed">
+        <div className="font-sans text-[15px] sm:text-base md:text-lg text-muted-foreground leading-relaxed">
           <p>
             Thanks so much for attending{" "}
             <span className="text-foreground font-medium">Notion Hackathon London</span>.
-            It's genuinely brilliant to be here with you all — so many awesome builders and makers in one room.
-          </p>
-          <p>
-            Grab the{" "}
-            <span className="text-foreground font-medium">Agent Knowledge Library</span>{" "}
-            template below — just drop your email in and it's yours. Happy building! 🚀
+            It's genuinely brilliant to be here with you all — so many awesome builders and makers in one room. Grab the template below and get started.
           </p>
         </div>
 
