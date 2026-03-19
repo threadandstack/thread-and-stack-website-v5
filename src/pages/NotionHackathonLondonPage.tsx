@@ -77,9 +77,9 @@ const NotionHackathonLondonPage = () => {
             It's genuinely brilliant to be here with you all — so many awesome builders and makers in one room.
           </p>
           <p>
-            You can duplicate the{" "}
+            Grab the{" "}
             <span className="text-foreground font-medium">Agent Knowledge Library</span>{" "}
-            template below. Pop in your email and I'll send it straight over. Happy building! 🚀
+            template below — just drop your email in and it's yours. Happy building! 🚀
           </p>
         </div>
 
