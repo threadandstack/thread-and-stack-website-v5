@@ -11,7 +11,7 @@ import notionAdvanced from "@/assets/notion-advanced.png";
 import notionWorkflows from "@/assets/notion-workflows.png";
 import notionEssentials from "@/assets/notion-essentials.png";
 import notionAmbassadorBlack from "@/assets/notion-ambassador-black.png";
-import heroImage from "@/assets/notion-hero-bg.png";
+import heroImage from "@/assets/brendan-hackathon.jpg";
 import notionCmsBuild from "@/assets/notion-cms-build.png";
 import notionCustomAgents from "@/assets/notion-custom-agents.png";
 
