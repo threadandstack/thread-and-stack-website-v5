@@ -77,7 +77,7 @@ const NotionSystemsPage = () => {
           <img
             src={heroImage}
             alt="Brendan presenting at Notion Hackathon London"
-            className="absolute inset-0 w-full h-full object-cover scale-[1.8] origin-[85%_25%]"
+            className="absolute inset-0 w-full h-full object-cover scale-[1.8] origin-[95%_25%]"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
           <div className="absolute bottom-6 left-6 z-10">
