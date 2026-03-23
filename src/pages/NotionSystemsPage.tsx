@@ -11,7 +11,7 @@ import notionAdvanced from "@/assets/notion-advanced.png";
 import notionWorkflows from "@/assets/notion-workflows.png";
 import notionEssentials from "@/assets/notion-essentials.png";
 import notionAmbassadorBlack from "@/assets/notion-ambassador-black.png";
-import heroImage from "@/assets/notion-hero-bg.png";
+import heroImage from "@/assets/brendan-hackathon.jpg";
 import notionCmsBuild from "@/assets/notion-cms-build.png";
 import notionCustomAgents from "@/assets/notion-custom-agents.png";
 
@@ -76,8 +76,9 @@ const NotionSystemsPage = () => {
         <div className="relative h-[60vh]">
           <img
             src={heroImage}
-            alt="Brendan working on laptop on the street"
+            alt="Brendan presenting at Notion Hackathon London"
             className="absolute inset-0 w-full h-full object-cover"
+            style={{ objectPosition: "70% 30%" }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
           <div className="absolute bottom-6 left-6 z-10">
@@ -110,8 +111,9 @@ const NotionSystemsPage = () => {
       <section className="relative hidden md:flex min-h-[90vh] items-end">
         <img
           src={heroImage}
-          alt="Brendan working on laptop on the street"
-          className="absolute inset-0 w-full h-full object-cover object-center"
+          alt="Brendan presenting at Notion Hackathon London"
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{ objectPosition: "65% 25%" }}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
