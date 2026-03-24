@@ -203,6 +203,10 @@ const GGFProposalPage = () => {
             <strong>More than 3 pages in total requires a rescope.</strong> If the working group decides they'd like additional pages, sections, or functionality beyond what's described here, that's absolutely possible — it just means a revised proposal before work continues.
           </Caveat>
 
+          <Caveat>
+            <strong>Audio content</strong> is included where files are provided in a standard format (MP3, M4A). Editing, transcription, or production of audio is not in scope and would require a separate conversation.
+          </Caveat>
+
           <div className="h-px bg-border my-10" />
 
           {/* Section 04 */}
