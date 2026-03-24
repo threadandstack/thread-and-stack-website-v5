@@ -88,9 +88,18 @@ const SectionLabel = ({ num, title }: { num: string; title: string }) => (
   </div>
 );
 
-// Need to find the component start
+const GGFProposalPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
+
+    const metaRobots = document.createElement('meta');
+    metaRobots.name = 'robots';
+    metaRobots.content = 'noindex, nofollow';
+    document.head.appendChild(metaRobots);
+
+    return () => {
+      document.head.removeChild(metaRobots);
+    };
   }, []);
 
   const handleDownload = () => {
