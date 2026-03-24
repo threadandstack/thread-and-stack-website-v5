@@ -108,56 +108,13 @@ const GGFProposalPage = () => {
       </div>
 
       <div className="bg-background w-full max-w-[780px] rounded-2xl shadow-[0_8px_40px_rgba(0,0,0,0.10)] overflow-hidden print:shadow-none print:rounded-none print:max-w-full">
-        {/* Header Variant A — Indigo/Blue background */}
-        <div className="bg-accent text-white px-14 pt-[52px] pb-11 max-sm:px-7 max-sm:pt-9 max-sm:pb-8">
-          <div className="flex items-center gap-3 mb-2">
-            <img src={WhiteStacked} alt="Thread & Stack" className="h-8" />
-            <span className="text-white/40">·</span>
-            <span className="font-sans text-[11px] font-semibold tracking-[0.12em] uppercase text-primary">Project Proposal</span>
-          </div>
-          <p className="font-sans text-[10px] font-bold tracking-[0.15em] uppercase text-white/40 mb-1">Option A — Blue background</p>
-          <h1 className="font-serif-pro text-[42px] max-sm:text-[32px] italic font-bold leading-[1.18] text-white mb-5">
-            A storytelling site that does the{" "}
-            <span className="text-primary">work</span>{" "}
-            justice.
-          </h1>
-          <p className="font-sans text-[15px] text-white/60 leading-relaxed max-w-[520px]">
-            A scrollable microsite for the Gender Justice working group — photos, voices, narrative. Built fast, handed over cleanly, no ongoing dependency on me.
-          </p>
-          <div className="mt-6 font-sans text-[12px] text-white/40 leading-[1.8]">
-            Prepared for: Ursula, Global Green Grants Fund · March 2026 · Ref: Gender Justice Microsite
-          </div>
-        </div>
-
-        {/* Header Variant B — Black background with blue/indigo accents */}
-        <div className="bg-primary text-primary-foreground px-14 pt-[52px] pb-11 max-sm:px-7 max-sm:pt-9 max-sm:pb-8 border-t-4 border-accent/30">
-          <div className="flex items-center gap-3 mb-2">
-            <img src={WhiteStacked} alt="Thread & Stack" className="h-8" />
-            <span className="text-primary-foreground/40">·</span>
-            <span className="font-sans text-[11px] font-semibold tracking-[0.12em] uppercase text-accent">Project Proposal</span>
-          </div>
-          <p className="font-sans text-[10px] font-bold tracking-[0.15em] uppercase text-primary-foreground/30 mb-1">Option B — Black + Blue</p>
-          <h1 className="font-serif-pro text-[42px] max-sm:text-[32px] italic font-bold leading-[1.18] text-primary-foreground mb-5">
-            A storytelling site that does the{" "}
-            <span className="text-accent">work</span>{" "}
-            justice.
-          </h1>
-          <p className="font-sans text-[15px] text-primary-foreground/60 leading-relaxed max-w-[520px]">
-            A scrollable microsite for the Gender Justice working group — photos, voices, narrative. Built fast, handed over cleanly, no ongoing dependency on me.
-          </p>
-          <div className="mt-6 font-sans text-[12px] text-primary-foreground/40 leading-[1.8]">
-            Prepared for: Ursula, Global Green Grants Fund · March 2026 · Ref: Gender Justice Microsite
-          </div>
-        </div>
-
-        {/* Header Variant C — Black background with orange accents */}
-        <div className="bg-primary text-primary-foreground px-14 pt-[52px] pb-11 max-sm:px-7 max-sm:pt-9 max-sm:pb-8 border-t-4 border-[#FF6200]/30">
-          <div className="flex items-center gap-3 mb-2">
+        {/* Header */}
+        <div className="bg-primary text-primary-foreground px-14 pt-[52px] pb-11 max-sm:px-7 max-sm:pt-9 max-sm:pb-8">
+          <div className="flex items-center gap-3 mb-6">
             <img src={WhiteStacked} alt="Thread & Stack" className="h-8" />
             <span className="text-primary-foreground/40">·</span>
             <span className="font-sans text-[11px] font-semibold tracking-[0.12em] uppercase text-[#FF6200]">Project Proposal</span>
           </div>
-          <p className="font-sans text-[10px] font-bold tracking-[0.15em] uppercase text-primary-foreground/30 mb-1">Option C — Black + Orange</p>
           <h1 className="font-serif-pro text-[42px] max-sm:text-[32px] italic font-bold leading-[1.18] text-primary-foreground mb-5">
             A storytelling site that does the{" "}
             <span className="text-[#FF6200]">work</span>{" "}
