@@ -309,6 +309,18 @@ const GGFProposalPage = () => {
                     <span className="font-sans text-[15px] font-bold text-primary">~$50</span>
                   </td>
                 </tr>
+                <tr className="bg-card border-t border-border">
+                  <td className="px-5 py-4 align-top">
+                    <span className="font-serif-pro italic text-[15px] font-semibold text-primary">Taxes</span>
+                    <div className="text-xs text-muted-foreground mt-0.5">Applicable to UK-based supplier</div>
+                  </td>
+                  <td className="px-5 py-4 text-[13.5px] text-foreground align-top leading-[1.55] max-sm:hidden">
+                    Brendan Rodgers / Thread & Stack is not currently VAT registered. No VAT is applicable to this invoice. If your organisation requires a formal tax statement for compliance purposes, this can be provided on request.
+                  </td>
+                  <td className="px-5 py-4 align-top text-right">
+                    <span className="font-sans text-[15px] font-bold text-primary">—</span>
+                  </td>
+                </tr>
               </tbody>
               <tfoot>
                 <tr className="bg-primary text-primary-foreground">
