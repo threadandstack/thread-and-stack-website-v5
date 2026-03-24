@@ -83,8 +83,8 @@ const dateBadgeCls = (style: string) => {
 
 const SectionLabel = ({ num, title }: { num: string; title: string }) => (
   <div className="flex items-center gap-3 mb-5">
-    <span className="font-sans text-[11px] font-bold tracking-wider text-accent">{num}</span>
-    <span className="font-serif-pro text-[22px] italic font-semibold text-primary">{title}</span>
+    <span className="font-sans text-[13px] font-bold tracking-wider text-accent">{num}</span>
+    <span className="font-serif-pro text-[30px] italic font-semibold text-primary">{title}</span>
   </div>
 );
 
