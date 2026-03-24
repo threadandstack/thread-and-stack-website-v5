@@ -113,12 +113,12 @@ const GGFProposalPage = () => {
           <div className="flex items-center gap-3 mb-2">
             <img src={WhiteStacked} alt="Thread & Stack" className="h-8" />
             <span className="text-white/40">·</span>
-            <span className="font-sans text-[11px] font-semibold tracking-[0.12em] uppercase text-white/70">Project Proposal</span>
+            <span className="font-sans text-[11px] font-semibold tracking-[0.12em] uppercase text-primary">Project Proposal</span>
           </div>
           <p className="font-sans text-[10px] font-bold tracking-[0.15em] uppercase text-white/40 mb-1">Option A — Blue background</p>
           <h1 className="font-serif-pro text-[42px] max-sm:text-[32px] italic font-bold leading-[1.18] text-white mb-5">
             A storytelling site that does the{" "}
-            <span className="text-white/80">work</span>{" "}
+            <span className="text-primary">work</span>{" "}
             justice.
           </h1>
           <p className="font-sans text-[15px] text-white/60 leading-relaxed max-w-[520px]">
