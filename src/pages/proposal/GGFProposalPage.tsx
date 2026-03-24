@@ -154,6 +154,9 @@ const GGFProposalPage = () => {
             <p className="text-[15px] leading-[1.7] text-foreground mt-2.5">
               Once it launches, anyone on your team can update it. No agency. No back-and-forth. No two-and-a-half years.
             </p>
+            <p className="text-[15px] leading-[1.7] text-foreground mt-2.5">
+              Analytics are set up on launch so you can see how many people visit, where they come from, and how they move through the site — without needing a developer to interpret it.
+            </p>
           </div>
 
           <div className="h-px bg-border my-10" />
