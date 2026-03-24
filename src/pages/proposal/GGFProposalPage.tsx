@@ -115,7 +115,7 @@ const GGFProposalPage = () => {
             <span className="text-primary-foreground/40">·</span>
             <span className="font-sans text-[11px] font-semibold tracking-[0.12em] uppercase text-[#FF6200]">Project Proposal</span>
           </div>
-          <h1 className="font-serif-pro text-[42px] max-sm:text-[32px] italic font-bold leading-[1.18] text-primary-foreground mb-5">
+          <h1 className="font-serif-pro text-[56px] max-sm:text-[42px] italic font-bold leading-[1.18] text-primary-foreground mb-5">
             A storytelling site that does the{" "}
             <span className="text-[#FF6200]">work</span>{" "}
             justice.
