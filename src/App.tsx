@@ -41,6 +41,7 @@ import WorkWithMePage from "./pages/WorkWithMePage";
 import CometEffectPage from "./pages/CometEffectPage";
 import MomentumMapPage from "./pages/MomentumMapPage";
 import NotionHackathonLondonPage from "./pages/NotionHackathonLondonPage";
+import GGFProposalPage from "./pages/proposal/GGFProposalPage";
 import { CookieConsent } from "./components/CookieConsent";
 
 const queryClient = new QueryClient();
