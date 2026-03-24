@@ -118,7 +118,7 @@ Platform security & data:
 • Certifications — The platform is SOC 2 Type II certified, GDPR compliant, and ISO 27001 certified.
 • Workspace transfer — The site will initially be built inside my Thread & Stack workspace. On handover, it's transferred into a GGF-owned Lovable workspace. Your team is invited with full access, and from that point everything is yours — I'm no longer involved unless you want me to be.
 
-Payment schedule: 50% on project kick-off, 50% on delivery. Invoices are provided in advance of each payment so you have everything you need for internal approvals.
+Payment schedule: 50% on project kick-off, 50% on delivery. Invoices are provided in advance of each payment so you have everything you need for internal approvals. A 20% late charge applies to any payment not received within 30 days of invoicing.
 
 ────────────────────────────────────────────
 

@@ -362,7 +362,7 @@ const GGFProposalPage = () => {
               <div className="flex-1">
                 <div className="font-sans text-[11px] font-bold uppercase tracking-[0.09em] text-accent mb-1.5">Payment schedule</div>
                 <div className="font-sans text-[13.5px] text-foreground leading-[1.65]">
-                  <strong className="text-primary">50% on project kick-off, 50% on delivery.</strong> Invoices are provided in advance of each payment so you have everything you need for internal approvals.
+                  <strong className="text-primary">50% on project kick-off, 50% on delivery.</strong> Invoices are provided in advance of each payment so you have everything you need for internal approvals. A 20% late charge applies to any payment not received within 30 days of invoicing.
                 </div>
               </div>
             </div>
