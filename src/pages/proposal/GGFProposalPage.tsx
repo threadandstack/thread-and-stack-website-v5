@@ -38,6 +38,7 @@ const SCOPE_ITEMS = [
   "Up to 2 additional sub-pages (e.g. About the Working Group, Contact / Get Involved)",
   "Navigation, footer, GGF branding integration, and accessibility basics",
   "Mobile-responsive layout throughout",
+  "Audio content integration — voice recordings or clips provided by partners, embedded within the storytelling flow",
 ];
 
 const TIMELINE = [
