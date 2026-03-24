@@ -212,7 +212,7 @@ const GGFProposalPage = () => {
           {/* Section 04 */}
           <SectionLabel num="04" title="How the timeline works" />
           <p className="text-[15px] leading-[1.7] text-foreground mb-4">
-            Rather than fixing a calendar date here, the timeline below runs from <strong>Day 1</strong> — the agreed project kick-off following our scoping call. A launch date of 15 April was discussed in our initial conversation; given where we are now, we'll confirm whether that's still achievable on the scoping call and set the clock from there.
+            Rather than fixing a calendar date here, the timeline below runs from <strong>Day 1</strong> — the agreed project kick-off following our scoping call. A launch date of 30 April was referenced in the project brief; given where we are now, we'll confirm whether that's still achievable on the scoping call and set the clock from there.
           </p>
           <p className="text-[15px] leading-[1.7] text-foreground mb-4">
             The phases marked <strong className="text-[#B34A00]">GGF to action</strong> are where the project depends on your team. Any delays on those phases will push the delivery date forward by the same amount.
