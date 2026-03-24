@@ -38,6 +38,7 @@ const SCOPE_ITEMS = [
   "Up to 2 additional sub-pages (e.g. About the Working Group, Contact / Get Involved)",
   "Navigation, footer, GGF branding integration, and accessibility basics",
   "Mobile-responsive layout throughout",
+  "Audio content integration — voice recordings or clips provided by partners, embedded within the storytelling flow",
 ];
 
 const TIMELINE = [
@@ -46,8 +47,9 @@ const TIMELINE = [
   { title: "Design sign-off", date: "By Day 9", dateStyle: "amber" as const, body: "Consolidated feedback from your single point of contact. One direction confirmed. This is the point of no return for the visual approach — amends after this stage go into the build, not the design phase.", owner: "ggf" as const },
   { title: "Build — version one", date: "Days 10–17", dateStyle: "blue" as const, body: "Full site built on Lovable using agreed design and content. All pages, navigation, responsive layout, and branding applied. No external access yet.", owner: "ts" as const },
   { title: "Staging review + amends", date: "Days 18–21", dateStyle: "amber" as const, body: "Private staging link shared with you. Two rounds of consolidated amends included. Feedback must come from a single contact — this is where the working group nomination really matters.", owner: "both" as const },
-  { title: "Final sign-off", date: "By Day 22", dateStyle: "amber" as const, body: "Written confirmation that the site is approved and ready to go live. Any last-minute copy corrections handled at this point — structural changes at this stage may affect the launch date.", owner: "ggf" as const },
-  { title: "Launch + handover", date: "Day 24", dateStyle: "green" as const, body: "Site goes live. Two one-hour training sessions delivered on how to make changes and updates using Lovable. Simple explainer documentation provided for reference. Full editing access transferred to your team. Thirty-day aftercare period begins.", owner: "both" as const, isLaunch: true },
+  { title: "Pre-launch testing", date: "Day 22–23", dateStyle: "blue" as const, body: "Full cross-browser and mobile testing completed before anything goes public. Any issues identified at this stage are resolved before sign-off is requested.", owner: "ts" as const },
+  { title: "Final sign-off", date: "By Day 24", dateStyle: "amber" as const, body: "Written confirmation that the site is approved and ready to go live. Any last-minute copy corrections handled at this point — structural changes at this stage may affect the launch date.", owner: "ggf" as const },
+  { title: "Launch + handover", date: "Day 26", dateStyle: "green" as const, body: "Site goes live. Two one-hour training sessions delivered on how to make changes and updates using Lovable. Simple explainer documentation provided for reference. Full editing access transferred to your team. Thirty-day aftercare period begins.", owner: "both" as const, isLaunch: true },
 ];
 
 const NEXT_STEPS = [
@@ -152,6 +154,9 @@ const GGFProposalPage = () => {
             <p className="text-[15px] leading-[1.7] text-foreground mt-2.5">
               Once it launches, anyone on your team can update it. No agency. No back-and-forth. No two-and-a-half years.
             </p>
+            <p className="text-[15px] leading-[1.7] text-foreground mt-2.5">
+              Analytics are set up on launch so you can see how many people visit, where they come from, and how they move through the site — without needing a developer to interpret it.
+            </p>
           </div>
 
           <div className="h-px bg-border my-10" />
@@ -198,12 +203,16 @@ const GGFProposalPage = () => {
             <strong>More than 3 pages in total requires a rescope.</strong> If the working group decides they'd like additional pages, sections, or functionality beyond what's described here, that's absolutely possible — it just means a revised proposal before work continues.
           </Caveat>
 
+          <Caveat>
+            <strong>Audio content</strong> is included where files are provided in a standard format (MP3, M4A). Editing, transcription, or production of audio is not in scope and would require a separate conversation.
+          </Caveat>
+
           <div className="h-px bg-border my-10" />
 
           {/* Section 04 */}
           <SectionLabel num="04" title="How the timeline works" />
           <p className="text-[15px] leading-[1.7] text-foreground mb-4">
-            Rather than fixing a calendar date here, the timeline below runs from <strong>Day 1</strong> — the agreed project kick-off following our scoping call. A launch date of 15 April was discussed in our initial conversation; given where we are now, we'll confirm whether that's still achievable on the scoping call and set the clock from there.
+            Rather than fixing a calendar date here, the timeline below runs from <strong>Day 1</strong> — the agreed project kick-off following our scoping call. A launch date of 30 April was referenced in the project brief; given where we are now, we'll confirm whether that's still achievable on the scoping call and set the clock from there.
           </p>
           <p className="text-[15px] leading-[1.7] text-foreground mb-4">
             The phases marked <strong className="text-[#B34A00]">GGF to action</strong> are where the project depends on your team. Any delays on those phases will push the delivery date forward by the same amount.
@@ -298,6 +307,18 @@ const GGFProposalPage = () => {
                   </td>
                   <td className="px-5 py-4 align-top text-right">
                     <span className="font-sans text-[15px] font-bold text-primary">~$50</span>
+                  </td>
+                </tr>
+                <tr className="bg-card border-t border-border">
+                  <td className="px-5 py-4 align-top">
+                    <span className="font-serif-pro italic text-[15px] font-semibold text-primary">Taxes</span>
+                    <div className="text-xs text-muted-foreground mt-0.5">Applicable to UK-based supplier</div>
+                  </td>
+                  <td className="px-5 py-4 text-[13.5px] text-foreground align-top leading-[1.55] max-sm:hidden">
+                    Brendan Rodgers / Thread & Stack is not currently VAT registered. No VAT is applicable to this invoice. If your organisation requires a formal tax statement for compliance purposes, this can be provided on request.
+                  </td>
+                  <td className="px-5 py-4 align-top text-right">
+                    <span className="font-sans text-[15px] font-bold text-primary">—</span>
                   </td>
                 </tr>
               </tbody>

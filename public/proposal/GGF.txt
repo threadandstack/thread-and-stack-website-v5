@@ -16,6 +16,8 @@ It's built for emotional resonance first. Photos paired with quotes and narrativ
 
 Once it launches, anyone on your team can update it. No agency. No back-and-forth. No two-and-a-half years.
 
+Analytics are set up on launch so you can see how many people visit, where they come from, and how they move through the site — without needing a developer to interpret it.
+
 ────────────────────────────────────────────
 
 02 — How we get there
@@ -46,14 +48,17 @@ Included in this proposal:
 ✓ Up to 2 additional sub-pages (e.g. About the Working Group, Contact / Get Involved)
 ✓ Navigation, footer, GGF branding integration, and accessibility basics
 ✓ Mobile-responsive layout throughout
+✓ Audio content integration — voice recordings or clips provided by partners, embedded within the storytelling flow
 
 Note: More than 3 pages in total requires a rescope. If the working group decides they'd like additional pages, sections, or functionality beyond what's described here, that's absolutely possible — it just means a revised proposal before work continues.
+
+Note: Audio content is included where files are provided in a standard format (MP3, M4A). Editing, transcription, or production of audio is not in scope and would require a separate conversation.
 
 ────────────────────────────────────────────
 
 04 — How the timeline works
 
-Rather than fixing a calendar date here, the timeline below runs from Day 1 — the agreed project kick-off following our scoping call. A launch date of 15 April was discussed in our initial conversation; given where we are now, we'll confirm whether that's still achievable on the scoping call and set the clock from there.
+Rather than fixing a calendar date here, the timeline below runs from Day 1 — the agreed project kick-off following our scoping call. A launch date of 30 April was referenced in the project brief; given where we are now, we'll confirm whether that's still achievable on the scoping call and set the clock from there.
 
 The phases marked "GGF to action" are where the project depends on your team. Any delays on those phases will push the delivery date forward by the same amount.
 
@@ -76,10 +81,13 @@ Full site built on Lovable using agreed design and content. All pages, navigatio
 Staging review + amends — Days 18–21 [Both]
 Private staging link shared with you. Two rounds of consolidated amends included. Feedback must come from a single contact — this is where the working group nomination really matters.
 
-Final sign-off — By Day 22 [GGF to action]
+Pre-launch testing — Day 22–23 [Thread & Stack]
+Full cross-browser and mobile testing completed before anything goes public. Any issues identified at this stage are resolved before sign-off is requested.
+
+Final sign-off — By Day 24 [GGF to action]
 Written confirmation that the site is approved and ready to go live. Any last-minute copy corrections handled at this point — structural changes at this stage may affect the launch date.
 
-Launch + handover — Day 24 [Both]
+Launch + handover — Day 26 [Both]
 Site goes live. Two one-hour training sessions delivered on how to make changes and updates using Lovable. Simple explainer documentation provided for reference. Full editing access transferred to your team. Thirty-day aftercare period begins.
 
 ────────────────────────────────────────────
@@ -96,6 +104,9 @@ Platform — Lovable (Year 1 subscription) — ~$289
 
 Domain name (Year 1 registration) — ~$50
 Custom URL for the microsite. Renewed directly by GGF from Year 2.
+
+Taxes (Applicable to UK-based supplier) — N/A
+Brendan Rodgers / Thread & Stack is not currently VAT registered. No VAT is applicable to this invoice. If your organisation requires a formal tax statement for compliance purposes, this can be provided on request.
 
 TOTAL — ~$5,000
 
