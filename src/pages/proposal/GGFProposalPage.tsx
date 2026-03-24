@@ -88,7 +88,7 @@ const SectionLabel = ({ num, title }: { num: string; title: string }) => (
   </div>
 );
 
-const GGFProposalPage = () => {
+// Need to find the component start
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
