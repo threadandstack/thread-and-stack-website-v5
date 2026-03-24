@@ -1,0 +1,126 @@
+THREAD & STACK · PROJECT PROPOSAL
+
+A storytelling site that does the work justice.
+
+A scrollable microsite for the Gender Justice working group — photos, voices, narrative. Built fast, handed over cleanly, no ongoing dependency on me.
+
+Prepared for: Ursula, Global Green Grants Fund · March 2026 · Ref: Gender Justice Microsite
+
+────────────────────────────────────────────
+
+01 — What you're getting
+
+A standalone scrollable microsite that tells the story of your Gender Justice working group's impact. The site lives at its own URL, separate from GGF's main website, so it doesn't touch your existing infrastructure at all.
+
+It's built for emotional resonance first. Photos paired with quotes and narrative text, flowing naturally as the reader scrolls. No maps, no complex functionality — just the story, presented with care and clarity, at a pace the reader controls.
+
+Once it launches, anyone on your team can update it. No agency. No back-and-forth. No two-and-a-half years.
+
+────────────────────────────────────────────
+
+02 — How we get there
+
+01. Foundations
+You share the content folder (photos, quotes, written narrative) and confirm branding requirements with your comms director. One point of contact from the working group is nominated to consolidate feedback.
+
+02. Design concepts
+I produce two visual directions on a shared design board where you can leave comments directly. We agree on a direction before any build begins.
+
+03. Build & amends
+I build the site using Lovable, an AI-assisted platform that lets me move quickly without compromising quality. Two rounds of amends are included to refine it.
+
+04. Staging & sign-off
+A live but private version goes up for your review before anything is made public. Final edits, then launch.
+
+05. Handover
+Full editing access transferred to your team, along with two one-hour training sessions on how to use Lovable to make changes and update the site, plus simple written explainer documentation you can refer back to. Thirty-day aftercare period included — I'm available for questions.
+
+────────────────────────────────────────────
+
+03 — What's in scope
+
+Before build begins, we'll confirm a simple site map together — typically a homepage scroll plus one or two supporting pages. That confirmation is a shared starting point, not an afterthought, because scope is what keeps the budget and timeline clean.
+
+Included in this proposal:
+✓ A scrolling homepage — the main storytelling journey
+✓ Up to 2 additional sub-pages (e.g. About the Working Group, Contact / Get Involved)
+✓ Navigation, footer, GGF branding integration, and accessibility basics
+✓ Mobile-responsive layout throughout
+
+Note: More than 3 pages in total requires a rescope. If the working group decides they'd like additional pages, sections, or functionality beyond what's described here, that's absolutely possible — it just means a revised proposal before work continues.
+
+────────────────────────────────────────────
+
+04 — How the timeline works
+
+Rather than fixing a calendar date here, the timeline below runs from Day 1 — the agreed project kick-off following our scoping call. A launch date of 15 April was discussed in our initial conversation; given where we are now, we'll confirm whether that's still achievable on the scoping call and set the clock from there.
+
+The phases marked "GGF to action" are where the project depends on your team. Any delays on those phases will push the delivery date forward by the same amount.
+
+Note on delays: If the content folder lands on Day 6 instead of Day 3, the build finishes on Day 17 instead of Day 14. We'll flag any slippage as soon as we see it.
+
+Timeline:
+
+Foundations — By Day 3 [GGF to action]
+Content folder delivered (photos, quotes, narrative text). Branding requirements confirmed with your comms director. Site map agreed — homepage plus up to 2 sub-pages confirmed in writing before design work begins.
+
+Design concepts — Days 4–8 [Thread & Stack]
+Two visual directions produced on a shared design board. You and your nominated feedback contact leave comments directly on the board — no email chains.
+
+Design sign-off — By Day 9 [GGF to action]
+Consolidated feedback from your single point of contact. One direction confirmed. This is the point of no return for the visual approach — amends after this stage go into the build, not the design phase.
+
+Build — version one — Days 10–17 [Thread & Stack]
+Full site built on Lovable using agreed design and content. All pages, navigation, responsive layout, and branding applied. No external access yet.
+
+Staging review + amends — Days 18–21 [Both]
+Private staging link shared with you. Two rounds of consolidated amends included. Feedback must come from a single contact — this is where the working group nomination really matters.
+
+Final sign-off — By Day 22 [GGF to action]
+Written confirmation that the site is approved and ready to go live. Any last-minute copy corrections handled at this point — structural changes at this stage may affect the launch date.
+
+Launch + handover — Day 24 [Both]
+Site goes live. Two one-hour training sessions delivered on how to make changes and updates using Lovable. Simple explainer documentation provided for reference. Full editing access transferred to your team. Thirty-day aftercare period begins.
+
+────────────────────────────────────────────
+
+05 — The investment
+
+Everything sits within your $5,000 ceiling, with the first year of platform costs included so there's no surprise bill after launch.
+
+Project fee (Brendan Rodgers / Thread & Stack) — $4,645
+All phases: design concepts, build, two rounds of amends, staging, launch, two one-hour training sessions, written documentation, handover, 30-day aftercare
+
+Platform — Lovable (Year 1 subscription) — ~$289
+£19/month, billed as part of the project. Includes hosting, AI-powered CMS, unlimited seats, accessibility optimisation, and integrations.
+
+Domain name (Year 1 registration) — ~$50
+Custom URL for the microsite. Renewed directly by GGF from Year 2.
+
+TOTAL — ~$5,000
+
+"The speed and cost-efficiency come from using Lovable rather than a traditional development workflow. The same work through a conventional agency would typically cost two to three times more."
+
+Platform security & data:
+• Data residency — Lovable supports regional data hosting in the EU, US, and Australia. For a project like this, EU hosting is the default — your data stays in the region you choose and doesn't move across regions.
+• Your data is not used to train AI — Lovable does not use customer content, code, or workspace data to train its models. Contractual agreements with any AI providers restrict training and retention of customer data.
+• Certifications — The platform is SOC 2 Type II certified, GDPR compliant, and ISO 27001 certified.
+• Workspace transfer — The site will initially be built inside my Thread & Stack workspace. On handover, it's transferred into a GGF-owned Lovable workspace. Your team is invited with full access, and from that point everything is yours — I'm no longer involved unless you want me to be.
+
+Payment schedule: 50% on project kick-off, 50% on delivery. Invoices are provided in advance of each payment so you have everything you need for internal approvals.
+
+────────────────────────────────────────────
+
+06 — If you'd like to move forward
+
+1. Let me know you're happy with this proposal and we'll book a brief scoping call to confirm the project start date and talk through any questions.
+2. Nominate one person from the working group as the single feedback point of contact.
+3. Confirm branding requirements with your comms director (even a quick steer on colours/logo usage is enough to begin).
+4. Share the content folder — WeTransfer or Google Drive, whatever's easiest — so I can understand what we're working with before design concepts begin.
+
+Happy to answer any questions before you decide. And if anything in here doesn't quite reflect what you had in mind from our conversation, just say — it's easy to adjust at this stage.
+
+────────────────────────────────────────────
+
+Brendan Rodgers · threadandstack.com
+Thread & Stack
