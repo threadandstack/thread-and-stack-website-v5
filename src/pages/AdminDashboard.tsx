@@ -29,6 +29,22 @@ const AdminDashboard = () => {
     );
   }
 
+  const [isSyncing, setIsSyncing] = useState(false);
+
+  const handleSyncBlogCache = async () => {
+    setIsSyncing(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('sync-blog-cache');
+      if (error) throw error;
+      toast.success(`Blog cache synced — ${data.synced} posts updated`);
+    } catch (error) {
+      console.error('Sync error:', error);
+      toast.error('Failed to sync blog cache');
+    } finally {
+      setIsSyncing(false);
+    }
+  };
+
   if (!user || !isAdmin) {
     return null;
   }
