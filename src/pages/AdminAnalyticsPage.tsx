@@ -121,11 +121,11 @@ const AdminAnalyticsPage = () => {
   const chartConfig = {
     visits: {
       label: "Visits",
-      color: "hsl(var(--primary))",
+      color: "#1340E8",
     },
     sessions: {
       label: "Sessions",
-      color: "hsl(var(--muted-foreground))",
+      color: "#DC143C",
     },
   };
 
@@ -225,12 +225,12 @@ const AdminAnalyticsPage = () => {
                   <AreaChart data={analytics.dailyData}>
                     <defs>
                       <linearGradient id="fillVisits" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.3} />
-                        <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0} />
+                        <stop offset="5%" stopColor="#1340E8" stopOpacity={0.3} />
+                        <stop offset="95%" stopColor="#1340E8" stopOpacity={0} />
                       </linearGradient>
                       <linearGradient id="fillSessions" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="hsl(var(--muted-foreground))" stopOpacity={0.3} />
-                        <stop offset="95%" stopColor="hsl(var(--muted-foreground))" stopOpacity={0} />
+                        <stop offset="5%" stopColor="#DC143C" stopOpacity={0.3} />
+                        <stop offset="95%" stopColor="#DC143C" stopOpacity={0} />
                       </linearGradient>
                     </defs>
                     <XAxis dataKey="date" tickLine={false} axisLine={false} tickMargin={8} />
@@ -239,14 +239,14 @@ const AdminAnalyticsPage = () => {
                     <Area
                       type="monotone"
                       dataKey="sessions"
-                      stroke="hsl(var(--muted-foreground))"
+                      stroke="#DC143C"
                       fill="url(#fillSessions)"
                       strokeWidth={2}
                     />
                     <Area
                       type="monotone"
                       dataKey="visits"
-                      stroke="hsl(var(--primary))"
+                      stroke="#1340E8"
                       fill="url(#fillVisits)"
                       strokeWidth={2}
                     />
