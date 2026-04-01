@@ -121,11 +121,11 @@ const AdminAnalyticsPage = () => {
   const chartConfig = {
     visits: {
       label: "Visits",
-      color: "hsl(var(--primary))",
+      color: "#1340E8",
     },
     sessions: {
       label: "Sessions",
-      color: "hsl(var(--muted-foreground))",
+      color: "#DC143C",
     },
   };
 
