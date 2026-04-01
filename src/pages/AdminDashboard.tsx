@@ -99,6 +99,30 @@ const AdminDashboard = () => {
           </div>
         </div>
 
+        {/* Blog Cache Sync */}
+        <Card className="mb-6">
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-primary/10">
+                  <RefreshCw className="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <CardTitle className="text-lg">Blog Cache</CardTitle>
+                  <CardDescription>Sync blog listing data from Notion to speed up page loads</CardDescription>
+                </div>
+              </div>
+              <Button onClick={handleSyncBlogCache} disabled={isSyncing}>
+                {isSyncing ? (
+                  <><Loader2 className="h-4 w-4 animate-spin mr-2" /> Syncing…</>
+                ) : (
+                  <><RefreshCw className="h-4 w-4 mr-2" /> Sync Now</>
+                )}
+              </Button>
+            </div>
+          </CardHeader>
+        </Card>
+
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {adminSections.map((section) => (
             <Card 
