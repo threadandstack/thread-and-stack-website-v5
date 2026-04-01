@@ -14,6 +14,54 @@ export type Database = {
   }
   public: {
     Tables: {
+      blog_posts_cache: {
+        Row: {
+          created_at: string
+          description: string | null
+          featured: boolean | null
+          header_image_url: string | null
+          id: string
+          intro: string | null
+          notion_id: string
+          published_date: string | null
+          reading_time: string | null
+          slug: string
+          synced_at: string
+          theme: string | null
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          featured?: boolean | null
+          header_image_url?: string | null
+          id?: string
+          intro?: string | null
+          notion_id: string
+          published_date?: string | null
+          reading_time?: string | null
+          slug: string
+          synced_at?: string
+          theme?: string | null
+          title: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          featured?: boolean | null
+          header_image_url?: string | null
+          id?: string
+          intro?: string | null
+          notion_id?: string
+          published_date?: string | null
+          reading_time?: string | null
+          slug?: string
+          synced_at?: string
+          theme?: string | null
+          title?: string
+        }
+        Relationships: []
+      }
       fiction_favorites: {
         Row: {
           answer: string
