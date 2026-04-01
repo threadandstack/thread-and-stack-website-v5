@@ -5,7 +5,7 @@ const NOTION_API_KEY = Deno.env.get('NOTION_API_KEY');
 const NOTION_DATABASE_ID = '2bd8863b87d480669541f70cf640a28f';
 
 // GA4 Measurement Protocol
-const GA4_MEASUREMENT_ID = 'G-G9DYRX0MH4';
+const GA4_MEASUREMENT_ID = 'G-HNPPG3WWLN';
 const GA4_API_SECRET = Deno.env.get('GA4_API_SECRET');
 
 async function sendGA4Event(eventName: string, params: Record<string, string | number> = {}) {

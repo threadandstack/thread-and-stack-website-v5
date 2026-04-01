@@ -9,7 +9,7 @@ const BEEHIIV_API_KEY = Deno.env.get('BEEHIIV_API_KEY');
 const BEEHIIV_PUBLICATION_ID = 'pub_b9e5eda8-3a17-4d9b-9f97-fb9208f49676';
 
 // GA4 Measurement Protocol
-const GA4_MEASUREMENT_ID = 'G-G9DYRX0MH4';
+const GA4_MEASUREMENT_ID = 'G-HNPPG3WWLN';
 const GA4_API_SECRET = Deno.env.get('GA4_API_SECRET');
 
 async function sendGA4Event(eventName: string, params: Record<string, string | number> = {}) {
