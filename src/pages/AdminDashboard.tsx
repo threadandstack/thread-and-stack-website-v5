@@ -2,13 +2,15 @@ import { useNavigate, Link } from "react-router-dom";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, LogOut, Loader2, Search, BookOpen, Image, BarChart3 } from "lucide-react";
-import { useEffect } from "react";
+import { ArrowLeft, LogOut, Loader2, Search, BookOpen, Image, BarChart3, RefreshCw } from "lucide-react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const { user, loading: authLoading, isAdmin, signOut } = useAdminAuth();
+  const [isSyncing, setIsSyncing] = useState(false);
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -27,6 +29,21 @@ const AdminDashboard = () => {
       </div>
     );
   }
+
+
+  const handleSyncBlogCache = async () => {
+    setIsSyncing(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('sync-blog-cache');
+      if (error) throw error;
+      toast.success(`Blog cache synced — ${data.synced} posts updated`);
+    } catch (error) {
+      console.error('Sync error:', error);
+      toast.error('Failed to sync blog cache');
+    } finally {
+      setIsSyncing(false);
+    }
+  };
 
   if (!user || !isAdmin) {
     return null;
@@ -81,6 +98,30 @@ const AdminDashboard = () => {
             </Button>
           </div>
         </div>
+
+        {/* Blog Cache Sync */}
+        <Card className="mb-6">
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-primary/10">
+                  <RefreshCw className="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <CardTitle className="text-lg">Blog Cache</CardTitle>
+                  <CardDescription>Sync blog listing data from Notion to speed up page loads</CardDescription>
+                </div>
+              </div>
+              <Button onClick={handleSyncBlogCache} disabled={isSyncing}>
+                {isSyncing ? (
+                  <><Loader2 className="h-4 w-4 animate-spin mr-2" /> Syncing…</>
+                ) : (
+                  <><RefreshCw className="h-4 w-4 mr-2" /> Sync Now</>
+                )}
+              </Button>
+            </div>
+          </CardHeader>
+        </Card>
 
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {adminSections.map((section) => (
