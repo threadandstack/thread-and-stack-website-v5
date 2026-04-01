@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2"
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -11,103 +12,46 @@ serve(async (req) => {
   }
 
   try {
-    const NOTION_API_KEY = Deno.env.get('NOTION_API_KEY')
-    if (!NOTION_API_KEY) {
-      throw new Error('NOTION_API_KEY not configured')
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!
+    const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY')!
+    const supabase = createClient(supabaseUrl, supabaseAnonKey)
+
+    const { data: cachedPosts, error } = await supabase
+      .from('blog_posts_cache')
+      .select('*')
+      .order('published_date', { ascending: false })
+
+    if (error) {
+      console.error('Cache read error:', error)
+      throw new Error(`Cache read error: ${error.message}`)
     }
 
-    // Query the Published Blog Library database
-    const databaseId = '2bc8863b87d4802fa65dd15c42ffa13b'
-    
-    const response = await fetch(
-      `https://api.notion.com/v1/databases/${databaseId}/query`,
-      {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${NOTION_API_KEY}`,
-          'Notion-Version': '2022-06-28',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          filter: {
-            property: 'Status',
-            status: {
-              equals: 'Live'
-            }
-          }
-        })
-      }
-    )
-
-    if (!response.ok) {
-      const errorText = await response.text()
-      console.error('Notion API error:', errorText)
-      throw new Error(`Notion API error: ${response.status}`)
-    }
-
-    const data = await response.json()
-    
-    // Transform Notion results to blog posts
-    const posts = data.results.map((page: any) => {
-      const properties = page.properties
-      
-      // Extract the featured image URL if it exists
-      const featuredImageFiles = properties['Featured IMG']?.files || []
-      const headerImage = featuredImageFiles.length > 0 ? featuredImageFiles[0].file?.url || featuredImageFiles[0].external?.url : null
-      
-      const title = properties['Name']?.title?.[0]?.plain_text || 'Untitled'
-      const slug = title
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/^-+|-+$/g, '')
-      
-      // Extract intro (max 50 chars hook)
-      const intro = properties['Intro']?.rich_text?.[0]?.plain_text || null
-      
-      // Extract published date
-      const publishedDate = properties['Published']?.date?.start || null
-      
-      // Extract featured checkbox
-      const featured = properties['Featured']?.checkbox || false
-      
-      return {
-        id: page.id,
-        slug: slug,
-        title: title,
-        description: properties['Description']?.rich_text?.[0]?.plain_text || '',
-        intro: intro,
-        headerImage: headerImage,
-        url: page.url,
-        readingTime: properties['Reading time']?.rich_text?.[0]?.plain_text || null,
-        theme: properties['Theme']?.select?.name || null,
-        publishedDate: publishedDate,
-        featured: featured
-      }
-    })
+    // Transform to match existing frontend contract
+    const posts = (cachedPosts || []).map((row: any) => ({
+      id: row.notion_id,
+      slug: row.slug,
+      title: row.title,
+      description: row.description || '',
+      intro: row.intro,
+      headerImage: row.header_image_url,
+      readingTime: row.reading_time,
+      theme: row.theme,
+      publishedDate: row.published_date,
+      featured: row.featured,
+    }))
 
     return new Response(
       JSON.stringify({ posts }),
-      { 
-        headers: { 
-          ...corsHeaders, 
-          'Content-Type': 'application/json' 
-        } 
-      }
+      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     )
   } catch (error) {
     console.error('Error fetching blog posts:', error)
     return new Response(
-      JSON.stringify({ 
+      JSON.stringify({
         error: error instanceof Error ? error.message : 'Unknown error',
         posts: []
       }),
-      { 
-        status: 500,
-        headers: { 
-          ...corsHeaders, 
-          'Content-Type': 'application/json' 
-        } 
-      }
+      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     )
   }
 })
