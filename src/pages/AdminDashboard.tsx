@@ -2,9 +2,10 @@ import { useNavigate, Link } from "react-router-dom";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, LogOut, Loader2, Search, BookOpen, Image, BarChart3 } from "lucide-react";
-import { useEffect } from "react";
+import { ArrowLeft, LogOut, Loader2, Search, BookOpen, Image, BarChart3, RefreshCw } from "lucide-react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
