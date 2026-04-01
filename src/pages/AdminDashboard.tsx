@@ -10,6 +10,7 @@ import { supabase } from "@/integrations/supabase/client";
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const { user, loading: authLoading, isAdmin, signOut } = useAdminAuth();
+  const [isSyncing, setIsSyncing] = useState(false);
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -29,7 +30,6 @@ const AdminDashboard = () => {
     );
   }
 
-  const [isSyncing, setIsSyncing] = useState(false);
 
   const handleSyncBlogCache = async () => {
     setIsSyncing(true);
