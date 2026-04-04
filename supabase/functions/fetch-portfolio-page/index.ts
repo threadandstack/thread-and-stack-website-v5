@@ -12,7 +12,7 @@ serve(async (req) => {
   }
 
   try {
-    const { page_id } = await req.json()
+    const { page_id, force_refresh } = await req.json()
 
     if (!page_id) {
       return new Response(
@@ -33,7 +33,7 @@ serve(async (req) => {
       .single()
 
     // If cached and less than 1 hour old, return it
-    if (cached && (Date.now() - new Date(cached.synced_at).getTime()) < 3600000) {
+    if (!force_refresh && cached && (Date.now() - new Date(cached.synced_at).getTime()) < 3600000) {
       return new Response(
         JSON.stringify({ page: { name: cached.name, html: cached.html_content, coverImage: cached.cover_image, tags: cached.tags, monthYear: cached.month_year } }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -172,6 +172,27 @@ serve(async (req) => {
           const url = block.image.file?.url || block.image.external?.url
           const cap = block.image.caption ? richTextToHtml(block.image.caption) : ''
           return url ? `<figure><img src="${url}" alt="${cap}" />${cap ? `<figcaption>${cap}</figcaption>` : ''}</figure>` : ''
+        }
+        case 'video': {
+          const url = block.video.file?.url || block.video.external?.url
+          if (!url) return ''
+          // External videos (YouTube, Vimeo, Loom) → iframe embed
+          if (block.video.type === 'external') {
+            const embedUrl = url
+              .replace('youtube.com/watch?v=', 'youtube.com/embed/')
+              .replace('youtu.be/', 'youtube.com/embed/')
+              .replace('vimeo.com/', 'player.vimeo.com/video/')
+              .replace('loom.com/share/', 'loom.com/embed/')
+            return `<div class="video-embed"><iframe src="${embedUrl}" frameborder="0" allowfullscreen loading="lazy" style="width:100%;aspect-ratio:16/9;border-radius:0.5rem;"></iframe></div>`
+          }
+          // Notion-hosted file → HTML5 video
+          const cap = block.video.caption ? richTextToHtml(block.video.caption) : ''
+          return `<figure class="video-figure"><video controls preload="metadata" style="width:100%;border-radius:0.5rem;"><source src="${url}" /></video>${cap ? `<figcaption>${cap}</figcaption>` : ''}</figure>`
+        }
+        case 'embed': {
+          const url = block.embed?.url
+          if (!url) return ''
+          return `<div class="video-embed"><iframe src="${url}" frameborder="0" allowfullscreen loading="lazy" style="width:100%;aspect-ratio:16/9;border-radius:0.5rem;"></iframe></div>`
         }
         case 'table': {
           if (!block.has_children) return ''

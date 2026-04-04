@@ -519,6 +519,15 @@ All colors MUST be HSL.
   .blog-content p:has(> br:only-child) {
     min-height: 1.5rem;
   }
+
+  /* Video styles */
+  .blog-content .video-figure {
+    margin: 2rem 0;
+  }
+
+  .blog-content .video-embed {
+    margin: 2rem 0;
+  }
 }
 
 /* CV page styles */
