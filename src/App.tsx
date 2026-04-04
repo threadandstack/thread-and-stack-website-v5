@@ -43,6 +43,8 @@ import MomentumMapPage from "./pages/MomentumMapPage";
 import NotionHackathonLondonPage from "./pages/NotionHackathonLondonPage";
 import NotionDevotionBrightonPage from "./pages/NotionDevotionBrightonPage";
 import GGFProposalPage from "./pages/proposal/GGFProposalPage";
+import CreativePortfolioPage from "./pages/CreativePortfolioPage";
+import NotionPortfolioPage from "./pages/NotionPortfolioPage";
 import { CookieConsent } from "./components/CookieConsent";
 
 const queryClient = new QueryClient();
@@ -97,6 +99,8 @@ const App = () => (
           <Route path="/notion-hackathon-london" element={<NotionHackathonLondonPage />} />
           <Route path="/notion-devotion-brighton" element={<NotionDevotionBrightonPage />} />
           <Route path="/proposal/GGF" element={<GGFProposalPage />} />
+          <Route path="/portfolio/creative" element={<CreativePortfolioPage />} />
+          <Route path="/portfolio/notion" element={<NotionPortfolioPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

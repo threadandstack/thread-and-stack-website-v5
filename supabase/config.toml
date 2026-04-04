@@ -41,3 +41,6 @@ verify_jwt = false
 
 [functions.sync-blog-cache]
 verify_jwt = false
+
+[functions.fetch-portfolio]
+verify_jwt = false
