@@ -129,7 +129,8 @@ export const PortfolioGallery = ({
         {displayed.map((item) => (
           <article
             key={item.id}
-            className="group rounded-xl border border-border overflow-hidden bg-card hover:shadow-md transition-shadow"
+            className="group rounded-xl border border-border overflow-hidden bg-card hover:shadow-md transition-shadow cursor-pointer"
+            onClick={() => setDetailItem(item)}
           >
             {/* Cover image */}
             {item.coverImage && !item.hasNda ? (
