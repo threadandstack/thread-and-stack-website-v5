@@ -528,6 +528,45 @@ All colors MUST be HSL.
   .blog-content .video-embed {
     margin: 2rem 0;
   }
+
+  /* Notion column layout */
+  .blog-content .notion-column-list {
+    display: grid;
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+  }
+
+  .blog-content .notion-columns-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .blog-content .notion-columns-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .blog-content .notion-columns-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @media (max-width: 640px) {
+    .blog-content .notion-column-list {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .blog-content .notion-column > *:first-child {
+    margin-top: 0;
+  }
+
+  .blog-content .notion-column > *:last-child {
+    margin-bottom: 0;
+  }
+
+  .blog-content .notion-column img {
+    width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+  }
 }
 
 /* CV page styles */

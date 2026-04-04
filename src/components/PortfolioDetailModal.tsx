@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
 import { Loader2, Lock } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -70,13 +75,12 @@ export const PortfolioDetailModal = ({
     }
   }, [open, pageId]);
 
-  const handleOpenChange = (isOpen: boolean) => {
-    onOpenChange(isOpen);
-  };
-
   return (
-    <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="max-w-4xl overflow-hidden p-0 gap-0 isolate">
+    <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetContent
+        side="right"
+        className="w-full sm:max-w-2xl lg:max-w-3xl p-0 overflow-y-auto"
+      >
         {hasNda ? (
           <div className="px-6 py-12 text-center text-muted-foreground">
             <Lock className="w-8 h-8 mx-auto mb-3" />
@@ -92,12 +96,12 @@ export const PortfolioDetailModal = ({
             <p>{error}</p>
           </div>
         ) : content ? (
-          <div className="max-h-[85vh] overflow-y-auto bg-background">
+          <div className="bg-background">
             <div className="px-6 pt-6 pb-5 border-b border-border bg-background">
-              <DialogHeader>
-                <DialogTitle className="text-2xl font-light leading-tight">
+              <SheetHeader>
+                <SheetTitle className="text-2xl font-light leading-tight">
                   {content.name}
-                </DialogTitle>
+                </SheetTitle>
                 <div className="flex flex-wrap items-center gap-2 pt-2">
                   {content.monthYear && (
                     <span className="text-sm text-muted-foreground font-sans">
@@ -116,7 +120,7 @@ export const PortfolioDetailModal = ({
                       </Badge>
                     ))}
                 </div>
-              </DialogHeader>
+              </SheetHeader>
             </div>
 
             {content.coverImage && (
@@ -139,7 +143,7 @@ export const PortfolioDetailModal = ({
             </div>
           </div>
         ) : null}
-      </DialogContent>
-    </Dialog>
+      </SheetContent>
+    </Sheet>
   );
 };

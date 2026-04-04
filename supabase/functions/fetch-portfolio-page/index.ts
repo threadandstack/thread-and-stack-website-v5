@@ -194,6 +194,31 @@ serve(async (req) => {
           if (!url) return ''
           return `<div class="video-embed"><iframe src="${url}" frameborder="0" allowfullscreen loading="lazy" style="width:100%;aspect-ratio:16/9;border-radius:0.5rem;"></iframe></div>`
         }
+        case 'column_list': {
+          if (!block.has_children) return ''
+          const columns = await fetchBlockChildren(block.id)
+          const colCount = columns.length
+          const colHtmlParts = await Promise.all(columns.map(async (col: any) => {
+            if (col.type !== 'column' || !col.has_children) return '<div class="notion-column"></div>'
+            const colChildren = await fetchBlockChildren(col.id)
+            // Group list items inside columns
+            const parts: string[] = []
+            let ib = false, in2 = false
+            for (const c of colChildren) {
+              if (c.type !== 'bulleted_list_item' && ib) { parts.push('</ul>'); ib = false }
+              if (c.type !== 'numbered_list_item' && in2) { parts.push('</ol>'); in2 = false }
+              if (c.type === 'bulleted_list_item' && !ib) { parts.push('<ul>'); ib = true }
+              if (c.type === 'numbered_list_item' && !in2) { parts.push('<ol>'); in2 = true }
+              const h = await blockToHtml(c)
+              if (h) parts.push(h)
+            }
+            if (ib) parts.push('</ul>')
+            if (in2) parts.push('</ol>')
+            return `<div class="notion-column">${parts.join('\n')}</div>`
+          }))
+          return `<div class="notion-column-list notion-columns-${colCount}">${colHtmlParts.join('')}</div>`
+        }
+        case 'column': return ''
         case 'table': {
           if (!block.has_children) return ''
           const rows = await fetchBlockChildren(block.id)
