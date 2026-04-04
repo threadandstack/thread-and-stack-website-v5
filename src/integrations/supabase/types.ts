@@ -224,6 +224,42 @@ export type Database = {
         }
         Relationships: []
       }
+      portfolio_content_cache: {
+        Row: {
+          cover_image: string | null
+          created_at: string
+          html_content: string
+          id: string
+          month_year: string | null
+          name: string
+          notion_page_id: string
+          synced_at: string
+          tags: string[] | null
+        }
+        Insert: {
+          cover_image?: string | null
+          created_at?: string
+          html_content: string
+          id?: string
+          month_year?: string | null
+          name: string
+          notion_page_id: string
+          synced_at?: string
+          tags?: string[] | null
+        }
+        Update: {
+          cover_image?: string | null
+          created_at?: string
+          html_content?: string
+          id?: string
+          month_year?: string | null
+          name?: string
+          notion_page_id?: string
+          synced_at?: string
+          tags?: string[] | null
+        }
+        Relationships: []
+      }
       workshop_quote_requests: {
         Row: {
           created_at: string
