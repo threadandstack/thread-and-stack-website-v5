@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ContactDrawer } from "@/components/ContactDrawer";
+import { PortfolioDetailModal } from "@/components/PortfolioDetailModal";
 import { PillButton } from "@/components/ui/pill-button";
 import { Send, Lock } from "lucide-react";
 
