@@ -6,11 +6,14 @@ const ALLOWED_TAGS = [
   "ul", "ol", "li", "blockquote", "pre", "img",
   "figure", "figcaption", "hr", "div", "span", "table",
   "thead", "tbody", "tr", "th", "td", "sup", "sub",
+  "video", "source", "iframe",
 ];
 
 const ALLOWED_ATTR = [
   "href", "src", "alt", "class", "target", "rel",
   "data-equation", "width", "height", "loading",
+  "controls", "preload", "type", "frameborder",
+  "allowfullscreen", "style",
 ];
 
 /**
