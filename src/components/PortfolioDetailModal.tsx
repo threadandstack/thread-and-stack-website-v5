@@ -76,62 +76,68 @@ export const PortfolioDetailModal = ({
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="max-w-3xl max-h-[85vh] overflow-y-auto">
+      <DialogContent className="max-w-4xl overflow-hidden p-0 gap-0 isolate">
         {hasNda ? (
-          <div className="py-12 text-center text-muted-foreground">
+          <div className="px-6 py-12 text-center text-muted-foreground">
             <Lock className="w-8 h-8 mx-auto mb-3" />
             <p className="font-sans">This project is under NDA.</p>
             <p className="text-sm mt-1">Get in touch to discuss similar work.</p>
           </div>
         ) : isLoading ? (
-          <div className="flex justify-center py-16">
+          <div className="flex justify-center px-6 py-16">
             <Loader2 className="h-8 w-8 animate-spin text-accent" />
           </div>
         ) : error ? (
-          <div className="py-12 text-center text-muted-foreground">
+          <div className="px-6 py-12 text-center text-muted-foreground">
             <p>{error}</p>
           </div>
         ) : content ? (
-          <>
-            <DialogHeader>
-              <DialogTitle className="text-2xl font-light leading-tight">
-                {content.name}
-              </DialogTitle>
-              <div className="flex flex-wrap items-center gap-2 pt-2">
-                {content.monthYear && (
-                  <span className="text-sm text-muted-foreground font-sans">
-                    {content.monthYear}
-                  </span>
-                )}
-                {content.tags
-                  .filter((t) => !["NDA", "Not Ready"].includes(t))
-                  .map((tag) => (
-                    <Badge
-                      key={tag}
-                      variant="outline"
-                      className={`text-[11px] font-sans ${TAG_COLORS[tag] || "bg-muted text-muted-foreground border-border"}`}
-                    >
-                      {tag}
-                    </Badge>
-                  ))}
-              </div>
-            </DialogHeader>
+          <div className="max-h-[85vh] overflow-y-auto bg-background">
+            <div className="px-6 pt-6 pb-5 border-b border-border bg-background">
+              <DialogHeader>
+                <DialogTitle className="text-2xl font-light leading-tight">
+                  {content.name}
+                </DialogTitle>
+                <div className="flex flex-wrap items-center gap-2 pt-2">
+                  {content.monthYear && (
+                    <span className="text-sm text-muted-foreground font-sans">
+                      {content.monthYear}
+                    </span>
+                  )}
+                  {content.tags
+                    .filter((t) => !["NDA", "Not Ready"].includes(t))
+                    .map((tag) => (
+                      <Badge
+                        key={tag}
+                        variant="outline"
+                        className={`text-[11px] font-sans ${TAG_COLORS[tag] || "bg-muted text-muted-foreground border-border"}`}
+                      >
+                        {tag}
+                      </Badge>
+                    ))}
+                </div>
+              </DialogHeader>
+            </div>
 
             {content.coverImage && (
-              <div className="aspect-[16/10] overflow-hidden rounded-lg mt-2 bg-muted relative z-0">
-                <img
-                  src={content.coverImage}
-                  alt={content.name}
-                  className="w-full h-full object-cover relative"
-                />
+              <div className="bg-muted border-b border-border">
+                <div className="aspect-[16/10] overflow-hidden">
+                  <img
+                    src={content.coverImage}
+                    alt={content.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
               </div>
             )}
 
-            <div
-              className="blog-content prose prose-sm max-w-none mt-4 relative z-10"
-              dangerouslySetInnerHTML={{ __html: sanitizeHtml(content.html) }}
-            />
-          </>
+            <div className="bg-background px-6 py-6">
+              <div
+                className="blog-content prose prose-sm max-w-none"
+                dangerouslySetInnerHTML={{ __html: sanitizeHtml(content.html) }}
+              />
+            </div>
+          </div>
         ) : null}
       </DialogContent>
     </Dialog>
