@@ -146,8 +146,20 @@ serve(async (req) => {
           let childHtml = ''
           if (block.has_children) {
             const children = await fetchBlockChildren(block.id)
-            const parts = await Promise.all(children.map((c: any) => blockToHtml(c)))
-            childHtml = parts.filter(Boolean).join('\n')
+            // Group consecutive list items into <ul>/<ol>
+            const groupedParts: string[] = []
+            let inBul = false, inNum = false
+            for (const c of children) {
+              if (c.type !== 'bulleted_list_item' && inBul) { groupedParts.push('</ul>'); inBul = false }
+              if (c.type !== 'numbered_list_item' && inNum) { groupedParts.push('</ol>'); inNum = false }
+              if (c.type === 'bulleted_list_item' && !inBul) { groupedParts.push('<ul>'); inBul = true }
+              if (c.type === 'numbered_list_item' && !inNum) { groupedParts.push('<ol>'); inNum = true }
+              const html = await blockToHtml(c)
+              if (html) groupedParts.push(html)
+            }
+            if (inBul) groupedParts.push('</ul>')
+            if (inNum) groupedParts.push('</ol>')
+            childHtml = groupedParts.join('\n')
           }
           return `<div class="callout callout-${color}">${iconHtml}<div class="callout-content">${t}${childHtml ? '\n' + childHtml : ''}</div></div>`
         }
