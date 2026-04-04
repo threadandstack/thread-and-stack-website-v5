@@ -45,6 +45,7 @@ export const PortfolioGallery = ({
 }: PortfolioGalleryProps) => {
   const [activeTag, setActiveTag] = useState<string | null>(null);
   const [contactOpen, setContactOpen] = useState(false);
+  const [detailItem, setDetailItem] = useState<PortfolioItem | null>(null);
 
   const { data: items = [], isLoading } = useQuery<PortfolioItem[]>({
     queryKey: ["portfolio", databaseId, filterTags],
