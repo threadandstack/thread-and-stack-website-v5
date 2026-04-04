@@ -12,7 +12,7 @@ serve(async (req) => {
   }
 
   try {
-    const { page_id } = await req.json()
+    const { page_id, force_refresh } = await req.json()
 
     if (!page_id) {
       return new Response(
@@ -33,7 +33,7 @@ serve(async (req) => {
       .single()
 
     // If cached and less than 1 hour old, return it
-    if (cached && (Date.now() - new Date(cached.synced_at).getTime()) < 3600000) {
+    if (!force_refresh && cached && (Date.now() - new Date(cached.synced_at).getTime()) < 3600000) {
       return new Response(
         JSON.stringify({ page: { name: cached.name, html: cached.html_content, coverImage: cached.cover_image, tags: cached.tags, monthYear: cached.month_year } }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
