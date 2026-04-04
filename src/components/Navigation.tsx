@@ -34,8 +34,6 @@ export const Navigation = ({ variant = "default" }: NavigationProps) => {
   const services = [
     { href: "/narratives-strategy", label: "Narratives & Strategy Services" },
     { href: "/notion-systems", label: "Notion & Systems Consultancy" },
-    { href: "/portfolio/creative", label: "Creative Portfolio" },
-    { href: "/portfolio/notion", label: "Notion Portfolio" },
   ];
 
   const navLinkClass = "text-sm font-sans transition-all not-italic";
