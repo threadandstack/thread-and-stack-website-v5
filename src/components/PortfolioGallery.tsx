@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ContactDrawer } from "@/components/ContactDrawer";
+import { PortfolioDetailModal } from "@/components/PortfolioDetailModal";
 import { PillButton } from "@/components/ui/pill-button";
 import { Send, Lock } from "lucide-react";
 
@@ -44,6 +45,7 @@ export const PortfolioGallery = ({
 }: PortfolioGalleryProps) => {
   const [activeTag, setActiveTag] = useState<string | null>(null);
   const [contactOpen, setContactOpen] = useState(false);
+  const [detailItem, setDetailItem] = useState<PortfolioItem | null>(null);
 
   const { data: items = [], isLoading } = useQuery<PortfolioItem[]>({
     queryKey: ["portfolio", databaseId, filterTags],
@@ -127,7 +129,8 @@ export const PortfolioGallery = ({
         {displayed.map((item) => (
           <article
             key={item.id}
-            className="group rounded-xl border border-border overflow-hidden bg-card hover:shadow-md transition-shadow"
+            className="group rounded-xl border border-border overflow-hidden bg-card hover:shadow-md transition-shadow cursor-pointer"
+            onClick={() => setDetailItem(item)}
           >
             {/* Cover image */}
             {item.coverImage && !item.hasNda ? (
@@ -205,6 +208,14 @@ export const PortfolioGallery = ({
         open={contactOpen}
         onOpenChange={setContactOpen}
         source={`portfolio-${pillar}`}
+      />
+
+      <PortfolioDetailModal
+        open={!!detailItem}
+        onOpenChange={(open) => { if (!open) setDetailItem(null); }}
+        pageId={detailItem?.id || null}
+        name={detailItem?.name || ""}
+        hasNda={detailItem?.hasNda || false}
       />
     </>
   );
