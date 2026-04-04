@@ -118,17 +118,17 @@ export const PortfolioDetailModal = ({
             </DialogHeader>
 
             {content.coverImage && (
-              <div className="aspect-[16/10] overflow-hidden rounded-lg mt-2 bg-muted">
+              <div className="aspect-[16/10] overflow-hidden rounded-lg mt-2 bg-muted relative z-0">
                 <img
                   src={content.coverImage}
                   alt={content.name}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover relative"
                 />
               </div>
             )}
 
             <div
-              className="blog-content prose prose-sm max-w-none mt-4"
+              className="blog-content prose prose-sm max-w-none mt-4 relative z-10"
               dangerouslySetInnerHTML={{ __html: sanitizeHtml(content.html) }}
             />
           </>
