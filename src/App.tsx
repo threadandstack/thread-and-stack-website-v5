@@ -43,6 +43,8 @@ import MomentumMapPage from "./pages/MomentumMapPage";
 import NotionHackathonLondonPage from "./pages/NotionHackathonLondonPage";
 import NotionDevotionBrightonPage from "./pages/NotionDevotionBrightonPage";
 import GGFProposalPage from "./pages/proposal/GGFProposalPage";
+import CreativePortfolioPage from "./pages/CreativePortfolioPage";
+import NotionPortfolioPage from "./pages/NotionPortfolioPage";
 import { CookieConsent } from "./components/CookieConsent";
 
 const queryClient = new QueryClient();
