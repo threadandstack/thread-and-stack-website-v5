@@ -277,6 +277,29 @@ All colors MUST be HSL.
     border: 1.5px solid hsl(var(--accent));
     border-radius: 50%;
   }
+
+  /* Bare <li> not inside ul/ol (e.g. from Notion callout blocks) */
+  .blog-content .callout-content > li,
+  .blog-content > li {
+    list-style: none;
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.7;
+  }
+
+  .blog-content .callout-content > li::before,
+  .blog-content > li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 7px;
+    height: 7px;
+    background: transparent;
+    border: 1.5px solid hsl(var(--accent));
+    border-radius: 50%;
+  }
   
   /* Secondary bullets - small indigo dot */
   .blog-content ul > li > ul > li::before {
