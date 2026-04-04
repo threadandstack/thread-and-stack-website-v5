@@ -1,45 +1,87 @@
 
 
-# Cookie Consent Banner for GDPR Compliance
+# Portfolio Pages Powered by Notion — Plan
 
-## What this does
-Adds a cookie consent banner that appears site-wide for first-time visitors, allowing them to accept or decline non-essential cookies (primarily Google Tag Manager / GA4 tracking). Their choice is remembered via localStorage so the banner only appears once.
+## What We Found in Notion
 
-## How it works
-- A new `CookieConsent` component renders as a fixed banner at the bottom of the screen
-- On first visit, GTM scripts are blocked until the user accepts cookies
-- If the user declines, GTM remains disabled for that session and future visits
-- The choice is stored in `localStorage` (not a cookie itself, avoiding circular consent issues)
-- A link to the existing Privacy Policy page is included in the banner
+The **Brendan Rodgers Portfolio** page contains an inline **Portfolio database** with this schema:
 
-## User experience
-- Small, non-intrusive banner at the bottom of the page with "Accept" and "Decline" buttons
-- Brief explanation: "We use cookies to analyse site traffic and improve your experience"
-- Link to `/privacy` for full details
-- Banner disappears after a choice is made and doesn't return
+| Property | Type | Purpose |
+|---|---|---|
+| Name | title | Project name |
+| Tags | multi_select | Brand Strategy, Content Strategy, Copywriting & Storytelling, Customer Journey Mapping, CRM, Design, Performance, Clientside, NDA, Not Ready |
+| Show in Portfolio | checkbox | Controls public visibility |
+| Text | text | Project description/summary |
+| Month & Year | text | Display date (e.g. "Oct 2025") |
+| Date | date | Sortable date |
+| Place | place | Location |
 
-## Technical details
+A second identical database exists under "BFB Labs Examples" — this can serve as the Notion systems/builds portfolio.
 
-### 1. New component: `src/components/CookieConsent.tsx`
-- Checks `localStorage` for a `cookie-consent` key on mount
-- If no choice stored, shows the banner
-- "Accept" sets `cookie-consent: accepted` and initialises GTM
-- "Decline" sets `cookie-consent: declined` and does nothing further
-- Styled to match the existing design system (muted background, small text, accent buttons)
+The Tags naturally split across your two pillars:
+- **Narrative Strategy**: Brand Strategy, Content Strategy, Copywriting & Storytelling, Customer Journey Mapping, Design
+- **Notion Systems**: CRM, Performance, Clientside (plus new tags you'd add for system builds)
 
-### 2. Update `index.html`
-- Remove the existing inline GTM script from the `<head>` so it doesn't fire before consent
-- Remove the GTM `<noscript>` iframe from `<body>`
+## Proposed Approach
 
-### 3. New utility: `src/lib/gtm.ts`
-- A small helper function `loadGTM()` that dynamically injects the GTM script when called
-- Only called after the user clicks "Accept"
-- Also called on page load if `localStorage` already contains `cookie-consent: accepted`
+### Use Notion as single source of truth for both portfolios
 
-### 4. Update `src/App.tsx`
-- Add `<CookieConsent />` inside the router so it renders on every page
+Rather than hardcoding portfolio items (as with the current Nerve Tumours UK featured project), fetch portfolio entries from the Notion databases via edge functions. You manage everything in Notion — add a new project, tick "Show in Portfolio", and it appears on the site.
 
-### 5. Consent check on return visits
-- On mount, if consent was previously accepted, GTM loads automatically
-- If declined, nothing loads — no tracking scripts run
+### Two portfolio pages, one component pattern
+
+**`/portfolio/creative`** — Narrative Strategy work
+- Fetches from the main Portfolio database (`2808863b-87d4-8027...`)
+- Filters by `Show in Portfolio = true` and creative-pillar Tags
+- Gallery grid of project cards with cover images, tags, and summary text
+- Click to expand into a detail view (modal or dedicated sub-page) showing full project content from Notion
+
+**`/portfolio/notion`** — Notion Systems & Builds
+- Fetches from the BFB Labs Portfolio database (`2e08863b-87d4-81e2...`) — or the same database filtered differently, depending on how you want to organise it
+- Same gallery layout and interaction pattern
+- Showcases Notion environments, automations, system builds
+
+### Edge function: `fetch-portfolio`
+
+A new edge function that:
+- Accepts `database_id` and optional `tags` filter as parameters
+- Queries the Notion API for entries where `Show in Portfolio = true`
+- Returns: name, tags, text summary, month & year, cover image (from page cover), and page content blocks for the detail view
+- Notion-hosted image URLs expire after ~1 hour, so we'd either cache in Supabase (like the blog) or accept fresh fetches
+
+### Frontend component: `PortfolioGallery`
+
+A shared component used by both `/portfolio/creative` and `/portfolio/notion`:
+- Responsive grid (1 col mobile, 2 col tablet, 3 col desktop)
+- Each card shows cover image, project name, tags as pills, and summary text
+- Tag-based filtering UI at the top (click a tag to filter)
+- Detail modal on click, rendering Notion block content (reusing the same HTML rendering approach as blog posts and governance pages)
+- Soft CTA at the bottom: "Like what you see? Let's talk" linking to the relevant service page
+
+### Integration with the lead gen plan
+
+Both portfolio pages feed into the trackable flow:
+- CTAs on portfolio pages link to `/work-with-me` or open the ContactDrawer with `source=portfolio-creative` or `source=portfolio-notion`
+- UTM params carry through from the portfolio page to the thank you page
+- Portfolio page views themselves become trackable funnel steps in GA4
+
+## Technical Summary
+
+| Step | What | Files |
+|---|---|---|
+| 1 | New edge function `fetch-portfolio` | `supabase/functions/fetch-portfolio/index.ts` |
+| 2 | Shared `PortfolioGallery` component | `src/components/PortfolioGallery.tsx` |
+| 3 | Portfolio detail modal (reuse Notion renderer) | `src/components/PortfolioDetailModal.tsx` |
+| 4 | Creative portfolio page | `src/pages/CreativePortfolioPage.tsx` |
+| 5 | Notion portfolio page | `src/pages/NotionPortfolioPage.tsx` |
+| 6 | Register routes in App.tsx | `src/App.tsx` |
+| 7 | Add nav links to portfolio pages | `src/components/Navigation.tsx` |
+
+## Open Question
+
+The two Notion databases have identical schemas. You could either:
+- **A)** Use both databases separately (one for creative, one for Notion builds) — cleaner separation, easier to manage independently
+- **B)** Merge everything into one database and differentiate with a new "Pillar" property — single source, but more complex filtering
+
+Which do you prefer? Or would you like to start with just the creative portfolio and add the Notion builds portfolio later?
 
