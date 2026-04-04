@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { Loader2, Lock } from "lucide-react";
@@ -60,17 +60,17 @@ export const PortfolioDetailModal = ({
     }
   };
 
-  const handleOpenChange = (isOpen: boolean) => {
-    if (isOpen && pageId && !hasNda) {
-      // Only fetch if we don't already have this page cached in state
-      if (!content || content.name !== name) {
-        fetchContent(pageId);
-      }
+  useEffect(() => {
+    if (open && pageId && !hasNda) {
+      fetchContent(pageId);
     }
-    if (!isOpen) {
+    if (!open) {
       setContent(null);
       setError(null);
     }
+  }, [open, pageId]);
+
+  const handleOpenChange = (isOpen: boolean) => {
     onOpenChange(isOpen);
   };
 
