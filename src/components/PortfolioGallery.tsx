@@ -209,6 +209,14 @@ export const PortfolioGallery = ({
         onOpenChange={setContactOpen}
         source={`portfolio-${pillar}`}
       />
+
+      <PortfolioDetailModal
+        open={!!detailItem}
+        onOpenChange={(open) => { if (!open) setDetailItem(null); }}
+        pageId={detailItem?.id || null}
+        name={detailItem?.name || ""}
+        hasNda={detailItem?.hasNda || false}
+      />
     </>
   );
 };

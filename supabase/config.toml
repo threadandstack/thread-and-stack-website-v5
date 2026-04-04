@@ -44,3 +44,6 @@ verify_jwt = false
 
 [functions.fetch-portfolio]
 verify_jwt = false
+
+[functions.fetch-portfolio-page]
+verify_jwt = false
