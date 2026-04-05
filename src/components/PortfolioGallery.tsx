@@ -174,7 +174,7 @@ export const PortfolioGallery = ({
               </div>
 
               <div className="flex items-start justify-between gap-2">
-                <h3 className="font-semibold text-lg text-foreground leading-tight">
+                <h3 className="font-semibold text-2xl md:text-3xl text-foreground leading-tight">
                   {item.name}
                 </h3>
                 {item.monthYear && (
