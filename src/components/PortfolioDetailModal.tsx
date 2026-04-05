@@ -6,7 +6,8 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
-import { Loader2, Lock } from "lucide-react";
+import { Lock } from "lucide-react";
+import { PortfolioLoader } from "@/components/PortfolioLoader";
 import { supabase } from "@/integrations/supabase/client";
 import { sanitizeHtml } from "@/lib/sanitize";
 
