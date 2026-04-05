@@ -125,20 +125,21 @@ export const PortfolioGallery = ({
       )}
 
       {/* Gallery grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* Masonry gallery */}
+      <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
         {displayed.map((item) => (
           <article
             key={item.id}
-            className="group rounded-xl border border-border overflow-hidden bg-card hover:shadow-md transition-shadow cursor-pointer"
+            className="group rounded-xl border border-border overflow-hidden bg-card hover:shadow-md transition-shadow cursor-pointer break-inside-avoid"
             onClick={() => setDetailItem(item)}
           >
             {/* Cover image */}
             {item.coverImage && !item.hasNda ? (
-              <div className="aspect-[16/10] overflow-hidden bg-muted">
+              <div className="overflow-hidden bg-muted">
                 <img
                   src={item.coverImage}
                   alt={item.name}
-                  className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
+                  className="w-full h-auto object-cover group-hover:scale-[1.02] transition-transform duration-500"
                   loading="lazy"
                 />
               </div>
@@ -157,25 +158,8 @@ export const PortfolioGallery = ({
 
             {/* Content */}
             <div className="p-5 space-y-3">
-              <div className="flex items-start justify-between gap-2">
-                <h3 className="font-semibold text-foreground leading-tight">
-                  {item.name}
-                </h3>
-                {item.monthYear && (
-                  <span className="text-xs text-muted-foreground whitespace-nowrap font-sans">
-                    {item.monthYear}
-                  </span>
-                )}
-              </div>
-
-              {item.text && (
-                <p className="text-sm text-muted-foreground line-clamp-3">
-                  {item.text}
-                </p>
-              )}
-
-              {/* Tags */}
-              <div className="flex flex-wrap gap-1.5 pt-1">
+              {/* Tags first */}
+              <div className="flex flex-wrap gap-1.5">
                 {item.tags
                   .filter((t) => !["NDA", "Not Ready"].includes(t))
                   .map((tag) => (
@@ -188,6 +172,23 @@ export const PortfolioGallery = ({
                     </Badge>
                   ))}
               </div>
+
+              <div className="flex items-start justify-between gap-2">
+                <h3 className="font-semibold text-lg text-foreground leading-tight">
+                  {item.name}
+                </h3>
+                {item.monthYear && (
+                  <span className="text-xs text-muted-foreground whitespace-nowrap font-sans mt-1">
+                    {item.monthYear}
+                  </span>
+                )}
+              </div>
+
+              {item.text && (
+                <p className="text-sm text-muted-foreground line-clamp-3">
+                  {item.text}
+                </p>
+              )}
             </div>
           </article>
         ))}
