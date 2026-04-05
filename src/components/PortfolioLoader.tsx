@@ -57,7 +57,7 @@ export const PortfolioLoader = () => {
             cx="50"
             cy="50"
             r="48"
-            fill="hsl(var(--accent) / 0.08)"
+            fill="hsl(var(--accent) / 0.15)"
           />
 
           {/* Liquid fill — clipped to circle */}
