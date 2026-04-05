@@ -692,11 +692,18 @@ All colors MUST be HSL.
 }
 
 @keyframes draw-line {
-  from {
-    stroke-dashoffset: 200;
+  from { stroke-dashoffset: 200; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes portfolio-bubble {
+  0% {
+    opacity: 0.7;
+    transform: translateY(0) scale(1);
   }
-  to {
-    stroke-dashoffset: 0;
+  100% {
+    opacity: 0;
+    transform: translateY(-18px) scale(0.3);
   }
 }
 
