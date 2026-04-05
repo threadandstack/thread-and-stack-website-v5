@@ -6,7 +6,8 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
-import { Loader2, Lock } from "lucide-react";
+import { Lock } from "lucide-react";
+import { PortfolioLoader } from "@/components/PortfolioLoader";
 import { supabase } from "@/integrations/supabase/client";
 import { sanitizeHtml } from "@/lib/sanitize";
 
@@ -88,9 +89,7 @@ export const PortfolioDetailModal = ({
             <p className="text-sm mt-1">Get in touch to discuss similar work.</p>
           </div>
         ) : isLoading ? (
-          <div className="flex justify-center px-6 py-16">
-            <Loader2 className="h-8 w-8 animate-spin text-accent" />
-          </div>
+          <PortfolioLoader />
         ) : error ? (
           <div className="px-6 py-12 text-center text-muted-foreground">
             <p>{error}</p>
