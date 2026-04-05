@@ -69,7 +69,7 @@ export const PortfolioLoader = () => {
             */}
 
             {/* Back wave — slightly transparent */}
-            <g opacity="0.4">
+            <g opacity="0.55">
               <rect x="-10" y="8" width="120" height="200" fill="hsl(var(--accent))">
                 <animateTransform
                   attributeName="transform"
