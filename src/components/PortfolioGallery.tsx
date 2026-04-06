@@ -59,9 +59,10 @@ export const PortfolioGallery = ({
     staleTime: 5 * 60 * 1000,
   });
 
-  // Split featured vs regular
-  const featuredItems = items.filter((i) => i.tags.includes("Featured"));
-  const regularItems = items.filter((i) => !i.tags.includes("Featured"));
+  // Split hero, featured, and regular
+  const heroItem = items.find((i) => i.tags.includes("Featured-Hero")) || null;
+  const featuredItems = items.filter((i) => i.tags.includes("Featured") && !i.tags.includes("Featured-Hero"));
+  const regularItems = items.filter((i) => !i.tags.includes("Featured") && !i.tags.includes("Featured-Hero"));
 
   // Collect unique tags for filter bar (exclude NDA, Not Ready, Featured)
   const allTags = Array.from(
