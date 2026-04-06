@@ -288,7 +288,7 @@ export const PortfolioGallery = ({
               {/* Tags first */}
               <div className="flex flex-wrap gap-1.5">
                 {item.tags
-                  .filter((t) => !["NDA", "Not Ready"].includes(t))
+                  .filter((t) => !["NDA", "Not Ready", "Featured"].includes(t))
                   .map((tag) => (
                     <Badge
                       key={tag}
