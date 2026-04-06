@@ -59,14 +59,18 @@ export const PortfolioGallery = ({
     staleTime: 5 * 60 * 1000,
   });
 
-  // Collect unique tags for filter bar (exclude NDA, Not Ready)
+  // Split featured vs regular
+  const featuredItems = items.filter((i) => i.tags.includes("Featured"));
+  const regularItems = items.filter((i) => !i.tags.includes("Featured"));
+
+  // Collect unique tags for filter bar (exclude NDA, Not Ready, Featured)
   const allTags = Array.from(
     new Set(items.flatMap((i) => i.tags))
-  ).filter((t) => !["NDA", "Not Ready"].includes(t));
+  ).filter((t) => !["NDA", "Not Ready", "Featured"].includes(t));
 
   const displayed = activeTag
-    ? items.filter((i) => i.tags.includes(activeTag))
-    : items;
+    ? regularItems.filter((i) => i.tags.includes(activeTag))
+    : regularItems;
 
   if (isLoading) {
     return (
