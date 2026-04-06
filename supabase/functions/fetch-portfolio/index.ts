@@ -70,16 +70,18 @@ serve(async (req) => {
 
       // Extract tags
       const pageTags = (props['Tags']?.multi_select || []).map((t: any) => t.name)
+      const proposalFeatures = (props['Proposal feature']?.multi_select || []).map((t: any) => t.name)
+      const allPageTags = [...pageTags, ...proposalFeatures.filter((f: string) => f === 'Featured')]
 
       return {
         id: page.id,
         name: props['Name']?.title?.[0]?.plain_text || 'Untitled',
-        tags: pageTags,
+        tags: allPageTags,
         text: props['Text']?.rich_text?.[0]?.plain_text || '',
         monthYear: props['Month & Year']?.rich_text?.[0]?.plain_text || '',
         date: props['Date']?.date?.start || null,
         coverImage,
-        hasNda: pageTags.includes('NDA'),
+        hasNda: allPageTags.includes('NDA'),
       }
     })
 
