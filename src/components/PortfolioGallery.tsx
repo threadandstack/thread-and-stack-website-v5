@@ -67,7 +67,7 @@ export const PortfolioGallery = ({
   // Collect unique tags for filter bar (exclude NDA, Not Ready, Featured)
   const allTags = Array.from(
     new Set(items.flatMap((i) => i.tags))
-  ).filter((t) => !["NDA", "Not Ready", "Featured"].includes(t));
+  ).filter((t) => !["NDA", "Not Ready", "Featured", "Featured-Hero"].includes(t));
 
   const displayed = activeTag
     ? regularItems.filter((i) => i.tags.includes(activeTag))
