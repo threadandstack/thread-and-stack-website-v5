@@ -59,14 +59,18 @@ export const PortfolioGallery = ({
     staleTime: 5 * 60 * 1000,
   });
 
-  // Collect unique tags for filter bar (exclude NDA, Not Ready)
+  // Split featured vs regular
+  const featuredItems = items.filter((i) => i.tags.includes("Featured"));
+  const regularItems = items.filter((i) => !i.tags.includes("Featured"));
+
+  // Collect unique tags for filter bar (exclude NDA, Not Ready, Featured)
   const allTags = Array.from(
     new Set(items.flatMap((i) => i.tags))
-  ).filter((t) => !["NDA", "Not Ready"].includes(t));
+  ).filter((t) => !["NDA", "Not Ready", "Featured"].includes(t));
 
   const displayed = activeTag
-    ? items.filter((i) => i.tags.includes(activeTag))
-    : items;
+    ? regularItems.filter((i) => i.tags.includes(activeTag))
+    : regularItems;
 
   if (isLoading) {
     return (
@@ -95,7 +99,130 @@ export const PortfolioGallery = ({
 
   return (
     <>
-      {/* Tag filter bar */}
+      {/* Featured hero section */}
+      {featuredItems.length > 0 && (
+        <div className="mb-16 space-y-6">
+          {/* Primary featured piece — full-width hero card */}
+          {featuredItems[0] && (
+            <article
+              className="group rounded-2xl border border-border overflow-hidden bg-card hover:shadow-lg transition-shadow cursor-pointer"
+              onClick={() => setDetailItem(featuredItems[0])}
+            >
+              <div className="grid md:grid-cols-2 gap-0">
+                {/* Image side */}
+                <div className="overflow-hidden bg-muted">
+                  {featuredItems[0].coverImage && !featuredItems[0].hasNda ? (
+                    <img
+                      src={featuredItems[0].coverImage}
+                      alt={featuredItems[0].name}
+                      className="w-full h-full object-cover min-h-[280px] md:min-h-[380px] group-hover:scale-[1.02] transition-transform duration-500"
+                    />
+                  ) : (
+                    <div className="w-full h-full min-h-[280px] md:min-h-[380px] flex items-center justify-center">
+                      {featuredItems[0].hasNda ? (
+                        <div className="text-center text-muted-foreground">
+                          <Lock className="w-8 h-8 mx-auto mb-2" />
+                          <span className="text-sm font-sans">Under NDA</span>
+                        </div>
+                      ) : (
+                        <div className="w-16 h-16 rounded-full bg-accent/10" />
+                      )}
+                    </div>
+                  )}
+                </div>
+
+                {/* Content side */}
+                <div className="p-8 md:p-10 flex flex-col justify-center space-y-4">
+                  <div className="flex flex-wrap gap-1.5">
+                    {featuredItems[0].tags
+                      .filter((t) => !["NDA", "Not Ready", "Featured"].includes(t))
+                      .map((tag) => (
+                        <Badge
+                          key={tag}
+                          variant="outline"
+                          className={`text-[11px] font-sans ${TAG_COLORS[tag] || "bg-muted text-muted-foreground border-border"}`}
+                        >
+                          {tag}
+                        </Badge>
+                      ))}
+                  </div>
+                  <h2 className="text-3xl md:text-4xl font-semibold text-foreground leading-tight">
+                    {featuredItems[0].name}
+                  </h2>
+                  {featuredItems[0].text && (
+                    <p className="text-base text-muted-foreground leading-relaxed">
+                      {featuredItems[0].text}
+                    </p>
+                  )}
+                  {featuredItems[0].monthYear && (
+                    <span className="text-xs text-muted-foreground font-sans">
+                      {featuredItems[0].monthYear}
+                    </span>
+                  )}
+                </div>
+              </div>
+            </article>
+          )}
+
+          {/* Secondary featured pieces — smaller cards side by side */}
+          {featuredItems.length > 1 && (
+            <div className="grid md:grid-cols-2 gap-6">
+              {featuredItems.slice(1).map((item) => (
+                <article
+                  key={item.id}
+                  className="group rounded-xl border border-border overflow-hidden bg-card hover:shadow-md transition-shadow cursor-pointer"
+                  onClick={() => setDetailItem(item)}
+                >
+                  {item.coverImage && !item.hasNda ? (
+                    <div className="overflow-hidden bg-muted">
+                      <img
+                        src={item.coverImage}
+                        alt={item.name}
+                        className="w-full h-48 object-cover group-hover:scale-[1.02] transition-transform duration-500"
+                        loading="lazy"
+                      />
+                    </div>
+                  ) : (
+                    <div className="h-48 bg-muted flex items-center justify-center">
+                      {item.hasNda ? (
+                        <div className="text-center text-muted-foreground">
+                          <Lock className="w-6 h-6 mx-auto mb-2" />
+                          <span className="text-xs font-sans">Under NDA</span>
+                        </div>
+                      ) : (
+                        <div className="w-12 h-12 rounded-full bg-accent/10" />
+                      )}
+                    </div>
+                  )}
+                  <div className="p-5 space-y-3">
+                    <div className="flex flex-wrap gap-1.5">
+                      {item.tags
+                        .filter((t) => !["NDA", "Not Ready", "Featured"].includes(t))
+                        .map((tag) => (
+                          <Badge
+                            key={tag}
+                            variant="outline"
+                            className={`text-[11px] font-sans ${TAG_COLORS[tag] || "bg-muted text-muted-foreground border-border"}`}
+                          >
+                            {tag}
+                          </Badge>
+                        ))}
+                    </div>
+                    <h3 className="font-semibold text-xl text-foreground leading-tight">
+                      {item.name}
+                    </h3>
+                    {item.text && (
+                      <p className="text-sm text-muted-foreground line-clamp-2">
+                        {item.text}
+                      </p>
+                    )}
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
       {allTags.length > 1 && (
         <div className="flex flex-wrap gap-2 mb-8">
           <button
@@ -161,7 +288,7 @@ export const PortfolioGallery = ({
               {/* Tags first */}
               <div className="flex flex-wrap gap-1.5">
                 {item.tags
-                  .filter((t) => !["NDA", "Not Ready"].includes(t))
+                  .filter((t) => !["NDA", "Not Ready", "Featured"].includes(t))
                   .map((tag) => (
                     <Badge
                       key={tag}
