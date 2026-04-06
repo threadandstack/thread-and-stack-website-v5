@@ -71,7 +71,7 @@ serve(async (req) => {
       // Extract tags
       const pageTags = (props['Tags']?.multi_select || []).map((t: any) => t.name)
       const proposalFeatures = (props['Proposal feature']?.multi_select || []).map((t: any) => t.name)
-      const allPageTags = [...pageTags, ...proposalFeatures.filter((f: string) => f === 'Featured')]
+      const allPageTags = [...pageTags, ...proposalFeatures.filter((f: string) => f === 'Featured' || f === 'Featured-Hero')]
 
       return {
         id: page.id,
