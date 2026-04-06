@@ -161,7 +161,7 @@ export const PortfolioGallery = ({
       {/* Featured items — side-by-side cards */}
       {featuredItems.length > 0 && (
         <div className="mb-16">
-          <div className={`grid gap-6 ${featuredItems.length === 1 ? 'grid-cols-1' : 'md:grid-cols-2'}`}>
+          <div className="grid grid-cols-1 gap-6">
             {featuredItems.map((item) => (
               <article
                 key={item.id}
