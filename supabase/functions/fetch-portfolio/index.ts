@@ -76,12 +76,12 @@ serve(async (req) => {
       return {
         id: page.id,
         name: props['Name']?.title?.[0]?.plain_text || 'Untitled',
-        tags: pageTags,
+        tags: allPageTags,
         text: props['Text']?.rich_text?.[0]?.plain_text || '',
         monthYear: props['Month & Year']?.rich_text?.[0]?.plain_text || '',
         date: props['Date']?.date?.start || null,
         coverImage,
-        hasNda: pageTags.includes('NDA'),
+        hasNda: allPageTags.includes('NDA'),
       }
     })
 
