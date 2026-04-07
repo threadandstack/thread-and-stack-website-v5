@@ -67,11 +67,21 @@ export const PortfolioGallery = ({
   // Collect unique tags for filter bar (exclude NDA, Not Ready, Featured)
   const allTags = Array.from(
     new Set(items.flatMap((i) => i.tags))
-  ).filter((t) => !["NDA", "Not Ready", "Featured", "Featured-Hero"].includes(t));
+  ).filter((t) => !["NDA", "Not Ready", "Featured", "Featured-Hero", "Masonry-Top"].includes(t));
+
+  const sortedRegular = [...regularItems].sort((a, b) => {
+    const aTop = a.tags.includes("Masonry-Top") ? 1 : 0;
+    const bTop = b.tags.includes("Masonry-Top") ? 1 : 0;
+    if (aTop !== bTop) return bTop - aTop;
+    // Descending by date
+    const aDate = a.date ? new Date(a.date).getTime() : 0;
+    const bDate = b.date ? new Date(b.date).getTime() : 0;
+    return bDate - aDate;
+  });
 
   const displayed = activeTag
-    ? regularItems.filter((i) => i.tags.includes(activeTag))
-    : regularItems;
+    ? sortedRegular.filter((i) => i.tags.includes(activeTag))
+    : sortedRegular;
 
   if (isLoading) {
     return (
@@ -133,7 +143,7 @@ export const PortfolioGallery = ({
               <div className="absolute bottom-0 left-0 right-0 p-8 md:p-10 space-y-3">
                 <div className="flex flex-wrap gap-1.5">
                   {heroItem.tags
-                    .filter((t) => !["NDA", "Not Ready", "Featured", "Featured-Hero"].includes(t))
+                    .filter((t) => !["NDA", "Not Ready", "Featured", "Featured-Hero", "Masonry-Top"].includes(t))
                     .map((tag) => (
                       <Badge
                         key={tag}
@@ -195,7 +205,7 @@ export const PortfolioGallery = ({
                   <div className="p-6 md:p-8 flex flex-col justify-center space-y-3">
                     <div className="flex flex-wrap gap-1.5">
                       {item.tags
-                        .filter((t) => !["NDA", "Not Ready", "Featured", "Featured-Hero"].includes(t))
+                        .filter((t) => !["NDA", "Not Ready", "Featured", "Featured-Hero", "Masonry-Top"].includes(t))
                         .map((tag) => (
                           <Badge
                             key={tag}
@@ -296,7 +306,7 @@ export const PortfolioGallery = ({
               {/* Tags first */}
               <div className="flex flex-wrap gap-1.5">
                 {item.tags
-                  .filter((t) => !["NDA", "Not Ready", "Featured", "Featured-Hero"].includes(t))
+                  .filter((t) => !["NDA", "Not Ready", "Featured", "Featured-Hero", "Masonry-Top"].includes(t))
                   .map((tag) => (
                     <Badge
                       key={tag}
