@@ -6,6 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 
 interface PasswordGateProps {
   storageKey: string;
+  portfolio: string;
   children: React.ReactNode;
 }
 
