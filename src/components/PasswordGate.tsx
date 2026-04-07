@@ -11,7 +11,7 @@ interface PasswordGateProps {
   children: React.ReactNode;
 }
 
-export const PasswordGate = ({ storageKey, children }: PasswordGateProps) => {
+export const PasswordGate = ({ storageKey, portfolio, children }: PasswordGateProps) => {
   const [unlocked, setUnlocked] = useState(() => sessionStorage.getItem(storageKey) === "true");
   const [value, setValue] = useState("");
   const [error, setError] = useState(false);
