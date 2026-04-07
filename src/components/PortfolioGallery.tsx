@@ -69,9 +69,19 @@ export const PortfolioGallery = ({
     new Set(items.flatMap((i) => i.tags))
   ).filter((t) => !["NDA", "Not Ready", "Featured", "Featured-Hero"].includes(t));
 
+  const sortedRegular = [...regularItems].sort((a, b) => {
+    const aTop = a.tags.includes("Masonry-Top") ? 1 : 0;
+    const bTop = b.tags.includes("Masonry-Top") ? 1 : 0;
+    if (aTop !== bTop) return bTop - aTop;
+    // Descending by date
+    const aDate = a.date ? new Date(a.date).getTime() : 0;
+    const bDate = b.date ? new Date(b.date).getTime() : 0;
+    return bDate - aDate;
+  });
+
   const displayed = activeTag
-    ? regularItems.filter((i) => i.tags.includes(activeTag))
-    : regularItems;
+    ? sortedRegular.filter((i) => i.tags.includes(activeTag))
+    : sortedRegular;
 
   if (isLoading) {
     return (
