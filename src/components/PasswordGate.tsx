@@ -1,9 +1,19 @@
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { Lock, Loader2 } from "lucide-react";
+import { Label } from "@/components/ui/label";
+import { Lock, Loader2, Mail } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import * as analytics from "@/hooks/useAnalytics";
+import { toast } from "sonner";
 
 interface PasswordGateProps {
   storageKey: string;
@@ -16,6 +26,14 @@ export const PasswordGate = ({ storageKey, portfolio, children }: PasswordGatePr
   const [value, setValue] = useState("");
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  // Request access form state
+  const [requestOpen, setRequestOpen] = useState(false);
+  const [reqName, setReqName] = useState("");
+  const [reqEmail, setReqEmail] = useState("");
+  const [reqMessage, setReqMessage] = useState("");
+  const [reqLoading, setReqLoading] = useState(false);
+  const [honeypot, setHoneypot] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,6 +64,35 @@ export const PasswordGate = ({ storageKey, portfolio, children }: PasswordGatePr
     }
   };
 
+  const handleRequestAccess = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (honeypot) return; // bot trap
+    if (!reqEmail.trim() || !reqName.trim()) return;
+
+    setReqLoading(true);
+    try {
+      const { error: insertError } = await supabase.from("leads").insert({
+        email: reqEmail.trim(),
+        name: reqName.trim(),
+        message: reqMessage.trim() || null,
+        source: `portfolio-access-request:${portfolio}`,
+      });
+
+      if (insertError) throw insertError;
+
+      analytics.trackEvent("portfolio_access_requested", { portfolio });
+      toast.success("Request sent! I'll be in touch soon.");
+      setRequestOpen(false);
+      setReqName("");
+      setReqEmail("");
+      setReqMessage("");
+    } catch {
+      toast.error("Something went wrong — please try again.");
+    } finally {
+      setReqLoading(false);
+    }
+  };
+
   if (unlocked) return <>{children}</>;
 
   return (
@@ -70,7 +117,75 @@ export const PasswordGate = ({ storageKey, portfolio, children }: PasswordGatePr
         <Button type="submit" className="w-full" disabled={loading}>
           {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Unlock"}
         </Button>
+
+        <div className="pt-2">
+          <button
+            type="button"
+            onClick={() => setRequestOpen(true)}
+            className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <Mail className="w-3.5 h-3.5" />
+            Request access
+          </button>
+        </div>
       </form>
+
+      <Dialog open={requestOpen} onOpenChange={setRequestOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Request Access</DialogTitle>
+            <DialogDescription>
+              Let me know who you are and I'll send you the password.
+            </DialogDescription>
+          </DialogHeader>
+          <form onSubmit={handleRequestAccess} className="space-y-4">
+            {/* Honeypot */}
+            <input
+              type="text"
+              name="website"
+              value={honeypot}
+              onChange={(e) => setHoneypot(e.target.value)}
+              className="absolute -left-[9999px] opacity-0"
+              tabIndex={-1}
+              autoComplete="off"
+            />
+            <div className="space-y-2">
+              <Label htmlFor="req-name">Name</Label>
+              <Input
+                id="req-name"
+                placeholder="Your name"
+                value={reqName}
+                onChange={(e) => setReqName(e.target.value)}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="req-email">Email</Label>
+              <Input
+                id="req-email"
+                type="email"
+                placeholder="you@example.com"
+                value={reqEmail}
+                onChange={(e) => setReqEmail(e.target.value)}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="req-message">Message (optional)</Label>
+              <Textarea
+                id="req-message"
+                placeholder="What brings you here?"
+                value={reqMessage}
+                onChange={(e) => setReqMessage(e.target.value)}
+                rows={3}
+              />
+            </div>
+            <Button type="submit" className="w-full" disabled={reqLoading}>
+              {reqLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Send Request"}
+            </Button>
+          </form>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
