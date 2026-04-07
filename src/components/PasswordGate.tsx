@@ -24,7 +24,7 @@ export const PasswordGate = ({ storageKey, portfolio, children }: PasswordGatePr
 
     try {
       const { data, error: fnError } = await supabase.functions.invoke("verify-portfolio-password", {
-        body: { password: value.trim() },
+        body: { password: value.trim(), portfolio, userAgent: navigator.userAgent },
       });
 
       if (fnError || !data?.valid) {
@@ -32,6 +32,10 @@ export const PasswordGate = ({ storageKey, portfolio, children }: PasswordGatePr
         setTimeout(() => setError(false), 1500);
       } else {
         sessionStorage.setItem(storageKey, "true");
+        if (data.label) {
+          sessionStorage.setItem(`${storageKey}-source`, data.label);
+          trackEvent("portfolio_unlocked", { source: data.label, portfolio });
+        }
         setUnlocked(true);
       }
     } catch {
