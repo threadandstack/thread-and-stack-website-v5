@@ -143,7 +143,7 @@ export const PortfolioGallery = ({
               <div className="absolute bottom-0 left-0 right-0 p-8 md:p-10 space-y-3">
                 <div className="flex flex-wrap gap-1.5">
                   {heroItem.tags
-                    .filter((t) => !["NDA", "Not Ready", "Featured", "Featured-Hero"].includes(t))
+                    .filter((t) => !["NDA", "Not Ready", "Featured", "Featured-Hero", "Masonry-Top"].includes(t))
                     .map((tag) => (
                       <Badge
                         key={tag}
@@ -205,7 +205,7 @@ export const PortfolioGallery = ({
                   <div className="p-6 md:p-8 flex flex-col justify-center space-y-3">
                     <div className="flex flex-wrap gap-1.5">
                       {item.tags
-                        .filter((t) => !["NDA", "Not Ready", "Featured", "Featured-Hero"].includes(t))
+                        .filter((t) => !["NDA", "Not Ready", "Featured", "Featured-Hero", "Masonry-Top"].includes(t))
                         .map((tag) => (
                           <Badge
                             key={tag}
@@ -306,7 +306,7 @@ export const PortfolioGallery = ({
               {/* Tags first */}
               <div className="flex flex-wrap gap-1.5">
                 {item.tags
-                  .filter((t) => !["NDA", "Not Ready", "Featured", "Featured-Hero"].includes(t))
+                  .filter((t) => !["NDA", "Not Ready", "Featured", "Featured-Hero", "Masonry-Top"].includes(t))
                   .map((tag) => (
                     <Badge
                       key={tag}
