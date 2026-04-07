@@ -3,13 +3,15 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Lock, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { trackEvent } from "@/hooks/useAnalytics";
 
 interface PasswordGateProps {
   storageKey: string;
+  portfolio: string;
   children: React.ReactNode;
 }
 
-export const PasswordGate = ({ storageKey, children }: PasswordGateProps) => {
+export const PasswordGate = ({ storageKey, portfolio, children }: PasswordGateProps) => {
   const [unlocked, setUnlocked] = useState(() => sessionStorage.getItem(storageKey) === "true");
   const [value, setValue] = useState("");
   const [error, setError] = useState(false);
@@ -22,7 +24,7 @@ export const PasswordGate = ({ storageKey, children }: PasswordGateProps) => {
 
     try {
       const { data, error: fnError } = await supabase.functions.invoke("verify-portfolio-password", {
-        body: { password: value.trim() },
+        body: { password: value.trim(), portfolio, userAgent: navigator.userAgent },
       });
 
       if (fnError || !data?.valid) {
@@ -30,6 +32,10 @@ export const PasswordGate = ({ storageKey, children }: PasswordGateProps) => {
         setTimeout(() => setError(false), 1500);
       } else {
         sessionStorage.setItem(storageKey, "true");
+        if (data.label) {
+          sessionStorage.setItem(`${storageKey}-source`, data.label);
+          trackEvent("portfolio_unlocked", { source: data.label, portfolio });
+        }
         setUnlocked(true);
       }
     } catch {

@@ -224,6 +224,62 @@ export type Database = {
         }
         Relationships: []
       }
+      portfolio_access_codes: {
+        Row: {
+          active: boolean
+          code: string
+          created_at: string
+          id: string
+          label: string
+        }
+        Insert: {
+          active?: boolean
+          code: string
+          created_at?: string
+          id?: string
+          label: string
+        }
+        Update: {
+          active?: boolean
+          code?: string
+          created_at?: string
+          id?: string
+          label?: string
+        }
+        Relationships: []
+      }
+      portfolio_access_logs: {
+        Row: {
+          code_id: string | null
+          created_at: string
+          id: string
+          portfolio: string
+          user_agent: string | null
+        }
+        Insert: {
+          code_id?: string | null
+          created_at?: string
+          id?: string
+          portfolio: string
+          user_agent?: string | null
+        }
+        Update: {
+          code_id?: string | null
+          created_at?: string
+          id?: string
+          portfolio?: string
+          user_agent?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "portfolio_access_logs_code_id_fkey"
+            columns: ["code_id"]
+            isOneToOne: false
+            referencedRelation: "portfolio_access_codes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       portfolio_content_cache: {
         Row: {
           cover_image: string | null
