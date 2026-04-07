@@ -1,5 +1,4 @@
-// GA4 Analytics Hook
-// Centralized tracking for all custom events
+// GA4 Analytics Hook — Centralized tracking for all custom events
 
 declare global {
   interface Window {
@@ -8,7 +7,7 @@ declare global {
   }
 }
 
-type EventParams = Record<string, string | number | boolean | undefined>;
+export type EventParams = Record<string, string | number | boolean | undefined>;
 
 export const trackEvent = (eventName: string, params?: EventParams) => {
   if (typeof window !== 'undefined' && window.gtag) {
