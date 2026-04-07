@@ -74,6 +74,12 @@ const AdminDashboard = () => {
       icon: Image,
       href: "/admin/images",
     },
+    {
+      title: "Portfolio Access",
+      description: "Track portfolio views and manage access codes by funnel",
+      icon: KeyRound,
+      href: "/admin/portfolio-access",
+    },
   ];
 
   return (
