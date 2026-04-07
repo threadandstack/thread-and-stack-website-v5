@@ -2,7 +2,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, LogOut, Loader2, Search, BookOpen, Image, BarChart3, RefreshCw } from "lucide-react";
+import { ArrowLeft, LogOut, Loader2, Search, BookOpen, Image, BarChart3, RefreshCw, KeyRound } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -73,6 +73,12 @@ const AdminDashboard = () => {
       description: "Browse and manage project images and assets",
       icon: Image,
       href: "/admin/images",
+    },
+    {
+      title: "Portfolio Access",
+      description: "Track portfolio views and manage access codes by funnel",
+      icon: KeyRound,
+      href: "/admin/portfolio-access",
     },
   ];
 

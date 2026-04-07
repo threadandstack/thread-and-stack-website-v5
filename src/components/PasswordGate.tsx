@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Lock, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { trackEvent } from "@/hooks/useAnalytics";
+import * as analytics from "@/hooks/useAnalytics";
 
 interface PasswordGateProps {
   storageKey: string;
@@ -34,7 +34,7 @@ export const PasswordGate = ({ storageKey, portfolio, children }: PasswordGatePr
         sessionStorage.setItem(storageKey, "true");
         if (data.label) {
           sessionStorage.setItem(`${storageKey}-source`, data.label);
-          trackEvent("portfolio_unlocked", { source: data.label, portfolio });
+          analytics.trackEvent("portfolio_unlocked", { source: data.label, portfolio });
         }
         setUnlocked(true);
       }

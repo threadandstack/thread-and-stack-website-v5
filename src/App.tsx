@@ -45,6 +45,7 @@ import NotionDevotionBrightonPage from "./pages/NotionDevotionBrightonPage";
 import GGFProposalPage from "./pages/proposal/GGFProposalPage";
 import CreativePortfolioPage from "./pages/CreativePortfolioPage";
 import NotionPortfolioPage from "./pages/NotionPortfolioPage";
+import PortfolioAccessAdminPage from "./pages/PortfolioAccessAdminPage";
 import { CookieConsent } from "./components/CookieConsent";
 
 const queryClient = new QueryClient();
@@ -86,6 +87,7 @@ const App = () => (
           <Route path="/admin/images" element={<ImageLibraryPage />} />
           <Route path="/admin/geo" element={<GeoAdminPage />} />
           <Route path="/admin/analytics" element={<AdminAnalyticsPage />} />
+          <Route path="/admin/portfolio-access" element={<PortfolioAccessAdminPage />} />
           <Route path="/favourite-fiction" element={<FictionFavoritesPage />} />
           <Route path="/private/brendan-rodgers-cv" element={<CVPage />} />
           <Route path="/retainer/launch" element={<RetainerLaunchPage />} />
