@@ -1,5 +1,6 @@
 // GA4 Analytics Hook — Centralized tracking for all custom events
 
+
 declare global {
   interface Window {
     gtag?: (...args: unknown[]) => void;
