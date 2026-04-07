@@ -1,87 +1,59 @@
 
 
-# Portfolio Pages Powered by Notion — Plan
+# Multi-Password Portfolio Access Tracking
 
-## What We Found in Notion
+## What This Does
 
-The **Brendan Rodgers Portfolio** page contains an inline **Portfolio database** with this schema:
+Instead of one password, you'll have a database table of password codes, each linked to a label (e.g. "linkedin-outreach", "client-acme", "event-brighton"). When someone enters a code, the system logs which code was used, when, and from where — giving you attribution data on who's viewing your portfolio and from which funnel.
 
-| Property | Type | Purpose |
+## Database
+
+**New table: `portfolio_access_codes`**
+
+| Column | Type | Purpose |
 |---|---|---|
-| Name | title | Project name |
-| Tags | multi_select | Brand Strategy, Content Strategy, Copywriting & Storytelling, Customer Journey Mapping, CRM, Design, Performance, Clientside, NDA, Not Ready |
-| Show in Portfolio | checkbox | Controls public visibility |
-| Text | text | Project description/summary |
-| Month & Year | text | Display date (e.g. "Oct 2025") |
-| Date | date | Sortable date |
-| Place | place | Location |
+| id | uuid | Primary key |
+| code | text (unique) | The password/code itself |
+| label | text | Human-readable source label (e.g. "LinkedIn DM — April") |
+| active | boolean | Enable/disable codes without deleting |
+| created_at | timestamptz | When the code was created |
 
-A second identical database exists under "BFB Labs Examples" — this can serve as the Notion systems/builds portfolio.
+**New table: `portfolio_access_logs`**
 
-The Tags naturally split across your two pillars:
-- **Narrative Strategy**: Brand Strategy, Content Strategy, Copywriting & Storytelling, Customer Journey Mapping, Design
-- **Notion Systems**: CRM, Performance, Clientside (plus new tags you'd add for system builds)
-
-## Proposed Approach
-
-### Use Notion as single source of truth for both portfolios
-
-Rather than hardcoding portfolio items (as with the current Nerve Tumours UK featured project), fetch portfolio entries from the Notion databases via edge functions. You manage everything in Notion — add a new project, tick "Show in Portfolio", and it appears on the site.
-
-### Two portfolio pages, one component pattern
-
-**`/portfolio/creative`** — Narrative Strategy work
-- Fetches from the main Portfolio database (`2808863b-87d4-8027...`)
-- Filters by `Show in Portfolio = true` and creative-pillar Tags
-- Gallery grid of project cards with cover images, tags, and summary text
-- Click to expand into a detail view (modal or dedicated sub-page) showing full project content from Notion
-
-**`/portfolio/notion`** — Notion Systems & Builds
-- Fetches from the BFB Labs Portfolio database (`2e08863b-87d4-81e2...`) — or the same database filtered differently, depending on how you want to organise it
-- Same gallery layout and interaction pattern
-- Showcases Notion environments, automations, system builds
-
-### Edge function: `fetch-portfolio`
-
-A new edge function that:
-- Accepts `database_id` and optional `tags` filter as parameters
-- Queries the Notion API for entries where `Show in Portfolio = true`
-- Returns: name, tags, text summary, month & year, cover image (from page cover), and page content blocks for the detail view
-- Notion-hosted image URLs expire after ~1 hour, so we'd either cache in Supabase (like the blog) or accept fresh fetches
-
-### Frontend component: `PortfolioGallery`
-
-A shared component used by both `/portfolio/creative` and `/portfolio/notion`:
-- Responsive grid (1 col mobile, 2 col tablet, 3 col desktop)
-- Each card shows cover image, project name, tags as pills, and summary text
-- Tag-based filtering UI at the top (click a tag to filter)
-- Detail modal on click, rendering Notion block content (reusing the same HTML rendering approach as blog posts and governance pages)
-- Soft CTA at the bottom: "Like what you see? Let's talk" linking to the relevant service page
-
-### Integration with the lead gen plan
-
-Both portfolio pages feed into the trackable flow:
-- CTAs on portfolio pages link to `/work-with-me` or open the ContactDrawer with `source=portfolio-creative` or `source=portfolio-notion`
-- UTM params carry through from the portfolio page to the thank you page
-- Portfolio page views themselves become trackable funnel steps in GA4
-
-## Technical Summary
-
-| Step | What | Files |
+| Column | Type | Purpose |
 |---|---|---|
-| 1 | New edge function `fetch-portfolio` | `supabase/functions/fetch-portfolio/index.ts` |
-| 2 | Shared `PortfolioGallery` component | `src/components/PortfolioGallery.tsx` |
-| 3 | Portfolio detail modal (reuse Notion renderer) | `src/components/PortfolioDetailModal.tsx` |
-| 4 | Creative portfolio page | `src/pages/CreativePortfolioPage.tsx` |
-| 5 | Notion portfolio page | `src/pages/NotionPortfolioPage.tsx` |
-| 6 | Register routes in App.tsx | `src/App.tsx` |
-| 7 | Add nav links to portfolio pages | `src/components/Navigation.tsx` |
+| id | uuid | Primary key |
+| code_id | uuid (FK) | Which code was used |
+| portfolio | text | Which portfolio was accessed (e.g. "creative", "notion") |
+| user_agent | text | Browser/device info |
+| created_at | timestamptz | Timestamp of access |
 
-## Open Question
+RLS: Public insert on logs (no auth needed), admin-only select on both tables. Codes table is admin-only for all operations.
 
-The two Notion databases have identical schemas. You could either:
-- **A)** Use both databases separately (one for creative, one for Notion builds) — cleaner separation, easier to manage independently
-- **B)** Merge everything into one database and differentiate with a new "Pillar" property — single source, but more complex filtering
+## Edge Function Update: `verify-portfolio-password`
 
-Which do you prefer? Or would you like to start with just the creative portfolio and add the Notion builds portfolio later?
+- Instead of comparing against a single env var, query `portfolio_access_codes` for a matching active code
+- On match, insert a row into `portfolio_access_logs` with the code ID, portfolio name, and user agent
+- Return `{ valid: true, label: "..." }` so the frontend can store the source label
+- The existing `PORTFOLIO_PASSWORD` secret stays as a fallback master password
+
+## Frontend Changes: `PasswordGate.tsx`
+
+- Pass a `portfolio` prop (e.g. "creative") to identify which portfolio is being accessed
+- Send `portfolio` and `userAgent` to the edge function alongside the password
+- On success, store the returned `label` in sessionStorage for optional GA4 event tracking
+- Fire a `trackEvent('portfolio_unlocked', { source: label, portfolio })` on successful unlock
+
+## Admin Management
+
+You'll manage codes directly via the backend — add rows to `portfolio_access_codes` with your chosen codes and labels. No admin UI needed initially, but one could be added to the existing admin dashboard later.
+
+## Files Changed
+
+| File | Change |
+|---|---|
+| Migration | Create `portfolio_access_codes` and `portfolio_access_logs` tables with RLS |
+| `supabase/functions/verify-portfolio-password/index.ts` | Query DB instead of env var, log access |
+| `src/components/PasswordGate.tsx` | Add `portfolio` prop, send metadata, track GA4 event |
+| `src/pages/CreativePortfolioPage.tsx` | Pass `portfolio="creative"` to PasswordGate |
 
