@@ -15,16 +15,6 @@ import { supabase } from "@/integrations/supabase/client";
 import * as analytics from "@/hooks/useAnalytics";
 import { toast } from "sonner";
 import BlackWordmark from "@/assets/logos/Black_TS_Wordmark.svg";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
-import { supabase } from "@/integrations/supabase/client";
-import * as analytics from "@/hooks/useAnalytics";
-import { toast } from "sonner";
 
 interface PasswordGateProps {
   storageKey: string;
