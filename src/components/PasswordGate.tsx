@@ -1,27 +1,42 @@
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Lock } from "lucide-react";
+import { Lock, Loader2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 interface PasswordGateProps {
   storageKey: string;
-  passwordHash: string; // simple comparison — not cryptographic
   children: React.ReactNode;
 }
 
-export const PasswordGate = ({ storageKey, passwordHash, children }: PasswordGateProps) => {
+export const PasswordGate = ({ storageKey, children }: PasswordGateProps) => {
   const [unlocked, setUnlocked] = useState(() => sessionStorage.getItem(storageKey) === "true");
   const [value, setValue] = useState("");
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (value.trim() === passwordHash) {
-      sessionStorage.setItem(storageKey, "true");
-      setUnlocked(true);
-    } else {
+    setLoading(true);
+    setError(false);
+
+    try {
+      const { data, error: fnError } = await supabase.functions.invoke("verify-portfolio-password", {
+        body: { password: value.trim() },
+      });
+
+      if (fnError || !data?.valid) {
+        setError(true);
+        setTimeout(() => setError(false), 1500);
+      } else {
+        sessionStorage.setItem(storageKey, "true");
+        setUnlocked(true);
+      }
+    } catch {
       setError(true);
       setTimeout(() => setError(false), 1500);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -46,7 +61,9 @@ export const PasswordGate = ({ storageKey, passwordHash, children }: PasswordGat
           autoFocus
         />
         {error && <p className="text-sm text-destructive">Incorrect password</p>}
-        <Button type="submit" className="w-full">Unlock</Button>
+        <Button type="submit" className="w-full" disabled={loading}>
+          {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Unlock"}
+        </Button>
       </form>
     </div>
   );
