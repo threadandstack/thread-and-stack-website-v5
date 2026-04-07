@@ -71,14 +71,18 @@ export const PasswordGate = ({ storageKey, portfolio, children }: PasswordGatePr
 
     setReqLoading(true);
     try {
-      const { error: insertError } = await supabase.from("leads").insert({
+      const leadData = {
         email: reqEmail.trim(),
         name: reqName.trim(),
         message: reqMessage.trim() || null,
         source: `portfolio-access-request:${portfolio}`,
-      });
+      };
 
+      const { error: insertError } = await supabase.from("leads").insert(leadData);
       if (insertError) throw insertError;
+
+      // Sync to Notion (fire-and-forget)
+      supabase.functions.invoke("sync-lead-to-notion", { body: leadData }).catch(() => {});
 
       analytics.trackEvent("portfolio_access_requested", { portfolio });
       toast.success("Request sent! I'll be in touch soon.");
