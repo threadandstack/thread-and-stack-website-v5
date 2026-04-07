@@ -101,7 +101,8 @@ export const PasswordGate = ({ storageKey, portfolio, children }: PasswordGatePr
   if (unlocked) return <>{children}</>;
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-6">
+    <div className="min-h-screen bg-background flex flex-col items-center justify-center p-6">
+      <img src={BlackWordmark} alt="Thread & Stack" className="h-16 md:h-20 mb-12" />
       <form onSubmit={handleSubmit} className="w-full max-w-sm space-y-6 text-center">
         <div className="mx-auto w-12 h-12 rounded-full bg-muted flex items-center justify-center">
           <Lock className="w-5 h-5 text-muted-foreground" />
