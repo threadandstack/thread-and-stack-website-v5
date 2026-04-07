@@ -34,7 +34,7 @@ export const PasswordGate = ({ storageKey, portfolio, children }: PasswordGatePr
         sessionStorage.setItem(storageKey, "true");
         if (data.label) {
           sessionStorage.setItem(`${storageKey}-source`, data.label);
-          trackEvent("portfolio_unlocked", { source: data.label, portfolio });
+          analytics.trackEvent("portfolio_unlocked", { source: data.label, portfolio });
         }
         setUnlocked(true);
       }
