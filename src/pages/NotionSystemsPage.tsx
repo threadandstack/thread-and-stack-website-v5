@@ -11,6 +11,8 @@ import notionAdvanced from "@/assets/notion-advanced.png";
 import notionWorkflows from "@/assets/notion-workflows.png";
 import notionEssentials from "@/assets/notion-essentials.png";
 import notionAmbassadorBlack from "@/assets/notion-ambassador-black.png";
+import notionConsultingPartner from "@/assets/notion-consulting-partner.png";
+import notionServiceSpecialist from "@/assets/notion-service-specialist.png";
 import heroImage from "@/assets/brendan-hackathon.jpg";
 import notionCmsBuild from "@/assets/notion-cms-build.png";
 import notionCustomAgents from "@/assets/notion-custom-agents.png";
@@ -305,11 +307,11 @@ const NotionSystemsPage = () => {
                 <img src={notionWorkflows} alt="Notion Academy Workflows" className="h-24 w-auto" />
                 <img src={notionEssentials} alt="Notion Academy Essentials" className="h-24 w-auto" />
               </div>
-              <img
-                src={notionAmbassadorBlack}
-                alt="Notion Official Ambassador"
-                className="h-14 w-auto"
-              />
+              <div className="flex flex-wrap items-center gap-4">
+                <img src={notionAmbassadorBlack} alt="Notion Official Ambassador" className="h-14 w-auto" />
+                <img src={notionConsultingPartner} alt="Notion Consulting Partner" className="h-24 w-auto" />
+                <img src={notionServiceSpecialist} alt="Notion Service Specialist" className="h-24 w-auto" />
+              </div>
             </div>
 
             {/* AI Fluency */}

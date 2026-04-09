@@ -11,6 +11,8 @@ import notionAdmin from "@/assets/notion-certified-admin.png";
 import notionAdvanced from "@/assets/notion-advanced.png";
 import notionWorkflows from "@/assets/notion-workflows.png";
 import notionEssentials from "@/assets/notion-essentials.png";
+import notionConsultingPartner from "@/assets/notion-consulting-partner.png";
+import notionServiceSpecialist from "@/assets/notion-service-specialist.png";
 import notionHeroPhoto from "@/assets/notion-certified-hero.png";
 import notionAmbassadorBlack from "@/assets/notion-ambassador-black.png";
 import { trackCtaClick } from "@/hooks/useAnalytics";
@@ -271,7 +273,7 @@ const IndexHorizontal = () => {
             <div className="grid md:grid-cols-2 gap-12 items-center mb-20">
               <div>
                 <div className="flex flex-wrap items-center gap-3 mb-4">
-                  {[notionAdmin, notionAdvanced, notionWorkflows, notionEssentials].map((badge, i) => (
+                  {[notionAdmin, notionAdvanced, notionWorkflows, notionEssentials, notionConsultingPartner, notionServiceSpecialist].map((badge, i) => (
                     <img key={i} src={badge} alt="Notion badge" className="w-10 h-auto" />
                   ))}
                 </div>
