@@ -8,6 +8,8 @@ import notionAdmin from "@/assets/notion-certified-admin.png";
 import notionAdvanced from "@/assets/notion-advanced.png";
 import notionWorkflows from "@/assets/notion-workflows.png";
 import notionEssentials from "@/assets/notion-essentials.png";
+import notionConsultingPartner from "@/assets/notion-consulting-partner.png";
+import notionServiceSpecialist from "@/assets/notion-service-specialist.png";
 
 export const OffersGrid = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -131,7 +133,7 @@ export const OffersGrid = () => {
                 {/* Notion badges for systems card */}
                 {index === 1 && (
                   <div className="flex items-center gap-2 mb-6 pt-2">
-                    {[notionAdmin, notionAdvanced, notionWorkflows, notionEssentials].map((badge, i) => (
+                    {[notionAdmin, notionAdvanced, notionWorkflows, notionEssentials, notionConsultingPartner, notionServiceSpecialist].map((badge, i) => (
                       <img
                         key={i}
                         src={badge}
