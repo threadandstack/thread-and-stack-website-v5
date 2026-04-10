@@ -11,6 +11,9 @@ const PORTFOLIO_DATABASES = [
   { id: '2e08863b-87d4-81e2-bea8-f435421a841a', label: 'notion' },
 ]
 
+// Matches Notion-hosted S3 file URLs (images, videos, etc.)
+const NOTION_S3_REGEX = /https:\/\/(?:prod-files-secure|s3)\.s3[.\w-]*\.amazonaws\.com\/[^\s"'<>]+/g
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders })
@@ -36,24 +39,20 @@ serve(async (req) => {
 
     let totalListingSynced = 0
     let totalContentSynced = 0
+    let totalMediaPersisted = 0
 
     for (const db of PORTFOLIO_DATABASES) {
       console.log(`Syncing portfolio database: ${db.label} (${db.id})`)
 
-      // Query Notion for pages with Show in Portfolio = true
-      // Use last_edited_time filter for incremental sync
-      const filter: any = {
-        and: [
-          { property: 'Show in Portfolio', checkbox: { equals: true } },
-          { timestamp: 'last_edited_time', last_edited_time: { after: lastSyncedAt } },
-        ]
-      }
-
-      // Check if this is first run (very old timestamp = full sync)
       const isFirstRun = new Date(lastSyncedAt).getTime() < new Date('2001-01-01').getTime()
       const queryFilter = isFirstRun
         ? { property: 'Show in Portfolio', checkbox: { equals: true } }
-        : filter
+        : {
+            and: [
+              { property: 'Show in Portfolio', checkbox: { equals: true } },
+              { timestamp: 'last_edited_time', last_edited_time: { after: lastSyncedAt } },
+            ]
+          }
 
       let allResults: any[] = []
       let startCursor: string | undefined = undefined
@@ -90,7 +89,6 @@ serve(async (req) => {
 
       if (allResults.length === 0) continue
 
-      // Process each page: upsert listing + render content
       for (const page of allResults) {
         const props = page.properties
 
@@ -99,7 +97,16 @@ serve(async (req) => {
         if (page.cover?.file?.url) coverImage = page.cover.file.url
         else if (page.cover?.external?.url) coverImage = page.cover.external.url
 
-        // Extract tags
+        // Persist cover image if it's a Notion S3 URL
+        if (coverImage && NOTION_S3_REGEX.test(coverImage)) {
+          NOTION_S3_REGEX.lastIndex = 0
+          const persisted = await persistSingleFile(sb, supabaseUrl, coverImage, `covers/${page.id}`)
+          if (persisted) {
+            coverImage = persisted
+            totalMediaPersisted++
+          }
+        }
+
         const pageTags = (props['Tags']?.multi_select || []).map((t: any) => t.name)
         const proposalFeatures = (props['Proposal feature']?.multi_select || []).map((t: any) => t.name)
         const allPageTags = [...pageTags, ...proposalFeatures.filter((f: string) => ['Featured', 'Featured-Hero', 'Masonry-Top'].includes(f))]
@@ -107,7 +114,6 @@ serve(async (req) => {
         const name = props['Name']?.title?.[0]?.plain_text || 'Untitled'
         const hasNda = allPageTags.includes('NDA')
 
-        // Upsert listing cache
         const listingRow = {
           database_id: db.id,
           notion_page_id: page.id,
@@ -124,12 +130,16 @@ serve(async (req) => {
         await sb.from('portfolio_listing_cache').upsert(listingRow, { onConflict: 'notion_page_id' })
         totalListingSynced++
 
-        // Skip content rendering for NDA items
         if (hasNda) continue
 
-        // Render content HTML
         try {
-          const htmlContent = await renderPageContent(page.id, NOTION_API_KEY)
+          let htmlContent = await renderPageContent(page.id, NOTION_API_KEY)
+
+          // Persist all media in HTML
+          const mediaResult = await persistMediaInHtml(sb, supabaseUrl, htmlContent, page.id)
+          htmlContent = mediaResult.html
+          totalMediaPersisted += mediaResult.count
+
           const monthYear = props['Month & Year']?.rich_text?.[0]?.plain_text || ''
 
           await sb.from('portfolio_content_cache').upsert({
@@ -148,16 +158,15 @@ serve(async (req) => {
       }
     }
 
-    // Update sync timestamp
     await sb.from('sync_metadata').upsert(
       { sync_type: 'portfolio', last_synced_at: syncStartTime },
       { onConflict: 'sync_type' }
     )
 
-    console.log(`Portfolio sync complete: ${totalListingSynced} listings, ${totalContentSynced} content pages`)
+    console.log(`Portfolio sync complete: ${totalListingSynced} listings, ${totalContentSynced} content, ${totalMediaPersisted} media files persisted`)
 
     return new Response(
-      JSON.stringify({ success: true, listings_synced: totalListingSynced, content_synced: totalContentSynced }),
+      JSON.stringify({ success: true, listings_synced: totalListingSynced, content_synced: totalContentSynced, media_persisted: totalMediaPersisted }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     )
   } catch (error) {
@@ -169,12 +178,99 @@ serve(async (req) => {
   }
 })
 
+// ─── Media persistence helpers ───
+
+function getExtensionFromUrl(url: string): string {
+  try {
+    const pathname = new URL(url).pathname
+    const lastSegment = pathname.split('/').pop() || ''
+    const ext = lastSegment.split('.').pop()?.toLowerCase() || ''
+    if (['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'mp4', 'mov', 'webm', 'pdf'].includes(ext)) return ext
+  } catch {}
+  return 'bin'
+}
+
+function getMimeType(ext: string): string {
+  const map: Record<string, string> = {
+    jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', gif: 'image/gif',
+    webp: 'image/webp', svg: 'image/svg+xml', mp4: 'video/mp4', mov: 'video/quicktime',
+    webm: 'video/webm', pdf: 'application/pdf', bin: 'application/octet-stream',
+  }
+  return map[ext] || 'application/octet-stream'
+}
+
+async function persistSingleFile(sb: any, supabaseUrl: string, notionUrl: string, storagePath: string): Promise<string | null> {
+  try {
+    const ext = getExtensionFromUrl(notionUrl)
+    const fullPath = `${storagePath}.${ext}`
+
+    const res = await fetch(notionUrl)
+    if (!res.ok) {
+      console.error(`Failed to download media: ${res.status} for ${notionUrl.substring(0, 80)}...`)
+      return null
+    }
+
+    const blob = await res.blob()
+    const arrayBuffer = await blob.arrayBuffer()
+    const uint8 = new Uint8Array(arrayBuffer)
+
+    const { error } = await sb.storage.from('notion-media').upload(fullPath, uint8, {
+      contentType: getMimeType(ext),
+      upsert: true,
+    })
+
+    if (error) {
+      console.error(`Storage upload error for ${fullPath}:`, error.message)
+      return null
+    }
+
+    return `${supabaseUrl}/storage/v1/object/public/notion-media/${fullPath}`
+  } catch (e) {
+    console.error(`persistSingleFile error:`, e)
+    return null
+  }
+}
+
+async function persistMediaInHtml(sb: any, supabaseUrl: string, html: string, pageId: string): Promise<{ html: string; count: number }> {
+  const matches = html.match(NOTION_S3_REGEX)
+  if (!matches) return { html, count: 0 }
+
+  // Deduplicate
+  const uniqueUrls = [...new Set(matches)]
+  let count = 0
+  let result = html
+
+  for (let i = 0; i < uniqueUrls.length; i++) {
+    const originalUrl = uniqueUrls[i]
+    // Strip query params for a clean URL to use as an identifier
+    const cleanUrl = originalUrl.split('?')[0]
+    // Create a deterministic path from the page ID and a hash of the clean URL
+    const hash = await hashString(cleanUrl)
+    const storagePath = `pages/${pageId}/${hash}`
+
+    const permanentUrl = await persistSingleFile(sb, supabaseUrl, originalUrl, storagePath)
+    if (permanentUrl) {
+      // Replace all occurrences (the URL with its query params)
+      result = result.split(originalUrl).join(permanentUrl)
+      count++
+    }
+  }
+
+  return { html: result, count }
+}
+
+async function hashString(str: string): Promise<string> {
+  const data = new TextEncoder().encode(str)
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data)
+  const hashArray = Array.from(new Uint8Array(hashBuffer))
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('').substring(0, 16)
+}
+
 // ─── Block-to-HTML rendering (reused from fetch-portfolio-page) ───
 
 async function renderPageContent(pageId: string, notionApiKey: string): Promise<string> {
   const headers = { 'Authorization': `Bearer ${notionApiKey}`, 'Notion-Version': '2022-06-28' }
 
-  // Fetch all blocks with pagination
   let allBlocks: any[] = []
   let startCursor: string | undefined = undefined
   do {
@@ -354,7 +450,6 @@ async function renderPageContent(pageId: string, notionApiKey: string): Promise<
     }
   }
 
-  // Group consecutive list items
   const htmlBlocks: string[] = []
   let inBullet = false, inNum = false
 

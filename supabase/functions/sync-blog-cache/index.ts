@@ -8,6 +8,9 @@ const corsHeaders = {
 
 const DATABASE_ID = '2bc8863b87d4802fa65dd15c42ffa13b'
 
+// Matches Notion-hosted S3 file URLs
+const NOTION_S3_REGEX = /https:\/\/(?:prod-files-secure|s3)\.s3[.\w-]*\.amazonaws\.com\/[^\s"'<>]+/g
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders })
@@ -32,7 +35,6 @@ serve(async (req) => {
     const syncStartTime = new Date().toISOString()
     const isFirstRun = new Date(lastSyncedAt).getTime() < new Date('2001-01-01').getTime()
 
-    // Build filter: Status = Live, optionally with last_edited_time
     const baseFilter = { property: 'Status', status: { equals: 'Live' } }
     const queryFilter = isFirstRun
       ? baseFilter
@@ -43,7 +45,6 @@ serve(async (req) => {
           ]
         }
 
-    // Query Notion
     let allResults: any[] = []
     let startCursor: string | undefined = undefined
     do {
@@ -74,24 +75,36 @@ serve(async (req) => {
     console.log(`Blog sync: found ${allResults.length} changed posts (incremental: ${!isFirstRun})`)
 
     if (allResults.length === 0) {
-      // Update sync timestamp even if nothing changed
       await supabase.from('sync_metadata').upsert(
         { sync_type: 'blog', last_synced_at: syncStartTime },
         { onConflict: 'sync_type' }
       )
       return new Response(
-        JSON.stringify({ success: true, synced: 0, content_synced: 0 }),
+        JSON.stringify({ success: true, synced: 0, content_synced: 0, media_persisted: 0 }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       )
     }
 
+    let totalMediaPersisted = 0
+
     // Process listing metadata
-    const posts = allResults.map((page: any) => {
+    const posts = await Promise.all(allResults.map(async (page: any) => {
       const properties = page.properties
       const featuredImageFiles = properties['Featured IMG']?.files || []
-      const headerImage = featuredImageFiles.length > 0
+      let headerImage = featuredImageFiles.length > 0
         ? featuredImageFiles[0].file?.url || featuredImageFiles[0].external?.url
         : null
+
+      // Persist header image
+      if (headerImage && NOTION_S3_REGEX.test(headerImage)) {
+        NOTION_S3_REGEX.lastIndex = 0
+        const persisted = await persistSingleFile(supabase, supabaseUrl, headerImage, `blog-covers/${page.id}`)
+        if (persisted) {
+          headerImage = persisted
+          totalMediaPersisted++
+        }
+      }
+
       const title = properties['Name']?.title?.[0]?.plain_text || 'Untitled'
       const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
 
@@ -108,11 +121,10 @@ serve(async (req) => {
         featured: properties['Featured']?.checkbox || false,
         synced_at: new Date().toISOString(),
       }
-    })
+    }))
 
-    // Upsert listing cache (blog_posts_cache)
+    // Upsert listing cache
     if (isFirstRun) {
-      // Full sync: clear and reinsert
       await supabase.from('blog_posts_cache').delete().neq('id', '00000000-0000-0000-0000-000000000000')
       if (posts.length > 0) {
         const { error: insertError } = await supabase.from('blog_posts_cache').insert(posts)
@@ -122,7 +134,6 @@ serve(async (req) => {
         }
       }
     } else {
-      // Incremental: upsert changed posts
       for (const post of posts) {
         await supabase.from('blog_posts_cache').upsert(post, { onConflict: 'notion_id' })
       }
@@ -130,44 +141,43 @@ serve(async (req) => {
 
     // Pre-render full HTML content for each changed post
     let contentSynced = 0
-    for (const page of allResults) {
-      const properties = page.properties
-      const title = properties['Name']?.title?.[0]?.plain_text || 'Untitled'
-      const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
+    for (let i = 0; i < allResults.length; i++) {
+      const page = allResults[i]
+      const post = posts[i]
 
       try {
-        const htmlContent = await renderBlogContent(page.id, NOTION_API_KEY)
-        const featuredImageFiles = properties['Featured IMG']?.files || []
-        const headerImage = featuredImageFiles.length > 0
-          ? featuredImageFiles[0].file?.url || featuredImageFiles[0].external?.url
-          : null
+        let htmlContent = await renderBlogContent(page.id, NOTION_API_KEY)
+
+        // Persist all media in HTML
+        const mediaResult = await persistMediaInHtml(supabase, supabaseUrl, htmlContent, page.id)
+        htmlContent = mediaResult.html
+        totalMediaPersisted += mediaResult.count
 
         await supabase.from('blog_content_cache').upsert({
           notion_id: page.id,
-          slug,
-          title,
+          slug: post.slug,
+          title: post.title,
           html_content: htmlContent,
-          header_image_url: headerImage,
-          description: properties['Description']?.rich_text?.[0]?.plain_text || null,
-          reading_time: properties['Reading time']?.rich_text?.[0]?.plain_text || null,
-          theme: properties['Theme']?.select?.name || null,
+          header_image_url: post.header_image_url,
+          description: post.description,
+          reading_time: post.reading_time,
+          theme: post.theme,
           synced_at: new Date().toISOString(),
         }, { onConflict: 'notion_id' })
 
         contentSynced++
       } catch (e) {
-        console.error(`Failed to render blog post "${title}":`, e)
+        console.error(`Failed to render blog post "${post.title}":`, e)
       }
     }
 
-    // Update sync timestamp
     await supabase.from('sync_metadata').upsert(
       { sync_type: 'blog', last_synced_at: syncStartTime },
       { onConflict: 'sync_type' }
     )
 
     return new Response(
-      JSON.stringify({ success: true, synced: posts.length, content_synced: contentSynced }),
+      JSON.stringify({ success: true, synced: posts.length, content_synced: contentSynced, media_persisted: totalMediaPersisted }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     )
   } catch (error) {
@@ -179,12 +189,95 @@ serve(async (req) => {
   }
 })
 
-// ─── Block-to-HTML rendering (reused from fetch-blog-post) ───
+// ─── Media persistence helpers ───
+
+function getExtensionFromUrl(url: string): string {
+  try {
+    const pathname = new URL(url).pathname
+    const lastSegment = pathname.split('/').pop() || ''
+    const ext = lastSegment.split('.').pop()?.toLowerCase() || ''
+    if (['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'mp4', 'mov', 'webm', 'pdf'].includes(ext)) return ext
+  } catch {}
+  return 'bin'
+}
+
+function getMimeType(ext: string): string {
+  const map: Record<string, string> = {
+    jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', gif: 'image/gif',
+    webp: 'image/webp', svg: 'image/svg+xml', mp4: 'video/mp4', mov: 'video/quicktime',
+    webm: 'video/webm', pdf: 'application/pdf', bin: 'application/octet-stream',
+  }
+  return map[ext] || 'application/octet-stream'
+}
+
+async function persistSingleFile(sb: any, supabaseUrl: string, notionUrl: string, storagePath: string): Promise<string | null> {
+  try {
+    const ext = getExtensionFromUrl(notionUrl)
+    const fullPath = `${storagePath}.${ext}`
+
+    const res = await fetch(notionUrl)
+    if (!res.ok) {
+      console.error(`Failed to download media: ${res.status} for ${notionUrl.substring(0, 80)}...`)
+      return null
+    }
+
+    const blob = await res.blob()
+    const arrayBuffer = await blob.arrayBuffer()
+    const uint8 = new Uint8Array(arrayBuffer)
+
+    const { error } = await sb.storage.from('notion-media').upload(fullPath, uint8, {
+      contentType: getMimeType(ext),
+      upsert: true,
+    })
+
+    if (error) {
+      console.error(`Storage upload error for ${fullPath}:`, error.message)
+      return null
+    }
+
+    return `${supabaseUrl}/storage/v1/object/public/notion-media/${fullPath}`
+  } catch (e) {
+    console.error(`persistSingleFile error:`, e)
+    return null
+  }
+}
+
+async function persistMediaInHtml(sb: any, supabaseUrl: string, html: string, pageId: string): Promise<{ html: string; count: number }> {
+  const matches = html.match(NOTION_S3_REGEX)
+  if (!matches) return { html, count: 0 }
+
+  const uniqueUrls = [...new Set(matches)]
+  let count = 0
+  let result = html
+
+  for (let i = 0; i < uniqueUrls.length; i++) {
+    const originalUrl = uniqueUrls[i]
+    const cleanUrl = originalUrl.split('?')[0]
+    const hash = await hashString(cleanUrl)
+    const storagePath = `pages/${pageId}/${hash}`
+
+    const permanentUrl = await persistSingleFile(sb, supabaseUrl, originalUrl, storagePath)
+    if (permanentUrl) {
+      result = result.split(originalUrl).join(permanentUrl)
+      count++
+    }
+  }
+
+  return { html: result, count }
+}
+
+async function hashString(str: string): Promise<string> {
+  const data = new TextEncoder().encode(str)
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data)
+  const hashArray = Array.from(new Uint8Array(hashBuffer))
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('').substring(0, 16)
+}
+
+// ─── Block-to-HTML rendering ───
 
 async function renderBlogContent(pageId: string, notionApiKey: string): Promise<string> {
   const headers = { 'Authorization': `Bearer ${notionApiKey}`, 'Notion-Version': '2022-06-28' }
 
-  // Fetch all blocks with pagination
   let allBlocks: any[] = []
   let startCursor: string | undefined = undefined
   do {
@@ -368,7 +461,6 @@ async function renderBlogContent(pageId: string, notionApiKey: string): Promise<
     }
   }
 
-  // Group consecutive list items
   const htmlBlocks: string[] = []
   let inBullet = false, inNum = false
 
