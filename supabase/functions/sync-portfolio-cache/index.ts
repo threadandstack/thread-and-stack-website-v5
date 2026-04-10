@@ -203,6 +203,26 @@ async function persistSingleFile(sb: any, supabaseUrl: string, notionUrl: string
   try {
     const ext = getExtensionFromUrl(notionUrl)
     const fullPath = `${storagePath}.${ext}`
+    const permanentUrl = `${supabaseUrl}/storage/v1/object/public/notion-media/${fullPath}`
+
+    // Check if file already exists in storage — skip download if so
+    const { data: existing } = await sb.storage.from('notion-media').list(
+      fullPath.substring(0, fullPath.lastIndexOf('/')),
+      { search: fullPath.substring(fullPath.lastIndexOf('/') + 1) }
+    )
+    if (existing && existing.length > 0) {
+      return permanentUrl
+    }
+
+    // HEAD request first to check size — skip files > 50MB to avoid memory issues
+    const headRes = await fetch(notionUrl, { method: 'HEAD' })
+    if (headRes.ok) {
+      const contentLength = Number(headRes.headers.get('content-length') || 0)
+      if (contentLength > 50 * 1024 * 1024) {
+        console.log(`Skipping large file (${(contentLength / 1024 / 1024).toFixed(1)}MB): ${fullPath}`)
+        return null
+      }
+    }
 
     const res = await fetch(notionUrl)
     if (!res.ok) {
@@ -224,7 +244,7 @@ async function persistSingleFile(sb: any, supabaseUrl: string, notionUrl: string
       return null
     }
 
-    return `${supabaseUrl}/storage/v1/object/public/notion-media/${fullPath}`
+    return permanentUrl
   } catch (e) {
     console.error(`persistSingleFile error:`, e)
     return null
