@@ -3,7 +3,7 @@ import { PillButton } from "@/components/ui/pill-button";
 import { Palette, Cog, ArrowRight } from "lucide-react";
 import { Emphasis } from "@/components/Emphasis";
 import brendanCafe from "@/assets/brendan-cafe-landscape.jpg";
-import brendanPostits from "@/assets/brendan-postits-landscape.jpg";
+import brendanPostits from "@/assets/brendan-postits-landscape.webp";
 import notionAdmin from "@/assets/notion-certified-admin.png";
 import notionAdvanced from "@/assets/notion-advanced.png";
 import notionWorkflows from "@/assets/notion-workflows.png";
