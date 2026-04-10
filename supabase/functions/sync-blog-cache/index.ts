@@ -204,6 +204,13 @@ async function persistMediaUrl(
   if (!isNotionS3Url(url)) return null
 
   try {
+    // Check if already persisted (skip re-download)
+    const { data: existing } = await sb.storage.from('notion-media').list(pageId, { search: `${label}.` })
+    if (existing && existing.some(f => f.name.startsWith(`${label}.`))) {
+      const match = existing.find(f => f.name.startsWith(`${label}.`))!
+      return `${supabaseUrl}/storage/v1/object/public/notion-media/${pageId}/${match.name}`
+    }
+
     const fileRes = await fetch(url)
     if (!fileRes.ok) {
       console.error(`Download failed for ${label}: ${fileRes.status}`)

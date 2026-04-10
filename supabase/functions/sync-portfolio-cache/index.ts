@@ -213,6 +213,18 @@ async function persistMediaUrl(
   if (!isNotionS3Url(url)) return null
 
   try {
+    // Guess extension from URL path before downloading
+    const urlExt = getFileExtension(url)
+    const guessPath = `${pageId}/${label}.${urlExt}`
+
+    // Check if already persisted (skip re-download)
+    const { data: existing } = await sb.storage.from('notion-media').list(pageId, { search: `${label}.` })
+    if (existing && existing.some(f => f.name.startsWith(`${label}.`))) {
+      const match = existing.find(f => f.name.startsWith(`${label}.`))!
+      const publicUrl = `${supabaseUrl}/storage/v1/object/public/notion-media/${pageId}/${match.name}`
+      return publicUrl
+    }
+
     // Download directly (Notion S3 URLs don't reliably support HEAD)
     const fileRes = await fetch(url)
     if (!fileRes.ok) {
