@@ -27,11 +27,17 @@ serve(async (req) => {
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     const sb = createClient(supabaseUrl, supabaseServiceKey)
 
-    // Check for full=true parameter
+    // Check for full=true, offset, limit parameters
     let fullSync = false
+    let batchOffset = 0
+    let batchLimit = 0 // 0 = no limit (process all)
+    let skipMedia = false
     try {
       const body = await req.json()
       fullSync = body?.full === true
+      batchOffset = typeof body?.offset === 'number' ? body.offset : 0
+      batchLimit = typeof body?.limit === 'number' ? body.limit : 0
+      skipMedia = body?.skip_media === true
     } catch { /* no body or invalid JSON, default to incremental */ }
 
     // Get last sync timestamp
@@ -95,6 +101,13 @@ serve(async (req) => {
 
       console.log(`Found ${allResults.length} pages in ${db.label} (full=${fullSync})`)
 
+      // Apply batch offset/limit if specified
+      if (batchOffset > 0 || batchLimit > 0) {
+        const end = batchLimit > 0 ? batchOffset + batchLimit : allResults.length
+        allResults = allResults.slice(batchOffset, end)
+        console.log(`Batching: offset=${batchOffset}, limit=${batchLimit}, processing ${allResults.length} pages`)
+      }
+
       if (allResults.length === 0) continue
 
       // Process pages one at a time to stay within memory limits
@@ -112,8 +125,8 @@ serve(async (req) => {
         const name = props['Name']?.title?.[0]?.plain_text || 'Untitled'
         const hasNda = allPageTags.includes('NDA')
 
-        // Persist cover image inline
-        if (coverImage) {
+        // Persist cover image inline (skip if already a permanent URL or skip_media flag)
+        if (coverImage && !skipMedia) {
           const persistedCover = await persistMediaUrl(sb, supabaseUrl, coverImage, page.id, 'cover')
           if (persistedCover) {
             coverImage = persistedCover
@@ -143,9 +156,11 @@ serve(async (req) => {
           let htmlContent = await renderPageContent(page.id, NOTION_API_KEY)
 
           // Persist all media in the HTML inline
-          const mediaResult = await persistMediaInHtml(sb, supabaseUrl, htmlContent, page.id)
-          htmlContent = mediaResult.html
-          totalMediaPersisted += mediaResult.count
+          if (!skipMedia) {
+            const mediaResult = await persistMediaInHtml(sb, supabaseUrl, htmlContent, page.id)
+            htmlContent = mediaResult.html
+            totalMediaPersisted += mediaResult.count
+          }
 
           const monthYear = props['Month & Year']?.rich_text?.[0]?.plain_text || ''
 
