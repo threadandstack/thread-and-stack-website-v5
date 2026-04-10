@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from "react";
-import ntuk1 from "@/assets/ntuk-logo-new.png";
-import ntuk2 from "@/assets/ntuk-quote-new.png";
-import ntuk3 from "@/assets/ntuk-olivia.png";
-import ntuk4 from "@/assets/ntuk-kieran.png";
-import ntuk5 from "@/assets/ntuk-running-new.png";
+import ntuk1 from "@/assets/ntuk-logo-new.webp";
+import ntuk2 from "@/assets/ntuk-quote-new.webp";
+import ntuk3 from "@/assets/ntuk-olivia.webp";
+import ntuk4 from "@/assets/ntuk-kieran.webp";
+import ntuk5 from "@/assets/ntuk-running-new.webp";
 import { FeaturedProjectModal } from "./FeaturedProjectModal";
 import { trackCaseStudyView } from "@/hooks/useAnalytics";
 

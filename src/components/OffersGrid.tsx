@@ -2,14 +2,14 @@ import { useState, useEffect, useRef } from "react";
 import { PillButton } from "@/components/ui/pill-button";
 import { Palette, Cog, ArrowRight } from "lucide-react";
 import { Emphasis } from "@/components/Emphasis";
-import brendanCafe from "@/assets/brendan-cafe-landscape.jpg";
+import brendanCafe from "@/assets/brendan-cafe-landscape.webp";
 import brendanPostits from "@/assets/brendan-postits-landscape.webp";
-import notionAdmin from "@/assets/notion-certified-admin.png";
-import notionAdvanced from "@/assets/notion-advanced.png";
-import notionWorkflows from "@/assets/notion-workflows.png";
-import notionEssentials from "@/assets/notion-essentials.png";
-import notionConsultingPartner from "@/assets/notion-consulting-partner.png";
-import notionServiceSpecialist from "@/assets/notion-service-specialist.png";
+import notionAdmin from "@/assets/notion-certified-admin.webp";
+import notionAdvanced from "@/assets/notion-advanced.webp";
+import notionWorkflows from "@/assets/notion-workflows.webp";
+import notionEssentials from "@/assets/notion-essentials.webp";
+import notionConsultingPartner from "@/assets/notion-consulting-partner.webp";
+import notionServiceSpecialist from "@/assets/notion-service-specialist.webp";
 
 export const OffersGrid = () => {
   const [isVisible, setIsVisible] = useState(false);

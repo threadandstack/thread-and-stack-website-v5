@@ -2,7 +2,7 @@ import { useRef, useEffect, useState } from "react";
 import { PillButton } from "@/components/ui/pill-button";
 import { ChevronDown, Rocket, Compass } from "lucide-react";
 import { Emphasis } from "@/components/Emphasis";
-import heroImage from "@/assets/photos/shoreditch/brendan-30.jpg";
+import heroImage from "@/assets/photos/shoreditch/brendan-30.webp";
 
 export const HeroPhoto = () => {
   const [isVisible, setIsVisible] = useState(false);

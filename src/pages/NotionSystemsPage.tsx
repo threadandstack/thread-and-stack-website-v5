@@ -6,16 +6,16 @@ import { ContactDrawer } from "@/components/ContactDrawer";
 import { PillButton } from "@/components/ui/pill-button";
 import { Check, Zap, Layers, Repeat, Rocket, MessageCircle, Shield, Bot, X } from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import notionAdmin from "@/assets/notion-certified-admin.png";
-import notionAdvanced from "@/assets/notion-advanced.png";
-import notionWorkflows from "@/assets/notion-workflows.png";
-import notionEssentials from "@/assets/notion-essentials.png";
-import notionAmbassadorBlack from "@/assets/notion-ambassador-black.png";
-import notionConsultingPartner from "@/assets/notion-consulting-partner.png";
-import notionServiceSpecialist from "@/assets/notion-service-specialist.png";
-import heroImage from "@/assets/brendan-hackathon.jpg";
-import notionCmsBuild from "@/assets/notion-cms-build.png";
-import notionCustomAgents from "@/assets/notion-custom-agents.png";
+import notionAdmin from "@/assets/notion-certified-admin.webp";
+import notionAdvanced from "@/assets/notion-advanced.webp";
+import notionWorkflows from "@/assets/notion-workflows.webp";
+import notionEssentials from "@/assets/notion-essentials.webp";
+import notionAmbassadorBlack from "@/assets/notion-ambassador-black.webp";
+import notionConsultingPartner from "@/assets/notion-consulting-partner.webp";
+import notionServiceSpecialist from "@/assets/notion-service-specialist.webp";
+import heroImage from "@/assets/brendan-hackathon.webp";
+import notionCmsBuild from "@/assets/notion-cms-build.webp";
+import notionCustomAgents from "@/assets/notion-custom-agents.webp";
 
 const NotionSystemsPage = () => {
   const [contactOpen, setContactOpen] = useState(false);

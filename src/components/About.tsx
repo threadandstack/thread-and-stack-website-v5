@@ -1,6 +1,6 @@
 import { PillButton } from "@/components/ui/pill-button";
 import { Rocket, User } from "lucide-react";
-import brendanPhoto from "@/assets/photos/shoreditch/brendan-34.jpg";
+import brendanPhoto from "@/assets/photos/shoreditch/brendan-34.webp";
 import { useEffect, useRef, useState } from "react";
 
 export const About = () => {

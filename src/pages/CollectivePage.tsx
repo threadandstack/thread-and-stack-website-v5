@@ -1,7 +1,7 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Users, Sparkles, Target, Palette } from "lucide-react";
-import brendanAvatar from "@/assets/brendan-avatar.png";
+import brendanAvatar from "@/assets/brendan-avatar.webp";
 
 const CollectivePage = () => {
   const collectiveMembers = [

@@ -1,4 +1,4 @@
-import thinkingImage from "@/assets/brendan-cafe.jpeg";
+import thinkingImage from "@/assets/brendan-cafe.webp";
 import { Emphasis } from "@/components/Emphasis";
 import { useEffect, useRef, useState } from "react";
 

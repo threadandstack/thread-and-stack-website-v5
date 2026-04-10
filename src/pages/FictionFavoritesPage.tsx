@@ -17,7 +17,7 @@ import { CampfireScene } from "@/components/fiction/CampfireScene";
 import { filterProfanity } from "@/lib/profanityFilter";
 import { normalizeTitle, generateClusterKey } from "@/lib/titleNormalizer";
 import { useGenreClusteredPositions } from "@/hooks/useGenreClusteredPositions";
-import fictionHeroImage from "@/assets/fiction-hero.png";
+import fictionHeroImage from "@/assets/fiction-hero.webp";
 
 interface FictionFavorite {
   id: string;

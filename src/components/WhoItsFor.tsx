@@ -1,7 +1,7 @@
 import { Check } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import workshopImage from "@/assets/photos/workshop/brendan-22.jpg";
+import workshopImage from "@/assets/photos/workshop/brendan-22.webp";
 
 export const WhoItsFor = () => {
   const [isVisible, setIsVisible] = useState(false);
