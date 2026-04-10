@@ -36,24 +36,20 @@ serve(async (req) => {
 
     let totalListingSynced = 0
     let totalContentSynced = 0
+    const syncedPageIds: string[] = []
 
     for (const db of PORTFOLIO_DATABASES) {
       console.log(`Syncing portfolio database: ${db.label} (${db.id})`)
 
-      // Query Notion for pages with Show in Portfolio = true
-      // Use last_edited_time filter for incremental sync
-      const filter: any = {
-        and: [
-          { property: 'Show in Portfolio', checkbox: { equals: true } },
-          { timestamp: 'last_edited_time', last_edited_time: { after: lastSyncedAt } },
-        ]
-      }
-
-      // Check if this is first run (very old timestamp = full sync)
       const isFirstRun = new Date(lastSyncedAt).getTime() < new Date('2001-01-01').getTime()
       const queryFilter = isFirstRun
         ? { property: 'Show in Portfolio', checkbox: { equals: true } }
-        : filter
+        : {
+            and: [
+              { property: 'Show in Portfolio', checkbox: { equals: true } },
+              { timestamp: 'last_edited_time', last_edited_time: { after: lastSyncedAt } },
+            ]
+          }
 
       let allResults: any[] = []
       let startCursor: string | undefined = undefined
@@ -90,16 +86,13 @@ serve(async (req) => {
 
       if (allResults.length === 0) continue
 
-      // Process each page: upsert listing + render content
       for (const page of allResults) {
         const props = page.properties
 
-        // Extract cover image
         let coverImage: string | null = null
         if (page.cover?.file?.url) coverImage = page.cover.file.url
         else if (page.cover?.external?.url) coverImage = page.cover.external.url
 
-        // Extract tags
         const pageTags = (props['Tags']?.multi_select || []).map((t: any) => t.name)
         const proposalFeatures = (props['Proposal feature']?.multi_select || []).map((t: any) => t.name)
         const allPageTags = [...pageTags, ...proposalFeatures.filter((f: string) => ['Featured', 'Featured-Hero', 'Masonry-Top'].includes(f))]
@@ -107,7 +100,6 @@ serve(async (req) => {
         const name = props['Name']?.title?.[0]?.plain_text || 'Untitled'
         const hasNda = allPageTags.includes('NDA')
 
-        // Upsert listing cache
         const listingRow = {
           database_id: db.id,
           notion_page_id: page.id,
@@ -124,10 +116,8 @@ serve(async (req) => {
         await sb.from('portfolio_listing_cache').upsert(listingRow, { onConflict: 'notion_page_id' })
         totalListingSynced++
 
-        // Skip content rendering for NDA items
         if (hasNda) continue
 
-        // Render content HTML
         try {
           const htmlContent = await renderPageContent(page.id, NOTION_API_KEY)
           const monthYear = props['Month & Year']?.rich_text?.[0]?.plain_text || ''
@@ -142,17 +132,30 @@ serve(async (req) => {
             synced_at: new Date().toISOString(),
           }, { onConflict: 'notion_page_id' })
           totalContentSynced++
+          syncedPageIds.push(page.id)
         } catch (e) {
           console.error(`Failed to render content for ${name}:`, e)
         }
       }
     }
 
-    // Update sync timestamp
     await sb.from('sync_metadata').upsert(
       { sync_type: 'portfolio', last_synced_at: syncStartTime },
       { onConflict: 'sync_type' }
     )
+
+    // Fire-and-forget: trigger media persistence for synced pages
+    if (syncedPageIds.length > 0) {
+      const persistUrl = `${supabaseUrl}/functions/v1/persist-notion-media`
+      fetch(persistUrl, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${supabaseServiceKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ tables: ['portfolio_content_cache', 'portfolio_listing_cache'], page_ids: syncedPageIds }),
+      }).catch(e => console.error('Failed to trigger media persistence:', e))
+    }
 
     console.log(`Portfolio sync complete: ${totalListingSynced} listings, ${totalContentSynced} content pages`)
 
@@ -169,12 +172,11 @@ serve(async (req) => {
   }
 })
 
-// ─── Block-to-HTML rendering (reused from fetch-portfolio-page) ───
+// ─── Block-to-HTML rendering ───
 
 async function renderPageContent(pageId: string, notionApiKey: string): Promise<string> {
   const headers = { 'Authorization': `Bearer ${notionApiKey}`, 'Notion-Version': '2022-06-28' }
 
-  // Fetch all blocks with pagination
   let allBlocks: any[] = []
   let startCursor: string | undefined = undefined
   do {
@@ -354,7 +356,6 @@ async function renderPageContent(pageId: string, notionApiKey: string): Promise<
     }
   }
 
-  // Group consecutive list items
   const htmlBlocks: string[] = []
   let inBullet = false, inNum = false
 

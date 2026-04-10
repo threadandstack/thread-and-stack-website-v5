@@ -32,7 +32,6 @@ serve(async (req) => {
     const syncStartTime = new Date().toISOString()
     const isFirstRun = new Date(lastSyncedAt).getTime() < new Date('2001-01-01').getTime()
 
-    // Build filter: Status = Live, optionally with last_edited_time
     const baseFilter = { property: 'Status', status: { equals: 'Live' } }
     const queryFilter = isFirstRun
       ? baseFilter
@@ -43,7 +42,6 @@ serve(async (req) => {
           ]
         }
 
-    // Query Notion
     let allResults: any[] = []
     let startCursor: string | undefined = undefined
     do {
@@ -74,7 +72,6 @@ serve(async (req) => {
     console.log(`Blog sync: found ${allResults.length} changed posts (incremental: ${!isFirstRun})`)
 
     if (allResults.length === 0) {
-      // Update sync timestamp even if nothing changed
       await supabase.from('sync_metadata').upsert(
         { sync_type: 'blog', last_synced_at: syncStartTime },
         { onConflict: 'sync_type' }
@@ -110,9 +107,8 @@ serve(async (req) => {
       }
     })
 
-    // Upsert listing cache (blog_posts_cache)
+    // Upsert listing cache
     if (isFirstRun) {
-      // Full sync: clear and reinsert
       await supabase.from('blog_posts_cache').delete().neq('id', '00000000-0000-0000-0000-000000000000')
       if (posts.length > 0) {
         const { error: insertError } = await supabase.from('blog_posts_cache').insert(posts)
@@ -122,7 +118,6 @@ serve(async (req) => {
         }
       }
     } else {
-      // Incremental: upsert changed posts
       for (const post of posts) {
         await supabase.from('blog_posts_cache').upsert(post, { onConflict: 'notion_id' })
       }
@@ -130,6 +125,8 @@ serve(async (req) => {
 
     // Pre-render full HTML content for each changed post
     let contentSynced = 0
+    const syncedNotionIds: string[] = []
+
     for (const page of allResults) {
       const properties = page.properties
       const title = properties['Name']?.title?.[0]?.plain_text || 'Untitled'
@@ -155,16 +152,29 @@ serve(async (req) => {
         }, { onConflict: 'notion_id' })
 
         contentSynced++
+        syncedNotionIds.push(page.id)
       } catch (e) {
         console.error(`Failed to render blog post "${title}":`, e)
       }
     }
 
-    // Update sync timestamp
     await supabase.from('sync_metadata').upsert(
       { sync_type: 'blog', last_synced_at: syncStartTime },
       { onConflict: 'sync_type' }
     )
+
+    // Fire-and-forget: trigger media persistence for synced content
+    if (syncedNotionIds.length > 0) {
+      const persistUrl = `${supabaseUrl}/functions/v1/persist-notion-media`
+      fetch(persistUrl, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${supabaseServiceKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ tables: ['blog_content_cache', 'blog_posts_cache'], page_ids: syncedNotionIds }),
+      }).catch(e => console.error('Failed to trigger media persistence:', e))
+    }
 
     return new Response(
       JSON.stringify({ success: true, synced: posts.length, content_synced: contentSynced }),
@@ -179,12 +189,11 @@ serve(async (req) => {
   }
 })
 
-// ─── Block-to-HTML rendering (reused from fetch-blog-post) ───
+// ─── Block-to-HTML rendering ───
 
 async function renderBlogContent(pageId: string, notionApiKey: string): Promise<string> {
   const headers = { 'Authorization': `Bearer ${notionApiKey}`, 'Notion-Version': '2022-06-28' }
 
-  // Fetch all blocks with pagination
   let allBlocks: any[] = []
   let startCursor: string | undefined = undefined
   do {
@@ -368,7 +377,6 @@ async function renderBlogContent(pageId: string, notionApiKey: string): Promise<
     }
   }
 
-  // Group consecutive list items
   const htmlBlocks: string[] = []
   let inBullet = false, inNum = false
 
