@@ -115,6 +115,7 @@ const App = () => (
             <Route path="/proposal/GGF" element={<GGFProposalPage />} />
             <Route path="/portfolio/creative" element={<CreativePortfolioPage />} />
             <Route path="/portfolio/notion" element={<NotionPortfolioPage />} />
+            <Route path="/onboarding/notionutopia" element={<NotionUtopiaPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
