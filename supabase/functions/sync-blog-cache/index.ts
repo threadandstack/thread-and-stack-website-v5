@@ -8,9 +8,6 @@ const corsHeaders = {
 
 const DATABASE_ID = '2bc8863b87d4802fa65dd15c42ffa13b'
 
-// Matches Notion-hosted S3 file URLs
-const NOTION_S3_REGEX = /https:\/\/(?:prod-files-secure|s3)\.s3[.\w-]*\.amazonaws\.com\/[^\s"'<>]+/g
-
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders })
@@ -80,31 +77,18 @@ serve(async (req) => {
         { onConflict: 'sync_type' }
       )
       return new Response(
-        JSON.stringify({ success: true, synced: 0, content_synced: 0, media_persisted: 0 }),
+        JSON.stringify({ success: true, synced: 0, content_synced: 0 }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       )
     }
 
-    let totalMediaPersisted = 0
-
     // Process listing metadata
-    const posts = await Promise.all(allResults.map(async (page: any) => {
+    const posts = allResults.map((page: any) => {
       const properties = page.properties
       const featuredImageFiles = properties['Featured IMG']?.files || []
-      let headerImage = featuredImageFiles.length > 0
+      const headerImage = featuredImageFiles.length > 0
         ? featuredImageFiles[0].file?.url || featuredImageFiles[0].external?.url
         : null
-
-      // Persist header image
-      if (headerImage && NOTION_S3_REGEX.test(headerImage)) {
-        NOTION_S3_REGEX.lastIndex = 0
-        const persisted = await persistSingleFile(supabase, supabaseUrl, headerImage, `blog-covers/${page.id}`)
-        if (persisted) {
-          headerImage = persisted
-          totalMediaPersisted++
-        }
-      }
-
       const title = properties['Name']?.title?.[0]?.plain_text || 'Untitled'
       const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
 
@@ -121,7 +105,7 @@ serve(async (req) => {
         featured: properties['Featured']?.checkbox || false,
         synced_at: new Date().toISOString(),
       }
-    }))
+    })
 
     // Upsert listing cache
     if (isFirstRun) {
@@ -141,33 +125,36 @@ serve(async (req) => {
 
     // Pre-render full HTML content for each changed post
     let contentSynced = 0
-    for (let i = 0; i < allResults.length; i++) {
-      const page = allResults[i]
-      const post = posts[i]
+    const syncedNotionIds: string[] = []
+
+    for (const page of allResults) {
+      const properties = page.properties
+      const title = properties['Name']?.title?.[0]?.plain_text || 'Untitled'
+      const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
 
       try {
-        let htmlContent = await renderBlogContent(page.id, NOTION_API_KEY)
-
-        // Persist all media in HTML
-        const mediaResult = await persistMediaInHtml(supabase, supabaseUrl, htmlContent, page.id)
-        htmlContent = mediaResult.html
-        totalMediaPersisted += mediaResult.count
+        const htmlContent = await renderBlogContent(page.id, NOTION_API_KEY)
+        const featuredImageFiles = properties['Featured IMG']?.files || []
+        const headerImage = featuredImageFiles.length > 0
+          ? featuredImageFiles[0].file?.url || featuredImageFiles[0].external?.url
+          : null
 
         await supabase.from('blog_content_cache').upsert({
           notion_id: page.id,
-          slug: post.slug,
-          title: post.title,
+          slug,
+          title,
           html_content: htmlContent,
-          header_image_url: post.header_image_url,
-          description: post.description,
-          reading_time: post.reading_time,
-          theme: post.theme,
+          header_image_url: headerImage,
+          description: properties['Description']?.rich_text?.[0]?.plain_text || null,
+          reading_time: properties['Reading time']?.rich_text?.[0]?.plain_text || null,
+          theme: properties['Theme']?.select?.name || null,
           synced_at: new Date().toISOString(),
         }, { onConflict: 'notion_id' })
 
         contentSynced++
+        syncedNotionIds.push(page.id)
       } catch (e) {
-        console.error(`Failed to render blog post "${post.title}":`, e)
+        console.error(`Failed to render blog post "${title}":`, e)
       }
     }
 
@@ -176,8 +163,21 @@ serve(async (req) => {
       { onConflict: 'sync_type' }
     )
 
+    // Fire-and-forget: trigger media persistence for synced content
+    if (syncedNotionIds.length > 0) {
+      const persistUrl = `${supabaseUrl}/functions/v1/persist-notion-media`
+      fetch(persistUrl, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${supabaseServiceKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ tables: ['blog_content_cache', 'blog_posts_cache'], page_ids: syncedNotionIds }),
+      }).catch(e => console.error('Failed to trigger media persistence:', e))
+    }
+
     return new Response(
-      JSON.stringify({ success: true, synced: posts.length, content_synced: contentSynced, media_persisted: totalMediaPersisted }),
+      JSON.stringify({ success: true, synced: posts.length, content_synced: contentSynced }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     )
   } catch (error) {
@@ -188,110 +188,6 @@ serve(async (req) => {
     )
   }
 })
-
-// ─── Media persistence helpers ───
-
-function getExtensionFromUrl(url: string): string {
-  try {
-    const pathname = new URL(url).pathname
-    const lastSegment = pathname.split('/').pop() || ''
-    const ext = lastSegment.split('.').pop()?.toLowerCase() || ''
-    if (['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'mp4', 'mov', 'webm', 'pdf'].includes(ext)) return ext
-  } catch {}
-  return 'bin'
-}
-
-function getMimeType(ext: string): string {
-  const map: Record<string, string> = {
-    jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', gif: 'image/gif',
-    webp: 'image/webp', svg: 'image/svg+xml', mp4: 'video/mp4', mov: 'video/quicktime',
-    webm: 'video/webm', pdf: 'application/pdf', bin: 'application/octet-stream',
-  }
-  return map[ext] || 'application/octet-stream'
-}
-
-async function persistSingleFile(sb: any, supabaseUrl: string, notionUrl: string, storagePath: string): Promise<string | null> {
-  try {
-    const ext = getExtensionFromUrl(notionUrl)
-    const fullPath = `${storagePath}.${ext}`
-    const permanentUrl = `${supabaseUrl}/storage/v1/object/public/notion-media/${fullPath}`
-
-    // Check if file already exists in storage — skip download if so
-    const { data: existing } = await sb.storage.from('notion-media').list(
-      fullPath.substring(0, fullPath.lastIndexOf('/')),
-      { search: fullPath.substring(fullPath.lastIndexOf('/') + 1) }
-    )
-    if (existing && existing.length > 0) {
-      return permanentUrl
-    }
-
-    // HEAD request first to check size — skip files > 50MB to avoid memory issues
-    const headRes = await fetch(notionUrl, { method: 'HEAD' })
-    if (headRes.ok) {
-      const contentLength = Number(headRes.headers.get('content-length') || 0)
-      if (contentLength > 50 * 1024 * 1024) {
-        console.log(`Skipping large file (${(contentLength / 1024 / 1024).toFixed(1)}MB): ${fullPath}`)
-        return null
-      }
-    }
-
-    const res = await fetch(notionUrl)
-    if (!res.ok) {
-      console.error(`Failed to download media: ${res.status} for ${notionUrl.substring(0, 80)}...`)
-      return null
-    }
-
-    const blob = await res.blob()
-    const arrayBuffer = await blob.arrayBuffer()
-    const uint8 = new Uint8Array(arrayBuffer)
-
-    const { error } = await sb.storage.from('notion-media').upload(fullPath, uint8, {
-      contentType: getMimeType(ext),
-      upsert: true,
-    })
-
-    if (error) {
-      console.error(`Storage upload error for ${fullPath}:`, error.message)
-      return null
-    }
-
-    return permanentUrl
-  } catch (e) {
-    console.error(`persistSingleFile error:`, e)
-    return null
-  }
-}
-
-async function persistMediaInHtml(sb: any, supabaseUrl: string, html: string, pageId: string): Promise<{ html: string; count: number }> {
-  const matches = html.match(NOTION_S3_REGEX)
-  if (!matches) return { html, count: 0 }
-
-  const uniqueUrls = [...new Set(matches)]
-  let count = 0
-  let result = html
-
-  for (let i = 0; i < uniqueUrls.length; i++) {
-    const originalUrl = uniqueUrls[i]
-    const cleanUrl = originalUrl.split('?')[0]
-    const hash = await hashString(cleanUrl)
-    const storagePath = `pages/${pageId}/${hash}`
-
-    const permanentUrl = await persistSingleFile(sb, supabaseUrl, originalUrl, storagePath)
-    if (permanentUrl) {
-      result = result.split(originalUrl).join(permanentUrl)
-      count++
-    }
-  }
-
-  return { html: result, count }
-}
-
-async function hashString(str: string): Promise<string> {
-  const data = new TextEncoder().encode(str)
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data)
-  const hashArray = Array.from(new Uint8Array(hashBuffer))
-  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('').substring(0, 16)
-}
 
 // ─── Block-to-HTML rendering ───
 
