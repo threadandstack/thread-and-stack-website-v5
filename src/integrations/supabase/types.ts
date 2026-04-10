@@ -14,6 +14,48 @@ export type Database = {
   }
   public: {
     Tables: {
+      blog_content_cache: {
+        Row: {
+          created_at: string
+          description: string | null
+          header_image_url: string | null
+          html_content: string
+          id: string
+          notion_id: string
+          reading_time: string | null
+          slug: string
+          synced_at: string
+          theme: string | null
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          header_image_url?: string | null
+          html_content: string
+          id?: string
+          notion_id: string
+          reading_time?: string | null
+          slug: string
+          synced_at?: string
+          theme?: string | null
+          title: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          header_image_url?: string | null
+          html_content?: string
+          id?: string
+          notion_id?: string
+          reading_time?: string | null
+          slug?: string
+          synced_at?: string
+          theme?: string | null
+          title?: string
+        }
+        Relationships: []
+      }
       blog_posts_cache: {
         Row: {
           created_at: string
@@ -313,6 +355,66 @@ export type Database = {
           notion_page_id?: string
           synced_at?: string
           tags?: string[] | null
+        }
+        Relationships: []
+      }
+      portfolio_listing_cache: {
+        Row: {
+          cover_image: string | null
+          created_at: string
+          database_id: string
+          date: string | null
+          has_nda: boolean
+          id: string
+          month_year: string | null
+          name: string
+          notion_page_id: string
+          synced_at: string
+          tags: string[] | null
+          text: string | null
+        }
+        Insert: {
+          cover_image?: string | null
+          created_at?: string
+          database_id: string
+          date?: string | null
+          has_nda?: boolean
+          id?: string
+          month_year?: string | null
+          name: string
+          notion_page_id: string
+          synced_at?: string
+          tags?: string[] | null
+          text?: string | null
+        }
+        Update: {
+          cover_image?: string | null
+          created_at?: string
+          database_id?: string
+          date?: string | null
+          has_nda?: boolean
+          id?: string
+          month_year?: string | null
+          name?: string
+          notion_page_id?: string
+          synced_at?: string
+          tags?: string[] | null
+          text?: string | null
+        }
+        Relationships: []
+      }
+      sync_metadata: {
+        Row: {
+          last_synced_at: string
+          sync_type: string
+        }
+        Insert: {
+          last_synced_at?: string
+          sync_type: string
+        }
+        Update: {
+          last_synced_at?: string
+          sync_type?: string
         }
         Relationships: []
       }

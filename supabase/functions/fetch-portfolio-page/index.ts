@@ -1,5 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3"
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2"
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -12,7 +12,7 @@ serve(async (req) => {
   }
 
   try {
-    const { page_id, force_refresh } = await req.json()
+    const { page_id } = await req.json()
 
     if (!page_id) {
       return new Response(
@@ -21,29 +21,36 @@ serve(async (req) => {
       )
     }
 
-    // Check cache first
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     const sb = createClient(supabaseUrl, supabaseKey)
 
+    // Read from cache
     const { data: cached } = await sb
       .from('portfolio_content_cache')
       .select('*')
       .eq('notion_page_id', page_id)
       .single()
 
-    // If cached and less than 1 hour old, return it
-    if (!force_refresh && cached && (Date.now() - new Date(cached.synced_at).getTime()) < 3600000) {
+    if (cached) {
       return new Response(
-        JSON.stringify({ page: { name: cached.name, html: cached.html_content, coverImage: cached.cover_image, tags: cached.tags, monthYear: cached.month_year } }),
+        JSON.stringify({
+          page: {
+            name: cached.name,
+            html: cached.html_content,
+            coverImage: cached.cover_image,
+            tags: cached.tags,
+            monthYear: cached.month_year,
+          }
+        }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       )
     }
 
+    // Cache miss — fall back to live Notion rendering
     const NOTION_API_KEY = Deno.env.get('NOTION_API_KEY')
     if (!NOTION_API_KEY) throw new Error('NOTION_API_KEY not configured')
 
-    // Fetch page properties
     const pageRes = await fetch(`https://api.notion.com/v1/pages/${page_id}`, {
       headers: { 'Authorization': `Bearer ${NOTION_API_KEY}`, 'Notion-Version': '2022-06-28' }
     })
@@ -59,22 +66,20 @@ serve(async (req) => {
     if (pageData.cover?.file?.url) coverImage = pageData.cover.file.url
     else if (pageData.cover?.external?.url) coverImage = pageData.cover.external.url
 
-    // Fetch all blocks (handle pagination)
+    // Fetch and render blocks
+    const headers2 = { 'Authorization': `Bearer ${NOTION_API_KEY}`, 'Notion-Version': '2022-06-28' }
     let allBlocks: any[] = []
     let startCursor: string | undefined = undefined
     do {
       const url = new URL(`https://api.notion.com/v1/blocks/${page_id}/children`)
       if (startCursor) url.searchParams.set('start_cursor', startCursor)
-      const blocksRes = await fetch(url.toString(), {
-        headers: { 'Authorization': `Bearer ${NOTION_API_KEY}`, 'Notion-Version': '2022-06-28' }
-      })
+      const blocksRes = await fetch(url.toString(), { headers: headers2 })
       if (!blocksRes.ok) throw new Error(`Failed to fetch blocks: ${blocksRes.status}`)
       const blocksData = await blocksRes.json()
       allBlocks = allBlocks.concat(blocksData.results || [])
       startCursor = blocksData.has_more ? blocksData.next_cursor : undefined
     } while (startCursor)
 
-    // --- Block-to-HTML conversion (matching fetch-blog-post pattern) ---
     const richTextToHtml = (richTextArray: any[]) => {
       if (!richTextArray || richTextArray.length === 0) return ''
       return richTextArray.map((text: any) => {
@@ -90,9 +95,7 @@ serve(async (req) => {
     }
 
     const fetchBlockChildren = async (blockId: string): Promise<any[]> => {
-      const r = await fetch(`https://api.notion.com/v1/blocks/${blockId}/children`, {
-        headers: { 'Authorization': `Bearer ${NOTION_API_KEY}`, 'Notion-Version': '2022-06-28' }
-      })
+      const r = await fetch(`https://api.notion.com/v1/blocks/${blockId}/children`, { headers: headers2 })
       if (!r.ok) return []
       const d = await r.json()
       return d.results || []
@@ -146,7 +149,6 @@ serve(async (req) => {
           let childHtml = ''
           if (block.has_children) {
             const children = await fetchBlockChildren(block.id)
-            // Group consecutive list items into <ul>/<ol>
             const groupedParts: string[] = []
             let inBul = false, inNum = false
             for (const c of children) {
@@ -176,7 +178,6 @@ serve(async (req) => {
         case 'video': {
           const url = block.video.file?.url || block.video.external?.url
           if (!url) return ''
-          // External videos (YouTube, Vimeo, Loom) → iframe embed
           if (block.video.type === 'external') {
             const embedUrl = url
               .replace('youtube.com/watch?v=', 'youtube.com/embed/')
@@ -185,7 +186,6 @@ serve(async (req) => {
               .replace('loom.com/share/', 'loom.com/embed/')
             return `<div class="video-embed"><iframe src="${embedUrl}" frameborder="0" allowfullscreen loading="lazy" style="width:100%;aspect-ratio:16/9;border-radius:0.5rem;"></iframe></div>`
           }
-          // Notion-hosted file → HTML5 video
           const cap = block.video.caption ? richTextToHtml(block.video.caption) : ''
           return `<figure class="video-figure"><video controls preload="metadata" style="width:100%;border-radius:0.5rem;"><source src="${url}" /></video>${cap ? `<figcaption>${cap}</figcaption>` : ''}</figure>`
         }
@@ -201,7 +201,6 @@ serve(async (req) => {
           const colHtmlParts = await Promise.all(columns.map(async (col: any) => {
             if (col.type !== 'column' || !col.has_children) return '<div class="notion-column"></div>'
             const colChildren = await fetchBlockChildren(col.id)
-            // Group list items inside columns
             const parts: string[] = []
             let ib = false, in2 = false
             for (const c of colChildren) {
@@ -245,20 +244,13 @@ serve(async (req) => {
       }
     }
 
-    // Group consecutive list items
     const htmlBlocks: string[] = []
     let inBullet = false, inNum = false
-
     for (const block of allBlocks) {
       if (block.type !== 'bulleted_list_item' && inBullet) { htmlBlocks.push('</ul>'); inBullet = false }
       if (block.type !== 'numbered_list_item' && inNum) { htmlBlocks.push('</ol>'); inNum = false }
-
-      if (block.type === 'bulleted_list_item') {
-        if (!inBullet) { htmlBlocks.push('<ul>'); inBullet = true }
-      } else if (block.type === 'numbered_list_item') {
-        if (!inNum) { htmlBlocks.push('<ol>'); inNum = true }
-      }
-
+      if (block.type === 'bulleted_list_item' && !inBullet) { htmlBlocks.push('<ul>'); inBullet = true }
+      else if (block.type === 'numbered_list_item' && !inNum) { htmlBlocks.push('<ol>'); inNum = true }
       const html = await blockToHtml(block)
       if (html) htmlBlocks.push(html)
     }
@@ -267,7 +259,7 @@ serve(async (req) => {
 
     const htmlContent = htmlBlocks.join('\n')
 
-    // Upsert cache
+    // Cache the result
     await sb.from('portfolio_content_cache').upsert({
       notion_page_id: page_id,
       name,

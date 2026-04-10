@@ -47,3 +47,6 @@ verify_jwt = false
 
 [functions.fetch-portfolio-page]
 verify_jwt = false
+
+[functions.sync-portfolio-cache]
+verify_jwt = false

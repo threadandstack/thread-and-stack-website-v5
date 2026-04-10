@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2"
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -12,25 +13,42 @@ serve(async (req) => {
 
   try {
     const { slug } = await req.json()
-    
-    if (!slug) {
-      throw new Error('Slug is required')
+    if (!slug) throw new Error('Slug is required')
+
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+    const sb = createClient(supabaseUrl, supabaseKey)
+
+    // Try cache first
+    const { data: cached } = await sb
+      .from('blog_content_cache')
+      .select('*')
+      .eq('slug', slug)
+      .single()
+
+    if (cached) {
+      return new Response(
+        JSON.stringify({
+          post: {
+            title: cached.title,
+            description: cached.description || '',
+            headerImage: cached.header_image_url,
+            content: cached.html_content,
+            readingTime: cached.reading_time,
+            theme: cached.theme,
+            lastEditedTime: cached.synced_at,
+          }
+        }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
     }
 
+    // Cache miss — fall back to live Notion rendering
     const NOTION_API_KEY = Deno.env.get('NOTION_API_KEY')
-    if (!NOTION_API_KEY) {
-      throw new Error('NOTION_API_KEY not configured')
-    }
-    
-    // First, query the database to find the page by title
+    if (!NOTION_API_KEY) throw new Error('NOTION_API_KEY not configured')
+
     const databaseId = '2bc8863b87d4802fa65dd15c42ffa13b'
-    
-    // Convert slug back to title format for searching
-    const searchTitle = slug
-      .split('-')
-      .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ')
-    
+
     const queryResponse = await fetch(
       `https://api.notion.com/v1/databases/${databaseId}/query`,
       {
@@ -41,413 +59,264 @@ serve(async (req) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          filter: {
-            property: 'Status',
-            status: {
-              equals: 'Live'
-            }
-          }
+          filter: { property: 'Status', status: { equals: 'Live' } }
         })
       }
     )
-    
-    if (!queryResponse.ok) {
-      throw new Error(`Failed to query database: ${queryResponse.status}`)
-    }
-    
+
+    if (!queryResponse.ok) throw new Error(`Failed to query database: ${queryResponse.status}`)
     const queryData = await queryResponse.json()
-    
-    // Find the page that matches the slug
+
     const matchingPage = queryData.results.find((page: any) => {
       const title = page.properties['Name']?.title?.[0]?.plain_text || ''
-      const pageSlug = title
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/^-+|-+$/g, '')
+      const pageSlug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
       return pageSlug === slug
     })
-    
-    if (!matchingPage) {
-      throw new Error('Post not found')
-    }
-    
+
+    if (!matchingPage) throw new Error('Post not found')
+
     const postId = matchingPage.id
     const lastEditedTime = matchingPage.last_edited_time
+    const properties = matchingPage.properties
 
-    // Fetch page properties
-    const pageResponse = await fetch(
-      `https://api.notion.com/v1/pages/${postId}`,
-      {
-        headers: {
-          'Authorization': `Bearer ${NOTION_API_KEY}`,
-          'Notion-Version': '2022-06-28',
-        }
-      }
-    )
+    // Fetch blocks
+    const headers2 = { 'Authorization': `Bearer ${NOTION_API_KEY}`, 'Notion-Version': '2022-06-28' }
+    let allBlocks: any[] = []
+    let startCursor: string | undefined = undefined
+    do {
+      const url = new URL(`https://api.notion.com/v1/blocks/${postId}/children`)
+      if (startCursor) url.searchParams.set('start_cursor', startCursor)
+      const res = await fetch(url.toString(), { headers: headers2 })
+      if (!res.ok) throw new Error(`Failed to fetch blocks: ${res.status}`)
+      const data = await res.json()
+      allBlocks = allBlocks.concat(data.results || [])
+      startCursor = data.has_more ? data.next_cursor : undefined
+    } while (startCursor)
 
-    if (!pageResponse.ok) {
-      throw new Error(`Failed to fetch page: ${pageResponse.status}`)
-    }
-
-    const pageData = await pageResponse.json()
-    const properties = pageData.properties
-
-    // Fetch page content (blocks)
-    const blocksResponse = await fetch(
-      `https://api.notion.com/v1/blocks/${postId}/children`,
-      {
-        headers: {
-          'Authorization': `Bearer ${NOTION_API_KEY}`,
-          'Notion-Version': '2022-06-28',
-        }
-      }
-    )
-
-    if (!blocksResponse.ok) {
-      throw new Error(`Failed to fetch blocks: ${blocksResponse.status}`)
-    }
-
-    const blocksData = await blocksResponse.json()
-    
-    console.log('Total blocks fetched:', blocksData.results.length)
-    
-    // Helper function to convert rich text to HTML with formatting
     const richTextToHtml = (richTextArray: any[]) => {
       if (!richTextArray || richTextArray.length === 0) return ''
-      
       return richTextArray.map((text: any) => {
-        let content = text.plain_text
-        
-        // Convert newlines (shift+return in Notion) to <br> tags
-        content = content.replace(/\n/g, '<br>')
-        
-        // Apply formatting annotations in the correct order
-        if (text.annotations.bold) {
-          content = `<strong>${content}</strong>`
-        }
-        if (text.annotations.italic) {
-          content = `<em>${content}</em>`
-        }
-        if (text.annotations.strikethrough) {
-          content = `<s>${content}</s>`
-        }
-        if (text.annotations.underline) {
-          content = `<u>${content}</u>`
-        }
-        if (text.annotations.code) {
-          content = `<code>${content}</code>`
-        }
-        if (text.href) {
-          content = `<a href="${text.href}" target="_blank" rel="noopener noreferrer">${content}</a>`
-        }
-        
+        let content = text.plain_text.replace(/\n/g, '<br>')
+        if (text.annotations.bold) content = `<strong>${content}</strong>`
+        if (text.annotations.italic) content = `<em>${content}</em>`
+        if (text.annotations.strikethrough) content = `<s>${content}</s>`
+        if (text.annotations.underline) content = `<u>${content}</u>`
+        if (text.annotations.code) content = `<code>${content}</code>`
+        if (text.href) content = `<a href="${text.href}" target="_blank" rel="noopener noreferrer">${content}</a>`
         return content
       }).join('')
     }
 
-    // Helper function to fetch block children (for callouts, etc.)
     const fetchBlockChildren = async (blockId: string): Promise<any[]> => {
-      const childResponse = await fetch(
-        `https://api.notion.com/v1/blocks/${blockId}/children`,
-        {
-          headers: {
-            'Authorization': `Bearer ${NOTION_API_KEY}`,
-            'Notion-Version': '2022-06-28',
-          }
-        }
-      )
-      if (!childResponse.ok) {
-        console.error('Failed to fetch block children')
-        return []
-      }
-      const childData = await childResponse.json()
-      return childData.results || []
+      const r = await fetch(`https://api.notion.com/v1/blocks/${blockId}/children`, { headers: headers2 })
+      if (!r.ok) return []
+      const d = await r.json()
+      return d.results || []
     }
 
-    // Helper function to convert a single block to HTML
     const blockToHtml = async (block: any): Promise<string> => {
       switch (block.type) {
-        case 'paragraph':
-          const text = richTextToHtml(block.paragraph.rich_text)
-          return text ? `<p>${text}</p>` : ''
-          
-        case 'heading_1':
-          return `<h1>${richTextToHtml(block.heading_1.rich_text)}</h1>`
-          
-        case 'heading_2':
-          return `<h2>${richTextToHtml(block.heading_2.rich_text)}</h2>`
-          
-        case 'heading_3':
-          return `<h3>${richTextToHtml(block.heading_3.rich_text)}</h3>`
-          
-        case 'bulleted_list_item':
-          const bulletText = richTextToHtml(block.bulleted_list_item.rich_text)
-          let bulletChildrenHtml = ''
-          if (block.has_children) {
-            const bulletChildren = await fetchBlockChildren(block.id)
-            const nestedBullets = bulletChildren.filter((c: any) => c.type === 'bulleted_list_item')
-            if (nestedBullets.length > 0) {
-              const nestedItems = await Promise.all(nestedBullets.map((c: any) => blockToHtml(c)))
-              bulletChildrenHtml = `<ul>${nestedItems.join('')}</ul>`
-            }
-          }
-          return `<li>${bulletText}${bulletChildrenHtml}</li>`
-          
-        case 'numbered_list_item':
-          const numItemText = richTextToHtml(block.numbered_list_item.rich_text)
-          let numChildrenHtml = ''
-          if (block.has_children) {
-            const numChildren = await fetchBlockChildren(block.id)
-            const nestedNums = numChildren.filter((c: any) => c.type === 'numbered_list_item')
-            if (nestedNums.length > 0) {
-              const nestedNumItems = await Promise.all(nestedNums.map((c: any) => blockToHtml(c)))
-              numChildrenHtml = `<ol>${nestedNumItems.join('')}</ol>`
-            }
-          }
-          return `<li>${numItemText}${numChildrenHtml}</li>`
-          
-        case 'quote':
-          return `<blockquote>${richTextToHtml(block.quote.rich_text)}</blockquote>`
-          
-        case 'code':
-          const codeText = block.code.rich_text.map((t: any) => t.plain_text).join('')
-          const language = block.code.language || ''
-          return `<pre><code class="language-${language}">${codeText}</code></pre>`
-          
-        case 'equation':
-          // Block-level equation (formula block)
-          const expression = block.equation.expression || ''
-          return `<div class="equation-block" data-equation="${expression}">$$${expression}$$</div>`
-          
-        case 'divider':
-          return '<hr />'
-          
-        case 'image':
-          const imageUrl = block.image.file?.url || block.image.external?.url
-          const caption = block.image.caption ? richTextToHtml(block.image.caption) : ''
-          if (imageUrl) {
-            return `<figure><img src="${imageUrl}" alt="${caption}" />${caption ? `<figcaption>${caption}</figcaption>` : ''}</figure>`
-          }
-          return ''
-          
-        default:
-          console.log(`Unsupported block type: ${block.type}`)
-          return ''
-      }
-    }
-    
-    // Group consecutive list items
-    const blocks = blocksData.results
-    const htmlBlocks: string[] = []
-    let inBulletList = false
-    let inNumberedList = false
-    
-    for (let i = 0; i < blocks.length; i++) {
-      const block = blocks[i]
-      
-      console.log(`Block ${i}: type=${block.type}`)
-      
-      // Close lists when switching to non-list blocks
-      if (block.type !== 'bulleted_list_item' && inBulletList) {
-        htmlBlocks.push('</ul>')
-        inBulletList = false
-      }
-      if (block.type !== 'numbered_list_item' && inNumberedList) {
-        htmlBlocks.push('</ol>')
-        inNumberedList = false
-      }
-      
-      switch (block.type) {
-        case 'paragraph':
-          const text = richTextToHtml(block.paragraph.rich_text)
-          if (text) htmlBlocks.push(`<p>${text}</p>`)
-          break
-          
-        case 'heading_1':
-          const h1Text = richTextToHtml(block.heading_1.rich_text)
-          htmlBlocks.push(`<h1>${h1Text}</h1>`)
-          break
-          
-        case 'heading_2':
-          const h2Text = richTextToHtml(block.heading_2.rich_text)
-          htmlBlocks.push(`<h2>${h2Text}</h2>`)
-          break
-          
-        case 'heading_3':
-          const h3Text = richTextToHtml(block.heading_3.rich_text)
-          htmlBlocks.push(`<h3>${h3Text}</h3>`)
-          break
-          
-        case 'bulleted_list_item':
-          if (!inBulletList) {
-            htmlBlocks.push('<ul>')
-            inBulletList = true
-          }
-          const bulletItemText = richTextToHtml(block.bulleted_list_item.rich_text)
-          // Handle nested children
-          let nestedBulletHtml = ''
-          if (block.has_children) {
-            const bulletChildren = await fetchBlockChildren(block.id)
-            const nestedBullets = bulletChildren.filter((b: any) => b.type === 'bulleted_list_item')
-            if (nestedBullets.length > 0) {
-              const nestedItems: string[] = []
-              for (const child of nestedBullets) {
-                const childHtml = await blockToHtml(child)
-                nestedItems.push(childHtml)
-              }
-              nestedBulletHtml = `<ul>${nestedItems.join('')}</ul>`
-            }
-          }
-          htmlBlocks.push(`<li>${bulletItemText}${nestedBulletHtml}</li>`)
-          break
-          
-        case 'numbered_list_item':
-          if (!inNumberedList) {
-            htmlBlocks.push('<ol>')
-            inNumberedList = true
-          }
-          const numItemMainText = richTextToHtml(block.numbered_list_item.rich_text)
-          // Handle nested children
-          let nestedNumHtml = ''
-          if (block.has_children) {
-            const numChildren = await fetchBlockChildren(block.id)
-            const nestedNums = numChildren.filter((b: any) => b.type === 'numbered_list_item')
-            if (nestedNums.length > 0) {
-              const nestedNumItems: string[] = []
-              for (const child of nestedNums) {
-                const childHtml = await blockToHtml(child)
-                nestedNumItems.push(childHtml)
-              }
-              nestedNumHtml = `<ol>${nestedNumItems.join('')}</ol>`
-            }
-          }
-          htmlBlocks.push(`<li>${numItemMainText}${nestedNumHtml}</li>`)
-          break
-          
-        case 'quote':
-          const quoteText = richTextToHtml(block.quote.rich_text)
-          // Fetch children if the quote has them (multi-line quotes)
-          let quoteChildrenHtml = ''
-          if (block.has_children) {
-            const quoteChildren = await fetchBlockChildren(block.id)
-            const quoteChildParts: string[] = []
-            for (const child of quoteChildren) {
-              const childHtml = await blockToHtml(child)
-              if (childHtml) quoteChildParts.push(childHtml)
-            }
-            quoteChildrenHtml = quoteChildParts.join('\n')
-          }
-          const fullQuoteContent = quoteText + (quoteChildrenHtml ? `\n${quoteChildrenHtml}` : '')
-          htmlBlocks.push(`<blockquote>${fullQuoteContent}</blockquote>`)
-          break
-          
-        case 'code':
-          const codeText = block.code.rich_text.map((t: any) => t.plain_text).join('')
-          const language = block.code.language || ''
-          htmlBlocks.push(`<pre><code class="language-${language}">${codeText}</code></pre>`)
-          break
-          
-        case 'equation':
-          // Block-level equation (formula block)
-          const expression = block.equation.expression || ''
-          htmlBlocks.push(`<div class="equation-block" data-equation="${expression}">$$${expression}$$</div>`)
-          break
-          
-        case 'callout':
-          const calloutText = richTextToHtml(block.callout.rich_text)
-          // Get icon - could be emoji, custom_emoji, external image, file, or null
-          const calloutIcon = block.callout.icon
-          let iconHtml = ''
-          if (calloutIcon?.type === 'emoji' && calloutIcon.emoji) {
-            iconHtml = `<span class="callout-icon">${calloutIcon.emoji}</span>`
-          } else if (calloutIcon?.type === 'custom_emoji' && calloutIcon.custom_emoji?.url) {
-            // Custom emoji uploaded to Notion workspace
-            iconHtml = `<img class="callout-icon-img" src="${calloutIcon.custom_emoji.url}" alt="${calloutIcon.custom_emoji.name || ''}" />`
-          } else if (calloutIcon?.type === 'external' && calloutIcon.external?.url) {
-            iconHtml = `<img class="callout-icon-img" src="${calloutIcon.external.url}" alt="" />`
-          } else if (calloutIcon?.type === 'file' && calloutIcon.file?.url) {
-            iconHtml = `<img class="callout-icon-img" src="${calloutIcon.file.url}" alt="" />`
-          }
-          // Get background color from Notion (defaults to gray_background if not set)
-          const calloutColor = block.callout.color || 'default'
-          
-          // Fetch children if the callout has them
-          let childrenHtml = ''
+        case 'paragraph': {
+          const t = richTextToHtml(block.paragraph.rich_text)
+          return t ? `<p>${t}</p>` : ''
+        }
+        case 'heading_1': return `<h1>${richTextToHtml(block.heading_1.rich_text)}</h1>`
+        case 'heading_2': return `<h2>${richTextToHtml(block.heading_2.rich_text)}</h2>`
+        case 'heading_3': return `<h3>${richTextToHtml(block.heading_3.rich_text)}</h3>`
+        case 'bulleted_list_item': {
+          const t = richTextToHtml(block.bulleted_list_item.rich_text)
+          let nested = ''
           if (block.has_children) {
             const children = await fetchBlockChildren(block.id)
-            const childHtmlParts: string[] = []
-            for (const child of children) {
-              const childHtml = await blockToHtml(child)
-              if (childHtml) childHtmlParts.push(childHtml)
+            const items = await Promise.all(children.filter((c: any) => c.type === 'bulleted_list_item').map((c: any) => blockToHtml(c)))
+            if (items.length) nested = `<ul>${items.join('')}</ul>`
+          }
+          return `<li>${t}${nested}</li>`
+        }
+        case 'numbered_list_item': {
+          const t = richTextToHtml(block.numbered_list_item.rich_text)
+          let nested = ''
+          if (block.has_children) {
+            const children = await fetchBlockChildren(block.id)
+            const items = await Promise.all(children.filter((c: any) => c.type === 'numbered_list_item').map((c: any) => blockToHtml(c)))
+            if (items.length) nested = `<ol>${items.join('')}</ol>`
+          }
+          return `<li>${t}${nested}</li>`
+        }
+        case 'quote': {
+          const t = richTextToHtml(block.quote.rich_text)
+          let childHtml = ''
+          if (block.has_children) {
+            const children = await fetchBlockChildren(block.id)
+            const parts = await Promise.all(children.map((c: any) => blockToHtml(c)))
+            childHtml = parts.filter(Boolean).join('\n')
+          }
+          return `<blockquote>${t}${childHtml ? '\n' + childHtml : ''}</blockquote>`
+        }
+        case 'callout': {
+          const t = richTextToHtml(block.callout.rich_text)
+          const icon = block.callout.icon
+          let iconHtml = ''
+          if (icon?.type === 'emoji') iconHtml = `<span class="callout-icon">${icon.emoji}</span>`
+          else if (icon?.type === 'custom_emoji' && icon.custom_emoji?.url) iconHtml = `<img class="callout-icon-img" src="${icon.custom_emoji.url}" alt="${icon.custom_emoji.name || ''}" />`
+          else if (icon?.type === 'external' && icon.external?.url) iconHtml = `<img class="callout-icon-img" src="${icon.external.url}" alt="" />`
+          else if (icon?.type === 'file' && icon.file?.url) iconHtml = `<img class="callout-icon-img" src="${icon.file.url}" alt="" />`
+          const color = block.callout.color || 'default'
+          let childHtml = ''
+          if (block.has_children) {
+            const children = await fetchBlockChildren(block.id)
+            const groupedParts: string[] = []
+            let inBul = false, inNum = false
+            for (const c of children) {
+              if (c.type !== 'bulleted_list_item' && inBul) { groupedParts.push('</ul>'); inBul = false }
+              if (c.type !== 'numbered_list_item' && inNum) { groupedParts.push('</ol>'); inNum = false }
+              if (c.type === 'bulleted_list_item' && !inBul) { groupedParts.push('<ul>'); inBul = true }
+              if (c.type === 'numbered_list_item' && !inNum) { groupedParts.push('<ol>'); inNum = true }
+              const html = await blockToHtml(c)
+              if (html) groupedParts.push(html)
             }
-            childrenHtml = childHtmlParts.join('\n')
+            if (inBul) groupedParts.push('</ul>')
+            if (inNum) groupedParts.push('</ol>')
+            childHtml = groupedParts.join('\n')
           }
-          
-          // Include both the main callout text and any children
-          const calloutContent = calloutText + (childrenHtml ? `\n${childrenHtml}` : '')
-          htmlBlocks.push(`<div class="callout callout-${calloutColor}">${iconHtml}<div class="callout-content">${calloutContent}</div></div>`)
-          break
-          
-        case 'divider':
-          htmlBlocks.push('<hr />')
-          break
-          
-        case 'image':
-          const imageUrl = block.image.file?.url || block.image.external?.url
-          const caption = block.image.caption ? richTextToHtml(block.image.caption) : ''
-          if (imageUrl) {
-            htmlBlocks.push(`<figure><img src="${imageUrl}" alt="${caption}" />${caption ? `<figcaption>${caption}</figcaption>` : ''}</figure>`)
+          return `<div class="callout callout-${color}">${iconHtml}<div class="callout-content">${t}${childHtml ? '\n' + childHtml : ''}</div></div>`
+        }
+        case 'code': {
+          const t = block.code.rich_text.map((x: any) => x.plain_text).join('')
+          return `<pre><code class="language-${block.code.language || ''}">${t}</code></pre>`
+        }
+        case 'equation': {
+          const expression = block.equation.expression || ''
+          return `<div class="equation-block" data-equation="${expression}">$$${expression}$$</div>`
+        }
+        case 'divider': return '<hr />'
+        case 'image': {
+          const url = block.image.file?.url || block.image.external?.url
+          const cap = block.image.caption ? richTextToHtml(block.image.caption) : ''
+          return url ? `<figure><img src="${url}" alt="${cap}" />${cap ? `<figcaption>${cap}</figcaption>` : ''}</figure>` : ''
+        }
+        case 'video': {
+          const url = block.video.file?.url || block.video.external?.url
+          if (!url) return ''
+          if (block.video.type === 'external') {
+            const embedUrl = url
+              .replace('youtube.com/watch?v=', 'youtube.com/embed/')
+              .replace('youtu.be/', 'youtube.com/embed/')
+              .replace('vimeo.com/', 'player.vimeo.com/video/')
+              .replace('loom.com/share/', 'loom.com/embed/')
+            return `<div class="video-embed"><iframe src="${embedUrl}" frameborder="0" allowfullscreen loading="lazy" style="width:100%;aspect-ratio:16/9;border-radius:0.5rem;"></iframe></div>`
           }
-          break
-          
-        default:
-          console.log(`Unsupported block type: ${block.type}`)
+          const cap = block.video.caption ? richTextToHtml(block.video.caption) : ''
+          return `<figure class="video-figure"><video controls preload="metadata" style="width:100%;border-radius:0.5rem;"><source src="${url}" /></video>${cap ? `<figcaption>${cap}</figcaption>` : ''}</figure>`
+        }
+        case 'embed': {
+          const url = block.embed?.url
+          if (!url) return ''
+          return `<div class="video-embed"><iframe src="${url}" frameborder="0" allowfullscreen loading="lazy" style="width:100%;aspect-ratio:16/9;border-radius:0.5rem;"></iframe></div>`
+        }
+        case 'column_list': {
+          if (!block.has_children) return ''
+          const columns = await fetchBlockChildren(block.id)
+          const colCount = columns.length
+          const colHtmlParts = await Promise.all(columns.map(async (col: any) => {
+            if (col.type !== 'column' || !col.has_children) return '<div class="notion-column"></div>'
+            const colChildren = await fetchBlockChildren(col.id)
+            const parts: string[] = []
+            let ib = false, in2 = false
+            for (const c of colChildren) {
+              if (c.type !== 'bulleted_list_item' && ib) { parts.push('</ul>'); ib = false }
+              if (c.type !== 'numbered_list_item' && in2) { parts.push('</ol>'); in2 = false }
+              if (c.type === 'bulleted_list_item' && !ib) { parts.push('<ul>'); ib = true }
+              if (c.type === 'numbered_list_item' && !in2) { parts.push('<ol>'); in2 = true }
+              const h = await blockToHtml(c)
+              if (h) parts.push(h)
+            }
+            if (ib) parts.push('</ul>')
+            if (in2) parts.push('</ol>')
+            return `<div class="notion-column">${parts.join('\n')}</div>`
+          }))
+          return `<div class="notion-column-list notion-columns-${colCount}">${colHtmlParts.join('')}</div>`
+        }
+        case 'column': return ''
+        case 'table': {
+          if (!block.has_children) return ''
+          const rows = await fetchBlockChildren(block.id)
+          const hasHeader = block.table.has_column_header
+          let html = '<table>'
+          rows.forEach((row: any, idx: number) => {
+            if (row.type !== 'table_row') return
+            const tag = (hasHeader && idx === 0) ? 'th' : 'td'
+            const wrapper = (hasHeader && idx === 0) ? 'thead' : (idx === 1 && hasHeader ? 'tbody' : '')
+            if (wrapper === 'thead') html += '<thead>'
+            if (wrapper === 'tbody') html += '<tbody>'
+            html += '<tr>'
+            for (const cell of row.table_row.cells) {
+              html += `<${tag}>${richTextToHtml(cell)}</${tag}>`
+            }
+            html += '</tr>'
+            if (wrapper === 'thead') html += '</thead>'
+          })
+          if (hasHeader && rows.length > 1) html += '</tbody>'
+          html += '</table>'
+          return html
+        }
+        default: return ''
       }
     }
-    
-    // Close any open lists
-    if (inBulletList) htmlBlocks.push('</ul>')
-    if (inNumberedList) htmlBlocks.push('</ol>')
-    
-    const content = htmlBlocks.join('\n')
-    console.log('Generated HTML length:', content.length)
 
-    // Extract the featured image URL if it exists
+    const htmlBlocks: string[] = []
+    let inBullet = false, inNum = false
+    for (let i = 0; i < allBlocks.length; i++) {
+      const block = allBlocks[i]
+      if (block.type !== 'bulleted_list_item' && inBullet) { htmlBlocks.push('</ul>'); inBullet = false }
+      if (block.type !== 'numbered_list_item' && inNum) { htmlBlocks.push('</ol>'); inNum = false }
+      if (block.type === 'bulleted_list_item' && !inBullet) { htmlBlocks.push('<ul>'); inBullet = true }
+      else if (block.type === 'numbered_list_item' && !inNum) { htmlBlocks.push('<ol>'); inNum = true }
+      const html = await blockToHtml(block)
+      if (html) htmlBlocks.push(html)
+    }
+    if (inBullet) htmlBlocks.push('</ul>')
+    if (inNum) htmlBlocks.push('</ol>')
+
+    const content = htmlBlocks.join('\n')
+
     const featuredImageFiles = properties['Featured IMG']?.files || []
-    const headerImage = featuredImageFiles.length > 0 ? featuredImageFiles[0].file?.url || featuredImageFiles[0].external?.url : null
+    const headerImage = featuredImageFiles.length > 0
+      ? featuredImageFiles[0].file?.url || featuredImageFiles[0].external?.url
+      : null
+
+    // Cache the result
+    await sb.from('blog_content_cache').upsert({
+      notion_id: postId,
+      slug,
+      title: properties['Name']?.title?.[0]?.plain_text || 'Untitled',
+      html_content: content,
+      header_image_url: headerImage,
+      description: properties['Description']?.rich_text?.[0]?.plain_text || null,
+      reading_time: properties['Reading time']?.rich_text?.[0]?.plain_text || null,
+      theme: properties['Theme']?.select?.name || null,
+      synced_at: new Date().toISOString(),
+    }, { onConflict: 'notion_id' })
 
     const post = {
       title: properties['Name']?.title?.[0]?.plain_text || 'Untitled',
       description: properties['Description']?.rich_text?.[0]?.plain_text || '',
-      headerImage: headerImage,
-      content: content,
+      headerImage,
+      content,
       readingTime: properties['Reading time']?.rich_text?.[0]?.plain_text || null,
       theme: properties['Theme']?.select?.name || null,
-      lastEditedTime: lastEditedTime
+      lastEditedTime,
     }
 
     return new Response(
       JSON.stringify({ post }),
-      { 
-        headers: { 
-          ...corsHeaders, 
-          'Content-Type': 'application/json' 
-        } 
-      }
+      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     )
   } catch (error) {
     console.error('Error fetching blog post:', error)
     return new Response(
-      JSON.stringify({ 
-        error: error instanceof Error ? error.message : 'Unknown error'
-      }),
-      { 
-        status: 500,
-        headers: { 
-          ...corsHeaders, 
-          'Content-Type': 'application/json' 
-        } 
-      }
+      JSON.stringify({ error: error instanceof Error ? error.message : 'Unknown error' }),
+      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     )
   }
 })

@@ -6,7 +6,10 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
-const DATABASE_ID = '2bc8863b87d4802fa65dd15c42ffa13b'
+const PORTFOLIO_DATABASES = [
+  { id: '2808863b-87d4-8027-8f0e-fb1f70d684e0', label: 'creative' },
+  { id: '2e08863b-87d4-81e2-bea8-f435421a841a', label: 'notion' },
+]
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -19,159 +22,146 @@ serve(async (req) => {
 
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
-    const supabase = createClient(supabaseUrl, supabaseServiceKey)
+    const sb = createClient(supabaseUrl, supabaseServiceKey)
 
-    // Get last sync timestamp for incremental mode
-    const { data: syncMeta } = await supabase
+    // Get last sync timestamp
+    const { data: syncMeta } = await sb
       .from('sync_metadata')
       .select('last_synced_at')
-      .eq('sync_type', 'blog')
+      .eq('sync_type', 'portfolio')
       .single()
 
     const lastSyncedAt = syncMeta?.last_synced_at || '2000-01-01T00:00:00Z'
     const syncStartTime = new Date().toISOString()
-    const isFirstRun = new Date(lastSyncedAt).getTime() < new Date('2001-01-01').getTime()
 
-    // Build filter: Status = Live, optionally with last_edited_time
-    const baseFilter = { property: 'Status', status: { equals: 'Live' } }
-    const queryFilter = isFirstRun
-      ? baseFilter
-      : {
-          and: [
-            baseFilter,
-            { timestamp: 'last_edited_time', last_edited_time: { after: lastSyncedAt } },
-          ]
+    let totalListingSynced = 0
+    let totalContentSynced = 0
+
+    for (const db of PORTFOLIO_DATABASES) {
+      console.log(`Syncing portfolio database: ${db.label} (${db.id})`)
+
+      // Query Notion for pages with Show in Portfolio = true
+      // Use last_edited_time filter for incremental sync
+      const filter: any = {
+        and: [
+          { property: 'Show in Portfolio', checkbox: { equals: true } },
+          { timestamp: 'last_edited_time', last_edited_time: { after: lastSyncedAt } },
+        ]
+      }
+
+      // Check if this is first run (very old timestamp = full sync)
+      const isFirstRun = new Date(lastSyncedAt).getTime() < new Date('2001-01-01').getTime()
+      const queryFilter = isFirstRun
+        ? { property: 'Show in Portfolio', checkbox: { equals: true } }
+        : filter
+
+      let allResults: any[] = []
+      let startCursor: string | undefined = undefined
+
+      do {
+        const body: any = {
+          filter: queryFilter,
+          sorts: [{ property: 'Date', direction: 'descending' }],
+        }
+        if (startCursor) body.start_cursor = startCursor
+
+        const res = await fetch(`https://api.notion.com/v1/databases/${db.id}/query`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${NOTION_API_KEY}`,
+            'Notion-Version': '2022-06-28',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(body),
+        })
+
+        if (!res.ok) {
+          const errText = await res.text()
+          console.error(`Notion query error for ${db.label}:`, errText)
+          throw new Error(`Failed to query database ${db.label}: ${res.status}`)
         }
 
-    // Query Notion
-    let allResults: any[] = []
-    let startCursor: string | undefined = undefined
-    do {
-      const body: any = { filter: queryFilter }
-      if (startCursor) body.start_cursor = startCursor
+        const data = await res.json()
+        allResults = allResults.concat(data.results || [])
+        startCursor = data.has_more ? data.next_cursor : undefined
+      } while (startCursor)
 
-      const response = await fetch(`https://api.notion.com/v1/databases/${DATABASE_ID}/query`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${NOTION_API_KEY}`,
-          'Notion-Version': '2022-06-28',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(body),
-      })
+      console.log(`Found ${allResults.length} changed pages in ${db.label}`)
 
-      if (!response.ok) {
-        const errorText = await response.text()
-        console.error('Notion API error:', errorText)
-        throw new Error(`Notion API error: ${response.status}`)
-      }
+      if (allResults.length === 0) continue
 
-      const data = await response.json()
-      allResults = allResults.concat(data.results || [])
-      startCursor = data.has_more ? data.next_cursor : undefined
-    } while (startCursor)
+      // Process each page: upsert listing + render content
+      for (const page of allResults) {
+        const props = page.properties
 
-    console.log(`Blog sync: found ${allResults.length} changed posts (incremental: ${!isFirstRun})`)
+        // Extract cover image
+        let coverImage: string | null = null
+        if (page.cover?.file?.url) coverImage = page.cover.file.url
+        else if (page.cover?.external?.url) coverImage = page.cover.external.url
 
-    if (allResults.length === 0) {
-      // Update sync timestamp even if nothing changed
-      await supabase.from('sync_metadata').upsert(
-        { sync_type: 'blog', last_synced_at: syncStartTime },
-        { onConflict: 'sync_type' }
-      )
-      return new Response(
-        JSON.stringify({ success: true, synced: 0, content_synced: 0 }),
-        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      )
-    }
+        // Extract tags
+        const pageTags = (props['Tags']?.multi_select || []).map((t: any) => t.name)
+        const proposalFeatures = (props['Proposal feature']?.multi_select || []).map((t: any) => t.name)
+        const allPageTags = [...pageTags, ...proposalFeatures.filter((f: string) => ['Featured', 'Featured-Hero', 'Masonry-Top'].includes(f))]
 
-    // Process listing metadata
-    const posts = allResults.map((page: any) => {
-      const properties = page.properties
-      const featuredImageFiles = properties['Featured IMG']?.files || []
-      const headerImage = featuredImageFiles.length > 0
-        ? featuredImageFiles[0].file?.url || featuredImageFiles[0].external?.url
-        : null
-      const title = properties['Name']?.title?.[0]?.plain_text || 'Untitled'
-      const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
+        const name = props['Name']?.title?.[0]?.plain_text || 'Untitled'
+        const hasNda = allPageTags.includes('NDA')
 
-      return {
-        notion_id: page.id,
-        slug,
-        title,
-        description: properties['Description']?.rich_text?.[0]?.plain_text || null,
-        intro: properties['Intro']?.rich_text?.[0]?.plain_text || null,
-        header_image_url: headerImage,
-        reading_time: properties['Reading time']?.rich_text?.[0]?.plain_text || null,
-        theme: properties['Theme']?.select?.name || null,
-        published_date: properties['Published']?.date?.start || null,
-        featured: properties['Featured']?.checkbox || false,
-        synced_at: new Date().toISOString(),
-      }
-    })
-
-    // Upsert listing cache (blog_posts_cache)
-    if (isFirstRun) {
-      // Full sync: clear and reinsert
-      await supabase.from('blog_posts_cache').delete().neq('id', '00000000-0000-0000-0000-000000000000')
-      if (posts.length > 0) {
-        const { error: insertError } = await supabase.from('blog_posts_cache').insert(posts)
-        if (insertError) {
-          console.error('Insert error:', insertError)
-          throw new Error(`Failed to insert cache: ${insertError.message}`)
-        }
-      }
-    } else {
-      // Incremental: upsert changed posts
-      for (const post of posts) {
-        await supabase.from('blog_posts_cache').upsert(post, { onConflict: 'notion_id' })
-      }
-    }
-
-    // Pre-render full HTML content for each changed post
-    let contentSynced = 0
-    for (const page of allResults) {
-      const properties = page.properties
-      const title = properties['Name']?.title?.[0]?.plain_text || 'Untitled'
-      const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
-
-      try {
-        const htmlContent = await renderBlogContent(page.id, NOTION_API_KEY)
-        const featuredImageFiles = properties['Featured IMG']?.files || []
-        const headerImage = featuredImageFiles.length > 0
-          ? featuredImageFiles[0].file?.url || featuredImageFiles[0].external?.url
-          : null
-
-        await supabase.from('blog_content_cache').upsert({
-          notion_id: page.id,
-          slug,
-          title,
-          html_content: htmlContent,
-          header_image_url: headerImage,
-          description: properties['Description']?.rich_text?.[0]?.plain_text || null,
-          reading_time: properties['Reading time']?.rich_text?.[0]?.plain_text || null,
-          theme: properties['Theme']?.select?.name || null,
+        // Upsert listing cache
+        const listingRow = {
+          database_id: db.id,
+          notion_page_id: page.id,
+          name,
+          tags: allPageTags,
+          text: props['Text']?.rich_text?.[0]?.plain_text || '',
+          month_year: props['Month & Year']?.rich_text?.[0]?.plain_text || '',
+          date: props['Date']?.date?.start || null,
+          cover_image: coverImage,
+          has_nda: hasNda,
           synced_at: new Date().toISOString(),
-        }, { onConflict: 'notion_id' })
+        }
 
-        contentSynced++
-      } catch (e) {
-        console.error(`Failed to render blog post "${title}":`, e)
+        await sb.from('portfolio_listing_cache').upsert(listingRow, { onConflict: 'notion_page_id' })
+        totalListingSynced++
+
+        // Skip content rendering for NDA items
+        if (hasNda) continue
+
+        // Render content HTML
+        try {
+          const htmlContent = await renderPageContent(page.id, NOTION_API_KEY)
+          const monthYear = props['Month & Year']?.rich_text?.[0]?.plain_text || ''
+
+          await sb.from('portfolio_content_cache').upsert({
+            notion_page_id: page.id,
+            name,
+            html_content: htmlContent,
+            cover_image: coverImage,
+            tags: allPageTags,
+            month_year: monthYear,
+            synced_at: new Date().toISOString(),
+          }, { onConflict: 'notion_page_id' })
+          totalContentSynced++
+        } catch (e) {
+          console.error(`Failed to render content for ${name}:`, e)
+        }
       }
     }
 
     // Update sync timestamp
-    await supabase.from('sync_metadata').upsert(
-      { sync_type: 'blog', last_synced_at: syncStartTime },
+    await sb.from('sync_metadata').upsert(
+      { sync_type: 'portfolio', last_synced_at: syncStartTime },
       { onConflict: 'sync_type' }
     )
 
+    console.log(`Portfolio sync complete: ${totalListingSynced} listings, ${totalContentSynced} content pages`)
+
     return new Response(
-      JSON.stringify({ success: true, synced: posts.length, content_synced: contentSynced }),
+      JSON.stringify({ success: true, listings_synced: totalListingSynced, content_synced: totalContentSynced }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     )
   } catch (error) {
-    console.error('Sync error:', error)
+    console.error('Portfolio sync error:', error)
     return new Response(
       JSON.stringify({ error: error instanceof Error ? error.message : 'Unknown error' }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -179,9 +169,9 @@ serve(async (req) => {
   }
 })
 
-// ─── Block-to-HTML rendering (reused from fetch-blog-post) ───
+// ─── Block-to-HTML rendering (reused from fetch-portfolio-page) ───
 
-async function renderBlogContent(pageId: string, notionApiKey: string): Promise<string> {
+async function renderPageContent(pageId: string, notionApiKey: string): Promise<string> {
   const headers = { 'Authorization': `Bearer ${notionApiKey}`, 'Notion-Version': '2022-06-28' }
 
   // Fetch all blocks with pagination
@@ -222,7 +212,7 @@ async function renderBlogContent(pageId: string, notionApiKey: string): Promise<
     switch (block.type) {
       case 'paragraph': {
         const t = richTextToHtml(block.paragraph.rich_text)
-        return t ? `<p>${t}</p>` : ''
+        return t ? `<p>${t}</p>` : '<p class="empty-paragraph"></p>'
       }
       case 'heading_1': return `<h1>${richTextToHtml(block.heading_1.rich_text)}</h1>`
       case 'heading_2': return `<h2>${richTextToHtml(block.heading_2.rich_text)}</h2>`
@@ -288,10 +278,6 @@ async function renderBlogContent(pageId: string, notionApiKey: string): Promise<
       case 'code': {
         const t = block.code.rich_text.map((x: any) => x.plain_text).join('')
         return `<pre><code class="language-${block.code.language || ''}">${t}</code></pre>`
-      }
-      case 'equation': {
-        const expression = block.equation.expression || ''
-        return `<div class="equation-block" data-equation="${expression}">$$${expression}$$</div>`
       }
       case 'divider': return '<hr />'
       case 'image': {
