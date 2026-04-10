@@ -9,7 +9,7 @@ const corsHeaders = {
 const DATABASE_ID = '2bc8863b87d4802fa65dd15c42ffa13b'
 
 const NOTION_S3_PATTERN = /https:\/\/(?:prod-files-secure|s3\.us-west-2\.amazonaws\.com\/secure\.notion-static\.com)[^\s"'<>)]+/g
-const MAX_FILE_SIZE = 50 * 1024 * 1024
+const MAX_FILE_SIZE = 200 * 1024 * 1024
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
