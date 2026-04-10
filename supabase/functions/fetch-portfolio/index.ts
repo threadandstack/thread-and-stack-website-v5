@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2"
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -20,80 +21,43 @@ serve(async (req) => {
       )
     }
 
-    const NOTION_API_KEY = Deno.env.get('NOTION_API_KEY')
-    if (!NOTION_API_KEY) {
-      throw new Error('NOTION_API_KEY not configured')
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+    const sb = createClient(supabaseUrl, supabaseKey)
+
+    // Read from portfolio_listing_cache
+    let query = sb
+      .from('portfolio_listing_cache')
+      .select('*')
+      .eq('database_id', database_id)
+      .order('date', { ascending: false, nullsFirst: false })
+
+    const { data: items, error } = await query
+
+    if (error) {
+      console.error('Database query error:', error)
+      throw new Error(`Failed to query cache: ${error.message}`)
     }
 
-    // Build filter: Show in Portfolio = true
-    const filter: any = {
-      property: 'Show in Portfolio',
-      checkbox: { equals: true }
-    }
+    let filtered = (items || []).map((item: any) => ({
+      id: item.notion_page_id,
+      name: item.name,
+      tags: item.tags || [],
+      text: item.text || '',
+      monthYear: item.month_year || '',
+      date: item.date,
+      coverImage: item.cover_image,
+      hasNda: item.has_nda,
+    }))
 
-    // Query the database
-    const queryResponse = await fetch(
-      `https://api.notion.com/v1/databases/${database_id}/query`,
-      {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${NOTION_API_KEY}`,
-          'Notion-Version': '2022-06-28',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          filter,
-          sorts: [{ property: 'Date', direction: 'descending' }]
-        })
-      }
-    )
-
-    if (!queryResponse.ok) {
-      const errText = await queryResponse.text()
-      console.error('Notion query error:', errText)
-      throw new Error(`Failed to query database: ${queryResponse.status}`)
-    }
-
-    const queryData = await queryResponse.json()
-
-    // Transform results
-    const items = (queryData.results || []).map((page: any) => {
-      const props = page.properties
-
-      // Extract cover image
-      let coverImage: string | null = null
-      if (page.cover?.file?.url) {
-        coverImage = page.cover.file.url
-      } else if (page.cover?.external?.url) {
-        coverImage = page.cover.external.url
-      }
-
-      // Extract tags
-      const pageTags = (props['Tags']?.multi_select || []).map((t: any) => t.name)
-      const proposalFeatures = (props['Proposal feature']?.multi_select || []).map((t: any) => t.name)
-      const allPageTags = [...pageTags, ...proposalFeatures.filter((f: string) => ['Featured', 'Featured-Hero', 'Masonry-Top'].includes(f))]
-
-      return {
-        id: page.id,
-        name: props['Name']?.title?.[0]?.plain_text || 'Untitled',
-        tags: allPageTags,
-        text: props['Text']?.rich_text?.[0]?.plain_text || '',
-        monthYear: props['Month & Year']?.rich_text?.[0]?.plain_text || '',
-        date: props['Date']?.date?.start || null,
-        coverImage,
-        hasNda: allPageTags.includes('NDA'),
-      }
-    })
-
-    // Filter by tags if provided (client can request specific tags)
-    let filtered = items
+    // Filter by tags if provided
     if (tags && Array.isArray(tags) && tags.length > 0) {
-      filtered = items.filter((item: any) =>
+      filtered = filtered.filter((item: any) =>
         item.tags.some((t: string) => tags.includes(t))
       )
     }
 
-    // Exclude items tagged "Not Ready"
+    // Exclude "Not Ready" items
     filtered = filtered.filter((item: any) => !item.tags.includes('Not Ready'))
 
     return new Response(
