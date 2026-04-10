@@ -120,7 +120,7 @@ const AdminDashboard = () => {
         </div>
 
         {/* Blog Cache Sync */}
-        <Card className="mb-6">
+        <Card className="mb-4">
           <CardHeader>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
@@ -129,11 +129,35 @@ const AdminDashboard = () => {
                 </div>
                 <div>
                   <CardTitle className="text-lg">Blog Cache</CardTitle>
-                  <CardDescription>Sync blog listing data from Notion to speed up page loads</CardDescription>
+                  <CardDescription>Sync blog listings and pre-render post content from Notion</CardDescription>
                 </div>
               </div>
-              <Button onClick={handleSyncBlogCache} disabled={isSyncing}>
-                {isSyncing ? (
+              <Button onClick={handleSyncBlogCache} disabled={isSyncingBlog}>
+                {isSyncingBlog ? (
+                  <><Loader2 className="h-4 w-4 animate-spin mr-2" /> Syncing…</>
+                ) : (
+                  <><RefreshCw className="h-4 w-4 mr-2" /> Sync Now</>
+                )}
+              </Button>
+            </div>
+          </CardHeader>
+        </Card>
+
+        {/* Portfolio Cache Sync */}
+        <Card className="mb-6">
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-primary/10">
+                  <RefreshCw className="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <CardTitle className="text-lg">Portfolio Cache</CardTitle>
+                  <CardDescription>Sync portfolio listings and pre-render project pages from Notion</CardDescription>
+                </div>
+              </div>
+              <Button onClick={handleSyncPortfolioCache} disabled={isSyncingPortfolio}>
+                {isSyncingPortfolio ? (
                   <><Loader2 className="h-4 w-4 animate-spin mr-2" /> Syncing…</>
                 ) : (
                   <><RefreshCw className="h-4 w-4 mr-2" /> Sync Now</>
