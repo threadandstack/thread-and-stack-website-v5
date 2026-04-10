@@ -125,8 +125,8 @@ serve(async (req) => {
         const name = props['Name']?.title?.[0]?.plain_text || 'Untitled'
         const hasNda = allPageTags.includes('NDA')
 
-        // Persist cover image inline
-        if (coverImage) {
+        // Persist cover image inline (skip if already a permanent URL or skip_media flag)
+        if (coverImage && !skipMedia) {
           const persistedCover = await persistMediaUrl(sb, supabaseUrl, coverImage, page.id, 'cover')
           if (persistedCover) {
             coverImage = persistedCover
