@@ -11,6 +11,9 @@ const PORTFOLIO_DATABASES = [
   { id: '2e08863b-87d4-81e2-bea8-f435421a841a', label: 'notion' },
 ]
 
+const NOTION_S3_PATTERN = /https:\/\/(?:prod-files-secure|s3\.us-west-2\.amazonaws\.com\/secure\.notion-static\.com)[^\s"'<>)]+/g
+const MAX_FILE_SIZE = 50 * 1024 * 1024 // 50MB
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders })
@@ -24,6 +27,13 @@ serve(async (req) => {
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     const sb = createClient(supabaseUrl, supabaseServiceKey)
 
+    // Check for full=true parameter
+    let fullSync = false
+    try {
+      const body = await req.json()
+      fullSync = body?.full === true
+    } catch { /* no body or invalid JSON, default to incremental */ }
+
     // Get last sync timestamp
     const { data: syncMeta } = await sb
       .from('sync_metadata')
@@ -33,23 +43,24 @@ serve(async (req) => {
 
     const lastSyncedAt = syncMeta?.last_synced_at || '2000-01-01T00:00:00Z'
     const syncStartTime = new Date().toISOString()
+    const isFirstRun = new Date(lastSyncedAt).getTime() < new Date('2001-01-01').getTime()
 
     let totalListingSynced = 0
     let totalContentSynced = 0
-    const syncedPageIds: string[] = []
+    let totalMediaPersisted = 0
 
     for (const db of PORTFOLIO_DATABASES) {
       console.log(`Syncing portfolio database: ${db.label} (${db.id})`)
 
-      const isFirstRun = new Date(lastSyncedAt).getTime() < new Date('2001-01-01').getTime()
-      const queryFilter = isFirstRun
-        ? { property: 'Show in Portfolio', checkbox: { equals: true } }
-        : {
+      const useIncremental = !isFirstRun && !fullSync
+      const queryFilter = useIncremental
+        ? {
             and: [
               { property: 'Show in Portfolio', checkbox: { equals: true } },
               { timestamp: 'last_edited_time', last_edited_time: { after: lastSyncedAt } },
             ]
           }
+        : { property: 'Show in Portfolio', checkbox: { equals: true } }
 
       let allResults: any[] = []
       let startCursor: string | undefined = undefined
@@ -82,10 +93,11 @@ serve(async (req) => {
         startCursor = data.has_more ? data.next_cursor : undefined
       } while (startCursor)
 
-      console.log(`Found ${allResults.length} changed pages in ${db.label}`)
+      console.log(`Found ${allResults.length} pages in ${db.label} (full=${fullSync})`)
 
       if (allResults.length === 0) continue
 
+      // Process pages one at a time to stay within memory limits
       for (const page of allResults) {
         const props = page.properties
 
@@ -99,6 +111,15 @@ serve(async (req) => {
 
         const name = props['Name']?.title?.[0]?.plain_text || 'Untitled'
         const hasNda = allPageTags.includes('NDA')
+
+        // Persist cover image inline
+        if (coverImage) {
+          const persistedCover = await persistMediaUrl(sb, supabaseUrl, coverImage, page.id, 'cover')
+          if (persistedCover) {
+            coverImage = persistedCover
+            totalMediaPersisted++
+          }
+        }
 
         const listingRow = {
           database_id: db.id,
@@ -119,7 +140,13 @@ serve(async (req) => {
         if (hasNda) continue
 
         try {
-          const htmlContent = await renderPageContent(page.id, NOTION_API_KEY)
+          let htmlContent = await renderPageContent(page.id, NOTION_API_KEY)
+
+          // Persist all media in the HTML inline
+          const mediaResult = await persistMediaInHtml(sb, supabaseUrl, htmlContent, page.id)
+          htmlContent = mediaResult.html
+          totalMediaPersisted += mediaResult.count
+
           const monthYear = props['Month & Year']?.rich_text?.[0]?.plain_text || ''
 
           await sb.from('portfolio_content_cache').upsert({
@@ -132,7 +159,6 @@ serve(async (req) => {
             synced_at: new Date().toISOString(),
           }, { onConflict: 'notion_page_id' })
           totalContentSynced++
-          syncedPageIds.push(page.id)
         } catch (e) {
           console.error(`Failed to render content for ${name}:`, e)
         }
@@ -144,23 +170,10 @@ serve(async (req) => {
       { onConflict: 'sync_type' }
     )
 
-    // Fire-and-forget: trigger media persistence for synced pages
-    if (syncedPageIds.length > 0) {
-      const persistUrl = `${supabaseUrl}/functions/v1/persist-notion-media`
-      fetch(persistUrl, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${supabaseServiceKey}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ tables: ['portfolio_content_cache', 'portfolio_listing_cache'], page_ids: syncedPageIds }),
-      }).catch(e => console.error('Failed to trigger media persistence:', e))
-    }
-
-    console.log(`Portfolio sync complete: ${totalListingSynced} listings, ${totalContentSynced} content pages`)
+    console.log(`Portfolio sync complete: ${totalListingSynced} listings, ${totalContentSynced} content, ${totalMediaPersisted} media files persisted`)
 
     return new Response(
-      JSON.stringify({ success: true, listings_synced: totalListingSynced, content_synced: totalContentSynced }),
+      JSON.stringify({ success: true, listings_synced: totalListingSynced, content_synced: totalContentSynced, media_persisted: totalMediaPersisted }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     )
   } catch (error) {
@@ -171,6 +184,100 @@ serve(async (req) => {
     )
   }
 })
+
+// ─── Inline media persistence ───
+
+function isNotionS3Url(url: string): boolean {
+  return url.includes('prod-files-secure') || url.includes('s3.us-west-2.amazonaws.com/secure.notion-static.com')
+}
+
+function getFileExtension(url: string, contentType?: string): string {
+  if (contentType) {
+    const map: Record<string, string> = {
+      'image/jpeg': 'jpg', 'image/png': 'png', 'image/gif': 'gif', 'image/webp': 'webp', 'image/svg+xml': 'svg',
+      'video/mp4': 'mp4', 'video/webm': 'webm', 'video/quicktime': 'mov',
+    }
+    if (map[contentType]) return map[contentType]
+  }
+  const pathMatch = url.split('?')[0].match(/\.(\w{2,5})$/)
+  return pathMatch ? pathMatch[1] : 'bin'
+}
+
+async function persistMediaUrl(
+  sb: ReturnType<typeof createClient>,
+  supabaseUrl: string,
+  url: string,
+  pageId: string,
+  label: string,
+): Promise<string | null> {
+  if (!isNotionS3Url(url)) return null
+
+  try {
+    const headRes = await fetch(url, { method: 'HEAD' })
+    if (!headRes.ok) {
+      console.error(`HEAD failed for ${label}: ${headRes.status}`)
+      return null
+    }
+    const contentLength = parseInt(headRes.headers.get('content-length') || '0')
+    if (contentLength > MAX_FILE_SIZE) {
+      console.log(`Skipping ${label}: ${contentLength} bytes exceeds limit`)
+      return null
+    }
+
+    const contentType = headRes.headers.get('content-type') || ''
+    const ext = getFileExtension(url, contentType)
+    const storagePath = `${pageId}/${label}.${ext}`
+
+    // Check if already exists
+    const { data: existing } = await sb.storage.from('notion-media').list(pageId, { search: `${label}.${ext}` })
+    if (existing && existing.length > 0) {
+      const publicUrl = `${supabaseUrl}/storage/v1/object/public/notion-media/${storagePath}`
+      return publicUrl
+    }
+
+    const fileRes = await fetch(url)
+    if (!fileRes.ok) return null
+    const fileData = await fileRes.arrayBuffer()
+
+    const { error } = await sb.storage.from('notion-media').upload(storagePath, fileData, {
+      contentType,
+      upsert: true,
+    })
+    if (error) {
+      console.error(`Upload failed for ${label}:`, error.message)
+      return null
+    }
+
+    const publicUrl = `${supabaseUrl}/storage/v1/object/public/notion-media/${storagePath}`
+    console.log(`Persisted ${label} -> ${storagePath}`)
+    return publicUrl
+  } catch (e) {
+    console.error(`Error persisting ${label}:`, e)
+    return null
+  }
+}
+
+async function persistMediaInHtml(
+  sb: ReturnType<typeof createClient>,
+  supabaseUrl: string,
+  html: string,
+  pageId: string,
+): Promise<{ html: string; count: number }> {
+  const urls = [...new Set(html.match(NOTION_S3_PATTERN) || [])]
+  let count = 0
+
+  for (let i = 0; i < urls.length; i++) {
+    const url = urls[i]
+    const label = `media-${i}`
+    const permanentUrl = await persistMediaUrl(sb, supabaseUrl, url, pageId, label)
+    if (permanentUrl) {
+      html = html.replaceAll(url, permanentUrl)
+      count++
+    }
+  }
+
+  return { html, count }
+}
 
 // ─── Block-to-HTML rendering ───
 

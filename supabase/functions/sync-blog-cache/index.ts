@@ -8,6 +8,9 @@ const corsHeaders = {
 
 const DATABASE_ID = '2bc8863b87d4802fa65dd15c42ffa13b'
 
+const NOTION_S3_PATTERN = /https:\/\/(?:prod-files-secure|s3\.us-west-2\.amazonaws\.com\/secure\.notion-static\.com)[^\s"'<>)]+/g
+const MAX_FILE_SIZE = 50 * 1024 * 1024
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders })
@@ -21,6 +24,13 @@ serve(async (req) => {
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     const supabase = createClient(supabaseUrl, supabaseServiceKey)
 
+    // Check for full=true parameter
+    let fullSync = false
+    try {
+      const body = await req.json()
+      fullSync = body?.full === true
+    } catch { /* no body */ }
+
     // Get last sync timestamp for incremental mode
     const { data: syncMeta } = await supabase
       .from('sync_metadata')
@@ -32,15 +42,16 @@ serve(async (req) => {
     const syncStartTime = new Date().toISOString()
     const isFirstRun = new Date(lastSyncedAt).getTime() < new Date('2001-01-01').getTime()
 
+    const useIncremental = !isFirstRun && !fullSync
     const baseFilter = { property: 'Status', status: { equals: 'Live' } }
-    const queryFilter = isFirstRun
-      ? baseFilter
-      : {
+    const queryFilter = useIncremental
+      ? {
           and: [
             baseFilter,
             { timestamp: 'last_edited_time', last_edited_time: { after: lastSyncedAt } },
           ]
         }
+      : baseFilter
 
     let allResults: any[] = []
     let startCursor: string | undefined = undefined
@@ -69,7 +80,7 @@ serve(async (req) => {
       startCursor = data.has_more ? data.next_cursor : undefined
     } while (startCursor)
 
-    console.log(`Blog sync: found ${allResults.length} changed posts (incremental: ${!isFirstRun})`)
+    console.log(`Blog sync: found ${allResults.length} posts (full=${fullSync}, incremental=${useIncremental})`)
 
     if (allResults.length === 0) {
       await supabase.from('sync_metadata').upsert(
@@ -77,22 +88,34 @@ serve(async (req) => {
         { onConflict: 'sync_type' }
       )
       return new Response(
-        JSON.stringify({ success: true, synced: 0, content_synced: 0 }),
+        JSON.stringify({ success: true, synced: 0, content_synced: 0, media_persisted: 0 }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       )
     }
 
-    // Process listing metadata
-    const posts = allResults.map((page: any) => {
+    let totalMediaPersisted = 0
+
+    // Process listing metadata + content one page at a time
+    for (const page of allResults) {
       const properties = page.properties
-      const featuredImageFiles = properties['Featured IMG']?.files || []
-      const headerImage = featuredImageFiles.length > 0
-        ? featuredImageFiles[0].file?.url || featuredImageFiles[0].external?.url
-        : null
       const title = properties['Name']?.title?.[0]?.plain_text || 'Untitled'
       const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
 
-      return {
+      const featuredImageFiles = properties['Featured IMG']?.files || []
+      let headerImage = featuredImageFiles.length > 0
+        ? featuredImageFiles[0].file?.url || featuredImageFiles[0].external?.url
+        : null
+
+      // Persist header image inline
+      if (headerImage) {
+        const persistedHeader = await persistMediaUrl(supabase, supabaseUrl, headerImage, `blog-${slug}`, 'header')
+        if (persistedHeader) {
+          headerImage = persistedHeader
+          totalMediaPersisted++
+        }
+      }
+
+      const listingRow = {
         notion_id: page.id,
         slug,
         title,
@@ -105,39 +128,17 @@ serve(async (req) => {
         featured: properties['Featured']?.checkbox || false,
         synced_at: new Date().toISOString(),
       }
-    })
 
-    // Upsert listing cache
-    if (isFirstRun) {
-      await supabase.from('blog_posts_cache').delete().neq('id', '00000000-0000-0000-0000-000000000000')
-      if (posts.length > 0) {
-        const { error: insertError } = await supabase.from('blog_posts_cache').insert(posts)
-        if (insertError) {
-          console.error('Insert error:', insertError)
-          throw new Error(`Failed to insert cache: ${insertError.message}`)
-        }
-      }
-    } else {
-      for (const post of posts) {
-        await supabase.from('blog_posts_cache').upsert(post, { onConflict: 'notion_id' })
-      }
-    }
+      await supabase.from('blog_posts_cache').upsert(listingRow, { onConflict: 'notion_id' })
 
-    // Pre-render full HTML content for each changed post
-    let contentSynced = 0
-    const syncedNotionIds: string[] = []
-
-    for (const page of allResults) {
-      const properties = page.properties
-      const title = properties['Name']?.title?.[0]?.plain_text || 'Untitled'
-      const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
-
+      // Render and persist content
       try {
-        const htmlContent = await renderBlogContent(page.id, NOTION_API_KEY)
-        const featuredImageFiles = properties['Featured IMG']?.files || []
-        const headerImage = featuredImageFiles.length > 0
-          ? featuredImageFiles[0].file?.url || featuredImageFiles[0].external?.url
-          : null
+        let htmlContent = await renderBlogContent(page.id, NOTION_API_KEY)
+
+        // Persist all media in HTML inline
+        const mediaResult = await persistMediaInHtml(supabase, supabaseUrl, htmlContent, `blog-${slug}`)
+        htmlContent = mediaResult.html
+        totalMediaPersisted += mediaResult.count
 
         await supabase.from('blog_content_cache').upsert({
           notion_id: page.id,
@@ -150,9 +151,6 @@ serve(async (req) => {
           theme: properties['Theme']?.select?.name || null,
           synced_at: new Date().toISOString(),
         }, { onConflict: 'notion_id' })
-
-        contentSynced++
-        syncedNotionIds.push(page.id)
       } catch (e) {
         console.error(`Failed to render blog post "${title}":`, e)
       }
@@ -163,21 +161,10 @@ serve(async (req) => {
       { onConflict: 'sync_type' }
     )
 
-    // Fire-and-forget: trigger media persistence for synced content
-    if (syncedNotionIds.length > 0) {
-      const persistUrl = `${supabaseUrl}/functions/v1/persist-notion-media`
-      fetch(persistUrl, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${supabaseServiceKey}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ tables: ['blog_content_cache', 'blog_posts_cache'], page_ids: syncedNotionIds }),
-      }).catch(e => console.error('Failed to trigger media persistence:', e))
-    }
+    console.log(`Blog sync complete: ${allResults.length} posts, ${totalMediaPersisted} media files persisted`)
 
     return new Response(
-      JSON.stringify({ success: true, synced: posts.length, content_synced: contentSynced }),
+      JSON.stringify({ success: true, synced: allResults.length, content_synced: allResults.length, media_persisted: totalMediaPersisted }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     )
   } catch (error) {
@@ -188,6 +175,97 @@ serve(async (req) => {
     )
   }
 })
+
+// ─── Inline media persistence ───
+
+function isNotionS3Url(url: string): boolean {
+  return url.includes('prod-files-secure') || url.includes('s3.us-west-2.amazonaws.com/secure.notion-static.com')
+}
+
+function getFileExtension(url: string, contentType?: string): string {
+  if (contentType) {
+    const map: Record<string, string> = {
+      'image/jpeg': 'jpg', 'image/png': 'png', 'image/gif': 'gif', 'image/webp': 'webp', 'image/svg+xml': 'svg',
+      'video/mp4': 'mp4', 'video/webm': 'webm', 'video/quicktime': 'mov',
+    }
+    if (map[contentType]) return map[contentType]
+  }
+  const pathMatch = url.split('?')[0].match(/\.(\w{2,5})$/)
+  return pathMatch ? pathMatch[1] : 'bin'
+}
+
+async function persistMediaUrl(
+  sb: ReturnType<typeof createClient>,
+  supabaseUrl: string,
+  url: string,
+  pageId: string,
+  label: string,
+): Promise<string | null> {
+  if (!isNotionS3Url(url)) return null
+
+  try {
+    const headRes = await fetch(url, { method: 'HEAD' })
+    if (!headRes.ok) {
+      console.error(`HEAD failed for ${label}: ${headRes.status}`)
+      return null
+    }
+    const contentLength = parseInt(headRes.headers.get('content-length') || '0')
+    if (contentLength > MAX_FILE_SIZE) {
+      console.log(`Skipping ${label}: ${contentLength} bytes exceeds limit`)
+      return null
+    }
+
+    const contentType = headRes.headers.get('content-type') || ''
+    const ext = getFileExtension(url, contentType)
+    const storagePath = `${pageId}/${label}.${ext}`
+
+    const { data: existing } = await sb.storage.from('notion-media').list(pageId, { search: `${label}.${ext}` })
+    if (existing && existing.length > 0) {
+      return `${supabaseUrl}/storage/v1/object/public/notion-media/${storagePath}`
+    }
+
+    const fileRes = await fetch(url)
+    if (!fileRes.ok) return null
+    const fileData = await fileRes.arrayBuffer()
+
+    const { error } = await sb.storage.from('notion-media').upload(storagePath, fileData, {
+      contentType,
+      upsert: true,
+    })
+    if (error) {
+      console.error(`Upload failed for ${label}:`, error.message)
+      return null
+    }
+
+    console.log(`Persisted ${label} -> ${storagePath}`)
+    return `${supabaseUrl}/storage/v1/object/public/notion-media/${storagePath}`
+  } catch (e) {
+    console.error(`Error persisting ${label}:`, e)
+    return null
+  }
+}
+
+async function persistMediaInHtml(
+  sb: ReturnType<typeof createClient>,
+  supabaseUrl: string,
+  html: string,
+  pageId: string,
+): Promise<{ html: string; count: number }> {
+  const urls = [...new Set(html.match(NOTION_S3_PATTERN) || [])]
+  let count = 0
+
+  for (let i = 0; i < urls.length; i++) {
+    const url = urls[i]
+    const label = `media-${i}`
+    const permanentUrl = await persistMediaUrl(sb, supabaseUrl, url, pageId, label)
+    if (permanentUrl) {
+      html = html.replaceAll(url, permanentUrl)
+      count++
+    }
+  }
+
+  return { html, count }
+}
 
 // ─── Block-to-HTML rendering ───
 
