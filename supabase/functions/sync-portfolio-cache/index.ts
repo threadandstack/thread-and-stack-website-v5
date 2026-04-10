@@ -27,11 +27,17 @@ serve(async (req) => {
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     const sb = createClient(supabaseUrl, supabaseServiceKey)
 
-    // Check for full=true parameter
+    // Check for full=true, offset, limit parameters
     let fullSync = false
+    let batchOffset = 0
+    let batchLimit = 0 // 0 = no limit (process all)
+    let skipMedia = false
     try {
       const body = await req.json()
       fullSync = body?.full === true
+      batchOffset = typeof body?.offset === 'number' ? body.offset : 0
+      batchLimit = typeof body?.limit === 'number' ? body.limit : 0
+      skipMedia = body?.skip_media === true
     } catch { /* no body or invalid JSON, default to incremental */ }
 
     // Get last sync timestamp
