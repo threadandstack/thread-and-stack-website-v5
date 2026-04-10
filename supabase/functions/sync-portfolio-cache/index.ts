@@ -156,9 +156,11 @@ serve(async (req) => {
           let htmlContent = await renderPageContent(page.id, NOTION_API_KEY)
 
           // Persist all media in the HTML inline
-          const mediaResult = await persistMediaInHtml(sb, supabaseUrl, htmlContent, page.id)
-          htmlContent = mediaResult.html
-          totalMediaPersisted += mediaResult.count
+          if (!skipMedia) {
+            const mediaResult = await persistMediaInHtml(sb, supabaseUrl, htmlContent, page.id)
+            htmlContent = mediaResult.html
+            totalMediaPersisted += mediaResult.count
+          }
 
           const monthYear = props['Month & Year']?.rich_text?.[0]?.plain_text || ''
 
