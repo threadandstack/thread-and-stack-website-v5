@@ -204,29 +204,21 @@ async function persistMediaUrl(
   if (!isNotionS3Url(url)) return null
 
   try {
-    const headRes = await fetch(url, { method: 'HEAD' })
-    if (!headRes.ok) {
-      console.error(`HEAD failed for ${label}: ${headRes.status}`)
-      return null
-    }
-    const contentLength = parseInt(headRes.headers.get('content-length') || '0')
-    if (contentLength > MAX_FILE_SIZE) {
-      console.log(`Skipping ${label}: ${contentLength} bytes exceeds limit`)
+    const fileRes = await fetch(url)
+    if (!fileRes.ok) {
+      console.error(`Download failed for ${label}: ${fileRes.status}`)
       return null
     }
 
-    const contentType = headRes.headers.get('content-type') || ''
+    const contentType = fileRes.headers.get('content-type') || ''
     const ext = getFileExtension(url, contentType)
     const storagePath = `${pageId}/${label}.${ext}`
 
-    const { data: existing } = await sb.storage.from('notion-media').list(pageId, { search: `${label}.${ext}` })
-    if (existing && existing.length > 0) {
-      return `${supabaseUrl}/storage/v1/object/public/notion-media/${storagePath}`
-    }
-
-    const fileRes = await fetch(url)
-    if (!fileRes.ok) return null
     const fileData = await fileRes.arrayBuffer()
+    if (fileData.byteLength > MAX_FILE_SIZE) {
+      console.log(`Skipping ${label}: ${fileData.byteLength} bytes exceeds limit`)
+      return null
+    }
 
     const { error } = await sb.storage.from('notion-media').upload(storagePath, fileData, {
       contentType,
