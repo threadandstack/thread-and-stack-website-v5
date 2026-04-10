@@ -6,7 +6,7 @@ import { Emphasis } from "@/components/Emphasis";
 import heroImage from "@/assets/hero-heading.png";
 import heroImageMobile from "@/assets/photos/shoreditch/brendan-33.jpg";
 import brendanCafe from "@/assets/brendan-cafe-landscape.jpg";
-import brendanPostits from "@/assets/brendan-postits-landscape.jpg";
+import brendanPostits from "@/assets/brendan-postits-landscape.webp";
 import notionAdmin from "@/assets/notion-certified-admin.png";
 import notionAdvanced from "@/assets/notion-advanced.png";
 import notionWorkflows from "@/assets/notion-workflows.png";
