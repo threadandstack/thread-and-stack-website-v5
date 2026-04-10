@@ -101,6 +101,13 @@ serve(async (req) => {
 
       console.log(`Found ${allResults.length} pages in ${db.label} (full=${fullSync})`)
 
+      // Apply batch offset/limit if specified
+      if (batchOffset > 0 || batchLimit > 0) {
+        const end = batchLimit > 0 ? batchOffset + batchLimit : allResults.length
+        allResults = allResults.slice(batchOffset, end)
+        console.log(`Batching: offset=${batchOffset}, limit=${batchLimit}, processing ${allResults.length} pages`)
+      }
+
       if (allResults.length === 0) continue
 
       // Process pages one at a time to stay within memory limits
