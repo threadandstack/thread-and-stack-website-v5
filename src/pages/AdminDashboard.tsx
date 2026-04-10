@@ -10,7 +10,8 @@ import { supabase } from "@/integrations/supabase/client";
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const { user, loading: authLoading, isAdmin, signOut } = useAdminAuth();
-  const [isSyncing, setIsSyncing] = useState(false);
+  const [isSyncingBlog, setIsSyncingBlog] = useState(false);
+  const [isSyncingPortfolio, setIsSyncingPortfolio] = useState(false);
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -30,18 +31,31 @@ const AdminDashboard = () => {
     );
   }
 
-
   const handleSyncBlogCache = async () => {
-    setIsSyncing(true);
+    setIsSyncingBlog(true);
     try {
       const { data, error } = await supabase.functions.invoke('sync-blog-cache');
       if (error) throw error;
-      toast.success(`Blog cache synced — ${data.synced} posts updated`);
+      toast.success(`Blog cache synced — ${data.synced} listings, ${data.content_synced} posts rendered`);
     } catch (error) {
       console.error('Sync error:', error);
       toast.error('Failed to sync blog cache');
     } finally {
-      setIsSyncing(false);
+      setIsSyncingBlog(false);
+    }
+  };
+
+  const handleSyncPortfolioCache = async () => {
+    setIsSyncingPortfolio(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('sync-portfolio-cache');
+      if (error) throw error;
+      toast.success(`Portfolio synced — ${data.listings_synced} listings, ${data.content_synced} pages rendered`);
+    } catch (error) {
+      console.error('Sync error:', error);
+      toast.error('Failed to sync portfolio cache');
+    } finally {
+      setIsSyncingPortfolio(false);
     }
   };
 
