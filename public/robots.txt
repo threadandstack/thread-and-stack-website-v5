@@ -14,3 +14,7 @@ User-agent: *
 Allow: /
 
 Disallow: /private/
+Disallow: /admin/
+Disallow: /v/
+
+Sitemap: https://threadandstack.com/sitemap.xml
