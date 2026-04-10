@@ -1,68 +1,124 @@
 
 
-# Site Performance, SEO and Security Hardening
+# Unified Content Cache: Blog + Portfolio Pre-Rendering with Incremental Polling
 
-## Context
+## Problem
 
-Claude's analysis flagged real issues: a 2.37MB monolithic JS bundle, no sitemap, missing CSP header, and a heavy Google Fonts payload. Some of these are solvable within Lovable's architecture (React SPA on Lovable hosting), others have constraints worth noting.
+Both blog and portfolio content currently hit Notion's API in real-time on every page load, causing 1-3 second delays. The blog listing is cached, but individual blog posts are not. Portfolio listings query Notion live every time.
 
-## What We Can Fix
+## Solution
 
-### 1. Route-based code splitting (biggest bundle impact)
+A cache-first architecture for all Notion content, with 5-minute incremental polling that only syncs pages that have changed. Your workflow: edit in Notion, and within 5 minutes the site reflects changes automatically. Manual sync buttons remain in the admin dashboard as an optional escape hatch.
 
-Currently all 40+ page components are eagerly imported in `App.tsx`. Converting these to `React.lazy()` with `Suspense` boundaries will split the 2.37MB bundle into per-route chunks. Only the homepage code loads on first visit; other pages load on navigation.
+```text
+Every 5 minutes (cron):
+  1. Check Notion: "pages where Last edited time > last_sync_timestamp"
+  2. If nothing changed → done
+  3. If changed → re-render only those items, upsert into cache
+  4. Update last_sync_timestamp
 
-**Approach**: Replace all page imports in `App.tsx` with lazy imports, wrap `Routes` in a `Suspense` fallback. Group admin pages together since they share dependencies.
+Frontend reads:
+  Blog listing    → blog_posts_cache (already exists)
+  Blog post page  → blog_content_cache (new)
+  Portfolio listing → portfolio_listing_cache (new)
+  Portfolio detail  → portfolio_content_cache (already exists)
+```
 
-### 2. Generate a static sitemap.xml
+## Implementation Steps
 
-Create a build-time script that reads the route definitions from the codebase and generates a `public/sitemap.xml` with all public routes (excluding admin, private, legacy redirects, and variant pages). Add a `Sitemap:` directive to `robots.txt`.
+### Step 1: Create new database tables
 
-### 3. Trim Google Fonts payload
+**`blog_content_cache`** — stores pre-rendered HTML for each blog post:
+- `notion_id` (text, unique)
+- `slug` (text)
+- `title` (text)
+- `html_content` (text) — full rendered HTML
+- `header_image_url` (text, nullable)
+- `description` (text, nullable)
+- `reading_time` (text, nullable)
+- `theme` (text, nullable)
+- `synced_at` (timestamptz)
 
-The current font request loads:
-- **Crimson Pro**: 9 weights (400-900 + 3 italic) — only `font-semibold` and `font-bold` italic are used
-- **Crimson Text**: 3 weights + 1 italic — used as `font-serif` fallback
-- **Inter**: 4 weights (300-600)
+**`portfolio_listing_cache`** — stores listing metadata for gallery pages:
+- `database_id` (text) — which portfolio database this belongs to
+- `notion_page_id` (text, unique)
+- `name` (text)
+- `tags` (text[])
+- `text` (text, nullable)
+- `month_year` (text, nullable)
+- `date` (date, nullable)
+- `cover_image` (text, nullable)
+- `has_nda` (boolean)
+- `synced_at` (timestamptz)
 
-We can cut this to:
-- **Crimson Pro**: 400, 500, 600, 700 + italic for 400, 500, 600 (drop 800, 900)
-- **Crimson Text**: 400, 600 + italic 400
-- **Inter**: 400, 500, 600 (drop 300)
-- Add `&display=swap` (already present) and `&text=` subsetting isn't practical here, but weight reduction alone saves ~40% of the font payload
+**`sync_metadata`** — tracks last sync timestamp per content type:
+- `sync_type` (text, primary key) — e.g. 'blog', 'portfolio-creative', 'portfolio-notion'
+- `last_synced_at` (timestamptz)
 
-### 4. Add preload hints for critical resources
+RLS: public SELECT on cache tables, service_role for writes.
 
-Add `<link rel="preload">` for the primary font files and the hero image/logo to improve LCP.
+### Step 2: Create `sync-portfolio-cache` edge function
 
-### 5. CSP meta tag
+New function that, for both portfolio databases:
+1. Reads `last_synced_at` from `sync_metadata`
+2. Queries Notion for pages where `Last edited time` > that timestamp (or all pages on first run)
+3. For each changed page: fetches all blocks, renders to HTML (reusing the existing block-to-HTML logic from `fetch-portfolio-page`)
+4. Upserts listing metadata into `portfolio_listing_cache`
+5. Upserts rendered HTML into `portfolio_content_cache`
+6. Updates `sync_metadata` with current timestamp
 
-Since Lovable hosting doesn't expose server config for response headers, we can add a `<meta http-equiv="Content-Security-Policy">` tag in `index.html`. This covers most CSP directives (though not `frame-ancestors`). The policy will allowlist the domains actually used: Google Fonts, Supabase, Cloudflare, GTM.
+### Step 3: Update `sync-blog-cache` to also pre-render full post HTML
 
-### 6. Update robots.txt with sitemap reference
+Currently this function only syncs listing metadata. Extend it to:
+1. Read `last_synced_at` from `sync_metadata` for incremental mode
+2. For changed posts: fetch blocks and render to HTML (reusing logic from `fetch-blog-post`)
+3. Upsert into `blog_content_cache`
+4. Update `sync_metadata`
 
-Add `Sitemap: https://threadandstack.com/sitemap.xml` to `robots.txt` and also disallow admin routes from crawling.
+### Step 4: Rewrite `fetch-portfolio` to read from database
 
-## What We Cannot Fix in Lovable
+Replace the Notion API call with a simple SELECT from `portfolio_listing_cache` filtered by `database_id`. Apply tag filtering and "Not Ready" exclusion in the query. This becomes a ~10ms database read.
 
-- **SSR/SSG**: Lovable is a client-side React SPA. There is no server-side rendering option. The `<div id="root"></div>` pattern is structural. This is the main LCP limiter on slow mobile connections, and it's an architecture constraint.
-- **Server-side response headers**: Lovable hosting doesn't expose header configuration. CSP via meta tag is the best available option. HSTS and other headers come from Cloudflare.
-- **Lighthouse CI in deployment pipeline**: Not available in Lovable's build system.
+### Step 5: Simplify `fetch-portfolio-page` to cache-only
+
+Remove the 1-hour TTL check. Read directly from `portfolio_content_cache`. If cache miss (rare), fall back to Notion and cache the result.
+
+### Step 6: Rewrite `fetch-blog-post` to cache-first
+
+Check `blog_content_cache` by slug first. If found, return instantly. If cache miss, fall back to the existing Notion rendering logic and cache the result.
+
+### Step 7: Set up 5-minute cron jobs
+
+Two cron jobs using pg_cron + pg_net:
+- `sync-blog-cache` every 5 minutes
+- `sync-portfolio-cache` every 5 minutes
+
+Replace the existing hourly blog sync cron with the 5-minute interval.
+
+### Step 8: Add "Sync Portfolio" button to Admin Dashboard
+
+Add a second sync button alongside the existing blog sync button, calling `sync-portfolio-cache`. Both buttons remain as manual overrides.
 
 ## Files Changed
 
 | File | Change |
 |---|---|
-| `src/App.tsx` | Convert ~40 page imports to `React.lazy()`, add `Suspense` wrapper |
-| `index.html` | Trim font weights, add preload hints, add CSP meta tag |
-| `public/robots.txt` | Add Sitemap directive, disallow `/admin/` |
-| `public/sitemap.xml` | New static file with all public routes |
+| Migration | Create `blog_content_cache`, `portfolio_listing_cache`, `sync_metadata` tables with RLS |
+| `supabase/functions/sync-portfolio-cache/index.ts` | **New** — syncs both portfolio databases incrementally, renders HTML |
+| `supabase/functions/sync-blog-cache/index.ts` | **Extend** — add full HTML pre-rendering + incremental mode |
+| `supabase/functions/fetch-portfolio/index.ts` | **Rewrite** — SELECT from `portfolio_listing_cache` |
+| `supabase/functions/fetch-portfolio-page/index.ts` | **Simplify** — cache-only read |
+| `supabase/functions/fetch-blog-post/index.ts` | **Rewrite** — cache-first with Notion fallback |
+| `supabase/config.toml` | Add `sync-portfolio-cache` function config |
+| `src/pages/AdminDashboard.tsx` | Add "Sync Portfolio" button |
+| Cron SQL (via insert tool) | Update blog cron to 5min, add portfolio cron at 5min |
 
-## Expected Impact
+## Expected Result
 
-- **Bundle**: Initial load drops from ~2.37MB to roughly 400-600KB (core framework + homepage only)
-- **LCP**: Improved by reduced parse/execute time, though still limited by client-side rendering
-- **SEO**: Sitemap returns 200, crawlers find all routes, admin pages excluded
-- **Security**: CSP header present, security score improves
-- **Fonts**: ~40% reduction in font download size
+- Blog listing: instant (already cached, no change)
+- Blog post pages: ~100ms (from `blog_content_cache` instead of 3 sequential Notion API calls)
+- Portfolio listing: ~100ms (from `portfolio_listing_cache` instead of live Notion query)
+- Portfolio detail: ~100ms (from pre-rendered cache instead of on-demand rendering)
+- Content freshness: max 5-minute delay after Notion edit
+- Manual sync buttons available for immediate updates
 
