@@ -4,8 +4,8 @@ import { ChevronDown, Rocket, Compass } from "lucide-react";
 import { Emphasis } from "@/components/Emphasis";
 import { trackCtaClick } from "@/hooks/useAnalytics";
 import { FocalPointPicker } from "@/components/FocalPointPicker";
-import heroImage from "@/assets/hero-heading.png";
-import heroImageMobile from "@/assets/photos/shoreditch/brendan-33.jpg";
+import heroImage from "@/assets/hero-heading.webp";
+import heroImageMobile from "@/assets/photos/shoreditch/brendan-33.webp";
 
 const DEV_MODE = import.meta.env.DEV;
 

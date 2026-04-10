@@ -3,14 +3,14 @@ import { Footer } from "@/components/Footer";
 import { FAQ } from "@/components/FAQ";
 import { PillButton } from "@/components/ui/pill-button";
 import { Rocket, Bot, Shield } from "lucide-react";
-import brendanWalking from "@/assets/photos/shoreditch/brendan-27.jpg";
-import notionAdmin from "@/assets/notion-certified-admin.png";
-import notionAdvanced from "@/assets/notion-advanced.png";
-import notionWorkflows from "@/assets/notion-workflows.png";
-import notionEssentials from "@/assets/notion-essentials.png";
-import notionAmbassadorBlack from "@/assets/notion-ambassador-black.png";
-import notionConsultingPartner from "@/assets/notion-consulting-partner.png";
-import notionServiceSpecialist from "@/assets/notion-service-specialist.png";
+import brendanWalking from "@/assets/photos/shoreditch/brendan-27.webp";
+import notionAdmin from "@/assets/notion-certified-admin.webp";
+import notionAdvanced from "@/assets/notion-advanced.webp";
+import notionWorkflows from "@/assets/notion-workflows.webp";
+import notionEssentials from "@/assets/notion-essentials.webp";
+import notionAmbassadorBlack from "@/assets/notion-ambassador-black.webp";
+import notionConsultingPartner from "@/assets/notion-consulting-partner.webp";
+import notionServiceSpecialist from "@/assets/notion-service-specialist.webp";
 
 const AboutPage = () => {
   return (

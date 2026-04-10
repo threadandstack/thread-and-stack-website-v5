@@ -8,7 +8,7 @@ import { RelatedBlogs } from "@/components/RelatedBlogs";
 import { FAQ } from "@/components/FAQ";
 import { Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import brendanAvatar from "@/assets/brendan-avatar.png";
+import brendanAvatar from "@/assets/brendan-avatar.webp";
 import { trackBlogRead } from "@/hooks/useAnalytics";
 import { sanitizeHtml } from "@/lib/sanitize";
 

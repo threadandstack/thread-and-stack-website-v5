@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
-import contactPhoto from "@/assets/photos/shoreditch/brendan-29.jpg";
+import contactPhoto from "@/assets/photos/shoreditch/brendan-29.webp";
 
 const contactSchema = z.object({
   name: z.string().max(100, "Name must be less than 100 characters").optional(),

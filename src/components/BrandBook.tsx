@@ -33,45 +33,45 @@ import BlackSocialSq from "@/assets/logos/Black_TS_SocialSq.svg";
 import WhiteSocialSq from "@/assets/logos/White_TS_SocialSq.svg";
 
 // Photography imports
-import workshop1 from "@/assets/photos/workshop/brendan-1.jpg";
-import workshop2 from "@/assets/photos/workshop/brendan-2.jpg";
-import workshop3 from "@/assets/photos/workshop/brendan-3.jpg";
-import workshop18 from "@/assets/photos/workshop/brendan-18.jpg";
-import workshop19 from "@/assets/photos/workshop/brendan-19.jpg";
-import workshop20 from "@/assets/photos/workshop/brendan-20.jpg";
-import workshop21 from "@/assets/photos/workshop/brendan-21.jpg";
-import workshop22 from "@/assets/photos/workshop/brendan-22.jpg";
-import workshop23 from "@/assets/photos/workshop/brendan-23.jpg";
-import workshop24 from "@/assets/photos/workshop/brendan-24.jpg";
-import workshop25 from "@/assets/photos/workshop/brendan-25.jpg";
+import workshop1 from "@/assets/photos/workshop/brendan-1.webp";
+import workshop2 from "@/assets/photos/workshop/brendan-2.webp";
+import workshop3 from "@/assets/photos/workshop/brendan-3.webp";
+import workshop18 from "@/assets/photos/workshop/brendan-18.webp";
+import workshop19 from "@/assets/photos/workshop/brendan-19.webp";
+import workshop20 from "@/assets/photos/workshop/brendan-20.webp";
+import workshop21 from "@/assets/photos/workshop/brendan-21.webp";
+import workshop22 from "@/assets/photos/workshop/brendan-22.webp";
+import workshop23 from "@/assets/photos/workshop/brendan-23.webp";
+import workshop24 from "@/assets/photos/workshop/brendan-24.webp";
+import workshop25 from "@/assets/photos/workshop/brendan-25.webp";
 
 // Shoreditch photos
-import shoreditch26 from "@/assets/photos/shoreditch/brendan-26.jpg";
+import shoreditch26 from "@/assets/photos/shoreditch/brendan-26.webp";
 
 // Portrait photos
-import portrait4 from "@/assets/photos/portraits/brendan-4.jpg";
-import portrait5 from "@/assets/photos/portraits/brendan-5.jpg";
-import portrait6 from "@/assets/photos/portraits/brendan-6.jpg";
-import portrait7 from "@/assets/photos/portraits/brendan-7.jpg";
-import portrait8 from "@/assets/photos/portraits/brendan-8.jpg";
-import portrait9 from "@/assets/photos/portraits/brendan-9.jpg";
-import portrait10 from "@/assets/photos/portraits/brendan-10.jpg";
-import portrait11 from "@/assets/photos/portraits/brendan-11.jpg";
-import portrait12 from "@/assets/photos/portraits/brendan-12.jpg";
-import portrait13 from "@/assets/photos/portraits/brendan-13.jpg";
-import portrait14 from "@/assets/photos/portraits/brendan-14.jpg";
-import portrait15 from "@/assets/photos/portraits/brendan-15.jpg";
-import portrait16 from "@/assets/photos/portraits/brendan-16.jpg";
-import portrait17 from "@/assets/photos/portraits/brendan-17.jpg";
-import shoreditch27 from "@/assets/photos/shoreditch/brendan-27.jpg";
-import shoreditch28 from "@/assets/photos/shoreditch/brendan-28.jpg";
-import shoreditch29 from "@/assets/photos/shoreditch/brendan-29.jpg";
-import shoreditch30 from "@/assets/photos/shoreditch/brendan-30.jpg";
-import shoreditch31 from "@/assets/photos/shoreditch/brendan-31.jpg";
-import shoreditch33 from "@/assets/photos/shoreditch/brendan-33.jpg";
-import shoreditch34 from "@/assets/photos/shoreditch/brendan-34.jpg";
-import shoreditch35 from "@/assets/photos/shoreditch/brendan-35.jpg";
-import shoreditch37 from "@/assets/photos/shoreditch/brendan-37.jpg";
+import portrait4 from "@/assets/photos/portraits/brendan-4.webp";
+import portrait5 from "@/assets/photos/portraits/brendan-5.webp";
+import portrait6 from "@/assets/photos/portraits/brendan-6.webp";
+import portrait7 from "@/assets/photos/portraits/brendan-7.webp";
+import portrait8 from "@/assets/photos/portraits/brendan-8.webp";
+import portrait9 from "@/assets/photos/portraits/brendan-9.webp";
+import portrait10 from "@/assets/photos/portraits/brendan-10.webp";
+import portrait11 from "@/assets/photos/portraits/brendan-11.webp";
+import portrait12 from "@/assets/photos/portraits/brendan-12.webp";
+import portrait13 from "@/assets/photos/portraits/brendan-13.webp";
+import portrait14 from "@/assets/photos/portraits/brendan-14.webp";
+import portrait15 from "@/assets/photos/portraits/brendan-15.webp";
+import portrait16 from "@/assets/photos/portraits/brendan-16.webp";
+import portrait17 from "@/assets/photos/portraits/brendan-17.webp";
+import shoreditch27 from "@/assets/photos/shoreditch/brendan-27.webp";
+import shoreditch28 from "@/assets/photos/shoreditch/brendan-28.webp";
+import shoreditch29 from "@/assets/photos/shoreditch/brendan-29.webp";
+import shoreditch30 from "@/assets/photos/shoreditch/brendan-30.webp";
+import shoreditch31 from "@/assets/photos/shoreditch/brendan-31.webp";
+import shoreditch33 from "@/assets/photos/shoreditch/brendan-33.webp";
+import shoreditch34 from "@/assets/photos/shoreditch/brendan-34.webp";
+import shoreditch35 from "@/assets/photos/shoreditch/brendan-35.webp";
+import shoreditch37 from "@/assets/photos/shoreditch/brendan-37.webp";
 
 // Custom social icons used in Footer
 const BlueskyIcon = ({ className }: { className?: string }) => (

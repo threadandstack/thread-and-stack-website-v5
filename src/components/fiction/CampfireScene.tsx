@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import campfireGif from "@/assets/campfire.gif";
-import treesImage from "@/assets/trees-silhouette.png";
+import treesImage from "@/assets/trees-silhouette.webp";
 
 // Generate smoke particles that rise high up the page
 const SmokeParticle = ({ delay, x, size = 3 }: { delay: number; x: number; size?: number }) => (

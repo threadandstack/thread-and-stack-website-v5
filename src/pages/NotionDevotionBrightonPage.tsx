@@ -8,8 +8,8 @@ import { Footer } from "@/components/Footer";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import WhiteLogo from "@/assets/logos/White_TS_Stacked.svg";
-import avatarPhoto from "@/assets/brendan-avatar.png";
-import templatePreview from "@/assets/hackathon-template-preview.png";
+import avatarPhoto from "@/assets/brendan-avatar.webp";
+import templatePreview from "@/assets/hackathon-template-preview.webp";
 
 const TEMPLATE_URL = "https://threadandstack.notion.site/c4a1f21560aa42c686c284a4a322f574?v=2329819a37fc4a16b799b32cdfcb7113";
 

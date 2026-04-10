@@ -7,8 +7,8 @@ import { Navigation } from "@/components/Navigation";
 import { ContactDrawer } from "@/components/ContactDrawer";
 import { FeaturedProjects } from "@/components/FeaturedProjects";
 import { trackServiceView, useScrollDepthTracking } from "@/hooks/useAnalytics";
-import heroImage from "@/assets/brendan-cafe-landscape.jpg";
-import heroImageMobile from "@/assets/brendan-cafe.jpeg";
+import heroImage from "@/assets/brendan-cafe-landscape.webp";
+import heroImageMobile from "@/assets/brendan-cafe.webp";
 
 const FractionalDeepEngagement = () => {
   const [contactOpen, setContactOpen] = useState(false);
