@@ -52,6 +52,7 @@ const GGFProposalPage = lazy(() => import("./pages/proposal/GGFProposalPage"));
 const CreativePortfolioPage = lazy(() => import("./pages/CreativePortfolioPage"));
 const NotionPortfolioPage = lazy(() => import("./pages/NotionPortfolioPage"));
 const PortfolioAccessAdminPage = lazy(() => import("./pages/PortfolioAccessAdminPage"));
+const NotionUtopiaPage = lazy(() => import("./pages/onboarding/NotionUtopiaPage"));
 
 const queryClient = new QueryClient();
 
@@ -114,6 +115,7 @@ const App = () => (
             <Route path="/proposal/GGF" element={<GGFProposalPage />} />
             <Route path="/portfolio/creative" element={<CreativePortfolioPage />} />
             <Route path="/portfolio/notion" element={<NotionPortfolioPage />} />
+            <Route path="/onboarding/notionutopia" element={<NotionUtopiaPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
