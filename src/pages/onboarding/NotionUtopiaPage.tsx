@@ -6,7 +6,7 @@ const NotionUtopiaPage = () => {
       <img src={stackedLogo} alt="Thread & Stack" className="h-14 mb-8" />
       <div className="w-full max-w-5xl flex-1">
         <iframe
-          src="https://threadandstack.notion.site/ebd/33e8863b87d48024b67ae60a3fe7a98f"
+          src="https://threadandstack.notion.site/33e8863b87d48024b67ae60a3fe7a98f?pvs=105"
           width="100%"
           height="600"
           frameBorder="0"
