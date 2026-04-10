@@ -52,6 +52,7 @@ const GGFProposalPage = lazy(() => import("./pages/proposal/GGFProposalPage"));
 const CreativePortfolioPage = lazy(() => import("./pages/CreativePortfolioPage"));
 const NotionPortfolioPage = lazy(() => import("./pages/NotionPortfolioPage"));
 const PortfolioAccessAdminPage = lazy(() => import("./pages/PortfolioAccessAdminPage"));
+const NotionUtopiaPage = lazy(() => import("./pages/onboarding/NotionUtopiaPage"));
 
 const queryClient = new QueryClient();
 
