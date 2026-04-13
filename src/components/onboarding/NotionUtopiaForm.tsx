@@ -18,7 +18,7 @@ const outcomeOptions = [
   "Work with subcontractors/clients without paying for loads of seats",
   "Better meeting notes → actions → follow-up",
   "A lightweight CRM for clients and partners",
-  "A hub for templates docs and "how we work"",
+  "A hub for templates docs and \u201Chow we work\u201D",
   "Voice-to-text workflows that actually stick",
   "AI that's useful because knowledge is structured",
 ] as const;
