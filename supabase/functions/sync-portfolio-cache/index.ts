@@ -420,7 +420,11 @@ async function renderPageContent(pageId: string, notionApiKey: string): Promise<
       case 'image': {
         const url = block.image.file?.url || block.image.external?.url
         const cap = block.image.caption ? richTextToHtml(block.image.caption) : ''
-        return url ? `<figure><img src="${url}" alt="${cap}" />${cap ? `<figcaption>${cap}</figcaption>` : ''}</figure>` : ''
+        if (!url) return ''
+        if (/\.(mp4|webm|mov)(\?|$)/i.test(url)) {
+          return `<figure class="video-figure"><video controls preload="metadata" style="width:100%;border-radius:0.5rem;"><source src="${url}" /></video>${cap ? `<figcaption>${cap}</figcaption>` : ''}</figure>`
+        }
+        return `<figure><img src="${url}" alt="${cap}" />${cap ? `<figcaption>${cap}</figcaption>` : ''}</figure>`
       }
       case 'video': {
         const url = block.video.file?.url || block.video.external?.url
