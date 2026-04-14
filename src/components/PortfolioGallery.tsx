@@ -57,6 +57,18 @@ export const PortfolioGallery = ({
   const [heroFocalMobile, setHeroFocalMobile] = useState({ x: 50, y: 50 });
   const [heroFocalDesktop, setHeroFocalDesktop] = useState({ x: 0, y: 0 });
 
+  const { data: items = [], isLoading } = useQuery<PortfolioItem[]>({
+    queryKey: ["portfolio", databaseId, filterTags],
+    queryFn: async () => {
+      const { data, error } = await supabase.functions.invoke("fetch-portfolio", {
+        body: { database_id: databaseId, tags: filterTags },
+      });
+      if (error) throw error;
+      return data?.items || [];
+    },
+    staleTime: 5 * 60 * 1000,
+  });
+
   // Auto-open detail modal when navigating to a direct item URL
   useEffect(() => {
     if (initialItemId && items.length > 0 && !detailItem) {
@@ -74,18 +86,6 @@ export const PortfolioGallery = ({
     setDetailItem(null);
     navigate(`/portfolio/${pillar}`, { replace: true });
   };
-
-  const { data: items = [], isLoading } = useQuery<PortfolioItem[]>({
-    queryKey: ["portfolio", databaseId, filterTags],
-    queryFn: async () => {
-      const { data, error } = await supabase.functions.invoke("fetch-portfolio", {
-        body: { database_id: databaseId, tags: filterTags },
-      });
-      if (error) throw error;
-      return data?.items || [];
-    },
-    staleTime: 5 * 60 * 1000,
-  });
 
   // Split hero, featured, and regular
   const heroItem = items.find((i) => i.tags.includes("Featured-Hero")) || null;
