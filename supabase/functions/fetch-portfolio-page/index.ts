@@ -101,6 +101,17 @@ serve(async (req) => {
       return d.results || []
     }
 
+    const toEmbedUrl = (url: string): string => {
+      // YouTube Shorts: youtube.com/shorts/ID → youtube.com/embed/ID
+      const shortsMatch = url.match(/youtube\.com\/shorts\/([^?&/]+)/)
+      if (shortsMatch) return `https://www.youtube.com/embed/${shortsMatch[1]}`
+      return url
+        .replace('youtube.com/watch?v=', 'youtube.com/embed/')
+        .replace('youtu.be/', 'youtube.com/embed/')
+        .replace('vimeo.com/', 'player.vimeo.com/video/')
+        .replace('loom.com/share/', 'loom.com/embed/')
+    }
+
     const blockToHtml = async (block: any): Promise<string> => {
       switch (block.type) {
         case 'paragraph': {
