@@ -75,6 +75,7 @@ export const PortfolioGallery = ({
     navigate(`/portfolio/${pillar}`, { replace: true });
   };
 
+  const { data: items = [], isLoading } = useQuery<PortfolioItem[]>({
     queryKey: ["portfolio", databaseId, filterTags],
     queryFn: async () => {
       const { data, error } = await supabase.functions.invoke("fetch-portfolio", {
