@@ -126,7 +126,7 @@ export const PortfolioGallery = ({
                   className="w-full h-[720px] md:h-[480px] object-cover object-left-top group-hover:scale-[1.02] transition-transform duration-500"
                 />
               ) : (
-                <div <div className="w-full h-[720px] md:h-[480px] flex items-center justify-center">>
+                <div className="w-full h-[720px] md:h-[480px] flex items-center justify-center">
                   {heroItem.hasNda ? (
                     <div className="text-center text-muted-foreground">
                       <Lock className="w-8 h-8 mx-auto mb-2" />
