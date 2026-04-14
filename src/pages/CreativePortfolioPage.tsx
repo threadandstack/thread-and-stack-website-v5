@@ -2,10 +2,13 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { PortfolioGallery } from "@/components/PortfolioGallery";
 import { PasswordGate } from "@/components/PasswordGate";
+import { useParams } from "react-router-dom";
 
 const CREATIVE_DB_ID = "2808863b-87d4-8027-8f0e-fb1f70d684e0";
 
 const CreativePortfolioPage = () => {
+  const { itemId } = useParams<{ itemId?: string }>();
+
   return (
     <PasswordGate storageKey="portfolio-creative-unlocked" portfolio="creative">
       <div className="min-h-screen bg-background">
@@ -27,6 +30,7 @@ const CreativePortfolioPage = () => {
               databaseId={CREATIVE_DB_ID}
               pillar="creative"
               ctaLabel="Ready to shape your narrative?"
+              initialItemId={itemId}
             />
           </div>
         </main>
