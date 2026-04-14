@@ -6,10 +6,12 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
-import { Lock } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Lock, RefreshCw } from "lucide-react";
 import { PortfolioLoader } from "@/components/PortfolioLoader";
 import { supabase } from "@/integrations/supabase/client";
 import { sanitizeHtml } from "@/lib/sanitize";
+import { toast } from "sonner";
 
 interface PortfolioDetailModalProps {
   open: boolean;
@@ -55,32 +57,64 @@ export const PortfolioDetailModal = ({
 }: PortfolioDetailModalProps) => {
   const [content, setContent] = useState<PageContent | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchContent = async (id: string) => {
-    setIsLoading(true);
-    setError(null);
+  const fetchContent = async (
+    id: string,
+    options?: { force?: boolean; preserveContent?: boolean }
+  ) => {
+    const preserveContent = options?.preserveContent === true;
+
+    if (preserveContent) {
+      setIsRefreshing(true);
+    } else {
+      setIsLoading(true);
+      setError(null);
+    }
+
     try {
       const { data, error: fnError } = await supabase.functions.invoke("fetch-portfolio-page", {
-        body: { page_id: id },
+        body: { page_id: id, force: options?.force === true },
       });
       if (fnError) throw fnError;
+
+      setError(null);
       setContent(data?.page || null);
+
+      if (preserveContent) {
+        toast.success("Portfolio page refreshed from Notion.");
+      }
     } catch (e) {
       console.error("Error fetching portfolio page:", e);
-      setError("Failed to load project details.");
+
+      if (preserveContent) {
+        toast.error("Failed to refresh portfolio page.");
+      } else {
+        setError("Failed to load project details.");
+      }
     } finally {
-      setIsLoading(false);
+      if (preserveContent) {
+        setIsRefreshing(false);
+      } else {
+        setIsLoading(false);
+      }
     }
+  };
+
+  const handleForceRefresh = () => {
+    if (!pageId) return;
+    void fetchContent(pageId, { force: true, preserveContent: true });
   };
 
   useEffect(() => {
     if (open && pageId && !hasNda) {
-      fetchContent(pageId);
+      void fetchContent(pageId);
     }
     if (!open) {
       setContent(null);
       setError(null);
+      setIsRefreshing(false);
     }
   }, [open, pageId]);
 
@@ -117,29 +151,44 @@ export const PortfolioDetailModal = ({
             )}
 
             <div className="px-6 pt-5 pb-4 border-b border-border bg-background">
-              <SheetHeader className="text-left">
-                <SheetTitle className="text-2xl font-light leading-tight text-left">
-                  {content.name}
-                </SheetTitle>
-                <div className="flex flex-wrap items-center gap-2 pt-2">
-                  {content.monthYear && (
-                    <span className="text-sm text-muted-foreground font-sans">
-                      {content.monthYear}
-                    </span>
-                  )}
-                  {content.tags
-                    .filter((t) => !["NDA", "Not Ready", "Featured", "Featured-Hero", "Masonry-Top"].includes(t))
-                    .map((tag) => (
-                      <Badge
-                        key={tag}
-                        variant="outline"
-                        className={`text-[11px] font-sans ${TAG_COLORS[tag] || "bg-muted text-muted-foreground border-border"}`}
-                      >
-                        {tag}
-                      </Badge>
-                    ))}
-                </div>
-              </SheetHeader>
+              <div className="flex items-start justify-between gap-4">
+                <SheetHeader className="text-left flex-1">
+                  <SheetTitle className="text-2xl font-light leading-tight text-left">
+                    {content.name}
+                  </SheetTitle>
+                  <div className="flex flex-wrap items-center gap-2 pt-2">
+                    {content.monthYear && (
+                      <span className="text-sm text-muted-foreground font-sans">
+                        {content.monthYear}
+                      </span>
+                    )}
+                    {content.tags
+                      .filter((t) => !["NDA", "Not Ready", "Featured", "Featured-Hero", "Masonry-Top"].includes(t))
+                      .map((tag) => (
+                        <Badge
+                          key={tag}
+                          variant="outline"
+                          className={`text-[11px] font-sans ${TAG_COLORS[tag] || "bg-muted text-muted-foreground border-border"}`}
+                        >
+                          {tag}
+                        </Badge>
+                      ))}
+                  </div>
+                </SheetHeader>
+
+                {import.meta.env.DEV && pageId && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="shrink-0"
+                    onClick={handleForceRefresh}
+                    disabled={isLoading || isRefreshing}
+                  >
+                    <RefreshCw className={`mr-2 h-4 w-4 ${isRefreshing ? "animate-spin" : ""}`} />
+                    Refresh from Notion
+                  </Button>
+                )}
+              </div>
             </div>
 
             <div className="bg-background px-6 py-6">
