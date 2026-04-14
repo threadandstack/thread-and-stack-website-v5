@@ -123,7 +123,7 @@ export const PortfolioGallery = ({
                 <img
                   src={heroItem.coverImage}
                   alt={heroItem.name}
-                  className="w-full h-[720px] md:h-[480px] object-cover object-left-top group-hover:scale-[1.02] transition-transform duration-500"
+                  className="w-full h-[720px] md:h-[480px] object-cover object-center md:object-left-top group-hover:scale-[1.02] transition-transform duration-500"
                 />
               ) : (
                 <div className="w-full h-[720px] md:h-[480px] flex items-center justify-center">
