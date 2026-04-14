@@ -121,16 +121,27 @@ export const PortfolioGallery = ({
         <div className="mb-16">
           <article
             className="group rounded-2xl border border-border overflow-hidden bg-card hover:shadow-lg transition-shadow cursor-pointer relative"
-            onClick={() => setDetailItem(heroItem)}
+            onClick={() => !focalPickerEnabled && setDetailItem(heroItem)}
           >
             {/* Full-width image with overlay */}
             <div className="relative overflow-hidden bg-muted">
               {heroItem.coverImage && !heroItem.hasNda ? (
-                <img
-                  src={heroItem.coverImage}
-                  alt={heroItem.name}
-                  className="w-full h-[720px] md:h-[480px] object-cover object-center md:object-left-top group-hover:scale-[1.02] transition-transform duration-500"
-                />
+                <>
+                  {/* Mobile image */}
+                  <img
+                    src={heroItem.coverImage}
+                    alt={heroItem.name}
+                    className="w-full h-[720px] object-cover md:hidden group-hover:scale-[1.02] transition-transform duration-500"
+                    style={{ objectPosition: `${heroFocalMobile.x}% ${heroFocalMobile.y}%` }}
+                  />
+                  {/* Desktop image */}
+                  <img
+                    src={heroItem.coverImage}
+                    alt={heroItem.name}
+                    className="w-full h-[480px] object-cover hidden md:block object-left-top group-hover:scale-[1.02] transition-transform duration-500"
+                    style={{ objectPosition: `${heroFocalDesktop.x}% ${heroFocalDesktop.y}%` }}
+                  />
+                </>
               ) : (
                 <div className="w-full h-[720px] md:h-[480px] flex items-center justify-center">
                   {heroItem.hasNda ? (
@@ -142,6 +153,16 @@ export const PortfolioGallery = ({
                     <div className="w-16 h-16 rounded-full bg-accent/10" />
                   )}
                 </div>
+              )}
+
+              {/* Dev-only focal point picker */}
+              {DEV_MODE && heroItem.coverImage && (
+                <FocalPointPicker
+                  enabled={focalPickerEnabled}
+                  onToggle={() => setFocalPickerEnabled(!focalPickerEnabled)}
+                  focalPoint={typeof window !== 'undefined' && window.innerWidth < 768 ? heroFocalMobile : heroFocalDesktop}
+                  onFocalPointChange={typeof window !== 'undefined' && window.innerWidth < 768 ? setHeroFocalMobile : setHeroFocalDesktop}
+                />
               )}
               {/* Gradient overlay at bottom */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
