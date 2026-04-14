@@ -49,6 +49,7 @@ const MomentumMapPage = lazy(() => import("./pages/MomentumMapPage"));
 const NotionHackathonLondonPage = lazy(() => import("./pages/NotionHackathonLondonPage"));
 const NotionDevotionBrightonPage = lazy(() => import("./pages/NotionDevotionBrightonPage"));
 const GGFProposalPage = lazy(() => import("./pages/proposal/GGFProposalPage"));
+const ArcCollectiveProposalPage = lazy(() => import("./pages/proposal/ArcCollectiveProposalPage"));
 const CreativePortfolioPage = lazy(() => import("./pages/CreativePortfolioPage"));
 const NotionPortfolioPage = lazy(() => import("./pages/NotionPortfolioPage"));
 const PortfolioAccessAdminPage = lazy(() => import("./pages/PortfolioAccessAdminPage"));
