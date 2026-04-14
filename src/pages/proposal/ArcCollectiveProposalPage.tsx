@@ -87,6 +87,7 @@ const OPTIONS = [
   {
     num: "4",
     title: "Fractional Support",
+    originalPrice: "£4,000/month",
     price: "£3,500/month",
     duration: "3-month commitment",
     recommended: true,
@@ -102,8 +103,7 @@ const OPTIONS = [
       "Business systems connected end-to-end",
       "Monthly goal scoping and ongoing support",
     ],
-    investment: "£10,500 across three months — the biggest commitment overall, but the easiest to absorb month to month.",
-    discount: "The £3,500 rate is a launch discount — I'd normally price this at £4,000/month.",
+    investment: "I've included a £500 discount per month for this because I genuinely believe this would be the best solution for what we discussed. I appreciate your perspective on being pre-revenue.",
     timeline: "Everything stood up across three months at a sustainable pace, rather than trying to sprint through it all at once.",
   },
 ];
@@ -182,6 +182,9 @@ const ArcCollectiveProposalPage = () => {
               )}
 
               <div className="flex flex-wrap items-baseline gap-3 mb-4">
+                {option.originalPrice && (
+                  <span className="font-serif-pro text-[20px] italic font-semibold text-muted-foreground/50 line-through">{option.originalPrice}</span>
+                )}
                 <span className="font-serif-pro text-[22px] italic font-semibold text-primary">{option.price}</span>
                 {option.duration && (
                   <span className="font-sans text-[13px] text-muted-foreground">({option.duration})</span>
