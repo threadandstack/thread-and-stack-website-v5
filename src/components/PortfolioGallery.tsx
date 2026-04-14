@@ -57,7 +57,24 @@ export const PortfolioGallery = ({
   const [heroFocalMobile, setHeroFocalMobile] = useState({ x: 50, y: 50 });
   const [heroFocalDesktop, setHeroFocalDesktop] = useState({ x: 0, y: 0 });
 
-  const { data: items = [], isLoading } = useQuery<PortfolioItem[]>({
+  // Auto-open detail modal when navigating to a direct item URL
+  useEffect(() => {
+    if (initialItemId && items.length > 0 && !detailItem) {
+      const match = items.find((i) => i.id === initialItemId);
+      if (match) setDetailItem(match);
+    }
+  }, [initialItemId, items]);
+
+  const openDetail = (item: PortfolioItem) => {
+    setDetailItem(item);
+    navigate(`/portfolio/${pillar}/${item.id}`, { replace: true });
+  };
+
+  const closeDetail = () => {
+    setDetailItem(null);
+    navigate(`/portfolio/${pillar}`, { replace: true });
+  };
+
     queryKey: ["portfolio", databaseId, filterTags],
     queryFn: async () => {
       const { data, error } = await supabase.functions.invoke("fetch-portfolio", {
