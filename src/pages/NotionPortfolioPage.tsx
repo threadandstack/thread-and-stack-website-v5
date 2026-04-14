@@ -1,10 +1,13 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { PortfolioGallery } from "@/components/PortfolioGallery";
+import { useParams } from "react-router-dom";
 
 const NOTION_DB_ID = "2e08863b-87d4-81e2-bea8-f435421a841a";
 
 const NotionPortfolioPage = () => {
+  const { itemId } = useParams<{ itemId?: string }>();
+
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
@@ -25,6 +28,7 @@ const NotionPortfolioPage = () => {
             databaseId={NOTION_DB_ID}
             pillar="notion"
             ctaLabel="Need a system that actually works?"
+            initialItemId={itemId}
           />
         </div>
       </main>
