@@ -529,6 +529,20 @@ All colors MUST be HSL.
     margin: 2rem 0;
   }
 
+  .blog-content .video-embed iframe,
+  .blog-content .notion-column iframe {
+    display: block;
+    width: 100%;
+    min-height: 16rem;
+    border: 0;
+    border-radius: 0.5rem;
+    background: hsl(var(--muted) / 0.35);
+  }
+
+  .blog-content .notion-column .video-embed {
+    margin: 0;
+  }
+
   /* Notion column layout */
   .blog-content .notion-column-list {
     display: grid;
