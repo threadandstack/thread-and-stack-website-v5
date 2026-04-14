@@ -416,11 +416,7 @@ async function renderPageContent(pageId: string, notionApiKey: string): Promise<
         const url = block.video.file?.url || block.video.external?.url
         if (!url) return ''
         if (block.video.type === 'external') {
-          const embedUrl = url
-            .replace('youtube.com/watch?v=', 'youtube.com/embed/')
-            .replace('youtu.be/', 'youtube.com/embed/')
-            .replace('vimeo.com/', 'player.vimeo.com/video/')
-            .replace('loom.com/share/', 'loom.com/embed/')
+          const embedUrl = toEmbedUrl(url)
           return `<div class="video-embed"><iframe src="${embedUrl}" frameborder="0" allowfullscreen loading="lazy" style="width:100%;aspect-ratio:16/9;border-radius:0.5rem;"></iframe></div>`
         }
         const cap = block.video.caption ? richTextToHtml(block.video.caption) : ''
@@ -429,7 +425,8 @@ async function renderPageContent(pageId: string, notionApiKey: string): Promise<
       case 'embed': {
         const url = block.embed?.url
         if (!url) return ''
-        return `<div class="video-embed"><iframe src="${url}" frameborder="0" allowfullscreen loading="lazy" style="width:100%;aspect-ratio:16/9;border-radius:0.5rem;"></iframe></div>`
+        const embedUrl = toEmbedUrl(url)
+        return `<div class="video-embed"><iframe src="${embedUrl}" frameborder="0" allowfullscreen loading="lazy" style="width:100%;aspect-ratio:16/9;border-radius:0.5rem;"></iframe></div>`
       }
       case 'column_list': {
         if (!block.has_children) return ''
