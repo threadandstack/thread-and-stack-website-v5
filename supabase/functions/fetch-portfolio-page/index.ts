@@ -12,7 +12,7 @@ serve(async (req) => {
   }
 
   try {
-    const { page_id } = await req.json()
+    const { page_id, force } = await req.json()
 
     if (!page_id) {
       return new Response(
@@ -32,7 +32,7 @@ serve(async (req) => {
       .eq('notion_page_id', page_id)
       .single()
 
-    if (cached) {
+    if (cached && !force) {
       return new Response(
         JSON.stringify({
           page: {
@@ -99,6 +99,17 @@ serve(async (req) => {
       if (!r.ok) return []
       const d = await r.json()
       return d.results || []
+    }
+
+    const toEmbedUrl = (url: string): string => {
+      // YouTube Shorts: youtube.com/shorts/ID → youtube.com/embed/ID
+      const shortsMatch = url.match(/youtube\.com\/shorts\/([^?&/]+)/)
+      if (shortsMatch) return `https://www.youtube.com/embed/${shortsMatch[1]}`
+      return url
+        .replace('youtube.com/watch?v=', 'youtube.com/embed/')
+        .replace('youtu.be/', 'youtube.com/embed/')
+        .replace('vimeo.com/', 'player.vimeo.com/video/')
+        .replace('loom.com/share/', 'loom.com/embed/')
     }
 
     const blockToHtml = async (block: any): Promise<string> => {
@@ -179,11 +190,7 @@ serve(async (req) => {
           const url = block.video.file?.url || block.video.external?.url
           if (!url) return ''
           if (block.video.type === 'external') {
-            const embedUrl = url
-              .replace('youtube.com/watch?v=', 'youtube.com/embed/')
-              .replace('youtu.be/', 'youtube.com/embed/')
-              .replace('vimeo.com/', 'player.vimeo.com/video/')
-              .replace('loom.com/share/', 'loom.com/embed/')
+            const embedUrl = toEmbedUrl(url)
             return `<div class="video-embed"><iframe src="${embedUrl}" frameborder="0" allowfullscreen loading="lazy" style="width:100%;aspect-ratio:16/9;border-radius:0.5rem;"></iframe></div>`
           }
           const cap = block.video.caption ? richTextToHtml(block.video.caption) : ''
@@ -192,7 +199,8 @@ serve(async (req) => {
         case 'embed': {
           const url = block.embed?.url
           if (!url) return ''
-          return `<div class="video-embed"><iframe src="${url}" frameborder="0" allowfullscreen loading="lazy" style="width:100%;aspect-ratio:16/9;border-radius:0.5rem;"></iframe></div>`
+          const embedUrl = toEmbedUrl(url)
+          return `<div class="video-embed"><iframe src="${embedUrl}" frameborder="0" allowfullscreen loading="lazy" style="width:100%;aspect-ratio:16/9;border-radius:0.5rem;"></iframe></div>`
         }
         case 'column_list': {
           if (!block.has_children) return ''
