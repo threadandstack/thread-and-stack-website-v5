@@ -70,7 +70,7 @@ const OPTIONS = [
     num: "3",
     title: "Website Build",
     price: "£5,000–£6,000",
-    duration: "~8 days of work",
+    duration: "Focused sprint across 1–1.5 months",
     description:
       "Full transparency: I don't typically offer website builds as a standalone service. But I've been building my own site and delivering a client project using Lovable over the past few months, and the practical knowledge I've picked up is directly relevant to what you need.",
     extendedDescription:
