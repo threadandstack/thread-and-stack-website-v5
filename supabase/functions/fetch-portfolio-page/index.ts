@@ -12,7 +12,7 @@ serve(async (req) => {
   }
 
   try {
-    const { page_id } = await req.json()
+    const { page_id, force } = await req.json()
 
     if (!page_id) {
       return new Response(
@@ -32,7 +32,7 @@ serve(async (req) => {
       .eq('notion_page_id', page_id)
       .single()
 
-    if (cached) {
+    if (cached && !force) {
       return new Response(
         JSON.stringify({
           page: {
