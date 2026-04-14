@@ -143,7 +143,7 @@ export const PortfolioGallery = ({
         <div className="mb-16">
           <article
             className="group rounded-2xl border border-border overflow-hidden bg-card hover:shadow-lg transition-shadow cursor-pointer relative"
-            onClick={() => !focalPickerEnabled && setDetailItem(heroItem)}
+            onClick={() => !focalPickerEnabled && openDetail(heroItem)}
           >
             {/* Full-width image with overlay */}
             <div className="relative overflow-hidden bg-muted">
@@ -225,7 +225,7 @@ export const PortfolioGallery = ({
               <article
                 key={item.id}
                 className="group rounded-2xl border border-border overflow-hidden bg-card hover:shadow-lg transition-shadow cursor-pointer"
-                onClick={() => setDetailItem(item)}
+                onClick={() => openDetail(item)}
               >
                 <div className="grid md:grid-cols-2 gap-0">
                   {/* Image side */}
@@ -325,7 +325,7 @@ export const PortfolioGallery = ({
           <article
             key={item.id}
             className="group rounded-xl border border-border overflow-hidden bg-card hover:shadow-md transition-shadow cursor-pointer break-inside-avoid"
-            onClick={() => setDetailItem(item)}
+            onClick={() => openDetail(item)}
           >
             {/* Cover image */}
             {item.coverImage && !item.hasNda ? (
@@ -407,7 +407,7 @@ export const PortfolioGallery = ({
 
       <PortfolioDetailModal
         open={!!detailItem}
-        onOpenChange={(open) => { if (!open) setDetailItem(null); }}
+        onOpenChange={(open) => { if (!open) closeDetail(); }}
         pageId={detailItem?.id || null}
         name={detailItem?.name || ""}
         hasNda={detailItem?.hasNda || false}
