@@ -221,9 +221,6 @@ const ArcCollectiveProposalPage = () => {
               {option.investment && (
                 <div className="bg-accent/5 rounded-xl p-4 mt-3">
                   <p className="text-[13.5px] text-foreground leading-[1.6] font-medium">{option.investment}</p>
-                  {option.discount && (
-                    <p className="text-[13px] text-accent mt-1.5 leading-[1.6]">{option.discount}</p>
-                  )}
                 </div>
               )}
 
