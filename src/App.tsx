@@ -49,6 +49,7 @@ const MomentumMapPage = lazy(() => import("./pages/MomentumMapPage"));
 const NotionHackathonLondonPage = lazy(() => import("./pages/NotionHackathonLondonPage"));
 const NotionDevotionBrightonPage = lazy(() => import("./pages/NotionDevotionBrightonPage"));
 const GGFProposalPage = lazy(() => import("./pages/proposal/GGFProposalPage"));
+const ArcCollectiveProposalPage = lazy(() => import("./pages/proposal/ArcCollectiveProposalPage"));
 const CreativePortfolioPage = lazy(() => import("./pages/CreativePortfolioPage"));
 const NotionPortfolioPage = lazy(() => import("./pages/NotionPortfolioPage"));
 const PortfolioAccessAdminPage = lazy(() => import("./pages/PortfolioAccessAdminPage"));
@@ -113,6 +114,7 @@ const App = () => (
             <Route path="/notion-hackathon-london" element={<NotionHackathonLondonPage />} />
             <Route path="/notion-devotion-brighton" element={<NotionDevotionBrightonPage />} />
             <Route path="/proposal/GGF" element={<GGFProposalPage />} />
+            <Route path="/proposal/arc-collective" element={<ArcCollectiveProposalPage />} />
             <Route path="/portfolio/creative" element={<CreativePortfolioPage />} />
             <Route path="/portfolio/creative/:itemId" element={<CreativePortfolioPage />} />
             <Route path="/portfolio/notion" element={<NotionPortfolioPage />} />

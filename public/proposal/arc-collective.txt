@@ -1,0 +1,104 @@
+Thread & Stack — Proposal for The Arc Collective
+April 2026
+
+Building the foundations properly.
+
+Four ways to work together — from focused sessions through to embedded strategic and operational support. Every option starts with a scoping session so we define exactly what's needed before any build work begins.
+
+A note on all of the below: each option would start with a scoping session so we define exactly what's needed before any build work begins. No guesswork, no wasted time.
+
+---
+
+01 — Clarity Sessions
+£350 per session
+
+A focused hour on a specific problem: Notion architecture, Lovable setup, questionnaire logic, whatever's in front of you. You leave with direction you can act on yourself.
+
+What's included:
+• 60-minute focused session on one specific challenge
+• Clear direction and next steps you can act on immediately
+• Full recording and summary notes
+
+3-session bundle: £900 (£300 each) if you want a sounding board as you build things out.
+
+---
+
+02 — Foundation Sprint
+£2,250–£3,750 (3–5 days)
+
+We co-build your core Notion operating system. Clients database with a proper pipeline, Services linked to your four-stage journey, Projects, Content Library, questionnaire integration. I walk you through everything as we go, so you own it afterwards. Exact scope defined in a discovery session.
+
+What's included:
+• Core Notion workspace: Clients, Services, Projects, Content Library
+• Pipeline and four-stage journey structure
+• Questionnaire integration
+• Hands-on walkthrough so you own it fully
+
+Timeline: Your workspace could be operational within two weeks.
+
+---
+
+03 — Website Build
+£5,000–£6,000 (~8 days of work)
+
+Full transparency: I don't typically offer website builds as a standalone service. But I've been building my own site and delivering a client project using Lovable over the past few months, and the practical knowledge I've picked up is directly relevant to what you need.
+
+What I've learned is that even with AI-powered tools, a website build requires regular touch points, careful attention to security, and structured decision-making around design and integrations. It's incredibly empowering for a founder to be able to move quickly with these tools, but it does represent a genuinely separate category of work that benefits from being scoped on its own.
+
+What's included:
+• Full website design and build using Lovable
+• Responsive layout across all devices
+• Structured decision-making around design and integrations
+• Regular touch points throughout the build process
+• Handover with full editing access
+
+Timeline: Assuming all content and creative assets are provided, the website could be live within four to five weeks.
+
+---
+
+04 — Fractional Support ← Recommended
+£3,500/month (3-month commitment)
+
+This is what I'd genuinely recommend, and honestly where I do my best work. Rather than billing per day across separate projects, I'm embedded alongside you for three months. We scope goals for each month and I plug into whatever matters most.
+
+Getting Notion operational, building the website, implementing the brand work Jules is finishing, setting up proper AI workflows, making sure your business systems are genuinely connected.
+
+What's included:
+• Notion operating system — built and running
+• Website — designed, built, and live
+• Brand implementation from Jules's work
+• AI workflow setup and training
+• Business systems connected end-to-end
+• Monthly goal scoping and ongoing support
+
+Investment: £10,500 across three months — the biggest commitment overall, but the easiest to absorb month to month.
+
+The £3,500 rate is a launch discount — I'd normally price this at £4,000/month.
+
+Timeline: Everything stood up across three months at a sustainable pace, rather than trying to sprint through it all at once.
+
+---
+
+05 — Bundling
+
+The sprint and website build work well together or separately. The fractional option absorbs both, plus the wider work around AI, brand implementation, and business workflows.
+
+---
+
+06 — At a Glance
+
+Clarity Sessions: £350/session (or £900 for 3)
+Foundation Sprint: £2,250–£3,750
+Website Build: £5,000–£6,000
+Fractional Support: £3,500/month (£10,500 over 3 months) — Recommended
+
+Brendan Rodgers / Thread & Stack is not currently VAT registered. No VAT is applicable. Payment terms and schedule agreed during scoping. A 15% late charge applies to any payment not received within 30 days of invoicing.
+
+---
+
+I'll send the library system document across separately. Should help as you're mapping things out this week with Jules.
+
+Let me know what resonates, or if you'd rather jump on a quick call once you've had a chance to sit with it.
+
+Brendan
+Brendan Rodgers · threadandstack.com
