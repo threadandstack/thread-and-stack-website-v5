@@ -49,6 +49,9 @@ export const PortfolioGallery = ({
   const [activeTag, setActiveTag] = useState<string | null>(null);
   const [contactOpen, setContactOpen] = useState(false);
   const [detailItem, setDetailItem] = useState<PortfolioItem | null>(null);
+  const [focalPickerEnabled, setFocalPickerEnabled] = useState(false);
+  const [heroFocalMobile, setHeroFocalMobile] = useState({ x: 50, y: 50 });
+  const [heroFocalDesktop, setHeroFocalDesktop] = useState({ x: 0, y: 0 });
 
   const { data: items = [], isLoading } = useQuery<PortfolioItem[]>({
     queryKey: ["portfolio", databaseId, filterTags],
