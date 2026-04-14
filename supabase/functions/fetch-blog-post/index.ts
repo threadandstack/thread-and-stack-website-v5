@@ -73,7 +73,12 @@ serve(async (req) => {
       return pageSlug === slug
     })
 
-    if (!matchingPage) throw new Error('Post not found')
+    if (!matchingPage) {
+      return new Response(
+        JSON.stringify({ post: null, error: 'Post not found' }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
 
     const postId = matchingPage.id
     const lastEditedTime = matchingPage.last_edited_time
