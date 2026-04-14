@@ -48,9 +48,11 @@ const AdminDashboard = () => {
   const handleSyncPortfolioCache = async () => {
     setIsSyncingPortfolio(true);
     try {
-      const { data, error } = await supabase.functions.invoke('sync-portfolio-cache');
+      const { data, error } = await supabase.functions.invoke('sync-portfolio-cache', {
+        body: { full: true },
+      });
       if (error) throw error;
-      toast.success(`Portfolio synced — ${data.listings_synced} listings, ${data.content_synced} pages rendered`);
+      toast.success(`Portfolio fully synced — ${data.listings_synced} listings, ${data.content_synced} pages rendered`);
     } catch (error) {
       console.error('Sync error:', error);
       toast.error('Failed to sync portfolio cache');
@@ -153,7 +155,7 @@ const AdminDashboard = () => {
                 </div>
                 <div>
                   <CardTitle className="text-lg">Portfolio Cache</CardTitle>
-                  <CardDescription>Sync portfolio listings and pre-render project pages from Notion</CardDescription>
+                  <CardDescription>Run a full sync of portfolio listings and pre-rendered project pages from Notion</CardDescription>
                 </div>
               </div>
               <Button onClick={handleSyncPortfolioCache} disabled={isSyncingPortfolio}>
