@@ -6,7 +6,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { ContactDrawer } from "@/components/ContactDrawer";
 import { PortfolioDetailModal } from "@/components/PortfolioDetailModal";
 import { PillButton } from "@/components/ui/pill-button";
+import { FocalPointPicker } from "@/components/FocalPointPicker";
 import { Send, Lock } from "lucide-react";
+
+const DEV_MODE = import.meta.env.DEV;
 
 interface PortfolioItem {
   id: string;
