@@ -38,6 +38,14 @@ const TAG_COLORS: Record<string, string> = {
   "Clientside": "bg-amber-100 text-amber-800 border-amber-200",
 };
 
+/** Convert <img> tags with .mp4 src to <video> elements */
+function convertMp4ImgsToVideo(html: string): string {
+  return html.replace(
+    /<img\s+src="([^"]+\.mp4)"[^/]*\/>/gi,
+    '<video controls preload="metadata" style="width:100%;border-radius:0.5rem;"><source src="$1" type="video/mp4" /></video>'
+  );
+}
+
 export const PortfolioDetailModal = ({
   open,
   onOpenChange,
@@ -137,7 +145,7 @@ export const PortfolioDetailModal = ({
             <div className="bg-background px-6 py-6">
               <div
                 className="blog-content prose prose-sm max-w-none"
-                dangerouslySetInnerHTML={{ __html: sanitizeHtml(content.html) }}
+                dangerouslySetInnerHTML={{ __html: sanitizeHtml(convertMp4ImgsToVideo(content.html)) }}
               />
             </div>
           </div>
