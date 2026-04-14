@@ -27,6 +27,7 @@ interface PortfolioGalleryProps {
   tags?: string[];
   pillar: "creative" | "notion";
   ctaLabel?: string;
+  initialItemId?: string;
 }
 
 const TAG_COLORS: Record<string, string> = {
@@ -45,7 +46,9 @@ export const PortfolioGallery = ({
   tags: filterTags,
   pillar,
   ctaLabel = "Like what you see? Let's talk",
+  initialItemId,
 }: PortfolioGalleryProps) => {
+  const navigate = useNavigate();
   const [activeTag, setActiveTag] = useState<string | null>(null);
   const [contactOpen, setContactOpen] = useState(false);
   const [detailItem, setDetailItem] = useState<PortfolioItem | null>(null);
