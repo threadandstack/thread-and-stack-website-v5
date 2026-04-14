@@ -288,6 +288,7 @@ const ArcCollectiveProposalPage = () => {
                     </div>
                   </td>
                   <td className="px-5 py-4 align-top text-right">
+                    <span className="font-sans text-[13px] text-muted-foreground/50 line-through mr-1">£4,000</span>
                     <span className="font-sans text-[15px] font-bold text-primary">£3,500/month</span>
                     <div className="text-xs text-muted-foreground mt-0.5">£10,500 over 3 months</div>
                   </td>
