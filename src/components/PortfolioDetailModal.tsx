@@ -96,9 +96,21 @@ export const PortfolioDetailModal = ({
           </div>
         ) : content ? (
           <div className="bg-background">
-            <div className="px-6 pt-6 pb-5 border-b border-border bg-background">
-              <SheetHeader>
-                <SheetTitle className="text-2xl font-light leading-tight">
+            {content.coverImage && (
+              <div className="bg-muted">
+                <div className="aspect-[16/10] overflow-hidden">
+                  <img
+                    src={content.coverImage}
+                    alt={content.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </div>
+            )}
+
+            <div className="px-6 pt-5 pb-4 border-b border-border bg-background">
+              <SheetHeader className="text-left">
+                <SheetTitle className="text-2xl font-light leading-tight text-left">
                   {content.name}
                 </SheetTitle>
                 <div className="flex flex-wrap items-center gap-2 pt-2">
@@ -108,7 +120,7 @@ export const PortfolioDetailModal = ({
                     </span>
                   )}
                   {content.tags
-                    .filter((t) => !["NDA", "Not Ready"].includes(t))
+                    .filter((t) => !["NDA", "Not Ready", "Featured", "Featured-Hero", "Masonry-Top"].includes(t))
                     .map((tag) => (
                       <Badge
                         key={tag}
@@ -121,18 +133,6 @@ export const PortfolioDetailModal = ({
                 </div>
               </SheetHeader>
             </div>
-
-            {content.coverImage && (
-              <div className="bg-muted border-b border-border">
-                <div className="aspect-[16/10] overflow-hidden">
-                  <img
-                    src={content.coverImage}
-                    alt={content.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              </div>
-            )}
 
             <div className="bg-background px-6 py-6">
               <div
