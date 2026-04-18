@@ -219,7 +219,7 @@ const PortfolioAccessAdminPage = () => {
                         <TableRow key={log.id}>
                           <TableCell className="text-sm">{formatDate(log.created_at)}</TableCell>
                           <TableCell>
-                            <Badge variant="secondary">{log.code_label}</Badge>
+                            <Badge variant="outline" className="bg-secondary text-secondary-foreground border-border">{log.code_label}</Badge>
                           </TableCell>
                           <TableCell className="capitalize">{log.portfolio}</TableCell>
                           <TableCell className="text-sm">{parseUA(log.user_agent)}</TableCell>
