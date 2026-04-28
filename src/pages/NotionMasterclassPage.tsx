@@ -130,9 +130,13 @@ const NotionMasterclassPage = () => {
       <Navigation />
 
       {/* HERO */}
-      <section className="relative pt-28 md:pt-32 pb-16 px-6 overflow-hidden">
-        <div className="max-w-6xl mx-auto grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-          <div className="lg:col-span-7 space-y-6">
+      <section className="relative pt-36 md:pt-44 lg:pt-52 pb-24 md:pb-32 px-6 overflow-hidden">
+        {/* Subtle indigo glow accents */}
+        <div className="pointer-events-none absolute top-20 -left-32 w-[460px] h-[460px] rounded-full bg-accent/8 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-24 right-0 w-[380px] h-[380px] rounded-full bg-accent/5 blur-3xl" />
+
+        <div className="relative max-w-6xl mx-auto grid lg:grid-cols-12 gap-14 lg:gap-20 items-center">
+          <div className="lg:col-span-7 space-y-8">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent/8 border border-accent/15">
               <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
               <span className="text-xs font-sans font-medium text-accent tracking-wide uppercase">
@@ -140,7 +144,7 @@ const NotionMasterclassPage = () => {
               </span>
             </div>
 
-            <h1 className="font-serif-pro text-4xl md:text-5xl lg:text-6xl font-semibold italic leading-[1.1] tracking-tight">
+            <h1 className="font-serif-pro text-4xl md:text-5xl lg:text-[3.75rem] font-semibold italic leading-[1.08] tracking-tight max-w-2xl">
               The Notion{" "}
               <span className="relative inline-block text-accent">
                 Masterclass
@@ -151,13 +155,13 @@ const NotionMasterclassPage = () => {
               <span className="text-accent">sticks</span>.
             </h1>
 
-            <p className="font-sans text-lg text-muted-foreground leading-relaxed max-w-xl">
+            <p className="font-sans text-lg md:text-xl text-muted-foreground leading-relaxed max-w-xl">
               Ninety minutes to swap a tangle of tabs, half-built templates and
               "I'll fix it later" workarounds for one Notion workspace that
               quietly runs the day-to-day of your business.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-3 pt-2">
+            <div className="flex flex-col sm:flex-row gap-3 pt-4">
               <PillButton
                 size="lg"
                 icon={Rocket}
@@ -176,7 +180,7 @@ const NotionMasterclassPage = () => {
               </PillButton>
             </div>
 
-            <p className="text-sm text-muted-foreground/70 pt-1">
+            <p className="text-sm text-muted-foreground/70 pt-2 max-w-md">
               Includes the recording, Notion workspace template, and a £100
               credit toward Notion &amp; Systems Consultancy.
             </p>
@@ -184,14 +188,14 @@ const NotionMasterclassPage = () => {
 
           {/* Hero visual — frosted card on photo */}
           <div className="lg:col-span-5">
-            <div className="relative rounded-3xl overflow-hidden shadow-[0_20px_60px_-20px_rgba(19,64,232,0.35)]">
+            <div className="relative rounded-3xl overflow-hidden shadow-[0_30px_80px_-20px_rgba(19,64,232,0.35)]">
               <img
                 src={workshop1}
                 alt="Brendan running a Notion workshop"
-                className="w-full h-[420px] object-cover"
+                className="w-full h-[460px] lg:h-[520px] object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-              <div className="absolute bottom-5 left-5 right-5 bg-background/90 backdrop-blur-md rounded-2xl p-5">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
+              <div className="absolute bottom-6 left-6 right-6 bg-background/90 backdrop-blur-md rounded-2xl p-5">
                 <div className="flex items-center gap-3 text-sm font-sans">
                   <Calendar className="w-4 h-4 text-accent" />
                   <span className="text-foreground font-medium">
