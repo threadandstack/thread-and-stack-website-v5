@@ -388,6 +388,8 @@ const NotionMasterclassPage = () => {
 
       {/* THE FRAMEWORK — indigo tier */}
       <section className="relative py-24 px-6 bg-indigo text-indigo-foreground overflow-hidden">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-background to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent" />
         {/* Soft glow accents to keep the subtle indigo aesthetic */}
         <div className="pointer-events-none absolute -top-24 -left-24 w-[420px] h-[420px] rounded-full bg-white/10 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-32 -right-20 w-[480px] h-[480px] rounded-full bg-white/5 blur-3xl" />
