@@ -606,6 +606,7 @@ const NotionMasterclassPage = () => {
 
       {/* FINAL CTA — indigo tier */}
       <section className="relative py-28 px-6 bg-indigo text-indigo-foreground overflow-hidden">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-background to-transparent" />
         {/* Subtle glow accents */}
         <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-white/10 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-24 -left-24 w-[360px] h-[360px] rounded-full bg-white/5 blur-3xl" />
