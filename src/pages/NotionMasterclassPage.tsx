@@ -214,36 +214,37 @@ const NotionMasterclassPage = () => {
         </div>
       </section>
 
-      {/* THE PROBLEM — indigo tier */}
-      <section className="relative py-24 px-6 bg-indigo text-indigo-foreground overflow-hidden">
-        {/* Soft fades into surrounding light sections */}
-        <ShapeDivider position="top" fillClassName="fill-background" />
-        <ShapeDivider position="bottom" fillClassName="fill-background" />
-        {/* Soft glow accents */}
-        <div className="pointer-events-none absolute -top-24 -left-24 w-[420px] h-[420px] rounded-full bg-white/10 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-32 -right-20 w-[480px] h-[480px] rounded-full bg-white/5 blur-3xl" />
-
-        <div className="relative max-w-4xl mx-auto text-center">
+      {/* THE PROBLEM — indigo callout card */}
+      <section className="py-16 md:py-20 px-6">
+        <div className="max-w-4xl mx-auto">
           <Reveal>
-            <p className="text-sm uppercase tracking-widest text-indigo-foreground/60 mb-4">
-              The problem
-            </p>
-            <h2 className="font-serif-pro text-3xl md:text-4xl font-semibold italic leading-tight mb-6 text-indigo-foreground">
-              You don't have a Notion problem.{" "}
-              <br className="hidden md:block" />
-              You have a{" "}
-              <span className="relative inline-block">
-                system
-                <span className="absolute left-0 right-0 -bottom-1 h-[2px] bg-white/50 rounded-full" />
-              </span>{" "}
-              problem.
-            </h2>
-            <p className="font-sans text-lg text-indigo-foreground/80 leading-relaxed max-w-2xl mx-auto">
-              Most founders I meet are paying a quiet creative tax —
-              context-switching between a dozen apps, rebuilding the same
-              pages, losing track of what they decided last Tuesday. Notion
-              isn't the issue. The architecture under it is.
-            </p>
+            <div className="relative bg-indigo text-indigo-foreground rounded-[2rem] md:rounded-[2.5rem] px-8 py-14 md:px-14 md:py-20 overflow-hidden shadow-[0_30px_80px_-30px_rgba(19,64,232,0.45)]">
+              {/* Soft glow accents — preserved style */}
+              <div className="pointer-events-none absolute -top-24 -left-24 w-[420px] h-[420px] rounded-full bg-white/10 blur-3xl" />
+              <div className="pointer-events-none absolute -bottom-32 -right-20 w-[480px] h-[480px] rounded-full bg-white/5 blur-3xl" />
+
+              <div className="relative text-center">
+                <p className="text-sm uppercase tracking-widest text-indigo-foreground/60 mb-4">
+                  The problem
+                </p>
+                <h2 className="font-serif-pro text-3xl md:text-4xl font-semibold italic leading-tight mb-6 text-indigo-foreground">
+                  You don't have a Notion problem.{" "}
+                  <br className="hidden md:block" />
+                  You have a{" "}
+                  <span className="relative inline-block">
+                    system
+                    <span className="absolute left-0 right-0 -bottom-1 h-[2px] bg-white/50 rounded-full" />
+                  </span>{" "}
+                  problem.
+                </h2>
+                <p className="font-sans text-lg text-indigo-foreground/80 leading-relaxed max-w-2xl mx-auto">
+                  Most founders I meet are paying a quiet creative tax —
+                  context-switching between a dozen apps, rebuilding the same
+                  pages, losing track of what they decided last Tuesday. Notion
+                  isn't the issue. The architecture under it is.
+                </p>
+              </div>
+            </div>
           </Reveal>
         </div>
       </section>
