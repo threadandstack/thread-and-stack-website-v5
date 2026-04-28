@@ -470,6 +470,7 @@ const NotionMasterclassPage = () => {
       <section className="relative py-20 px-6 bg-muted/30 overflow-hidden">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-background to-transparent" />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-background to-transparent" />
+        <div className="relative max-w-2xl mx-auto">
           <Reveal>
             <div className="bg-card rounded-3xl p-8 md:p-10 shadow-[0_8px_40px_-10px_rgba(19,64,232,0.15)] border border-accent/10">
               <p className="text-sm uppercase tracking-widest text-muted-foreground mb-2">
