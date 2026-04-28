@@ -609,45 +609,48 @@ const NotionMasterclassPage = () => {
       {/* FAQ */}
       <FAQ items={FAQ_ITEMS} title="Common questions" />
 
-      {/* FINAL CTA — indigo tier */}
-      <section className="relative py-28 px-6 bg-indigo text-indigo-foreground overflow-hidden">
-        <ShapeDivider position="top" fillClassName="fill-background" />
-        {/* Subtle glow accents */}
-        <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-white/10 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-24 -left-24 w-[360px] h-[360px] rounded-full bg-white/5 blur-3xl" />
-        <div className="relative max-w-3xl mx-auto text-center">
-          <Reveal>
-            <h2 className="font-serif-pro text-3xl md:text-5xl font-semibold italic leading-tight mb-6 text-indigo-foreground">
-              Ready for a Notion system that{" "}
-              <span className="italic underline decoration-white/40 decoration-2 underline-offset-[6px]">
-                actually sticks
-              </span>
-              ?
-            </h2>
-            <p className="text-lg text-indigo-foreground/80 max-w-xl mx-auto mb-8 leading-relaxed">
-              Save your seat for the next live session, or send me a question
-              first — whichever feels right.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <PillButton
-                size="lg"
-                icon={Rocket}
-                className="font-semibold bg-white text-accent hover:bg-white/90"
-                onClick={() => openRegister("final-cta")}
-              >
-                Save my seat — {PRICE_LABEL}
-              </PillButton>
-              <PillButton
-                size="lg"
-                variant="outline"
-                icon={MessageCircle}
-                className="border-white/40 text-indigo-foreground hover:bg-white/10"
-                onClick={() => openQuestion("final-cta")}
-              >
-                Ask a question
-              </PillButton>
+      {/* FINAL CTA — indigo callout card */}
+      <section className="py-16 md:py-24 px-6">
+        <div className="max-w-4xl mx-auto">
+          <div className="relative bg-indigo text-indigo-foreground rounded-[2rem] md:rounded-[2.5rem] px-8 py-16 md:px-14 md:py-20 overflow-hidden shadow-[0_30px_80px_-30px_rgba(19,64,232,0.5)]">
+            {/* Subtle glow accents */}
+            <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-white/10 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-24 -left-24 w-[360px] h-[360px] rounded-full bg-white/5 blur-3xl" />
+            <div className="relative max-w-3xl mx-auto text-center">
+              <Reveal>
+                <h2 className="font-serif-pro text-3xl md:text-5xl font-semibold italic leading-tight mb-6 text-indigo-foreground">
+                  Ready for a Notion system that{" "}
+                  <span className="italic underline decoration-white/40 decoration-2 underline-offset-[6px]">
+                    actually sticks
+                  </span>
+                  ?
+                </h2>
+                <p className="text-lg text-indigo-foreground/80 max-w-xl mx-auto mb-8 leading-relaxed">
+                  Save your seat for the next live session, or send me a question
+                  first — whichever feels right.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                  <PillButton
+                    size="lg"
+                    icon={Rocket}
+                    className="font-semibold bg-white text-accent hover:bg-white/90"
+                    onClick={() => openRegister("final-cta")}
+                  >
+                    Save my seat — {PRICE_LABEL}
+                  </PillButton>
+                  <PillButton
+                    size="lg"
+                    variant="outline"
+                    icon={MessageCircle}
+                    className="border-white/40 text-indigo-foreground hover:bg-white/10"
+                    onClick={() => openQuestion("final-cta")}
+                  >
+                    Ask a question
+                  </PillButton>
+                </div>
+              </Reveal>
             </div>
-          </Reveal>
+          </div>
         </div>
       </section>
 
