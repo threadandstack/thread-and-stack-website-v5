@@ -580,15 +580,21 @@ const NotionMasterclassPage = () => {
       {/* FAQ */}
       <FAQ items={FAQ_ITEMS} title="Common questions" />
 
-      {/* FINAL CTA */}
-      <section className="py-24 px-6">
-        <div className="max-w-3xl mx-auto text-center">
+      {/* FINAL CTA — indigo tier */}
+      <section className="relative py-28 px-6 bg-indigo text-indigo-foreground overflow-hidden">
+        {/* Subtle glow accents */}
+        <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-white/10 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-24 -left-24 w-[360px] h-[360px] rounded-full bg-white/5 blur-3xl" />
+        <div className="relative max-w-3xl mx-auto text-center">
           <Reveal>
-            <h2 className="font-serif-pro text-3xl md:text-5xl font-semibold italic leading-tight mb-6">
+            <h2 className="font-serif-pro text-3xl md:text-5xl font-semibold italic leading-tight mb-6 text-indigo-foreground">
               Ready for a Notion system that{" "}
-              <span className="text-accent">actually sticks</span>?
+              <span className="italic underline decoration-white/40 decoration-2 underline-offset-[6px]">
+                actually sticks
+              </span>
+              ?
             </h2>
-            <p className="text-lg text-muted-foreground max-w-xl mx-auto mb-8 leading-relaxed">
+            <p className="text-lg text-indigo-foreground/80 max-w-xl mx-auto mb-8 leading-relaxed">
               Save your seat for the next live session, or send me a question
               first — whichever feels right.
             </p>
@@ -596,7 +602,7 @@ const NotionMasterclassPage = () => {
               <PillButton
                 size="lg"
                 icon={Rocket}
-                className="font-semibold"
+                className="font-semibold bg-white text-accent hover:bg-white/90"
                 onClick={() => openRegister("final-cta")}
               >
                 Save my seat — {PRICE_LABEL}
@@ -605,6 +611,7 @@ const NotionMasterclassPage = () => {
                 size="lg"
                 variant="outline"
                 icon={MessageCircle}
+                className="border-white/40 text-indigo-foreground hover:bg-white/10"
                 onClick={() => openQuestion("final-cta")}
               >
                 Ask a question
