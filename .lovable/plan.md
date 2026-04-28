@@ -1,79 +1,61 @@
-# Notion Masterclass — Page Plan
+## Notion Masterclass — Hero & Problem section refinements
 
-A new landing page at **`/notion-masterclass`** that mirrors the structure of `notionconsultants.com/masterclass`, restyled in the Thread & Stack brand language (Crimson Pro + Inter, indigo `#1340E8`, soft cards, no thread dividers, scroll fades from 40% opacity).
+Three focused tweaks to `src/pages/NotionMasterclassPage.tsx`. No new files, no dependency changes.
 
-> **Heads up — memory conflict:** Project memory says workshops are a retired service pillar. This page reintroduces a paid live workshop product. I'll treat it as an intentional exception (separate masterclass product, not part of the "two-pillar" services) and won't link it from the main nav unless you ask. Confirm if you'd like me to update the memory after.
+### 1. Tighten hero copy
 
-## Positioning
+Make the hero punchier and less wordy — keep the editorial italic feel but reduce visual length.
 
-- **Product:** 90-minute live online masterclass on building a Notion system that works for solo founders.
-- **Audience:** Founders & solo operators drowning in scattered tools (the "creative tax" angle).
-- **Working title (open to change):** *"The Founder's Notion Masterclass — 90 minutes to a system that actually sticks."*
-- **Price:** single price, placeholder `£149` — confirm number before launch.
+- **Headline**: drop the second line's verbosity.
+  - From: *"The Notion Masterclass for founders who want a system that sticks."*
+  - To: *"The Notion Masterclass for founders who want a system that sticks."* (keep), but tighten the line break — remove "for founders who want" mid-line padding by restructuring as two short lines: line 1 *"The Notion Masterclass"*, line 2 *"for founders who want a system that sticks."* — already mostly there; reduce max-width so it breaks tighter.
+- **Sub-paragraph**: shorten from three clauses to one.
+  - From: *"Ninety minutes to swap a tangle of tabs, half-built templates and 'I'll fix it later' workarounds for one Notion workspace that quietly runs the day-to-day of your business."*
+  - To: *"Ninety minutes to turn a tangle of tabs and half-built templates into one workspace that quietly runs your business."*
+- **Fine print**: trim slightly.
+  - To: *"Includes the recording, workspace template, and £100 credit toward Notion & Systems Consultancy."*
+- Reduce hero vertical padding a touch (`pt-32 md:pt-40 lg:pt-44`) since copy is shorter, keeping breathing room without feeling sparse.
 
-## Page structure (top to bottom)
+### 2. Give "The Problem" the indigo treatment
 
-1. **Hero** — split layout
-   - Left: editorial Crimson Pro italic headline, supporting Inter paragraph, primary CTA "Save my seat — £149", secondary "What you'll leave with" anchor link.
-   - Right: frosted card on a workshop photo (uses existing `src/assets/photos/workshop/*.webp`). Optional video play button placeholder for a future trailer.
-2. **The Opportunity / The Problem** — "creative tax" framing: most founders don't have a Notion problem, they have a *system* problem. Soft card with supporting copy + small inline illustration.
-3. **Who this is for** — 3–4 soft cards (founders, solo operators, makers building a stack, consultants productising). Indigo ring bullets per the list-item branding rule.
-4. **What you'll master** — 4-up grid of outcomes (Crimson Pro mini-headings + Inter body). Examples:
-   - Designing a Notion architecture that scales with you
-   - Capture → Process → Publish workflows
-   - Killing the 12-tool tax
-   - Templates you can reuse the next day
-5. **Testimonial #1** — pull-quote card with avatar, sourced from existing Testimonials data (placeholder until you supply a workshop-specific quote).
-6. **Your framework** — single editorial section explaining the workshop's spine (e.g. the "Thread → Stack → Ship" framework), with a simple SVG/figure placeholder.
-7. **Your instructor** — Brendan bio block, portrait from `src/assets/photos/portraits/`, Notion Certified Consultant badge per the credential badge rule.
-8. **Testimonial #2** — second pull-quote card.
-9. **Pricing** — single soft card: title, what's included list, **£149**, primary CTA "Save my seat". Below a divider note: *"All attendees receive the recording, the workspace template, and a £100 credit toward Notion & Systems Consultancy."*
-10. **Bonus material** — "What you take home" — 3–4 bullets (workshop recording, Notion workspace template, 30-day implementation checklist, private follow-up Q&A).
-11. **FAQ** — reuse the existing `<FAQ />` component pattern with masterclass-specific questions (format, refunds, level required, recording access).
-12. **Final CTA band** — large repeat CTA + secondary "Ask a question" opening the new drawer in question mode.
-13. **Footer** — existing global Footer.
+Currently uses `bg-muted/30`. Convert to the same dark indigo tier as the Framework section so the page now has a clear two-tier rhythm: light (hero) → indigo (problem) → light (who it's for) → light (what you'll master) → light (testimonial) → indigo (framework) → …
 
-## New lead-capture drawer
+Apply to the existing `{/* THE PROBLEM */}` section:
 
-A dedicated drawer component **`MasterclassRegisterDrawer`** modelled on `ContactDrawer`:
+- Wrapper: `relative py-24 px-6 bg-indigo text-indigo-foreground overflow-hidden`
+- Add the same soft glow accents used in the Framework section (two absolute `blur-3xl` white circles at low opacity) to preserve the subtle indigo glow aesthetic.
+- Eyebrow: `text-indigo-foreground/60`
+- Headline: `text-indigo-foreground`, with the emphasised word *"system"* set to `text-white` (or `text-indigo-foreground` with underline accent) instead of `text-accent`, since accent indigo on indigo background loses contrast. Use a soft white `Emphasis` underline for the brand cue.
+- Body copy: `text-indigo-foreground/80`.
 
-- Two modes via prop: `"register"` (default) and `"question"`.
-- Fields: Name, Email, Role/Organisation (per the standardised form field rule), "What's your biggest Notion frustration right now?" (textarea), GDPR consent checkbox, honeypot field.
-- Submission goes to a new Supabase table `masterclass_registrations` (columns: id, created_at, name, email, role_org, message, mode, utm_source/medium/campaign, consent_given). RLS: insert-only for anon, select restricted to authenticated admins.
-- After submit: success state in-drawer + UTM-aware redirect to a thank-you route (using the existing thank-you flow pattern) for GA4 tracking. New thank-you key: `masterclass_register`.
-- Lead also synced to Notion via the existing `sync-lead-to-notion` edge function (extend it to accept a `source: 'masterclass'` tag) so it lands in the same lead pipeline.
+### 3. Fade backgrounds rather than hard edges
 
-## Styling rules applied
+Replace abrupt `bg-muted/30` and `bg-indigo` block transitions with gradient fades so each band blends into the next.
 
-- Crimson Pro italic for hero + section headings; Inter for body and UI.
-- Indigo `#1340E8` accent, `#181B24` for any night-mode hero variant (not used by default here).
-- Soft rounded cards (`rounded-2xl`), soft shadows, no hard borders, no thread dividers.
-- Scroll-triggered fade-up animations starting at 40% opacity (matches site-wide `IntersectionObserver` pattern in `Hero.tsx`).
-- `PillButton` for all CTAs with the existing hover-reveal interaction.
-- Pull-quote cards use the soft-card pattern from `Testimonials.tsx`.
+Approach: add a thin gradient "fader" strip at the top and bottom of the tinted sections that transitions from the previous/next section's background colour into the section's own colour. Simple, no extra components needed:
 
-## Tracking
-
-- `trackServiceView('Notion Masterclass')` on mount.
-- `trackCtaClick('Save my seat', '<section>')` on every primary CTA.
-- Scroll-depth tracking via `useScrollDepthTracking('notion-masterclass')`.
-- UTM params captured from the URL and persisted with the form submission.
-
-## Technical changes
-
-```text
-NEW   src/pages/NotionMasterclassPage.tsx
-NEW   src/components/MasterclassRegisterDrawer.tsx
-EDIT  src/App.tsx                          // add /notion-masterclass route (lazy-loaded)
-EDIT  supabase/functions/sync-lead-to-notion/index.ts  // accept source: 'masterclass'
-NEW   supabase migration: masterclass_registrations table + RLS
+```tsx
+{/* Top fade */}
+<div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-background to-transparent" />
+{/* Bottom fade */}
+<div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-background to-transparent" />
 ```
 
-Reuses: `Navigation`, `Footer`, `FAQ`, `PillButton`, `Card`, `Emphasis`, existing photo assets in `src/assets/photos/workshop` and `src/assets/photos/portraits`, GDPR consent checkbox pattern, honeypot pattern, GA4 thank-you redirect flow.
+For the indigo tier sections, the fade strips use `from-background` (the surrounding light background) so the indigo blends in/out softly instead of a hard edge. Apply to:
 
-## Open items I'll need from you (can finalise after build)
+- The Problem (newly indigo)
+- The Framework (already indigo)
+- The "What you'll master" (`bg-muted/30`) — use `from-background` fades so the muted strip dissolves into the white sections above/below.
+- The Final CTA indigo band (lines beyond what's shown — same treatment).
 
-1. Final price (placeholder £149).
-2. Final headline + subhead — I'll draft, you tweak.
-3. Workshop date/time, or "next cohort TBA — register for the waitlist".
-4. Whether to add a nav entry now or keep it unlinked for direct-share / paid traffic only.
+Each section needs `relative overflow-hidden` (most already do) and the fade divs placed as the first children inside the section, behind content (`-z-0` on faders or simply place them before the content div which already has `relative`).
+
+### Out of scope
+
+- No copy changes outside the hero.
+- No new components, routes, or data changes.
+- The indigo glow accents and existing scroll-fade `Reveal` behaviour are preserved exactly.
+
+### File touched
+
+- `src/pages/NotionMasterclassPage.tsx`

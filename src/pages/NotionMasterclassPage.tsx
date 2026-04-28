@@ -130,13 +130,13 @@ const NotionMasterclassPage = () => {
       <Navigation />
 
       {/* HERO */}
-      <section className="relative pt-36 md:pt-44 lg:pt-52 pb-24 md:pb-32 px-6 overflow-hidden">
+      <section className="relative pt-32 md:pt-40 lg:pt-44 pb-24 md:pb-28 px-6 overflow-hidden">
         {/* Subtle indigo glow accents */}
         <div className="pointer-events-none absolute top-20 -left-32 w-[460px] h-[460px] rounded-full bg-accent/8 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-24 right-0 w-[380px] h-[380px] rounded-full bg-accent/5 blur-3xl" />
 
         <div className="relative max-w-6xl mx-auto grid lg:grid-cols-12 gap-14 lg:gap-20 items-center">
-          <div className="lg:col-span-7 space-y-8">
+          <div className="lg:col-span-7 space-y-7">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent/8 border border-accent/15">
               <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
               <span className="text-xs font-sans font-medium text-accent tracking-wide uppercase">
@@ -144,24 +144,23 @@ const NotionMasterclassPage = () => {
               </span>
             </div>
 
-            <h1 className="font-serif-pro text-4xl md:text-5xl lg:text-[3.75rem] font-semibold italic leading-[1.08] tracking-tight max-w-2xl">
+            <h1 className="font-serif-pro text-4xl md:text-5xl lg:text-[3.5rem] font-semibold italic leading-[1.05] tracking-tight max-w-xl">
               The Notion{" "}
               <span className="relative inline-block text-accent">
                 Masterclass
                 <Emphasis className="absolute -bottom-2 left-0 right-0" delay={400} animate />
               </span>
               <br />
-              for founders who want a system that{" "}
+              for a system that{" "}
               <span className="text-accent">sticks</span>.
             </h1>
 
-            <p className="font-sans text-lg md:text-xl text-muted-foreground leading-relaxed max-w-xl">
-              Ninety minutes to swap a tangle of tabs, half-built templates and
-              "I'll fix it later" workarounds for one Notion workspace that
-              quietly runs the day-to-day of your business.
+            <p className="font-sans text-lg md:text-xl text-muted-foreground leading-relaxed max-w-lg">
+              Ninety minutes to turn a tangle of tabs and half-built templates
+              into one workspace that quietly runs your business.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-3 pt-4">
+            <div className="flex flex-col sm:flex-row gap-3 pt-2">
               <PillButton
                 size="lg"
                 icon={Rocket}
@@ -180,9 +179,9 @@ const NotionMasterclassPage = () => {
               </PillButton>
             </div>
 
-            <p className="text-sm text-muted-foreground/70 pt-2 max-w-md">
-              Includes the recording, Notion workspace template, and a £100
-              credit toward Notion &amp; Systems Consultancy.
+            <p className="text-sm text-muted-foreground/70 pt-1 max-w-md">
+              Includes the recording, workspace template, and £100 credit toward
+              Notion &amp; Systems Consultancy.
             </p>
           </div>
 
@@ -214,22 +213,35 @@ const NotionMasterclassPage = () => {
         </div>
       </section>
 
-      {/* THE PROBLEM */}
-      <section className="py-20 px-6 bg-muted/30">
-        <div className="max-w-4xl mx-auto text-center">
+      {/* THE PROBLEM — indigo tier */}
+      <section className="relative py-24 px-6 bg-indigo text-indigo-foreground overflow-hidden">
+        {/* Soft fades into surrounding light sections */}
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-background to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent" />
+        {/* Soft glow accents */}
+        <div className="pointer-events-none absolute -top-24 -left-24 w-[420px] h-[420px] rounded-full bg-white/10 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-32 -right-20 w-[480px] h-[480px] rounded-full bg-white/5 blur-3xl" />
+
+        <div className="relative max-w-4xl mx-auto text-center">
           <Reveal>
-            <p className="text-sm uppercase tracking-widest text-muted-foreground mb-4">
+            <p className="text-sm uppercase tracking-widest text-indigo-foreground/60 mb-4">
               The problem
             </p>
-            <h2 className="font-serif-pro text-3xl md:text-4xl font-semibold italic leading-tight mb-6">
-              You don't have a Notion problem. <br className="hidden md:block" />
-              You have a <span className="text-accent">system</span> problem.
+            <h2 className="font-serif-pro text-3xl md:text-4xl font-semibold italic leading-tight mb-6 text-indigo-foreground">
+              You don't have a Notion problem.{" "}
+              <br className="hidden md:block" />
+              You have a{" "}
+              <span className="relative inline-block">
+                system
+                <span className="absolute left-0 right-0 -bottom-1 h-[2px] bg-white/50 rounded-full" />
+              </span>{" "}
+              problem.
             </h2>
-            <p className="font-sans text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-              Most founders I meet are paying a quiet creative tax — context-switching
-              between a dozen apps, rebuilding the same pages, losing track of
-              what they decided last Tuesday. Notion isn't the issue. The
-              architecture under it is.
+            <p className="font-sans text-lg text-indigo-foreground/80 leading-relaxed max-w-2xl mx-auto">
+              Most founders I meet are paying a quiet creative tax —
+              context-switching between a dozen apps, rebuilding the same
+              pages, losing track of what they decided last Tuesday. Notion
+              isn't the issue. The architecture under it is.
             </p>
           </Reveal>
         </div>
@@ -289,8 +301,10 @@ const NotionMasterclassPage = () => {
       {/* WHAT YOU'LL LEAVE WITH */}
       <section
         id="what-youll-leave-with"
-        className="py-20 px-6 bg-muted/30"
+        className="relative py-20 px-6 bg-muted/30 overflow-hidden"
       >
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-background to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-background to-transparent"  />
         <div className="max-w-6xl mx-auto">
           <Reveal>
             <p className="text-sm uppercase tracking-widest text-muted-foreground text-center mb-4">
@@ -374,6 +388,8 @@ const NotionMasterclassPage = () => {
 
       {/* THE FRAMEWORK — indigo tier */}
       <section className="relative py-24 px-6 bg-indigo text-indigo-foreground overflow-hidden">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-background to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent" />
         {/* Soft glow accents to keep the subtle indigo aesthetic */}
         <div className="pointer-events-none absolute -top-24 -left-24 w-[420px] h-[420px] rounded-full bg-white/10 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-32 -right-20 w-[480px] h-[480px] rounded-full bg-white/5 blur-3xl" />
@@ -451,8 +467,10 @@ const NotionMasterclassPage = () => {
       </section>
 
       {/* PRICING */}
-      <section className="py-20 px-6 bg-muted/30">
-        <div className="max-w-2xl mx-auto">
+      <section className="relative py-20 px-6 bg-muted/30 overflow-hidden">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-background to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-background to-transparent" />
+        <div className="relative max-w-2xl mx-auto">
           <Reveal>
             <div className="bg-card rounded-3xl p-8 md:p-10 shadow-[0_8px_40px_-10px_rgba(19,64,232,0.15)] border border-accent/10">
               <p className="text-sm uppercase tracking-widest text-muted-foreground mb-2">
@@ -557,8 +575,10 @@ const NotionMasterclassPage = () => {
       </section>
 
       {/* TESTIMONIAL #2 */}
-      <section className="py-20 px-6 bg-muted/30">
-        <div className="max-w-3xl mx-auto">
+      <section className="relative py-20 px-6 bg-muted/30 overflow-hidden">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-background to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-background to-transparent" />
+        <div className="relative max-w-3xl mx-auto">
           <Reveal>
             <div className="bg-card rounded-2xl p-8 md:p-10 shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
               <p className="font-serif-pro text-2xl md:text-3xl italic leading-snug mb-6">
@@ -586,6 +606,7 @@ const NotionMasterclassPage = () => {
 
       {/* FINAL CTA — indigo tier */}
       <section className="relative py-28 px-6 bg-indigo text-indigo-foreground overflow-hidden">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-background to-transparent" />
         {/* Subtle glow accents */}
         <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-white/10 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-24 -left-24 w-[360px] h-[360px] rounded-full bg-white/5 blur-3xl" />
