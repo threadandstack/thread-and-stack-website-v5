@@ -213,22 +213,35 @@ const NotionMasterclassPage = () => {
         </div>
       </section>
 
-      {/* THE PROBLEM */}
-      <section className="py-20 px-6 bg-muted/30">
-        <div className="max-w-4xl mx-auto text-center">
+      {/* THE PROBLEM — indigo tier */}
+      <section className="relative py-24 px-6 bg-indigo text-indigo-foreground overflow-hidden">
+        {/* Soft fades into surrounding light sections */}
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-background to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent" />
+        {/* Soft glow accents */}
+        <div className="pointer-events-none absolute -top-24 -left-24 w-[420px] h-[420px] rounded-full bg-white/10 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-32 -right-20 w-[480px] h-[480px] rounded-full bg-white/5 blur-3xl" />
+
+        <div className="relative max-w-4xl mx-auto text-center">
           <Reveal>
-            <p className="text-sm uppercase tracking-widest text-muted-foreground mb-4">
+            <p className="text-sm uppercase tracking-widest text-indigo-foreground/60 mb-4">
               The problem
             </p>
-            <h2 className="font-serif-pro text-3xl md:text-4xl font-semibold italic leading-tight mb-6">
-              You don't have a Notion problem. <br className="hidden md:block" />
-              You have a <span className="text-accent">system</span> problem.
+            <h2 className="font-serif-pro text-3xl md:text-4xl font-semibold italic leading-tight mb-6 text-indigo-foreground">
+              You don't have a Notion problem.{" "}
+              <br className="hidden md:block" />
+              You have a{" "}
+              <span className="relative inline-block">
+                system
+                <span className="absolute left-0 right-0 -bottom-1 h-[2px] bg-white/50 rounded-full" />
+              </span>{" "}
+              problem.
             </h2>
-            <p className="font-sans text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-              Most founders I meet are paying a quiet creative tax — context-switching
-              between a dozen apps, rebuilding the same pages, losing track of
-              what they decided last Tuesday. Notion isn't the issue. The
-              architecture under it is.
+            <p className="font-sans text-lg text-indigo-foreground/80 leading-relaxed max-w-2xl mx-auto">
+              Most founders I meet are paying a quiet creative tax —
+              context-switching between a dozen apps, rebuilding the same
+              pages, losing track of what they decided last Tuesday. Notion
+              isn't the issue. The architecture under it is.
             </p>
           </Reveal>
         </div>
