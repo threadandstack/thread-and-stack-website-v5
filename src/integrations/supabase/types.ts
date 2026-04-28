@@ -206,6 +206,48 @@ export type Database = {
         }
         Relationships: []
       }
+      masterclass_registrations: {
+        Row: {
+          consent_given: boolean
+          created_at: string
+          email: string
+          id: string
+          message: string | null
+          mode: string
+          name: string
+          role_org: string | null
+          utm_campaign: string | null
+          utm_medium: string | null
+          utm_source: string | null
+        }
+        Insert: {
+          consent_given?: boolean
+          created_at?: string
+          email: string
+          id?: string
+          message?: string | null
+          mode?: string
+          name: string
+          role_org?: string | null
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+        }
+        Update: {
+          consent_given?: boolean
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string | null
+          mode?: string
+          name?: string
+          role_org?: string | null
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+        }
+        Relationships: []
+      }
       page_seo: {
         Row: {
           canonical_url: string | null
