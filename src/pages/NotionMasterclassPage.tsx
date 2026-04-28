@@ -130,13 +130,13 @@ const NotionMasterclassPage = () => {
       <Navigation />
 
       {/* HERO */}
-      <section className="relative pt-36 md:pt-44 lg:pt-52 pb-24 md:pb-32 px-6 overflow-hidden">
+      <section className="relative pt-32 md:pt-40 lg:pt-44 pb-24 md:pb-28 px-6 overflow-hidden">
         {/* Subtle indigo glow accents */}
         <div className="pointer-events-none absolute top-20 -left-32 w-[460px] h-[460px] rounded-full bg-accent/8 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-24 right-0 w-[380px] h-[380px] rounded-full bg-accent/5 blur-3xl" />
 
         <div className="relative max-w-6xl mx-auto grid lg:grid-cols-12 gap-14 lg:gap-20 items-center">
-          <div className="lg:col-span-7 space-y-8">
+          <div className="lg:col-span-7 space-y-7">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent/8 border border-accent/15">
               <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
               <span className="text-xs font-sans font-medium text-accent tracking-wide uppercase">
@@ -144,24 +144,23 @@ const NotionMasterclassPage = () => {
               </span>
             </div>
 
-            <h1 className="font-serif-pro text-4xl md:text-5xl lg:text-[3.75rem] font-semibold italic leading-[1.08] tracking-tight max-w-2xl">
+            <h1 className="font-serif-pro text-4xl md:text-5xl lg:text-[3.5rem] font-semibold italic leading-[1.05] tracking-tight max-w-xl">
               The Notion{" "}
               <span className="relative inline-block text-accent">
                 Masterclass
                 <Emphasis className="absolute -bottom-2 left-0 right-0" delay={400} animate />
               </span>
               <br />
-              for founders who want a system that{" "}
+              for a system that{" "}
               <span className="text-accent">sticks</span>.
             </h1>
 
-            <p className="font-sans text-lg md:text-xl text-muted-foreground leading-relaxed max-w-xl">
-              Ninety minutes to swap a tangle of tabs, half-built templates and
-              "I'll fix it later" workarounds for one Notion workspace that
-              quietly runs the day-to-day of your business.
+            <p className="font-sans text-lg md:text-xl text-muted-foreground leading-relaxed max-w-lg">
+              Ninety minutes to turn a tangle of tabs and half-built templates
+              into one workspace that quietly runs your business.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-3 pt-4">
+            <div className="flex flex-col sm:flex-row gap-3 pt-2">
               <PillButton
                 size="lg"
                 icon={Rocket}
@@ -180,9 +179,9 @@ const NotionMasterclassPage = () => {
               </PillButton>
             </div>
 
-            <p className="text-sm text-muted-foreground/70 pt-2 max-w-md">
-              Includes the recording, Notion workspace template, and a £100
-              credit toward Notion &amp; Systems Consultancy.
+            <p className="text-sm text-muted-foreground/70 pt-1 max-w-md">
+              Includes the recording, workspace template, and £100 credit toward
+              Notion &amp; Systems Consultancy.
             </p>
           </div>
 
