@@ -217,8 +217,8 @@ const NotionMasterclassPage = () => {
       {/* THE PROBLEM — indigo tier */}
       <section className="relative py-24 px-6 bg-indigo text-indigo-foreground overflow-hidden">
         {/* Soft fades into surrounding light sections */}
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-background to-transparent" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent" />
+        <ShapeDivider position="top" fillClassName="fill-background" />
+        <ShapeDivider position="bottom" fillClassName="fill-background" />
         {/* Soft glow accents */}
         <div className="pointer-events-none absolute -top-24 -left-24 w-[420px] h-[420px] rounded-full bg-white/10 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-32 -right-20 w-[480px] h-[480px] rounded-full bg-white/5 blur-3xl" />
@@ -304,8 +304,8 @@ const NotionMasterclassPage = () => {
         id="what-youll-leave-with"
         className="relative py-20 px-6 bg-muted/30 overflow-hidden"
       >
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-background to-transparent" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-background to-transparent"  />
+        <ShapeDivider position="top" fillClassName="fill-background" />
+        <ShapeDivider position="bottom" fillClassName="fill-background" />
         <div className="max-w-6xl mx-auto">
           <Reveal>
             <p className="text-sm uppercase tracking-widest text-muted-foreground text-center mb-4">
@@ -389,8 +389,8 @@ const NotionMasterclassPage = () => {
 
       {/* THE FRAMEWORK — indigo tier */}
       <section className="relative py-24 px-6 bg-indigo text-indigo-foreground overflow-hidden">
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-background to-transparent" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent" />
+        <ShapeDivider position="top" fillClassName="fill-background" />
+        <ShapeDivider position="bottom" fillClassName="fill-background" />
         {/* Soft glow accents to keep the subtle indigo aesthetic */}
         <div className="pointer-events-none absolute -top-24 -left-24 w-[420px] h-[420px] rounded-full bg-white/10 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-32 -right-20 w-[480px] h-[480px] rounded-full bg-white/5 blur-3xl" />
@@ -469,8 +469,8 @@ const NotionMasterclassPage = () => {
 
       {/* PRICING */}
       <section className="relative py-20 px-6 bg-muted/30 overflow-hidden">
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-background to-transparent" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-background to-transparent" />
+        <ShapeDivider position="top" fillClassName="fill-background" />
+        <ShapeDivider position="bottom" fillClassName="fill-background" />
         <div className="relative max-w-2xl mx-auto">
           <Reveal>
             <div className="bg-card rounded-3xl p-8 md:p-10 shadow-[0_8px_40px_-10px_rgba(19,64,232,0.15)] border border-accent/10">
@@ -577,8 +577,8 @@ const NotionMasterclassPage = () => {
 
       {/* TESTIMONIAL #2 */}
       <section className="relative py-20 px-6 bg-muted/30 overflow-hidden">
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-background to-transparent" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-background to-transparent" />
+        <ShapeDivider position="top" fillClassName="fill-background" />
+        <ShapeDivider position="bottom" fillClassName="fill-background" />
         <div className="relative max-w-3xl mx-auto">
           <Reveal>
             <div className="bg-card rounded-2xl p-8 md:p-10 shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
@@ -607,7 +607,7 @@ const NotionMasterclassPage = () => {
 
       {/* FINAL CTA — indigo tier */}
       <section className="relative py-28 px-6 bg-indigo text-indigo-foreground overflow-hidden">
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-background to-transparent" />
+        <ShapeDivider position="top" fillClassName="fill-background" />
         {/* Subtle glow accents */}
         <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-white/10 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-24 -left-24 w-[360px] h-[360px] rounded-full bg-white/5 blur-3xl" />
