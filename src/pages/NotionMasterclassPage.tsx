@@ -5,7 +5,6 @@ import { FAQ } from "@/components/FAQ";
 import { PillButton } from "@/components/ui/pill-button";
 import { Emphasis } from "@/components/Emphasis";
 import { MasterclassRegisterDrawer } from "@/components/MasterclassRegisterDrawer";
-import { ShapeDivider } from "@/components/ShapeDivider";
 import {
   Rocket,
   MessageCircle,
@@ -214,36 +213,37 @@ const NotionMasterclassPage = () => {
         </div>
       </section>
 
-      {/* THE PROBLEM — indigo tier */}
-      <section className="relative py-24 px-6 bg-indigo text-indigo-foreground overflow-hidden">
-        {/* Soft fades into surrounding light sections */}
-        <ShapeDivider position="top" fillClassName="fill-background" />
-        <ShapeDivider position="bottom" fillClassName="fill-background" />
-        {/* Soft glow accents */}
-        <div className="pointer-events-none absolute -top-24 -left-24 w-[420px] h-[420px] rounded-full bg-white/10 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-32 -right-20 w-[480px] h-[480px] rounded-full bg-white/5 blur-3xl" />
-
-        <div className="relative max-w-4xl mx-auto text-center">
+      {/* THE PROBLEM — indigo callout card */}
+      <section className="py-16 md:py-20 px-6">
+        <div className="max-w-4xl mx-auto">
           <Reveal>
-            <p className="text-sm uppercase tracking-widest text-indigo-foreground/60 mb-4">
-              The problem
-            </p>
-            <h2 className="font-serif-pro text-3xl md:text-4xl font-semibold italic leading-tight mb-6 text-indigo-foreground">
-              You don't have a Notion problem.{" "}
-              <br className="hidden md:block" />
-              You have a{" "}
-              <span className="relative inline-block">
-                system
-                <span className="absolute left-0 right-0 -bottom-1 h-[2px] bg-white/50 rounded-full" />
-              </span>{" "}
-              problem.
-            </h2>
-            <p className="font-sans text-lg text-indigo-foreground/80 leading-relaxed max-w-2xl mx-auto">
-              Most founders I meet are paying a quiet creative tax —
-              context-switching between a dozen apps, rebuilding the same
-              pages, losing track of what they decided last Tuesday. Notion
-              isn't the issue. The architecture under it is.
-            </p>
+            <div className="relative bg-indigo text-indigo-foreground rounded-[2rem] md:rounded-[2.5rem] px-8 py-14 md:px-14 md:py-20 overflow-hidden shadow-[0_30px_80px_-30px_rgba(19,64,232,0.45)]">
+              {/* Soft glow accents — preserved style */}
+              <div className="pointer-events-none absolute -top-24 -left-24 w-[420px] h-[420px] rounded-full bg-white/10 blur-3xl" />
+              <div className="pointer-events-none absolute -bottom-32 -right-20 w-[480px] h-[480px] rounded-full bg-white/5 blur-3xl" />
+
+              <div className="relative text-center">
+                <p className="text-sm uppercase tracking-widest text-indigo-foreground/60 mb-4">
+                  The problem
+                </p>
+                <h2 className="font-serif-pro text-3xl md:text-4xl font-semibold italic leading-tight mb-6 text-indigo-foreground">
+                  You don't have a Notion problem.{" "}
+                  <br className="hidden md:block" />
+                  You have a{" "}
+                  <span className="relative inline-block">
+                    system
+                    <span className="absolute left-0 right-0 -bottom-1 h-[2px] bg-white/50 rounded-full" />
+                  </span>{" "}
+                  problem.
+                </h2>
+                <p className="font-sans text-lg text-indigo-foreground/80 leading-relaxed max-w-2xl mx-auto">
+                  Most founders I meet are paying a quiet creative tax —
+                  context-switching between a dozen apps, rebuilding the same
+                  pages, losing track of what they decided last Tuesday. Notion
+                  isn't the issue. The architecture under it is.
+                </p>
+              </div>
+            </div>
           </Reveal>
         </div>
       </section>
@@ -304,8 +304,6 @@ const NotionMasterclassPage = () => {
         id="what-youll-leave-with"
         className="relative py-20 px-6 bg-muted/30 overflow-hidden"
       >
-        <ShapeDivider position="top" fillClassName="fill-background" />
-        <ShapeDivider position="bottom" fillClassName="fill-background" />
         <div className="max-w-6xl mx-auto">
           <Reveal>
             <p className="text-sm uppercase tracking-widest text-muted-foreground text-center mb-4">
@@ -387,45 +385,48 @@ const NotionMasterclassPage = () => {
         </div>
       </section>
 
-      {/* THE FRAMEWORK — indigo tier */}
-      <section className="relative py-24 px-6 bg-indigo text-indigo-foreground overflow-hidden">
-        <ShapeDivider position="top" fillClassName="fill-background" />
-        <ShapeDivider position="bottom" fillClassName="fill-background" />
-        {/* Soft glow accents to keep the subtle indigo aesthetic */}
-        <div className="pointer-events-none absolute -top-24 -left-24 w-[420px] h-[420px] rounded-full bg-white/10 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-32 -right-20 w-[480px] h-[480px] rounded-full bg-white/5 blur-3xl" />
-        <div className="relative max-w-5xl mx-auto grid md:grid-cols-12 gap-10 items-center">
-          <Reveal className="md:col-span-7">
-            <p className="text-sm uppercase tracking-widest text-indigo-foreground/60 mb-4">
-              The framework
-            </p>
-            <h2 className="font-serif-pro text-3xl md:text-4xl font-semibold italic mb-6 leading-tight text-indigo-foreground">
-              Thread → Stack → Ship
-            </h2>
-            <p className="text-indigo-foreground/80 leading-relaxed mb-4">
-              Every system we build runs on the same spine. Pull the
-              <span className="text-indigo-foreground font-medium"> thread </span>
-              of how your business actually works. Build the
-              <span className="text-indigo-foreground font-medium"> stack </span>
-              that holds it. Then
-              <span className="text-indigo-foreground font-medium"> ship </span>
-              the workflows that use it daily.
-            </p>
-            <p className="text-indigo-foreground/80 leading-relaxed">
-              The masterclass walks the same three steps live, with your
-              business as the example. You'll leave with the framework, the
-              language, and the workspace.
-            </p>
-          </Reveal>
-          <Reveal className="md:col-span-5" delay={120}>
-            <div className="rounded-3xl overflow-hidden shadow-[0_30px_80px_-20px_rgba(0,0,0,0.45)] ring-1 ring-white/15">
-              <img
-                src={workshop22}
-                alt="Workshop participants mapping a Notion system"
-                className="w-full h-[360px] object-cover"
-              />
+      {/* THE FRAMEWORK — indigo callout card */}
+      <section className="py-16 md:py-20 px-6">
+        <div className="max-w-5xl mx-auto">
+          <div className="relative bg-indigo text-indigo-foreground rounded-[2rem] md:rounded-[2.5rem] px-8 py-14 md:px-14 md:py-16 overflow-hidden shadow-[0_30px_80px_-30px_rgba(19,64,232,0.45)]">
+            {/* Soft glow accents */}
+            <div className="pointer-events-none absolute -top-24 -left-24 w-[420px] h-[420px] rounded-full bg-white/10 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-32 -right-20 w-[480px] h-[480px] rounded-full bg-white/5 blur-3xl" />
+
+            <div className="relative grid md:grid-cols-12 gap-10 items-center">
+              <Reveal className="md:col-span-7">
+                <p className="text-sm uppercase tracking-widest text-indigo-foreground/60 mb-4">
+                  The framework
+                </p>
+                <h2 className="font-serif-pro text-3xl md:text-4xl font-semibold italic mb-6 leading-tight text-indigo-foreground">
+                  Thread → Stack → Ship
+                </h2>
+                <p className="text-indigo-foreground/80 leading-relaxed mb-4">
+                  Every system we build runs on the same spine. Pull the
+                  <span className="text-indigo-foreground font-medium"> thread </span>
+                  of how your business actually works. Build the
+                  <span className="text-indigo-foreground font-medium"> stack </span>
+                  that holds it. Then
+                  <span className="text-indigo-foreground font-medium"> ship </span>
+                  the workflows that use it daily.
+                </p>
+                <p className="text-indigo-foreground/80 leading-relaxed">
+                  The masterclass walks the same three steps live, with your
+                  business as the example. You'll leave with the framework, the
+                  language, and the workspace.
+                </p>
+              </Reveal>
+              <Reveal className="md:col-span-5" delay={120}>
+                <div className="rounded-3xl overflow-hidden shadow-[0_30px_80px_-20px_rgba(0,0,0,0.45)] ring-1 ring-white/15">
+                  <img
+                    src={workshop22}
+                    alt="Workshop participants mapping a Notion system"
+                    className="w-full h-[360px] object-cover"
+                  />
+                </div>
+              </Reveal>
             </div>
-          </Reveal>
+          </div>
         </div>
       </section>
 
@@ -469,8 +470,6 @@ const NotionMasterclassPage = () => {
 
       {/* PRICING */}
       <section className="relative py-20 px-6 bg-muted/30 overflow-hidden">
-        <ShapeDivider position="top" fillClassName="fill-background" />
-        <ShapeDivider position="bottom" fillClassName="fill-background" />
         <div className="relative max-w-2xl mx-auto">
           <Reveal>
             <div className="bg-card rounded-3xl p-8 md:p-10 shadow-[0_8px_40px_-10px_rgba(19,64,232,0.15)] border border-accent/10">
@@ -577,8 +576,6 @@ const NotionMasterclassPage = () => {
 
       {/* TESTIMONIAL #2 */}
       <section className="relative py-20 px-6 bg-muted/30 overflow-hidden">
-        <ShapeDivider position="top" fillClassName="fill-background" />
-        <ShapeDivider position="bottom" fillClassName="fill-background" />
         <div className="relative max-w-3xl mx-auto">
           <Reveal>
             <div className="bg-card rounded-2xl p-8 md:p-10 shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
@@ -605,45 +602,48 @@ const NotionMasterclassPage = () => {
       {/* FAQ */}
       <FAQ items={FAQ_ITEMS} title="Common questions" />
 
-      {/* FINAL CTA — indigo tier */}
-      <section className="relative py-28 px-6 bg-indigo text-indigo-foreground overflow-hidden">
-        <ShapeDivider position="top" fillClassName="fill-background" />
-        {/* Subtle glow accents */}
-        <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-white/10 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-24 -left-24 w-[360px] h-[360px] rounded-full bg-white/5 blur-3xl" />
-        <div className="relative max-w-3xl mx-auto text-center">
-          <Reveal>
-            <h2 className="font-serif-pro text-3xl md:text-5xl font-semibold italic leading-tight mb-6 text-indigo-foreground">
-              Ready for a Notion system that{" "}
-              <span className="italic underline decoration-white/40 decoration-2 underline-offset-[6px]">
-                actually sticks
-              </span>
-              ?
-            </h2>
-            <p className="text-lg text-indigo-foreground/80 max-w-xl mx-auto mb-8 leading-relaxed">
-              Save your seat for the next live session, or send me a question
-              first — whichever feels right.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <PillButton
-                size="lg"
-                icon={Rocket}
-                className="font-semibold bg-white text-accent hover:bg-white/90"
-                onClick={() => openRegister("final-cta")}
-              >
-                Save my seat — {PRICE_LABEL}
-              </PillButton>
-              <PillButton
-                size="lg"
-                variant="outline"
-                icon={MessageCircle}
-                className="border-white/40 text-indigo-foreground hover:bg-white/10"
-                onClick={() => openQuestion("final-cta")}
-              >
-                Ask a question
-              </PillButton>
+      {/* FINAL CTA — indigo callout card */}
+      <section className="py-16 md:py-24 px-6">
+        <div className="max-w-4xl mx-auto">
+          <div className="relative bg-indigo text-indigo-foreground rounded-[2rem] md:rounded-[2.5rem] px-8 py-16 md:px-14 md:py-20 overflow-hidden shadow-[0_30px_80px_-30px_rgba(19,64,232,0.5)]">
+            {/* Subtle glow accents */}
+            <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-white/10 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-24 -left-24 w-[360px] h-[360px] rounded-full bg-white/5 blur-3xl" />
+            <div className="relative max-w-3xl mx-auto text-center">
+              <Reveal>
+                <h2 className="font-serif-pro text-3xl md:text-5xl font-semibold italic leading-tight mb-6 text-indigo-foreground">
+                  Ready for a Notion system that{" "}
+                  <span className="italic underline decoration-white/40 decoration-2 underline-offset-[6px]">
+                    actually sticks
+                  </span>
+                  ?
+                </h2>
+                <p className="text-lg text-indigo-foreground/80 max-w-xl mx-auto mb-8 leading-relaxed">
+                  Save your seat for the next live session, or send me a question
+                  first — whichever feels right.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                  <PillButton
+                    size="lg"
+                    icon={Rocket}
+                    className="font-semibold bg-white text-accent hover:bg-white/90"
+                    onClick={() => openRegister("final-cta")}
+                  >
+                    Save my seat — {PRICE_LABEL}
+                  </PillButton>
+                  <PillButton
+                    size="lg"
+                    variant="outline"
+                    icon={MessageCircle}
+                    className="border-white/40 text-indigo-foreground hover:bg-white/10"
+                    onClick={() => openQuestion("final-cta")}
+                  >
+                    Ask a question
+                  </PillButton>
+                </div>
+              </Reveal>
             </div>
-          </Reveal>
+          </div>
         </div>
       </section>
 
