@@ -5,6 +5,7 @@ import { FAQ } from "@/components/FAQ";
 import { PillButton } from "@/components/ui/pill-button";
 import { Emphasis } from "@/components/Emphasis";
 import { MasterclassRegisterDrawer } from "@/components/MasterclassRegisterDrawer";
+import { ShapeDivider } from "@/components/ShapeDivider";
 import {
   Rocket,
   MessageCircle,
