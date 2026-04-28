@@ -5,7 +5,6 @@ import { FAQ } from "@/components/FAQ";
 import { PillButton } from "@/components/ui/pill-button";
 import { Emphasis } from "@/components/Emphasis";
 import { MasterclassRegisterDrawer } from "@/components/MasterclassRegisterDrawer";
-import { ShapeDivider } from "@/components/ShapeDivider";
 import {
   Rocket,
   MessageCircle,
@@ -305,8 +304,6 @@ const NotionMasterclassPage = () => {
         id="what-youll-leave-with"
         className="relative py-20 px-6 bg-muted/30 overflow-hidden"
       >
-        <ShapeDivider position="top" fillClassName="fill-background" />
-        <ShapeDivider position="bottom" fillClassName="fill-background" />
         <div className="max-w-6xl mx-auto">
           <Reveal>
             <p className="text-sm uppercase tracking-widest text-muted-foreground text-center mb-4">
@@ -473,8 +470,6 @@ const NotionMasterclassPage = () => {
 
       {/* PRICING */}
       <section className="relative py-20 px-6 bg-muted/30 overflow-hidden">
-        <ShapeDivider position="top" fillClassName="fill-background" />
-        <ShapeDivider position="bottom" fillClassName="fill-background" />
         <div className="relative max-w-2xl mx-auto">
           <Reveal>
             <div className="bg-card rounded-3xl p-8 md:p-10 shadow-[0_8px_40px_-10px_rgba(19,64,232,0.15)] border border-accent/10">
@@ -581,8 +576,6 @@ const NotionMasterclassPage = () => {
 
       {/* TESTIMONIAL #2 */}
       <section className="relative py-20 px-6 bg-muted/30 overflow-hidden">
-        <ShapeDivider position="top" fillClassName="fill-background" />
-        <ShapeDivider position="bottom" fillClassName="fill-background" />
         <div className="relative max-w-3xl mx-auto">
           <Reveal>
             <div className="bg-card rounded-2xl p-8 md:p-10 shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
