@@ -368,33 +368,36 @@ const NotionMasterclassPage = () => {
         </div>
       </section>
 
-      {/* THE FRAMEWORK */}
-      <section className="py-20 px-6 bg-muted/30">
-        <div className="max-w-5xl mx-auto grid md:grid-cols-12 gap-10 items-center">
+      {/* THE FRAMEWORK — indigo tier */}
+      <section className="relative py-24 px-6 bg-indigo text-indigo-foreground overflow-hidden">
+        {/* Soft glow accents to keep the subtle indigo aesthetic */}
+        <div className="pointer-events-none absolute -top-24 -left-24 w-[420px] h-[420px] rounded-full bg-white/10 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-32 -right-20 w-[480px] h-[480px] rounded-full bg-white/5 blur-3xl" />
+        <div className="relative max-w-5xl mx-auto grid md:grid-cols-12 gap-10 items-center">
           <Reveal className="md:col-span-7">
-            <p className="text-sm uppercase tracking-widest text-muted-foreground mb-4">
+            <p className="text-sm uppercase tracking-widest text-indigo-foreground/60 mb-4">
               The framework
             </p>
-            <h2 className="font-serif-pro text-3xl md:text-4xl font-semibold italic mb-6 leading-tight">
+            <h2 className="font-serif-pro text-3xl md:text-4xl font-semibold italic mb-6 leading-tight text-indigo-foreground">
               Thread → Stack → Ship
             </h2>
-            <p className="text-muted-foreground leading-relaxed mb-4">
+            <p className="text-indigo-foreground/80 leading-relaxed mb-4">
               Every system we build runs on the same spine. Pull the
-              <span className="text-foreground font-medium"> thread </span>
+              <span className="text-indigo-foreground font-medium"> thread </span>
               of how your business actually works. Build the
-              <span className="text-foreground font-medium"> stack </span>
+              <span className="text-indigo-foreground font-medium"> stack </span>
               that holds it. Then
-              <span className="text-foreground font-medium"> ship </span>
+              <span className="text-indigo-foreground font-medium"> ship </span>
               the workflows that use it daily.
             </p>
-            <p className="text-muted-foreground leading-relaxed">
+            <p className="text-indigo-foreground/80 leading-relaxed">
               The masterclass walks the same three steps live, with your
               business as the example. You'll leave with the framework, the
               language, and the workspace.
             </p>
           </Reveal>
           <Reveal className="md:col-span-5" delay={120}>
-            <div className="rounded-3xl overflow-hidden shadow-[0_20px_60px_-20px_rgba(19,64,232,0.25)]">
+            <div className="rounded-3xl overflow-hidden shadow-[0_30px_80px_-20px_rgba(0,0,0,0.45)] ring-1 ring-white/15">
               <img
                 src={workshop22}
                 alt="Workshop participants mapping a Notion system"
@@ -577,15 +580,21 @@ const NotionMasterclassPage = () => {
       {/* FAQ */}
       <FAQ items={FAQ_ITEMS} title="Common questions" />
 
-      {/* FINAL CTA */}
-      <section className="py-24 px-6">
-        <div className="max-w-3xl mx-auto text-center">
+      {/* FINAL CTA — indigo tier */}
+      <section className="relative py-28 px-6 bg-indigo text-indigo-foreground overflow-hidden">
+        {/* Subtle glow accents */}
+        <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-white/10 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-24 -left-24 w-[360px] h-[360px] rounded-full bg-white/5 blur-3xl" />
+        <div className="relative max-w-3xl mx-auto text-center">
           <Reveal>
-            <h2 className="font-serif-pro text-3xl md:text-5xl font-semibold italic leading-tight mb-6">
+            <h2 className="font-serif-pro text-3xl md:text-5xl font-semibold italic leading-tight mb-6 text-indigo-foreground">
               Ready for a Notion system that{" "}
-              <span className="text-accent">actually sticks</span>?
+              <span className="italic underline decoration-white/40 decoration-2 underline-offset-[6px]">
+                actually sticks
+              </span>
+              ?
             </h2>
-            <p className="text-lg text-muted-foreground max-w-xl mx-auto mb-8 leading-relaxed">
+            <p className="text-lg text-indigo-foreground/80 max-w-xl mx-auto mb-8 leading-relaxed">
               Save your seat for the next live session, or send me a question
               first — whichever feels right.
             </p>
@@ -593,7 +602,7 @@ const NotionMasterclassPage = () => {
               <PillButton
                 size="lg"
                 icon={Rocket}
-                className="font-semibold"
+                className="font-semibold bg-white text-accent hover:bg-white/90"
                 onClick={() => openRegister("final-cta")}
               >
                 Save my seat — {PRICE_LABEL}
@@ -602,6 +611,7 @@ const NotionMasterclassPage = () => {
                 size="lg"
                 variant="outline"
                 icon={MessageCircle}
+                className="border-white/40 text-indigo-foreground hover:bg-white/10"
                 onClick={() => openQuestion("final-cta")}
               >
                 Ask a question
