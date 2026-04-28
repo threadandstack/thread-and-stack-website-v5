@@ -301,8 +301,10 @@ const NotionMasterclassPage = () => {
       {/* WHAT YOU'LL LEAVE WITH */}
       <section
         id="what-youll-leave-with"
-        className="py-20 px-6 bg-muted/30"
+        className="relative py-20 px-6 bg-muted/30 overflow-hidden"
       >
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-background to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-background to-transparent"  />
         <div className="max-w-6xl mx-auto">
           <Reveal>
             <p className="text-sm uppercase tracking-widest text-muted-foreground text-center mb-4">
