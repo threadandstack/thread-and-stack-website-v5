@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { FAQ } from "@/components/FAQ";
@@ -108,6 +107,7 @@ const NotionMasterclassPage = () => {
   );
 
   useEffect(() => {
+    document.title = "Notion Masterclass for Founders — Thread & Stack";
     trackServiceView("Notion Masterclass");
     const cleanup = useScrollDepthTracking("notion-masterclass");
     return cleanup;
@@ -127,18 +127,6 @@ const NotionMasterclassPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Helmet>
-        <title>Notion Masterclass for Founders — Thread &amp; Stack</title>
-        <meta
-          name="description"
-          content="A 90-minute live online masterclass for founders who want a Notion system that actually sticks. Stop bouncing between tools, start building one workspace that runs your business."
-        />
-        <link
-          rel="canonical"
-          href="https://www.threadandstack.com/notion-masterclass"
-        />
-      </Helmet>
-
       <Navigation />
 
       {/* HERO */}
