@@ -57,6 +57,7 @@ const PortfolioAccessAdminPage = lazy(() => import("./pages/PortfolioAccessAdmin
 const NotionUtopiaPage = lazy(() => import("./pages/onboarding/NotionUtopiaPage"));
 const CharityMeetupApril26Page = lazy(() => import("./pages/CharityMeetupApril26Page"));
 const PowerHourThankYouPage = lazy(() => import("./pages/PowerHourThankYouPage"));
+const UnsubscribePage = lazy(() => import("./pages/UnsubscribePage"));
 
 const queryClient = new QueryClient();
 
