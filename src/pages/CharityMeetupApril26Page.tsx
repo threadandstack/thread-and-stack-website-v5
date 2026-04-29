@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Compass, Linkedin, ArrowRight, GraduationCap, Zap, FileStack, Sparkles, Brain, Mail } from "lucide-react";
 import { PillButton } from "@/components/ui/pill-button";
 import { Footer } from "@/components/Footer";
