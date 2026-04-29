@@ -82,7 +82,7 @@ const CharityMeetupApril26Page = () => {
               </p>
             </div>
           </div>
-        </a>
+        </button>
 
         <div className="font-sans text-[15px] sm:text-base md:text-lg text-muted-foreground leading-relaxed space-y-4">
           <p>
