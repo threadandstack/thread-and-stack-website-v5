@@ -99,7 +99,7 @@ Deno.serve(async (req) => {
     // Create or reuse a Stripe coupon for £100 off
     let discounts: { coupon: string }[] | undefined;
     if (couponValid) {
-      const couponId = `charity100_${env}`;
+      const couponId = `charitymeetup100_${env}`;
       try {
         await stripe.coupons.retrieve(couponId);
       } catch {
