@@ -92,6 +92,7 @@ const App = () => (
             <Route path="/blog/:slug" element={<BlogPostPage />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/data-guarantee" element={<DataGuarantee />} />
+            <Route path="/unsubscribe" element={<UnsubscribePage />} />
             <Route path="/collective" element={<CollectivePage />} />
             <Route path="/thread-demo" element={<ThreadMotifDemo />} />
             <Route path="/brand-book" element={<BrandBook />} />
