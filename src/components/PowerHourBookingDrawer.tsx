@@ -31,6 +31,8 @@ export function PowerHourBookingDrawer({
   const { toast } = useToast();
   const [submitting, setSubmitting] = useState(false);
   const [clientSecret, setClientSecret] = useState<string | null>(null);
+  const [stripeInstance, setStripeInstance] = useState<Stripe | null>(null);
+  const [stripeError, setStripeError] = useState<string | null>(null);
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -46,6 +48,7 @@ export function PowerHourBookingDrawer({
       // Reset on close
       setClientSecret(null);
       setSubmitting(false);
+      setStripeError(null);
     }
   }, [open]);
 
