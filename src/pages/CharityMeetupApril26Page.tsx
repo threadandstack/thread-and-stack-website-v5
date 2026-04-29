@@ -217,7 +217,7 @@ const CharityMeetupApril26Page = () => {
         open={drawerOpen}
         onOpenChange={setDrawerOpen}
         source="charity-meetup-april26"
-        defaultCoupon="CHARITY100"
+        defaultCoupon="CHARITYMEETUP100"
       />
     </div>
   );
