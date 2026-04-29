@@ -75,7 +75,7 @@ const CharityMeetupApril26Page = () => {
               </h2>
               <p className="text-[13px] sm:text-sm font-sans opacity-90">
                 <span className="font-semibold">£395</span> · sixty focused minutes to map your highest-leverage AI moves. Use code{" "}
-                <span className="font-mono font-semibold tracking-wider">CHARITY100</span> at checkout for £100 off — first 10 only.
+                <span className="font-mono font-semibold tracking-wider">CHARITYMEETUP100</span> at checkout for £100 off — first 10 only.
               </p>
               <p className="inline-flex items-center gap-1 text-[13px] sm:text-sm font-medium pt-1 group-hover:gap-2 transition-all">
                 Claim your slot <ArrowRight className="w-4 h-4" />
