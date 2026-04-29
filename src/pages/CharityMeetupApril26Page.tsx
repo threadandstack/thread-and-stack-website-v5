@@ -74,8 +74,8 @@ const CharityMeetupApril26Page = () => {
                 £100 off a 1:1 AI Power-Hour
               </h2>
               <p className="text-[13px] sm:text-sm font-sans opacity-90">
-                Normally <span className="line-through opacity-70">£395</span> ·{" "}
-                <span className="font-semibold">£295 for you</span> — sixty focused minutes to map your highest-leverage AI moves.
+                <span className="font-semibold">£395</span> · sixty focused minutes to map your highest-leverage AI moves. Use code{" "}
+                <span className="font-mono font-semibold tracking-wider">CHARITY100</span> at checkout for £100 off — first 10 only.
               </p>
               <p className="inline-flex items-center gap-1 text-[13px] sm:text-sm font-medium pt-1 group-hover:gap-2 transition-all">
                 Claim your slot <ArrowRight className="w-4 h-4" />
@@ -213,6 +213,12 @@ const CharityMeetupApril26Page = () => {
         </div>
       </main>
       <Footer />
+      <PowerHourBookingDrawer
+        open={drawerOpen}
+        onOpenChange={setDrawerOpen}
+        source="charity-meetup-april26"
+        defaultCoupon="CHARITY100"
+      />
     </div>
   );
 };

@@ -56,6 +56,7 @@ const NotionPortfolioPage = lazy(() => import("./pages/NotionPortfolioPage"));
 const PortfolioAccessAdminPage = lazy(() => import("./pages/PortfolioAccessAdminPage"));
 const NotionUtopiaPage = lazy(() => import("./pages/onboarding/NotionUtopiaPage"));
 const CharityMeetupApril26Page = lazy(() => import("./pages/CharityMeetupApril26Page"));
+const PowerHourThankYouPage = lazy(() => import("./pages/PowerHourThankYouPage"));
 
 const queryClient = new QueryClient();
 
@@ -125,6 +126,7 @@ const App = () => (
             <Route path="/onboarding/notionutopia" element={<NotionUtopiaPage />} />
             <Route path="/Charity-Meetup-April26" element={<CharityMeetupApril26Page />} />
             <Route path="/charity-meetup-april26" element={<CharityMeetupApril26Page />} />
+            <Route path="/power-hour/thank-you" element={<PowerHourThankYouPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
