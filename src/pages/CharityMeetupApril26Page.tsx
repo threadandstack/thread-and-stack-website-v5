@@ -51,7 +51,9 @@ const CharityMeetupApril26Page = () => {
             Charity Meetup London · April 2026
           </p>
           <h1 className="font-serif-pro text-3xl sm:text-4xl md:text-5xl font-semibold italic leading-tight">
-            The Smart Digital Shift — your AI starter pack 🌱
+            The Smart Digital Shift
+            <br />
+            Your AI starter pack 🌱
           </h1>
         </div>
 
