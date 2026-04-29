@@ -3,7 +3,7 @@ import { createClient } from "jsr:@supabase/supabase-js@2";
 import { z } from "https://esm.sh/zod@3.23.8";
 import { type StripeEnv, createStripeClient } from "../_shared/stripe.ts";
 
-const COUPON_CODE = "CHARITY100";
+const COUPON_CODE = "CHARITYMEETUP100";
 const COUPON_DISCOUNT_PENCE = 10000; // £100 off
 const COUPON_MAX_USES = 10;
 const PRICE_LOOKUP_KEY = "ai_power_hour_395_gbp";
@@ -99,7 +99,7 @@ Deno.serve(async (req) => {
     // Create or reuse a Stripe coupon for £100 off
     let discounts: { coupon: string }[] | undefined;
     if (couponValid) {
-      const couponId = `charity100_${env}`;
+      const couponId = `charitymeetup100_${env}`;
       try {
         await stripe.coupons.retrieve(couponId);
       } catch {

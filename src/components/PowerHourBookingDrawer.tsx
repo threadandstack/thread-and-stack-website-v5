@@ -53,7 +53,7 @@ export function PowerHourBookingDrawer({
   }, [defaultCoupon]);
 
   const couponNormalized = form.couponCode.trim().toUpperCase();
-  const couponLooksValid = couponNormalized === "CHARITY100";
+  const couponLooksValid = couponNormalized === "CHARITYMEETUP100";
   const displayedTotal = couponLooksValid ? FULL_PRICE - COUPON_DISCOUNT : FULL_PRICE;
 
   const fetchClientSecret = useCallback(async (): Promise<string> => {
@@ -141,7 +141,7 @@ export function PowerHourBookingDrawer({
                 <div className="flex items-center justify-between text-xs text-[hsl(var(--accent))]">
                   <span className="inline-flex items-center gap-1">
                     <CheckCircle2 className="w-3.5 h-3.5" />
-                    Coupon CHARITY100 — £100 off
+                    Coupon CHARITYMEETUP100 — £100 off
                   </span>
                   <span className="line-through text-muted-foreground">£395</span>
                 </div>
