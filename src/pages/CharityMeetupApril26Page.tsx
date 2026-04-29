@@ -1,6 +1,9 @@
+import { useState } from "react";
 import { Compass, Linkedin, ArrowRight, GraduationCap, Zap, FileStack, Sparkles, Brain, Mail } from "lucide-react";
 import { PillButton } from "@/components/ui/pill-button";
 import { Footer } from "@/components/Footer";
+import { PowerHourBookingDrawer } from "@/components/PowerHourBookingDrawer";
+import { PaymentTestModeBanner } from "@/components/PaymentTestModeBanner";
 import WhiteLogo from "@/assets/logos/White_TS_Stacked.svg";
 import avatarPhoto from "@/assets/brendan-avatar.webp";
 
@@ -32,8 +35,10 @@ const RESOURCES = [
 ];
 
 const CharityMeetupApril26Page = () => {
+  const [drawerOpen, setDrawerOpen] = useState(false);
   return (
     <div className="dark min-h-screen bg-background text-foreground">
+      <PaymentTestModeBanner />
       <main className="max-w-2xl mx-auto px-4 sm:px-6 pt-12 pb-16 sm:py-20 space-y-8 sm:space-y-10">
         {/* Avatar + Logo */}
         <div className="flex items-center gap-4">
@@ -51,9 +56,10 @@ const CharityMeetupApril26Page = () => {
         </div>
 
         {/* Limited Offer */}
-        <a
-          href="mailto:hello@threadandstack.com?subject=AI%20Power-Hour%20%E2%80%94%20Charity%20Meetup%20April%2026%20offer"
-          className="group block relative overflow-hidden rounded-2xl bg-gradient-to-br from-[hsl(var(--accent))] to-[hsl(var(--accent))]/80 text-[hsl(var(--accent-foreground))] p-5 sm:p-6 shadow-[0_20px_60px_-20px_hsl(var(--accent)/0.5)] transition-transform hover:-translate-y-0.5"
+        <button
+          type="button"
+          onClick={() => setDrawerOpen(true)}
+          className="group block w-full text-left relative overflow-hidden rounded-2xl bg-gradient-to-br from-[hsl(var(--accent))] to-[hsl(var(--accent))]/80 text-[hsl(var(--accent-foreground))] p-5 sm:p-6 shadow-[0_20px_60px_-20px_hsl(var(--accent)/0.5)] transition-transform hover:-translate-y-0.5"
         >
           <div className="pointer-events-none absolute -top-16 -right-16 w-48 h-48 rounded-full bg-white/15 blur-3xl" />
           <div className="relative flex items-start gap-4">
@@ -68,15 +74,15 @@ const CharityMeetupApril26Page = () => {
                 £100 off a 1:1 AI Power-Hour
               </h2>
               <p className="text-[13px] sm:text-sm font-sans opacity-90">
-                Normally <span className="line-through opacity-70">£395</span> ·{" "}
-                <span className="font-semibold">£295 for you</span> — sixty focused minutes to map your highest-leverage AI moves.
+                <span className="font-semibold">£395</span> · sixty focused minutes to map your highest-leverage AI moves. Use code{" "}
+                <span className="font-mono font-semibold tracking-wider">CHARITY100</span> at checkout for £100 off — first 10 only.
               </p>
               <p className="inline-flex items-center gap-1 text-[13px] sm:text-sm font-medium pt-1 group-hover:gap-2 transition-all">
                 Claim your slot <ArrowRight className="w-4 h-4" />
               </p>
             </div>
           </div>
-        </a>
+        </button>
 
         <div className="font-sans text-[15px] sm:text-base md:text-lg text-muted-foreground leading-relaxed space-y-4">
           <p>
@@ -207,6 +213,12 @@ const CharityMeetupApril26Page = () => {
         </div>
       </main>
       <Footer />
+      <PowerHourBookingDrawer
+        open={drawerOpen}
+        onOpenChange={setDrawerOpen}
+        source="charity-meetup-april26"
+        defaultCoupon="CHARITY100"
+      />
     </div>
   );
 };

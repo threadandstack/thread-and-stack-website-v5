@@ -104,6 +104,30 @@ export type Database = {
         }
         Relationships: []
       }
+      coupon_redemptions: {
+        Row: {
+          code: string
+          created_at: string
+          email: string | null
+          id: string
+          stripe_session_id: string | null
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          email?: string | null
+          id?: string
+          stripe_session_id?: string | null
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          email?: string | null
+          id?: string
+          stripe_session_id?: string | null
+        }
+        Relationships: []
+      }
       fiction_favorites: {
         Row: {
           answer: string
@@ -445,6 +469,60 @@ export type Database = {
         }
         Relationships: []
       }
+      power_hour_bookings: {
+        Row: {
+          amount_paid: number | null
+          consent_given: boolean
+          coupon_code: string | null
+          created_at: string
+          email: string
+          focus: string | null
+          id: string
+          name: string
+          role_org: string | null
+          source: string
+          status: string
+          stripe_session_id: string | null
+          utm_campaign: string | null
+          utm_medium: string | null
+          utm_source: string | null
+        }
+        Insert: {
+          amount_paid?: number | null
+          consent_given?: boolean
+          coupon_code?: string | null
+          created_at?: string
+          email: string
+          focus?: string | null
+          id?: string
+          name: string
+          role_org?: string | null
+          source?: string
+          status?: string
+          stripe_session_id?: string | null
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+        }
+        Update: {
+          amount_paid?: number | null
+          consent_given?: boolean
+          coupon_code?: string | null
+          created_at?: string
+          email?: string
+          focus?: string | null
+          id?: string
+          name?: string
+          role_org?: string | null
+          source?: string
+          status?: string
+          stripe_session_id?: string | null
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+        }
+        Relationships: []
+      }
       sync_metadata: {
         Row: {
           last_synced_at: string
@@ -498,7 +576,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      count_coupon_redemptions: { Args: { _code: string }; Returns: number }
     }
     Enums: {
       [_ in never]: never
