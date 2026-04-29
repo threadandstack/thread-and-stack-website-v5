@@ -96,20 +96,30 @@ Deno.serve(async (req) => {
     if (!prices.data.length) throw new Error("Price not found");
     const stripePrice = prices.data[0];
 
-    // Create or reuse a Stripe coupon for £100 off
+    // Create or reuse a Stripe coupon for £100 off — Stripe enforces max_redemptions=10
     let discounts: { coupon: string }[] | undefined;
     if (couponValid) {
-      const couponId = `charitymeetup100_${env}`;
+      const couponId = `charitymeetup100_v2_${env}`;
       try {
         await stripe.coupons.retrieve(couponId);
       } catch {
-        await stripe.coupons.create({
-          id: couponId,
-          amount_off: COUPON_DISCOUNT_PENCE,
-          currency: "gbp",
-          duration: "once",
-          name: "Charity Meetup — £100 off",
-        });
+        try {
+          await stripe.coupons.create({
+            id: couponId,
+            amount_off: COUPON_DISCOUNT_PENCE,
+            currency: "gbp",
+            duration: "once",
+            max_redemptions: COUPON_MAX_USES,
+            name: "Charity Meetup — £100 off",
+          });
+        } catch (createErr) {
+          // Stripe will reject with a clean error if max_redemptions is reached
+          console.error("Coupon create failed", createErr);
+          return new Response(
+            JSON.stringify({ error: "Sorry — this coupon has reached its limit of 10 uses." }),
+            { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+          );
+        }
       }
       discounts = [{ coupon: couponId }];
     }
