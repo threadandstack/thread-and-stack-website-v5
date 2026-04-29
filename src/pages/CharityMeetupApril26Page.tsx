@@ -36,6 +36,18 @@ const RESOURCES = [
 
 const CharityMeetupApril26Page = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
+
+  // Auto-open the booking drawer when the URL has ?book=1 (or ?book=true).
+  // This lets us share a unique direct link, e.g. /charity-meetup-april26?book=1
+  // Optional: ?coupon=CHARITYMEETUP100 (defaults to that anyway).
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const book = params.get("book");
+    if (book === "1" || book === "true" || book === "yes") {
+      setDrawerOpen(true);
+    }
+  }, []);
   return (
     <div className="dark min-h-screen bg-background text-foreground">
       <PaymentTestModeBanner />
