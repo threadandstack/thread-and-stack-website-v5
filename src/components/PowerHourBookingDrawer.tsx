@@ -9,7 +9,8 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { EmbeddedCheckoutProvider, EmbeddedCheckout } from "@stripe/react-stripe-js";
 import { getStripe, getStripeEnvironment } from "@/lib/stripe";
-import { Loader2, ArrowRight, BadgePercent, CheckCircle2, ShieldCheck } from "lucide-react";
+import { Loader2, ArrowRight, BadgePercent, CheckCircle2, ShieldCheck, AlertTriangle } from "lucide-react";
+import type { Stripe } from "@stripe/stripe-js";
 
 interface PowerHourBookingDrawerProps {
   open: boolean;
@@ -30,6 +31,8 @@ export function PowerHourBookingDrawer({
   const { toast } = useToast();
   const [submitting, setSubmitting] = useState(false);
   const [clientSecret, setClientSecret] = useState<string | null>(null);
+  const [stripeInstance, setStripeInstance] = useState<Stripe | null>(null);
+  const [stripeError, setStripeError] = useState<string | null>(null);
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -45,12 +48,40 @@ export function PowerHourBookingDrawer({
       // Reset on close
       setClientSecret(null);
       setSubmitting(false);
+      setStripeError(null);
     }
   }, [open]);
 
   useEffect(() => {
     setForm((f) => ({ ...f, couponCode: defaultCoupon }));
   }, [defaultCoupon]);
+
+  // Pre-load Stripe.js as soon as we have a clientSecret so we can show
+  // a clear error if the Stripe script fails to load (otherwise the
+  // EmbeddedCheckout silently renders nothing → white screen).
+  useEffect(() => {
+    if (!clientSecret) return;
+    let cancelled = false;
+    setStripeError(null);
+    getStripe()
+      .then((s) => {
+        if (cancelled) return;
+        if (!s) {
+          setStripeError("Stripe failed to initialise. Please try again.");
+        } else {
+          setStripeInstance(s);
+        }
+      })
+      .catch((err) => {
+        if (cancelled) return;
+        setStripeError(
+          err instanceof Error ? err.message : "Stripe failed to load. Check your connection and try again."
+        );
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [clientSecret]);
 
   const couponNormalized = form.couponCode.trim().toUpperCase();
   const couponLooksValid = couponNormalized === "CHARITYMEETUP100";
@@ -268,13 +299,53 @@ export function PowerHourBookingDrawer({
             </form>
           </div>
         ) : (
-          <div className="min-h-screen bg-background">
-            <EmbeddedCheckoutProvider
-              stripe={getStripe()}
-              options={{ fetchClientSecret }}
-            >
-              <EmbeddedCheckout />
-            </EmbeddedCheckoutProvider>
+          <div className="min-h-screen bg-background p-4">
+            {stripeError ? (
+              <div className="max-w-md mx-auto mt-12 rounded-xl border bg-card p-6 text-center space-y-4">
+                <AlertTriangle className="w-8 h-8 text-destructive mx-auto" />
+                <div className="space-y-1">
+                  <p className="font-serif-pro text-lg font-semibold">Payment couldn't load</p>
+                  <p className="text-sm text-muted-foreground">{stripeError}</p>
+                  <p className="text-xs text-muted-foreground">
+                    This is often a network/ad-blocker issue. Try disabling blockers, switching network,
+                    or opening in another browser.
+                  </p>
+                </div>
+                <div className="flex gap-2 justify-center">
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      setClientSecret(null);
+                      setStripeError(null);
+                    }}
+                  >
+                    Back
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      // Force re-trigger by toggling clientSecret
+                      const cs = clientSecret;
+                      setClientSecret(null);
+                      setStripeError(null);
+                      setTimeout(() => setClientSecret(cs), 50);
+                    }}
+                  >
+                    Try again
+                  </Button>
+                </div>
+              </div>
+            ) : !stripeInstance ? (
+              <div className="flex items-center justify-center min-h-[400px] text-muted-foreground">
+                <Loader2 className="w-5 h-5 animate-spin mr-2" /> Loading secure payment…
+              </div>
+            ) : (
+              <EmbeddedCheckoutProvider
+                stripe={stripeInstance}
+                options={{ fetchClientSecret }}
+              >
+                <EmbeddedCheckout />
+              </EmbeddedCheckoutProvider>
+            )}
           </div>
         )}
       </SheetContent>
