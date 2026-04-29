@@ -41,9 +41,11 @@ Deno.serve(async (req) => {
     // Update booking
     const { data: existing } = await supabase
       .from("power_hour_bookings")
-      .select("id, status")
+      .select("id, status, name, email, role_org, focus, source, utm_source, utm_medium, utm_campaign, coupon_code")
       .eq("stripe_session_id", sessionId)
       .maybeSingle();
+
+    const justPaid = !!(existing && status === "paid" && existing.status !== "paid");
 
     if (existing) {
       await supabase
@@ -52,13 +54,67 @@ Deno.serve(async (req) => {
         .eq("id", existing.id);
 
       // Record coupon redemption once on first paid confirmation
-      if (status === "paid" && existing.status !== "paid" && couponCode) {
+      if (justPaid && couponCode) {
         await supabase.from("coupon_redemptions").insert({
           code: couponCode,
           stripe_session_id: sessionId,
           email: session.customer_details?.email ?? null,
         });
       }
+    }
+
+    // Fire emails on first transition to paid (idempotency keys make double-fires safe)
+    if (justPaid && existing) {
+      const buyerEmail = existing.email || session.customer_details?.email || null;
+      const buyerName = existing.name || (session.metadata?.name as string | undefined) || undefined;
+
+      const emailJobs: Promise<unknown>[] = [];
+
+      if (buyerEmail) {
+        emailJobs.push(
+          supabase.functions.invoke("send-transactional-email", {
+            body: {
+              templateName: "power-hour-buyer-confirmation",
+              recipientEmail: buyerEmail,
+              idempotencyKey: `ph-buyer-${sessionId}`,
+              templateData: {
+                name: buyerName,
+                amountPaid: amountPaid ?? undefined,
+                couponCode: existing.coupon_code || couponCode || undefined,
+              },
+            },
+          }),
+        );
+      }
+
+      emailJobs.push(
+        supabase.functions.invoke("send-transactional-email", {
+          body: {
+            templateName: "power-hour-admin-notification",
+            recipientEmail: "br@brendanrodgers.uk",
+            idempotencyKey: `ph-admin-${sessionId}`,
+            templateData: {
+              name: existing.name,
+              email: buyerEmail,
+              roleOrg: existing.role_org,
+              focus: existing.focus,
+              amountPaid: amountPaid ?? undefined,
+              couponCode: existing.coupon_code || couponCode || undefined,
+              source: existing.source,
+              utmSource: existing.utm_source,
+              utmMedium: existing.utm_medium,
+              utmCampaign: existing.utm_campaign,
+              environment,
+              stripeSessionId: sessionId,
+            },
+          },
+        }),
+      );
+
+      const results = await Promise.allSettled(emailJobs);
+      results.forEach((r, i) => {
+        if (r.status === "rejected") console.error(`Email job ${i} failed`, r.reason);
+      });
     }
 
     return new Response(
