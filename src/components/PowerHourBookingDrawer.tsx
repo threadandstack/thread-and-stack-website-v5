@@ -56,6 +56,33 @@ export function PowerHourBookingDrawer({
     setForm((f) => ({ ...f, couponCode: defaultCoupon }));
   }, [defaultCoupon]);
 
+  // Pre-load Stripe.js as soon as we have a clientSecret so we can show
+  // a clear error if the Stripe script fails to load (otherwise the
+  // EmbeddedCheckout silently renders nothing → white screen).
+  useEffect(() => {
+    if (!clientSecret) return;
+    let cancelled = false;
+    setStripeError(null);
+    getStripe()
+      .then((s) => {
+        if (cancelled) return;
+        if (!s) {
+          setStripeError("Stripe failed to initialise. Please try again.");
+        } else {
+          setStripeInstance(s);
+        }
+      })
+      .catch((err) => {
+        if (cancelled) return;
+        setStripeError(
+          err instanceof Error ? err.message : "Stripe failed to load. Check your connection and try again."
+        );
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [clientSecret]);
+
   const couponNormalized = form.couponCode.trim().toUpperCase();
   const couponLooksValid = couponNormalized === "CHARITYMEETUP100";
   const displayedTotal = couponLooksValid ? FULL_PRICE - COUPON_DISCOUNT : FULL_PRICE;
