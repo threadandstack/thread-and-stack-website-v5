@@ -57,6 +57,7 @@ const PortfolioAccessAdminPage = lazy(() => import("./pages/PortfolioAccessAdmin
 const NotionUtopiaPage = lazy(() => import("./pages/onboarding/NotionUtopiaPage"));
 const CharityMeetupApril26Page = lazy(() => import("./pages/CharityMeetupApril26Page"));
 const PowerHourThankYouPage = lazy(() => import("./pages/PowerHourThankYouPage"));
+const UnsubscribePage = lazy(() => import("./pages/UnsubscribePage"));
 
 const queryClient = new QueryClient();
 
@@ -91,6 +92,7 @@ const App = () => (
             <Route path="/blog/:slug" element={<BlogPostPage />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/data-guarantee" element={<DataGuarantee />} />
+            <Route path="/unsubscribe" element={<UnsubscribePage />} />
             <Route path="/collective" element={<CollectivePage />} />
             <Route path="/thread-demo" element={<ThreadMotifDemo />} />
             <Route path="/brand-book" element={<BrandBook />} />
