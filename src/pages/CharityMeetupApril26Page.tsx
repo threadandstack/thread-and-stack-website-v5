@@ -25,12 +25,12 @@ const RESOURCES = [
     available: true,
   },
   {
-    title: "Templates for AI Skills",
+    title: "Prompts & Skills for AI",
     description: "Prompt and workflow templates designed for charity teams — fundraising, comms, and operations — so you can practise the skills, not start from scratch.",
     icon: FileStack,
-    cta: "Coming soon",
-    url: "#",
-    available: false,
+    cta: "Open prompts & skills",
+    url: "https://threadandstack.notion.site/Prompts-Skills-for-AI-3518863b87d480659135cc9c9f508008",
+    available: true,
   },
 ];
 
