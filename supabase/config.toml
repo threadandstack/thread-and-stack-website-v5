@@ -53,3 +53,9 @@ verify_jwt = false
 
 [functions.submit-notion-utopia]
 verify_jwt = false
+
+[functions.create-power-hour-checkout]
+verify_jwt = false
+
+[functions.confirm-power-hour-checkout]
+verify_jwt = false

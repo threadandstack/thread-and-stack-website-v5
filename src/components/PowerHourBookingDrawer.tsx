@@ -1,0 +1,283 @@
+import { useState, useCallback, useEffect } from "react";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
+import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+import { EmbeddedCheckoutProvider, EmbeddedCheckout } from "@stripe/react-stripe-js";
+import { getStripe, getStripeEnvironment } from "@/lib/stripe";
+import { Loader2, ArrowRight, BadgePercent, CheckCircle2, ShieldCheck } from "lucide-react";
+
+interface PowerHourBookingDrawerProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  source?: string;
+  defaultCoupon?: string;
+}
+
+const FULL_PRICE = 39500;
+const COUPON_DISCOUNT = 10000;
+
+export function PowerHourBookingDrawer({
+  open,
+  onOpenChange,
+  source = "charity-meetup-april26",
+  defaultCoupon = "",
+}: PowerHourBookingDrawerProps) {
+  const { toast } = useToast();
+  const [submitting, setSubmitting] = useState(false);
+  const [clientSecret, setClientSecret] = useState<string | null>(null);
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    roleOrg: "",
+    focus: "",
+    couponCode: defaultCoupon,
+    consent: false,
+    honeypot: "",
+  });
+
+  useEffect(() => {
+    if (!open) {
+      // Reset on close
+      setClientSecret(null);
+      setSubmitting(false);
+    }
+  }, [open]);
+
+  useEffect(() => {
+    setForm((f) => ({ ...f, couponCode: defaultCoupon }));
+  }, [defaultCoupon]);
+
+  const couponNormalized = form.couponCode.trim().toUpperCase();
+  const couponLooksValid = couponNormalized === "CHARITY100";
+  const displayedTotal = couponLooksValid ? FULL_PRICE - COUPON_DISCOUNT : FULL_PRICE;
+
+  const fetchClientSecret = useCallback(async (): Promise<string> => {
+    if (clientSecret) return clientSecret;
+    throw new Error("No client secret yet");
+  }, [clientSecret]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (submitting) return;
+
+    if (!form.name.trim() || !form.email.trim()) {
+      toast({ title: "Please add your name and email.", variant: "destructive" });
+      return;
+    }
+    if (!form.consent) {
+      toast({
+        title: "Please confirm consent so I can be in touch.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setSubmitting(true);
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const { data, error } = await supabase.functions.invoke("create-power-hour-checkout", {
+        body: {
+          name: form.name.trim(),
+          email: form.email.trim(),
+          roleOrg: form.roleOrg.trim(),
+          focus: form.focus.trim(),
+          couponCode: form.couponCode.trim(),
+          consent: form.consent,
+          source,
+          utmSource: params.get("utm_source") ?? "",
+          utmMedium: params.get("utm_medium") ?? "",
+          utmCampaign: params.get("utm_campaign") ?? "",
+          honeypot: form.honeypot,
+          environment: getStripeEnvironment(),
+          returnUrl: `${window.location.origin}/power-hour/thank-you?session_id={CHECKOUT_SESSION_ID}`,
+        },
+      });
+      if (error) throw error;
+      if (!data?.clientSecret) {
+        throw new Error(data?.error || "Could not start checkout");
+      }
+      setClientSecret(data.clientSecret);
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "Something went wrong.";
+      toast({ title: "Couldn't start checkout", description: msg, variant: "destructive" });
+      setSubmitting(false);
+    }
+  };
+
+  return (
+    <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetContent
+        side="right"
+        className="w-full sm:max-w-xl overflow-y-auto p-0 bg-background"
+      >
+        {!clientSecret ? (
+          <div className="p-6 sm:p-8 space-y-6">
+            <SheetHeader className="space-y-2 text-left">
+              <div className="inline-flex items-center gap-2 text-[11px] font-sans uppercase tracking-widest text-[hsl(var(--accent))]">
+                <BadgePercent className="w-3.5 h-3.5" /> AI Power-Hour
+              </div>
+              <SheetTitle className="font-serif-pro text-2xl sm:text-3xl font-semibold italic leading-tight">
+                Claim your slot
+              </SheetTitle>
+              <SheetDescription className="text-sm sm:text-base">
+                Sixty focused minutes, 1:1 with Brendan. Tell me a bit about you and pay to confirm
+                — I'll be in touch within 24h to book a time.
+              </SheetDescription>
+            </SheetHeader>
+
+            <div className="rounded-xl border bg-card p-4 space-y-1.5">
+              <div className="flex items-baseline justify-between">
+                <span className="text-sm font-sans text-muted-foreground">AI Power-Hour</span>
+                <span className="font-serif-pro text-xl font-semibold">
+                  £{(displayedTotal / 100).toFixed(0)}
+                </span>
+              </div>
+              {couponLooksValid && (
+                <div className="flex items-center justify-between text-xs text-[hsl(var(--accent))]">
+                  <span className="inline-flex items-center gap-1">
+                    <CheckCircle2 className="w-3.5 h-3.5" />
+                    Coupon CHARITY100 — £100 off
+                  </span>
+                  <span className="line-through text-muted-foreground">£395</span>
+                </div>
+              )}
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-4">
+              {/* Honeypot */}
+              <input
+                type="text"
+                tabIndex={-1}
+                autoComplete="off"
+                value={form.honeypot}
+                onChange={(e) => setForm({ ...form, honeypot: e.target.value })}
+                className="absolute -left-[9999px] w-px h-px opacity-0"
+                aria-hidden="true"
+              />
+
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <Label htmlFor="ph-name">Name *</Label>
+                  <Input
+                    id="ph-name"
+                    required
+                    maxLength={120}
+                    value={form.name}
+                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="ph-email">Email *</Label>
+                  <Input
+                    id="ph-email"
+                    type="email"
+                    required
+                    maxLength={255}
+                    value={form.email}
+                    onChange={(e) => setForm({ ...form, email: e.target.value })}
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <Label htmlFor="ph-role">Role &amp; organisation</Label>
+                <Input
+                  id="ph-role"
+                  placeholder="e.g. Head of Comms, Hope Charity"
+                  maxLength={255}
+                  value={form.roleOrg}
+                  onChange={(e) => setForm({ ...form, roleOrg: e.target.value })}
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <Label htmlFor="ph-focus">What you'd like to focus on</Label>
+                <Textarea
+                  id="ph-focus"
+                  rows={4}
+                  maxLength={2000}
+                  placeholder="A short note on the AI question or workflow you'd like help with."
+                  value={form.focus}
+                  onChange={(e) => setForm({ ...form, focus: e.target.value })}
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <Label htmlFor="ph-coupon" className="inline-flex items-center gap-1.5">
+                  <BadgePercent className="w-3.5 h-3.5" /> Coupon code (optional)
+                </Label>
+                <Input
+                  id="ph-coupon"
+                  placeholder="Got a code? Add it here"
+                  maxLength={40}
+                  value={form.couponCode}
+                  onChange={(e) =>
+                    setForm({ ...form, couponCode: e.target.value.toUpperCase() })
+                  }
+                  className="uppercase tracking-wider"
+                />
+                {form.couponCode && !couponLooksValid && (
+                  <p className="text-xs text-muted-foreground">
+                    We'll check this when you continue.
+                  </p>
+                )}
+              </div>
+
+              <div className="flex items-start gap-3 pt-1">
+                <Checkbox
+                  id="ph-consent"
+                  checked={form.consent}
+                  onCheckedChange={(v) => setForm({ ...form, consent: v === true })}
+                />
+                <Label
+                  htmlFor="ph-consent"
+                  className="text-xs sm:text-sm font-normal text-muted-foreground leading-relaxed"
+                >
+                  I'm happy for Brendan to contact me about my booking and the Power-Hour. See the{" "}
+                  <a href="/privacy" target="_blank" className="underline">
+                    privacy policy
+                  </a>
+                  .
+                </Label>
+              </div>
+
+              <Button
+                type="submit"
+                disabled={submitting}
+                className="w-full bg-[hsl(var(--accent))] text-[hsl(var(--accent-foreground))] hover:bg-[hsl(var(--accent))]/90"
+              >
+                {submitting ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin mr-2" /> Starting checkout…
+                  </>
+                ) : (
+                  <>
+                    Continue to payment <ArrowRight className="w-4 h-4 ml-2" />
+                  </>
+                )}
+              </Button>
+
+              <p className="text-[11px] text-muted-foreground inline-flex items-center gap-1.5 justify-center w-full">
+                <ShieldCheck className="w-3 h-3" /> Secure payment via Stripe.
+              </p>
+            </form>
+          </div>
+        ) : (
+          <div className="min-h-screen bg-background">
+            <EmbeddedCheckoutProvider
+              stripe={getStripe()}
+              options={{ fetchClientSecret }}
+            >
+              <EmbeddedCheckout />
+            </EmbeddedCheckoutProvider>
+          </div>
+        )}
+      </SheetContent>
+    </Sheet>
+  );
+}
