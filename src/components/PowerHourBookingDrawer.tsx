@@ -8,7 +8,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { EmbeddedCheckoutProvider, EmbeddedCheckout } from "@stripe/react-stripe-js";
-import { getStripe, getStripeEnvironment } from "@/lib/stripe";
+import { getStripe, getStripeEnvironment, resetStripeLoader } from "@/lib/stripe";
 import { Loader2, ArrowRight, BadgePercent, CheckCircle2, ShieldCheck, AlertTriangle } from "lucide-react";
 import type { Stripe } from "@stripe/stripe-js";
 
@@ -63,6 +63,7 @@ export function PowerHourBookingDrawer({
     if (!clientSecret) return;
     let cancelled = false;
     setStripeError(null);
+    setStripeInstance(null);
     getStripe()
       .then((s) => {
         if (cancelled) return;
@@ -323,8 +324,9 @@ export function PowerHourBookingDrawer({
                   </Button>
                   <Button
                     onClick={() => {
-                      // Force re-trigger by toggling clientSecret
                       const cs = clientSecret;
+                      resetStripeLoader();
+                      setStripeInstance(null);
                       setClientSecret(null);
                       setStripeError(null);
                       setTimeout(() => setClientSecret(cs), 50);
