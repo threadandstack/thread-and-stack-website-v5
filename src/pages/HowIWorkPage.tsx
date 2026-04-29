@@ -126,7 +126,7 @@ const HowIWorkPage = () => {
             What AI must never replace.
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed max-w-3xl mb-16">
-            As AI becomes more capable, the question isn't <em>what it can do</em> — it's <em>what it should leave alone</em>. These four drives form the foundation of the human condition. They shape how we work, create, and connect. Any AI strategy worth its salt protects them.
+            As AI becomes more capable, the question isn't <em>what it can do</em> — it's <em>what it should leave alone</em>. These four drivers form the foundation of the human condition. They shape how we work, create, and connect. Any AI strategy worth its salt protects them.
           </p>
 
           <div className="grid md:grid-cols-2 gap-6">
