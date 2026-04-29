@@ -1,4 +1,4 @@
-import { Compass, Linkedin, ArrowRight, GraduationCap, Zap, FileStack } from "lucide-react";
+import { Compass, Linkedin, ArrowRight, GraduationCap, Zap, FileStack, Sparkles, Brain } from "lucide-react";
 import { PillButton } from "@/components/ui/pill-button";
 import { Footer } from "@/components/Footer";
 import WhiteLogo from "@/assets/logos/White_TS_Stacked.svg";
@@ -50,6 +50,34 @@ const CharityMeetupApril26Page = () => {
           </h1>
         </div>
 
+        {/* Limited Offer */}
+        <a
+          href="mailto:hello@threadandstack.com?subject=AI%20Power-Hour%20%E2%80%94%20Charity%20Meetup%20April%2026%20offer"
+          className="group block relative overflow-hidden rounded-2xl bg-gradient-to-br from-[hsl(var(--accent))] to-[hsl(var(--accent))]/80 text-[hsl(var(--accent-foreground))] p-5 sm:p-6 shadow-[0_20px_60px_-20px_hsl(var(--accent)/0.5)] transition-transform hover:-translate-y-0.5"
+        >
+          <div className="pointer-events-none absolute -top-16 -right-16 w-48 h-48 rounded-full bg-white/15 blur-3xl" />
+          <div className="relative flex items-start gap-4">
+            <div className="shrink-0 w-10 h-10 rounded-full bg-white/15 flex items-center justify-center">
+              <Sparkles className="w-5 h-5" />
+            </div>
+            <div className="space-y-1.5 flex-1">
+              <p className="text-[11px] sm:text-xs font-sans uppercase tracking-widest opacity-80">
+                Charity Meetup attendees · limited offer
+              </p>
+              <h2 className="font-serif-pro text-xl sm:text-2xl font-semibold italic leading-tight">
+                £100 off a 1:1 AI Power-Hour
+              </h2>
+              <p className="text-[13px] sm:text-sm font-sans opacity-90">
+                Normally <span className="line-through opacity-70">£395</span> ·{" "}
+                <span className="font-semibold">£295 for you</span> — sixty focused minutes to map your highest-leverage AI moves.
+              </p>
+              <p className="inline-flex items-center gap-1 text-[13px] sm:text-sm font-medium pt-1 group-hover:gap-2 transition-all">
+                Claim your slot <ArrowRight className="w-4 h-4" />
+              </p>
+            </div>
+          </div>
+        </a>
+
         <div className="font-sans text-[15px] sm:text-base md:text-lg text-muted-foreground leading-relaxed space-y-4">
           <p>
             Lovely to be in the room with you for{" "}
@@ -97,6 +125,59 @@ const CharityMeetupApril26Page = () => {
               </div>
             );
           })}
+        </div>
+
+        {/* How I think about AI */}
+        <div className="rounded-xl border bg-card p-5 sm:p-6 space-y-5">
+          <div className="flex items-start gap-3">
+            <div className="shrink-0 w-10 h-10 rounded-lg bg-[hsl(var(--accent))]/15 text-[hsl(var(--accent))] flex items-center justify-center">
+              <Brain className="w-5 h-5" />
+            </div>
+            <div className="space-y-1">
+              <h2 className="font-serif-pro text-lg sm:text-xl font-semibold italic leading-tight">
+                How I think about AI use
+              </h2>
+              <p className="text-[14px] sm:text-[15px] text-muted-foreground font-sans leading-relaxed">
+                Two simple frameworks I lean on so AI stays a tool that serves the mission — not the other way round.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
+            <div className="rounded-lg bg-background/50 border border-border p-4 space-y-2">
+              <p className="text-[11px] font-sans uppercase tracking-widest text-[hsl(var(--accent))]">
+                The 4 C's
+              </p>
+              <p className="font-serif-pro text-base font-semibold italic">
+                What stays human
+              </p>
+              <ul className="text-[13px] sm:text-sm font-sans text-muted-foreground space-y-1.5 leading-snug">
+                <li><span className="text-foreground font-medium">Connection</span> — relationships and trust</li>
+                <li><span className="text-foreground font-medium">Care</span> — empathy and judgement</li>
+                <li><span className="text-foreground font-medium">Creativity</span> — original thinking and craft</li>
+                <li><span className="text-foreground font-medium">Conviction</span> — values and decisions</li>
+              </ul>
+            </div>
+
+            <div className="rounded-lg bg-background/50 border border-border p-4 space-y-2">
+              <p className="text-[11px] font-sans uppercase tracking-widest text-[hsl(var(--accent))]">
+                The 4 D's
+              </p>
+              <p className="font-serif-pro text-base font-semibold italic">
+                Where AI earns its keep
+              </p>
+              <ul className="text-[13px] sm:text-sm font-sans text-muted-foreground space-y-1.5 leading-snug">
+                <li><span className="text-foreground font-medium">Dull</span> — repetitive admin</li>
+                <li><span className="text-foreground font-medium">Dirty</span> — messy data and cleanup</li>
+                <li><span className="text-foreground font-medium">Difficult</span> — complex synthesis at speed</li>
+                <li><span className="text-foreground font-medium">Dangerous</span> — risky-to-miss checks and reviews</li>
+              </ul>
+            </div>
+          </div>
+
+          <p className="text-[13px] sm:text-sm font-sans text-muted-foreground italic">
+            Protect the C's. Delegate the D's. That's the shift.
+          </p>
         </div>
 
         {/* Stay connected */}
