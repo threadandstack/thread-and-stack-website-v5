@@ -1,4 +1,4 @@
-import { Compass, Linkedin, ArrowRight, GraduationCap, Zap, FileStack, Sparkles, Brain } from "lucide-react";
+import { Compass, Linkedin, ArrowRight, GraduationCap, Zap, FileStack, Sparkles, Brain, Mail } from "lucide-react";
 import { PillButton } from "@/components/ui/pill-button";
 import { Footer } from "@/components/Footer";
 import WhiteLogo from "@/assets/logos/White_TS_Stacked.svg";
@@ -178,6 +178,10 @@ const CharityMeetupApril26Page = () => {
           <p className="text-[13px] sm:text-sm font-sans text-muted-foreground italic">
             Protect the C's. Delegate the D's. That's the shift.
           </p>
+
+          <PillButton variant="outline" icon={ArrowRight} asChild className="w-full sm:w-auto">
+            <a href="/how-i-work">Read more</a>
+          </PillButton>
         </div>
 
         {/* Stay connected */}
@@ -196,8 +200,8 @@ const CharityMeetupApril26Page = () => {
                 Connect on LinkedIn
               </a>
             </PillButton>
-            <PillButton variant="outline" icon={Compass} asChild className="w-full sm:w-auto">
-              <a href="/work-with-me">How I work</a>
+            <PillButton variant="outline" icon={Mail} asChild className="w-full sm:w-auto">
+              <a href="mailto:br@brendanrodgers.uk">Email me</a>
             </PillButton>
           </div>
         </div>
