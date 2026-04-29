@@ -50,6 +50,34 @@ const CharityMeetupApril26Page = () => {
           </h1>
         </div>
 
+        {/* Limited Offer */}
+        <a
+          href="mailto:hello@threadandstack.com?subject=AI%20Power-Hour%20%E2%80%94%20Charity%20Meetup%20April%2026%20offer"
+          className="group block relative overflow-hidden rounded-2xl bg-gradient-to-br from-[hsl(var(--accent))] to-[hsl(var(--accent))]/80 text-[hsl(var(--accent-foreground))] p-5 sm:p-6 shadow-[0_20px_60px_-20px_hsl(var(--accent)/0.5)] transition-transform hover:-translate-y-0.5"
+        >
+          <div className="pointer-events-none absolute -top-16 -right-16 w-48 h-48 rounded-full bg-white/15 blur-3xl" />
+          <div className="relative flex items-start gap-4">
+            <div className="shrink-0 w-10 h-10 rounded-full bg-white/15 flex items-center justify-center">
+              <Sparkles className="w-5 h-5" />
+            </div>
+            <div className="space-y-1.5 flex-1">
+              <p className="text-[11px] sm:text-xs font-sans uppercase tracking-widest opacity-80">
+                Charity Meetup attendees · limited offer
+              </p>
+              <h2 className="font-serif-pro text-xl sm:text-2xl font-semibold italic leading-tight">
+                £100 off a 1:1 AI Power-Hour
+              </h2>
+              <p className="text-[13px] sm:text-sm font-sans opacity-90">
+                Normally <span className="line-through opacity-70">£395</span> ·{" "}
+                <span className="font-semibold">£295 for you</span> — sixty focused minutes to map your highest-leverage AI moves.
+              </p>
+              <p className="inline-flex items-center gap-1 text-[13px] sm:text-sm font-medium pt-1 group-hover:gap-2 transition-all">
+                Claim your slot <ArrowRight className="w-4 h-4" />
+              </p>
+            </div>
+          </div>
+        </a>
+
         <div className="font-sans text-[15px] sm:text-base md:text-lg text-muted-foreground leading-relaxed space-y-4">
           <p>
             Lovely to be in the room with you for{" "}
