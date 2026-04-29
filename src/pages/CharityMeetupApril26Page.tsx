@@ -68,14 +68,19 @@ const CharityMeetupApril26Page = () => {
             </div>
             <div className="space-y-1.5 flex-1">
               <p className="text-[11px] sm:text-xs font-sans uppercase tracking-widest opacity-80">
-                Charity Meetup attendees · limited offer
+                Charity Meetup attendees — limited offer
               </p>
               <h2 className="font-serif-pro text-xl sm:text-2xl font-semibold italic leading-tight">
-                Pick one workflow that's eating your team's time
+                AI Power-Hour Offer · £100 off
               </h2>
+              <p className="text-[13px] sm:text-sm font-sans font-medium opacity-95">
+                One hour, one workflow — normally £395.
+              </p>
               <p className="text-[13px] sm:text-sm font-sans opacity-90">
-                We'll spend an hour together and get it running with AI properly. £100 off a Power-Hour below — use code{" "}
-                <span className="font-mono font-semibold tracking-wider">CHARITYMEETUP100</span> at checkout. First 10 only.
+                Pick a workflow that's eating your team's time, and we'll spend an hour together to get it running with AI properly.
+              </p>
+              <p className="text-[13px] sm:text-sm font-sans opacity-90 pt-0.5">
+                Voucher: <span className="font-mono font-semibold tracking-wider">CHARITYMEETUP100</span> <span className="opacity-75">(first 10 claimed)</span>
               </p>
               <p className="inline-flex items-center gap-1 text-[13px] sm:text-sm font-medium pt-1 group-hover:gap-2 transition-all">
                 Claim your slot <ArrowRight className="w-4 h-4" />
