@@ -308,8 +308,8 @@ export function PowerHourBookingDrawer({
                   <p className="font-serif-pro text-lg font-semibold">Payment couldn't load</p>
                   <p className="text-sm text-muted-foreground">{stripeError}</p>
                   <p className="text-xs text-muted-foreground">
-                    This is often a network/ad-blocker issue. Try disabling blockers, switching network,
-                    or opening in another browser.
+                    This can happen if Stripe is blocked by browser settings, a content security rule,
+                    or a temporary connection issue. Please try again, or use another browser if it persists.
                   </p>
                 </div>
                 <div className="flex gap-2 justify-center">
@@ -318,6 +318,8 @@ export function PowerHourBookingDrawer({
                     onClick={() => {
                       setClientSecret(null);
                       setStripeError(null);
+                      setStripeInstance(null);
+                      setSubmitting(false);
                     }}
                   >
                     Back
