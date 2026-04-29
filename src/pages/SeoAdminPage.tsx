@@ -62,18 +62,33 @@ const emptyFormData: Omit<PageSeo, 'id' | 'created_at' | 'updated_at'> = {
   featured_related_blog_slug: null,
 };
 
-// All site pages (excluding admin pages)
+// All site pages (excluding admin, preview/variant, and private/gated pages)
 const SITE_PAGES = [
   { path: "/", label: "Home", type: "site" },
   { path: "/about", label: "About", type: "site" },
   { path: "/how-i-work", label: "How I Work", type: "site" },
+  { path: "/work-with-me", label: "Work With Me", type: "site" },
   { path: "/sessions-and-sprints", label: "Sessions & Sprints", type: "site" },
   { path: "/narratives-strategy", label: "Narratives & Strategy Services", type: "site" },
+  { path: "/fractional-deep-engagement", label: "Fractional Deep Engagement", type: "site" },
+  { path: "/notion-systems", label: "Notion & Systems Consultancy", type: "site" },
+  { path: "/notion-masterclass", label: "Notion Masterclass", type: "site" },
   { path: "/workshops", label: "Workshops", type: "site" },
+  { path: "/retainer/launch", label: "Retainer — Launch", type: "site" },
+  { path: "/retainer/startup", label: "Retainer — Startup", type: "site" },
+  { path: "/retainer/scaleup", label: "Retainer — Scale-Up", type: "site" },
+  { path: "/comet-effect", label: "Comet Effect", type: "site" },
+  { path: "/momentum-map", label: "Momentum Map", type: "site" },
+  { path: "/notion-hackathon-london", label: "Notion Hackathon London", type: "site" },
+  { path: "/notion-devotion-brighton", label: "Notion Devotion Brighton", type: "site" },
+  { path: "/portfolio/creative", label: "Portfolio — Creative", type: "site" },
+  { path: "/portfolio/notion", label: "Portfolio — Notion", type: "site" },
+  { path: "/favourite-fiction", label: "Favourite Fiction", type: "site" },
   { path: "/blog", label: "Blog", type: "site" },
+  { path: "/collective", label: "Collective", type: "site" },
+  { path: "/onboarding/notionutopia", label: "Onboarding — Notion Utopia", type: "site" },
   { path: "/privacy", label: "Privacy Policy", type: "site" },
   { path: "/data-guarantee", label: "Data Guarantee", type: "site" },
-  { path: "/collective", label: "Collective", type: "site" },
   { path: "/brand-book", label: "Brand Book", type: "site" },
 ];
 
