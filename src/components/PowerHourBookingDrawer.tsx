@@ -299,13 +299,53 @@ export function PowerHourBookingDrawer({
             </form>
           </div>
         ) : (
-          <div className="min-h-screen bg-background">
-            <EmbeddedCheckoutProvider
-              stripe={getStripe()}
-              options={{ fetchClientSecret }}
-            >
-              <EmbeddedCheckout />
-            </EmbeddedCheckoutProvider>
+          <div className="min-h-screen bg-background p-4">
+            {stripeError ? (
+              <div className="max-w-md mx-auto mt-12 rounded-xl border bg-card p-6 text-center space-y-4">
+                <AlertTriangle className="w-8 h-8 text-destructive mx-auto" />
+                <div className="space-y-1">
+                  <p className="font-serif-pro text-lg font-semibold">Payment couldn't load</p>
+                  <p className="text-sm text-muted-foreground">{stripeError}</p>
+                  <p className="text-xs text-muted-foreground">
+                    This is often a network/ad-blocker issue. Try disabling blockers, switching network,
+                    or opening in another browser.
+                  </p>
+                </div>
+                <div className="flex gap-2 justify-center">
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      setClientSecret(null);
+                      setStripeError(null);
+                    }}
+                  >
+                    Back
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      // Force re-trigger by toggling clientSecret
+                      const cs = clientSecret;
+                      setClientSecret(null);
+                      setStripeError(null);
+                      setTimeout(() => setClientSecret(cs), 50);
+                    }}
+                  >
+                    Try again
+                  </Button>
+                </div>
+              </div>
+            ) : !stripeInstance ? (
+              <div className="flex items-center justify-center min-h-[400px] text-muted-foreground">
+                <Loader2 className="w-5 h-5 animate-spin mr-2" /> Loading secure payment…
+              </div>
+            ) : (
+              <EmbeddedCheckoutProvider
+                stripe={stripeInstance}
+                options={{ fetchClientSecret }}
+              >
+                <EmbeddedCheckout />
+              </EmbeddedCheckoutProvider>
+            )}
           </div>
         )}
       </SheetContent>
