@@ -1,4 +1,5 @@
 import Stripe from "https://esm.sh/stripe@22.0.2";
+import { encode } from "https://deno.land/std@0.168.0/encoding/hex.ts";
 
 const getEnv = (key: string): string => {
   const value = Deno.env.get(key);
