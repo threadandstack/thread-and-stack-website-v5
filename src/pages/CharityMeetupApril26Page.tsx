@@ -73,14 +73,19 @@ const CharityMeetupApril26Page = () => {
 
         <div className="font-sans text-[15px] sm:text-base md:text-lg text-muted-foreground leading-relaxed space-y-4">
           <p>
-            Lovely to be in the room with you for{" "}
-            <span className="text-foreground font-medium">Future-Proofing Your Charity</span> at Oliver Wyman, hosted by Dawn Newton.
-            I co-led the <span className="text-foreground font-medium">Smart Digital Shift</span> chat room with David Cobb — and promised to share the resources I mentioned.
+            Lovely to be in the room with you for the{" "}
+            <span className="text-foreground font-medium">Charity Meetup</span> at Oliver Wyman, hosted by Dawn Newton.
+            It was a pleasure to discuss the <span className="text-foreground font-medium">Smart Digital Shift</span> with you.
           </p>
           <p>
-            Below are three things to help your team move from{" "}
-            <em className="text-foreground not-italic font-medium">"AI feels overwhelming"</em>{" "}
-            to <em className="text-foreground not-italic font-medium">"we've actually tried it this week"</em>. No jargon, no hype — just practical, human-first ways in.
+            Below are three resources: a comprehensive list of AI training links, a breakdown of some quick wins you could take today, and a set of useful prompts to assist with AI tool use.
+          </p>
+          <p>
+            I've also included an offer for a discounted 1:1 session — should you want some further support.
+          </p>
+          <p>
+            Warm wishes,<br />
+            <span className="text-foreground font-medium">Brendan @ Thread &amp; Stack</span>
           </p>
         </div>
 
