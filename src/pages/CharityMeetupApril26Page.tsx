@@ -17,12 +17,12 @@ const RESOURCES = [
     available: true,
   },
   {
-    title: "Quick Wins",
+    title: "Quick Wins With AI",
     description: "Small, immediate AI moves your team can apply this week — drafting, summarising, repurposing, and reclaiming time from admin chaos.",
     icon: Zap,
-    cta: "Coming soon",
-    url: "#",
-    available: false,
+    cta: "Open quick wins",
+    url: "https://threadandstack.notion.site/Quick-Wins-With-AI-3518863b87d480f9aaa8def89f7f1726",
+    available: true,
   },
   {
     title: "Templates for AI Skills",
