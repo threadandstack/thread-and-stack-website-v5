@@ -15,6 +15,10 @@ export function getStripe(): Promise<Stripe | null> {
   return stripePromise;
 }
 
+export function resetStripeLoader() {
+  stripePromise = null;
+}
+
 export function getStripeEnvironment(): StripeEnv {
   return environment;
 }
