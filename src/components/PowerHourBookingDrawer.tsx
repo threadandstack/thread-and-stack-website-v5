@@ -9,7 +9,8 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { EmbeddedCheckoutProvider, EmbeddedCheckout } from "@stripe/react-stripe-js";
 import { getStripe, getStripeEnvironment } from "@/lib/stripe";
-import { Loader2, ArrowRight, BadgePercent, CheckCircle2, ShieldCheck } from "lucide-react";
+import { Loader2, ArrowRight, BadgePercent, CheckCircle2, ShieldCheck, AlertTriangle } from "lucide-react";
+import type { Stripe } from "@stripe/stripe-js";
 
 interface PowerHourBookingDrawerProps {
   open: boolean;
