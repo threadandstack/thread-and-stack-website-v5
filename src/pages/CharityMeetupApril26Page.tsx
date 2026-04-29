@@ -1,4 +1,4 @@
-import { Compass, Linkedin, ArrowRight, GraduationCap, Zap, FileStack, Sparkles, Brain } from "lucide-react";
+import { Compass, Linkedin, ArrowRight, GraduationCap, Zap, FileStack, Sparkles, Brain, Mail } from "lucide-react";
 import { PillButton } from "@/components/ui/pill-button";
 import { Footer } from "@/components/Footer";
 import WhiteLogo from "@/assets/logos/White_TS_Stacked.svg";
