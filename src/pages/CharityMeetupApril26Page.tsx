@@ -170,19 +170,19 @@ const CharityMeetupApril26Page = () => {
                 The 4 D's
               </p>
               <p className="font-serif-pro text-base font-semibold italic">
-                Where AI earns its keep
+                How to operate with AI
               </p>
               <ul className="text-[13px] sm:text-sm font-sans text-muted-foreground space-y-1.5 leading-snug">
-                <li><span className="text-foreground font-medium">Dull</span> — repetitive admin</li>
-                <li><span className="text-foreground font-medium">Dirty</span> — messy data and cleanup</li>
-                <li><span className="text-foreground font-medium">Difficult</span> — complex synthesis at speed</li>
-                <li><span className="text-foreground font-medium">Dangerous</span> — risky-to-miss checks and reviews</li>
+                <li><span className="text-foreground font-medium">Delegation</span> — knowing whether, when, and how to engage AI</li>
+                <li><span className="text-foreground font-medium">Description</span> — articulating goals clearly enough to prompt useful behaviour</li>
+                <li><span className="text-foreground font-medium">Discernment</span> — accurately assessing AI outputs</li>
+                <li><span className="text-foreground font-medium">Diligence</span> — ethics, transparency, and accountability</li>
               </ul>
             </div>
           </div>
 
           <p className="text-[13px] sm:text-sm font-sans text-muted-foreground italic">
-            Protect the C's. Delegate the D's. That's the shift.
+            Protect the C's. Practise the D's. That's the shift.
           </p>
 
           <PillButton variant="outline" icon={ArrowRight} asChild className="w-full sm:w-auto">
