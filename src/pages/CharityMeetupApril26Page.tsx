@@ -51,10 +51,25 @@ const CharityMeetupApril26Page = () => {
             Charity Meetup London · April 2026
           </p>
           <h1 className="font-serif-pro text-3xl sm:text-4xl md:text-5xl font-semibold italic leading-tight">
-            The Smart Digital Shift
+            <span className="bg-gradient-to-r from-[#FF6200] via-[#FF8A3D] to-[#FFB36B] bg-clip-text text-transparent">
+              The Smart Digital Shift
+            </span>
             <br />
             Your AI starter pack 🌱
           </h1>
+        </div>
+
+        <div className="font-sans text-[15px] sm:text-base md:text-lg text-muted-foreground leading-relaxed space-y-4">
+          <p>
+            Lovely to be in the room with you for{" "}
+            <span className="text-foreground font-medium">Future-Proofing Your Charity</span> at Oliver Wyman, hosted by Dawn Newton.
+            I co-led the <span className="text-foreground font-medium">Smart Digital Shift</span> chat room with David Cobb — and promised to share the resources I mentioned.
+          </p>
+          <p>
+            Below are three things to help your team move from{" "}
+            <em className="text-foreground not-italic font-medium">"AI feels overwhelming"</em>{" "}
+            to <em className="text-foreground not-italic font-medium">"we've actually tried it this week"</em>. No jargon, no hype — just practical, human-first ways in.
+          </p>
         </div>
 
         {/* Limited Offer */}
@@ -90,19 +105,6 @@ const CharityMeetupApril26Page = () => {
             </div>
           </div>
         </button>
-
-        <div className="font-sans text-[15px] sm:text-base md:text-lg text-muted-foreground leading-relaxed space-y-4">
-          <p>
-            Lovely to be in the room with you for{" "}
-            <span className="text-foreground font-medium">Future-Proofing Your Charity</span> at Oliver Wyman, hosted by Dawn Newton.
-            I co-led the <span className="text-foreground font-medium">Smart Digital Shift</span> chat room with David Cobb — and promised to share the resources I mentioned.
-          </p>
-          <p>
-            Below are three things to help your team move from{" "}
-            <em className="text-foreground not-italic font-medium">"AI feels overwhelming"</em>{" "}
-            to <em className="text-foreground not-italic font-medium">"we've actually tried it this week"</em>. No jargon, no hype — just practical, human-first ways in.
-          </p>
-        </div>
 
         {/* Resources */}
         <div className="space-y-4">
@@ -165,10 +167,10 @@ const CharityMeetupApril26Page = () => {
                 What stays human
               </p>
               <ul className="text-[13px] sm:text-sm font-sans text-muted-foreground space-y-1.5 leading-snug">
-                <li><span className="text-foreground font-medium">Connection</span> — relationships and trust</li>
-                <li><span className="text-foreground font-medium">Care</span> — empathy and judgement</li>
-                <li><span className="text-foreground font-medium">Creativity</span> — original thinking and craft</li>
-                <li><span className="text-foreground font-medium">Conviction</span> — values and decisions</li>
+                <li><span className="text-foreground font-medium">Connection</span> — belonging, trust, and rapport</li>
+                <li><span className="text-foreground font-medium">Creativity</span> — judgement, taste, and craft</li>
+                <li><span className="text-foreground font-medium">Curiosity</span> — better questions and reframes</li>
+                <li><span className="text-foreground font-medium">Contribution</span> — purpose and meaning</li>
               </ul>
             </div>
 
