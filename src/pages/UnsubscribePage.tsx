@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { PillButton } from "@/components/ui/pill-button";
 import { Loader2, CheckCircle2, XCircle } from "lucide-react";
 import { Footer } from "@/components/Footer";
-import WhiteLogo from "@/assets/thread-stack-logo-white.png";
+import WhiteLogo from "@/assets/logos/White_TS_Stacked.svg";
 
 type State = "loading" | "valid" | "already" | "invalid" | "submitting" | "done" | "error";
 
