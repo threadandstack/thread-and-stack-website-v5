@@ -71,11 +71,11 @@ const CharityMeetupApril26Page = () => {
                 Charity Meetup attendees · limited offer
               </p>
               <h2 className="font-serif-pro text-xl sm:text-2xl font-semibold italic leading-tight">
-                £100 off a 1:1 AI Power-Hour
+                Pick one workflow that's eating your team's time
               </h2>
               <p className="text-[13px] sm:text-sm font-sans opacity-90">
-                <span className="font-semibold">£395</span> · sixty focused minutes to map your highest-leverage AI moves. Use code{" "}
-                <span className="font-mono font-semibold tracking-wider">CHARITYMEETUP100</span> at checkout for £100 off — first 10 only.
+                We'll spend an hour together and get it running with AI properly. £100 off a Power-Hour below — use code{" "}
+                <span className="font-mono font-semibold tracking-wider">CHARITYMEETUP100</span> at checkout. First 10 only.
               </p>
               <p className="inline-flex items-center gap-1 text-[13px] sm:text-sm font-medium pt-1 group-hover:gap-2 transition-all">
                 Claim your slot <ArrowRight className="w-4 h-4" />
