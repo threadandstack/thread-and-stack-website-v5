@@ -80,22 +80,21 @@ const CharityMeetupApril26Page = () => {
     }
     setIsSubmitting(true);
     try {
-      const { error } = await supabase.functions.invoke("subscribe-newsletter", {
-        body: { email },
+      const { error } = await supabase.from("leads").insert({
+        email,
+        source: "charity-meetup-april26-resources",
+        message: "Unlocked AI starter pack resources",
       });
       if (error) throw error;
       setUnlocked(true);
       try { sessionStorage.setItem(UNLOCK_STORAGE_KEY, "1"); } catch { /* ignore */ }
       toast({ title: "Resources unlocked", description: "Thanks — links are open below." });
     } catch (error: any) {
-      const alreadySubbed = error?.message?.toLowerCase?.().includes("already");
-      if (alreadySubbed) {
-        setUnlocked(true);
-        try { sessionStorage.setItem(UNLOCK_STORAGE_KEY, "1"); } catch { /* ignore */ }
-        toast({ title: "Welcome back", description: "You're already on the list — resources unlocked." });
-      } else {
-        toast({ title: "Something went wrong", description: "Please try again.", variant: "destructive" });
-      }
+      console.error("Lead capture failed:", error);
+      // Fail open — still unlock so attendees aren't blocked.
+      setUnlocked(true);
+      try { sessionStorage.setItem(UNLOCK_STORAGE_KEY, "1"); } catch { /* ignore */ }
+      toast({ title: "Resources unlocked", description: "Links are open below." });
     } finally {
       setIsSubmitting(false);
     }
