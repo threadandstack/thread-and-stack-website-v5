@@ -175,10 +175,82 @@ const CharityMeetupApril26Page = () => {
           </div>
         </button>
 
+        {/* Email gate (only shown until unlocked) */}
+        {!unlocked && (
+          <div className="rounded-xl border border-[hsl(var(--accent))]/30 bg-[hsl(var(--accent))]/5 p-5 sm:p-6 space-y-4">
+            <div className="flex items-start gap-3">
+              <div className="shrink-0 w-10 h-10 rounded-lg bg-[hsl(var(--accent))]/15 text-[hsl(var(--accent))] flex items-center justify-center">
+                <Lock className="w-5 h-5" />
+              </div>
+              <div className="space-y-1">
+                <h2 className="font-serif-pro text-lg sm:text-xl font-semibold italic leading-tight">
+                  Join our mailing list to access these free resources
+                </h2>
+                <p className="text-[14px] sm:text-[15px] text-muted-foreground font-sans leading-relaxed">
+                  Pop your email in once and all three resources unlock below. No spam — occasional, useful notes for charity teams.
+                </p>
+              </div>
+            </div>
+            <form onSubmit={handleUnlock} className="relative space-y-3">
+              <Input
+                type="email"
+                placeholder="your@email.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="bg-background"
+              />
+              <div className="flex items-start gap-2">
+                <Checkbox
+                  id="charity-meetup-consent"
+                  checked={consent}
+                  onCheckedChange={(checked) => setConsent(checked === true)}
+                  className="mt-0.5"
+                />
+                <Label
+                  htmlFor="charity-meetup-consent"
+                  className="text-xs sm:text-sm text-muted-foreground cursor-pointer leading-tight"
+                >
+                  I agree to be emailed by Thread &amp; Stack
+                </Label>
+              </div>
+              <PillButton
+                type="submit"
+                icon={ArrowRight}
+                disabled={isSubmitting || !consent}
+                className="w-full sm:w-auto"
+              >
+                {isSubmitting ? "Unlocking…" : "Unlock resources"}
+              </PillButton>
+              {/* Honeypot */}
+              <div className="absolute -left-[9999px]" aria-hidden="true">
+                <Input
+                  type="text"
+                  name="website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
+                />
+              </div>
+            </form>
+            <p className="text-[11px] text-muted-foreground/70">
+              Unsubscribe any time. We never share your data.
+            </p>
+          </div>
+        )}
+
         {/* Resources */}
         <div className="space-y-4">
+          {unlocked && (
+            <div className="inline-flex items-center gap-2 text-xs font-sans text-[hsl(var(--accent))]">
+              <Check className="w-3.5 h-3.5" />
+              Resources unlocked for this session
+            </div>
+          )}
           {RESOURCES.map((r) => {
             const Icon = r.icon;
+            const isLocked = !unlocked;
             return (
               <div key={r.title} className="rounded-xl border bg-card p-5 sm:p-6 space-y-4">
                 <div className="flex items-start gap-3">
@@ -195,11 +267,18 @@ const CharityMeetupApril26Page = () => {
                   </div>
                 </div>
                 {r.available ? (
-                  <PillButton asChild icon={ArrowRight} className="w-full sm:w-auto">
-                    <a href={r.url} target="_blank" rel="noopener noreferrer">
-                      {r.cta}
-                    </a>
-                  </PillButton>
+                  isLocked ? (
+                    <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-sans text-muted-foreground border border-dashed border-border rounded-full px-3 py-1.5">
+                      <Lock className="w-3.5 h-3.5" />
+                      Join the list above to unlock
+                    </div>
+                  ) : (
+                    <PillButton asChild icon={ArrowRight} className="w-full sm:w-auto">
+                      <a href={r.url} target="_blank" rel="noopener noreferrer">
+                        {r.cta}
+                      </a>
+                    </PillButton>
+                  )
                 ) : (
                   <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-sans text-muted-foreground border border-dashed border-border rounded-full px-3 py-1.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-[hsl(var(--accent))] animate-pulse" />
