@@ -1,11 +1,18 @@
 import { useState, useEffect } from "react";
-import { Compass, Linkedin, ArrowRight, GraduationCap, Zap, FileStack, Sparkles, Brain, Mail } from "lucide-react";
+import { Compass, Linkedin, ArrowRight, GraduationCap, Zap, FileStack, Sparkles, Brain, Mail, Lock, Check } from "lucide-react";
 import { PillButton } from "@/components/ui/pill-button";
 import { Footer } from "@/components/Footer";
 import { PowerHourBookingDrawer } from "@/components/PowerHourBookingDrawer";
 import { PaymentTestModeBanner } from "@/components/PaymentTestModeBanner";
+import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
+import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 import WhiteLogo from "@/assets/logos/White_TS_Stacked.svg";
 import avatarPhoto from "@/assets/brendan-avatar.webp";
+
+const UNLOCK_STORAGE_KEY = "charity-meetup-april26-resources-unlocked";
 
 const RESOURCES = [
   {
