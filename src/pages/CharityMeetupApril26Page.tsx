@@ -43,10 +43,14 @@ const RESOURCES = [
 
 const CharityMeetupApril26Page = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [unlocked, setUnlocked] = useState(false);
+  const [email, setEmail] = useState("");
+  const [consent, setConsent] = useState(false);
+  const [honeypot, setHoneypot] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
 
   // Auto-open the booking drawer when the URL has ?book=1 (or ?book=true).
-  // This lets us share a unique direct link, e.g. /charity-meetup-april26?book=1
-  // Optional: ?coupon=CHARITYMEETUP100 (defaults to that anyway).
   useEffect(() => {
     if (typeof window === "undefined") return;
     const params = new URLSearchParams(window.location.search);
@@ -54,7 +58,48 @@ const CharityMeetupApril26Page = () => {
     if (book === "1" || book === "true" || book === "yes") {
       setDrawerOpen(true);
     }
+    try {
+      if (sessionStorage.getItem(UNLOCK_STORAGE_KEY) === "1") {
+        setUnlocked(true);
+      }
+    } catch {
+      // ignore
+    }
   }, []);
+
+  const handleUnlock = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (honeypot) return;
+    if (!consent) {
+      toast({
+        title: "Consent required",
+        description: "Please tick the box to receive emails.",
+        variant: "destructive",
+      });
+      return;
+    }
+    setIsSubmitting(true);
+    try {
+      const { error } = await supabase.functions.invoke("subscribe-newsletter", {
+        body: { email },
+      });
+      if (error) throw error;
+      setUnlocked(true);
+      try { sessionStorage.setItem(UNLOCK_STORAGE_KEY, "1"); } catch { /* ignore */ }
+      toast({ title: "Resources unlocked", description: "Thanks — links are open below." });
+    } catch (error: any) {
+      const alreadySubbed = error?.message?.toLowerCase?.().includes("already");
+      if (alreadySubbed) {
+        setUnlocked(true);
+        try { sessionStorage.setItem(UNLOCK_STORAGE_KEY, "1"); } catch { /* ignore */ }
+        toast({ title: "Welcome back", description: "You're already on the list — resources unlocked." });
+      } else {
+        toast({ title: "Something went wrong", description: "Please try again.", variant: "destructive" });
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   return (
     <div className="dark min-h-screen bg-background text-foreground">
       <PaymentTestModeBanner />
