@@ -349,7 +349,7 @@ const UnleashYourTeamPage = () => {
         <div className="border-t border-border pt-6 sm:pt-8 space-y-4 sm:space-y-5">
           <h2 className="font-serif-pro text-xl sm:text-2xl font-semibold italic">Let's stay connected</h2>
           <p className="font-sans text-sm sm:text-base text-muted-foreground">
-            If you'd like a hand piloting AI in your team — narrative, ops, or building custom assistants on Notion — I'd love to chat. No pressure, just useful conversation.
+            If you'd like a hand piloting AI in your team, whether that's narrative, ops, or building custom assistants on Notion, I'd love to chat. No pressure, just useful conversation.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
             <PillButton variant="indigo" icon={Linkedin} asChild className="w-full sm:w-auto">
