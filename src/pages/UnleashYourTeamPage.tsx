@@ -117,7 +117,7 @@ const UnleashYourTeamPage = () => {
               Unleash your team's power
             </span>
             <br />
-            <span className="text-xl">AI that frees you to be strategic & creative 🌱</span>
+            <span className="text-3xl">AI that frees you to be strategic & creative 🌱</span>
           </h1>
         </div>
 
