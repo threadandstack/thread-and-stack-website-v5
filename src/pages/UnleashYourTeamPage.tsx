@@ -192,9 +192,12 @@ const UnleashYourTeamPage = () => {
                 <p className="text-[13px] sm:text-sm font-sans opacity-90">
                   Pick a workflow that's eating your team's time, and we'll spend an hour together getting it running with AI properly.
                 </p>
-                <p className="inline-flex items-center gap-1 text-sm font-medium pt-1 group-hover:gap-2 transition-all">
-                  Claim your slot <ArrowRight className="w-4 h-4" />
-                </p>
+                <span className="mt-2 inline-flex items-center self-start rounded-full bg-[hsl(var(--background))] text-[hsl(var(--foreground))] px-5 py-2 text-sm font-sans font-medium shadow-[0_2px_8px_rgba(0,0,0,0.15)] transition-all">
+                  <span className="w-0 h-5 flex items-center justify-center overflow-hidden transition-all duration-300 opacity-0 scale-75 group-hover:w-5 group-hover:opacity-100 group-hover:scale-100 group-hover:mr-1.5">
+                    <ArrowRight className="w-4 h-4 shrink-0" />
+                  </span>
+                  Claim your slot
+                </span>
               </div>
             </div>
           </div>
