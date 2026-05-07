@@ -153,50 +153,54 @@ const UnleashYourTeamPage = () => {
           <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-background z-10" />
           <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-background z-10" />
 
-          <div className="relative p-5 sm:p-6">
+          <div className="relative p-5 sm:p-7">
             {/* Solid inner frame */}
             <div className="absolute inset-3 rounded-xl border border-[hsl(var(--background))]/40 pointer-events-none" />
 
-            <div className="relative flex flex-col sm:flex-row items-stretch gap-3 sm:gap-0">
+            <div className="relative flex flex-col sm:flex-row items-stretch gap-4 sm:gap-0">
               {/* Left — offer value */}
-              <div className="flex-1 flex flex-col items-center justify-center text-center sm:text-left sm:items-start sm:pr-5">
-                <div className="flex items-center gap-1.5 text-[11px] sm:text-xs font-sans uppercase tracking-widest opacity-80">
-                  <Scissors className="w-3 h-3" />
-                  <span>For impact-focused teams</span>
+              <div className="flex-1 flex flex-col items-center sm:items-start justify-between text-center sm:text-left sm:pr-6 gap-4">
+                <div className="flex flex-col items-center sm:items-start">
+                  <div className="flex items-center gap-1.5 text-[11px] sm:text-xs font-sans uppercase tracking-widest opacity-80">
+                    <Scissors className="w-3 h-3" />
+                    <span>For impact-focused teams</span>
+                  </div>
+                  <span className="mt-1 text-5xl sm:text-8xl font-extrabold italic tracking-tight font-serif-pro leading-none">
+                    15%
+                  </span>
+                  <h2 className="mt-2 font-serif-pro text-lg sm:text-xl font-semibold italic leading-tight">
+                    AI Power-Hour
+                  </h2>
                 </div>
-                <div className="mt-2 flex items-baseline gap-1 font-serif-pro">
-                  <span className="text-3xl font-extrabold tracking-tight font-serif-pro italic sm:text-8xl">15%</span>
-                </div>
-                <h2 className="mt-1 font-serif-pro text-lg sm:text-xl font-semibold italic leading-tight">
-                  AI Power-Hour
-                </h2>
-                <div className="mt-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-[hsl(var(--background))]/40 bg-[hsl(var(--background))]/80 text-[hsl(var(--foreground))]">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-[hsl(var(--background))]/40 bg-[hsl(var(--background))]/80 text-[hsl(var(--foreground))]">
                   <span className="text-[10px] uppercase tracking-wider opacity-70">Voucher</span>
                   <span className="font-mono font-bold tracking-wider text-sm">IMPACT15</span>
                 </div>
               </div>
 
               {/* Divider */}
-              <div className="hidden sm:flex flex-col items-center justify-center px-5">
+              <div className="hidden sm:flex flex-col items-center justify-center px-6">
                 <div className="w-px h-full border-l border-[hsl(var(--background))]/40" />
               </div>
-              <div className="flex sm:hidden items-center justify-center py-1">
+              <div className="flex sm:hidden items-center justify-center">
                 <div className="w-full h-px border-t border-[hsl(var(--background))]/40" />
               </div>
 
               {/* Right — details + CTA */}
-              <div className="flex-[1.5] flex flex-col justify-center space-y-1.5 sm:pl-5">
-                <p className="text-sm sm:text-base font-sans font-medium opacity-95">
-                  One hour, one workflow. Normally £395, yours for <span className="font-bold">£335.75</span>.
-                </p>
-                <p className="text-[13px] sm:text-sm font-sans opacity-90">
-                  Pick a workflow that's eating your team's time, and we'll spend an hour together getting it running with AI properly.
-                </p>
-                <span className="mt-2 inline-flex items-center self-start rounded-full bg-[hsl(var(--background))] text-[hsl(var(--foreground))] px-5 py-2 text-sm font-sans font-medium shadow-[0_2px_8px_rgba(0,0,0,0.15)] transition-all">
-                  <span className="w-0 h-5 flex items-center justify-center overflow-hidden transition-all duration-300 opacity-0 scale-75 group-hover:w-5 group-hover:opacity-100 group-hover:scale-100 group-hover:mr-1.5">
+              <div className="flex-[1.4] flex flex-col justify-between gap-4 sm:pl-6">
+                <div className="space-y-2">
+                  <p className="text-sm sm:text-base font-sans font-medium opacity-95">
+                    One hour, one workflow. Normally £395, yours for <span className="font-bold">£335.75</span>.
+                  </p>
+                  <p className="text-[13px] sm:text-sm font-sans opacity-90 leading-relaxed">
+                    Pick a workflow that's eating your team's time, and we'll spend an hour together getting it running with AI properly.
+                  </p>
+                </div>
+                <span className="inline-flex items-center self-start sm:self-end rounded-full bg-[hsl(var(--background))] text-[hsl(var(--foreground))] pl-5 pr-5 py-2 text-sm font-sans font-medium shadow-[0_2px_8px_rgba(0,0,0,0.15)] transition-all">
+                  Claim your slot
+                  <span className="w-0 h-5 flex items-center justify-center overflow-hidden transition-all duration-300 opacity-0 scale-75 group-hover:w-5 group-hover:opacity-100 group-hover:scale-100 group-hover:ml-1.5">
                     <ArrowRight className="w-4 h-4 shrink-0" />
                   </span>
-                  Claim your slot
                 </span>
               </div>
             </div>
