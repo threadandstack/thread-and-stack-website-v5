@@ -328,10 +328,10 @@ const UnleashYourTeamPage = () => {
                 How to operate with AI
               </p>
               <ul className="text-[13px] sm:text-sm font-sans text-muted-foreground space-y-1.5 leading-snug">
-                <li><span className="text-foreground font-medium">Delegation</span> — knowing whether, when, and how to engage AI</li>
-                <li><span className="text-foreground font-medium">Description</span> — articulating goals clearly enough to prompt useful behaviour</li>
-                <li><span className="text-foreground font-medium">Discernment</span> — accurately assessing AI outputs</li>
-                <li><span className="text-foreground font-medium">Diligence</span> — ethics, transparency, and accountability</li>
+                <li><span className="text-foreground font-medium">Delegation</span>: knowing whether, when, and how to engage AI</li>
+                <li><span className="text-foreground font-medium">Description</span>: articulating goals clearly enough to prompt useful behaviour</li>
+                <li><span className="text-foreground font-medium">Discernment</span>: accurately assessing AI outputs</li>
+                <li><span className="text-foreground font-medium">Diligence</span>: ethics, transparency, and accountability</li>
               </ul>
             </div>
           </div>
