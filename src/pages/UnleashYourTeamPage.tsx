@@ -313,10 +313,10 @@ const UnleashYourTeamPage = () => {
                 What stays human
               </p>
               <ul className="text-[13px] sm:text-sm font-sans text-muted-foreground space-y-1.5 leading-snug">
-                <li><span className="text-foreground font-medium">Connection</span> — belonging, trust, and rapport</li>
-                <li><span className="text-foreground font-medium">Creativity</span> — judgement, taste, and craft</li>
-                <li><span className="text-foreground font-medium">Curiosity</span> — better questions and reframes</li>
-                <li><span className="text-foreground font-medium">Contribution</span> — purpose and meaning</li>
+                <li><span className="text-foreground font-medium">Connection</span>: belonging, trust, and rapport</li>
+                <li><span className="text-foreground font-medium">Creativity</span>: judgement, taste, and craft</li>
+                <li><span className="text-foreground font-medium">Curiosity</span>: better questions and reframes</li>
+                <li><span className="text-foreground font-medium">Contribution</span>: purpose and meaning</li>
               </ul>
             </div>
 
