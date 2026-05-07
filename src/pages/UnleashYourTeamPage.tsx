@@ -186,7 +186,7 @@ const UnleashYourTeamPage = () => {
                   Join our mailing list to access these free resources
                 </h2>
                 <p className="text-[14px] sm:text-[15px] text-muted-foreground font-sans leading-relaxed">
-                  Pop your email in once and all three resources unlock below. No spam — occasional, useful notes for purpose-driven teams.
+                  Pop your email in once and all three resources unlock below. No spam, just occasional, useful notes for purpose-driven teams.
                 </p>
               </div>
             </div>
