@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Linkedin, ArrowRight, GraduationCap, Zap, FileStack, Sparkles, Brain, Mail, Lock, Check } from "lucide-react";
+import { Linkedin, ArrowRight, GraduationCap, Zap, FileStack, Sparkles, Brain, Mail, Lock, Check, Percent, Scissors } from "lucide-react";
 import { PillButton } from "@/components/ui/pill-button";
 import { Footer } from "@/components/Footer";
 import { PowerHourBookingDrawer } from "@/components/PowerHourBookingDrawer";
@@ -143,36 +143,61 @@ const UnleashYourTeamPage = () => {
           </p>
         </div>
 
-        {/* Limited Offer */}
+        {/* Limited Offer — Voucher */}
         <button
           type="button"
           onClick={() => setDrawerOpen(true)}
-          className="group block w-full text-left relative overflow-hidden rounded-2xl bg-gradient-to-br from-[hsl(var(--accent))] to-[hsl(var(--accent))]/80 text-[hsl(var(--accent-foreground))] p-5 sm:p-6 shadow-[0_20px_60px_-20px_hsl(var(--accent)/0.5)] transition-transform hover:-translate-y-0.5"
+          className="group block w-full text-left relative overflow-hidden rounded-2xl bg-gradient-to-br from-[hsl(var(--accent))] to-[hsl(var(--accent))]/80 text-[hsl(var(--accent-foreground))] shadow-[0_20px_60px_-20px_hsl(var(--accent)/0.5)] transition-transform hover:-translate-y-0.5"
         >
-          <div className="pointer-events-none absolute -top-16 -right-16 w-48 h-48 rounded-full bg-white/15 blur-3xl" />
-          <div className="relative flex items-start gap-4">
-            <div className="shrink-0 w-10 h-10 rounded-full bg-white/15 flex items-center justify-center">
-              <Sparkles className="w-5 h-5" />
-            </div>
-            <div className="space-y-1.5 flex-1">
-              <p className="text-[11px] sm:text-xs font-sans uppercase tracking-widest opacity-80">
-                For impact-focused teams · 15% off
-              </p>
-              <h2 className="font-serif-pro text-xl sm:text-2xl font-semibold italic leading-tight">
-                AI Power-Hour · 15% off
-              </h2>
-              <p className="text-[13px] sm:text-sm font-sans font-medium opacity-95">
-                One hour, one workflow. Normally £395, yours for £335.75.
-              </p>
-              <p className="text-[13px] sm:text-sm font-sans opacity-90">
-                Pick a workflow that's eating your team's time, and we'll spend an hour together getting it running with AI properly.
-              </p>
-              <p className="text-[13px] sm:text-sm font-sans opacity-90 pt-0.5">
-                Voucher: <span className="font-mono font-semibold tracking-wider">IMPACT15</span>
-              </p>
-              <p className="inline-flex items-center gap-1 text-[13px] sm:text-sm font-medium pt-1 group-hover:gap-2 transition-all">
-                Claim your slot <ArrowRight className="w-4 h-4" />
-              </p>
+          {/* Side notches */}
+          <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-background z-10" />
+          <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-background z-10" />
+
+          <div className="relative p-5 sm:p-6">
+            {/* Dashed inner frame */}
+            <div className="absolute inset-3 rounded-xl border-2 border-dashed border-white/30 pointer-events-none" />
+
+            <div className="relative flex flex-col sm:flex-row items-stretch gap-3 sm:gap-0">
+              {/* Left — offer value */}
+              <div className="flex-1 flex flex-col items-center justify-center text-center sm:text-left sm:items-start sm:pr-5">
+                <div className="flex items-center gap-1.5 text-[11px] sm:text-xs font-sans uppercase tracking-widest opacity-80">
+                  <Scissors className="w-3 h-3" />
+                  <span>For impact-focused teams</span>
+                </div>
+                <div className="mt-2 flex items-baseline gap-1.5">
+                  <Percent className="w-6 h-6 sm:w-7 sm:h-7 opacity-90" />
+                  <span className="text-3xl sm:text-4xl font-extrabold font-sans tracking-tight">15</span>
+                  <span className="text-lg sm:text-xl font-bold font-sans">% OFF</span>
+                </div>
+                <h2 className="mt-1 font-serif-pro text-lg sm:text-xl font-semibold italic leading-tight">
+                  AI Power-Hour
+                </h2>
+                <div className="mt-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border-2 border-dashed border-white/40 bg-white/10">
+                  <span className="text-[10px] uppercase tracking-wider opacity-70">Voucher</span>
+                  <span className="font-mono font-bold tracking-wider text-sm">IMPACT15</span>
+                </div>
+              </div>
+
+              {/* Divider */}
+              <div className="hidden sm:flex flex-col items-center justify-center px-5">
+                <div className="w-px h-full border-l-2 border-dashed border-white/40" />
+              </div>
+              <div className="flex sm:hidden items-center justify-center py-1">
+                <div className="w-full h-px border-t-2 border-dashed border-white/40" />
+              </div>
+
+              {/* Right — details + CTA */}
+              <div className="flex-[1.5] flex flex-col justify-center space-y-1.5 sm:pl-5">
+                <p className="text-sm sm:text-base font-sans font-medium opacity-95">
+                  One hour, one workflow. Normally £395, yours for <span className="font-bold">£335.75</span>.
+                </p>
+                <p className="text-[13px] sm:text-sm font-sans opacity-90">
+                  Pick a workflow that's eating your team's time, and we'll spend an hour together getting it running with AI properly.
+                </p>
+                <p className="inline-flex items-center gap-1 text-sm font-medium pt-1 group-hover:gap-2 transition-all">
+                  Claim your slot <ArrowRight className="w-4 h-4" />
+                </p>
+              </div>
             </div>
           </div>
         </button>
