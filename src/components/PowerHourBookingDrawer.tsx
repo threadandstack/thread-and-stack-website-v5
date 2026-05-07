@@ -99,8 +99,9 @@ export function PowerHourBookingDrawer({
   }, [clientSecret]);
 
   const couponNormalized = form.couponCode.trim().toUpperCase();
-  const couponLooksValid = couponNormalized === "CHARITYMEETUP100";
-  const displayedTotal = couponLooksValid ? FULL_PRICE - COUPON_DISCOUNT : FULL_PRICE;
+  const matchedCoupon = COUPONS[couponNormalized] ?? null;
+  const couponLooksValid = matchedCoupon !== null;
+  const displayedTotal = applyCoupon(matchedCoupon);
 
   const fetchClientSecret = useCallback(async (): Promise<string> => {
     if (clientSecret) return clientSecret;
