@@ -17,7 +17,7 @@ const UNLOCK_STORAGE_KEY = "unleash-your-team-resources-unlocked";
 const RESOURCES = [
   {
     title: "AI Training Resources",
-    description: "A curated Notion hub of AI training links for purpose-driven teams — courses, primers, and trusted starting points to build confidence with the tools.",
+    description: "A curated Notion hub of AI training links for purpose-driven teams: courses, primers, and trusted starting points to build confidence with the tools.",
     icon: GraduationCap,
     cta: "Open the resource hub",
     url: "https://threadandstack.notion.site/AI-Resources-for-Nonprofits-3518863b87d4802c98f0eed5afc6ecea",
@@ -25,7 +25,7 @@ const RESOURCES = [
   },
   {
     title: "Quick Wins With AI",
-    description: "Small, immediate AI moves your team can apply this week — drafting, summarising, repurposing, and reclaiming time from admin chaos.",
+    description: "Small, immediate AI moves your team can apply this week: drafting, summarising, repurposing, and reclaiming time from admin chaos.",
     icon: Zap,
     cta: "Open quick wins",
     url: "https://threadandstack.notion.site/Quick-Wins-With-AI-3518863b87d480f9aaa8def89f7f1726",
@@ -33,7 +33,7 @@ const RESOURCES = [
   },
   {
     title: "Prompts & Skills for AI",
-    description: "Prompt and workflow templates designed for mission-led teams — fundraising, comms, and operations — so you can practise the skills, not start from scratch.",
+    description: "Prompt and workflow templates designed for mission-led teams across fundraising, comms, and operations, so you can practise the skills without starting from scratch.",
     icon: FileStack,
     cta: "Open prompts & skills",
     url: "https://threadandstack.notion.site/Prompts-Skills-for-AI-3518863b87d480659135cc9c9f508008",
@@ -123,16 +123,16 @@ const UnleashYourTeamPage = () => {
 
         <div className="font-sans text-[15px] sm:text-base md:text-lg text-muted-foreground leading-relaxed space-y-4">
           <p>
-            Mission-led teams carry a quiet <span className="text-foreground font-medium">creative tax</span> — the admin chaos, the inbox sprawl, the half-finished docs that swallow the time you'd rather spend on strategy, story and the work that actually moves the needle.
+            Mission-led teams carry a quiet <span className="text-foreground font-medium">creative tax</span>: the admin chaos, the inbox sprawl, the half-finished docs that swallow the time you'd rather spend on strategy, story, and the work that actually moves the needle.
           </p>
           <p>
-            We help purpose-driven teams adopt practical <span className="text-foreground font-medium">AI workflows</span> that take that weight off — so your people are freed up to do their most strategic and creative work, not replaced by a machine.
+            We help purpose-driven teams adopt practical <span className="text-foreground font-medium">AI workflows</span> that take that weight off, so your people are freed up to do their most strategic and creative work, not replaced by a machine.
           </p>
           <p>
             Below are three free resources to get you started: a curated set of AI training links, quick wins your team can apply this week, and a library of prompts built for mission-led work.
           </p>
           <p>
-            I've also included a discounted 1:1 Power-Hour for impact-focused teams — should you want some hands-on support.
+            I've also included a discounted 1:1 Power-Hour for impact-focused teams, should you want some hands-on support.
           </p>
           <p>
             Warm wishes,<br />
@@ -153,16 +153,16 @@ const UnleashYourTeamPage = () => {
             </div>
             <div className="space-y-1.5 flex-1">
               <p className="text-[11px] sm:text-xs font-sans uppercase tracking-widest opacity-80">
-                For impact-focused teams — 15% off
+                For impact-focused teams · 15% off
               </p>
               <h2 className="font-serif-pro text-xl sm:text-2xl font-semibold italic leading-tight">
                 AI Power-Hour · 15% off
               </h2>
               <p className="text-[13px] sm:text-sm font-sans font-medium opacity-95">
-                One hour, one workflow — normally £395, yours for £335.75.
+                One hour, one workflow. Normally £395, yours for £335.75.
               </p>
               <p className="text-[13px] sm:text-sm font-sans opacity-90">
-                Pick a workflow that's eating your team's time, and we'll spend an hour together to get it running with AI properly.
+                Pick a workflow that's eating your team's time, and we'll spend an hour together getting it running with AI properly.
               </p>
               <p className="text-[13px] sm:text-sm font-sans opacity-90 pt-0.5">
                 Voucher: <span className="font-mono font-semibold tracking-wider">IMPACT15</span>
@@ -186,7 +186,7 @@ const UnleashYourTeamPage = () => {
                   Join our mailing list to access these free resources
                 </h2>
                 <p className="text-[14px] sm:text-[15px] text-muted-foreground font-sans leading-relaxed">
-                  Pop your email in once and all three resources unlock below. No spam — occasional, useful notes for purpose-driven teams.
+                  Pop your email in once and all three resources unlock below. No spam, just occasional, useful notes for purpose-driven teams.
                 </p>
               </div>
             </div>
@@ -280,7 +280,7 @@ const UnleashYourTeamPage = () => {
                 ) : (
                   <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-sans text-muted-foreground border border-dashed border-border rounded-full px-3 py-1.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-[hsl(var(--accent))] animate-pulse" />
-                    {r.cta} — I'll share this shortly
+                    {r.cta} · I'll share this shortly
                   </div>
                 )}
               </div>
@@ -299,7 +299,7 @@ const UnleashYourTeamPage = () => {
                 How I think about AI use
               </h2>
               <p className="text-[14px] sm:text-[15px] text-muted-foreground font-sans leading-relaxed">
-                Two simple frameworks I lean on so AI stays a tool that serves the mission — not the other way round.
+                Two simple frameworks I lean on so AI stays a tool that serves the mission, not the other way round.
               </p>
             </div>
           </div>
@@ -313,10 +313,10 @@ const UnleashYourTeamPage = () => {
                 What stays human
               </p>
               <ul className="text-[13px] sm:text-sm font-sans text-muted-foreground space-y-1.5 leading-snug">
-                <li><span className="text-foreground font-medium">Connection</span> — belonging, trust, and rapport</li>
-                <li><span className="text-foreground font-medium">Creativity</span> — judgement, taste, and craft</li>
-                <li><span className="text-foreground font-medium">Curiosity</span> — better questions and reframes</li>
-                <li><span className="text-foreground font-medium">Contribution</span> — purpose and meaning</li>
+                <li><span className="text-foreground font-medium">Connection</span>: belonging, trust, and rapport</li>
+                <li><span className="text-foreground font-medium">Creativity</span>: judgement, taste, and craft</li>
+                <li><span className="text-foreground font-medium">Curiosity</span>: better questions and reframes</li>
+                <li><span className="text-foreground font-medium">Contribution</span>: purpose and meaning</li>
               </ul>
             </div>
 
@@ -328,10 +328,10 @@ const UnleashYourTeamPage = () => {
                 How to operate with AI
               </p>
               <ul className="text-[13px] sm:text-sm font-sans text-muted-foreground space-y-1.5 leading-snug">
-                <li><span className="text-foreground font-medium">Delegation</span> — knowing whether, when, and how to engage AI</li>
-                <li><span className="text-foreground font-medium">Description</span> — articulating goals clearly enough to prompt useful behaviour</li>
-                <li><span className="text-foreground font-medium">Discernment</span> — accurately assessing AI outputs</li>
-                <li><span className="text-foreground font-medium">Diligence</span> — ethics, transparency, and accountability</li>
+                <li><span className="text-foreground font-medium">Delegation</span>: knowing whether, when, and how to engage AI</li>
+                <li><span className="text-foreground font-medium">Description</span>: articulating goals clearly enough to prompt useful behaviour</li>
+                <li><span className="text-foreground font-medium">Discernment</span>: accurately assessing AI outputs</li>
+                <li><span className="text-foreground font-medium">Diligence</span>: ethics, transparency, and accountability</li>
               </ul>
             </div>
           </div>
@@ -349,7 +349,7 @@ const UnleashYourTeamPage = () => {
         <div className="border-t border-border pt-6 sm:pt-8 space-y-4 sm:space-y-5">
           <h2 className="font-serif-pro text-xl sm:text-2xl font-semibold italic">Let's stay connected</h2>
           <p className="font-sans text-sm sm:text-base text-muted-foreground">
-            If you'd like a hand piloting AI in your team — narrative, ops, or building custom assistants on Notion — I'd love to chat. No pressure, just useful conversation.
+            If you'd like a hand piloting AI in your team, whether that's narrative, ops, or building custom assistants on Notion, I'd love to chat. No pressure, just useful conversation.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
             <PillButton variant="indigo" icon={Linkedin} asChild className="w-full sm:w-auto">
