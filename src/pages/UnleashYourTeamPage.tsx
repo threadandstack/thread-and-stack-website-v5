@@ -123,10 +123,13 @@ const UnleashYourTeamPage = () => {
 
         <div className="font-sans text-[15px] sm:text-base md:text-lg text-muted-foreground leading-relaxed space-y-4">
           <p>
-            Mission-led teams carry a quiet <span className="text-foreground font-medium">creative tax</span>: the admin chaos, the inbox sprawl, the half-finished docs that swallow the time you'd rather spend on strategy, story, and the work that actually moves the needle.
+            Mission-led teams carry a quiet <span className="text-foreground font-medium">creative tax</span>: the admin chaos, the inbox sprawl, the half-finished docs that swallow the time you'd rather spend on strategy, story, and the work that actually moves the needle. It's the visible symptom of a deeper cognitive load.
           </p>
           <p>
-            We help purpose-driven teams adopt practical <span className="text-foreground font-medium">AI workflows</span> that take that weight off, so your people are freed up to do their most strategic and creative work, not replaced by a machine.
+            The barrier to AI actually relieving that load is what we call the <span className="text-foreground font-medium">context wall</span>. Your team has the ingredients for good decisions: notes, project history, client nuance, the why behind the work. But it's scattered across tools, docs, and threads, so the model never gets what it needs at the moment you need it.
+          </p>
+          <p>
+            We help purpose-driven teams adopt practical <span className="text-foreground font-medium">AI workflows</span> that bridge that wall, turning messy knowledge into structured context, so your people are freed up to do their most strategic and creative work, not replaced by a machine.
           </p>
           <p>
             Below are three free resources to get you started: a curated set of AI training links, quick wins your team can apply this week, and a library of prompts built for mission-led work.
