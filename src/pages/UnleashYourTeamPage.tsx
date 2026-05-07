@@ -299,7 +299,7 @@ const UnleashYourTeamPage = () => {
                 How I think about AI use
               </h2>
               <p className="text-[14px] sm:text-[15px] text-muted-foreground font-sans leading-relaxed">
-                Two simple frameworks I lean on so AI stays a tool that serves the mission — not the other way round.
+                Two simple frameworks I lean on so AI stays a tool that serves the mission, not the other way round.
               </p>
             </div>
           </div>
