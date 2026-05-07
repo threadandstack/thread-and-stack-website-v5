@@ -171,14 +171,14 @@ Deno.serve(async (req) => {
       ...(discounts ? { discounts } : { allow_promotion_codes: false }),
       metadata: {
         booking_id: booking.id,
-        coupon_code: couponValid ? couponNormalized : "",
+        coupon_code: couponConfig ? couponNormalized : "",
         source: data.source,
         name: data.name,
       },
       payment_intent_data: {
         metadata: {
           booking_id: booking.id,
-          coupon_code: couponValid ? couponNormalized : "",
+          coupon_code: couponConfig ? couponNormalized : "",
         },
       },
     });
