@@ -129,6 +129,8 @@ const App = () => (
             <Route path="/onboarding/notionutopia" element={<NotionUtopiaPage />} />
             <Route path="/Charity-Meetup-April26" element={<CharityMeetupApril26Page />} />
             <Route path="/charity-meetup-april26" element={<CharityMeetupApril26Page />} />
+            <Route path="/Unleash-Your-Team" element={<UnleashYourTeamPage />} />
+            <Route path="/unleash-your-team" element={<UnleashYourTeamPage />} />
             <Route path="/power-hour/thank-you" element={<PowerHourThankYouPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
