@@ -164,9 +164,9 @@ const UnleashYourTeamPage = () => {
                   <Scissors className="w-3 h-3" />
                   <span>For impact-focused teams</span>
                 </div>
-                <div className="mt-2 flex items-baseline gap-1.5">
+                <div className="mt-2 flex items-baseline gap-1.5 font-serif text-2xl">
                   <Percent className="w-6 h-6 sm:w-7 sm:h-7 opacity-90" />
-                  <span className="text-3xl sm:text-4xl font-extrabold font-sans tracking-tight">15</span>
+                  <span className="text-3xl font-extrabold tracking-tight font-serif text-center sm:text-6xl">15</span>
                   <span className="text-lg sm:text-xl font-bold font-sans">% OFF</span>
                 </div>
                 <h2 className="mt-1 font-serif-pro text-lg sm:text-xl font-semibold italic leading-tight">
