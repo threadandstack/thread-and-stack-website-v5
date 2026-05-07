@@ -129,13 +129,13 @@ const UnleashYourTeamPage = () => {
             The barrier to AI actually relieving that load is what we call the <span className="text-foreground font-medium">context wall</span>. Your team has the ingredients for good decisions: notes, project history, client nuance, the why behind the work. But it's scattered across tools, docs, and threads, so the model never gets what it needs at the moment you need it.
           </p>
           <p>
-            We help purpose-driven teams adopt practical <span className="text-foreground font-medium">AI workflows</span> that bridge that wall, turning messy knowledge into structured context, so your people are freed up to do their most strategic and creative work, not replaced by a machine.
+            We help purpose-driven teams adopt practical <span className="text-foreground font-medium">AI workflows</span> that bridge the context wall, so your people are freed up to do their most strategic and creative work, not replaced by a machine.
           </p>
           <p>
-            Below are three free resources to get you started: a curated set of AI training links, quick wins your team can apply this week, and a library of prompts built for mission-led work.
+            Below are three free resources to get you started.
           </p>
           <p>
-            I've also included a discounted 1:1 Power-Hour for impact-focused teams, should you want some hands-on support.
+            I've also included a discounted 1:1 Power-Hour for impact-focused teams, should you want hands-on support.
           </p>
           <p>
             Warm wishes,<br />
