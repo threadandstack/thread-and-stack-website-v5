@@ -172,8 +172,8 @@ const UnleashYourTeamPage = () => {
                     AI Power-Hour
                   </h2>
                 </div>
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-[hsl(var(--background))]/40 bg-[hsl(var(--background))]/80 text-[hsl(var(--foreground))]">
-                  <span className="text-[10px] uppercase tracking-wider opacity-70">Voucher</span>
+                <div className="inline-flex items-center gap-2 rounded-full bg-[hsl(var(--background))] text-[hsl(var(--foreground))] px-5 py-2 shadow-[0_2px_8px_rgba(0,0,0,0.15)]">
+                  <span className="text-[10px] uppercase tracking-wider opacity-60">Voucher</span>
                   <span className="font-mono font-bold tracking-wider text-sm">IMPACT15</span>
                 </div>
               </div>
