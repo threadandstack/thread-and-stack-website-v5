@@ -1,55 +1,64 @@
-I found the likely root cause: the app’s `index.html` has a strict Content Security Policy that does not allow Stripe’s scripts or checkout iframe domains.
+## Goal
 
-Currently it allows scripts from the site itself, Google Tag Manager, and Google Analytics only:
+Create a general-purpose lead magnet landing page modelled on `/charity-meetup-april26`, repositioned for any purpose-driven / impact-focused team. Same resources, same email gate, same Power-Hour offer — but with a new headline, framing, and a 15% off coupon (`IMPACT15`).
 
-```text
-script-src ... https://www.googletagmanager.com https://www.google-analytics.com https://tagmanager.google.com
-frame-src ... google/youtube/vimeo/loom
-connect-src ... supabase/google/notion
-```
+## New route
 
-But Embedded Checkout needs at minimum Stripe script/frame/connect permissions. That means Chrome/Dia can be working perfectly with no VPN/ad blocker, while the browser still refuses to load Stripe because the site itself tells it not to.
+- `src/pages/UnleashYourTeamPage.tsx` mounted at:
+  - `/unleash-your-team` (canonical)
+  - `/Unleash-Your-Team` (case-insensitive convenience, mirroring the existing pattern)
+- Registered in `src/App.tsx` alongside the charity meetup routes (lazy-loaded).
 
-## Plan
+## Page content
 
-1. Update the Content Security Policy in `index.html`
-   - Add Stripe script domains, especially `https://js.stripe.com`.
-   - Add Stripe frame domains, especially `https://js.stripe.com` and `https://checkout.stripe.com`.
-   - Add Stripe connection domains such as `https://api.stripe.com` and any required Stripe telemetry endpoints used by Stripe.js.
-   - Keep the existing Google, Notion, media, and font allowances intact.
+Built from the same components as `CharityMeetupApril26Page` (avatar + logo, gradient headline, email-gate card, three resource cards, 4 C's / 4 D's framework, LinkedIn + email CTAs, Footer, `PowerHourBookingDrawer`).
 
-2. Improve the checkout error messaging
-   - Replace the generic “network/ad-blocker issue” wording with a clearer message that includes possible site security-policy blocking.
-   - Keep the friendly fallback but avoid implying the user’s browser/network is definitely at fault.
+Differences:
 
-3. Improve retry/reset behaviour
-   - Keep the Stripe loader reset already added.
-   - Also reset `submitting` when returning from checkout failure to the form so the drawer cannot get stuck in a disabled “Starting checkout…” state.
+- **Eyebrow**: "For purpose-driven teams · AI that frees you up"
+- **Headline (gradient)**: *"Unleash your team's power"* with sub-line: *"AI workflows that free your team to be more strategic and creative."*
+- **Intro copy** — reframed for impact-led orgs (charities, social enterprises, mission-driven teams). Names the "creative tax" / admin chaos and positions AI as a way to reclaim time for strategy and creative work, not to replace people. Removes Charity Meetup / Oliver Wyman / Dawn Newton references.
+- **Resources**: same three Notion links and copy (already evergreen).
+- **Email gate**: same component pattern; lead `source = "unleash-your-team-resources"` so we can attribute leads separately. Same consent + honeypot + sessionStorage unlock key (`unleash-your-team-resources-unlocked`).
+- **Power-Hour offer card**: copy updated to "15% off — for purpose-driven teams". Shows £395 → £335.75 (15% off), voucher `IMPACT15`, no "first 10 claimed" line (we can frame it as an ongoing offer for impact-led teams). Opens `PowerHourBookingDrawer` with `source="unleash-your-team"` and `defaultCoupon="IMPACT15"`.
+- **Frameworks (4 C's / 4 D's)** and **Stay connected** sections kept verbatim — they're brand-level.
 
-4. Verify in preview
-   - Open `/charity-meetup-april26`.
-   - Fill the drawer form and consent checkbox.
-   - Click “Continue to payment”.
-   - Confirm that the embedded Stripe checkout form loads instead of the fallback error.
-   - Check console/network for CSP or Stripe loading errors.
+## Coupon plumbing — `IMPACT15` (15% off)
 
-## Test card after the form loads
+The existing flow only supports the £100 flat-rate `CHARITYMEETUP100` coupon. We need to add a second coupon without breaking the first.
 
-Use Stripe’s test card in the embedded form:
+### `src/components/PowerHourBookingDrawer.tsx`
 
-```text
-Card: 4242 4242 4242 4242
-Expiry: any future date
-CVC: any 3 digits
-Postcode: any valid-looking postcode/ZIP
-```
+- Replace the single-coupon constants with a small lookup:
+  ```ts
+  const COUPONS = {
+    CHARITYMEETUP100: { kind: "amount", amountOff: 10000, label: "£100 off" },
+    IMPACT15:         { kind: "percent", percentOff: 15,  label: "15% off" },
+  } as const;
+  ```
+- Compute `displayedTotal` from the matched coupon (flat amount or percent of `FULL_PRICE`, rounded to nearest pence).
+- Update the green confirmation row to show the coupon's own label (e.g. "Coupon IMPACT15 — 15% off") instead of the hard-coded charity copy.
+- `couponLooksValid` becomes "is the normalized code a key in `COUPONS`".
 
-For declined-payment testing later:
+### `supabase/functions/create-power-hour-checkout/index.ts`
 
-```text
-Card: 4000 0000 0000 0002
-```
+- Replace the single `COUPON_CODE` / `COUPON_DISCOUNT_PENCE` constants with a `COUPONS` map keyed by code, each entry holding either `{ kind: "amount", amountOff }` or `{ kind: "percent", percentOff }`, plus a `maxUses` (keep `CHARITYMEETUP100` at 10; `IMPACT15` set to a higher cap, e.g. 100, since it's an ongoing impact-org offer).
+- Validation flow:
+  1. Normalise the code; reject if not in the map.
+  2. Use the existing `count_coupon_redemptions` RPC against the normalized code; reject if `>= maxUses` for that coupon.
+- Stripe coupon creation: derive a deterministic Stripe coupon id per code + env, e.g. `impact15_v1_${env}` / keep `charitymeetup100_v2_${env}`. For percent coupons, create with `percent_off: 15` instead of `amount_off`. For amount coupons, keep current behaviour.
+- Pass through `coupon_code: couponNormalized` on the booking insert and metadata as today, so attribution works for both.
 
-## Expected result
+The `count_coupon_redemptions` RPC already takes the code as an argument, so no DB migration is required — `IMPACT15` redemptions will be counted naturally as bookings come in with that code stored in `power_hour_bookings.coupon_code`.
 
-The checkout should stop failing at the Stripe.js load step. If the next error appears after this, it will likely be a payment/session-level issue rather than the browser refusing to load Stripe’s assets.
+## Tracking / attribution
+
+- Lead capture uses `source: "unleash-your-team-resources"`.
+- Power-Hour bookings from this page will land with `source: "unleash-your-team"` and `coupon_code: "IMPACT15"`, so you can pull them out the same way you pulled the charity meetup numbers.
+
+## Out of scope
+
+- No changes to the existing `/charity-meetup-april26` page or its coupon.
+- No new database columns or migrations.
+- No new edge function — we extend the existing `create-power-hour-checkout`.
+- No sitemap / nav changes (this is a direct-link lead magnet, like the charity page).

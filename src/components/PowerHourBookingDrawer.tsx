@@ -20,7 +20,21 @@ interface PowerHourBookingDrawerProps {
 }
 
 const FULL_PRICE = 39500;
-const COUPON_DISCOUNT = 10000;
+
+type CouponDef =
+  | { kind: "amount"; amountOff: number; label: string }
+  | { kind: "percent"; percentOff: number; label: string };
+
+const COUPONS: Record<string, CouponDef> = {
+  CHARITYMEETUP100: { kind: "amount", amountOff: 10000, label: "£100 off" },
+  IMPACT15: { kind: "percent", percentOff: 15, label: "15% off" },
+};
+
+function applyCoupon(coupon: CouponDef | null): number {
+  if (!coupon) return FULL_PRICE;
+  if (coupon.kind === "amount") return Math.max(0, FULL_PRICE - coupon.amountOff);
+  return Math.round(FULL_PRICE * (1 - coupon.percentOff / 100));
+}
 
 export function PowerHourBookingDrawer({
   open,
@@ -85,8 +99,9 @@ export function PowerHourBookingDrawer({
   }, [clientSecret]);
 
   const couponNormalized = form.couponCode.trim().toUpperCase();
-  const couponLooksValid = couponNormalized === "CHARITYMEETUP100";
-  const displayedTotal = couponLooksValid ? FULL_PRICE - COUPON_DISCOUNT : FULL_PRICE;
+  const matchedCoupon = COUPONS[couponNormalized] ?? null;
+  const couponLooksValid = matchedCoupon !== null;
+  const displayedTotal = applyCoupon(matchedCoupon);
 
   const fetchClientSecret = useCallback(async (): Promise<string> => {
     if (clientSecret) return clientSecret;
@@ -166,14 +181,14 @@ export function PowerHourBookingDrawer({
               <div className="flex items-baseline justify-between">
                 <span className="text-sm font-sans text-muted-foreground">AI Power-Hour</span>
                 <span className="font-serif-pro text-xl font-semibold">
-                  £{(displayedTotal / 100).toFixed(0)}
+                  £{(displayedTotal / 100).toFixed(2).replace(/\.00$/, "")}
                 </span>
               </div>
-              {couponLooksValid && (
+              {matchedCoupon && (
                 <div className="flex items-center justify-between text-xs text-[hsl(var(--accent))]">
                   <span className="inline-flex items-center gap-1">
                     <CheckCircle2 className="w-3.5 h-3.5" />
-                    Coupon CHARITYMEETUP100 — £100 off
+                    Coupon {couponNormalized} — {matchedCoupon.label}
                   </span>
                   <span className="line-through text-muted-foreground">£395</span>
                 </div>
