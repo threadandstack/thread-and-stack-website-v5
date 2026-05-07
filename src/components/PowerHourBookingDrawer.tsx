@@ -181,14 +181,14 @@ export function PowerHourBookingDrawer({
               <div className="flex items-baseline justify-between">
                 <span className="text-sm font-sans text-muted-foreground">AI Power-Hour</span>
                 <span className="font-serif-pro text-xl font-semibold">
-                  £{(displayedTotal / 100).toFixed(0)}
+                  £{(displayedTotal / 100).toFixed(2).replace(/\.00$/, "")}
                 </span>
               </div>
-              {couponLooksValid && (
+              {matchedCoupon && (
                 <div className="flex items-center justify-between text-xs text-[hsl(var(--accent))]">
                   <span className="inline-flex items-center gap-1">
                     <CheckCircle2 className="w-3.5 h-3.5" />
-                    Coupon CHARITYMEETUP100 — £100 off
+                    Coupon {couponNormalized} — {matchedCoupon.label}
                   </span>
                   <span className="line-through text-muted-foreground">£395</span>
                 </div>
