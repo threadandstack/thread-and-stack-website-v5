@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Linkedin, ArrowRight, GraduationCap, Zap, FileStack, Sparkles, Brain, Mail, Lock, Check } from "lucide-react";
+import { Linkedin, ArrowRight, GraduationCap, Zap, FileStack, Sparkles, Brain, Mail, Lock, Check, Percent, Scissors } from "lucide-react";
 import { PillButton } from "@/components/ui/pill-button";
 import { Footer } from "@/components/Footer";
 import { PowerHourBookingDrawer } from "@/components/PowerHourBookingDrawer";
