@@ -159,13 +159,13 @@ const UnleashYourTeamPage = () => {
 
             <div className="relative flex flex-col sm:flex-row items-stretch gap-4 sm:gap-0">
               {/* Left — offer value */}
-              <div className="flex-1 flex flex-col items-center sm:items-start justify-between text-center sm:text-left sm:pr-6 gap-4">
+              <div className="flex-1 flex-col items-center text-center sm:text-left sm:pr-6 gap-4 px-[6px] mx-[8px] flex sm:items-center justify-between">
                 <div className="flex flex-col items-center sm:items-start">
                   <div className="flex items-center gap-1.5 text-[11px] sm:text-xs font-sans uppercase tracking-widest opacity-80">
-                    <Scissors className="w-3 h-3" />
-                    <span>For impact-focused teams</span>
+                    <Sparkles className="lucide lucide-scissors h-[45px] w-[45px]" />
+                    <span className="mx-0 px-0">Purpose-Led Teams</span>
                   </div>
-                  <span className="mt-1 text-5xl sm:text-8xl font-extrabold italic tracking-tight font-serif-pro leading-none">
+                  <span className="mt-1 text-5xl sm:text-8xl font-extrabold italic tracking-tight font-serif-pro leading-none text-center">
                     15%
                   </span>
                   <h2 className="mt-2 font-serif-pro text-lg sm:text-xl font-semibold italic leading-tight">
@@ -187,8 +187,8 @@ const UnleashYourTeamPage = () => {
               </div>
 
               {/* Right — details + CTA */}
-              <div className="flex-[1.4] flex flex-col justify-between gap-4 sm:pl-6">
-                <div className="space-y-2">
+              <div className="flex-[1.4] flex-col gap-4 sm:pl-6 px-0 flex items-center justify-between">
+                <div className="space-y-2 px-0 mx-[20px]">
                   <p className="text-sm sm:text-base font-sans font-medium opacity-95">
                     One hour, one workflow. Normally £395, yours for <span className="font-bold">£335.75</span>.
                   </p>
@@ -196,7 +196,7 @@ const UnleashYourTeamPage = () => {
                     Pick a workflow that's eating your team's time, and we'll spend an hour together getting it running with AI properly.
                   </p>
                 </div>
-                <span className="inline-flex items-center self-start sm:self-end rounded-full bg-[hsl(var(--background))] text-[hsl(var(--foreground))] pl-5 pr-5 py-2 text-sm font-sans font-medium shadow-[0_2px_8px_rgba(0,0,0,0.15)] transition-all">
+                <span className="inline-flex items-center self-start sm:self-end rounded-full bg-[hsl(var(--background))] text-[hsl(var(--foreground))] pl-5 pr-5 py-2 text-sm font-sans font-medium shadow-[0_2px_8px_rgba(0,0,0,0.15)] transition-all px-0">
                   Claim your slot
                   <span className="w-0 h-5 flex items-center justify-center overflow-hidden transition-all duration-300 opacity-0 scale-75 group-hover:w-5 group-hover:opacity-100 group-hover:scale-100 group-hover:ml-1.5">
                     <ArrowRight className="w-4 h-4 shrink-0" />
