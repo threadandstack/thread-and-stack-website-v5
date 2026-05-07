@@ -280,7 +280,7 @@ const UnleashYourTeamPage = () => {
                 ) : (
                   <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-sans text-muted-foreground border border-dashed border-border rounded-full px-3 py-1.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-[hsl(var(--accent))] animate-pulse" />
-                    {r.cta} — I'll share this shortly
+                    {r.cta} · I'll share this shortly
                   </div>
                 )}
               </div>
