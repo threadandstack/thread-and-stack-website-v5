@@ -165,7 +165,7 @@ const UnleashYourTeamPage = () => {
                   <span>For impact-focused teams</span>
                 </div>
                 <div className="mt-2 flex items-baseline gap-1 font-serif-pro">
-                  <span className="text-3xl sm:text-6xl font-extrabold tracking-tight font-serif-pro">15%</span>
+                  <span className="text-3xl font-extrabold tracking-tight font-serif-pro sm:text-8xl">15%</span>
                 </div>
                 <h2 className="mt-1 font-serif-pro text-lg sm:text-xl font-semibold italic leading-tight">
                   AI Power-Hour
