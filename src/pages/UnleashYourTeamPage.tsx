@@ -153,16 +153,16 @@ const UnleashYourTeamPage = () => {
             </div>
             <div className="space-y-1.5 flex-1">
               <p className="text-[11px] sm:text-xs font-sans uppercase tracking-widest opacity-80">
-                For impact-focused teams — 15% off
+                For impact-focused teams · 15% off
               </p>
               <h2 className="font-serif-pro text-xl sm:text-2xl font-semibold italic leading-tight">
                 AI Power-Hour · 15% off
               </h2>
               <p className="text-[13px] sm:text-sm font-sans font-medium opacity-95">
-                One hour, one workflow — normally £395, yours for £335.75.
+                One hour, one workflow. Normally £395, yours for £335.75.
               </p>
               <p className="text-[13px] sm:text-sm font-sans opacity-90">
-                Pick a workflow that's eating your team's time, and we'll spend an hour together to get it running with AI properly.
+                Pick a workflow that's eating your team's time, and we'll spend an hour together getting it running with AI properly.
               </p>
               <p className="text-[13px] sm:text-sm font-sans opacity-90 pt-0.5">
                 Voucher: <span className="font-mono font-semibold tracking-wider">IMPACT15</span>
