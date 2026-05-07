@@ -3,9 +3,27 @@ import { createClient } from "jsr:@supabase/supabase-js@2";
 import { z } from "https://esm.sh/zod@3.23.8";
 import { type StripeEnv, createStripeClient } from "../_shared/stripe.ts";
 
-const COUPON_CODE = "CHARITYMEETUP100";
-const COUPON_DISCOUNT_PENCE = 10000; // £100 off
-const COUPON_MAX_USES = 10;
+type CouponConfig =
+  | { kind: "amount"; amountOff: number; maxUses: number; stripeId: string; name: string }
+  | { kind: "percent"; percentOff: number; maxUses: number; stripeId: string; name: string };
+
+const COUPONS: Record<string, CouponConfig> = {
+  CHARITYMEETUP100: {
+    kind: "amount",
+    amountOff: 10000, // £100 off
+    maxUses: 10,
+    stripeId: "charitymeetup100_v2",
+    name: "Charity Meetup — £100 off",
+  },
+  IMPACT15: {
+    kind: "percent",
+    percentOff: 15,
+    maxUses: 100,
+    stripeId: "impact15_v1",
+    name: "Impact teams — 15% off",
+  },
+};
+
 const PRICE_LOOKUP_KEY = "ai_power_hour_395_gbp";
 
 const BodySchema = z.object({
