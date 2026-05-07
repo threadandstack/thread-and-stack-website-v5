@@ -20,7 +20,21 @@ interface PowerHourBookingDrawerProps {
 }
 
 const FULL_PRICE = 39500;
-const COUPON_DISCOUNT = 10000;
+
+type CouponDef =
+  | { kind: "amount"; amountOff: number; label: string }
+  | { kind: "percent"; percentOff: number; label: string };
+
+const COUPONS: Record<string, CouponDef> = {
+  CHARITYMEETUP100: { kind: "amount", amountOff: 10000, label: "£100 off" },
+  IMPACT15: { kind: "percent", percentOff: 15, label: "15% off" },
+};
+
+function applyCoupon(coupon: CouponDef | null): number {
+  if (!coupon) return FULL_PRICE;
+  if (coupon.kind === "amount") return Math.max(0, FULL_PRICE - coupon.amountOff);
+  return Math.round(FULL_PRICE * (1 - coupon.percentOff / 100));
+}
 
 export function PowerHourBookingDrawer({
   open,
