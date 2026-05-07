@@ -154,8 +154,8 @@ const UnleashYourTeamPage = () => {
           <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-background z-10" />
 
           <div className="relative p-5 sm:p-6">
-            {/* Dashed inner frame */}
-            <div className="absolute inset-3 rounded-xl border-2 border-dashed border-white/30 pointer-events-none" />
+            {/* Solid inner frame */}
+            <div className="absolute inset-3 rounded-xl border border-[hsl(var(--background))]/40 pointer-events-none" />
 
             <div className="relative flex flex-col sm:flex-row items-stretch gap-3 sm:gap-0">
               {/* Left — offer value */}
@@ -172,7 +172,7 @@ const UnleashYourTeamPage = () => {
                 <h2 className="mt-1 font-serif-pro text-lg sm:text-xl font-semibold italic leading-tight">
                   AI Power-Hour
                 </h2>
-                <div className="mt-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border-2 border-dashed border-white/40 bg-white/10">
+                <div className="mt-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-[hsl(var(--background))]/40 bg-[hsl(var(--background))]/80 text-[hsl(var(--foreground))]">
                   <span className="text-[10px] uppercase tracking-wider opacity-70">Voucher</span>
                   <span className="font-mono font-bold tracking-wider text-sm">IMPACT15</span>
                 </div>
@@ -180,10 +180,10 @@ const UnleashYourTeamPage = () => {
 
               {/* Divider */}
               <div className="hidden sm:flex flex-col items-center justify-center px-5">
-                <div className="w-px h-full border-l-2 border-dashed border-white/40" />
+                <div className="w-px h-full border-l border-[hsl(var(--background))]/40" />
               </div>
               <div className="flex sm:hidden items-center justify-center py-1">
-                <div className="w-full h-px border-t-2 border-dashed border-white/40" />
+                <div className="w-full h-px border-t border-[hsl(var(--background))]/40" />
               </div>
 
               {/* Right — details + CTA */}
