@@ -101,6 +101,7 @@ const App = () => (
             <Route path="/v/photo-hero" element={<IndexPhotoHero />} />
             <Route path="/v/alt-hero" element={<IndexAltHero />} />
             <Route path="/v/horizontal" element={<IndexHorizontal />} />
+            <Route path="/v/pick-a-lane" element={<IndexPickALane />} />
             <Route path="/admin/login" element={<AdminLoginPage />} />
             <Route path="/admin/reset-password" element={<AdminResetPassword />} />
             <Route path="/admin" element={<AdminDashboard />} />
