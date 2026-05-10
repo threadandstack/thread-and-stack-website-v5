@@ -27,7 +27,7 @@ const DataGuarantee = lazy(() => import("./pages/DataGuarantee"));
 const CollectivePage = lazy(() => import("./pages/CollectivePage"));
 
 
-const IndexHorizontal = lazy(() => import("./pages/IndexHorizontal"));
+
 const IndexPickALane = lazy(() => import("./pages/IndexPickALane"));
 const ThreadMotifDemo = lazy(() => import("./components/ThreadMotifDemo"));
 const BrandBook = lazy(() => import("./components/BrandBook"));
@@ -100,7 +100,7 @@ const App = () => (
             <Route path="/brand-book" element={<BrandBook />} />
             
             
-            <Route path="/v/horizontal" element={<IndexHorizontal />} />
+            
             <Route path="/v/pick-a-lane" element={<IndexPickALane />} />
             <Route path="/admin/login" element={<AdminLoginPage />} />
             <Route path="/admin/reset-password" element={<AdminResetPassword />} />
