@@ -28,6 +28,7 @@ const CollectivePage = lazy(() => import("./pages/CollectivePage"));
 const IndexPhotoHero = lazy(() => import("./pages/IndexPhotoHero"));
 const IndexAltHero = lazy(() => import("./pages/IndexAltHero"));
 const IndexHorizontal = lazy(() => import("./pages/IndexHorizontal"));
+const IndexPickALane = lazy(() => import("./pages/IndexPickALane"));
 const ThreadMotifDemo = lazy(() => import("./components/ThreadMotifDemo"));
 const BrandBook = lazy(() => import("./components/BrandBook"));
 const SeoAdminPage = lazy(() => import("./pages/SeoAdminPage"));
@@ -100,6 +101,7 @@ const App = () => (
             <Route path="/v/photo-hero" element={<IndexPhotoHero />} />
             <Route path="/v/alt-hero" element={<IndexAltHero />} />
             <Route path="/v/horizontal" element={<IndexHorizontal />} />
+            <Route path="/v/pick-a-lane" element={<IndexPickALane />} />
             <Route path="/admin/login" element={<AdminLoginPage />} />
             <Route path="/admin/reset-password" element={<AdminResetPassword />} />
             <Route path="/admin" element={<AdminDashboard />} />
