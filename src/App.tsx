@@ -25,7 +25,7 @@ const BlogPostPage = lazy(() => import("./pages/BlogPostPage"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const DataGuarantee = lazy(() => import("./pages/DataGuarantee"));
 const CollectivePage = lazy(() => import("./pages/CollectivePage"));
-const IndexPhotoHero = lazy(() => import("./pages/IndexPhotoHero"));
+
 const IndexAltHero = lazy(() => import("./pages/IndexAltHero"));
 const IndexHorizontal = lazy(() => import("./pages/IndexHorizontal"));
 const IndexPickALane = lazy(() => import("./pages/IndexPickALane"));
@@ -98,7 +98,7 @@ const App = () => (
             <Route path="/collective" element={<CollectivePage />} />
             <Route path="/thread-demo" element={<ThreadMotifDemo />} />
             <Route path="/brand-book" element={<BrandBook />} />
-            <Route path="/v/photo-hero" element={<IndexPhotoHero />} />
+            
             <Route path="/v/alt-hero" element={<IndexAltHero />} />
             <Route path="/v/horizontal" element={<IndexHorizontal />} />
             <Route path="/v/pick-a-lane" element={<IndexPickALane />} />
