@@ -63,6 +63,8 @@ const ServicesOnePager = ({
   startBlurb,
   metaTitle,
 }: Props) => {
+  const [openOffers, setOpenOffers] = useState<string[]>([]);
+
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = metaTitle;
@@ -77,9 +79,34 @@ const ServicesOnePager = ({
     };
   }, [metaTitle]);
 
+  // Expand all when printing, restore on after-print
+  useEffect(() => {
+    let prev: string[] = [];
+    const before = () => {
+      prev = openOffers;
+      setOpenOffers(offers.map((_, i) => `offer-${i}`));
+    };
+    const after = () => setOpenOffers(prev);
+    window.addEventListener("beforeprint", before);
+    window.addEventListener("afterprint", after);
+    return () => {
+      window.removeEventListener("beforeprint", before);
+      window.removeEventListener("afterprint", after);
+    };
+  }, [openOffers, offers]);
+
+  const openAndScroll = (i: number) => {
+    const val = `offer-${i}`;
+    setOpenOffers((prev) => (prev.includes(val) ? prev : [...prev, val]));
+    setTimeout(() => {
+      document.getElementById(val)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 60);
+  };
+
   const handleDownload = () => {
     window.print();
   };
+
 
   return (
     <div className="min-h-screen bg-muted/50 flex justify-center items-start py-10 px-5 print:bg-white print:p-0">
