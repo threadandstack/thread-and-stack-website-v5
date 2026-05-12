@@ -33,24 +33,6 @@ const offers: Offer[] = [
   },
   {
     num: "3",
-    title: "Product launch and piloting",
-    shape: "Concentrated Project",
-    scope: "6 to 12 weeks, staged around the launch window",
-    emotional:
-      "For when there is a new thing in the world, or about to be, and the question is whether it will find the audience it is built for. Launches are mostly an exercise in patience and signal, not noise.",
-    concrete:
-      "We design the launch in a way that lets you learn what is actually true about the market while still putting something credible into it.",
-    includes: [
-      "Launch narrative and audience definition",
-      "Messaging frameworks and channel sequencing",
-      "Pilot design and feedback loops",
-      "Post-launch positioning shifts",
-    ],
-    bestFor:
-      "Founders, marketing leaders, or product teams bringing something new to a defined audience.",
-  },
-  {
-    num: "4",
     title: "Journey design and experience",
     shape: "Concentrated Project",
     scope: "Typical scope 4 to 8 weeks",
@@ -66,6 +48,24 @@ const offers: Offer[] = [
     ],
     bestFor:
       "Organisations where marketing, sales, product, and service have grown apart, and the customer is feeling the seams.",
+  },
+  {
+    num: "4",
+    title: "Product launch and piloting",
+    shape: "Concentrated Project",
+    scope: "6 to 12 weeks, staged around the launch window",
+    emotional:
+      "For when there is a new thing in the world, or about to be, and the question is whether it will find the audience it is built for. Launches are mostly an exercise in patience and signal, not noise.",
+    concrete:
+      "We design the launch in a way that lets you learn what is actually true about the market while still putting something credible into it.",
+    includes: [
+      "Launch narrative and audience definition",
+      "Messaging frameworks and channel sequencing",
+      "Pilot design and feedback loops",
+      "Post-launch positioning shifts",
+    ],
+    bestFor:
+      "Founders, marketing leaders, or product teams bringing something new to a defined audience.",
   },
   {
     num: "5",
