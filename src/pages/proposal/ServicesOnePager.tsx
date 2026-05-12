@@ -1,6 +1,12 @@
-import { useEffect } from "react";
-import { Download, ArrowRight } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Download, ArrowRight, Plus, Minus } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import WhiteStacked from "@/assets/logos/White_TS_Stacked.svg";
 import GreyStacked from "@/assets/logos/Grey_TS_Stacked.svg";
 
