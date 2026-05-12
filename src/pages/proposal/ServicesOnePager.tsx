@@ -95,9 +95,27 @@ const ServicesOnePager = ({
           <h1 className="font-serif-pro text-[52px] max-sm:text-[38px] italic font-bold leading-[1.15] text-primary-foreground mb-5">
             {headline}
           </h1>
-          <p className="font-sans text-[15px] text-primary-foreground/70 leading-relaxed max-w-[560px]">
+          <p className="font-sans text-[15px] text-primary-foreground/80 leading-relaxed max-w-[600px] mb-7">
             {intro}
           </p>
+
+          {/* Offer pills */}
+          <div className="flex flex-wrap gap-2 mb-2">
+            {offers.map((o, idx) => (
+              <a
+                key={idx}
+                href={`#offer-${idx}`}
+                className="group inline-flex items-center gap-2 bg-primary-foreground/[0.06] hover:bg-primary-foreground/[0.12] border border-primary-foreground/15 hover:border-[#FF6200]/60 transition-colors rounded-full pl-2 pr-3.5 py-1.5 print:bg-transparent print:border-primary-foreground/30"
+              >
+                <span className="font-sans text-[10px] font-bold text-[#FF6200] bg-[#FF6200]/15 rounded-full w-5 h-5 flex items-center justify-center">
+                  {o.num}
+                </span>
+                <span className="font-sans text-[12.5px] font-medium text-primary-foreground/90 group-hover:text-primary-foreground">
+                  {o.title}
+                </span>
+              </a>
+            ))}
+          </div>
         </div>
 
         {/* Body */}
@@ -116,7 +134,7 @@ const ServicesOnePager = ({
 
           {/* Offers */}
           {offers.map((offer, i) => (
-            <div key={i}>
+            <div key={i} id={`offer-${i}`} className="scroll-mt-8">
               {i > 0 && <div className="h-px bg-border my-10" />}
 
               <div className="flex items-center gap-2 mb-3">
