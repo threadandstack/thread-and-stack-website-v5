@@ -31,19 +31,19 @@ const offers: Offer[] = [
   },
   {
     num: "3",
-    title: "Workspace Build",
+    title: "Workspace Architect",
     shape: "Concentrated Project",
-    scope: "End-to-end Notion build",
+    scope: "End-to-end systems build",
     emotional:
-      "The end-to-end build that makes sure Notion is set up properly. Information architecture, databases, permissions, admin configuration, and a change management plan that means your team actually adopts it rather than quietly going back to what they know.",
+      "The end-to-end build for organisations carrying too many tools, too many tabs, and too many places the same information lives. We optimise the operational stack to reduce fragmentation, collapse duplicated effort, and break down the silos that have quietly grown between teams.",
     includes: [
-      "Workspace audit and workflow mapping",
-      "Custom Notion system design and build",
-      "CRM migration and team workflows where needed",
-      "Documentation, training, and handover",
+      "Stack audit and workflow mapping across existing tools",
+      "Information architecture, permissions, and admin configuration",
+      "System consolidation, migration, and team workflow design",
+      "Change management, documentation, training, and handover",
     ],
     bestFor:
-      "Founders and teams committing to Notion properly, or anyone who has tried to build their own setup and stalled.",
+      "Founders and teams ready to commit to a single source of truth, or anyone whose stack has sprawled and stalled.",
   },
   {
     num: "4",
@@ -84,7 +84,7 @@ const offers: Offer[] = [
 const AiOpsServicesPage = () => (
   <ServicesOnePager
     metaTitle="AI & Operations Services · Thread & Stack"
-    kicker="Services · AI & Operations"
+    kicker="Services · AI & Operations · System agnostic"
     headline={
       <>
         Systems that <span className="text-[#FF6200]">stick</span>. AI that earns its keep.
