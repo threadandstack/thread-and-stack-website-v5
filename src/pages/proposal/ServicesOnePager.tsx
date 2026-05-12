@@ -135,9 +135,10 @@ const ServicesOnePager = ({
           {/* Offer pills */}
           <div className="flex flex-wrap gap-2 mb-2">
             {offers.map((o, idx) => (
-              <a
+              <button
                 key={idx}
-                href={`#offer-${idx}`}
+                type="button"
+                onClick={() => openAndScroll(idx)}
                 className="group inline-flex items-center gap-2 bg-primary-foreground/[0.06] hover:bg-primary-foreground/[0.12] border border-primary-foreground/15 hover:border-[#FF6200]/60 transition-colors rounded-full pl-2 pr-3.5 py-1.5 print:bg-transparent print:border-primary-foreground/30"
               >
                 <span className="font-sans text-[10px] font-bold text-[#FF6200] bg-[#FF6200]/15 rounded-full w-5 h-5 flex items-center justify-center">
@@ -146,7 +147,7 @@ const ServicesOnePager = ({
                 <span className="font-sans text-[12.5px] font-medium text-primary-foreground/90 group-hover:text-primary-foreground">
                   {o.title}
                 </span>
-              </a>
+              </button>
             ))}
           </div>
         </div>
