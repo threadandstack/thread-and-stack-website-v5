@@ -84,7 +84,7 @@ const offers: Offer[] = [
 const AiOpsServicesPage = () => (
   <ServicesOnePager
     metaTitle="AI & Operations Services · Thread & Stack"
-    kicker="Services · AI & Operations"
+    kicker="Services · AI & Operations · System agnostic"
     headline={
       <>
         Systems that <span className="text-[#FF6200]">stick</span>. AI that earns its keep.
