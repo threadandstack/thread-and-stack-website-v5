@@ -138,53 +138,82 @@ const ServicesOnePager = ({
           <SectionLabel num="01" title={trackTitle} />
           <p className="text-[15px] leading-[1.7] text-foreground mb-10">{trackBlurb}</p>
 
-          {/* Offers */}
-          {offers.map((offer, i) => (
-            <div key={i} id={`offer-${i}`} className="scroll-mt-8">
-              {i > 0 && <div className="h-px bg-border my-10" />}
-
-              <div className="flex items-center gap-2 mb-3">
-                <span className="font-sans text-[10px] font-bold uppercase tracking-[0.14em] text-accent bg-accent/10 px-2.5 py-1 rounded-full">
-                  {offer.shape}
-                </span>
-                {offer.scope && (
-                  <span className="font-sans text-[12px] text-muted-foreground">{offer.scope}</span>
-                )}
-              </div>
-
-              <h3 className="font-serif-pro text-[26px] italic font-semibold text-primary mb-3 leading-tight">
-                {offer.title}
-              </h3>
-
-              <p className="text-[15px] leading-[1.7] text-foreground mb-3">{offer.emotional}</p>
-
-              {offer.concrete && (
-                <p className="text-[15px] leading-[1.7] text-foreground mb-3">{offer.concrete}</p>
-              )}
-
-              {offer.includes && offer.includes.length > 0 && (
-                <div className="bg-card rounded-2xl px-5 py-[22px] shadow-[var(--shadow-soft)] mb-4 mt-5">
-                  <h4 className="font-serif-pro text-[17px] italic font-semibold text-primary mb-3">What's included</h4>
-                  <div className="flex flex-col gap-2">
-                    {offer.includes.map((item, idx) => (
-                      <div key={idx} className="flex items-start gap-2.5 text-[13.5px] text-foreground leading-[1.55]">
-                        <div className="w-4 h-4 rounded-full bg-accent/10 border-[1.5px] border-accent flex items-center justify-center flex-shrink-0 mt-px text-accent">
-                          <CheckIcon />
+          {/* Offers (expandable) */}
+          <Accordion
+            type="multiple"
+            value={openOffers}
+            onValueChange={setOpenOffers}
+            className="flex flex-col gap-3"
+          >
+            {offers.map((offer, i) => {
+              const val = `offer-${i}`;
+              return (
+                <AccordionItem
+                  key={i}
+                  id={val}
+                  value={val}
+                  className="scroll-mt-8 border border-border/60 rounded-2xl bg-card overflow-hidden print:break-inside-avoid"
+                >
+                  <AccordionTrigger className="px-5 py-4 hover:no-underline [&>svg]:hidden group">
+                    <div className="flex items-center gap-4 flex-1 text-left">
+                      <span className="font-sans text-[11px] font-bold text-[#FF6200] bg-[#FF6200]/10 rounded-full w-7 h-7 flex items-center justify-center flex-shrink-0">
+                        {offer.num}
+                      </span>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-serif-pro text-[20px] italic font-semibold text-primary leading-tight mb-1">
+                          {offer.title}
+                        </h3>
+                        <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                          <span className="font-sans text-[10px] font-bold uppercase tracking-[0.14em] text-accent">
+                            {offer.shape}
+                          </span>
+                          {offer.scope && (
+                            <>
+                              <span className="text-muted-foreground/50 text-[10px]">·</span>
+                              <span className="font-sans text-[12px] text-muted-foreground">{offer.scope}</span>
+                            </>
+                          )}
                         </div>
-                        <span>{item}</span>
                       </div>
-                    ))}
-                  </div>
-                </div>
-              )}
+                      <span className="flex-shrink-0 w-7 h-7 rounded-full border border-border flex items-center justify-center text-muted-foreground group-hover:text-accent group-hover:border-accent transition-colors print:hidden">
+                        <Plus className="w-3.5 h-3.5 group-data-[state=open]:hidden" />
+                        <Minus className="w-3.5 h-3.5 hidden group-data-[state=open]:block" />
+                      </span>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-5 pb-5">
+                    <p className="text-[15px] leading-[1.7] text-foreground mb-3">{offer.emotional}</p>
 
-              <div className="bg-accent/5 rounded-xl p-4 mt-3">
-                <p className="text-[13.5px] text-foreground leading-[1.6]">
-                  <span className="font-semibold text-accent">Best for: </span>{offer.bestFor}
-                </p>
-              </div>
-            </div>
-          ))}
+                    {offer.concrete && (
+                      <p className="text-[15px] leading-[1.7] text-foreground mb-3">{offer.concrete}</p>
+                    )}
+
+                    {offer.includes && offer.includes.length > 0 && (
+                      <div className="bg-muted/60 rounded-xl px-5 py-[18px] mb-4 mt-4">
+                        <h4 className="font-serif-pro text-[16px] italic font-semibold text-primary mb-3">What's included</h4>
+                        <div className="flex flex-col gap-2">
+                          {offer.includes.map((item, idx) => (
+                            <div key={idx} className="flex items-start gap-2.5 text-[13.5px] text-foreground leading-[1.55]">
+                              <div className="w-4 h-4 rounded-full bg-accent/10 border-[1.5px] border-accent flex items-center justify-center flex-shrink-0 mt-px text-accent">
+                                <CheckIcon />
+                              </div>
+                              <span>{item}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="bg-accent/5 rounded-xl p-4 mt-3">
+                      <p className="text-[13.5px] text-foreground leading-[1.6]">
+                        <span className="font-semibold text-accent">Best for: </span>{offer.bestFor}
+                      </p>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              );
+            })}
+          </Accordion>
 
           <div className="h-px bg-border my-10" />
 
