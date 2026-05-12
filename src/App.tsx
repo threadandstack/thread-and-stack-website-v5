@@ -51,6 +51,8 @@ const NotionHackathonLondonPage = lazy(() => import("./pages/NotionHackathonLond
 const NotionDevotionBrightonPage = lazy(() => import("./pages/NotionDevotionBrightonPage"));
 const GGFProposalPage = lazy(() => import("./pages/proposal/GGFProposalPage"));
 const ArcCollectiveProposalPage = lazy(() => import("./pages/proposal/ArcCollectiveProposalPage"));
+const StrategyServicesPage = lazy(() => import("./pages/proposal/StrategyServicesPage"));
+const AiOpsServicesPage = lazy(() => import("./pages/proposal/AiOpsServicesPage"));
 const NotionMasterclassPage = lazy(() => import("./pages/NotionMasterclassPage"));
 const CreativePortfolioPage = lazy(() => import("./pages/CreativePortfolioPage"));
 const NotionPortfolioPage = lazy(() => import("./pages/NotionPortfolioPage"));
@@ -123,6 +125,8 @@ const App = () => (
             <Route path="/notion-devotion-brighton" element={<NotionDevotionBrightonPage />} />
             <Route path="/proposal/GGF" element={<GGFProposalPage />} />
             <Route path="/proposal/arc-collective" element={<ArcCollectiveProposalPage />} />
+            <Route path="/proposal/services-strategy" element={<StrategyServicesPage />} />
+            <Route path="/proposal/services-ai-ops" element={<AiOpsServicesPage />} />
             <Route path="/notion-masterclass" element={<NotionMasterclassPage />} />
             <Route path="/portfolio/creative" element={<CreativePortfolioPage />} />
             <Route path="/portfolio/creative/:itemId" element={<CreativePortfolioPage />} />
