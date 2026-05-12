@@ -40,6 +40,9 @@ export type Offer = {
   concrete?: string;
   includes?: string[];
   bestFor: string;
+  icon?: string;
+  variant?: "default" | "dark";
+  cta?: { label: string; href: string };
 };
 
 type Props = {
