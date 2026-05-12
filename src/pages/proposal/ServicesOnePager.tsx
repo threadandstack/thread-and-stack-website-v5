@@ -1,0 +1,207 @@
+import { useEffect } from "react";
+import { Download, ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import WhiteStacked from "@/assets/logos/White_TS_Stacked.svg";
+import GreyStacked from "@/assets/logos/Grey_TS_Stacked.svg";
+
+const CheckIcon = () => (
+  <svg width="8" height="8" viewBox="0 0 8 8">
+    <polyline points="1.5,4 3,5.5 6.5,2" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
+const CardIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+    <rect x="1" y="4" width="16" height="11" rx="2" stroke="currentColor" strokeWidth="1.5" />
+    <path d="M1 8h16" stroke="currentColor" strokeWidth="1.5" />
+    <path d="M5 12h3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+  </svg>
+);
+
+const SectionLabel = ({ num, title }: { num: string; title: string }) => (
+  <div className="flex items-center gap-3 mb-5">
+    <span className="font-sans text-[13px] font-bold tracking-wider text-accent">{num}</span>
+    <span className="font-serif-pro text-[28px] italic font-semibold text-primary leading-tight">{title}</span>
+  </div>
+);
+
+export type Offer = {
+  num: string;
+  title: string;
+  shape: string;
+  scope?: string;
+  emotional: string;
+  concrete?: string;
+  includes?: string[];
+  bestFor: string;
+};
+
+type Props = {
+  kicker: string;
+  headline: React.ReactNode;
+  intro: string;
+  trackTitle: string;
+  trackBlurb: string;
+  offers: Offer[];
+  startBlurb: string;
+  metaTitle: string;
+};
+
+const ServicesOnePager = ({
+  kicker,
+  headline,
+  intro,
+  trackTitle,
+  trackBlurb,
+  offers,
+  startBlurb,
+  metaTitle,
+}: Props) => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    document.title = metaTitle;
+
+    const metaRobots = document.createElement("meta");
+    metaRobots.name = "robots";
+    metaRobots.content = "noindex, nofollow";
+    document.head.appendChild(metaRobots);
+
+    return () => {
+      document.head.removeChild(metaRobots);
+    };
+  }, [metaTitle]);
+
+  const handleDownload = () => {
+    window.print();
+  };
+
+  return (
+    <div className="min-h-screen bg-muted/50 flex justify-center items-start py-10 px-5 print:bg-white print:p-0">
+      <div className="fixed top-5 right-5 z-50 print:hidden">
+        <Button onClick={handleDownload} size="sm" className="gap-2 rounded-lg shadow-lg">
+          <Download className="w-3.5 h-3.5" />
+          Download PDF
+        </Button>
+      </div>
+
+      <div className="bg-background w-full max-w-[820px] rounded-2xl shadow-[0_8px_40px_rgba(0,0,0,0.10)] overflow-hidden print:shadow-none print:rounded-none print:max-w-full">
+        {/* Header */}
+        <div className="bg-primary text-primary-foreground px-14 pt-[52px] pb-11 max-sm:px-7 max-sm:pt-9 max-sm:pb-8">
+          <div className="flex items-center gap-3 mb-6">
+            <img src={WhiteStacked} alt="Thread & Stack" className="h-8" />
+            <span className="text-primary-foreground/40">·</span>
+            <span className="font-sans text-[11px] font-semibold tracking-[0.12em] uppercase text-[#FF6200]">{kicker}</span>
+          </div>
+          <h1 className="font-serif-pro text-[52px] max-sm:text-[38px] italic font-bold leading-[1.15] text-primary-foreground mb-5">
+            {headline}
+          </h1>
+          <p className="font-sans text-[15px] text-primary-foreground/70 leading-relaxed max-w-[560px]">
+            {intro}
+          </p>
+        </div>
+
+        {/* Body */}
+        <div className="px-14 pt-[52px] pb-14 max-sm:px-7 max-sm:pt-9 max-sm:pb-9">
+          {/* How we work */}
+          <div className="bg-muted rounded-2xl p-7 mb-10">
+            <div className="font-sans text-[11px] font-bold uppercase tracking-[0.12em] text-accent mb-2">How we work</div>
+            <p className="text-[15px] leading-[1.7] text-foreground">
+              Three engagement shapes across every track. A <strong>Rapid Intervention</strong> for the question you want answered in a session. A <strong>Concentrated Project</strong> when there is a defined piece of work to be done. An <strong>Ongoing Partnership</strong> when the work is continuous and the value compounds. Most clients start with an intervention or a project, and the ones who stay tend to move onto a retainer.
+            </p>
+          </div>
+
+          {/* Track intro */}
+          <SectionLabel num="01" title={trackTitle} />
+          <p className="text-[15px] leading-[1.7] text-foreground mb-10">{trackBlurb}</p>
+
+          {/* Offers */}
+          {offers.map((offer, i) => (
+            <div key={i}>
+              {i > 0 && <div className="h-px bg-border my-10" />}
+
+              <div className="flex items-center gap-2 mb-3">
+                <span className="font-sans text-[10px] font-bold uppercase tracking-[0.14em] text-accent bg-accent/10 px-2.5 py-1 rounded-full">
+                  {offer.shape}
+                </span>
+                {offer.scope && (
+                  <span className="font-sans text-[12px] text-muted-foreground">{offer.scope}</span>
+                )}
+              </div>
+
+              <h3 className="font-serif-pro text-[26px] italic font-semibold text-primary mb-3 leading-tight">
+                {offer.title}
+              </h3>
+
+              <p className="text-[15px] leading-[1.7] text-foreground mb-3">{offer.emotional}</p>
+
+              {offer.concrete && (
+                <p className="text-[15px] leading-[1.7] text-foreground mb-3">{offer.concrete}</p>
+              )}
+
+              {offer.includes && offer.includes.length > 0 && (
+                <div className="bg-card rounded-2xl px-5 py-[22px] shadow-[var(--shadow-soft)] mb-4 mt-5">
+                  <h4 className="font-serif-pro text-[17px] italic font-semibold text-primary mb-3">What's included</h4>
+                  <div className="flex flex-col gap-2">
+                    {offer.includes.map((item, idx) => (
+                      <div key={idx} className="flex items-start gap-2.5 text-[13.5px] text-foreground leading-[1.55]">
+                        <div className="w-4 h-4 rounded-full bg-accent/10 border-[1.5px] border-accent flex items-center justify-center flex-shrink-0 mt-px text-accent">
+                          <CheckIcon />
+                        </div>
+                        <span>{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <div className="bg-accent/5 rounded-xl p-4 mt-3">
+                <p className="text-[13.5px] text-foreground leading-[1.6]">
+                  <span className="font-semibold text-accent">Best for: </span>{offer.bestFor}
+                </p>
+              </div>
+            </div>
+          ))}
+
+          <div className="h-px bg-border my-10" />
+
+          {/* How to start */}
+          <SectionLabel num="02" title="How to start" />
+          <p className="text-[15px] leading-[1.7] text-foreground mb-6">{startBlurb}</p>
+
+          <a
+            href="https://calendly.com/brendanrodgersuk/book-a-discovery-call-with-brendan-rodgers-ai"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-accent text-accent-foreground font-sans text-[14px] font-semibold px-5 py-3 rounded-full hover:opacity-90 transition-opacity print:hidden"
+          >
+            Book a discovery call
+            <ArrowRight className="w-4 h-4" />
+          </a>
+
+          {/* Payment terms */}
+          <div className="bg-muted rounded-2xl p-[18px] px-5 mt-10">
+            <div className="flex gap-3.5 items-start text-accent">
+              <div className="flex-shrink-0 mt-0.5"><CardIcon /></div>
+              <div className="flex-1">
+                <div className="font-sans text-[11px] font-bold uppercase tracking-[0.09em] text-accent mb-1.5">Pricing & terms</div>
+                <div className="font-sans text-[13.5px] text-foreground leading-[1.65]">
+                  Pricing is shaped to scope and surfaced during the discovery conversation. Standard terms are 50% upfront and 50% on delivery. Thread & Stack is not VAT registered. A 15% late charge applies to any payment not received within 30 days of invoicing.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="border-t border-border px-14 py-7 flex items-center justify-between gap-6 max-sm:flex-col max-sm:items-start max-sm:px-7">
+          <p className="text-[13.5px] text-muted-foreground leading-[1.55] max-w-[420px]">
+            Brendan Rodgers · <a href="https://threadandstack.com/" className="text-accent hover:underline">threadandstack.com</a>
+          </p>
+          <img src={GreyStacked} alt="Thread & Stack" className="h-8 opacity-50 flex-shrink-0" />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ServicesOnePager;
