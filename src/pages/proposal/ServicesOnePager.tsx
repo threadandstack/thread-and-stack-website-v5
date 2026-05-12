@@ -134,7 +134,7 @@ const ServicesOnePager = ({
 
           {/* Offers */}
           {offers.map((offer, i) => (
-            <div key={i}>
+            <div key={i} id={`offer-${i}`} className="scroll-mt-8">
               {i > 0 && <div className="h-px bg-border my-10" />}
 
               <div className="flex items-center gap-2 mb-3">
