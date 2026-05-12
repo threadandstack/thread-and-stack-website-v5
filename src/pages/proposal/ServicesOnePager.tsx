@@ -40,6 +40,9 @@ export type Offer = {
   concrete?: string;
   includes?: string[];
   bestFor: string;
+  icon?: string;
+  variant?: "default" | "dark";
+  cta?: { label: string; href: string };
 };
 
 type Props = {
@@ -180,49 +183,59 @@ const ServicesOnePager = ({
                   key={i}
                   id={val}
                   value={val}
-                  className="scroll-mt-8 border border-border/60 rounded-2xl bg-card overflow-hidden print:break-inside-avoid"
+                  className={
+                    offer.variant === "dark"
+                      ? "scroll-mt-8 border border-black rounded-2xl bg-black text-white overflow-hidden print:break-inside-avoid"
+                      : "scroll-mt-8 border border-border/60 rounded-2xl bg-card overflow-hidden print:break-inside-avoid"
+                  }
                 >
                   <AccordionTrigger className="px-5 py-4 hover:no-underline [&>svg]:hidden group">
                     <div className="flex items-center gap-4 flex-1 text-left">
-                      <span className="font-sans text-[11px] font-bold text-[#FF6200] bg-[#FF6200]/10 rounded-full w-7 h-7 flex items-center justify-center flex-shrink-0">
-                        {offer.num}
-                      </span>
+                      {offer.icon ? (
+                        <span className="flex-shrink-0 w-7 h-7 rounded-full bg-white flex items-center justify-center overflow-hidden">
+                          <img src={offer.icon} alt="" className="w-5 h-5 object-contain" />
+                        </span>
+                      ) : (
+                        <span className="font-sans text-[11px] font-bold text-[#FF6200] bg-[#FF6200]/10 rounded-full w-7 h-7 flex items-center justify-center flex-shrink-0">
+                          {offer.num}
+                        </span>
+                      )}
                       <div className="flex-1 min-w-0">
-                        <h3 className="font-serif-pro text-[20px] italic font-semibold text-primary leading-tight mb-1">
+                        <h3 className={`font-serif-pro text-[20px] italic font-semibold leading-tight mb-1 ${offer.variant === "dark" ? "text-white" : "text-primary"}`}>
                           {offer.title}
                         </h3>
                         <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                          <span className="font-sans text-[10px] font-bold uppercase tracking-[0.14em] text-accent">
+                          <span className={`font-sans text-[10px] font-bold uppercase tracking-[0.14em] ${offer.variant === "dark" ? "text-[#FF6200]" : "text-accent"}`}>
                             {offer.shape}
                           </span>
                           {offer.scope && (
                             <>
-                              <span className="text-muted-foreground/50 text-[10px]">·</span>
-                              <span className="font-sans text-[12px] text-muted-foreground">{offer.scope}</span>
+                              <span className={offer.variant === "dark" ? "text-white/40 text-[10px]" : "text-muted-foreground/50 text-[10px]"}>·</span>
+                              <span className={`font-sans text-[12px] ${offer.variant === "dark" ? "text-white/70" : "text-muted-foreground"}`}>{offer.scope}</span>
                             </>
                           )}
                         </div>
                       </div>
-                      <span className="flex-shrink-0 w-7 h-7 rounded-full border border-border flex items-center justify-center text-muted-foreground group-hover:text-accent group-hover:border-accent transition-colors print:hidden">
+                      <span className={`flex-shrink-0 w-7 h-7 rounded-full border flex items-center justify-center transition-colors print:hidden ${offer.variant === "dark" ? "border-white/30 text-white/70 group-hover:text-[#FF6200] group-hover:border-[#FF6200]" : "border-border text-muted-foreground group-hover:text-accent group-hover:border-accent"}`}>
                         <Plus className="w-3.5 h-3.5 group-data-[state=open]:hidden" />
                         <Minus className="w-3.5 h-3.5 hidden group-data-[state=open]:block" />
                       </span>
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="px-5 pb-5">
-                    <p className="text-[15px] leading-[1.7] text-foreground mb-3">{offer.emotional}</p>
+                    <p className={`text-[15px] leading-[1.7] mb-3 ${offer.variant === "dark" ? "text-white/85" : "text-foreground"}`}>{offer.emotional}</p>
 
                     {offer.concrete && (
-                      <p className="text-[15px] leading-[1.7] text-foreground mb-3">{offer.concrete}</p>
+                      <p className={`text-[15px] leading-[1.7] mb-3 ${offer.variant === "dark" ? "text-white/85" : "text-foreground"}`}>{offer.concrete}</p>
                     )}
 
                     {offer.includes && offer.includes.length > 0 && (
-                      <div className="bg-muted/60 rounded-xl px-5 py-[18px] mb-4 mt-4">
-                        <h4 className="font-serif-pro text-[16px] italic font-semibold text-primary mb-3">What's included</h4>
+                      <div className={`rounded-xl px-5 py-[18px] mb-4 mt-4 ${offer.variant === "dark" ? "bg-white/5" : "bg-muted/60"}`}>
+                        <h4 className={`font-serif-pro text-[16px] italic font-semibold mb-3 ${offer.variant === "dark" ? "text-white" : "text-primary"}`}>What's included</h4>
                         <div className="flex flex-col gap-2">
                           {offer.includes.map((item, idx) => (
-                            <div key={idx} className="flex items-start gap-2.5 text-[13.5px] text-foreground leading-[1.55]">
-                              <div className="w-4 h-4 rounded-full bg-accent/10 border-[1.5px] border-accent flex items-center justify-center flex-shrink-0 mt-px text-accent">
+                            <div key={idx} className={`flex items-start gap-2.5 text-[13.5px] leading-[1.55] ${offer.variant === "dark" ? "text-white/85" : "text-foreground"}`}>
+                              <div className={`w-4 h-4 rounded-full border-[1.5px] flex items-center justify-center flex-shrink-0 mt-px ${offer.variant === "dark" ? "bg-[#FF6200]/15 border-[#FF6200] text-[#FF6200]" : "bg-accent/10 border-accent text-accent"}`}>
                                 <CheckIcon />
                               </div>
                               <span>{item}</span>
@@ -232,9 +245,21 @@ const ServicesOnePager = ({
                       </div>
                     )}
 
-                    <div className="bg-accent/5 rounded-xl p-4 mt-3">
-                      <p className="text-[13.5px] text-foreground leading-[1.6]">
-                        <span className="font-semibold text-accent">Best for: </span>{offer.bestFor}
+                    {offer.cta && (
+                      <a
+                        href={offer.cta.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 bg-[#FF6200] text-white font-sans text-[13px] font-semibold px-4 py-2.5 rounded-full hover:opacity-90 transition-opacity mt-2 mb-3"
+                      >
+                        {offer.cta.label}
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </a>
+                    )}
+
+                    <div className={`rounded-xl p-4 mt-3 ${offer.variant === "dark" ? "bg-[#FF6200]/10" : "bg-accent/5"}`}>
+                      <p className={`text-[13.5px] leading-[1.6] ${offer.variant === "dark" ? "text-white/90" : "text-foreground"}`}>
+                        <span className={`font-semibold ${offer.variant === "dark" ? "text-[#FF6200]" : "text-accent"}`}>Best for: </span>{offer.bestFor}
                       </p>
                     </div>
                   </AccordionContent>
