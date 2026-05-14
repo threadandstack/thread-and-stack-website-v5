@@ -87,7 +87,7 @@ const HomePageDraft = () => {
     {
       icon: <Sparkles className="w-6 h-6" />,
       label: "AIOps",
-      title: "AI Agents & Automations Layered In",
+      title: "Team OS",
       description:
         "AI woven through your existing stack — custom agents, content pipelines, and automations that quietly do the work in the background and give your team back time.",
       includes: [
