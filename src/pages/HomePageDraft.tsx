@@ -105,6 +105,91 @@ const HomePageDraft = () => {
     },
   ];
 
+  const testimonials = [
+    {
+      headline: "Hire Brendan, you won't regret it!",
+      quote:
+        "Brendan is like a Swiss army knife when it comes to marketing — strategic and hands-on. He helped me build a system that actually works for The IMMA Collective, I've now got real peace of mind, a clear vision for the business, and marketing that feels properly joined up.",
+      author: "Lilli Graf",
+      date: "Apr 17, 2026",
+    },
+    {
+      headline: "Brendan does great work!",
+      quote:
+        "Brendan did a terrific and patient job of untangling my Notion ineptitude. I'm saving time already with the new cleaned up format.",
+      author: "Lucian James",
+      date: "May 8, 2026",
+    },
+    {
+      headline: "A safe pair of hands",
+      quote:
+        "Brendan has been a dream. His support totally invigorated us. We've made more progress in the last couple of months than we had in the previous year.",
+      author: "Alex Aggidis",
+      date: "Head of Marketing, Fundraising Everywhere",
+    },
+    {
+      headline: "Tenacious and exceptional",
+      quote:
+        "Brendan is one of the most tenacious marketers I've met, fast to action plans with exceptional follow through to get the job done.",
+      author: "Courtney Evans",
+      date: "CEO, Funraisin",
+    },
+  ];
+
+  const [tApi, setTApi] = useState<CarouselApi>();
+  const [tSelected, setTSelected] = useState(0);
+
+  useEffect(() => {
+    if (!tApi) return;
+    const update = () => setTSelected(tApi.selectedScrollSnap());
+    update();
+    tApi.on("select", update);
+    tApi.on("reInit", update);
+    return () => {
+      tApi.off("select", update);
+      tApi.off("reInit", update);
+    };
+  }, [tApi]);
+
+  // Auto-advance testimonials
+  useEffect(() => {
+    if (!tApi) return;
+    const id = setInterval(() => tApi.scrollNext(), 6000);
+    return () => clearInterval(id);
+  }, [tApi]);
+
+  const journey = [
+    {
+      icon: <Compass className="w-6 h-6" />,
+      stage: "Stage One",
+      title: "Discovery",
+      description:
+        "We get to know the team, surface what's really going on, and align on a Statement of Work and timeline. No assumptions — just a clear picture of where you are and where you're heading.",
+    },
+    {
+      icon: <PenTool className="w-6 h-6" />,
+      stage: "Stage Two",
+      title: "Design",
+      description:
+        "We architect the system on paper before we touch a tool — workflows, information design, and the shape of the build. You see the plan before anything gets wired up.",
+    },
+    {
+      icon: <Wrench className="w-6 h-6" />,
+      stage: "Stage Three",
+      title: "Delivery",
+      description:
+        "We build, test, and iterate in the open. Regular check-ins, working sessions, and a system that lands fully documented and ready for your team to actually use.",
+    },
+    {
+      icon: <HeartHandshake className="w-6 h-6" />,
+      stage: "Stage Four",
+      title: "Aftercare",
+      description:
+        "A handover that sticks — training, documentation, and a window of post-launch support so the system embeds properly. Optional ongoing retainer if you want us to stay close.",
+    },
+  ];
+
+
   const onSelect = useCallback(() => {
     if (!api) return;
     setSelected(api.selectedScrollSnap());
