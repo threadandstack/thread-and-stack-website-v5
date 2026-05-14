@@ -239,9 +239,6 @@ const HomePageDraft = () => {
         </div>
       </section>
 
-      {/* Testimonials — variant preview */}
-      <TestimonialVariants testimonials={testimonials} />
-
       {/* Build Domains Carousel */}
       <section className="relative z-10 pb-24 px-6">
         <div className="max-w-7xl mx-auto">
