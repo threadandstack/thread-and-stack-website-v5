@@ -38,53 +38,83 @@ import notionCustomAgents from "@/assets/notion-custom-agents.webp";
 const HomePageDraft = () => {
   const [contactOpen, setContactOpen] = useState(false);
   const [zoomedImage, setZoomedImage] = useState<{ src: string; alt: string } | null>(null);
+  const [api, setApi] = useState<CarouselApi>();
+  const [selected, setSelected] = useState(0);
 
-  const tiers = [
+  const builds = [
     {
-      icon: <Zap className="w-6 h-6" />,
-      label: "Rapid Intervention",
-      title: "Notion Session",
-      tagline: "1 System · 1 Discussion · 1 Workflow fixed",
+      icon: <Briefcase className="w-6 h-6" />,
+      label: "BizOps",
+      title: "The Operating System for the Business",
       description:
-        "A single focused session to unblock a Notion problem, validate a workspace decision, or fix a broken workflow.",
+        "The connective tissue of your company — workflows, SOPs, knowledge bases, and the documentation layer that keeps everyone moving in the same direction.",
       includes: [
-        "60-minute deep-dive on one system or workflow",
-        "Full recording, AI transcription & summary",
-        "A clear action plan — exactly what to do next",
+        "Workspace architecture & information design",
+        "Workflow mapping, SOPs & documentation",
+        "Cross-team handoffs & process clarity",
+        "Single source of truth for the team",
       ],
-      cta: "Book a Session",
+      cta: "Build my BizOps",
     },
     {
-      icon: <Repeat className="w-6 h-6" />,
-      label: "Ongoing Partnership",
-      title: "Fractional Ops & Automations Director",
-      tagline: "Monthly system focuses & AI ops support",
+      icon: <TrendingUp className="w-6 h-6" />,
+      label: "RevOps",
+      title: "Pipeline, CRM & Revenue Workflows",
       description:
-        "Embedded operational support on retainer. Notion administration, AI automations, and a new system focus each month.",
+        "Joined-up sales and marketing operations — from first touch to closed-won. Lead lifecycle, pipeline hygiene, and attribution that actually tells you what works.",
       includes: [
-        "Monthly system focus & optimisation sprint",
-        "Ongoing Notion administration & maintenance",
-        "AI workflow design & automation support",
-        "Slack access for ops questions & unblocking",
+        "CRM design, migration & cleanup",
+        "Lead lifecycle & pipeline workflows",
+        "Marketing → sales handoff automations",
+        "Attribution, reporting & revenue dashboards",
       ],
-      cta: "Explore a Retainer",
+      cta: "Build my RevOps",
     },
     {
-      icon: <Layers className="w-6 h-6" />,
-      label: "Concentrated Project",
-      title: "System Build Engagement",
-      tagline: "Workflows, CRM, marketing ops — scoped & built",
+      icon: <Crown className="w-6 h-6" />,
+      label: "ExecOps",
+      title: "A Leadership OS for Founders & Teams",
       description:
-        "A scoped engagement to build or rebuild your Notion workspace. CRM migration, content pipelines, or operational untangling.",
+        "The operating rhythm that lets a leadership team think clearly — meeting cadences, decision logs, weekly reviews, and the dashboards that surface what matters.",
       includes: [
-        "Workspace audit & workflow mapping",
-        "Custom Notion system design & build",
-        "CRM migration, marketing ops, or team workflows",
-        "Documentation, training & handover",
+        "Meeting cadence & decision-log design",
+        "Weekly / monthly review systems",
+        "Exec dashboards & team-health signals",
+        "Strategic planning workflows",
       ],
-      cta: "Discuss a Build",
+      cta: "Build my ExecOps",
+    },
+    {
+      icon: <Sparkles className="w-6 h-6" />,
+      label: "AIOps",
+      title: "AI Agents & Automations Layered In",
+      description:
+        "AI woven through your existing stack — custom agents, content pipelines, and automations that quietly do the work in the background and give your team back time.",
+      includes: [
+        "Custom AI agents built to your workflow",
+        "Email triage, summarisation & briefing",
+        "Content & research automation pipelines",
+        "Stack-wide automation orchestration",
+      ],
+      cta: "Build my AIOps",
     },
   ];
+
+  const onSelect = useCallback(() => {
+    if (!api) return;
+    setSelected(api.selectedScrollSnap());
+  }, [api]);
+
+  useEffect(() => {
+    if (!api) return;
+    onSelect();
+    api.on("select", onSelect);
+    api.on("reInit", onSelect);
+    return () => {
+      api.off("select", onSelect);
+      api.off("reInit", onSelect);
+    };
+  }, [api, onSelect]);
 
   return (
     <main className="min-h-screen relative pt-24 bg-background">
@@ -111,59 +141,111 @@ const HomePageDraft = () => {
         </div>
       </section>
 
-      {/* 3-Column Product Cards */}
+      {/* Build Domains Carousel */}
       <section className="relative z-10 pb-24 px-6">
         <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-6">
-            {tiers.map((tier, index) => {
-              const isRecommended = index === 1;
-              return (
-                <div
-                  key={index}
-                  className={`bg-card rounded-2xl p-8 transition-all duration-300 flex flex-col relative ${
-                    isRecommended
-                      ? "ring-2 ring-accent shadow-[0_8px_30px_rgba(0,0,0,0.12)] scale-[1.02] md:scale-105"
-                      : "shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.12)]"
-                  }`}
-                >
-                  {isRecommended && (
-                    <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                      <span className="bg-accent text-accent-foreground text-xs font-sans font-semibold px-4 py-1 rounded-full whitespace-nowrap">
-                        Recommended
-                      </span>
-                    </div>
-                  )}
-
-                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-6 ${
-                    isRecommended ? "bg-accent text-accent-foreground" : "bg-accent/10 text-accent"
-                  }`}>
-                    {tier.icon}
-                  </div>
-
-                  <h3 className="text-2xl mb-2 font-semibold italic">{tier.title}</h3>
-                  <p className="text-sm font-sans text-accent mb-4">{tier.label}</p>
-                  <p className="font-sans text-muted-foreground leading-relaxed mb-6">{tier.description}</p>
-
-                  <ul className="space-y-2 mb-8 flex-grow">
-                    {tier.includes.map((item, idx) => (
-                      <li key={idx} className="flex items-start gap-2">
-                        <Check className="w-4 h-4 text-accent mt-0.5 flex-shrink-0" />
-                        <span className="text-sm font-sans text-muted-foreground">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <PillButton
-                    className="w-full"
-                    icon={Rocket}
-                    variant={isRecommended ? "indigo" : "default"}
-                    onClick={() => setContactOpen(true)}
+          <Carousel
+            setApi={setApi}
+            opts={{ align: "center", loop: true }}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-4 py-6">
+              {builds.map((build, index) => {
+                const isActive = index === selected;
+                return (
+                  <CarouselItem
+                    key={index}
+                    className="pl-4 basis-full md:basis-1/2 lg:basis-1/3"
                   >
-                    {tier.cta}
-                  </PillButton>
-                </div>
-              );
-            })}
+                    <button
+                      type="button"
+                      onClick={() => api?.scrollTo(index)}
+                      className={`text-left w-full bg-card rounded-2xl p-8 transition-all duration-300 flex flex-col h-full ${
+                        isActive
+                          ? "ring-2 ring-accent shadow-[0_8px_30px_rgba(0,0,0,0.12)] scale-[1.02]"
+                          : "shadow-[0_4px_20px_rgba(0,0,0,0.08)] opacity-70 hover:opacity-100"
+                      }`}
+                    >
+                      <div
+                        className={`w-12 h-12 rounded-xl flex items-center justify-center mb-6 ${
+                          isActive
+                            ? "bg-accent text-accent-foreground"
+                            : "bg-accent/10 text-accent"
+                        }`}
+                      >
+                        {build.icon}
+                      </div>
+
+                      <p className="text-sm font-sans text-accent mb-2 uppercase tracking-wide">
+                        {build.label}
+                      </p>
+                      <h3 className="text-2xl mb-4 font-semibold italic">
+                        {build.title}
+                      </h3>
+                      <p className="font-sans text-muted-foreground leading-relaxed mb-6">
+                        {build.description}
+                      </p>
+
+                      <ul className="space-y-2 mb-8 flex-grow">
+                        {build.includes.map((item, idx) => (
+                          <li key={idx} className="flex items-start gap-2">
+                            <Check className="w-4 h-4 text-accent mt-0.5 flex-shrink-0" />
+                            <span className="text-sm font-sans text-muted-foreground">
+                              {item}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+
+                      <PillButton
+                        className="w-full"
+                        icon={Rocket}
+                        variant={isActive ? "indigo" : "default"}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setContactOpen(true);
+                        }}
+                      >
+                        {build.cta}
+                      </PillButton>
+                    </button>
+                  </CarouselItem>
+                );
+              })}
+            </CarouselContent>
+          </Carousel>
+
+          {/* Carousel controls */}
+          <div className="flex items-center justify-center gap-4 mt-8">
+            <Button
+              variant="outline"
+              size="icon"
+              className="h-10 w-10 rounded-full"
+              onClick={() => api?.scrollPrev()}
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </Button>
+            <div className="flex items-center gap-2">
+              {builds.map((_, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => api?.scrollTo(idx)}
+                  className={`h-2 rounded-full transition-all ${
+                    idx === selected ? "w-8 bg-accent" : "w-2 bg-muted-foreground/30"
+                  }`}
+                  aria-label={`Go to ${builds[idx].label}`}
+                />
+              ))}
+            </div>
+            <Button
+              variant="outline"
+              size="icon"
+              className="h-10 w-10 rounded-full"
+              onClick={() => api?.scrollNext()}
+            >
+              <ChevronRight className="h-5 w-5" />
+            </Button>
           </div>
         </div>
       </section>
