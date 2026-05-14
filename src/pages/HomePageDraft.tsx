@@ -23,6 +23,11 @@ import {
   TrendingUp,
   Crown,
   Sparkles,
+  Compass,
+  PenTool,
+  Wrench,
+  HeartHandshake,
+  Quote,
 } from "lucide-react";
 import logo from "@/assets/logos/Black_TS_Stacked.svg";
 import notionAdmin from "@/assets/notion-certified-admin.webp";
