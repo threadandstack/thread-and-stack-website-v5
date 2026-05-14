@@ -94,6 +94,7 @@ const App = () => (
             <Route path="/fractional-strategy" element={<FractionalDeepEngagement />} />
             <Route path="/deep-engagement" element={<FractionalDeepEngagement />} />
             <Route path="/blog" element={<BlogPage />} />
+            <Route path="/home-draft" element={<HomePageDraft />} />
             <Route path="/blog/:slug" element={<BlogPostPage />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/data-guarantee" element={<DataGuarantee />} />
