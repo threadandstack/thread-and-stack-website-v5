@@ -201,7 +201,7 @@ const HomePageDraft = () => {
                         <PillButton
                           className="w-full"
                           icon={Rocket}
-                          variant={isActive ? "indigo" : "default"}
+                          variant={isActive ? "dark" : "default"}
                           onClick={(e) => {
                             e.stopPropagation();
                             setContactOpen(true);
