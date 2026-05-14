@@ -143,27 +143,27 @@ const HomePageDraft = () => {
 
       {/* Build Domains Carousel */}
       <section className="relative z-10 pb-24 px-6">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           <Carousel
             setApi={setApi}
-            opts={{ align: "center", loop: true }}
-            className="w-full"
+            opts={{ align: "center", loop: true, startIndex: 1 }}
+            className="w-full px-4 md:px-12"
           >
-            <CarouselContent className="-ml-4 py-6">
+            <CarouselContent className="-ml-6 py-10">
               {builds.map((build, index) => {
                 const isActive = index === selected;
                 return (
                   <CarouselItem
                     key={index}
-                    className="pl-4 basis-full md:basis-1/2 lg:basis-1/3"
+                    className="pl-6 basis-[85%] sm:basis-[60%] md:basis-[42%] lg:basis-[32%]"
                   >
                     <button
                       type="button"
                       onClick={() => api?.scrollTo(index)}
-                      className={`text-left w-full bg-card rounded-2xl p-8 transition-all duration-300 flex flex-col h-full ${
+                      className={`text-left w-full bg-card rounded-2xl p-8 transition-all duration-500 flex flex-col h-full ${
                         isActive
-                          ? "ring-2 ring-accent shadow-[0_8px_30px_rgba(0,0,0,0.12)] scale-[1.02]"
-                          : "shadow-[0_4px_20px_rgba(0,0,0,0.08)] opacity-70 hover:opacity-100"
+                          ? "ring-2 ring-accent shadow-[0_12px_40px_rgba(0,0,0,0.14)] scale-[1.04] opacity-100"
+                          : "shadow-[0_2px_12px_rgba(0,0,0,0.06)] opacity-50 scale-[0.94] hover:opacity-80"
                       }`}
                     >
                       <div
