@@ -18,7 +18,7 @@ const HomePageDraft = () => {
             />
           </div>
           <p className="text-xl text-muted-foreground mb-8 text-center leading-relaxed max-w-2xl mx-auto">
-            Thoughts on brand, creativity, and the systems that build our businesses.
+            AI Ops & Systems for teams who want the work to flow.
           </p>
 
           <div className="flex justify-center mb-8">
