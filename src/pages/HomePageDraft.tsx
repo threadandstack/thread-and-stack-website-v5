@@ -1,7 +1,7 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import journalLogo from "@/assets/journal-logo.webp";
+import logo from "@/assets/logos/Black_TS_Stacked.svg";
 
 const HomePageDraft = () => {
   return (
