@@ -378,6 +378,81 @@ const HomePageDraft = () => {
         </div>
       </section>
 
+      {/* Engagement Journey */}
+      <section className="py-24 px-6 bg-muted/20">
+        <div className="max-w-3xl mx-auto">
+          <div className="text-center mb-16">
+            <span className="inline-flex items-center rounded-full bg-accent/10 text-accent text-xs font-sans font-semibold px-3 py-1 mb-4">
+              How we work together
+            </span>
+            <h2 className="text-4xl md:text-5xl font-semibold italic mb-4">
+              What an engagement looks like
+            </h2>
+            <p className="font-sans text-muted-foreground leading-relaxed max-w-xl mx-auto">
+              Every Thread &amp; Stack engagement moves through four clear stages — so you always know where we are and what's coming next.
+            </p>
+          </div>
+
+          <div className="relative">
+            {/* vertical thread */}
+            <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-accent/40 to-transparent md:-translate-x-px" aria-hidden />
+
+            <ol className="space-y-12">
+              {journey.map((step, idx) => {
+                const isLeft = idx % 2 === 0;
+                return (
+                  <li
+                    key={idx}
+                    className={`relative md:grid md:grid-cols-2 md:gap-12 md:items-center`}
+                  >
+                    {/* Node */}
+                    <div className="absolute left-6 md:left-1/2 -translate-x-1/2 top-6 z-10">
+                      <div className="w-12 h-12 rounded-full bg-background border-2 border-foreground flex items-center justify-center text-sm font-semibold shadow-md">
+                        {idx + 1}
+                      </div>
+                    </div>
+
+                    {/* Card */}
+                    <div
+                      className={`pl-20 md:pl-0 ${
+                        isLeft ? "md:pr-16 md:text-right" : "md:col-start-2 md:pl-16"
+                      }`}
+                    >
+                      <div className="bg-card rounded-2xl p-6 md:p-8 shadow-[0_2px_12px_rgba(0,0,0,0.06)]">
+                        <div
+                          className={`flex items-center gap-3 mb-3 ${
+                            isLeft ? "md:justify-end" : ""
+                          }`}
+                        >
+                          <div className="w-10 h-10 rounded-xl bg-accent/10 text-accent flex items-center justify-center">
+                            {step.icon}
+                          </div>
+                          <span className="text-xs font-sans uppercase tracking-wide text-accent">
+                            {step.stage}
+                          </span>
+                        </div>
+                        <h3 className="text-2xl font-semibold italic mb-3">
+                          {step.title}
+                        </h3>
+                        <p className="font-sans text-muted-foreground leading-relaxed">
+                          {step.description}
+                        </p>
+                      </div>
+                    </div>
+                  </li>
+                );
+              })}
+            </ol>
+          </div>
+
+          <div className="flex justify-center mt-16">
+            <PillButton icon={MessageCircle} onClick={() => setContactOpen(true)}>
+              Start with Discovery
+            </PillButton>
+          </div>
+        </div>
+      </section>
+
       {/* System Build Showcase */}
       <section className="py-24 px-6">
         <div className="max-w-6xl mx-auto">
