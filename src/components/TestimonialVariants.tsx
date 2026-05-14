@@ -64,15 +64,23 @@ export const TestimonialVariants = ({ testimonials }: Props) => {
 /* ------------------------------------------------------------------ */
 /* 1. Notion Kanban Scatter — draggable cards on a soft board         */
 /* ------------------------------------------------------------------ */
+const tagByAuthor: Record<string, { tag: string; tagColor: string }> = {
+  "Jasmine Stone": { tag: "Notion Mentorship", tagColor: "bg-orange-100 text-orange-700" },
+  "Lilli Graf": { tag: "AI Workflows", tagColor: "bg-blue-100 text-blue-700" },
+  "Lucian James": { tag: "Task OS", tagColor: "bg-purple-100 text-purple-700" },
+  "Alex Aggidis": { tag: "Strategy", tagColor: "bg-green-100 text-green-700" },
+  "Courtney Evans": { tag: "Leadership", tagColor: "bg-yellow-100 text-yellow-700" },
+};
+
 const KanbanScatter = ({ testimonials }: Props) => {
-  // Hand-tuned positions so cards feel scattered but balanced.
+  // Cluttered, overlapping starting positions (percent-based for responsiveness).
   const positions = [
-    { top: "4%", left: "3%", rotate: -4, tag: "Mentorship", tagColor: "bg-orange-100 text-orange-700" },
-    { top: "8%", left: "38%", rotate: 2, tag: "Notion Build", tagColor: "bg-blue-100 text-blue-700" },
-    { top: "2%", left: "70%", rotate: 5, tag: "Strategy", tagColor: "bg-purple-100 text-purple-700" },
-    { top: "48%", left: "12%", rotate: 3, tag: "Marketing", tagColor: "bg-green-100 text-green-700" },
-    { top: "52%", left: "48%", rotate: -3, tag: "Ops", tagColor: "bg-pink-100 text-pink-700" },
-    { top: "46%", left: "75%", rotate: 6, tag: "Leadership", tagColor: "bg-yellow-100 text-yellow-700" },
+    { top: "6%", left: "8%", rotate: -5 },
+    { top: "12%", left: "26%", rotate: 3 },
+    { top: "4%", left: "44%", rotate: -2 },
+    { top: "18%", left: "58%", rotate: 4 },
+    { top: "10%", left: "72%", rotate: -3 },
+    { top: "22%", left: "38%", rotate: 6 },
   ];
 
   const boardRef = useRef<HTMLDivElement>(null);
@@ -118,14 +126,15 @@ const KanbanScatter = ({ testimonials }: Props) => {
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
       onPointerLeave={onPointerUp}
-      className="relative w-full h-[640px] md:h-[560px] rounded-2xl bg-[radial-gradient(circle_at_1px_1px,hsl(var(--muted-foreground)/0.18)_1px,transparent_0)] [background-size:20px_20px] bg-muted/20 overflow-hidden touch-none"
+      className="relative w-full h-[420px] md:h-[360px] rounded-2xl bg-[radial-gradient(circle_at_1px_1px,hsl(var(--muted-foreground)/0.18)_1px,transparent_0)] [background-size:20px_20px] bg-muted/20 overflow-hidden touch-none"
     >
-      <div className="absolute top-4 left-1/2 -translate-x-1/2 text-[11px] font-sans uppercase tracking-widest text-muted-foreground/70 pointer-events-none">
+      <div className="absolute top-3 left-1/2 -translate-x-1/2 text-[11px] font-sans uppercase tracking-widest text-muted-foreground/70 pointer-events-none">
         ↕ Drag the cards · Notion-style board
       </div>
 
       {testimonials.slice(0, positions.length).map((t, idx) => {
         const pos = positions[idx];
+        const meta = tagByAuthor[t.author] ?? { tag: "Testimonial", tagColor: "bg-muted text-muted-foreground" };
         const override = overrides[idx];
         const style: React.CSSProperties = override
           ? {
@@ -146,25 +155,25 @@ const KanbanScatter = ({ testimonials }: Props) => {
             key={idx}
             onPointerDown={(e) => onPointerDown(e, idx)}
             style={style}
-            className="absolute w-[260px] md:w-[280px] bg-card rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_30px_rgba(0,0,0,0.14)] cursor-grab active:cursor-grabbing transition-shadow p-5 select-none"
+            className="absolute w-[300px] md:w-[320px] bg-white rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_30px_rgba(0,0,0,0.14)] cursor-grab active:cursor-grabbing transition-shadow p-4 select-none"
           >
-            <div className="flex items-center gap-2 mb-3">
-              <span className={`text-[10px] font-sans font-medium px-2 py-0.5 rounded ${pos.tagColor}`}>
-                {pos.tag}
+            <div className="flex items-center gap-2 mb-2">
+              <span className={`text-[10px] font-sans font-medium px-2 py-0.5 rounded ${meta.tagColor}`}>
+                {meta.tag}
               </span>
               <span className="text-[10px] font-sans text-muted-foreground/60 ml-auto">
                 ⋮⋮
               </span>
             </div>
-            <p className="text-sm font-semibold italic mb-2 leading-snug">
+            <p className="text-sm font-semibold italic mb-1.5 leading-snug line-clamp-1">
               {t.headline}
             </p>
-            <p className="text-xs font-sans text-muted-foreground leading-relaxed mb-3 line-clamp-5">
+            <p className="text-xs font-sans text-muted-foreground leading-relaxed mb-2 line-clamp-2">
               "{t.quote}"
             </p>
-            <div className="pt-2 border-t border-border/40">
-              <p className="text-xs font-sans text-foreground">{t.author}</p>
-              <p className="text-[10px] font-sans text-muted-foreground/70">{t.date}</p>
+            <div className="pt-1.5 border-t border-border/40 flex items-baseline justify-between gap-2">
+              <p className="text-xs font-sans text-foreground truncate">{t.author}</p>
+              <p className="text-[10px] font-sans text-muted-foreground/70 truncate">{t.date}</p>
             </div>
           </div>
         );
