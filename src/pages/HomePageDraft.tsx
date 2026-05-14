@@ -1,7 +1,7 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import journalLogo from "@/assets/journal-logo.webp";
+import logo from "@/assets/logos/Black_TS_Stacked.svg";
 
 const HomePageDraft = () => {
   return (
@@ -12,7 +12,7 @@ const HomePageDraft = () => {
         <div className="max-w-4xl mx-auto">
           <div className="flex justify-center mb-6">
             <img
-              src={journalLogo}
+              src={logo}
               alt="Thread & Stack"
               className="h-40 sm:h-56 md:h-80 w-auto"
             />
