@@ -170,7 +170,7 @@ const HomePageDraft = () => {
                         <div
                           className={`w-12 h-12 rounded-xl flex items-center justify-center mb-6 ${
                             isActive
-                              ? "bg-accent text-accent-foreground"
+                              ? "bg-foreground text-background"
                               : "bg-accent/10 text-accent"
                           }`}
                         >
@@ -201,7 +201,7 @@ const HomePageDraft = () => {
                         <PillButton
                           className="w-full"
                           icon={Rocket}
-                          variant={isActive ? "indigo" : "default"}
+                          variant={isActive ? "dark" : "default"}
                           onClick={(e) => {
                             e.stopPropagation();
                             setContactOpen(true);
