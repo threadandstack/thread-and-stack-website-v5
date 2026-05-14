@@ -12,7 +12,7 @@ const HomePageDraft = () => {
         <div className="max-w-4xl mx-auto">
           <div className="flex justify-center mb-6">
             <img
-              src={journalLogo}
+              src={logo}
               alt="Thread & Stack"
               className="h-40 sm:h-56 md:h-80 w-auto"
             />
