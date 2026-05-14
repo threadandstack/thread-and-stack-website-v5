@@ -163,7 +163,7 @@ const HomePageDraft = () => {
                         onClick={() => api?.scrollTo(index)}
                         className={`text-left w-full bg-card rounded-2xl p-8 transition-all duration-500 flex flex-col h-full ${
                           isActive
-                            ? "ring-2 ring-accent shadow-[0_12px_40px_rgba(0,0,0,0.14)] scale-[1.04] opacity-100"
+                            ? "ring-2 ring-foreground shadow-[0_12px_40px_rgba(0,0,0,0.14)] scale-[1.04] opacity-100"
                             : "shadow-[0_2px_12px_rgba(0,0,0,0.06)] opacity-50 scale-[0.94] hover:opacity-80"
                         }`}
                       >
