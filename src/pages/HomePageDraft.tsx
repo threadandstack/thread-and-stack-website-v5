@@ -14,7 +14,7 @@ const HomePageDraft = () => {
             <img
               src={logo}
               alt="Thread & Stack"
-              className="h-40 sm:h-56 md:h-80 w-auto"
+              className="h-32 sm:h-44 md:h-64 w-auto"
             />
           </div>
           <p className="text-xl text-muted-foreground mb-8 text-center leading-relaxed max-w-2xl mx-auto">
