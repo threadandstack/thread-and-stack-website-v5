@@ -9,6 +9,8 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
   type CarouselApi,
 } from "@/components/ui/carousel";
 import {
@@ -21,8 +23,6 @@ import {
   TrendingUp,
   Crown,
   Sparkles,
-  ChevronLeft,
-  ChevronRight,
 } from "lucide-react";
 import logo from "@/assets/logos/Black_TS_Stacked.svg";
 import notionAdmin from "@/assets/notion-certified-admin.webp";
@@ -39,7 +39,7 @@ const HomePageDraft = () => {
   const [contactOpen, setContactOpen] = useState(false);
   const [zoomedImage, setZoomedImage] = useState<{ src: string; alt: string } | null>(null);
   const [api, setApi] = useState<CarouselApi>();
-  const [selected, setSelected] = useState(0);
+  const [selected, setSelected] = useState(1);
 
   const builds = [
     {
@@ -146,86 +146,82 @@ const HomePageDraft = () => {
         <div className="max-w-7xl mx-auto">
           <Carousel
             setApi={setApi}
-            opts={{ align: "center", loop: true, startIndex: 1 }}
-            className="w-full px-4 md:px-12"
+            opts={{ align: "center", loop: true, startIndex: 1, skipSnaps: false }}
+            className="w-full"
           >
-            <CarouselContent className="-ml-6 py-10">
-              {builds.map((build, index) => {
-                const isActive = index === selected;
-                return (
-                  <CarouselItem
-                    key={index}
-                    className="pl-6 basis-[85%] sm:basis-[60%] md:basis-[42%] lg:basis-[32%]"
-                  >
-                    <button
-                      type="button"
-                      onClick={() => api?.scrollTo(index)}
-                      className={`text-left w-full bg-card rounded-2xl p-8 transition-all duration-500 flex flex-col h-full ${
-                        isActive
-                          ? "ring-2 ring-accent shadow-[0_12px_40px_rgba(0,0,0,0.14)] scale-[1.04] opacity-100"
-                          : "shadow-[0_2px_12px_rgba(0,0,0,0.06)] opacity-50 scale-[0.94] hover:opacity-80"
-                      }`}
+            <div className="relative">
+              <CarouselContent className="-ml-6 py-10">
+                {builds.map((build, index) => {
+                  const isActive = index === selected;
+                  return (
+                    <CarouselItem
+                      key={index}
+                      className="pl-6 basis-[82%] sm:basis-[58%] md:basis-[46%] lg:basis-[40%] xl:basis-[36%]"
                     >
-                      <div
-                        className={`w-12 h-12 rounded-xl flex items-center justify-center mb-6 ${
+                      <button
+                        type="button"
+                        onClick={() => api?.scrollTo(index)}
+                        className={`text-left w-full bg-card rounded-2xl p-8 transition-all duration-500 flex flex-col h-full ${
                           isActive
-                            ? "bg-accent text-accent-foreground"
-                            : "bg-accent/10 text-accent"
+                            ? "ring-2 ring-accent shadow-[0_12px_40px_rgba(0,0,0,0.14)] scale-[1.04] opacity-100"
+                            : "shadow-[0_2px_12px_rgba(0,0,0,0.06)] opacity-50 scale-[0.94] hover:opacity-80"
                         }`}
                       >
-                        {build.icon}
-                      </div>
+                        <div
+                          className={`w-12 h-12 rounded-xl flex items-center justify-center mb-6 ${
+                            isActive
+                              ? "bg-accent text-accent-foreground"
+                              : "bg-accent/10 text-accent"
+                          }`}
+                        >
+                          {build.icon}
+                        </div>
 
-                      <p className="text-sm font-sans text-accent mb-2 uppercase tracking-wide">
-                        {build.label}
-                      </p>
-                      <h3 className="text-2xl mb-4 font-semibold italic">
-                        {build.title}
-                      </h3>
-                      <p className="font-sans text-muted-foreground leading-relaxed mb-6">
-                        {build.description}
-                      </p>
+                        <p className="text-sm font-sans text-accent mb-2 uppercase tracking-wide">
+                          {build.label}
+                        </p>
+                        <h3 className="text-2xl mb-4 font-semibold italic">
+                          {build.title}
+                        </h3>
+                        <p className="font-sans text-muted-foreground leading-relaxed mb-6">
+                          {build.description}
+                        </p>
 
-                      <ul className="space-y-2 mb-8 flex-grow">
-                        {build.includes.map((item, idx) => (
-                          <li key={idx} className="flex items-start gap-2">
-                            <Check className="w-4 h-4 text-accent mt-0.5 flex-shrink-0" />
-                            <span className="text-sm font-sans text-muted-foreground">
-                              {item}
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
+                        <ul className="space-y-2 mb-8 flex-grow">
+                          {build.includes.map((item, idx) => (
+                            <li key={idx} className="flex items-start gap-2">
+                              <Check className="w-4 h-4 text-accent mt-0.5 flex-shrink-0" />
+                              <span className="text-sm font-sans text-muted-foreground">
+                                {item}
+                              </span>
+                            </li>
+                          ))}
+                        </ul>
 
-                      <PillButton
-                        className="w-full"
-                        icon={Rocket}
-                        variant={isActive ? "indigo" : "default"}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setContactOpen(true);
-                        }}
-                      >
-                        {build.cta}
-                      </PillButton>
-                    </button>
-                  </CarouselItem>
-                );
-              })}
-            </CarouselContent>
-          </Carousel>
+                        <PillButton
+                          className="w-full"
+                          icon={Rocket}
+                          variant={isActive ? "indigo" : "default"}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setContactOpen(true);
+                          }}
+                        >
+                          {build.cta}
+                        </PillButton>
+                      </button>
+                    </CarouselItem>
+                  );
+                })}
+              </CarouselContent>
 
-          {/* Carousel controls */}
-          <div className="flex items-center justify-center gap-4 mt-8">
-            <Button
-              variant="outline"
-              size="icon"
-              className="h-10 w-10 rounded-full"
-              onClick={() => api?.scrollPrev()}
-            >
-              <ChevronLeft className="h-5 w-5" />
-            </Button>
-            <div className="flex items-center gap-2">
+              {/* Floating prev/next — sit on top of the rail, hidden on small screens */}
+              <CarouselPrevious className="hidden md:flex -left-4 lg:-left-6 h-12 w-12 bg-background shadow-lg" />
+              <CarouselNext className="hidden md:flex -right-4 lg:-right-6 h-12 w-12 bg-background shadow-lg" />
+            </div>
+
+            {/* Dots */}
+            <div className="flex items-center justify-center gap-2 mt-8">
               {builds.map((_, idx) => (
                 <button
                   key={idx}
@@ -238,15 +234,7 @@ const HomePageDraft = () => {
                 />
               ))}
             </div>
-            <Button
-              variant="outline"
-              size="icon"
-              className="h-10 w-10 rounded-full"
-              onClick={() => api?.scrollNext()}
-            >
-              <ChevronRight className="h-5 w-5" />
-            </Button>
-          </div>
+          </Carousel>
         </div>
       </section>
 
