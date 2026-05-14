@@ -4,6 +4,7 @@ import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { PillButton } from "@/components/ui/pill-button";
 import { ContactDrawer } from "@/components/ContactDrawer";
+import { TestimonialVariants } from "@/components/TestimonialVariants";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import {
   Carousel,
@@ -238,51 +239,8 @@ const HomePageDraft = () => {
         </div>
       </section>
 
-      {/* Testimonials slider */}
-      <section className="pb-12 px-6">
-        <div className="max-w-3xl mx-auto">
-          <Carousel
-            setApi={setTApi}
-            opts={{ align: "center", loop: true }}
-            className="w-full"
-          >
-            <CarouselContent>
-              {testimonials.map((t, idx) => (
-                <CarouselItem key={idx} className="basis-full">
-                  <div className="bg-card rounded-2xl p-8 md:p-10 shadow-[0_2px_12px_rgba(0,0,0,0.05)] text-center">
-                    <Quote className="w-8 h-8 text-accent/40 mx-auto mb-4" />
-                    <p className="text-lg md:text-xl font-semibold italic mb-4">
-                      {t.headline}
-                    </p>
-                    <p className="font-sans text-muted-foreground leading-relaxed mb-6 max-w-2xl mx-auto">
-                      "{t.quote}"
-                    </p>
-                    <p className="font-sans text-sm text-foreground">
-                      {t.author}
-                    </p>
-                    <p className="font-sans text-xs text-muted-foreground/70">
-                      {t.date}
-                    </p>
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-          </Carousel>
-          <div className="flex items-center justify-center gap-2 mt-6">
-            {testimonials.map((_, idx) => (
-              <button
-                key={idx}
-                type="button"
-                onClick={() => tApi?.scrollTo(idx)}
-                className={`h-2 rounded-full transition-all ${
-                  idx === tSelected ? "w-8 bg-accent" : "w-2 bg-muted-foreground/30"
-                }`}
-                aria-label={`Testimonial ${idx + 1}`}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Testimonials — variant preview */}
+      <TestimonialVariants testimonials={testimonials} />
 
       {/* Build Domains Carousel */}
       <section className="relative z-10 pb-24 px-6">
