@@ -15,9 +15,10 @@ import { trackNavClick, trackCtaClick } from "@/hooks/useAnalytics";
 
 interface NavigationProps {
   variant?: "default" | "dark" | "image-hero";
+  hideLogo?: boolean;
 }
 
-export const Navigation = ({ variant = "default" }: NavigationProps) => {
+export const Navigation = ({ variant = "default", hideLogo = false }: NavigationProps) => {
   const isDark = variant === "dark" || variant === "image-hero";
   const isImageHero = variant === "image-hero";
   const [isScrolled, setIsScrolled] = useState(false);
