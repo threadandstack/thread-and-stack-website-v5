@@ -23,6 +23,11 @@ import {
   TrendingUp,
   Crown,
   Sparkles,
+  Compass,
+  PenTool,
+  Wrench,
+  HeartHandshake,
+  Quote,
 } from "lucide-react";
 import logo from "@/assets/logos/Black_TS_Stacked.svg";
 import notionAdmin from "@/assets/notion-certified-admin.webp";
@@ -100,6 +105,91 @@ const HomePageDraft = () => {
     },
   ];
 
+  const testimonials = [
+    {
+      headline: "Hire Brendan, you won't regret it!",
+      quote:
+        "Brendan is like a Swiss army knife when it comes to marketing — strategic and hands-on. He helped me build a system that actually works for The IMMA Collective, I've now got real peace of mind, a clear vision for the business, and marketing that feels properly joined up.",
+      author: "Lilli Graf",
+      date: "Apr 17, 2026",
+    },
+    {
+      headline: "Brendan does great work!",
+      quote:
+        "Brendan did a terrific and patient job of untangling my Notion ineptitude. I'm saving time already with the new cleaned up format.",
+      author: "Lucian James",
+      date: "May 8, 2026",
+    },
+    {
+      headline: "A safe pair of hands",
+      quote:
+        "Brendan has been a dream. His support totally invigorated us. We've made more progress in the last couple of months than we had in the previous year.",
+      author: "Alex Aggidis",
+      date: "Head of Marketing, Fundraising Everywhere",
+    },
+    {
+      headline: "Tenacious and exceptional",
+      quote:
+        "Brendan is one of the most tenacious marketers I've met, fast to action plans with exceptional follow through to get the job done.",
+      author: "Courtney Evans",
+      date: "CEO, Funraisin",
+    },
+  ];
+
+  const [tApi, setTApi] = useState<CarouselApi>();
+  const [tSelected, setTSelected] = useState(0);
+
+  useEffect(() => {
+    if (!tApi) return;
+    const update = () => setTSelected(tApi.selectedScrollSnap());
+    update();
+    tApi.on("select", update);
+    tApi.on("reInit", update);
+    return () => {
+      tApi.off("select", update);
+      tApi.off("reInit", update);
+    };
+  }, [tApi]);
+
+  // Auto-advance testimonials
+  useEffect(() => {
+    if (!tApi) return;
+    const id = setInterval(() => tApi.scrollNext(), 6000);
+    return () => clearInterval(id);
+  }, [tApi]);
+
+  const journey = [
+    {
+      icon: <Compass className="w-6 h-6" />,
+      stage: "Stage One",
+      title: "Discovery",
+      description:
+        "We get to know the team, surface what's really going on, and align on a Statement of Work and timeline. No assumptions — just a clear picture of where you are and where you're heading.",
+    },
+    {
+      icon: <PenTool className="w-6 h-6" />,
+      stage: "Stage Two",
+      title: "Design",
+      description:
+        "We architect the system on paper before we touch a tool — workflows, information design, and the shape of the build. You see the plan before anything gets wired up.",
+    },
+    {
+      icon: <Wrench className="w-6 h-6" />,
+      stage: "Stage Three",
+      title: "Delivery",
+      description:
+        "We build, test, and iterate in the open. Regular check-ins, working sessions, and a system that lands fully documented and ready for your team to actually use.",
+    },
+    {
+      icon: <HeartHandshake className="w-6 h-6" />,
+      stage: "Stage Four",
+      title: "Aftercare",
+      description:
+        "A handover that sticks — training, documentation, and a window of post-launch support so the system embeds properly. Optional ongoing retainer if you want us to stay close.",
+    },
+  ];
+
+
   const onSelect = useCallback(() => {
     if (!api) return;
     setSelected(api.selectedScrollSnap());
@@ -137,6 +227,52 @@ const HomePageDraft = () => {
 
           <div className="flex justify-center mb-8">
             <Button>Get in touch</Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials slider */}
+      <section className="pb-12 px-6">
+        <div className="max-w-3xl mx-auto">
+          <Carousel
+            setApi={setTApi}
+            opts={{ align: "center", loop: true }}
+            className="w-full"
+          >
+            <CarouselContent>
+              {testimonials.map((t, idx) => (
+                <CarouselItem key={idx} className="basis-full">
+                  <div className="bg-card rounded-2xl p-8 md:p-10 shadow-[0_2px_12px_rgba(0,0,0,0.05)] text-center">
+                    <Quote className="w-8 h-8 text-accent/40 mx-auto mb-4" />
+                    <p className="text-lg md:text-xl font-semibold italic mb-4">
+                      {t.headline}
+                    </p>
+                    <p className="font-sans text-muted-foreground leading-relaxed mb-6 max-w-2xl mx-auto">
+                      "{t.quote}"
+                    </p>
+                    <p className="font-sans text-sm text-foreground">
+                      {t.author}
+                    </p>
+                    <p className="font-sans text-xs text-muted-foreground/70">
+                      {t.date}
+                    </p>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
+          <div className="flex items-center justify-center gap-2 mt-6">
+            {testimonials.map((_, idx) => (
+              <button
+                key={idx}
+                type="button"
+                onClick={() => tApi?.scrollTo(idx)}
+                className={`h-2 rounded-full transition-all ${
+                  idx === tSelected ? "w-8 bg-accent" : "w-2 bg-muted-foreground/30"
+                }`}
+                aria-label={`Testimonial ${idx + 1}`}
+              />
+            ))}
           </div>
         </div>
       </section>
@@ -239,6 +375,81 @@ const HomePageDraft = () => {
               ))}
             </div>
           </Carousel>
+        </div>
+      </section>
+
+      {/* Engagement Journey */}
+      <section className="py-24 px-6 bg-muted/20">
+        <div className="max-w-3xl mx-auto">
+          <div className="text-center mb-16">
+            <span className="inline-flex items-center rounded-full bg-accent/10 text-accent text-xs font-sans font-semibold px-3 py-1 mb-4">
+              How we work together
+            </span>
+            <h2 className="text-4xl md:text-5xl font-semibold italic mb-4">
+              What an engagement looks like
+            </h2>
+            <p className="font-sans text-muted-foreground leading-relaxed max-w-xl mx-auto">
+              Every Thread &amp; Stack engagement moves through four clear stages — so you always know where we are and what's coming next.
+            </p>
+          </div>
+
+          <div className="relative">
+            {/* vertical thread */}
+            <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-accent/40 to-transparent md:-translate-x-px" aria-hidden />
+
+            <ol className="space-y-12">
+              {journey.map((step, idx) => {
+                const isLeft = idx % 2 === 0;
+                return (
+                  <li
+                    key={idx}
+                    className={`relative md:grid md:grid-cols-2 md:gap-12 md:items-center`}
+                  >
+                    {/* Node */}
+                    <div className="absolute left-6 md:left-1/2 -translate-x-1/2 top-6 z-10">
+                      <div className="w-12 h-12 rounded-full bg-background border-2 border-foreground flex items-center justify-center text-sm font-semibold shadow-md">
+                        {idx + 1}
+                      </div>
+                    </div>
+
+                    {/* Card */}
+                    <div
+                      className={`pl-20 md:pl-0 ${
+                        isLeft ? "md:pr-16 md:text-right" : "md:col-start-2 md:pl-16"
+                      }`}
+                    >
+                      <div className="bg-card rounded-2xl p-6 md:p-8 shadow-[0_2px_12px_rgba(0,0,0,0.06)]">
+                        <div
+                          className={`flex items-center gap-3 mb-3 ${
+                            isLeft ? "md:justify-end" : ""
+                          }`}
+                        >
+                          <div className="w-10 h-10 rounded-xl bg-accent/10 text-accent flex items-center justify-center">
+                            {step.icon}
+                          </div>
+                          <span className="text-xs font-sans uppercase tracking-wide text-accent">
+                            {step.stage}
+                          </span>
+                        </div>
+                        <h3 className="text-2xl font-semibold italic mb-3">
+                          {step.title}
+                        </h3>
+                        <p className="font-sans text-muted-foreground leading-relaxed">
+                          {step.description}
+                        </p>
+                      </div>
+                    </div>
+                  </li>
+                );
+              })}
+            </ol>
+          </div>
+
+          <div className="flex justify-center mt-16">
+            <PillButton icon={MessageCircle} onClick={() => setContactOpen(true)}>
+              Start with Discovery
+            </PillButton>
+          </div>
         </div>
       </section>
 
