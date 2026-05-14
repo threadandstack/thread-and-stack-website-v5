@@ -73,17 +73,18 @@ const tagByAuthor: Record<string, { tag: string; tagColor: string }> = {
 };
 
 const KanbanScatter = ({ testimonials }: Props) => {
-  // Cluttered, overlapping starting positions (percent-based for responsiveness).
+  // Cluttered, overlapping starting positions on the left ~65% of the board.
   const positions = [
-    { top: "6%", left: "8%", rotate: -5 },
-    { top: "12%", left: "26%", rotate: 3 },
-    { top: "4%", left: "44%", rotate: -2 },
-    { top: "18%", left: "58%", rotate: 4 },
-    { top: "10%", left: "72%", rotate: -3 },
-    { top: "22%", left: "38%", rotate: 6 },
+    { top: "8%", left: "4%", rotate: -5 },
+    { top: "14%", left: "18%", rotate: 3 },
+    { top: "5%", left: "32%", rotate: -2 },
+    { top: "26%", left: "10%", rotate: 4 },
+    { top: "32%", left: "26%", rotate: -3 },
+    { top: "22%", left: "40%", rotate: 6 },
   ];
 
   const boardRef = useRef<HTMLDivElement>(null);
+  const dropRef = useRef<HTMLDivElement>(null);
   const [dragState, setDragState] = useState<{
     idx: number;
     offsetX: number;
@@ -92,6 +93,14 @@ const KanbanScatter = ({ testimonials }: Props) => {
   const [overrides, setOverrides] = useState<Record<number, { x: number; y: number }>>({});
   const [topZ, setTopZ] = useState(10);
   const [zMap, setZMap] = useState<Record<number, number>>({});
+  const [overDrop, setOverDrop] = useState(false);
+  const [expandedIdx, setExpandedIdx] = useState<number | null>(null);
+
+  const isOverDrop = (clientX: number, clientY: number) => {
+    const r = dropRef.current?.getBoundingClientRect();
+    if (!r) return false;
+    return clientX >= r.left && clientX <= r.right && clientY >= r.top && clientY <= r.bottom;
+  };
 
   const onPointerDown = (e: React.PointerEvent, idx: number) => {
     const target = e.currentTarget as HTMLDivElement;
@@ -116,38 +125,79 @@ const KanbanScatter = ({ testimonials }: Props) => {
     const x = e.clientX - board.left - dragState.offsetX;
     const y = e.clientY - board.top - dragState.offsetY;
     setOverrides((o) => ({ ...o, [dragState.idx]: { x, y } }));
+    setOverDrop(isOverDrop(e.clientX, e.clientY));
   };
 
-  const onPointerUp = () => setDragState(null);
+  const onPointerUp = (e: React.PointerEvent) => {
+    if (dragState && isOverDrop(e.clientX, e.clientY)) {
+      setExpandedIdx(dragState.idx);
+    }
+    setDragState(null);
+    setOverDrop(false);
+  };
 
   return (
     <div
       ref={boardRef}
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
-      onPointerLeave={onPointerUp}
-      className="relative w-full h-[420px] md:h-[360px] rounded-2xl bg-[radial-gradient(circle_at_1px_1px,hsl(var(--muted-foreground)/0.18)_1px,transparent_0)] [background-size:20px_20px] bg-muted/20 overflow-hidden touch-none"
+      onPointerLeave={() => {
+        setDragState(null);
+        setOverDrop(false);
+      }}
+      className="relative w-full h-[480px] md:h-[440px] rounded-2xl bg-[radial-gradient(circle_at_1px_1px,hsl(var(--muted-foreground)/0.18)_1px,transparent_0)] [background-size:20px_20px] bg-muted/20 overflow-hidden touch-none"
     >
-      <div className="absolute top-3 left-1/2 -translate-x-1/2 text-[11px] font-sans uppercase tracking-widest text-muted-foreground/70 pointer-events-none">
-        ↕ Drag the cards · Notion-style board
+      <div className="absolute top-3 left-6 text-[11px] font-sans uppercase tracking-widest text-muted-foreground/70 pointer-events-none">
+        ↕ Drag a card →
+      </div>
+
+      {/* Drop zone */}
+      <div
+        ref={dropRef}
+        className={`absolute top-6 right-6 bottom-6 w-[32%] rounded-2xl border-2 border-dashed transition-all flex items-center justify-center text-center px-6 ${
+          overDrop
+            ? "border-foreground bg-foreground/5 scale-[1.02]"
+            : "border-muted-foreground/30 bg-background/40"
+        }`}
+      >
+        {expandedIdx !== null ? (
+          <ExpandedCard
+            t={testimonials[expandedIdx]}
+            meta={tagByAuthor[testimonials[expandedIdx].author]}
+            onClose={() => setExpandedIdx(null)}
+          />
+        ) : (
+          <div className="pointer-events-none">
+            <div className="text-3xl mb-2">📌</div>
+            <p className="text-sm font-semibold italic mb-1">Drop a card here</p>
+            <p className="text-xs font-sans text-muted-foreground">
+              Drag any testimonial into this box to read the full story.
+            </p>
+          </div>
+        )}
       </div>
 
       {testimonials.slice(0, positions.length).map((t, idx) => {
         const pos = positions[idx];
         const meta = tagByAuthor[t.author] ?? { tag: "Testimonial", tagColor: "bg-muted text-muted-foreground" };
         const override = overrides[idx];
+        const hidden = expandedIdx === idx;
         const style: React.CSSProperties = override
           ? {
               left: override.x,
               top: override.y,
               transform: `rotate(${pos.rotate}deg)`,
               zIndex: zMap[idx] ?? 1,
+              opacity: hidden ? 0 : 1,
+              pointerEvents: hidden ? "none" : "auto",
             }
           : {
               top: pos.top,
               left: pos.left,
               transform: `rotate(${pos.rotate}deg)`,
               zIndex: zMap[idx] ?? 1,
+              opacity: hidden ? 0 : 1,
+              pointerEvents: hidden ? "none" : "auto",
             };
 
         return (
@@ -155,7 +205,7 @@ const KanbanScatter = ({ testimonials }: Props) => {
             key={idx}
             onPointerDown={(e) => onPointerDown(e, idx)}
             style={style}
-            className="absolute w-[300px] md:w-[320px] bg-white rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_30px_rgba(0,0,0,0.14)] cursor-grab active:cursor-grabbing transition-shadow p-4 select-none"
+            className="absolute w-[260px] md:w-[280px] bg-white rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_30px_rgba(0,0,0,0.14)] cursor-grab active:cursor-grabbing transition-shadow p-4 select-none"
           >
             <div className="flex items-center gap-2 mb-2">
               <span className={`text-[10px] font-sans font-medium px-2 py-0.5 rounded ${meta.tagColor}`}>
@@ -178,6 +228,45 @@ const KanbanScatter = ({ testimonials }: Props) => {
           </div>
         );
       })}
+    </div>
+  );
+};
+
+const ExpandedCard = ({
+  t,
+  meta,
+  onClose,
+}: {
+  t: Testimonial;
+  meta?: { tag: string; tagColor: string };
+  onClose: () => void;
+}) => {
+  return (
+    <div className="relative w-full h-full bg-white rounded-xl shadow-[0_12px_40px_rgba(0,0,0,0.12)] p-6 flex flex-col text-left animate-scale-in">
+      <button
+        type="button"
+        onClick={onClose}
+        aria-label="Close"
+        className="absolute top-3 right-3 w-7 h-7 rounded-full bg-muted hover:bg-muted/70 flex items-center justify-center text-sm"
+      >
+        ×
+      </button>
+      {meta && (
+        <span className={`self-start text-[10px] font-sans font-medium px-2 py-0.5 rounded mb-3 ${meta.tagColor}`}>
+          {meta.tag}
+        </span>
+      )}
+      <Quote className="w-6 h-6 text-accent/40 mb-2" />
+      <p className="text-lg md:text-xl font-semibold italic mb-3 leading-snug">
+        {t.headline}
+      </p>
+      <p className="font-sans text-sm text-muted-foreground leading-relaxed mb-4 overflow-y-auto">
+        "{t.quote}"
+      </p>
+      <div className="mt-auto pt-3 border-t border-border/40">
+        <p className="font-sans text-sm text-foreground">{t.author}</p>
+        <p className="font-sans text-xs text-muted-foreground/70">{t.date}</p>
+      </div>
     </div>
   );
 };
