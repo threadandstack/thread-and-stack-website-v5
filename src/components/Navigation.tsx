@@ -15,9 +15,10 @@ import { trackNavClick, trackCtaClick } from "@/hooks/useAnalytics";
 
 interface NavigationProps {
   variant?: "default" | "dark" | "image-hero";
+  hideLogo?: boolean;
 }
 
-export const Navigation = ({ variant = "default" }: NavigationProps) => {
+export const Navigation = ({ variant = "default", hideLogo = false }: NavigationProps) => {
   const isDark = variant === "dark" || variant === "image-hero";
   const isImageHero = variant === "image-hero";
   const [isScrolled, setIsScrolled] = useState(false);
@@ -58,25 +59,29 @@ export const Navigation = ({ variant = "default" }: NavigationProps) => {
       <nav className="absolute top-0 left-0 right-0 z-40 py-5 px-6">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           {/* Logo */}
-          <a
-            href="/"
-            className="block relative"
-            onMouseEnter={() => setIsLogoHovered(true)}
-            onMouseLeave={() => setIsLogoHovered(false)}
-          >
-            <img
-              src={isDark ? WhiteStacked : GreyStacked}
-              alt="Thread & Stack"
-              className="h-12 md:h-14 w-auto transition-opacity duration-500 ease-in-out"
-              style={{ opacity: isLogoHovered ? 0 : 1 }}
-            />
-            <img
-              src={IndigoStacked}
-              alt=""
-              className="h-12 md:h-14 w-auto absolute inset-0 transition-opacity duration-500 ease-in-out"
-              style={{ opacity: isLogoHovered ? 1 : 0 }}
-            />
-          </a>
+          {hideLogo ? (
+            <div />
+          ) : (
+            <a
+              href="/"
+              className="block relative"
+              onMouseEnter={() => setIsLogoHovered(true)}
+              onMouseLeave={() => setIsLogoHovered(false)}
+            >
+              <img
+                src={isDark ? WhiteStacked : GreyStacked}
+                alt="Thread & Stack"
+                className="h-12 md:h-14 w-auto transition-opacity duration-500 ease-in-out"
+                style={{ opacity: isLogoHovered ? 0 : 1 }}
+              />
+              <img
+                src={IndigoStacked}
+                alt=""
+                className="h-12 md:h-14 w-auto absolute inset-0 transition-opacity duration-500 ease-in-out"
+                style={{ opacity: isLogoHovered ? 1 : 0 }}
+              />
+            </a>
+          )}
 
           {/* Desktop pill nav */}
           <div className="hidden md:flex items-center gap-1 bg-background/90 backdrop-blur-md rounded-full px-2 py-1.5 shadow-[0_2px_20px_rgba(0,0,0,0.08)] border border-border/30">

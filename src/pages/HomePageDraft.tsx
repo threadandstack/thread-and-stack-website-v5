@@ -6,7 +6,7 @@ import logo from "@/assets/logos/Black_TS_Stacked.svg";
 const HomePageDraft = () => {
   return (
     <main className="min-h-screen relative pt-24">
-      <Navigation />
+      <Navigation hideLogo />
 
       <section className="py-24 px-6">
         <div className="max-w-4xl mx-auto">
