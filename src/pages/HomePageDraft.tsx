@@ -4,6 +4,7 @@ import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { PillButton } from "@/components/ui/pill-button";
 import { ContactDrawer } from "@/components/ContactDrawer";
+import { TestimonialVariants } from "@/components/TestimonialVariants";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import {
   Carousel,
