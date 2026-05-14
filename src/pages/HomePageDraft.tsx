@@ -107,6 +107,13 @@ const HomePageDraft = () => {
 
   const testimonials = [
     {
+      headline: "Genuinely transformative",
+      quote:
+        "This Notion Mentorship sprint has been genuinely transformative for me. In just a few weeks, I significantly upped my productivity and efficiency — not just in how much I get done, but in how clearly I can show the value of my work.",
+      author: "Jasmine Stone",
+      date: "Marketing Manager",
+    },
+    {
       headline: "Hire Brendan, you won't regret it!",
       quote:
         "Brendan is like a Swiss army knife when it comes to marketing — strategic and hands-on. He helped me build a system that actually works for The IMMA Collective, I've now got real peace of mind, a clear vision for the business, and marketing that feels properly joined up.",
