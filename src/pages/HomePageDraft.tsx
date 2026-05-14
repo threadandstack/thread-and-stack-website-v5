@@ -1,11 +1,29 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { PillButton } from "@/components/ui/pill-button";
 import { ContactDrawer } from "@/components/ContactDrawer";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Check, Zap, Layers, Repeat, Rocket, MessageCircle, Shield, Bot } from "lucide-react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  type CarouselApi,
+} from "@/components/ui/carousel";
+import {
+  Check,
+  Rocket,
+  MessageCircle,
+  Shield,
+  Bot,
+  Briefcase,
+  TrendingUp,
+  Crown,
+  Sparkles,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 import logo from "@/assets/logos/Black_TS_Stacked.svg";
 import notionAdmin from "@/assets/notion-certified-admin.webp";
 import notionAdvanced from "@/assets/notion-advanced.webp";
