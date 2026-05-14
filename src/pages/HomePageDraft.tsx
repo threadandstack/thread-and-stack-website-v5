@@ -199,9 +199,13 @@ const HomePageDraft = () => {
                         </ul>
 
                         <PillButton
-                          className="w-full"
+                          className={
+                            isActive
+                              ? "w-full bg-foreground text-background hover:bg-indigo hover:text-white"
+                              : "w-full"
+                          }
                           icon={Rocket}
-                          variant={isActive ? "dark" : "default"}
+                          variant="default"
                           onClick={(e) => {
                             e.stopPropagation();
                             setContactOpen(true);
