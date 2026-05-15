@@ -6,12 +6,7 @@ import { PillButton } from "@/components/ui/pill-button";
 import { ContactDrawer } from "@/components/ContactDrawer";
 import { TestimonialVariants } from "@/components/TestimonialVariants";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  type CarouselApi,
-} from "@/components/ui/carousel";
+import { type CarouselApi } from "@/components/ui/carousel";
 import {
   Check,
   Rocket,
