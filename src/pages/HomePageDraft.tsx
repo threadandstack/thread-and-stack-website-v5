@@ -219,21 +219,8 @@ const HomePageDraft = () => {
   ];
 
 
-  const onSelect = useCallback(() => {
-    if (!api) return;
-    setSelected(api.selectedScrollSnap());
-  }, [api]);
 
-  useEffect(() => {
-    if (!api) return;
-    onSelect();
-    api.on("select", onSelect);
-    api.on("reInit", onSelect);
-    return () => {
-      api.off("select", onSelect);
-      api.off("reInit", onSelect);
-    };
-  }, [api, onSelect]);
+
 
   return (
     <main className="min-h-screen relative pt-24 bg-background">
