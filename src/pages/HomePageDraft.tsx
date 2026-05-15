@@ -129,7 +129,7 @@ const HomePageDraft = () => {
       date: "May 8, 2026",
     },
     {
-      headline: "A safe pair of hands",
+      headline: "More progress in months than a year",
       quote:
         "Brendan has been a dream. His support totally invigorated us. We've made more progress in the last couple of months than we had in the previous year.",
       author: "Alex Aggidis",
@@ -141,6 +141,13 @@ const HomePageDraft = () => {
         "Brendan is one of the most tenacious marketers I've met, fast to action plans with exceptional follow through to get the job done.",
       author: "Courtney Evans",
       date: "CEO, Funraisin",
+    },
+    {
+      headline: "A safe pair of hands",
+      quote:
+        "Brendan is smart. He gets it quickly. He's a very safe pair of hands.",
+      author: "Gary O'Donnell",
+      date: "Operations Director, Dentsu Aegis",
     },
   ];
 
