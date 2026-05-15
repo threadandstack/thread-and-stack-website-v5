@@ -223,11 +223,27 @@ const HomePageDraft = () => {
       <section className="py-24 px-6">
         <div className="max-w-4xl mx-auto">
           <div className="flex justify-center mb-6">
-            <img
-              src={logo}
-              alt="Thread & Stack"
-              className="h-32 sm:h-44 md:h-64 w-auto"
-            />
+            <div className="relative group cursor-pointer">
+              {/* Indigo glow layer (feathered, revealed on hover) */}
+              <img
+                src={logoIndigo}
+                alt=""
+                aria-hidden="true"
+                className="absolute inset-0 h-32 sm:h-44 md:h-64 w-auto opacity-0 group-hover:opacity-90 blur-2xl scale-110 transition-opacity duration-700 ease-out pointer-events-none"
+              />
+              {/* Sharper indigo overlay for color shift */}
+              <img
+                src={logoIndigo}
+                alt=""
+                aria-hidden="true"
+                className="absolute inset-0 h-32 sm:h-44 md:h-64 w-auto opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out pointer-events-none"
+              />
+              <img
+                src={logo}
+                alt="Thread & Stack"
+                className="relative h-32 sm:h-44 md:h-64 w-auto transition-opacity duration-500 group-hover:opacity-0"
+              />
+            </div>
           </div>
           <p className="text-xl text-muted-foreground mb-8 text-center leading-relaxed max-w-2xl mx-auto">
             AI Ops & Systems for teams who want the work to flow.
