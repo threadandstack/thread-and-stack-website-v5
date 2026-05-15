@@ -346,6 +346,11 @@ const HomePageDraft = () => {
       </section>
 
       {/* Testimonials — Kanban scatter directly under product carousel */}
+      <div className="max-w-6xl mx-auto px-6">
+        <h2 className="text-3xl md:text-4xl font-semibold italic mb-6">
+          A stack of kind words
+        </h2>
+      </div>
       <TestimonialVariants testimonials={testimonials} />
 
       {/* Credentials */}
