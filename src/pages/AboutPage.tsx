@@ -4,13 +4,8 @@ import { FAQ } from "@/components/FAQ";
 import { PillButton } from "@/components/ui/pill-button";
 import { Rocket, Bot, Shield } from "lucide-react";
 import brendanWalking from "@/assets/photos/shoreditch/brendan-27.webp";
-import notionAdmin from "@/assets/notion-certified-admin.webp";
-import notionAdvanced from "@/assets/notion-advanced.webp";
-import notionWorkflows from "@/assets/notion-workflows.webp";
-import notionEssentials from "@/assets/notion-essentials.webp";
 import notionAmbassadorBlack from "@/assets/notion-ambassador-black.webp";
-import notionConsultingPartner from "@/assets/notion-consulting-partner.webp";
-import notionServiceSpecialist from "@/assets/notion-service-specialist.webp";
+import notionBadges from "@/assets/notion-badges.png";
 
 const AboutPage = () => {
   return (
@@ -113,16 +108,11 @@ const AboutPage = () => {
                 Brendan is a Certified Notion Admin and Official Notion Ambassador — one of a small group globally recognised by Notion for expertise in workspace design, workflow automation, and systems strategy.
               </p>
 
-              <div className="flex flex-wrap items-center gap-4 mb-4">
-                <img src={notionAdmin} alt="Notion Certified Admin" className="h-24 w-auto" />
-                <img src={notionAdvanced} alt="Notion Academy Advanced" className="h-24 w-auto" />
-                <img src={notionWorkflows} alt="Notion Academy Workflows" className="h-24 w-auto" />
-                <img src={notionEssentials} alt="Notion Academy Essentials" className="h-24 w-auto" />
+              <div className="mb-4">
+                <img src={notionBadges} alt="Notion certifications: Academy Essentials, Workflows, Advanced, AI, Certified Admin, Service Specialist, Consulting Partner" className="w-full h-auto" />
               </div>
               <div className="flex flex-wrap items-center gap-4">
                 <img src={notionAmbassadorBlack} alt="Notion Official Ambassador" className="h-14 w-auto" />
-                <img src={notionConsultingPartner} alt="Notion Consulting Partner" className="h-24 w-auto" />
-                <img src={notionServiceSpecialist} alt="Notion Service Specialist" className="h-24 w-auto" />
               </div>
             </div>
 
