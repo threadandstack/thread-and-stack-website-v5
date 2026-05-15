@@ -342,7 +342,7 @@ const HomePageDraft = () => {
                   return (
                     <CarouselItem
                       key={index}
-                      className="pl-6 basis-[82%] sm:basis-[58%] md:basis-[46%] lg:basis-[40%] xl:basis-[36%]"
+                      className="pl-6 basis-[82%] sm:basis-[58%] md:basis-[42%] lg:basis-[34%] xl:basis-[31%]"
                     >
                       <button
                         type="button"
