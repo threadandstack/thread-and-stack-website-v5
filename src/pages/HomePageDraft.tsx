@@ -324,7 +324,7 @@ const HomePageDraft = () => {
                 const translateX = offset * 260; // px lateral spread
                 const translateZ = isActive ? 0 : -180 - (abs - 1) * 80;
                 const scale = isActive ? 1.02 : 0.9;
-                const opacity = abs > 2 ? 0 : isActive ? 1 : 0.45;
+                const opacity = abs > 1 ? 0 : isActive ? 1 : 0.45;
                 return (
                   <button
                     type="button"
