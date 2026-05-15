@@ -360,16 +360,13 @@ const HomePageDraft = () => {
                 <h3 className="text-2xl font-semibold italic">Notion Certified</h3>
               </div>
 
-              <p className="font-sans text-muted-foreground leading-relaxed mb-6">
-                Brendan is a Certified Notion Admin and Official Notion Ambassador — one of a small group globally recognised by Notion for expertise in workspace design, workflow automation, and systems strategy.
-              </p>
-
-              <div className="mb-4">
+              <div className="mb-6">
                 <img src={notionBadges} alt="Notion certifications: Academy Essentials, Workflows, Advanced, AI, Certified Admin, Service Specialist, Consulting Partner" className="w-full h-auto" />
               </div>
-              <div className="flex flex-wrap items-center gap-4">
-                <img src={notionAmbassadorBlack} alt="Notion Official Ambassador" className="h-14 w-auto" />
-              </div>
+
+              <p className="font-sans text-muted-foreground leading-relaxed">
+                Brendan is a Certified Notion Admin and Official Notion Ambassador — one of a small group globally recognised by Notion for expertise in workspace design, workflow automation, and systems strategy.
+              </p>
             </div>
 
             <div className="bg-card rounded-2xl p-10 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
