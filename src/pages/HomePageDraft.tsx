@@ -244,26 +244,77 @@ const HomePageDraft = () => {
       <section className="py-24 px-6">
         <div className="max-w-4xl mx-auto">
           <div className="flex justify-center mb-6">
-            <div className="relative group cursor-pointer">
-              {/* Indigo glow layer (feathered, revealed on hover) */}
-              <img
-                src={logoIndigo}
-                alt=""
-                aria-hidden="true"
-                className="absolute inset-0 h-32 sm:h-44 md:h-64 w-auto opacity-0 group-hover:opacity-90 blur-2xl scale-110 transition-opacity duration-700 ease-out pointer-events-none"
-              />
-              {/* Sharper indigo overlay for color shift */}
-              <img
-                src={logoIndigo}
-                alt=""
-                aria-hidden="true"
-                className="absolute inset-0 h-32 sm:h-44 md:h-64 w-auto opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out pointer-events-none"
-              />
-              <img
-                src={logo}
-                alt="Thread & Stack"
-                className="relative h-32 sm:h-44 md:h-64 w-auto transition-opacity duration-500 group-hover:opacity-0"
-              />
+            <div
+              className="relative group cursor-pointer [perspective:800px]"
+              onMouseMove={(e) => {
+                const el = e.currentTarget as HTMLDivElement;
+                const r = el.getBoundingClientRect();
+                const x = ((e.clientX - r.left) / r.width) * 100;
+                const y = ((e.clientY - r.top) / r.height) * 100;
+                // tilt: -8deg to +8deg, shadow offset based on cursor
+                const tx = (x - 50) / 6; // rotateY
+                const ty = (50 - y) / 6; // rotateX
+                const sx = (50 - x) / 4; // shadow x
+                const sy = (50 - y) / 4; // shadow y
+                el.style.setProperty("--mx", `${x}%`);
+                el.style.setProperty("--my", `${y}%`);
+                el.style.setProperty("--tx", `${tx}deg`);
+                el.style.setProperty("--ty", `${ty}deg`);
+                el.style.setProperty("--sx", `${sx}px`);
+                el.style.setProperty("--sy", `${sy}px`);
+              }}
+              onMouseLeave={(e) => {
+                const el = e.currentTarget as HTMLDivElement;
+                el.style.setProperty("--tx", `0deg`);
+                el.style.setProperty("--ty", `0deg`);
+                el.style.setProperty("--sx", `0px`);
+                el.style.setProperty("--sy", `0px`);
+              }}
+              style={{
+                ["--mx" as any]: "50%",
+                ["--my" as any]: "50%",
+                ["--tx" as any]: "0deg",
+                ["--ty" as any]: "0deg",
+                ["--sx" as any]: "0px",
+                ["--sy" as any]: "0px",
+              }}
+            >
+              <div
+                className="relative transition-transform duration-200 ease-out [transform-style:preserve-3d]"
+                style={{ transform: "rotateX(var(--ty)) rotateY(var(--tx))" }}
+              >
+                {/* Base black logo with dynamic 3D drop shadow */}
+                <img
+                  src={logo}
+                  alt="Thread & Stack"
+                  className="relative h-32 sm:h-44 md:h-64 w-auto transition-[filter] duration-200"
+                  style={{
+                    filter:
+                      "drop-shadow(calc(var(--sx) * -1) calc(var(--sy) * -1) 12px hsl(var(--foreground) / 0.18)) drop-shadow(var(--sx) var(--sy) 4px hsl(var(--foreground) / 0.08))",
+                  }}
+                />
+                {/* Indigo tint, masked to a small soft area under cursor */}
+                <img
+                  src={logoIndigo}
+                  alt=""
+                  aria-hidden="true"
+                  className="absolute inset-0 h-32 sm:h-44 md:h-64 w-auto opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
+                  style={{
+                    WebkitMaskImage:
+                      "radial-gradient(circle 70px at var(--mx) var(--my), rgba(0,0,0,0.95), rgba(0,0,0,0) 75%)",
+                    maskImage:
+                      "radial-gradient(circle 70px at var(--mx) var(--my), rgba(0,0,0,0.95), rgba(0,0,0,0) 75%)",
+                  }}
+                />
+                {/* Soft indigo glow halo following cursor (outside logo) */}
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none blur-xl"
+                  style={{
+                    background:
+                      "radial-gradient(circle 90px at var(--mx) var(--my), hsl(var(--accent) / 0.45), transparent 70%)",
+                  }}
+                />
+              </div>
             </div>
           </div>
           <p className="text-xl text-muted-foreground mb-8 text-center leading-relaxed max-w-2xl mx-auto">
