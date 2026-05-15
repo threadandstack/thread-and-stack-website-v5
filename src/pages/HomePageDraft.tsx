@@ -142,6 +142,27 @@ const HomePageDraft = () => {
       author: "Gary O'Donnell",
       date: "Operations Director, Dentsu Aegis",
     },
+    {
+      headline: "Big thinking, sharp strategy",
+      quote:
+        "Brendan constantly combined big thinking and strategic expertise to propose innovative new ideas for guiding content development — aligning deep research and analysis with project objectives and KPIs.",
+      author: "Chris Mejaski",
+      date: "Content Strategist, eBay",
+    },
+    {
+      headline: "Built trust, boosted efficiency",
+      quote:
+        "Brendan quickly built trust among our DE/UK stakeholders, boosting marketing efficiency through creative strategy and consulting, and spearheading cross-functional collaboration across global marketing teams.",
+      author: "Xania Khan",
+      date: "Head of Content Strategy, eBay",
+    },
+    {
+      headline: "Trends before anyone else",
+      quote:
+        "Brendan's extensive industry experience and knowledge of the latest marketing trends — before anyone else — makes every campaign feel exciting and innovative. His commitment and passion for delivering meaningful change, powered by tech, is inspiring.",
+      author: "Matthew Ivo",
+      date: "Marketing colleague",
+    },
   ];
 
   const [tApi, setTApi] = useState<CarouselApi>();
