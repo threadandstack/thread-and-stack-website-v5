@@ -16,6 +16,9 @@ const tagByAuthor: Record<string, { tag: string; tagColor: string }> = {
   "Alex Aggidis": { tag: "Strategy", tagColor: "bg-green-100 text-green-700" },
   "Courtney Evans": { tag: "Leadership", tagColor: "bg-yellow-100 text-yellow-700" },
   "Gary O'Donnell": { tag: "Operations", tagColor: "bg-pink-100 text-pink-700" },
+  "Chris Mejaski": { tag: "Content Strategy", tagColor: "bg-indigo-100 text-indigo-700" },
+  "Xania Khan": { tag: "Content Strategy", tagColor: "bg-teal-100 text-teal-700" },
+  "Matthew Ivo": { tag: "Campaigns", tagColor: "bg-rose-100 text-rose-700" },
 };
 
 export const TestimonialVariants = ({ testimonials }: Props) => {
@@ -32,15 +35,18 @@ const KanbanScatter = ({ testimonials }: Props) => {
   // Cluttered, overlapping starting positions spread across the board.
   const positions = [
     { top: "6%", left: "4%", rotate: -5 },
-    { top: "12%", left: "20%", rotate: 3 },
-    { top: "4%", left: "38%", rotate: -2 },
-    { top: "10%", left: "56%", rotate: 4 },
-    { top: "8%", left: "72%", rotate: -3 },
-    { top: "38%", left: "12%", rotate: 5 },
-    { top: "42%", left: "30%", rotate: -4 },
-    { top: "36%", left: "48%", rotate: 2 },
-    { top: "40%", left: "66%", rotate: -2 },
-    { top: "44%", left: "80%", rotate: 4 },
+    { top: "12%", left: "18%", rotate: 3 },
+    { top: "4%", left: "34%", rotate: -2 },
+    { top: "10%", left: "50%", rotate: 4 },
+    { top: "8%", left: "66%", rotate: -3 },
+    { top: "14%", left: "82%", rotate: 2 },
+    { top: "44%", left: "8%", rotate: 5 },
+    { top: "48%", left: "24%", rotate: -4 },
+    { top: "42%", left: "40%", rotate: 2 },
+    { top: "46%", left: "56%", rotate: -2 },
+    { top: "44%", left: "72%", rotate: 4 },
+    { top: "50%", left: "86%", rotate: -3 },
+    { top: "20%", left: "10%", rotate: 1 },
   ];
 
   const boardRef = useRef<HTMLDivElement>(null);
