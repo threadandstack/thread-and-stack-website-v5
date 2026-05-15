@@ -16,6 +16,9 @@ const tagByAuthor: Record<string, { tag: string; tagColor: string }> = {
   "Alex Aggidis": { tag: "Strategy", tagColor: "bg-green-100 text-green-700" },
   "Courtney Evans": { tag: "Leadership", tagColor: "bg-yellow-100 text-yellow-700" },
   "Gary O'Donnell": { tag: "Operations", tagColor: "bg-pink-100 text-pink-700" },
+  "Chris Mejaski": { tag: "Content Strategy", tagColor: "bg-indigo-100 text-indigo-700" },
+  "Xania Khan": { tag: "Content Strategy", tagColor: "bg-teal-100 text-teal-700" },
+  "Matthew Ivo": { tag: "Campaigns", tagColor: "bg-rose-100 text-rose-700" },
 };
 
 export const TestimonialVariants = ({ testimonials }: Props) => {
