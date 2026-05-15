@@ -4,7 +4,6 @@ import { FAQ } from "@/components/FAQ";
 import { PillButton } from "@/components/ui/pill-button";
 import { Rocket, Bot, Shield } from "lucide-react";
 import brendanWalking from "@/assets/photos/shoreditch/brendan-27.webp";
-import notionAmbassadorBlack from "@/assets/notion-ambassador-black.webp";
 import notionBadges from "@/assets/notion-badges.png";
 
 const AboutPage = () => {
