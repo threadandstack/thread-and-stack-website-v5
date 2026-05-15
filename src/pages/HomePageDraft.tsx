@@ -327,104 +327,135 @@ const HomePageDraft = () => {
         </div>
       </section>
 
-      {/* Build Domains Carousel */}
-      <section className="relative z-10 pb-24 px-6">
+      {/* Build Domains — 3D Coverflow */}
+      <section className="relative z-10 pb-24 px-6 overflow-hidden">
         <div className="max-w-7xl mx-auto">
-          <Carousel
-            setApi={setApi}
-            opts={{ align: "center", loop: true, startIndex: 1, skipSnaps: false }}
-            className="w-full"
+          <div
+            className="relative h-[640px] md:h-[680px] [perspective:1800px]"
           >
-            <div className="relative">
-              <CarouselContent className="-ml-6 py-10">
-                {builds.map((build, index) => {
-                  const isActive = index === selected;
-                  return (
-                    <CarouselItem
-                      key={index}
-                      className="pl-6 basis-[82%] sm:basis-[58%] md:basis-[42%] lg:basis-[34%] xl:basis-[31%]"
+            <div className="absolute inset-0 [transform-style:preserve-3d]">
+              {builds.map((build, index) => {
+                const len = builds.length;
+                let offset = index - selected;
+                if (offset > len / 2) offset -= len;
+                if (offset < -len / 2) offset += len;
+                const abs = Math.abs(offset);
+                const isActive = offset === 0;
+                const angle = offset * 38; // degrees of Y rotation
+                const translateX = offset * 260; // px lateral spread
+                const translateZ = isActive ? 0 : -180 - (abs - 1) * 80;
+                const scale = isActive ? 1.02 : 0.9;
+                const opacity = abs > 2 ? 0 : isActive ? 1 : 0.45;
+                return (
+                  <button
+                    type="button"
+                    key={index}
+                    onClick={() => setSelected(index)}
+                    aria-label={`Show ${build.label}`}
+                    style={{
+                      transform: `translate(-50%, -50%) translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${-angle}deg) scale(${scale})`,
+                      opacity,
+                      zIndex: 20 - abs,
+                      transition:
+                        "transform 700ms cubic-bezier(0.22,1,0.36,1), opacity 500ms ease, box-shadow 500ms ease",
+                      pointerEvents: abs > 2 ? "none" : "auto",
+                    }}
+                    className={`absolute left-1/2 top-1/2 w-[340px] md:w-[380px] text-left bg-card rounded-2xl p-7 md:p-8 flex flex-col [backface-visibility:hidden] ${
+                      isActive
+                        ? "ring-2 ring-foreground shadow-[0_24px_60px_rgba(0,0,0,0.22)]"
+                        : "shadow-[0_8px_24px_rgba(0,0,0,0.10)] hover:opacity-80"
+                    }`}
+                  >
+                    <div
+                      className={`w-12 h-12 rounded-xl flex items-center justify-center mb-5 ${
+                        isActive
+                          ? "bg-foreground text-background"
+                          : "bg-accent/10 text-accent"
+                      }`}
                     >
-                      <button
-                        type="button"
-                        onClick={() => api?.scrollTo(index)}
-                        className={`text-left w-full bg-card rounded-2xl p-8 transition-all duration-500 flex flex-col h-full ${
-                          isActive
-                            ? "ring-2 ring-foreground shadow-[0_12px_40px_rgba(0,0,0,0.14)] scale-[1.04] opacity-100"
-                            : "shadow-[0_2px_12px_rgba(0,0,0,0.06)] opacity-50 scale-[0.94] hover:opacity-80"
-                        }`}
-                      >
-                        <div
-                          className={`w-12 h-12 rounded-xl flex items-center justify-center mb-6 ${
-                            isActive
-                              ? "bg-foreground text-background"
-                              : "bg-accent/10 text-accent"
-                          }`}
-                        >
-                          {build.icon}
-                        </div>
+                      {build.icon}
+                    </div>
 
-                        <p className="text-sm font-sans text-accent mb-2 uppercase tracking-wide">
-                          {build.label}
-                        </p>
-                        <h3 className="text-2xl mb-4 font-semibold italic">
-                          {build.title}
-                        </h3>
-                        <p className="font-sans text-muted-foreground leading-relaxed mb-6">
-                          {build.description}
-                        </p>
+                    <p className="text-sm font-sans text-accent mb-2 uppercase tracking-wide">
+                      {build.label}
+                    </p>
+                    <h3 className="text-2xl mb-4 font-semibold italic">
+                      {build.title}
+                    </h3>
+                    <p className="font-sans text-muted-foreground leading-relaxed mb-6 text-sm">
+                      {build.description}
+                    </p>
 
-                        <ul className="space-y-2 mb-8 flex-grow">
-                          {build.includes.map((item, idx) => (
-                            <li key={idx} className="flex items-start gap-2">
-                              <Check className="w-4 h-4 text-accent mt-0.5 flex-shrink-0" />
-                              <span className="text-sm font-sans text-muted-foreground">
-                                {item}
-                              </span>
-                            </li>
-                          ))}
-                        </ul>
+                    <ul className="space-y-2 mb-6 flex-grow">
+                      {build.includes.map((item, idx) => (
+                        <li key={idx} className="flex items-start gap-2">
+                          <Check className="w-4 h-4 text-accent mt-0.5 flex-shrink-0" />
+                          <span className="text-sm font-sans text-muted-foreground">
+                            {item}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
 
-                        <PillButton
-                          className={
-                            isActive
-                              ? "w-full bg-foreground text-background hover:bg-indigo hover:text-white"
-                              : "w-full"
-                          }
-                          icon={Rocket}
-                          variant="default"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setContactOpen(true);
-                          }}
-                        >
-                          {build.cta}
-                        </PillButton>
-                      </button>
-                    </CarouselItem>
-                  );
-                })}
-              </CarouselContent>
-
-              {/* Floating prev/next — sit on top of the rail, hidden on small screens */}
-              <CarouselPrevious className="hidden md:flex -left-4 lg:-left-6 h-12 w-12 bg-background shadow-lg" />
-              <CarouselNext className="hidden md:flex -right-4 lg:-right-6 h-12 w-12 bg-background shadow-lg" />
+                    <PillButton
+                      className={
+                        isActive
+                          ? "w-full bg-foreground text-background hover:bg-indigo hover:text-white"
+                          : "w-full"
+                      }
+                      icon={Rocket}
+                      variant="default"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (!isActive) {
+                          setSelected(index);
+                          return;
+                        }
+                        setContactOpen(true);
+                      }}
+                    >
+                      {build.cta}
+                    </PillButton>
+                  </button>
+                );
+              })}
             </div>
 
-            {/* Dots */}
-            <div className="flex items-center justify-center gap-2 mt-8">
-              {builds.map((_, idx) => (
-                <button
-                  key={idx}
-                  type="button"
-                  onClick={() => api?.scrollTo(idx)}
-                  className={`h-2 rounded-full transition-all ${
-                    idx === selected ? "w-8 bg-accent" : "w-2 bg-muted-foreground/30"
-                  }`}
-                  aria-label={`Go to ${builds[idx].label}`}
-                />
-              ))}
-            </div>
-          </Carousel>
+            {/* Prev / Next */}
+            <button
+              type="button"
+              onClick={() =>
+                setSelected((s) => (s - 1 + builds.length) % builds.length)
+              }
+              aria-label="Previous"
+              className="hidden md:flex absolute left-2 lg:left-6 top-1/2 -translate-y-1/2 z-30 h-12 w-12 items-center justify-center rounded-full bg-background shadow-lg border border-border/60 hover:bg-muted transition"
+            >
+              ‹
+            </button>
+            <button
+              type="button"
+              onClick={() => setSelected((s) => (s + 1) % builds.length)}
+              aria-label="Next"
+              className="hidden md:flex absolute right-2 lg:right-6 top-1/2 -translate-y-1/2 z-30 h-12 w-12 items-center justify-center rounded-full bg-background shadow-lg border border-border/60 hover:bg-muted transition"
+            >
+              ›
+            </button>
+          </div>
+
+          {/* Dots */}
+          <div className="flex items-center justify-center gap-2 mt-4">
+            {builds.map((_, idx) => (
+              <button
+                key={idx}
+                type="button"
+                onClick={() => setSelected(idx)}
+                className={`h-2 rounded-full transition-all ${
+                  idx === selected ? "w-8 bg-accent" : "w-2 bg-muted-foreground/30"
+                }`}
+                aria-label={`Go to ${builds[idx].label}`}
+              />
+            ))}
+          </div>
         </div>
       </section>
 
