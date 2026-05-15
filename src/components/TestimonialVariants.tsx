@@ -1,11 +1,4 @@
-import { useEffect, useRef, useState } from "react";
-import { Quote } from "lucide-react";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  type CarouselApi,
-} from "@/components/ui/carousel";
+import { useRef, useState } from "react";
 
 export type Testimonial = {
   headline: string;
@@ -16,75 +9,41 @@ export type Testimonial = {
 
 type Props = { testimonials: Testimonial[] };
 
-const variants = [
-  { id: "kanban", label: "Kanban Scatter" },
-  { id: "deck", label: "Polaroid Deck" },
-  { id: "marquee", label: "Marquee + Spotlight" },
-  { id: "ticker", label: "Ticker + Expanding Quote" },
-] as const;
-
-type VariantId = (typeof variants)[number]["id"];
-
-export const TestimonialVariants = ({ testimonials }: Props) => {
-  const [variant, setVariant] = useState<VariantId>("kanban");
-
-  return (
-    <section className="pb-12 px-6">
-      <div className="max-w-6xl mx-auto">
-        {/* Variant switcher (preview only) */}
-        <div className="flex flex-wrap items-center justify-center gap-2 mb-8">
-          <span className="text-xs font-sans text-muted-foreground mr-2 uppercase tracking-wide">
-            Preview style:
-          </span>
-          {variants.map((v) => (
-            <button
-              key={v.id}
-              type="button"
-              onClick={() => setVariant(v.id)}
-              className={`text-xs font-sans px-3 py-1.5 rounded-full transition-all ${
-                variant === v.id
-                  ? "bg-foreground text-background"
-                  : "bg-muted text-muted-foreground hover:bg-muted/70"
-              }`}
-            >
-              {v.label}
-            </button>
-          ))}
-        </div>
-
-        {variant === "kanban" && <KanbanScatter testimonials={testimonials} />}
-        {variant === "deck" && <PolaroidDeck testimonials={testimonials} />}
-        {variant === "marquee" && <MarqueeSpotlight testimonials={testimonials} />}
-        {variant === "ticker" && <TickerExpand testimonials={testimonials} />}
-      </div>
-    </section>
-  );
-};
-
-/* ------------------------------------------------------------------ */
-/* 1. Notion Kanban Scatter — draggable cards on a soft board         */
-/* ------------------------------------------------------------------ */
 const tagByAuthor: Record<string, { tag: string; tagColor: string }> = {
   "Jasmine Stone": { tag: "Notion Mentorship", tagColor: "bg-orange-100 text-orange-700" },
   "Lilli Graf": { tag: "AI Workflows", tagColor: "bg-blue-100 text-blue-700" },
   "Lucian James": { tag: "Task OS", tagColor: "bg-purple-100 text-purple-700" },
   "Alex Aggidis": { tag: "Strategy", tagColor: "bg-green-100 text-green-700" },
   "Courtney Evans": { tag: "Leadership", tagColor: "bg-yellow-100 text-yellow-700" },
+  "Gary O'Donnell": { tag: "Operations", tagColor: "bg-pink-100 text-pink-700" },
+};
+
+export const TestimonialVariants = ({ testimonials }: Props) => {
+  return (
+    <section className="pb-12 px-6">
+      <div className="max-w-6xl mx-auto">
+        <KanbanScatter testimonials={testimonials} />
+      </div>
+    </section>
+  );
 };
 
 const KanbanScatter = ({ testimonials }: Props) => {
-  // Cluttered, overlapping starting positions on the left ~65% of the board.
+  // Cluttered, overlapping starting positions spread across the board.
   const positions = [
-    { top: "8%", left: "4%", rotate: -5 },
-    { top: "14%", left: "18%", rotate: 3 },
-    { top: "5%", left: "32%", rotate: -2 },
-    { top: "26%", left: "10%", rotate: 4 },
-    { top: "32%", left: "26%", rotate: -3 },
-    { top: "22%", left: "40%", rotate: 6 },
+    { top: "6%", left: "4%", rotate: -5 },
+    { top: "12%", left: "20%", rotate: 3 },
+    { top: "4%", left: "38%", rotate: -2 },
+    { top: "10%", left: "56%", rotate: 4 },
+    { top: "8%", left: "72%", rotate: -3 },
+    { top: "38%", left: "12%", rotate: 5 },
+    { top: "42%", left: "30%", rotate: -4 },
+    { top: "36%", left: "48%", rotate: 2 },
+    { top: "40%", left: "66%", rotate: -2 },
+    { top: "44%", left: "80%", rotate: 4 },
   ];
 
   const boardRef = useRef<HTMLDivElement>(null);
-  const dropRef = useRef<HTMLDivElement>(null);
   const [dragState, setDragState] = useState<{
     idx: number;
     offsetX: number;
@@ -93,20 +52,10 @@ const KanbanScatter = ({ testimonials }: Props) => {
   const [overrides, setOverrides] = useState<Record<number, { x: number; y: number }>>({});
   const [topZ, setTopZ] = useState(10);
   const [zMap, setZMap] = useState<Record<number, number>>({});
-  const [overDrop, setOverDrop] = useState(false);
-  const [expandedIdx, setExpandedIdx] = useState<number | null>(null);
-
-  const isOverDrop = (clientX: number, clientY: number) => {
-    const r = dropRef.current?.getBoundingClientRect();
-    if (!r) return false;
-    return clientX >= r.left && clientX <= r.right && clientY >= r.top && clientY <= r.bottom;
-  };
 
   const onPointerDown = (e: React.PointerEvent, idx: number) => {
     const target = e.currentTarget as HTMLDivElement;
     target.setPointerCapture(e.pointerId);
-    const board = boardRef.current?.getBoundingClientRect();
-    if (!board) return;
     const rect = target.getBoundingClientRect();
     setDragState({
       idx,
@@ -125,79 +74,38 @@ const KanbanScatter = ({ testimonials }: Props) => {
     const x = e.clientX - board.left - dragState.offsetX;
     const y = e.clientY - board.top - dragState.offsetY;
     setOverrides((o) => ({ ...o, [dragState.idx]: { x, y } }));
-    setOverDrop(isOverDrop(e.clientX, e.clientY));
   };
 
-  const onPointerUp = (e: React.PointerEvent) => {
-    if (dragState && isOverDrop(e.clientX, e.clientY)) {
-      setExpandedIdx(dragState.idx);
-    }
-    setDragState(null);
-    setOverDrop(false);
-  };
+  const onPointerUp = () => setDragState(null);
 
   return (
     <div
       ref={boardRef}
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
-      onPointerLeave={() => {
-        setDragState(null);
-        setOverDrop(false);
-      }}
-      className="relative w-full h-[480px] md:h-[440px] rounded-2xl bg-[radial-gradient(circle_at_1px_1px,hsl(var(--muted-foreground)/0.18)_1px,transparent_0)] [background-size:20px_20px] bg-muted/20 overflow-hidden touch-none"
+      onPointerLeave={() => setDragState(null)}
+      className="relative w-full h-[560px] md:h-[520px] rounded-2xl bg-[radial-gradient(circle_at_1px_1px,hsl(var(--muted-foreground)/0.18)_1px,transparent_0)] [background-size:20px_20px] bg-muted/20 overflow-hidden touch-none"
     >
       <div className="absolute top-3 left-6 text-[11px] font-sans uppercase tracking-widest text-muted-foreground/70 pointer-events-none">
-        ↕ Drag a card →
-      </div>
-
-      {/* Drop zone */}
-      <div
-        ref={dropRef}
-        className={`absolute top-6 right-6 bottom-6 w-[32%] rounded-2xl border-2 border-dashed transition-all flex items-center justify-center text-center px-6 ${
-          overDrop
-            ? "border-foreground bg-foreground/5 scale-[1.02]"
-            : "border-muted-foreground/30 bg-background/40"
-        }`}
-      >
-        {expandedIdx !== null ? (
-          <ExpandedCard
-            t={testimonials[expandedIdx]}
-            meta={tagByAuthor[testimonials[expandedIdx].author]}
-            onClose={() => setExpandedIdx(null)}
-          />
-        ) : (
-          <div className="pointer-events-none">
-            <div className="text-3xl mb-2">📌</div>
-            <p className="text-sm font-semibold italic mb-1">Drop a card here</p>
-            <p className="text-xs font-sans text-muted-foreground">
-              Drag any testimonial into this box to read the full story.
-            </p>
-          </div>
-        )}
+        ↕ Drag the cards around
       </div>
 
       {testimonials.slice(0, positions.length).map((t, idx) => {
         const pos = positions[idx];
         const meta = tagByAuthor[t.author] ?? { tag: "Testimonial", tagColor: "bg-muted text-muted-foreground" };
         const override = overrides[idx];
-        const hidden = expandedIdx === idx;
         const style: React.CSSProperties = override
           ? {
               left: override.x,
               top: override.y,
               transform: `rotate(${pos.rotate}deg)`,
               zIndex: zMap[idx] ?? 1,
-              opacity: hidden ? 0 : 1,
-              pointerEvents: hidden ? "none" : "auto",
             }
           : {
               top: pos.top,
               left: pos.left,
               transform: `rotate(${pos.rotate}deg)`,
               zIndex: zMap[idx] ?? 1,
-              opacity: hidden ? 0 : 1,
-              pointerEvents: hidden ? "none" : "auto",
             };
 
         return (
@@ -218,230 +126,16 @@ const KanbanScatter = ({ testimonials }: Props) => {
             <p className="text-sm font-semibold italic mb-1.5 leading-snug line-clamp-1">
               {t.headline}
             </p>
-            <p className="text-xs font-sans text-muted-foreground leading-relaxed mb-2 line-clamp-2">
+            <p className="text-[11px] font-sans text-muted-foreground leading-relaxed mb-2 line-clamp-2">
               "{t.quote}"
             </p>
             <div className="pt-1.5 border-t border-border/40 flex items-baseline justify-between gap-2">
-              <p className="text-xs font-sans text-foreground truncate">{t.author}</p>
+              <p className="text-[11px] font-sans text-foreground truncate">{t.author}</p>
               <p className="text-[10px] font-sans text-muted-foreground/70 truncate">{t.date}</p>
             </div>
           </div>
         );
       })}
-    </div>
-  );
-};
-
-const ExpandedCard = ({
-  t,
-  meta,
-  onClose,
-}: {
-  t: Testimonial;
-  meta?: { tag: string; tagColor: string };
-  onClose: () => void;
-}) => {
-  return (
-    <div className="relative w-full h-full bg-white rounded-xl shadow-[0_12px_40px_rgba(0,0,0,0.12)] p-6 flex flex-col text-left animate-scale-in">
-      <button
-        type="button"
-        onClick={onClose}
-        aria-label="Close"
-        className="absolute top-3 right-3 w-7 h-7 rounded-full bg-muted hover:bg-muted/70 flex items-center justify-center text-sm"
-      >
-        ×
-      </button>
-      {meta && (
-        <span className={`self-start text-[10px] font-sans font-medium px-2 py-0.5 rounded mb-3 ${meta.tagColor}`}>
-          {meta.tag}
-        </span>
-      )}
-      <Quote className="w-6 h-6 text-accent/40 mb-2" />
-      <p className="text-lg md:text-xl font-semibold italic mb-3 leading-snug">
-        {t.headline}
-      </p>
-      <p className="font-sans text-sm text-muted-foreground leading-relaxed mb-4 overflow-y-auto">
-        "{t.quote}"
-      </p>
-      <div className="mt-auto pt-3 border-t border-border/40">
-        <p className="font-sans text-sm text-foreground">{t.author}</p>
-        <p className="font-sans text-xs text-muted-foreground/70">{t.date}</p>
-      </div>
-    </div>
-  );
-};
-
-/* ------------------------------------------------------------------ */
-/* 2. Polaroid Deck — flick the top card away                          */
-/* ------------------------------------------------------------------ */
-const PolaroidDeck = ({ testimonials }: Props) => {
-  const [order, setOrder] = useState(testimonials.map((_, i) => i));
-  const [flipping, setFlipping] = useState(false);
-
-  const advance = () => {
-    if (flipping) return;
-    setFlipping(true);
-    setTimeout(() => {
-      setOrder((o) => [...o.slice(1), o[0]]);
-      setFlipping(false);
-    }, 380);
-  };
-
-  return (
-    <div className="relative h-[420px] flex items-center justify-center">
-      <button
-        type="button"
-        onClick={advance}
-        aria-label="Next testimonial"
-        className="absolute inset-0 z-30 cursor-pointer"
-      />
-      {order.map((tIdx, stackIdx) => {
-        const t = testimonials[tIdx];
-        const isTop = stackIdx === 0;
-        const offset = stackIdx * 8;
-        const rotate = stackIdx % 2 === 0 ? -stackIdx * 1.2 : stackIdx * 1.2;
-        const flying = isTop && flipping;
-        return (
-          <div
-            key={tIdx}
-            style={{
-              transform: flying
-                ? `translate(120%, -20%) rotate(18deg)`
-                : `translate(${offset}px, ${offset}px) rotate(${rotate}deg)`,
-              opacity: flying ? 0 : 1 - stackIdx * 0.12,
-              zIndex: 20 - stackIdx,
-              transition: "transform 0.4s cubic-bezier(.4,.1,.2,1), opacity 0.4s",
-            }}
-            className="absolute w-[340px] md:w-[420px] bg-card p-6 pb-10 rounded-sm shadow-[0_8px_30px_rgba(0,0,0,0.12)]"
-          >
-            <Quote className="w-6 h-6 text-accent/40 mb-3" />
-            <p className="text-base md:text-lg font-semibold italic mb-3">{t.headline}</p>
-            <p className="font-sans text-sm text-muted-foreground leading-relaxed mb-4 line-clamp-5">
-              "{t.quote}"
-            </p>
-            <p className="font-sans text-sm text-foreground" style={{ fontFamily: "Marginalia, cursive" }}>
-              {t.author}
-            </p>
-            <p className="font-sans text-xs text-muted-foreground/70">{t.date}</p>
-          </div>
-        );
-      })}
-      <p className="absolute bottom-2 left-1/2 -translate-x-1/2 text-[11px] font-sans uppercase tracking-widest text-muted-foreground/60 pointer-events-none">
-        Tap to flick →
-      </p>
-    </div>
-  );
-};
-
-/* ------------------------------------------------------------------ */
-/* 3. Marquee Wall + Spotlight                                         */
-/* ------------------------------------------------------------------ */
-const MarqueeSpotlight = ({ testimonials }: Props) => {
-  const [hovered, setHovered] = useState<number | null>(null);
-  const doubled = [...testimonials, ...testimonials];
-
-  return (
-    <div
-      className="relative overflow-hidden py-6 group"
-      onMouseLeave={() => setHovered(null)}
-    >
-      <div
-        className="flex gap-6 w-max animate-[marquee_40s_linear_infinite]"
-        style={{ animationPlayState: hovered !== null ? "paused" : "running" }}
-      >
-        {doubled.map((t, idx) => {
-          const isHover = hovered === idx;
-          const dim = hovered !== null && !isHover;
-          return (
-            <div
-              key={idx}
-              onMouseEnter={() => setHovered(idx)}
-              className={`shrink-0 w-[320px] bg-card rounded-2xl p-6 shadow-[0_2px_12px_rgba(0,0,0,0.05)] transition-all duration-300 ${
-                isHover ? "scale-110 shadow-[0_12px_40px_rgba(0,0,0,0.18)] z-10" : ""
-              } ${dim ? "opacity-30 scale-95" : "opacity-100"}`}
-            >
-              <Quote className="w-5 h-5 text-accent/40 mb-2" />
-              <p className="text-sm font-semibold italic mb-2">{t.headline}</p>
-              <p className="font-sans text-xs text-muted-foreground leading-relaxed mb-3 line-clamp-4">
-                "{t.quote}"
-              </p>
-              <p className="font-sans text-xs text-foreground">{t.author}</p>
-              <p className="font-sans text-[10px] text-muted-foreground/70">{t.date}</p>
-            </div>
-          );
-        })}
-      </div>
-      <style>{`
-        @keyframes marquee {
-          from { transform: translateX(0); }
-          to { transform: translateX(-50%); }
-        }
-      `}</style>
-    </div>
-  );
-};
-
-/* ------------------------------------------------------------------ */
-/* 4. Ticker + Expanding Quote                                         */
-/* ------------------------------------------------------------------ */
-const TickerExpand = ({ testimonials }: Props) => {
-  const [active, setActive] = useState(0);
-  const [api, setApi] = useState<CarouselApi>();
-
-  useEffect(() => {
-    const id = setInterval(() => {
-      setActive((a) => (a + 1) % testimonials.length);
-    }, 5000);
-    return () => clearInterval(id);
-  }, [testimonials.length]);
-
-  useEffect(() => {
-    api?.scrollTo(active);
-  }, [active, api]);
-
-  return (
-    <div>
-      {/* Ticker */}
-      <div className="border-y border-border bg-muted/30 overflow-hidden">
-        <div className="flex divide-x divide-border">
-          {testimonials.map((t, idx) => (
-            <button
-              key={idx}
-              type="button"
-              onClick={() => setActive(idx)}
-              className={`shrink-0 px-5 py-3 text-left transition-colors ${
-                idx === active ? "bg-card" : "hover:bg-card/50"
-              }`}
-            >
-              <p className="text-xs font-sans font-medium truncate max-w-[220px]">
-                {t.headline}
-              </p>
-              <p className="text-[10px] font-sans text-muted-foreground">{t.author}</p>
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Expanded quote */}
-      <Carousel setApi={setApi} opts={{ loop: true }} className="mt-8">
-        <CarouselContent>
-          {testimonials.map((t, idx) => (
-            <CarouselItem key={idx} className="basis-full">
-              <div className="max-w-2xl mx-auto text-center px-6">
-                <Quote className="w-8 h-8 text-accent/40 mx-auto mb-4" />
-                <p className="text-2xl md:text-3xl font-semibold italic mb-6 leading-tight">
-                  {t.headline}
-                </p>
-                <p className="font-sans text-muted-foreground leading-relaxed mb-6">
-                  "{t.quote}"
-                </p>
-                <p className="font-sans text-sm text-foreground">{t.author}</p>
-                <p className="font-sans text-xs text-muted-foreground/70">{t.date}</p>
-              </div>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-      </Carousel>
     </div>
   );
 };
