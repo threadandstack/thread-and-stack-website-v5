@@ -38,8 +38,6 @@ import notionEssentials from "@/assets/notion-essentials.webp";
 import notionAmbassadorBlack from "@/assets/notion-ambassador-black.webp";
 import notionConsultingPartner from "@/assets/notion-consulting-partner.webp";
 import notionServiceSpecialist from "@/assets/notion-service-specialist.webp";
-import notionCmsBuild from "@/assets/notion-cms-build.webp";
-import notionCustomAgents from "@/assets/notion-custom-agents.webp";
 
 const HomePageDraft = () => {
   const [contactOpen, setContactOpen] = useState(false);
