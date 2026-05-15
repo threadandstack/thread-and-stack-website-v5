@@ -31,6 +31,7 @@ import {
   Quote,
 } from "lucide-react";
 import logo from "@/assets/logos/Black_TS_Stacked.svg";
+import logoIndigo from "@/assets/logos/Indigo_TS_Stacked.svg";
 import notionBadges from "@/assets/notion-badges.png";
 
 const HomePageDraft = () => {
