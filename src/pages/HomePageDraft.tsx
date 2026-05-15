@@ -324,7 +324,7 @@ const HomePageDraft = () => {
                 const translateX = offset * 260; // px lateral spread
                 const translateZ = isActive ? 0 : -180 - (abs - 1) * 80;
                 const scale = isActive ? 1.02 : 0.9;
-                const opacity = abs > 2 ? 0 : isActive ? 1 : 0.45;
+                const opacity = abs > 1 ? 0 : isActive ? 1 : 0.45;
                 return (
                   <button
                     type="button"
@@ -337,7 +337,7 @@ const HomePageDraft = () => {
                       zIndex: 20 - abs,
                       transition:
                         "transform 700ms cubic-bezier(0.22,1,0.36,1), opacity 500ms ease, box-shadow 500ms ease",
-                      pointerEvents: abs > 2 ? "none" : "auto",
+                      pointerEvents: abs > 1 ? "none" : "auto",
                     }}
                     className={`absolute left-1/2 top-1/2 w-[340px] md:w-[380px] text-left bg-card rounded-2xl p-7 md:p-8 flex flex-col [backface-visibility:hidden] ${
                       isActive
