@@ -84,7 +84,7 @@ const KanbanScatter = ({ testimonials }: Props) => {
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
       onPointerLeave={() => setDragState(null)}
-      className="relative w-full h-[560px] md:h-[520px] rounded-2xl bg-[radial-gradient(circle_at_1px_1px,hsl(var(--muted-foreground)/0.18)_1px,transparent_0)] [background-size:20px_20px] bg-muted/20 overflow-hidden touch-none"
+      className="relative w-full h-[280px] md:h-[260px] rounded-2xl bg-[radial-gradient(circle_at_1px_1px,hsl(var(--muted-foreground)/0.18)_1px,transparent_0)] [background-size:20px_20px] bg-muted/20 overflow-hidden touch-none"
     >
       <div className="absolute top-3 left-6 text-[11px] font-sans uppercase tracking-widest text-muted-foreground/70 pointer-events-none">
         ↕ Drag the cards around
