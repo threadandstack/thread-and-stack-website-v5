@@ -33,20 +33,21 @@ export const TestimonialVariants = ({ testimonials }: Props) => {
 
 const KanbanScatter = ({ testimonials }: Props) => {
   // Cluttered, overlapping starting positions spread across the board.
+  // Positions kept inside the board: cards are ~280px wide, so left maxes at calc(100% - 290px).
   const positions = [
-    { top: "6%", left: "4%", rotate: -5 },
-    { top: "12%", left: "18%", rotate: 3 },
-    { top: "4%", left: "34%", rotate: -2 },
-    { top: "10%", left: "50%", rotate: 4 },
-    { top: "8%", left: "66%", rotate: -3 },
-    { top: "14%", left: "82%", rotate: 2 },
-    { top: "44%", left: "8%", rotate: 5 },
-    { top: "48%", left: "24%", rotate: -4 },
-    { top: "42%", left: "40%", rotate: 2 },
-    { top: "46%", left: "56%", rotate: -2 },
-    { top: "44%", left: "72%", rotate: 4 },
-    { top: "50%", left: "86%", rotate: -3 },
-    { top: "20%", left: "10%", rotate: 1 },
+    { top: "6%", left: "1%", rotate: -5 },
+    { top: "12%", left: "14%", rotate: 3 },
+    { top: "4%", left: "28%", rotate: -2 },
+    { top: "10%", left: "42%", rotate: 4 },
+    { top: "8%", left: "56%", rotate: -3 },
+    { top: "14%", left: "calc(100% - 290px)", rotate: 2 },
+    { top: "44%", left: "4%", rotate: 5 },
+    { top: "48%", left: "18%", rotate: -4 },
+    { top: "42%", left: "32%", rotate: 2 },
+    { top: "46%", left: "46%", rotate: -2 },
+    { top: "44%", left: "60%", rotate: 4 },
+    { top: "50%", left: "calc(100% - 290px)", rotate: -3 },
+    { top: "20%", left: "8%", rotate: 1 },
   ];
 
   const boardRef = useRef<HTMLDivElement>(null);
