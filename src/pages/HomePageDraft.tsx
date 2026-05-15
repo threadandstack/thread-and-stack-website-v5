@@ -30,8 +30,7 @@ import notionBadges from "@/assets/notion-badges.png";
 const HomePageDraft = () => {
   const [contactOpen, setContactOpen] = useState(false);
   const [zoomedImage, setZoomedImage] = useState<{ src: string; alt: string } | null>(null);
-  const [api, setApi] = useState<CarouselApi>();
-  const [selected, setSelected] = useState(1);
+  const [selected, setSelected] = useState(0);
 
   const builds = [
     {
