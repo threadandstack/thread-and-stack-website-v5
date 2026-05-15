@@ -4,13 +4,8 @@ import { FAQ } from "@/components/FAQ";
 import { PillButton } from "@/components/ui/pill-button";
 import { Rocket, Bot, Shield } from "lucide-react";
 import brendanWalking from "@/assets/photos/shoreditch/brendan-27.webp";
-import notionAdmin from "@/assets/notion-certified-admin.webp";
-import notionAdvanced from "@/assets/notion-advanced.webp";
-import notionWorkflows from "@/assets/notion-workflows.webp";
-import notionEssentials from "@/assets/notion-essentials.webp";
 import notionAmbassadorBlack from "@/assets/notion-ambassador-black.webp";
-import notionConsultingPartner from "@/assets/notion-consulting-partner.webp";
-import notionServiceSpecialist from "@/assets/notion-service-specialist.webp";
+import notionBadges from "@/assets/notion-badges.png";
 
 const AboutPage = () => {
   return (
