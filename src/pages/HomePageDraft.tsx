@@ -38,8 +38,6 @@ import notionEssentials from "@/assets/notion-essentials.webp";
 import notionAmbassadorBlack from "@/assets/notion-ambassador-black.webp";
 import notionConsultingPartner from "@/assets/notion-consulting-partner.webp";
 import notionServiceSpecialist from "@/assets/notion-service-specialist.webp";
-import notionCmsBuild from "@/assets/notion-cms-build.webp";
-import notionCustomAgents from "@/assets/notion-custom-agents.webp";
 
 const HomePageDraft = () => {
   const [contactOpen, setContactOpen] = useState(false);
@@ -349,90 +347,6 @@ const HomePageDraft = () => {
 
       {/* Testimonials — Kanban scatter directly under product carousel */}
       <TestimonialVariants testimonials={testimonials} />
-
-      {/* System Build Showcase */}
-      <section className="py-24 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-10 items-center">
-            <div className="order-2 md:order-1">
-              <span className="inline-flex items-center rounded-full bg-accent/10 text-accent text-xs font-sans font-semibold px-3 py-1 mb-4">
-                System Build Example
-              </span>
-              <h2 className="text-3xl md:text-4xl font-semibold italic mb-4">
-                Notion + Lovable CMS Build
-              </h2>
-              <p className="font-sans text-muted-foreground leading-relaxed mb-4">
-                A three-tier content management system combining Notion as the editorial backend, Supabase Edge Functions as the API layer, and a custom-built Lovable frontend — all working in sync.
-              </p>
-              <ul className="space-y-2 mb-6">
-                {[
-                  "Notion Content Library as the single source of truth",
-                  "API integration via Edge Functions for real-time content sync",
-                  "Custom frontend with category filtering, OG images & SEO",
-                  "Third-party tool orchestration across the full stack",
-                ].map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-accent mt-0.5 flex-shrink-0" />
-                    <span className="text-sm font-sans text-muted-foreground">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div
-              className="order-1 md:order-2 rounded-2xl overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.12)] cursor-zoom-in transition-transform hover:scale-[1.02]"
-              onClick={() => setZoomedImage({ src: notionCmsBuild, alt: "Three-tier Notion CMS build" })}
-            >
-              <img
-                src={notionCmsBuild}
-                alt="Three-tier Notion CMS build showing Content Library, Published Blog Library, and the live Thread & Stack Journal"
-                className="w-full h-auto"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Fractional Ops Showcase */}
-      <section className="pb-24 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-10 items-center">
-            <div
-              className="rounded-2xl overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.12)] cursor-zoom-in transition-transform hover:scale-[1.02]"
-              onClick={() => setZoomedImage({ src: notionCustomAgents, alt: "Custom Notion AI agent" })}
-            >
-              <img
-                src={notionCustomAgents}
-                alt="Custom Notion AI agent 'Email Recapper' with daily email summary delivered to mobile inbox"
-                className="w-full h-auto"
-              />
-            </div>
-            <div>
-              <span className="inline-flex items-center rounded-full bg-accent/10 text-accent text-xs font-sans font-semibold px-3 py-1 mb-4">
-                Fractional Ops Example
-              </span>
-              <h2 className="text-3xl md:text-4xl font-semibold italic mb-4">
-                Custom Agents & Automations
-              </h2>
-              <p className="font-sans text-muted-foreground leading-relaxed mb-4">
-                A custom Notion AI agent designed to process and triage a busy inbox every morning — summarising action items, flagging replies, and delivering a structured daily briefing straight to your phone.
-              </p>
-              <ul className="space-y-2">
-                {[
-                  "Custom Notion AI agent built to your workflow",
-                  "Automated daily email triage and summarisation",
-                  "Priority flagging with actionable next steps",
-                  "Delivered as a Notion notification — no extra tools needed",
-                ].map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-accent mt-0.5 flex-shrink-0" />
-                    <span className="text-sm font-sans text-muted-foreground">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Credentials */}
       <section className="py-24 px-6">
