@@ -79,6 +79,8 @@ const UnleashYourTeamPage = () => {
     }
     setIsSubmitting(true);
     try {
+      const leadId = crypto.randomUUID();
+      const submittedAt = new Date().toISOString();
       const { error } = await supabase.from("leads").insert({
         email,
         source: "unleash-your-team-resources",
@@ -87,7 +89,31 @@ const UnleashYourTeamPage = () => {
       if (error) throw error;
       setUnlocked(true);
       try { sessionStorage.setItem(UNLOCK_STORAGE_KEY, "1"); } catch { /* ignore */ }
-      toast({ title: "Resources unlocked", description: "Thanks — links are open below." });
+
+      // Fire-and-forget: confirmation to visitor + admin notification.
+      supabase.functions.invoke("send-transactional-email", {
+        body: {
+          templateName: "unleash-resources-confirmation",
+          recipientEmail: email,
+          idempotencyKey: `unleash-confirm-${leadId}`,
+        },
+      }).catch((err) => console.error("Visitor confirmation email failed", err));
+
+      supabase.functions.invoke("send-transactional-email", {
+        body: {
+          templateName: "unleash-lead-admin-notification",
+          recipientEmail: "br@brendanrodgers.uk",
+          idempotencyKey: `unleash-admin-${leadId}`,
+          templateData: {
+            email,
+            source: "unleash-your-team-resources",
+            message: "Unlocked AI starter pack resources",
+            submittedAt,
+          },
+        },
+      }).catch((err) => console.error("Admin notification email failed", err));
+
+      toast({ title: "Resources unlocked", description: "Thanks — links are open below, and on their way to your inbox." });
     } catch (error: any) {
       console.error("Lead capture failed:", error);
       setUnlocked(true);
