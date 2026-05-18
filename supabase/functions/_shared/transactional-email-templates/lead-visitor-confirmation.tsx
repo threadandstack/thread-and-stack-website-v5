@@ -46,9 +46,10 @@ const LeadVisitorConfirmation = ({ name }: Props) => (
         <Hr style={hr} />
 
         <Text style={footer}>
-          This message was sent from an unmonitored address — I'll reply directly to the email address you submitted.
+          Feel free to reply to this email — it'll come straight to my inbox.
         </Text>
         <Text style={signature}>— Brendan, {SITE_NAME}</Text>
+
       </Container>
     </Body>
   </Html>
