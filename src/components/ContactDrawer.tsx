@@ -82,11 +82,16 @@ export const ContactDrawer = ({ open, onOpenChange, source = "drawer" }: Contact
     const fullMessage = [role.trim() ? `[${role.trim()}]` : "", serviceLine, message.trim()].filter(Boolean).join("\n\n");
 
     try {
+      const leadId = crypto.randomUUID();
+      const cleanName = name.trim() || null;
+      const cleanEmail = email.trim();
+
       const { error } = await supabase
         .from('leads')
         .insert({
-          name: name.trim() || null,
-          email: email.trim(),
+          id: leadId,
+          name: cleanName,
+          email: cleanEmail,
           message: fullMessage || null,
           source
         });
@@ -97,12 +102,35 @@ export const ContactDrawer = ({ open, onOpenChange, source = "drawer" }: Contact
       
       supabase.functions.invoke('sync-lead-to-notion', {
         body: {
-          name: name.trim() || null,
-          email: email.trim(),
+          name: cleanName,
+          email: cleanEmail,
           message: fullMessage || null,
           source
         }
       }).catch(err => console.error('Notion sync error:', err));
+
+      supabase.functions.invoke('send-transactional-email', {
+        body: {
+          templateName: 'lead-visitor-confirmation',
+          recipientEmail: cleanEmail,
+          idempotencyKey: `lead-visitor-${leadId}`,
+          templateData: { name: cleanName ?? undefined },
+        }
+      }).catch(err => console.error('Visitor email error:', err));
+
+      supabase.functions.invoke('send-transactional-email', {
+        body: {
+          templateName: 'lead-admin-notification',
+          idempotencyKey: `lead-admin-${leadId}`,
+          templateData: {
+            name: cleanName ?? undefined,
+            email: cleanEmail,
+            source,
+            message: fullMessage || undefined,
+            submittedAt: new Date().toISOString(),
+          },
+        }
+      }).catch(err => console.error('Admin email error:', err));
 
       toast({
         title: "Thanks for reaching out!",
