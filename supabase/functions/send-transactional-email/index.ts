@@ -15,6 +15,10 @@ const SENDER_DOMAIN = "notify.threadandstack.com"
 // When display_from_root is enabled, this can be the root domain for cleaner branding,
 // even though actual sending uses the subdomain above.
 const FROM_DOMAIN = "notify.threadandstack.com"
+// REPLY_TO is the address inserted into the Reply-To: header so that when a
+// recipient replies, the message lands in a real, monitored inbox rather than
+// the unmonitored noreply@ sender address.
+const REPLY_TO = "br@brendanrodgers.uk"
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
