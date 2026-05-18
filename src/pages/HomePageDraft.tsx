@@ -310,7 +310,36 @@ const HomePageDraft = () => {
       <section className="relative z-10 pb-24 px-6 overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <div
-            className="relative h-[640px] md:h-[680px] [perspective:1800px]"
+            className="relative h-[640px] md:h-[680px] [perspective:1800px] select-none"
+            style={{ touchAction: "pan-y" }}
+            onTouchStart={(e) => {
+              const t = e.touches[0];
+              (e.currentTarget as any)._tsx = t.clientX;
+              (e.currentTarget as any)._tsy = t.clientY;
+              (e.currentTarget as any)._tsLocked = false;
+            }}
+            onTouchMove={(e) => {
+              const el = e.currentTarget as any;
+              if (el._tsx == null) return;
+              const dx = e.touches[0].clientX - el._tsx;
+              const dy = e.touches[0].clientY - el._tsy;
+              if (!el._tsLocked && Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy)) {
+                el._tsLocked = true;
+              }
+              if (el._tsLocked && e.cancelable) e.preventDefault();
+            }}
+            onTouchEnd={(e) => {
+              const el = e.currentTarget as any;
+              if (el._tsx == null) return;
+              const t = e.changedTouches[0];
+              const dx = t.clientX - el._tsx;
+              const dy = t.clientY - el._tsy;
+              el._tsx = null;
+              if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+                if (dx < 0) setSelected((s) => (s + 1) % builds.length);
+                else setSelected((s) => (s - 1 + builds.length) % builds.length);
+              }
+            }}
           >
             <div className="absolute inset-0 [transform-style:preserve-3d]">
               {builds.map((build, index) => {
