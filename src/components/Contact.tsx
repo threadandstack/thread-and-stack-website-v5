@@ -74,25 +74,54 @@ export const Contact = () => {
       : message.trim();
 
     try {
+      const leadId = crypto.randomUUID();
+      const source = 'homepage-contact';
+      const cleanName = name.trim() || null;
+      const cleanEmail = email.trim();
+
       const { error } = await supabase
         .from('leads')
         .insert({
-          name: name.trim() || null,
-          email: email.trim(),
+          id: leadId,
+          name: cleanName,
+          email: cleanEmail,
           message: fullMessage || null,
-          source: 'homepage-contact'
+          source
         });
 
       if (error) throw error;
 
       supabase.functions.invoke('sync-lead-to-notion', {
         body: {
-          name: name.trim() || null,
-          email: email.trim(),
+          name: cleanName,
+          email: cleanEmail,
           message: fullMessage || null,
-          source: 'homepage-contact'
+          source
         }
       }).catch(err => console.error('Notion sync error:', err));
+
+      supabase.functions.invoke('send-transactional-email', {
+        body: {
+          templateName: 'lead-visitor-confirmation',
+          recipientEmail: cleanEmail,
+          idempotencyKey: `lead-visitor-${leadId}`,
+          templateData: { name: cleanName ?? undefined },
+        }
+      }).catch(err => console.error('Visitor email error:', err));
+
+      supabase.functions.invoke('send-transactional-email', {
+        body: {
+          templateName: 'lead-admin-notification',
+          idempotencyKey: `lead-admin-${leadId}`,
+          templateData: {
+            name: cleanName ?? undefined,
+            email: cleanEmail,
+            source,
+            message: fullMessage || undefined,
+            submittedAt: new Date().toISOString(),
+          },
+        }
+      }).catch(err => console.error('Admin email error:', err));
 
       toast({
         title: "Message sent!",
