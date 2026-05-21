@@ -6,6 +6,7 @@ import WhiteStacked from "@/assets/logos/White_TS_Stacked.svg";
 import GreyStacked from "@/assets/logos/Grey_TS_Stacked.svg";
 import LssLogoWhite from "@/assets/proposal/lss-logo-white.webp";
 import BrSignature from "@/assets/proposal/br-signature.png";
+import SystemMapDiagram from "@/components/proposal/SystemMapDiagram";
 
 /* ---------------------------- Helpers ---------------------------- */
 
@@ -349,6 +350,11 @@ const LSSProposalPage = () => {
                 ]}
               />
             </section>
+
+            {/* Full-bleed system map diagram */}
+            <div className="relative left-1/2 right-1/2 -mx-[50vw] w-screen my-12">
+              <SystemMapDiagram />
+            </div>
 
             <Rule />
 
