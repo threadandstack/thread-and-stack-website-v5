@@ -24,27 +24,37 @@ const fadeUp = {
   transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] as const },
 };
 
-// Editorial section header: eyebrow + italic serif title, no boxes
+// Editorial section header — brand-book numbered style (big accent numeral + slight rotation)
 const SectionHead = ({
   num,
   eyebrow,
   title,
+  rotate = -0.3,
 }: {
   num?: string;
   eyebrow?: string;
   title: React.ReactNode;
+  rotate?: number;
 }) => (
   <motion.div {...fadeUp} className="mb-10 md:mb-14">
-    {(num || eyebrow) && (
-      <div className="flex items-center gap-3 mb-5 font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-muted-foreground">
-        {num && <span className="text-accent">{num}</span>}
-        {num && eyebrow && <span className="h-px w-8 bg-border" />}
-        {eyebrow && <span>{eyebrow}</span>}
+    {eyebrow && (
+      <div className="mb-4 font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-muted-foreground">
+        {eyebrow}
       </div>
     )}
-    <h2 className="font-serif-pro text-[32px] sm:text-4xl md:text-[44px] italic font-semibold leading-[1.1] tracking-tight text-foreground text-balance">
-      {title}
-    </h2>
+    <div className="flex items-baseline gap-4 md:gap-5">
+      {num && (
+        <span className="font-serif-pro text-3xl md:text-5xl font-light italic text-accent leading-none flex-shrink-0">
+          {num}
+        </span>
+      )}
+      <h2
+        className="font-serif-pro text-[30px] sm:text-4xl md:text-[42px] italic font-bold leading-[1.1] tracking-tight text-foreground text-balance"
+        style={{ transform: `rotate(${rotate}deg)` }}
+      >
+        {title}
+      </h2>
+    </div>
   </motion.div>
 );
 
@@ -84,15 +94,17 @@ const Rule = () => (
   </div>
 );
 
-// Editorial pull quote
-const PullQuote = ({ children }: { children: React.ReactNode }) => (
+// Editorial pull quote — rotated, brand-book style
+const PullQuote = ({ children, rotate = 0.2 }: { children: React.ReactNode; rotate?: number }) => (
   <motion.blockquote
     {...fadeUp}
-    className="my-12 md:my-16 font-serif-pro italic text-[24px] md:text-[30px] leading-[1.35] text-foreground text-balance"
+    className="my-12 md:my-16 font-serif-pro italic text-[24px] md:text-[32px] leading-[1.35] text-foreground text-balance"
+    style={{ transform: `rotate(${rotate}deg)` }}
   >
     {children}
   </motion.blockquote>
 );
+
 
 /* ---------------------------- Welcome ---------------------------- */
 
