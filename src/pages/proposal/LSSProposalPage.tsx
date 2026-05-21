@@ -2,12 +2,20 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, Download, Anchor, X } from "lucide-react";
 import { PillButton } from "@/components/ui/pill-button";
+import { Emphasis } from "@/components/Emphasis";
 import WhiteStacked from "@/assets/logos/White_TS_Stacked.svg";
 import GreyStacked from "@/assets/logos/Grey_TS_Stacked.svg";
 import LssLogoWhite from "@/assets/proposal/lss-logo-white.webp";
 import BrSignature from "@/assets/proposal/br-signature.png";
 
 /* ---------------------------- Helpers ---------------------------- */
+
+/** Inline accent word with subtle baseline-shift (brand-book treatment). */
+const Hl = ({ children, shift = 1 }: { children: React.ReactNode; shift?: number }) => (
+  <span className="inline-block text-accent" style={{ transform: `translateY(${shift}px)` }}>
+    {children}
+  </span>
+);
 
 const fadeUp = {
   initial: { opacity: 0, y: 20 },
@@ -16,27 +24,37 @@ const fadeUp = {
   transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] as const },
 };
 
-// Editorial section header: eyebrow + italic serif title, no boxes
+// Editorial section header — brand-book numbered style (big accent numeral + slight rotation)
 const SectionHead = ({
   num,
   eyebrow,
   title,
+  rotate = -0.3,
 }: {
   num?: string;
   eyebrow?: string;
   title: React.ReactNode;
+  rotate?: number;
 }) => (
   <motion.div {...fadeUp} className="mb-10 md:mb-14">
-    {(num || eyebrow) && (
-      <div className="flex items-center gap-3 mb-5 font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-muted-foreground">
-        {num && <span className="text-accent">{num}</span>}
-        {num && eyebrow && <span className="h-px w-8 bg-border" />}
-        {eyebrow && <span>{eyebrow}</span>}
+    {eyebrow && (
+      <div className="mb-4 font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-muted-foreground">
+        {eyebrow}
       </div>
     )}
-    <h2 className="font-serif-pro text-[32px] sm:text-4xl md:text-[44px] italic font-semibold leading-[1.1] tracking-tight text-foreground text-balance">
-      {title}
-    </h2>
+    <div className="flex items-baseline gap-4 md:gap-5">
+      {num && (
+        <span className="font-serif-pro text-3xl md:text-5xl font-light italic text-accent leading-none flex-shrink-0">
+          {num}
+        </span>
+      )}
+      <h2
+        className="font-serif-pro text-[30px] sm:text-4xl md:text-[42px] italic font-bold leading-[1.1] tracking-tight text-foreground text-balance"
+        style={{ transform: `rotate(${rotate}deg)` }}
+      >
+        {title}
+      </h2>
+    </div>
   </motion.div>
 );
 
@@ -76,15 +94,17 @@ const Rule = () => (
   </div>
 );
 
-// Editorial pull quote
-const PullQuote = ({ children }: { children: React.ReactNode }) => (
+// Editorial pull quote — rotated, brand-book style
+const PullQuote = ({ children, rotate = 0.2 }: { children: React.ReactNode; rotate?: number }) => (
   <motion.blockquote
     {...fadeUp}
-    className="my-12 md:my-16 font-serif-pro italic text-[24px] md:text-[30px] leading-[1.35] text-foreground text-balance"
+    className="my-12 md:my-16 font-serif-pro italic text-[24px] md:text-[32px] leading-[1.35] text-foreground text-balance"
+    style={{ transform: `rotate(${rotate}deg)` }}
   >
     {children}
   </motion.blockquote>
 );
+
 
 /* ---------------------------- Welcome ---------------------------- */
 
@@ -285,7 +305,12 @@ const LSSProposalPage = () => {
               transition={{ duration: 0.9, delay: 0.25 }}
               className="font-serif-pro text-[40px] sm:text-5xl md:text-6xl italic font-semibold leading-[1.05] tracking-tight text-foreground text-balance mb-8"
             >
-              A vision for the London School of Sailing.
+              A{" "}
+              <span className="inline-block relative text-accent" style={{ transform: "translateY(1px)" }}>
+                vision
+                <Emphasis className="absolute -bottom-2 left-0 right-0" delay={900} animate={true} />
+              </span>{" "}
+              for the London School of Sailing.
             </motion.h1>
 
             <motion.p
@@ -307,7 +332,8 @@ const LSSProposalPage = () => {
               <SectionHead
                 num="01"
                 eyebrow="Where LSS is now"
-                title={<>LSS has outgrown the tool-sprawl stage.</>}
+                rotate={-0.4}
+                title={<>LSS has outgrown the <Hl>tool-sprawl</Hl> stage.</>}
               />
               <P>
                 LSS is now scaling at a pace where the systems that got you here will quietly start to cost you
@@ -333,7 +359,8 @@ const LSSProposalPage = () => {
               <SectionHead
                 num="02"
                 eyebrow="Systems that build safety"
-                title={<>Voyage Tracking.</>}
+                rotate={0.3}
+                title={<>Voyage <Hl shift={-1}>Tracking.</Hl></>}
               />
               <P>
                 As I reviewed our notes, something we didn't discuss became obvious — we should build a live
@@ -351,8 +378,8 @@ const LSSProposalPage = () => {
                 becomes less of an issue. When you next find signal, the system updates and resumes. From the
                 boat, in the harbour, mid-Solent, wherever the work actually happens.
               </P>
-              <PullQuote>
-                This shouldn't feel heavy. It should feel like: <em>we run a tight ship, and the system proves it.</em>
+              <PullQuote rotate={-0.4}>
+                This shouldn't feel heavy. It should feel like: <em className="text-accent not-italic font-semibold">we run a tight ship, and the system proves it.</em>
               </PullQuote>
             </section>
 
@@ -363,7 +390,8 @@ const LSSProposalPage = () => {
               <SectionHead
                 num="03"
                 eyebrow="The brief underneath the brief"
-                title={<>Operational continuity.</>}
+                rotate={-0.3}
+                title={<>Operational <Hl>continuity.</Hl></>}
               />
               <P>This is not about any one team member, but about designing LSS its own OS. We want to enable:</P>
               <BulletList
@@ -373,8 +401,8 @@ const LSSProposalPage = () => {
                   <>The business doesn't slow down because information is stuck in one person's inbox, memory, or WhatsApp thread.</>,
                 ]}
               />
-              <PullQuote>
-                Continuity is what lets LSS grow without it costing you the life you want outside the business.
+              <PullQuote rotate={0.5}>
+                <Hl shift={-2}>Continuity</Hl> is what lets LSS grow without it costing you the life you want outside the business.
               </PullQuote>
             </section>
 
@@ -385,7 +413,8 @@ const LSSProposalPage = () => {
               <SectionHead
                 num="04"
                 eyebrow="The shape of the work"
-                title={<>Four windows of work.</>}
+                rotate={0.4}
+                title={<>Four windows of <Hl shift={-1}>work.</Hl></>}
               />
 
               <H3>1) Communications triage</H3>
@@ -475,7 +504,8 @@ const LSSProposalPage = () => {
               <SectionHead
                 num="05"
                 eyebrow="How it works"
-                title={<>Tools and tasks, without overwhelm.</>}
+                rotate={-0.3}
+                title={<>Tools and tasks, without <Hl>overwhelm.</Hl></>}
               />
 
               <H3>What I do</H3>
@@ -514,10 +544,13 @@ const LSSProposalPage = () => {
               <SectionHead
                 num="06"
                 eyebrow="Family-first, permanently"
-                title={<>Relationship rate.</>}
+                rotate={0.3}
+                title={<>Relationship <Hl shift={-1}>rate.</Hl></>}
               />
               <P>My standard rate is £500 per half-day.</P>
-              <PullQuote>Your rate is £400 per half-day. Permanently.</PullQuote>
+              <PullQuote rotate={-0.4}>
+                Your rate is <Hl shift={-2}>£400</Hl> per half-day. Permanently.
+              </PullQuote>
               <P>
                 This isn't a discount. It's a deliberate, structural decision about the kind of relationship I
                 want this to be.
@@ -553,7 +586,8 @@ const LSSProposalPage = () => {
               <SectionHead
                 num="07"
                 eyebrow="The journey"
-                title={<>Three stages, shaped around you.</>}
+                rotate={-0.4}
+                title={<>Three stages, <Hl>shaped</Hl> around you.</>}
               />
 
               <H3>1) Audit &amp; Workshop — an in-person day with you</H3>
@@ -607,8 +641,16 @@ const LSSProposalPage = () => {
                 <div className="font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-accent mb-5">
                   Next
                 </div>
-                <h2 className="font-serif-pro text-[32px] sm:text-4xl md:text-[44px] italic font-semibold leading-[1.1] tracking-tight text-foreground text-balance mb-8">
-                  If this feels right, let's begin.
+                <h2
+                  className="font-serif-pro text-[32px] sm:text-4xl md:text-[44px] italic font-bold leading-[1.1] tracking-tight text-foreground text-balance mb-8"
+                  style={{ transform: "rotate(-0.3deg)" }}
+                >
+                  If this feels right, let's{" "}
+                  <span className="inline-block relative text-accent" style={{ transform: "translateY(1px)" }}>
+                    begin
+                    <Emphasis className="absolute -bottom-2 left-0 right-0" delay={300} animate={true} />
+                  </span>
+                  .
                 </h2>
                 <p className="font-sans text-[16px] text-muted-foreground leading-relaxed max-w-xl mx-auto mb-10">
                   Anything in here that doesn't match what you had in mind, just say — easy to adjust before we
