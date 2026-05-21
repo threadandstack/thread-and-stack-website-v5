@@ -390,7 +390,8 @@ const LSSProposalPage = () => {
               <SectionHead
                 num="03"
                 eyebrow="The brief underneath the brief"
-                title={<>Operational continuity.</>}
+                rotate={-0.3}
+                title={<>Operational <Hl>continuity.</Hl></>}
               />
               <P>This is not about any one team member, but about designing LSS its own OS. We want to enable:</P>
               <BulletList
