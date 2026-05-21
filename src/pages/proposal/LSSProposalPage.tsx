@@ -401,8 +401,8 @@ const LSSProposalPage = () => {
                   <>The business doesn't slow down because information is stuck in one person's inbox, memory, or WhatsApp thread.</>,
                 ]}
               />
-              <PullQuote>
-                Continuity is what lets LSS grow without it costing you the life you want outside the business.
+              <PullQuote rotate={0.5}>
+                <Hl shift={-2}>Continuity</Hl> is what lets LSS grow without it costing you the life you want outside the business.
               </PullQuote>
             </section>
 
