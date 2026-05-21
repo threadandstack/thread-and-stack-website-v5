@@ -359,7 +359,8 @@ const LSSProposalPage = () => {
               <SectionHead
                 num="02"
                 eyebrow="Systems that build safety"
-                title={<>Voyage Tracking.</>}
+                rotate={0.3}
+                title={<>Voyage <Hl shift={-1}>Tracking.</Hl></>}
               />
               <P>
                 As I reviewed our notes, something we didn't discuss became obvious — we should build a live
