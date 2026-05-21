@@ -12,6 +12,7 @@ import {
   Repeat,
   LayoutGrid,
   Compass,
+  X,
 } from "lucide-react";
 import { PillButton } from "@/components/ui/pill-button";
 import WhiteStacked from "@/assets/logos/White_TS_Stacked.svg";
@@ -126,43 +127,40 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => (
     className="fixed inset-0 z-[100] flex flex-col bg-primary text-primary-foreground overflow-hidden"
   >
     {/* Centre: dual lockup */}
-    <div className="flex-1 flex flex-col items-start justify-start px-6 sm:px-10 md:px-16 text-left overflow-y-auto">
+    <div className="flex-1 flex flex-col items-center justify-start px-6 sm:px-10 md:px-16 overflow-y-auto">
+      <div className="w-full max-w-2xl flex flex-col items-start text-left">
       {/* Logos */}
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.9, delay: 0.25 }}
-        className="flex items-center gap-6 sm:gap-10 md:gap-14 mt-10 sm:mt-12 mb-8 sm:mb-10"
+        className="self-center flex items-center gap-10 sm:gap-14 md:gap-20 mt-16 sm:mt-20 md:mt-24 mb-12 sm:mb-16"
       >
         <img
           src={WhiteStacked}
           alt="Thread & Stack"
-          className="h-16 sm:h-20 md:h-24 w-auto"
+          className="h-20 sm:h-24 md:h-28 w-auto"
         />
-        <span className="font-serif-pro italic text-3xl sm:text-4xl md:text-5xl text-primary-foreground/40 leading-none">
-          ×
-        </span>
+        <X
+          aria-hidden="true"
+          className="w-5 h-5 sm:w-6 sm:h-6 text-primary-foreground/30"
+          strokeWidth={1}
+        />
         <img
           src={LssLogoWhite}
           alt="London School of Sailing"
-          className="h-16 sm:h-20 md:h-24 w-auto"
+          className="h-20 sm:h-24 md:h-28 w-auto"
         />
       </motion.div>
 
-      {/* Combined meta line */}
+      {/* Meta line */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.4 }}
-        className="font-sans text-[11px] sm:text-[12px] tracking-[0.18em] uppercase text-primary-foreground/55 mb-6 sm:mb-8 max-w-3xl leading-[1.9]"
+        className="self-center font-sans text-[11px] sm:text-[12px] tracking-[0.28em] uppercase text-primary-foreground/55 mb-10 sm:mb-12"
       >
-        <span>Project Proposal · Confidential</span>
-        <span className="text-primary-foreground/30 mx-2">·</span>
-        <span>Prepared for London School of Sailing</span>
-        <span className="text-primary-foreground/30 mx-2">·</span>
-        <span>By Brendan Rodgers, Thread &amp; Stack</span>
-        <span className="text-primary-foreground/30 mx-2">·</span>
-        <span>May 2026</span>
+        Confidential <span className="text-primary-foreground/25 mx-2">·</span> Proposal <span className="text-primary-foreground/25 mx-2">·</span> May 2026
       </motion.div>
 
       {/* Headline */}
@@ -221,6 +219,7 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => (
           <p className="text-primary-foreground/90 font-medium pt-1">Brendan</p>
         </div>
       </motion.div>
+      </div>
     </div>
 
     {/* CTA */}
