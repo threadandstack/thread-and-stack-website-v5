@@ -288,7 +288,7 @@ const LSSProposalPage = () => {
               transition={{ duration: 0.9, delay: 0.3 }}
               className="font-serif-pro text-[44px] sm:text-6xl md:text-7xl italic font-bold leading-[1.02] tracking-tight mb-6 max-w-4xl"
             >
-              One system that holds LSS together.
+              LSS is ready for it's own OS.
             </motion.h1>
 
             <motion.p
@@ -297,10 +297,13 @@ const LSSProposalPage = () => {
               transition={{ duration: 0.8, delay: 0.5 }}
               className="font-sans text-base sm:text-lg md:text-xl text-primary-foreground/75 leading-relaxed max-w-2xl"
             >
-              An operational backbone for the school — CRM, customer journey,
-              Voyage Records, daily ops — built so the business runs cleanly
-              through the season and doesn't depend on any one person being at
-              full capacity.
+              LSS OS is the operational backbone that underpins everything that
+              matters.
+              <br />
+              <br />
+              The system centralises vital internal knowledge (customer data,
+              marketing and sales playbooks, growth plans, saftey procedures),
+              and allows easier collaboration, delegation, and automation.
             </motion.p>
 
             <motion.div
