@@ -641,8 +641,16 @@ const LSSProposalPage = () => {
                 <div className="font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-accent mb-5">
                   Next
                 </div>
-                <h2 className="font-serif-pro text-[32px] sm:text-4xl md:text-[44px] italic font-semibold leading-[1.1] tracking-tight text-foreground text-balance mb-8">
-                  If this feels right, let's begin.
+                <h2
+                  className="font-serif-pro text-[32px] sm:text-4xl md:text-[44px] italic font-bold leading-[1.1] tracking-tight text-foreground text-balance mb-8"
+                  style={{ transform: "rotate(-0.3deg)" }}
+                >
+                  If this feels right, let's{" "}
+                  <span className="inline-block relative text-accent" style={{ transform: "translateY(1px)" }}>
+                    begin
+                    <Emphasis className="absolute -bottom-2 left-0 right-0" delay={300} animate={true} />
+                  </span>
+                  .
                 </h2>
                 <p className="font-sans text-[16px] text-muted-foreground leading-relaxed max-w-xl mx-auto mb-10">
                   Anything in here that doesn't match what you had in mind, just say — easy to adjust before we
