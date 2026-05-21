@@ -413,7 +413,8 @@ const LSSProposalPage = () => {
               <SectionHead
                 num="04"
                 eyebrow="The shape of the work"
-                title={<>Four windows of work.</>}
+                rotate={0.4}
+                title={<>Four windows of <Hl shift={-1}>work.</Hl></>}
               />
 
               <H3>1) Communications triage</H3>
