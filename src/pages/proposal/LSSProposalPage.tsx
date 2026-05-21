@@ -130,7 +130,7 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => (
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8, delay: 0.15 }}
-      className="flex items-center justify-center pt-10 sm:pt-14"
+      className="flex items-center justify-center pt-8 sm:pt-10"
     >
       <span className="font-sans text-[11px] sm:text-[12px] tracking-[0.32em] uppercase text-primary-foreground/50">
         Project Proposal · Confidential
@@ -138,24 +138,24 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => (
     </motion.div>
 
     {/* Centre: dual lockup */}
-    <div className="flex-1 flex flex-col items-center justify-center px-6 text-center">
+    <div className="flex-1 flex flex-col items-center justify-start px-6 text-center overflow-y-auto">
       {/* Logos */}
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.9, delay: 0.25 }}
-        className="flex items-center justify-center gap-8 sm:gap-14 md:gap-20 mb-14 sm:mb-16 md:mb-20"
+        className="flex items-center justify-center gap-6 sm:gap-10 md:gap-14 mt-6 sm:mt-8 mb-8 sm:mb-10"
       >
         <img
           src={WhiteStacked}
           alt="Thread & Stack"
-          className="h-24 sm:h-32 md:h-40 w-auto"
+          className="h-16 sm:h-20 md:h-24 w-auto"
         />
-        <div className="h-20 sm:h-28 md:h-36 w-px bg-primary-foreground/20" />
+        <div className="h-12 sm:h-16 md:h-20 w-px bg-primary-foreground/20" />
         <img
           src={LssLogoWhite}
           alt="London School of Sailing"
-          className="h-24 sm:h-32 md:h-40 w-auto"
+          className="h-16 sm:h-20 md:h-24 w-auto"
         />
       </motion.div>
 
@@ -164,7 +164,7 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => (
         initial={{ opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, delay: 0.55 }}
-        className="font-serif-pro text-5xl sm:text-6xl md:text-7xl italic font-semibold leading-[1.02] tracking-tight mb-10 sm:mb-12 max-w-3xl"
+        className="font-serif-pro text-3xl sm:text-4xl md:text-5xl italic font-semibold leading-[1.05] tracking-tight mb-6 sm:mb-8 max-w-3xl"
       >
         Welcome to your proposal.
       </motion.h1>
@@ -174,7 +174,7 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => (
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.8 }}
-        className="font-sans text-[12px] sm:text-[13px] tracking-[0.16em] uppercase text-primary-foreground/55 leading-[2] max-w-2xl"
+        className="font-sans text-[11px] sm:text-[12px] tracking-[0.16em] uppercase text-primary-foreground/55 leading-[2] mb-8 sm:mb-10"
       >
         <div>Prepared for London School of Sailing</div>
         <div className="text-primary-foreground/40">·</div>
@@ -182,14 +182,54 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => (
         <div className="text-primary-foreground/40">·</div>
         <div>May 2026</div>
       </motion.div>
+
+      {/* Intro Letter */}
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.9, delay: 1.0 }}
+        className="max-w-xl text-left mx-auto mb-8 sm:mb-10"
+      >
+        <div className="font-sans text-sm sm:text-[15px] leading-[1.75] text-primary-foreground/80 space-y-4">
+          <p className="text-primary-foreground/90 font-medium">Ruaraidh,</p>
+
+          <p>
+            This proposal is not a pitch. It's a vision document. This is my way of showing you, clearly and honestly, what we can do together for LSS.
+          </p>
+
+          <p>
+            There is a lot of love, hope, sweat and determination in your business. I was very touched by how our meeting in Peter's shed took place. Not only did you share with me some sensitive context, but it reminded me that you, and your new family are part of my own story. So I'm going to start us off from a different footing than we left on:
+          </p>
+
+          <p>
+            My intention is to help LSS reach a place of stable, systematised operational strength — that is tailored to you, and LSS's needs. This system will hold steady no matter how many new team members, new customers, or new friends arrive to join the LSS's own voyage.
+          </p>
+
+          <p>
+            I'm reducing all my rates by 20% for you, permanently. I'm also going to propose a few options, with a flexible project framework within this vision doc.
+          </p>
+
+          <p>
+            And putting it bluntly, we can also keep talking it through until it works for you. I'd rather get you kitted out, the way I know you should be. Price would be a stupid reason not to help you, when I'm a friend in your camp already.
+          </p>
+
+          <p>
+            So give this a read (probably best to grab a cup of tea or a beer),
+          </p>
+
+          <p>Let me know what you think.</p>
+
+          <p className="text-primary-foreground/90 font-medium pt-1">Brendan</p>
+        </div>
+      </motion.div>
     </div>
 
     {/* CTA */}
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, delay: 1.05 }}
-      className="flex flex-col items-center pb-12 sm:pb-16"
+      transition={{ duration: 0.8, delay: 1.2 }}
+      className="flex flex-col items-center pb-8 sm:pb-10 bg-primary"
     >
       <button
         onClick={onOpen}
@@ -198,7 +238,7 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => (
         Open the proposal
         <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
       </button>
-      <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-primary-foreground/35 mt-5">
+      <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-primary-foreground/35 mt-4">
         Click to reveal
       </p>
     </motion.div>
