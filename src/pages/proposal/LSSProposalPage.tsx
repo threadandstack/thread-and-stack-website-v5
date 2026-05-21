@@ -208,7 +208,7 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => (
           </ul>
 
           <p>
-            And putting it bluntly, we can also keep talking it through until it works for you. I'd rather get you kitted out, the way I know you should be. <strong>Price would be a stupid reason not to help you</strong>, when I'm a friend in your camp already.
+            Putting it bluntly, we can also keep talking it through until it works for you. Price would be a daft reason to find myself not helping you. I'm a friend in your camp already, and I'd rather get you kitted out, the way I know you should be.
           </p>
 
           <p>
