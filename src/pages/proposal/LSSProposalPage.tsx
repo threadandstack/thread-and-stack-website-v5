@@ -504,7 +504,8 @@ const LSSProposalPage = () => {
               <SectionHead
                 num="05"
                 eyebrow="How it works"
-                title={<>Tools and tasks, without overwhelm.</>}
+                rotate={-0.3}
+                title={<>Tools and tasks, without <Hl>overwhelm.</Hl></>}
               />
 
               <H3>What I do</H3>
