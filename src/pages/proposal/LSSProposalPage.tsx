@@ -218,6 +218,7 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => (
           <p className="text-primary-foreground/90 font-medium pt-1">Brendan</p>
         </div>
       </motion.div>
+      </div>
     </div>
 
     {/* CTA */}
