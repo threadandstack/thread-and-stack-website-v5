@@ -1,20 +1,12 @@
 import { useRef, useEffect, useState } from "react";
 import { PillButton } from "@/components/ui/pill-button";
 import { ArrowRight, ChevronDown, Compass, Rocket } from "lucide-react";
-import { Emphasis } from "@/components/Emphasis";
 import { trackCtaClick } from "@/hooks/useAnalytics";
 
 export const Hero = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [showUnderline, setShowUnderline] = useState(false);
   const [scrollOpacity, setScrollOpacity] = useState(1);
   const ref = useRef<HTMLDivElement>(null);
-  
-  useEffect(() => {
-    // Trigger underline animation after page load
-    const timer = setTimeout(() => setShowUnderline(true), 600);
-    return () => clearTimeout(timer);
-  }, []);
   
   useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => {
@@ -52,9 +44,8 @@ export const Hero = () => {
           <h1 className="font-serif-pro text-4xl md:text-6xl font-semibold italic leading-tight max-w-4xl mx-auto">
             Marketing that feels{" "}
             <span className="inline-block" style={{ transform: "translateY(-1px)" }}>more</span>{" "}
-            <span className="inline-block text-accent relative" style={{ transform: "translateY(1px)" }}>
+            <span className="inline-block text-accent" style={{ transform: "translateY(1px)" }}>
               human
-              {showUnderline && <Emphasis className="absolute -bottom-2 left-0 right-0" delay={0} animate={true} />}
             </span>
           </h1>
         </div>

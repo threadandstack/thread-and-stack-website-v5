@@ -3,7 +3,6 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { FAQ } from "@/components/FAQ";
 import { PillButton } from "@/components/ui/pill-button";
-import { Emphasis } from "@/components/Emphasis";
 import { MasterclassRegisterDrawer } from "@/components/MasterclassRegisterDrawer";
 import {
   Rocket,
@@ -148,7 +147,6 @@ const NotionMasterclassPage = () => {
               The Notion{" "}
               <span className="relative inline-block text-accent">
                 Masterclass
-                <Emphasis className="absolute -bottom-2 left-0 right-0" delay={400} animate />
               </span>
               <br />
               for a system that{" "}

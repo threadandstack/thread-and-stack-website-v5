@@ -1,5 +1,4 @@
 import thinkingImage from "@/assets/brendan-cafe.webp";
-import { Emphasis } from "@/components/Emphasis";
 import { useEffect, useRef, useState } from "react";
 
 export const WhatWeDo = () => {
@@ -32,13 +31,10 @@ export const WhatWeDo = () => {
         {/* Title */}
         <h2 className="text-5xl md:text-6xl mb-12 md:mb-16 text-balance font-semibold italic leading-tight">
           <span className="relative inline-block">Clear
-            <Emphasis className="absolute -bottom-2 left-0 right-0" delay={isVisible ? 0.5 : 999} />
           </span> narratives.<br />
           <span className="relative inline-block">Creative
-            <Emphasis className="absolute -bottom-2 left-0 right-0" delay={isVisible ? 1.2 : 999} />
           </span> direction.<br />
           <span className="relative inline-block">Living
-            <Emphasis className="absolute -bottom-2 left-0 right-0" delay={isVisible ? 1.9 : 999} />
           </span> brands.
         </h2>
         

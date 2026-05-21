@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, Download, Anchor, X } from "lucide-react";
 import { PillButton } from "@/components/ui/pill-button";
-import { Emphasis } from "@/components/Emphasis";
 import WhiteStacked from "@/assets/logos/White_TS_Stacked.svg";
 import GreyStacked from "@/assets/logos/Grey_TS_Stacked.svg";
 import LssLogoWhite from "@/assets/proposal/lss-logo-white.webp";
@@ -306,9 +305,8 @@ const LSSProposalPage = () => {
               className="font-serif-pro text-[40px] sm:text-5xl md:text-6xl italic font-semibold leading-[1.05] tracking-tight text-foreground text-balance mb-8"
             >
               A{" "}
-              <span className="inline-block relative text-accent" style={{ transform: "translateY(1px)" }}>
+              <span className="inline-block text-accent" style={{ transform: "translateY(1px)" }}>
                 vision
-                <Emphasis className="absolute -bottom-2 left-0 right-0" delay={900} animate={true} />
               </span>{" "}
               for the London School of Sailing.
             </motion.h1>
@@ -646,9 +644,8 @@ const LSSProposalPage = () => {
                   style={{ transform: "rotate(-0.3deg)" }}
                 >
                   If this feels right, let's{" "}
-                  <span className="inline-block relative text-accent" style={{ transform: "translateY(1px)" }}>
+                  <span className="inline-block text-accent" style={{ transform: "translateY(1px)" }}>
                     begin
-                    <Emphasis className="absolute -bottom-2 left-0 right-0" delay={300} animate={true} />
                   </span>
                   .
                 </h2>
