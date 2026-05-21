@@ -260,36 +260,35 @@ const LSSProposalPage = () => {
         </div>
 
         {/* ============== HERO ============== */}
-        <section className="relative overflow-hidden bg-primary text-primary-foreground">
-          <div
-            className="absolute inset-0 opacity-70 pointer-events-none"
-            style={{
-              background:
-                "radial-gradient(circle at 20% 10%, hsl(var(--accent) / 0.28), transparent 55%), radial-gradient(circle at 85% 90%, #FF620055, transparent 55%)",
-            }}
-          />
+        <section className="relative bg-primary text-primary-foreground">
           <div className="relative z-10 max-w-6xl mx-auto px-5 sm:px-8 pt-20 pb-24 md:pt-32 md:pb-36">
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.1 }}
-              className="flex items-center gap-3 mb-8"
+              className="flex items-center gap-4 mb-10"
             >
-              <img src={WhiteStacked} alt="Thread & Stack" className="h-10" />
-              <span className="text-primary-foreground/30">·</span>
-              <span className="font-sans text-[11px] font-semibold tracking-[0.18em] uppercase" style={{ color: "#FF6200" }}>
-                Project Proposal
-              </span>
+              <img src={WhiteStacked} alt="Thread & Stack" className="h-12" />
+              <span className="h-10 w-px bg-primary-foreground/20" />
+              <img src={LssLogoWhite} alt="London School of Sailing" className="h-12" />
             </motion.div>
+
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              className="font-sans text-[11px] font-semibold tracking-[0.28em] uppercase text-primary-foreground/55 mb-6"
+            >
+              Project Proposal
+            </motion.p>
 
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.25 }}
+              transition={{ duration: 0.9, delay: 0.3 }}
               className="font-serif-pro text-[44px] sm:text-6xl md:text-7xl italic font-bold leading-[1.02] tracking-tight mb-6 max-w-4xl"
             >
-              One system that holds{" "}
-              <span style={{ color: "#FF6200" }}>LSS</span> together.
+              One system that holds LSS together.
             </motion.h1>
 
             <motion.p
@@ -308,25 +307,23 @@ const LSSProposalPage = () => {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.75 }}
-              className="mt-10 flex flex-wrap gap-x-8 gap-y-3 text-xs sm:text-[13px] font-sans text-primary-foreground/50 tracking-wide"
+              className="mt-12 pt-8 border-t border-primary-foreground/15 flex flex-wrap gap-x-10 gap-y-3 text-xs sm:text-[13px] font-sans text-primary-foreground/60 tracking-wide"
             >
               <div>
-                <span className="text-primary-foreground/30 mr-2 uppercase tracking-[0.18em] text-[10px]">For</span>
+                <span className="text-primary-foreground/35 mr-2 uppercase tracking-[0.18em] text-[10px]">Prepared for</span>
                 Ruaraidh Plummer
               </div>
               <div>
-                <span className="text-primary-foreground/30 mr-2 uppercase tracking-[0.18em] text-[10px]">Date</span>
-                May 2026
+                <span className="text-primary-foreground/35 mr-2 uppercase tracking-[0.18em] text-[10px]">By</span>
+                Brendan Rodgers, Thread &amp; Stack
               </div>
               <div>
-                <span className="text-primary-foreground/30 mr-2 uppercase tracking-[0.18em] text-[10px]">Ref</span>
-                LSS Foundation
+                <span className="text-primary-foreground/35 mr-2 uppercase tracking-[0.18em] text-[10px]">Date</span>
+                May 2026
               </div>
             </motion.div>
           </div>
-
-          {/* Soft transition edge */}
-          <div className="absolute bottom-0 inset-x-0 h-24 bg-gradient-to-b from-transparent to-background pointer-events-none" />
+          {/* Crisp hard edge — no fade */}
         </section>
 
         {/* ============== 01 What we're solving ============== */}
