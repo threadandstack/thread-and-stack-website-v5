@@ -305,7 +305,12 @@ const LSSProposalPage = () => {
               transition={{ duration: 0.9, delay: 0.25 }}
               className="font-serif-pro text-[40px] sm:text-5xl md:text-6xl italic font-semibold leading-[1.05] tracking-tight text-foreground text-balance mb-8"
             >
-              A vision for the London School of Sailing.
+              A{" "}
+              <span className="inline-block relative text-accent" style={{ transform: "translateY(1px)" }}>
+                vision
+                <Emphasis className="absolute -bottom-2 left-0 right-0" delay={900} animate={true} />
+              </span>{" "}
+              for the London School of Sailing.
             </motion.h1>
 
             <motion.p
