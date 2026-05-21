@@ -548,7 +548,9 @@ const LSSProposalPage = () => {
                 title={<>Relationship <Hl shift={-1}>rate.</Hl></>}
               />
               <P>My standard rate is £500 per half-day.</P>
-              <PullQuote>Your rate is £400 per half-day. Permanently.</PullQuote>
+              <PullQuote rotate={-0.4}>
+                Your rate is <Hl shift={-2}>£400</Hl> per half-day. Permanently.
+              </PullQuote>
               <P>
                 This isn't a discount. It's a deliberate, structural decision about the kind of relationship I
                 want this to be.
