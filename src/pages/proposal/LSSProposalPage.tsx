@@ -20,6 +20,7 @@ import BlackStacked from "@/assets/logos/Black_TS_Stacked.svg";
 import IndigoStacked from "@/assets/logos/Indigo_TS_Stacked.svg";
 import GreyStacked from "@/assets/logos/Grey_TS_Stacked.svg";
 import LssLogoWhite from "@/assets/proposal/lss-logo-white.webp";
+import BrSignature from "@/assets/proposal/br-signature.png";
 
 /* ---------------------------- Content ---------------------------- */
 
@@ -216,6 +217,11 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => (
 
           <p>Let me know what you think.</p>
 
+          <img
+            src={BrSignature}
+            alt="Brendan Rodgers signature"
+            className="h-20 sm:h-24 w-auto -ml-2 mt-4 opacity-90"
+          />
           <p className="text-primary-foreground/90 font-medium pt-1">Brendan</p>
         </div>
       </motion.div>
