@@ -332,7 +332,8 @@ const LSSProposalPage = () => {
               <SectionHead
                 num="01"
                 eyebrow="Where LSS is now"
-                title={<>LSS has outgrown the tool-sprawl stage.</>}
+                rotate={-0.4}
+                title={<>LSS has outgrown the <Hl>tool-sprawl</Hl> stage.</>}
               />
               <P>
                 LSS is now scaling at a pace where the systems that got you here will quietly start to cost you
