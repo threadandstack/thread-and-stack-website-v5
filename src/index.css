@@ -705,10 +705,6 @@ All colors MUST be HSL.
   }
 }
 
-@keyframes draw-line {
-  from { stroke-dashoffset: 200; }
-  to { stroke-dashoffset: 0; }
-}
 
 @keyframes portfolio-bubble {
   0% {
