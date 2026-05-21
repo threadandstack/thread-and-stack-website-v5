@@ -1,7 +1,6 @@
 import { useRef, useEffect, useState } from "react";
 import { PillButton } from "@/components/ui/pill-button";
 import { ChevronDown, Rocket, Compass } from "lucide-react";
-import { Emphasis } from "@/components/Emphasis";
 import { trackCtaClick } from "@/hooks/useAnalytics";
 import { FocalPointPicker } from "@/components/FocalPointPicker";
 import heroImage from "@/assets/hero-heading.webp";
@@ -11,16 +10,10 @@ const DEV_MODE = import.meta.env.DEV;
 
 export const HeroAlt = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [showUnderline, setShowUnderline] = useState(false);
   const [scrollOpacity, setScrollOpacity] = useState(1);
   const [focalPickerEnabled, setFocalPickerEnabled] = useState(false);
   const [focalPoint, setFocalPoint] = useState({ x: 72, y: 18 });
   const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setShowUnderline(true), 600);
-    return () => clearTimeout(timer);
-  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => {
@@ -88,9 +81,6 @@ export const HeroAlt = () => {
             Stories that{" "}
             <span className="relative inline-block text-accent">
               land
-              {showUnderline && (
-                <Emphasis className="absolute -bottom-2 left-0 right-0" delay={0} animate={true} />
-              )}
             </span>
             .
             <br />

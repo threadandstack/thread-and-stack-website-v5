@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Emphasis } from "@/components/Emphasis";
 import { Button } from "@/components/ui/button";
 import { 
   ArrowRight, 
@@ -115,13 +114,6 @@ const ColorSwatch = ({ name, hex, dark }: { name: string; hex: string; dark?: bo
 
 // Brand Book - Living reference for Thread & Stack
 export const BrandBook = () => {
-  const [showUnderline, setShowUnderline] = useState(false);
-  
-  useEffect(() => {
-    const timer = setTimeout(() => setShowUnderline(true), 600);
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
     <div className="min-h-screen bg-background p-8 md:p-16 space-y-24 print:p-4 print:space-y-12">
       {/* Download button */}
@@ -281,9 +273,8 @@ export const BrandBook = () => {
             <h3 className="font-serif-pro text-4xl md:text-6xl font-semibold leading-tight max-w-4xl">
               Marketing that feels{" "}
               <span className="inline-block" style={{ transform: "translateY(-1px)" }}>more</span>{" "}
-              <span className="inline-block text-accent relative" style={{ transform: "translateY(1px)" }}>
+              <span className="inline-block text-accent" style={{ transform: "translateY(1px)" }}>
                 human
-                {showUnderline && <Emphasis className="absolute -bottom-2 left-0 right-0" delay={0} animate={true} />}
               </span>
             </h3>
             
