@@ -12,6 +12,7 @@ import {
   Repeat,
   LayoutGrid,
   Compass,
+  X,
 } from "lucide-react";
 import { PillButton } from "@/components/ui/pill-button";
 import WhiteStacked from "@/assets/logos/White_TS_Stacked.svg";
