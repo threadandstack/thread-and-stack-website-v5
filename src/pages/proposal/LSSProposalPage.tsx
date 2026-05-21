@@ -125,33 +125,23 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => (
     }}
     className="fixed inset-0 z-[100] flex flex-col bg-primary text-primary-foreground overflow-hidden"
   >
-    {/* Top eyebrow */}
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.8, delay: 0.15 }}
-      className="flex items-center justify-center pt-8 sm:pt-10"
-    >
-      <span className="font-sans text-[11px] sm:text-[12px] tracking-[0.32em] uppercase text-primary-foreground/50">
-        Project Proposal · Confidential
-      </span>
-    </motion.div>
-
     {/* Centre: dual lockup */}
-    <div className="flex-1 flex flex-col items-center justify-start px-6 text-center overflow-y-auto">
+    <div className="flex-1 flex flex-col items-start justify-start px-6 sm:px-10 md:px-16 text-left overflow-y-auto">
       {/* Logos */}
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.9, delay: 0.25 }}
-        className="flex items-center justify-center gap-6 sm:gap-10 md:gap-14 mt-6 sm:mt-8 mb-8 sm:mb-10"
+        className="flex items-center gap-6 sm:gap-10 md:gap-14 mt-10 sm:mt-12 mb-8 sm:mb-10"
       >
         <img
           src={WhiteStacked}
           alt="Thread & Stack"
           className="h-16 sm:h-20 md:h-24 w-auto"
         />
-        <div className="h-12 sm:h-16 md:h-20 w-px bg-primary-foreground/20" />
+        <span className="font-serif-pro italic text-3xl sm:text-4xl md:text-5xl text-primary-foreground/40 leading-none">
+          ×
+        </span>
         <img
           src={LssLogoWhite}
           alt="London School of Sailing"
@@ -159,29 +149,31 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => (
         />
       </motion.div>
 
+      {/* Combined meta line */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.4 }}
+        className="font-sans text-[11px] sm:text-[12px] tracking-[0.18em] uppercase text-primary-foreground/55 mb-6 sm:mb-8 max-w-3xl leading-[1.9]"
+      >
+        <span>Project Proposal · Confidential</span>
+        <span className="text-primary-foreground/30 mx-2">·</span>
+        <span>Prepared for London School of Sailing</span>
+        <span className="text-primary-foreground/30 mx-2">·</span>
+        <span>By Brendan Rodgers, Thread &amp; Stack</span>
+        <span className="text-primary-foreground/30 mx-2">·</span>
+        <span>May 2026</span>
+      </motion.div>
+
       {/* Headline */}
       <motion.h1
         initial={{ opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, delay: 0.55 }}
-        className="font-serif-pro text-3xl sm:text-4xl md:text-5xl italic font-semibold leading-[1.05] tracking-tight mb-6 sm:mb-8 max-w-3xl"
+        className="font-serif-pro text-3xl sm:text-4xl md:text-5xl italic font-semibold leading-[1.05] tracking-tight mb-8 sm:mb-10 max-w-3xl"
       >
-        Welcome to your proposal.
+        A vision for LSS.
       </motion.h1>
-
-      {/* Formal byline */}
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.8 }}
-        className="font-sans text-[11px] sm:text-[12px] tracking-[0.16em] uppercase text-primary-foreground/55 leading-[2] mb-8 sm:mb-10"
-      >
-        <div>Prepared for London School of Sailing</div>
-        <div className="text-primary-foreground/40">·</div>
-        <div>By Brendan Rodgers, Thread &amp; Stack</div>
-        <div className="text-primary-foreground/40">·</div>
-        <div>May 2026</div>
-      </motion.div>
 
       {/* Intro Letter */}
       <motion.div
