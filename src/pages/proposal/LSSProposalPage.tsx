@@ -378,8 +378,8 @@ const LSSProposalPage = () => {
                 becomes less of an issue. When you next find signal, the system updates and resumes. From the
                 boat, in the harbour, mid-Solent, wherever the work actually happens.
               </P>
-              <PullQuote>
-                This shouldn't feel heavy. It should feel like: <em>we run a tight ship, and the system proves it.</em>
+              <PullQuote rotate={-0.4}>
+                This shouldn't feel heavy. It should feel like: <em className="text-accent not-italic font-semibold">we run a tight ship, and the system proves it.</em>
               </PullQuote>
             </section>
 
