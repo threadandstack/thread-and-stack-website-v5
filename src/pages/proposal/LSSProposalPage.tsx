@@ -180,7 +180,7 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => (
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.9, delay: 1.0 }}
-        className="max-w-xl text-left mx-auto mb-8 sm:mb-10"
+        className="max-w-xl text-left mb-8 sm:mb-10"
       >
         <div className="font-sans text-sm sm:text-[15px] leading-[1.75] text-primary-foreground/80 space-y-4">
           <p className="text-primary-foreground/90 font-medium">Ruaraidh,</p>
