@@ -544,7 +544,8 @@ const LSSProposalPage = () => {
               <SectionHead
                 num="06"
                 eyebrow="Family-first, permanently"
-                title={<>Relationship rate.</>}
+                rotate={0.3}
+                title={<>Relationship <Hl shift={-1}>rate.</Hl></>}
               />
               <P>My standard rate is £500 per half-day.</P>
               <PullQuote>Your rate is £400 per half-day. Permanently.</PullQuote>
