@@ -450,14 +450,8 @@ const LSSProposalPage = () => {
         </section>
 
         {/* ============== 04 Voyage Records ============== */}
-        <section className="px-5 sm:px-8 py-20 md:py-28 bg-primary text-primary-foreground relative overflow-hidden">
-          <div
-            className="absolute inset-0 opacity-40 pointer-events-none"
-            style={{
-              background:
-                "radial-gradient(circle at 80% 10%, #FF620055, transparent 55%), radial-gradient(circle at 10% 90%, hsl(var(--accent) / 0.3), transparent 50%)",
-            }}
-          />
+        <section className="px-5 sm:px-8 py-20 md:py-28 bg-primary text-primary-foreground relative">
+
           <div className="relative z-10 max-w-5xl mx-auto">
             <motion.div {...fadeUp} className="mb-10 md:mb-14 max-w-3xl">
               <div className="flex items-center gap-3 mb-4 text-primary-foreground/60">
