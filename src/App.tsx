@@ -130,6 +130,7 @@ const App = () => (
             <Route path="/proposal/arc-collective" element={<ArcCollectiveProposalPage />} />
             <Route path="/proposal/services-strategy" element={<StrategyServicesPage />} />
             <Route path="/proposal/services-ai-ops" element={<AiOpsServicesPage />} />
+            <Route path="/proposal/lss" element={<LSSProposalPage />} />
             <Route path="/notion-masterclass" element={<NotionMasterclassPage />} />
             <Route path="/portfolio/creative" element={<CreativePortfolioPage />} />
             <Route path="/portfolio/creative/:itemId" element={<CreativePortfolioPage />} />
