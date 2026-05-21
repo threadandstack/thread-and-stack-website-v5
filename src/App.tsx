@@ -54,6 +54,7 @@ const GGFProposalPage = lazy(() => import("./pages/proposal/GGFProposalPage"));
 const ArcCollectiveProposalPage = lazy(() => import("./pages/proposal/ArcCollectiveProposalPage"));
 const StrategyServicesPage = lazy(() => import("./pages/proposal/StrategyServicesPage"));
 const AiOpsServicesPage = lazy(() => import("./pages/proposal/AiOpsServicesPage"));
+const LSSProposalPage = lazy(() => import("./pages/proposal/LSSProposalPage"));
 const NotionMasterclassPage = lazy(() => import("./pages/NotionMasterclassPage"));
 const CreativePortfolioPage = lazy(() => import("./pages/CreativePortfolioPage"));
 const NotionPortfolioPage = lazy(() => import("./pages/NotionPortfolioPage"));
