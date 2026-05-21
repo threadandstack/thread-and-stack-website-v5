@@ -2,12 +2,20 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, Download, Anchor, X } from "lucide-react";
 import { PillButton } from "@/components/ui/pill-button";
+import { Emphasis } from "@/components/Emphasis";
 import WhiteStacked from "@/assets/logos/White_TS_Stacked.svg";
 import GreyStacked from "@/assets/logos/Grey_TS_Stacked.svg";
 import LssLogoWhite from "@/assets/proposal/lss-logo-white.webp";
 import BrSignature from "@/assets/proposal/br-signature.png";
 
 /* ---------------------------- Helpers ---------------------------- */
+
+/** Inline accent word with subtle baseline-shift (brand-book treatment). */
+const Hl = ({ children, shift = 1 }: { children: React.ReactNode; shift?: number }) => (
+  <span className="inline-block text-accent" style={{ transform: `translateY(${shift}px)` }}>
+    {children}
+  </span>
+);
 
 const fadeUp = {
   initial: { opacity: 0, y: 20 },
