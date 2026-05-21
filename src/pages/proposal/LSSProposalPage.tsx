@@ -351,6 +351,11 @@ const LSSProposalPage = () => {
               />
             </section>
 
+            {/* Full-bleed system map diagram */}
+            <div className="relative left-1/2 right-1/2 -mx-[50vw] w-screen my-12">
+              <SystemMapDiagram />
+            </div>
+
             <Rule />
 
             {/* 02 — Voyage Tracking */}
