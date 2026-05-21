@@ -15,8 +15,10 @@ import {
 } from "lucide-react";
 import { PillButton } from "@/components/ui/pill-button";
 import WhiteStacked from "@/assets/logos/White_TS_Stacked.svg";
+import BlackStacked from "@/assets/logos/Black_TS_Stacked.svg";
 import IndigoStacked from "@/assets/logos/Indigo_TS_Stacked.svg";
 import GreyStacked from "@/assets/logos/Grey_TS_Stacked.svg";
+import LssLogoWhite from "@/assets/proposal/lss-logo-white.webp";
 
 /* ---------------------------- Content ---------------------------- */
 
@@ -121,72 +123,85 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => (
       y: "-100%",
       transition: { duration: 1.05, ease: [0.7, 0, 0.3, 1] },
     }}
-    className="fixed inset-0 z-[100] flex items-center justify-center bg-primary text-primary-foreground overflow-hidden"
+    className="fixed inset-0 z-[100] flex flex-col bg-primary text-primary-foreground overflow-hidden"
   >
-    {/* Soft ambient gradient */}
-    <div
-      className="absolute inset-0 opacity-60 pointer-events-none"
-      style={{
-        background:
-          "radial-gradient(circle at 30% 20%, hsl(var(--accent) / 0.25), transparent 55%), radial-gradient(circle at 75% 80%, #FF6200aa, transparent 50%)",
-      }}
-    />
+    {/* Top eyebrow */}
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.8, delay: 0.15 }}
+      className="flex items-center justify-center pt-10 sm:pt-14"
+    >
+      <span className="font-sans text-[11px] sm:text-[12px] tracking-[0.32em] uppercase text-primary-foreground/50">
+        Project Proposal · Confidential
+      </span>
+    </motion.div>
 
-    <div className="relative z-10 px-6 text-center max-w-xl">
+    {/* Centre: dual lockup */}
+    <div className="flex-1 flex flex-col items-center justify-center px-6 text-center">
+      {/* Logos */}
       <motion.div
-        initial={{ opacity: 0, y: 12 }}
+        initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.15 }}
-        className="flex justify-center mb-10"
+        transition={{ duration: 0.9, delay: 0.25 }}
+        className="flex items-center justify-center gap-8 sm:gap-14 md:gap-20 mb-14 sm:mb-16 md:mb-20"
       >
-        <img src={WhiteStacked} alt="Thread & Stack" className="h-20 sm:h-24 w-auto" />
+        <img
+          src={WhiteStacked}
+          alt="Thread & Stack"
+          className="h-24 sm:h-32 md:h-40 w-auto"
+        />
+        <div className="h-20 sm:h-28 md:h-36 w-px bg-primary-foreground/20" />
+        <img
+          src={LssLogoWhite}
+          alt="London School of Sailing"
+          className="h-24 sm:h-32 md:h-40 w-auto"
+        />
       </motion.div>
 
-      <motion.p
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 0.45 }}
-        className="font-sans text-[11px] tracking-[0.28em] uppercase text-primary-foreground/60 mb-5"
-      >
-        Prepared for London School of Sailing
-      </motion.p>
-
+      {/* Headline */}
       <motion.h1
         initial={{ opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.9, delay: 0.6 }}
-        className="font-serif-pro text-4xl sm:text-5xl md:text-6xl italic font-semibold leading-[1.05] tracking-tight mb-3"
+        transition={{ duration: 1, delay: 0.55 }}
+        className="font-serif-pro text-5xl sm:text-6xl md:text-7xl italic font-semibold leading-[1.02] tracking-tight mb-10 sm:mb-12 max-w-3xl"
       >
-        Welcome to your{" "}
-        <span style={{ color: "#FF6200" }}>proposal</span>.
+        Welcome to your proposal.
       </motion.h1>
 
-      <motion.p
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.85 }}
-        className="font-sans text-base sm:text-lg text-primary-foreground/70 leading-relaxed mb-10"
-      >
-        A system that holds LSS together — from first enquiry to the moment a skipper signs off the voyage.
-      </motion.p>
-
+      {/* Formal byline */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 1.05 }}
+        transition={{ duration: 0.8, delay: 0.8 }}
+        className="font-sans text-[12px] sm:text-[13px] tracking-[0.16em] uppercase text-primary-foreground/55 leading-[2] max-w-2xl"
       >
-        <button
-          onClick={onOpen}
-          className="group inline-flex items-center gap-3 rounded-full bg-background text-foreground px-7 py-4 font-sans text-sm font-semibold shadow-[0_10px_40px_rgba(0,0,0,0.25)] hover:shadow-[0_14px_50px_rgba(0,0,0,0.35)] transition-all duration-300 hover:-translate-y-0.5"
-        >
-          Open the proposal
-          <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-        </button>
-        <p className="font-sans text-[11px] tracking-wider uppercase text-primary-foreground/40 mt-6">
-          Click to reveal
-        </p>
+        <div>Prepared for London School of Sailing</div>
+        <div className="text-primary-foreground/40">·</div>
+        <div>By Brendan Rodgers, Thread &amp; Stack</div>
+        <div className="text-primary-foreground/40">·</div>
+        <div>May 2026</div>
       </motion.div>
     </div>
+
+    {/* CTA */}
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, delay: 1.05 }}
+      className="flex flex-col items-center pb-12 sm:pb-16"
+    >
+      <button
+        onClick={onOpen}
+        className="group inline-flex items-center gap-3 rounded-full bg-background text-foreground px-7 py-4 font-sans text-sm font-semibold shadow-[0_10px_40px_rgba(0,0,0,0.25)] hover:shadow-[0_14px_50px_rgba(0,0,0,0.35)] transition-all duration-300 hover:-translate-y-0.5"
+      >
+        Open the proposal
+        <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+      </button>
+      <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-primary-foreground/35 mt-5">
+        Click to reveal
+      </p>
+    </motion.div>
   </motion.div>
 );
 
@@ -245,36 +260,35 @@ const LSSProposalPage = () => {
         </div>
 
         {/* ============== HERO ============== */}
-        <section className="relative overflow-hidden bg-primary text-primary-foreground">
-          <div
-            className="absolute inset-0 opacity-70 pointer-events-none"
-            style={{
-              background:
-                "radial-gradient(circle at 20% 10%, hsl(var(--accent) / 0.28), transparent 55%), radial-gradient(circle at 85% 90%, #FF620055, transparent 55%)",
-            }}
-          />
+        <section className="relative bg-primary text-primary-foreground">
           <div className="relative z-10 max-w-6xl mx-auto px-5 sm:px-8 pt-20 pb-24 md:pt-32 md:pb-36">
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.1 }}
-              className="flex items-center gap-3 mb-8"
+              className="flex items-center gap-4 mb-10"
             >
-              <img src={WhiteStacked} alt="Thread & Stack" className="h-10" />
-              <span className="text-primary-foreground/30">·</span>
-              <span className="font-sans text-[11px] font-semibold tracking-[0.18em] uppercase" style={{ color: "#FF6200" }}>
-                Project Proposal
-              </span>
+              <img src={WhiteStacked} alt="Thread & Stack" className="h-12" />
+              <span className="h-10 w-px bg-primary-foreground/20" />
+              <img src={LssLogoWhite} alt="London School of Sailing" className="h-12" />
             </motion.div>
+
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              className="font-sans text-[11px] font-semibold tracking-[0.28em] uppercase text-primary-foreground/55 mb-6"
+            >
+              Project Proposal
+            </motion.p>
 
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.25 }}
+              transition={{ duration: 0.9, delay: 0.3 }}
               className="font-serif-pro text-[44px] sm:text-6xl md:text-7xl italic font-bold leading-[1.02] tracking-tight mb-6 max-w-4xl"
             >
-              One system that holds{" "}
-              <span style={{ color: "#FF6200" }}>LSS</span> together.
+              One system that holds LSS together.
             </motion.h1>
 
             <motion.p
@@ -293,25 +307,23 @@ const LSSProposalPage = () => {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.75 }}
-              className="mt-10 flex flex-wrap gap-x-8 gap-y-3 text-xs sm:text-[13px] font-sans text-primary-foreground/50 tracking-wide"
+              className="mt-12 pt-8 border-t border-primary-foreground/15 flex flex-wrap gap-x-10 gap-y-3 text-xs sm:text-[13px] font-sans text-primary-foreground/60 tracking-wide"
             >
               <div>
-                <span className="text-primary-foreground/30 mr-2 uppercase tracking-[0.18em] text-[10px]">For</span>
+                <span className="text-primary-foreground/35 mr-2 uppercase tracking-[0.18em] text-[10px]">Prepared for</span>
                 Ruaraidh Plummer
               </div>
               <div>
-                <span className="text-primary-foreground/30 mr-2 uppercase tracking-[0.18em] text-[10px]">Date</span>
-                May 2026
+                <span className="text-primary-foreground/35 mr-2 uppercase tracking-[0.18em] text-[10px]">By</span>
+                Brendan Rodgers, Thread &amp; Stack
               </div>
               <div>
-                <span className="text-primary-foreground/30 mr-2 uppercase tracking-[0.18em] text-[10px]">Ref</span>
-                LSS Foundation
+                <span className="text-primary-foreground/35 mr-2 uppercase tracking-[0.18em] text-[10px]">Date</span>
+                May 2026
               </div>
             </motion.div>
           </div>
-
-          {/* Soft transition edge */}
-          <div className="absolute bottom-0 inset-x-0 h-24 bg-gradient-to-b from-transparent to-background pointer-events-none" />
+          {/* Crisp hard edge — no fade */}
         </section>
 
         {/* ============== 01 What we're solving ============== */}
@@ -438,14 +450,8 @@ const LSSProposalPage = () => {
         </section>
 
         {/* ============== 04 Voyage Records ============== */}
-        <section className="px-5 sm:px-8 py-20 md:py-28 bg-primary text-primary-foreground relative overflow-hidden">
-          <div
-            className="absolute inset-0 opacity-40 pointer-events-none"
-            style={{
-              background:
-                "radial-gradient(circle at 80% 10%, #FF620055, transparent 55%), radial-gradient(circle at 10% 90%, hsl(var(--accent) / 0.3), transparent 50%)",
-            }}
-          />
+        <section className="px-5 sm:px-8 py-20 md:py-28 bg-primary text-primary-foreground relative">
+
           <div className="relative z-10 max-w-5xl mx-auto">
             <motion.div {...fadeUp} className="mb-10 md:mb-14 max-w-3xl">
               <div className="flex items-center gap-3 mb-4 text-primary-foreground/60">
