@@ -194,7 +194,7 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => (
           <p className="text-primary-foreground/90 font-medium">Ruaraidh,</p>
 
           <p>
-            This proposal is not a pitch. It's a vision document. This is my way of showing you, clearly and honestly, what we can do together for LSS.
+            This proposal is not a pitch. It's a <strong>vision document</strong>. This is my way of showing you, clearly and honestly, what we can do together for LSS.
           </p>
 
           <p>
@@ -202,15 +202,22 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => (
           </p>
 
           <p>
-            My intention is to help LSS reach a place of stable, systematised operational strength — that is tailored to you, and LSS's needs. This system will hold steady no matter how many new team members, new customers, or new friends arrive to join the LSS's own voyage.
+            My intention is to help LSS reach a place of <strong>stable, systematised operational strength</strong> — that is tailored to you, and LSS's needs. This system will hold steady no matter how many new team members, new customers, or new friends arrive to join the LSS's own voyage.
           </p>
 
-          <p>
-            I'm reducing all my rates by 20% for you, permanently. I'm also going to propose a few options, with a flexible project framework within this vision doc.
-          </p>
+          <ul className="space-y-2 my-2 ml-0 pl-0 list-none">
+            <li className="flex items-start gap-3">
+              <span className="mt-2.5 w-1.5 h-1.5 rounded-full bg-primary-foreground/40 flex-shrink-0" />
+              <span>I'm reducing all my rates by <strong>20% for you, permanently</strong>.</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="mt-2.5 w-1.5 h-1.5 rounded-full bg-primary-foreground/40 flex-shrink-0" />
+              <span>I'm also going to propose a few options, with a <strong>flexible project framework</strong> within this vision doc.</span>
+            </li>
+          </ul>
 
           <p>
-            And putting it bluntly, we can also keep talking it through until it works for you. I'd rather get you kitted out, the way I know you should be. Price would be a stupid reason not to help you, when I'm a friend in your camp already.
+            And putting it bluntly, we can also keep talking it through until it works for you. I'd rather get you kitted out, the way I know you should be. <strong>Price would be a stupid reason not to help you</strong>, when I'm a friend in your camp already.
           </p>
 
           <p>
