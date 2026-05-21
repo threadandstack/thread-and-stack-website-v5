@@ -584,7 +584,8 @@ const LSSProposalPage = () => {
               <SectionHead
                 num="07"
                 eyebrow="The journey"
-                title={<>Three stages, shaped around you.</>}
+                rotate={-0.4}
+                title={<>Three stages, <Hl>shaped</Hl> around you.</>}
               />
 
               <H3>1) Audit &amp; Workshop — an in-person day with you</H3>
