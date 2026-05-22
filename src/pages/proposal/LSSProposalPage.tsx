@@ -216,46 +216,34 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => (
           className="max-w-xl text-left mb-8 sm:mb-10"
         >
           <div className="font-sans text-sm sm:text-[15px] leading-[1.75] text-primary-foreground/80 space-y-4">
+            <p className="font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-primary-foreground/50">
+              A Note from Brendan
+            </p>
+
             <p className="text-primary-foreground/90 font-medium">Ruaraidh,</p>
 
             <p>
-              This proposal is not a pitch. It's a <strong>vision document</strong>. This is my way of showing
-              you, clearly and honestly, what we can do together for LSS.
+              This proposal is my way of showing you, clearly and honestly, what we can do together for LSS. It's not designed as a simple pitch, but as a tailored vision for you, and how we can work to build your ops to become truly supportive.
             </p>
 
             <p>
-              There is a lot of love, hope, sweat and determination in your business. I was very touched by how
-              our meeting in Peter's shed took place. Not only did you share with me some sensitive context, but
-              it reminded me that you, and your new family are part of my own story. So I'm going to start us off
-              from a different footing than we left on:
+              There is a lot of love, hope, sweat and determination in The London School of Sailing. I was very touched by how our meeting in Peter's shed took place. It reminded me that you, and your new family are part of my own story.
             </p>
 
             <p>
-              My intention is to help LSS reach a place of <strong>stable, systematised operational strength</strong>{" "}
-              - that is tailored to you, and LSS's needs. This system will hold steady no matter how many new team
-              members, new customers, or new friends arrive to join the LSS's own voyage.
+              My intention is to help LSS reach a place of <strong>stable, systematised operational strength</strong>. Not only will this system hold steady no matter how many new team members, new customers, or new friends arrive to join LSS's own voyage.
             </p>
 
-            <ul className="space-y-2 my-2 ml-0 pl-0 list-none">
-              <li className="flex items-start gap-3">
-                <span className="mt-2.5 w-1.5 h-1.5 rounded-full bg-primary-foreground/40 flex-shrink-0" />
-                <span>
-                  I'm reducing all my rates by <strong>20% for you, permanently</strong>.
-                </span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="mt-2.5 w-1.5 h-1.5 rounded-full bg-primary-foreground/40 flex-shrink-0" />
-                <span>
-                  I'm also going to propose a few options, with a <strong>flexible project framework</strong>{" "}
-                  within this vision doc.
-                </span>
-              </li>
-            </ul>
+            <p>
+              So I'm taking a decision to reduce all my rates by <strong>20% for you specifically, permanently</strong>.
+            </p>
 
             <p>
-              Putting it bluntly, we can also keep talking it through until it works for you. Price would be a
-              daft reason to find myself not helping you. I'm a friend in your camp already, and I'd rather get
-              you kitted out, the way I know you should be.
+              I'm also going to propose a few options, with a <strong>flexible project framework</strong> within this vision doc.
+            </p>
+
+            <p>
+              Putting it bluntly, only a very few people in my close family and friends circles run their own business. So, we can also keep talking it through until it works for you. Price would be a daft reason to find myself not helping you. I'm a friend in your camp already, and I'd rather get you kitted out.
             </p>
 
             <p>So give this a read (probably best to grab a cup of tea or a beer),</p>
