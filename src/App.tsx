@@ -55,6 +55,7 @@ const ArcCollectiveProposalPage = lazy(() => import("./pages/proposal/ArcCollect
 const StrategyServicesPage = lazy(() => import("./pages/proposal/StrategyServicesPage"));
 const AiOpsServicesPage = lazy(() => import("./pages/proposal/AiOpsServicesPage"));
 const LSSProposalPage = lazy(() => import("./pages/proposal/LSSProposalPage"));
+const SFFireProposalPage = lazy(() => import("./pages/proposal/SFFireProposalPage"));
 const BfBLabsProposalPage = lazy(() => import("./pages/proposal/BfBLabsProposalPage"));
 const NotionMasterclassPage = lazy(() => import("./pages/NotionMasterclassPage"));
 const CreativePortfolioPage = lazy(() => import("./pages/CreativePortfolioPage"));
@@ -132,6 +133,7 @@ const App = () => (
             <Route path="/proposal/services-strategy" element={<StrategyServicesPage />} />
             <Route path="/proposal/services-ai-ops" element={<AiOpsServicesPage />} />
             <Route path="/proposal/lss" element={<LSSProposalPage />} />
+            <Route path="/proposal/sf-fire" element={<SFFireProposalPage />} />
             <Route path="/proposal/bfb-labs" element={<BfBLabsProposalPage />} />
             <Route path="/notion-masterclass" element={<NotionMasterclassPage />} />
             <Route path="/portfolio/creative" element={<CreativePortfolioPage />} />
