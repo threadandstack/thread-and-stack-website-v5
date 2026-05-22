@@ -618,14 +618,9 @@ const LSSProposalPage = () => {
                 {/* Timeline rail */}
                 <div
                   aria-hidden
-                  className="absolute left-[7px] sm:left-[11px] top-3 bottom-3 w-px bg-primary-foreground/25"
-                  style={{
-                    backgroundImage:
-                      "linear-gradient(to bottom, hsl(var(--primary-foreground) / 0.35) 50%, transparent 50%)",
-                    backgroundSize: "1px 8px",
-                    backgroundRepeat: "repeat-y",
-                  }}
+                  className="absolute left-[7px] sm:left-[11px] top-2 bottom-2 w-[2px] rounded-full bg-accent/40"
                 />
+
 
                 {/* Phase 1 */}
                 <div className="relative pb-14">
