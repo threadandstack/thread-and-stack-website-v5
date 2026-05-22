@@ -467,7 +467,7 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => (
             </p>
 
             <p>
-              My intention is to help LSS reach a place of <strong>stable, systematised operational strength</strong>. Not only will this system hold steady no matter how many new team members, new customers, or new friends arrive to join LSS's own voyage.
+              My intention is to help LSS reach a place of <strong>stable, systematised operational strength</strong>. This system will hold steady no matter how many new team members, new customers, or new friends arrive to join LSS's own voyage.
             </p>
 
             <p>
