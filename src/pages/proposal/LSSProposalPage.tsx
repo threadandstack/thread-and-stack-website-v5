@@ -503,6 +503,7 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => (
 
 const LSSProposalPage = () => {
   const [opened, setOpened] = useState(false);
+  const [replyOpen, setReplyOpen] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
