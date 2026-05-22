@@ -206,7 +206,7 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => (
           transition={{ duration: 1, delay: 0.55 }}
           className="font-serif-pro text-3xl sm:text-4xl md:text-5xl italic font-semibold leading-[1.05] tracking-tight mb-8 sm:mb-10 max-w-3xl"
         >
-          A vision for LSS.
+          A Note from Brendan
         </motion.h1>
 
         <motion.div
