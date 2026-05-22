@@ -15,6 +15,7 @@ import WhiteStacked from "@/assets/logos/White_TS_Stacked.svg";
 import BlackStacked from "@/assets/logos/Black_TS_Stacked.svg";
 import GreyStacked from "@/assets/logos/Grey_TS_Stacked.svg";
 import SFFireLogo from "@/assets/proposal/sf-property-fire-prevention-logo.gif";
+import SFFireLogoDark from "@/assets/proposal/sf-property-fire-prevention-logo-dark.png";
 import BrSignature from "@/assets/proposal/br-signature.png";
 import BrendanAvatar from "@/assets/brendan-avatar.webp";
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
@@ -424,9 +425,7 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => (
         >
           <img src={WhiteStacked} alt="Thread & Stack" className="h-24 sm:h-24 md:h-28 w-auto" />
           <X aria-hidden="true" className="w-5 h-5 sm:w-6 sm:h-6 text-primary-foreground/30" strokeWidth={1} />
-          <div className="font-serif-pro italic font-semibold text-primary-foreground text-center leading-tight text-2xl sm:text-2xl md:text-3xl max-w-[14ch]">
-            SF Property<br />Fire Prevention
-          </div>
+          <img src={SFFireLogoDark} alt="SF Property Fire Prevention" className="h-24 sm:h-24 md:h-28 w-auto" />
         </motion.div>
 
         <motion.div
