@@ -425,9 +425,7 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => (
         >
           <img src={WhiteStacked} alt="Thread & Stack" className="h-24 sm:h-24 md:h-28 w-auto" />
           <X aria-hidden="true" className="w-5 h-5 sm:w-6 sm:h-6 text-primary-foreground/30" strokeWidth={1} />
-          <div className="font-serif-pro italic font-semibold text-primary-foreground text-center leading-tight text-2xl sm:text-2xl md:text-3xl max-w-[14ch]">
-            SF Property<br />Fire Prevention
-          </div>
+          <img src={SFFireLogoDark} alt="SF Property Fire Prevention" className="h-24 sm:h-24 md:h-28 w-auto" />
         </motion.div>
 
         <motion.div
