@@ -575,29 +575,31 @@ const LSSProposalPage = () => {
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.05 }}
-              className="flex items-center justify-center gap-10 sm:gap-14 md:gap-20 mb-12 sm:mb-14"
-            >
-              <img src={BlackStacked} alt="Thread & Stack" className="h-16 sm:h-20 md:h-24 w-auto" />
-              <X aria-hidden="true" className="w-5 h-5 sm:w-6 sm:h-6 text-foreground/25" strokeWidth={1} />
-              <img src={LssLogoBlack} alt="London School of Sailing" className="h-16 sm:h-20 md:h-24 w-auto" />
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.1 }}
-              className="font-sans text-[11px] tracking-[0.28em] uppercase text-muted-foreground mb-10"
+              transition={{ duration: 0.7, delay: 0.05 }}
+              className="font-sans text-[10.5px] sm:text-[11px] tracking-[0.28em] uppercase text-muted-foreground mb-8 sm:mb-0 sm:order-2 sm:mt-0"
             >
               Confidential <span className="text-muted-foreground/40 mx-2">·</span> Proposal{" "}
               <span className="text-muted-foreground/40 mx-2">·</span> May 2026
             </motion.div>
 
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.15 }}
+              className="flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-14 md:gap-20 mb-12 sm:mb-14 sm:order-1"
+            >
+              <img src={BlackStacked} alt="Thread & Stack" className="h-20 sm:h-20 md:h-24 w-auto" />
+              <X aria-hidden="true" className="w-5 h-5 sm:w-6 sm:h-6 text-foreground/25" strokeWidth={1} />
+              <img src={LssLogoBlack} alt="London School of Sailing" className="h-20 sm:h-20 md:h-24 w-auto" />
+            </motion.div>
+
+            <motion.div className="hidden sm:block sm:h-10" aria-hidden="true" />
+
             <motion.h1
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.25 }}
-              className="font-serif-pro text-[40px] sm:text-5xl md:text-6xl italic font-semibold leading-[1.05] tracking-tight text-foreground text-balance mb-8"
+              className="font-serif-pro text-[36px] sm:text-5xl md:text-6xl italic font-semibold leading-[1.05] tracking-tight text-foreground text-balance mb-8"
             >
               A{" "}
               <span className="inline-block text-accent" style={{ transform: "translateY(1px)" }}>
@@ -610,9 +612,12 @@ const LSSProposalPage = () => {
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.45 }}
-              className="font-sans text-[15px] text-muted-foreground tracking-wide"
+              className="font-sans text-[14px] sm:text-[15px] text-muted-foreground tracking-wide leading-relaxed"
             >
-              Prepared for Ruaraidh Plummer · By Brendan Rodgers, Thread &amp; Stack
+              <span className="block sm:inline">Prepared for Ruaraidh Plummer</span>
+              <span className="hidden sm:inline"> · </span>
+              <span className="block sm:inline">By Brendan Rodgers,</span>
+              <span className="block sm:inline sm:ml-1">Thread &amp; Stack</span>
             </motion.p>
           </div>
         </header>
