@@ -1050,14 +1050,14 @@ const LSSProposalPage = () => {
 
             <Rule />
 
-            {/* 10 — Next steps / CTA */}
-            <section className="text-center">
-              <motion.div {...fadeUp}>
-                <div className="font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-accent mb-5">
+            {/* 10 — Business card */}
+            <section>
+              <motion.div {...fadeUp} className="mx-auto max-w-xl">
+                <div className="mb-6 text-center font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-accent">
                   Next
                 </div>
                 <h2
-                  className="font-serif-pro text-[32px] sm:text-4xl md:text-[44px] italic font-bold leading-[1.1] tracking-tight text-foreground text-balance mb-8"
+                  className="font-serif-pro text-[28px] sm:text-[34px] md:text-[40px] italic font-bold leading-[1.1] tracking-tight text-foreground text-balance mb-10 text-center"
                   style={{ transform: "rotate(-0.3deg)" }}
                 >
                   If this feels right, let's{" "}
@@ -1066,16 +1066,44 @@ const LSSProposalPage = () => {
                   </span>
                   .
                 </h2>
-                <p className="font-sans text-[16px] text-muted-foreground leading-relaxed max-w-xl mx-auto mb-10">
-                  Anything in here that doesn't match what you had in mind, just say — easy to adjust before we
-                  book the mapping session. The aim is a system that fits the way LSS actually runs, not the way
-                  a brief assumes it does.
-                </p>
-                <PillButton size="lg" icon={Anchor} onClick={() => setReplyOpen(true)}>
-                  Reply to begin
-                </PillButton>
+
+                <div className="rounded-2xl border border-border bg-card/40 shadow-[0_2px_24px_-12px_rgba(0,0,0,0.12)] p-6 sm:p-8 flex flex-col sm:flex-row items-center sm:items-start gap-6">
+                  <img
+                    src={BrendanAvatar}
+                    alt="Brendan Rodgers"
+                    className="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover flex-shrink-0"
+                  />
+                  <div className="flex-1 text-center sm:text-left">
+                    <div className="font-serif-pro italic text-2xl font-semibold text-foreground leading-tight">
+                      Brendan Rodgers
+                    </div>
+                    <div className="font-sans text-[13px] tracking-[0.18em] uppercase text-muted-foreground mt-1">
+                      Thread &amp; Stack
+                    </div>
+                    <div className="mt-4 space-y-1.5 font-sans text-[15px] text-foreground/85">
+                      <div>
+                        <a href="mailto:br@brendanrodgers.uk" className="text-accent hover:underline">
+                          br@brendanrodgers.uk
+                        </a>
+                      </div>
+                      <div>
+                        <a href="tel:+447913566551" className="hover:text-accent transition-colors">
+                          07913 566551
+                        </a>
+                      </div>
+                    </div>
+                    <a
+                      href="mailto:br@brendanrodgers.uk?subject=LSS%20Proposal%20%E2%80%94%20Reply&body=Hi%20Brendan%2C%0A%0A"
+                      className="mt-6 inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-accent text-accent-foreground font-sans text-sm hover:bg-accent/90 transition-colors"
+                    >
+                      <Send className="w-4 h-4" />
+                      Email Brendan
+                    </a>
+                  </div>
+                </div>
               </motion.div>
             </section>
+
           </div>
         </article>
 
