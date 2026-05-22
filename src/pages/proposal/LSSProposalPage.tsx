@@ -626,18 +626,19 @@ const LSSProposalPage = () => {
                 {/* Phase 1 */}
                 <div className="relative pb-14">
                   <span className="inline-flex items-center rounded-full bg-accent px-4 py-1 text-xs font-bold tracking-[0.18em] uppercase text-accent-foreground">
-                    Phase 1 · Mapping
+                    Phase 1 · Discovery
                   </span>
                   <h3 className="mt-4 font-serif text-2xl sm:text-3xl leading-tight">
-                    In-person mapping session
+                    In-person discovery session
                   </h3>
                   <P>
                     <strong>1 session · <Price was="£500" now="£400" /></strong>
                   </P>
                   <P>
-                    One focused half-day together, in person. We walk the current systems, confirm priorities, map
-                    what the foundation build needs to contain. You leave with a shared brief, agreed before
-                    anything gets built.
+                    We've already done some of the work during our session together on Wednesday, so I'm able to
+                    reduce this phase from a full day to a single half day. As we sit down together and map out
+                    current systems, confirm priorities, and map what the foundation build needs to contain.
+                    You'll leave with a shared brief, agreed before anything gets built.
                   </P>
                   <P>
                     <strong>Before the session:</strong> access to Monday, and a short conversation with whoever
