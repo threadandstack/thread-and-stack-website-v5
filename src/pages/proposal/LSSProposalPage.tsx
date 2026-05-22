@@ -742,7 +742,7 @@ const LSSProposalPage = () => {
               />
 
               <H3>Option 3 — Paid in full</H3>
-              <P>The cheapest route — an extra £200 off for paying in full, upfront.</P>
+              <P>The cheapest route — an additional saving of £200 for paying in full, upfront.</P>
               <EditorialTable
                 rows={[
                   ["Full engagement, paid upfront", <strong>£5,400</strong>],
