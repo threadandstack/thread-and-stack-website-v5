@@ -1035,10 +1035,8 @@ const LSSProposalPage = () => {
                   book the mapping session. The aim is a system that fits the way LSS actually runs, not the way
                   a brief assumes it does.
                 </p>
-                <PillButton size="lg" icon={Anchor} asChild>
-                  <a href="mailto:br@brendanrodgers.uk?subject=LSS%20Proposal%20—%20next%20steps">
-                    Reply to begin
-                  </a>
+                <PillButton size="lg" icon={Anchor} onClick={() => setReplyOpen(true)}>
+                  Reply to begin
                 </PillButton>
               </motion.div>
             </section>
