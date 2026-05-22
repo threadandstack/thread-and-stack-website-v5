@@ -618,22 +618,17 @@ const LSSProposalPage = () => {
                 {/* Timeline rail */}
                 <div
                   aria-hidden
-                  className="absolute left-[7px] sm:left-[11px] top-3 bottom-3 w-px bg-primary-foreground/25"
-                  style={{
-                    backgroundImage:
-                      "linear-gradient(to bottom, hsl(var(--primary-foreground) / 0.35) 50%, transparent 50%)",
-                    backgroundSize: "1px 8px",
-                    backgroundRepeat: "repeat-y",
-                  }}
+                  className="absolute left-[7px] sm:left-[11px] top-2 bottom-2 w-[2px] rounded-full bg-accent/40"
                 />
+
 
                 {/* Phase 1 */}
                 <div className="relative pb-14">
                   <span
                     aria-hidden
-                    className="absolute -left-8 sm:-left-12 top-1 h-4 w-4 rounded-full bg-primary ring-4 ring-background"
+                    className="absolute -left-8 sm:-left-12 top-1 h-4 w-4 rounded-full bg-accent ring-4 ring-background"
                   />
-                  <span className="inline-flex items-center rounded-full bg-primary px-4 py-1 text-xs font-bold tracking-[0.18em] uppercase text-primary-foreground">
+                  <span className="inline-flex items-center rounded-full bg-accent px-4 py-1 text-xs font-bold tracking-[0.18em] uppercase text-accent-foreground">
                     Phase 1 · Mapping
                   </span>
                   <h3 className="mt-4 font-serif text-2xl sm:text-3xl leading-tight">
@@ -657,9 +652,9 @@ const LSSProposalPage = () => {
                 <div className="relative pb-14">
                   <span
                     aria-hidden
-                    className="absolute -left-8 sm:-left-12 top-1 h-4 w-4 rounded-full bg-primary ring-4 ring-background"
+                    className="absolute -left-8 sm:-left-12 top-1 h-4 w-4 rounded-full bg-accent ring-4 ring-background"
                   />
-                  <span className="inline-flex items-center rounded-full bg-primary px-4 py-1 text-xs font-bold tracking-[0.18em] uppercase text-primary-foreground">
+                  <span className="inline-flex items-center rounded-full bg-accent px-4 py-1 text-xs font-bold tracking-[0.18em] uppercase text-accent-foreground">
                     Phase 2 · Build
                   </span>
                   <h3 className="mt-4 font-serif text-2xl sm:text-3xl leading-tight">
@@ -687,9 +682,9 @@ const LSSProposalPage = () => {
                 <div className="relative">
                   <span
                     aria-hidden
-                    className="absolute -left-8 sm:-left-12 top-1 h-4 w-4 rounded-full bg-primary ring-4 ring-background"
+                    className="absolute -left-8 sm:-left-12 top-1 h-4 w-4 rounded-full bg-accent ring-4 ring-background"
                   />
-                  <span className="inline-flex items-center rounded-full border border-primary/60 bg-primary/10 px-4 py-1 text-xs font-bold tracking-[0.18em] uppercase text-primary">
+                  <span className="inline-flex items-center rounded-full bg-accent px-4 py-1 text-xs font-bold tracking-[0.18em] uppercase text-accent-foreground">
                     Phase 3 · Ongoing
                   </span>
                   <h3 className="mt-4 font-serif text-2xl sm:text-3xl leading-tight">
