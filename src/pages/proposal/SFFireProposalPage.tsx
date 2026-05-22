@@ -14,6 +14,7 @@ import { trackContactFormSubmit } from "@/hooks/useAnalytics";
 import WhiteStacked from "@/assets/logos/White_TS_Stacked.svg";
 import BlackStacked from "@/assets/logos/Black_TS_Stacked.svg";
 import GreyStacked from "@/assets/logos/Grey_TS_Stacked.svg";
+import SFFireLogo from "@/assets/proposal/sf-property-fire-prevention-logo.gif";
 import BrSignature from "@/assets/proposal/br-signature.png";
 import BrendanAvatar from "@/assets/brendan-avatar.webp";
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
@@ -594,9 +595,7 @@ const SFFireProposalPage = () => {
             >
               <img src={BlackStacked} alt="Thread & Stack" className="h-20 sm:h-20 md:h-24 w-auto" />
               <X aria-hidden="true" className="w-5 h-5 sm:w-6 sm:h-6 text-foreground/25" strokeWidth={1} />
-              <div className="font-serif-pro italic font-semibold text-foreground text-center leading-tight text-xl sm:text-2xl md:text-2xl max-w-[14ch]">
-                SF Property<br />Fire Prevention
-              </div>
+              <img src={SFFireLogo} alt="SF Property Fire Prevention" className="h-20 sm:h-20 md:h-24 w-auto" />
             </motion.div>
 
             <motion.h1
