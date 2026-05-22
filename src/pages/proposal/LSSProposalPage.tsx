@@ -3,8 +3,10 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, Download, Anchor, X } from "lucide-react";
 import { PillButton } from "@/components/ui/pill-button";
 import WhiteStacked from "@/assets/logos/White_TS_Stacked.svg";
+import BlackStacked from "@/assets/logos/Black_TS_Stacked.svg";
 import GreyStacked from "@/assets/logos/Grey_TS_Stacked.svg";
 import LssLogoWhite from "@/assets/proposal/lss-logo-white.webp";
+import LssLogoBlack from "@/assets/proposal/lss-logo-black.png";
 import BrSignature from "@/assets/proposal/br-signature.png";
 import IconClaude from "@/assets/proposal/icons/claude.png";
 import IconNotion from "@/assets/proposal/icons/notion.png";
@@ -345,6 +347,17 @@ const LSSProposalPage = () => {
         {/* ============== EDITORIAL HEADER ============== */}
         <header className="px-5 sm:px-8 pt-24 sm:pt-32 md:pt-40 pb-12 md:pb-16">
           <div className="max-w-2xl mx-auto text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.05 }}
+              className="flex items-center justify-center gap-10 sm:gap-14 md:gap-20 mb-12 sm:mb-14"
+            >
+              <img src={BlackStacked} alt="Thread & Stack" className="h-16 sm:h-20 md:h-24 w-auto" />
+              <X aria-hidden="true" className="w-5 h-5 sm:w-6 sm:h-6 text-foreground/25" strokeWidth={1} />
+              <img src={LssLogoBlack} alt="London School of Sailing" className="h-16 sm:h-20 md:h-24 w-auto" />
+            </motion.div>
+
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
