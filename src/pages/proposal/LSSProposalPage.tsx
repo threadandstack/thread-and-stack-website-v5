@@ -624,10 +624,6 @@ const LSSProposalPage = () => {
 
                 {/* Phase 1 */}
                 <div className="relative pb-14">
-                  <span
-                    aria-hidden
-                    className="absolute -left-8 sm:-left-12 top-1 h-4 w-4 rounded-full bg-accent ring-4 ring-background"
-                  />
                   <span className="inline-flex items-center rounded-full bg-accent px-4 py-1 text-xs font-bold tracking-[0.18em] uppercase text-accent-foreground">
                     Phase 1 · Mapping
                   </span>
@@ -650,10 +646,6 @@ const LSSProposalPage = () => {
 
                 {/* Phase 2 */}
                 <div className="relative pb-14">
-                  <span
-                    aria-hidden
-                    className="absolute -left-8 sm:-left-12 top-1 h-4 w-4 rounded-full bg-accent ring-4 ring-background"
-                  />
                   <span className="inline-flex items-center rounded-full bg-accent px-4 py-1 text-xs font-bold tracking-[0.18em] uppercase text-accent-foreground">
                     Phase 2 · Build
                   </span>
@@ -680,10 +672,6 @@ const LSSProposalPage = () => {
 
                 {/* Phase 3 */}
                 <div className="relative">
-                  <span
-                    aria-hidden
-                    className="absolute -left-8 sm:-left-12 top-1 h-4 w-4 rounded-full bg-accent ring-4 ring-background"
-                  />
                   <span className="inline-flex items-center rounded-full bg-accent px-4 py-1 text-xs font-bold tracking-[0.18em] uppercase text-accent-foreground">
                     Phase 3 · Ongoing
                   </span>
