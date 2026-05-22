@@ -448,8 +448,8 @@ const LSSProposalPage = () => {
                 {[
                   { icon: IconClaude, title: "Claude — your co-founder assistant.", body: "Connected to all Notion context. Reads and edits Notion directly. Knows LSS's history, priorities and how you think. Claude Pro includes Claude Code — the tool used to build and maintain the system. One subscription, two roles." },
                   { icon: IconNotion, title: "Notion Workspace — the single source of truth.", body: "Customer records, event history, procedures, team knowledge. Staff find answers without asking you. New people onboard from the system itself." },
-                  { icon: IconNotionAI, title: "Notion AI — the knowledge layer.", body: "Anyone on the team asks a question in plain English and gets an answer from the workspace. Sharon, James, a new skipper, a future hire. No training required." },
-                  { icon: IconLassie, title: "Custom agents — purpose-built AI tools.", body: "Lassie handles first-line enquiries. Booking intelligence surfaces patterns. They reason over context — not just follow rules." },
+                  { icon: IconLassie, title: "Notion AI — the knowledge layer.", body: "Anyone on the team asks a question in plain English and gets an answer from the workspace. Sharon, James, a new skipper, a future hire. No training required." },
+                  { icon: IconNotionAI, title: "Custom agents — purpose-built AI tools.", body: "Lassie handles first-line enquiries. Booking intelligence surfaces patterns. They reason over context — not just follow rules." },
                   { icon: IconZapier, title: "Automations — the pipes.", body: "Booking confirmed, joining instructions sent. Payment due, reminder raised, FreeAgent invoice created. Event in Notion, product pushed to Squarespace. Dumb, reliable, running quietly in the background." },
                 ].map((layer, i) => (
                   <motion.li
