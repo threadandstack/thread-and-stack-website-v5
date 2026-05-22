@@ -6,6 +6,11 @@ import WhiteStacked from "@/assets/logos/White_TS_Stacked.svg";
 import GreyStacked from "@/assets/logos/Grey_TS_Stacked.svg";
 import LssLogoWhite from "@/assets/proposal/lss-logo-white.webp";
 import BrSignature from "@/assets/proposal/br-signature.png";
+import IconClaude from "@/assets/proposal/icons/claude.png";
+import IconNotion from "@/assets/proposal/icons/notion.png";
+import IconNotionAI from "@/assets/proposal/icons/notion-ai.png";
+import IconLassie from "@/assets/proposal/icons/lassie.png";
+import IconZapier from "@/assets/proposal/icons/zapier.svg";
 
 
 /* ---------------------------- Helpers ---------------------------- */
@@ -439,15 +444,32 @@ const LSSProposalPage = () => {
                 One coherent operation, replacing the fragmentation. Each layer connects to the same knowledge
                 base. Each one is replaceable if something better comes along.
               </P>
-              <BulletList
-                items={[
-                  <><strong>Claude — your co-founder assistant.</strong> Connected to all Notion context. Reads and edits Notion directly. Knows LSS's history, priorities and how you think. Claude Pro includes Claude Code — the tool used to build and maintain the system. One subscription, two roles.</>,
-                  <><strong>Notion Workspace — the single source of truth.</strong> Customer records, event history, procedures, team knowledge. Staff find answers without asking you. New people onboard from the system itself.</>,
-                  <><strong>Notion AI — the knowledge layer.</strong> Anyone on the team asks a question in plain English and gets an answer from the workspace. Sharon, James, a new skipper, a future hire. No training required.</>,
-                  <><strong>Custom agents — purpose-built AI tools.</strong> Lassie handles first-line enquiries. Booking intelligence surfaces patterns. They reason over context — not just follow rules.</>,
-                  <><strong>Automations — the pipes.</strong> Booking confirmed, joining instructions sent. Payment due, reminder raised, FreeAgent invoice created. Event in Notion, product pushed to Squarespace. Dumb, reliable, running quietly in the background.</>,
-                ]}
-              />
+              <ul className="mt-8 space-y-5">
+                {[
+                  { icon: IconClaude, title: "Claude — your co-founder assistant.", body: "Connected to all Notion context. Reads and edits Notion directly. Knows LSS's history, priorities and how you think. Claude Pro includes Claude Code — the tool used to build and maintain the system. One subscription, two roles." },
+                  { icon: IconNotion, title: "Notion Workspace — the single source of truth.", body: "Customer records, event history, procedures, team knowledge. Staff find answers without asking you. New people onboard from the system itself." },
+                  { icon: IconNotionAI, title: "Notion AI — the knowledge layer.", body: "Anyone on the team asks a question in plain English and gets an answer from the workspace. Sharon, James, a new skipper, a future hire. No training required." },
+                  { icon: IconLassie, title: "Custom agents — purpose-built AI tools.", body: "Lassie handles first-line enquiries. Booking intelligence surfaces patterns. They reason over context — not just follow rules." },
+                  { icon: IconZapier, title: "Automations — the pipes.", body: "Booking confirmed, joining instructions sent. Payment due, reminder raised, FreeAgent invoice created. Event in Notion, product pushed to Squarespace. Dumb, reliable, running quietly in the background." },
+                ].map((layer, i) => (
+                  <motion.li
+                    key={i}
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                    className="flex gap-5 items-start bg-card/60 rounded-2xl p-5 shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
+                  >
+                    <div className="flex-shrink-0 w-14 h-14 rounded-xl bg-background flex items-center justify-center shadow-[0_1px_4px_rgba(0,0,0,0.06)]">
+                      <img src={layer.icon} alt="" className="w-9 h-9 object-contain" />
+                    </div>
+                    <div className="flex-1 pt-1">
+                      <strong className="font-serif-pro italic text-lg text-primary block mb-1">{layer.title}</strong>
+                      <span className="text-foreground/75 leading-relaxed">{layer.body}</span>
+                    </div>
+                  </motion.li>
+                ))}
+              </ul>
             </section>
 
             <Rule />
