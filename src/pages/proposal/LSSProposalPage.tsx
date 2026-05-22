@@ -478,6 +478,10 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => (
               We can also keep talking it through if you'd like. After all, price would be a daft reason to find myself not supporting someone so close to the family. I'm a friend in your camp already, and I'd rather get you kitted out.
             </p>
 
+            <p>
+              The good news is that both Squarespace and FreeAgent have working APIs, which means we can work a lot of the optimisation you're after into the third phase of the engagement. That's automation that actually sticks.
+            </p>
+
             <p>So give this a read. It's probably best to grab a brew or a cup of coffee and a comfy seat.</p>
 
             <p>Let me know what you think.</p>
