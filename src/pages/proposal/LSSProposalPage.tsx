@@ -471,18 +471,14 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => (
             </p>
 
             <p>
-              So I'm taking a decision to reduce all my rates by <strong>20% for you specifically, permanently</strong>.
+              Therefore, I'm taking a decision to reduce all my rates by <strong>20% for you specifically, permanently</strong>. I'm also going to propose a few options with a <strong>flexible payment framework</strong> within this doc. I've also built out clarity on how the change in tech stack can also drive savings.
             </p>
 
             <p>
-              I'm also going to propose a few options, with a <strong>flexible project framework</strong> within this vision doc.
+              We can also keep talking it through if you'd like. After all, price would be a daft reason to find myself not supporting someone so close to the family. I'm a friend in your camp already, and I'd rather get you kitted out.
             </p>
 
-            <p>
-              We can also keep talking it through until it works for you. Price would be a daft reason to find myself not helping you. I'm a friend in your camp already, and I'd rather get you kitted out.
-            </p>
-
-            <p>So give this a read (probably best to grab a cup of tea or a beer),</p>
+            <p>So give this a read. It's probably best to grab a brew or a cup of coffee and a comfy seat.</p>
 
             <p>Let me know what you think.</p>
 
