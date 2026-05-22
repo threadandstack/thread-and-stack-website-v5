@@ -14,6 +14,7 @@ import { trackContactFormSubmit } from "@/hooks/useAnalytics";
 import WhiteStacked from "@/assets/logos/White_TS_Stacked.svg";
 import BlackStacked from "@/assets/logos/Black_TS_Stacked.svg";
 import GreyStacked from "@/assets/logos/Grey_TS_Stacked.svg";
+import SFFireLogo from "@/assets/proposal/sf-property-fire-prevention-logo.gif";
 import BrSignature from "@/assets/proposal/br-signature.png";
 import BrendanAvatar from "@/assets/brendan-avatar.webp";
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
