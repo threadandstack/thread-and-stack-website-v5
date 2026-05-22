@@ -836,6 +836,9 @@ const LSSProposalPage = () => {
                 cannot: maintains context across conversations, connects to the Notion knowledge lake, works
                 within the system rather than separately from it.
               </P>
+              <p className="font-sans text-[13px] text-muted-foreground/70 mt-2">
+                * All prices illustrative.
+              </p>
             </section>
 
             <Rule />
