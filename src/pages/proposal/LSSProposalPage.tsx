@@ -16,6 +16,7 @@ import GreyStacked from "@/assets/logos/Grey_TS_Stacked.svg";
 import LssLogoWhite from "@/assets/proposal/lss-logo-white.webp";
 import LssLogoBlack from "@/assets/proposal/lss-logo-black.png";
 import BrSignature from "@/assets/proposal/br-signature.png";
+import BrendanAvatar from "@/assets/brendan-avatar.webp";
 import IconClaude from "@/assets/proposal/icons/claude.png";
 import IconNotion from "@/assets/proposal/icons/notion.png";
 import IconNotionAI from "@/assets/proposal/icons/notion-ai.png";
