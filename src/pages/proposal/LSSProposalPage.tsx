@@ -772,7 +772,7 @@ const LSSProposalPage = () => {
                   [<strong>Consultant</strong>, "Brendan Rodgers, Thread & Stack"],
                   [<strong>Standard rate</strong>, <span className="line-through text-muted-foreground/60">£500</span>],
                   [<strong>Defined rate</strong>, "£400 per half-day (relationship rate, permanently)"],
-                  [<strong>Phase 1</strong>, "In-person mapping session — 1 block"],
+                  [<strong>Phase 1</strong>, "In-person discovery session — 1 block"],
                   [<strong>Phase 2</strong>, "Foundation build — ~10 blocks"],
                   [<strong>Ongoing</strong>, "Monthly support block — 1 block/month"],
                   [<strong>Phase 1 total</strong>, "£400"],
