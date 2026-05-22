@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowRight, Download, Anchor, X, Send, Check } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Download, Anchor, X, Send, Check } from "lucide-react";
 import { PillButton } from "@/components/ui/pill-button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
