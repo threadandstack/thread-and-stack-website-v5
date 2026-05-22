@@ -717,7 +717,7 @@ const LSSProposalPage = () => {
               <EditorialTable
                 head={["Milestone", "When", "Amount"]}
                 rows={[
-                  ["Phase 1 — mapping session", "On booking", "£400"],
+                  ["Phase 1 — discovery session", "On booking", "£400"],
                   ["Phase 2 — first half of build", "End of month one", "£2,000"],
                   ["Phase 2 — second half of build", "End of month two", "£2,000"],
                   ["Ongoing — month one", "End of month three", "£400"],
