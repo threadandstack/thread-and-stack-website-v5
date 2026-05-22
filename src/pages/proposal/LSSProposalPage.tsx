@@ -243,7 +243,7 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => (
             </p>
 
             <p>
-              Putting it bluntly, only a very few people in my close family and friends circles run their own business. So, we can also keep talking it through until it works for you. Price would be a daft reason to find myself not helping you. I'm a friend in your camp already, and I'd rather get you kitted out.
+              We can also keep talking it through until it works for you. Price would be a daft reason to find myself not helping you. I'm a friend in your camp already, and I'd rather get you kitted out.
             </p>
 
             <p>So give this a read (probably best to grab a cup of tea or a beer),</p>
