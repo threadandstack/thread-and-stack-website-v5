@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowRight, Download, Anchor, X, Send, Check } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Download, Anchor, X, Send, Check } from "lucide-react";
 import { PillButton } from "@/components/ui/pill-button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -645,6 +645,19 @@ const LSSProposalPage = () => {
                 The approach here is different. We build around a <strong>knowledge lake that LSS owns
                 entirely</strong>, where every tool earns its place and none of them hold you hostage.
               </P>
+
+              <motion.p {...fadeUp} className="font-sans text-sm mt-2 mb-6">
+                <a
+                  href="https://threadandstack.notion.site/The-Intentional-Tool-Stack-3678863b87d4815a8f72c285e27b320b"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-accent hover:underline underline-offset-4"
+                >
+                  Read the full Intentional Tool Stack methodology
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </a>
+              </motion.p>
+
               <PullQuote rotate={-0.4}>
                 Own the lake. Let the <Hl shift={-2}>rivers</Hl> come and go.
               </PullQuote>
