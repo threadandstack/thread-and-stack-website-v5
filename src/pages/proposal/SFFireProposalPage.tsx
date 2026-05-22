@@ -595,9 +595,7 @@ const SFFireProposalPage = () => {
             >
               <img src={BlackStacked} alt="Thread & Stack" className="h-20 sm:h-20 md:h-24 w-auto" />
               <X aria-hidden="true" className="w-5 h-5 sm:w-6 sm:h-6 text-foreground/25" strokeWidth={1} />
-              <div className="font-serif-pro italic font-semibold text-foreground text-center leading-tight text-xl sm:text-2xl md:text-2xl max-w-[14ch]">
-                SF Property<br />Fire Prevention
-              </div>
+              <img src={SFFireLogo} alt="SF Property Fire Prevention" className="h-20 sm:h-20 md:h-24 w-auto" />
             </motion.div>
 
             <motion.h1
