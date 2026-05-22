@@ -377,33 +377,8 @@ const LSSProposalPage = () => {
         {/* ============== BODY ============== */}
         <article className="px-5 sm:px-8 pb-24">
           <div className="max-w-2xl mx-auto">
-            {/* 01 — Outgrown the tool-sprawl stage */}
-            <section>
-              <SectionHead
-                num="01"
-                eyebrow="Where LSS is now"
-                rotate={-0.4}
-                title={<>LSS has outgrown the <Hl>tool-sprawl</Hl> stage.</>}
-              />
-              <P>
-                LSS is now scaling at a pace where the systems that got you here will quietly start to cost you
-                more than they're worth. What you need now is operational strength that scales with the team, the
-                customer base, and the ambition behind the business.
-              </P>
-              <P>What you're really buying is:</P>
-              <BulletList
-                items={[
-                  <><strong>Less reactive comms</strong> (email, WhatsApp, phone) landing on you personally.</>,
-                  <><strong>Centralised knowledge</strong> — LSS team and collaborators can find answers, faster.</>,
-                  <><strong>Clear accountability</strong> across the team — who owns what, what's next, what's overdue.</>,
-                  <><strong>Repeatable customer delivery</strong> (pre-voyage → on-voyage → post-voyage).</>,
-                  <><strong>A founder setup that stops you being the bottleneck.</strong></>,
-                ]}
-              />
-            </section>
+            {/* (legacy intro removed — replaced by new section 01 below) */}
 
-
-            <Rule />
 
             {/* 01 — The problem */}
             <section>
