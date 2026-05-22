@@ -17,12 +17,17 @@ import GreyStacked from "@/assets/logos/Grey_TS_Stacked.svg";
 import BrSignature from "@/assets/proposal/br-signature.png";
 import BrendanAvatar from "@/assets/brendan-avatar.webp";
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
+import IconNotion from "@/assets/proposal/icons/notion.png";
+import IconNotionAI from "@/assets/proposal/icons/notion-ai.png";
+import IconLassie from "@/assets/proposal/icons/lassie.png";
+import IconZapier from "@/assets/proposal/icons/zapier.svg";
+import IconFormLink from "@/assets/proposal/icons/form-link.svg";
 
 const testimonials = [
   { headline: "Genuinely transformative", quote: "This Notion Mentorship sprint has been genuinely transformative for me. In just a few weeks, I significantly upped my productivity and efficiency — not just in how much I get done, but in how clearly I can show the value of my work.", author: "Jasmine Stone", role: "Marketing Manager", color: "#1340E8" },
   { headline: "Hire Brendan, you won't regret it!", quote: "Brendan is like a Swiss army knife when it comes to marketing — strategic and hands-on. He helped me build a system that actually works for The IMMA Collective. I've now got real peace of mind, a clear vision for the business, and marketing that feels properly joined up.", author: "Lilli Graf", role: "Founder, The IMMA Collective", color: "#FF6200" },
   { headline: "Brendan does great work!", quote: "Brendan did a terrific and patient job of untangling my Notion ineptitude. I'm saving time already with the new cleaned up format.", author: "Lucian James", role: "Client", color: "#DC2626" },
-  { headline: "More progress in months than a year", quote: "Brendan has been a dream. His support totally invigorated us. We've made more progress in the last couple of months than we had in the previous year.", author: "Alex Aggidis", role: "Head of Marketing, Fundraising Everywhere", color: "#E11D8F" },
+  { headline: "More progress in months than a year", quote: "Brendan has been a dream. His support totally invigorated us. We've made more progress in the last couple of months than we had in the previous year.", author: "Alex Aggidis", role: "Head of Marketing, Everywhere+", color: "#E11D8F" },
   { headline: "Tenacious and exceptional", quote: "Brendan is one of the most tenacious marketers I've met, fast to action plans with exceptional follow through to get the job done.", author: "Courtney Evans", role: "CEO, Funraisin", color: "#1340E8" },
   { headline: "A safe pair of hands", quote: "Brendan is smart. He gets it quickly. He's a very safe pair of hands.", author: "Gary O'Donnell", role: "Operations Director, Dentsu Aegis", color: "#FF6200" },
   { headline: "Big thinking, sharp strategy", quote: "Brendan constantly combined big thinking and strategic expertise to propose innovative new ideas for guiding content development — aligning deep research and analysis with project objectives and KPIs.", author: "Chris Mejaski", role: "Content Strategist, eBay", color: "#DC2626" },
@@ -681,34 +686,31 @@ const SFFireProposalPage = () => {
                 clear role for each layer.
               </P>
 
-              <H3>Notion Workspace — the single source of truth</H3>
-              <P>
-                Training modules, onboarding stages, job records, customer data, safety checklists, compliance
-                tracking. Everything that currently lives in folders, on Stephen's desktop, or in the heads of
-                three people who have been doing this for two decades. Built mobile-first, so crews can access
-                what they need from a phone on-site without needing a Notion account.
-              </P>
-
-              <H3>Notion AI — the knowledge layer</H3>
-              <P>
-                Once the content is in the system, anyone on the team can ask a question in plain language and
-                get an answer drawn from the workspace. Carol doesn't need to know where things are stored.
-                Joe can check a procedure mid-job without calling Stephen.
-              </P>
-
-              <H3>Forms and public web links</H3>
-              <P>
-                How the field crew interact with the system without requiring full accounts. Job completion
-                submitted via a simple mobile form. Photos uploaded. Incident reports filed. The data flows
-                in without the cost of additional Notion seats.
-              </P>
-
-              <H3>Automations — the reliable background layer</H3>
-              <P>
-                Job due reminders triggered by the re-booking cycle. Training stage progressions flagged when a
-                crew member completes a module. QC alerts for Joe when a new hire's first solo job is ready
-                for review.
-              </P>
+              <ul className="mt-8 space-y-5">
+                {[
+                  { icon: IconNotion, title: "Notion Workspace — the single source of truth.", body: "Training modules, onboarding stages, job records, customer data, safety checklists, compliance tracking. Everything that currently lives in folders, on Stephen's desktop, or in the heads of three people who have been doing this for two decades. Built mobile-first, so crews can access what they need from a phone on-site without needing a Notion account." },
+                  { icon: IconLassie, title: "Notion AI — the knowledge layer.", body: "Once the content is in the system, anyone on the team can ask a question in plain language and get an answer drawn from the workspace. Carol doesn't need to know where things are stored. Joe can check a procedure mid-job without calling Stephen." },
+                  { icon: IconFormLink, title: "Forms and public web links — the field interface.", body: "How the field crew interact with the system without requiring full accounts. Job completion submitted via a simple mobile form. Photos uploaded. Incident reports filed. The data flows in without the cost of additional Notion seats." },
+                  { icon: IconZapier, title: "Automations — the reliable background layer.", body: "Job due reminders triggered by the re-booking cycle. Training stage progressions flagged when a crew member completes a module. QC alerts for Joe when a new hire's first solo job is ready for review." },
+                ].map((layer, i) => (
+                  <motion.li
+                    key={i}
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                    className="flex gap-5 items-start bg-card/60 rounded-2xl p-5 shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
+                  >
+                    <div className="flex-shrink-0 w-14 h-14 rounded-xl bg-background flex items-center justify-center shadow-[0_1px_4px_rgba(0,0,0,0.06)]">
+                      <img src={layer.icon} alt="" className="w-9 h-9 object-contain" />
+                    </div>
+                    <div className="flex-1 pt-1">
+                      <strong className="font-serif-pro italic text-lg text-primary block mb-1">{layer.title}</strong>
+                      <span className="text-foreground/75 leading-relaxed">{layer.body}</span>
+                    </div>
+                  </motion.li>
+                ))}
+              </ul>
 
               <P>
                 My job across this engagement is to design the architecture, build the system, train the team,
