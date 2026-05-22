@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowRight, ArrowUpRight, Download, Anchor, X, Send, Check } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Download, Anchor, X, Send, Check, Linkedin } from "lucide-react";
+import NotionBadges from "@/assets/notion-badges.png";
 import { PillButton } from "@/components/ui/pill-button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -1091,14 +1092,36 @@ const LSSProposalPage = () => {
                         </a>
                       </div>
                     </div>
-                    <a
-                      href="mailto:br@brendanrodgers.uk?subject=LSS%20Proposal%20%E2%80%94%20Reply&body=Hi%20Brendan%2C%0A%0A"
-                      className="mt-6 inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-accent text-accent-foreground font-sans text-sm hover:bg-accent/90 transition-colors"
-                    >
-                      <Send className="w-4 h-4" />
-                      Email Brendan
-                    </a>
+                    <div className="mt-6 flex flex-wrap items-center justify-center sm:justify-start gap-3">
+                      <a
+                        href="mailto:br@brendanrodgers.uk?subject=LSS%20Proposal%20%E2%80%94%20Reply&body=Hi%20Brendan%2C%0A%0A"
+                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-accent text-accent-foreground font-sans text-sm hover:bg-accent/90 transition-colors"
+                      >
+                        <Send className="w-4 h-4" />
+                        Email Brendan
+                      </a>
+                      <a
+                        href="https://www.linkedin.com/in/rodgersbrendan/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-border bg-card/40 text-foreground font-sans text-sm hover:bg-card/70 transition-colors"
+                      >
+                        <Linkedin className="w-4 h-4" />
+                        Connect on LinkedIn
+                      </a>
+                    </div>
                   </div>
+                </div>
+
+                <div className="mt-12 sm:mt-16">
+                  <div className="text-center font-sans text-[12px] tracking-[0.22em] uppercase text-muted-foreground/70 mb-5">
+                    Notion Credentials
+                  </div>
+                  <img
+                    src={NotionBadges}
+                    alt="Notion certification badges — Academy Essentials, Workflows, Advanced, AI, Certified Admin, Service Specialist, and Consulting Partner"
+                    className="w-full max-w-2xl mx-auto h-auto"
+                  />
                 </div>
               </motion.div>
             </section>
