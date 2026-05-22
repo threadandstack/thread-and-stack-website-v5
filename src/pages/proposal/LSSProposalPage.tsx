@@ -1039,14 +1039,6 @@ const LSSProposalPage = () => {
                 ]}
               />
 
-              <H3>What we need from you to begin</H3>
-              <BulletList
-                items={[
-                  <>Reply with yes, questions, or call.</>,
-                  <>Read-only access to Monday.com.</>,
-                  <>A short conversation with whoever handles your day-to-day admin.</>,
-                ]}
-              />
             </section>
 
             <Rule />
