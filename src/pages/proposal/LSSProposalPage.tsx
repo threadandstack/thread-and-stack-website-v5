@@ -571,12 +571,12 @@ const LSSProposalPage = () => {
 
         {/* ============== EDITORIAL HEADER ============== */}
         <header className="px-5 sm:px-8 pt-24 sm:pt-32 md:pt-40 pb-12 md:pb-16">
-          <div className="max-w-2xl mx-auto text-center">
+          <div className="max-w-2xl mx-auto text-center flex flex-col">
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.05 }}
-              className="font-sans text-[10.5px] sm:text-[11px] tracking-[0.28em] uppercase text-muted-foreground mb-8 sm:mb-0 sm:order-2 sm:mt-0"
+              className="font-sans text-[10.5px] sm:text-[11px] tracking-[0.28em] uppercase text-muted-foreground mb-8 sm:mb-10 order-1 sm:order-2"
             >
               Confidential <span className="text-muted-foreground/40 mx-2">·</span> Proposal{" "}
               <span className="text-muted-foreground/40 mx-2">·</span> May 2026
@@ -586,14 +586,13 @@ const LSSProposalPage = () => {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.15 }}
-              className="flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-14 md:gap-20 mb-12 sm:mb-14 sm:order-1"
+              className="flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-14 md:gap-20 mb-12 sm:mb-14 order-2 sm:order-1"
             >
               <img src={BlackStacked} alt="Thread & Stack" className="h-20 sm:h-20 md:h-24 w-auto" />
               <X aria-hidden="true" className="w-5 h-5 sm:w-6 sm:h-6 text-foreground/25" strokeWidth={1} />
               <img src={LssLogoBlack} alt="London School of Sailing" className="h-20 sm:h-20 md:h-24 w-auto" />
             </motion.div>
 
-            <motion.div className="hidden sm:block sm:h-10" aria-hidden="true" />
 
             <motion.h1
               initial={{ opacity: 0, y: 16 }}
