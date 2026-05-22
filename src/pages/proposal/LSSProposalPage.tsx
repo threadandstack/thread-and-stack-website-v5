@@ -626,18 +626,19 @@ const LSSProposalPage = () => {
                 {/* Phase 1 */}
                 <div className="relative pb-14">
                   <span className="inline-flex items-center rounded-full bg-accent px-4 py-1 text-xs font-bold tracking-[0.18em] uppercase text-accent-foreground">
-                    Phase 1 · Mapping
+                    Phase 1 · Discovery
                   </span>
                   <h3 className="mt-4 font-serif text-2xl sm:text-3xl leading-tight">
-                    In-person mapping session
+                    In-person discovery session
                   </h3>
                   <P>
                     <strong>1 session · <Price was="£500" now="£400" /></strong>
                   </P>
                   <P>
-                    One focused half-day together, in person. We walk the current systems, confirm priorities, map
-                    what the foundation build needs to contain. You leave with a shared brief, agreed before
-                    anything gets built.
+                    We've already done some of the work during our session together on Wednesday, so I'm able to
+                    reduce this phase from a full day to a single half day. As we sit down together and map out
+                    current systems, confirm priorities, and map what the foundation build needs to contain.
+                    You'll leave with a shared brief, agreed before anything gets built.
                   </P>
                   <P>
                     <strong>Before the session:</strong> access to Monday, and a short conversation with whoever
@@ -716,7 +717,7 @@ const LSSProposalPage = () => {
               <EditorialTable
                 head={["Milestone", "When", "Amount"]}
                 rows={[
-                  ["Phase 1 — mapping session", "On booking", "£400"],
+                  ["Phase 1 — discovery session", "On booking", "£400"],
                   ["Phase 2 — first half of build", "End of month one", "£2,000"],
                   ["Phase 2 — second half of build", "End of month two", "£2,000"],
                   ["Ongoing — month one", "End of month three", "£400"],
@@ -741,7 +742,7 @@ const LSSProposalPage = () => {
               />
 
               <H3>Option 3 — Paid in full</H3>
-              <P>The cheapest route — an extra £200 off for paying in full, upfront.</P>
+              <P>The cheapest route — an additional saving of £200 for paying in full, upfront.</P>
               <EditorialTable
                 rows={[
                   ["Full engagement, paid upfront", <strong>£5,400</strong>],
@@ -771,7 +772,7 @@ const LSSProposalPage = () => {
                   [<strong>Consultant</strong>, "Brendan Rodgers, Thread & Stack"],
                   [<strong>Standard rate</strong>, <span className="line-through text-muted-foreground/60">£500</span>],
                   [<strong>Defined rate</strong>, "£400 per half-day (relationship rate, permanently)"],
-                  [<strong>Phase 1</strong>, "In-person mapping session — 1 block"],
+                  [<strong>Phase 1</strong>, "In-person discovery session — 1 block"],
                   [<strong>Phase 2</strong>, "Foundation build — ~10 blocks"],
                   [<strong>Ongoing</strong>, "Monthly support block — 1 block/month"],
                   [<strong>Phase 1 total</strong>, "£400"],
