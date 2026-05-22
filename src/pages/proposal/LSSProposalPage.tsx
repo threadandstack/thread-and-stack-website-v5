@@ -1059,6 +1059,7 @@ const LSSProposalPage = () => {
           </div>
         </footer>
       </motion.main>
+      <ReplyDrawer open={replyOpen} onOpenChange={setReplyOpen} />
     </>
   );
 };
