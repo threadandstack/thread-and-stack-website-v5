@@ -105,6 +105,57 @@ const PullQuote = ({ children, rotate = 0.2 }: { children: React.ReactNode; rota
   </motion.blockquote>
 );
 
+// Editorial table — soft card, brand-book treatment
+const EditorialTable = ({
+  head,
+  rows,
+}: {
+  head?: React.ReactNode[];
+  rows: React.ReactNode[][];
+}) => (
+  <motion.div
+    {...fadeUp}
+    className="my-8 overflow-hidden rounded-2xl border border-border bg-card/40 shadow-[0_2px_24px_-12px_rgba(0,0,0,0.08)]"
+  >
+    <table className="w-full font-sans text-[14.5px] md:text-[15px]">
+      {head && (
+        <thead>
+          <tr className="bg-muted/40">
+            {head.map((h, i) => (
+              <th
+                key={i}
+                className="text-left px-4 md:px-5 py-3 font-semibold text-[11px] tracking-[0.18em] uppercase text-muted-foreground"
+              >
+                {h}
+              </th>
+            ))}
+          </tr>
+        </thead>
+      )}
+      <tbody>
+        {rows.map((row, r) => (
+          <tr key={r} className="border-t border-border/60">
+            {row.map((cell, c) => (
+              <td key={c} className="px-4 md:px-5 py-3 align-top text-foreground/85 leading-[1.6]">
+                {cell}
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </motion.div>
+);
+
+// Price strike → new (brand-book pink/blue treatment, kept subtle)
+const Price = ({ was, now }: { was: string; now: string }) => (
+  <span className="whitespace-nowrap">
+    <span className="line-through text-muted-foreground/60 mr-2">{was}</span>
+    <span className="text-accent font-semibold">{now}</span>
+  </span>
+);
+
+
 
 /* ---------------------------- Welcome ---------------------------- */
 
