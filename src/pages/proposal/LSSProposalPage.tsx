@@ -598,7 +598,7 @@ const LSSProposalPage = () => {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.25 }}
-              className="font-serif-pro text-[36px] sm:text-5xl md:text-6xl italic font-semibold leading-[1.05] tracking-tight text-foreground text-balance mb-8"
+              className="font-serif-pro text-[36px] sm:text-5xl md:text-6xl italic font-semibold leading-[1.05] tracking-tight text-foreground text-balance mb-8 order-3"
             >
               A{" "}
               <span className="inline-block text-accent" style={{ transform: "translateY(1px)" }}>
@@ -611,7 +611,7 @@ const LSSProposalPage = () => {
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.45 }}
-              className="font-sans text-[14px] sm:text-[15px] text-muted-foreground tracking-wide leading-relaxed"
+              className="font-sans text-[14px] sm:text-[15px] text-muted-foreground tracking-wide leading-relaxed order-4"
             >
               <span className="block sm:inline">Prepared for Ruaraidh Plummer</span>
               <span className="hidden sm:inline"> · </span>
