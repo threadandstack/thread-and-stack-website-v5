@@ -424,21 +424,21 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => (
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="self-center order-1 sm:order-2 font-sans text-[10.5px] sm:text-[12px] tracking-[0.28em] uppercase text-primary-foreground/55 mt-14 sm:mt-0 mb-8 sm:mb-12 text-center"
-        >
-          Confidential <span className="text-primary-foreground/25 mx-2">·</span> Proposal{" "}
-          <span className="text-primary-foreground/25 mx-2">·</span> May 2026
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.35 }}
-          className="self-center order-2 sm:order-1 flex flex-col sm:flex-row items-center gap-8 sm:gap-14 md:gap-20 sm:mt-20 md:mt-24 mb-12 sm:mb-16"
+          className="self-center flex flex-col sm:flex-row items-center gap-8 sm:gap-14 md:gap-20 mt-14 sm:mt-20 md:mt-24 mb-12 sm:mb-16"
         >
           <img src={WhiteStacked} alt="Thread & Stack" className="h-24 sm:h-24 md:h-28 w-auto" />
           <X aria-hidden="true" className="w-5 h-5 sm:w-6 sm:h-6 text-primary-foreground/30" strokeWidth={1} />
           <img src={LssLogoWhite} alt="London School of Sailing" className="h-24 sm:h-24 md:h-28 w-auto" />
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.35 }}
+          className="self-center font-sans text-[10.5px] sm:text-[12px] tracking-[0.28em] uppercase text-primary-foreground/55 mb-8 sm:mb-12 text-center"
+        >
+          Confidential <span className="text-primary-foreground/25 mx-2">·</span> Proposal{" "}
+          <span className="text-primary-foreground/25 mx-2">·</span> May 2026
         </motion.div>
 
         <motion.h1
