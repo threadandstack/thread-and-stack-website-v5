@@ -198,6 +198,28 @@ const ReplyDrawer = ({ open, onOpenChange }: { open: boolean; onOpenChange: (o: 
             </div>
           </div>
 
+          {intent === "call" && (
+            <div className="rounded-xl border border-border overflow-hidden bg-background">
+              <div className="px-4 py-2 border-b border-border/60 flex items-center justify-between">
+                <span className="font-sans text-xs text-muted-foreground">Pick a time that works</span>
+                <a
+                  href="https://calendar.notion.so/meet/threadandstack/65kzf4ojy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-sans text-xs text-accent hover:underline inline-flex items-center gap-1"
+                >
+                  Open <ArrowUpRight className="w-3 h-3" />
+                </a>
+              </div>
+              <iframe
+                src="https://calendar.notion.so/meet/threadandstack/65kzf4ojy"
+                title="Schedule a call with Brendan"
+                className="w-full h-[520px] border-0"
+                loading="lazy"
+              />
+            </div>
+          )}
+
           <div>
             <Label htmlFor="lss-message" className="text-sm text-muted-foreground">
               Anything to add <span className="text-muted-foreground/60">(optional)</span>
