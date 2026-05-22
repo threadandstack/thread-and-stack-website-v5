@@ -216,9 +216,6 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => (
           className="max-w-xl text-left mb-8 sm:mb-10"
         >
           <div className="font-sans text-sm sm:text-[15px] leading-[1.75] text-primary-foreground/80 space-y-4">
-            <p className="font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-primary-foreground/50">
-              A Note from Brendan
-            </p>
 
             <p className="text-primary-foreground/90 font-medium">Ruaraidh,</p>
 
