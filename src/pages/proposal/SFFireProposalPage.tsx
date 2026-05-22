@@ -1044,9 +1044,12 @@ const SFFireProposalPage = () => {
                           <p className="font-sans text-[13px] leading-relaxed text-foreground/75 mb-4 flex-1">
                             {t.quote}
                           </p>
-                          <div className="pt-3 border-t border-border/60">
-                            <div className="font-sans text-[13px] text-foreground">{t.author}</div>
-                            <div className="font-sans text-[11px] text-muted-foreground mt-0.5">{t.role}</div>
+                          <div
+                            className="pt-3 pb-3 px-4 -mx-5 -mb-5 mt-auto rounded-b-2xl"
+                            style={{ backgroundColor: t.color }}
+                          >
+                            <div className="font-sans text-[13px] text-white font-semibold">{t.author}</div>
+                            <div className="font-sans text-[11px] text-white/80 mt-0.5">{t.role}</div>
                           </div>
                         </div>
                       </CarouselItem>
