@@ -1007,8 +1007,47 @@ const SFFireProposalPage = () => {
                     </div>
                   </div>
                 </div>
+              </motion.div>
 
-                <div className="mt-12 sm:mt-16">
+              {/* Trust-building testimonials carousel */}
+              <motion.div {...fadeUp} className="mx-auto max-w-4xl mt-14 sm:mt-16">
+                <div className="text-center font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-accent mb-5">
+                  Kind words
+                </div>
+                <Carousel
+                  opts={{ align: "start", loop: true, dragFree: true }}
+                  className="w-full"
+                >
+                  <CarouselContent className="-ml-3">
+                    {testimonials.map((t, i) => (
+                      <CarouselItem
+                        key={i}
+                        className="pl-3 basis-[85%] sm:basis-1/2 lg:basis-1/3"
+                      >
+                        <div className="h-full rounded-2xl border border-border bg-card/40 shadow-[0_2px_24px_-12px_rgba(0,0,0,0.12)] p-5 flex flex-col">
+                          <p className="font-serif-pro italic text-[15px] leading-snug text-foreground mb-3">
+                            "{t.headline}"
+                          </p>
+                          <p className="font-sans text-[13px] leading-relaxed text-foreground/75 mb-4 flex-1">
+                            {t.quote}
+                          </p>
+                          <div className="pt-3 border-t border-border/60">
+                            <div className="font-sans text-[13px] text-foreground">{t.author}</div>
+                            <div className="font-sans text-[11px] text-muted-foreground mt-0.5">{t.role}</div>
+                          </div>
+                        </div>
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+                  <div className="hidden sm:block">
+                    <CarouselPrevious className="-left-4" />
+                    <CarouselNext className="-right-4" />
+                  </div>
+                </Carousel>
+              </motion.div>
+
+              <motion.div {...fadeUp} className="mx-auto max-w-xl mt-12 sm:mt-16">
+                <div>
                   <div className="text-center font-sans text-[12px] tracking-[0.22em] uppercase text-muted-foreground/70 mb-5">
                     Notion Credentials
                   </div>
@@ -1018,6 +1057,7 @@ const SFFireProposalPage = () => {
                     className="w-full max-w-2xl mx-auto h-auto"
                   />
                 </div>
+
               </motion.div>
             </section>
 
