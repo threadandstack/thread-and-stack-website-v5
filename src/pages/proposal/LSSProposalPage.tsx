@@ -614,53 +614,103 @@ const LSSProposalPage = () => {
                 title={<>Three phases, <Hl>shaped</Hl> around you.</>}
               />
 
-              <H3>Phase 1 — In-person mapping session</H3>
-              <P>
-                <strong>1 session · <Price was="£500" now="£400" /></strong>
-              </P>
-              <P>
-                One focused half-day together, in person. We walk the current systems, confirm priorities, map
-                what the foundation build needs to contain. You leave with a shared brief, agreed before anything
-                gets built.
-              </P>
-              <P>
-                <strong>Before the session:</strong> access to Monday, and a short conversation with whoever
-                handles day-to-day admin alongside you.
-              </P>
+              <div className="relative mt-8 pl-8 sm:pl-12">
+                {/* Timeline rail */}
+                <div
+                  aria-hidden
+                  className="absolute left-[7px] sm:left-[11px] top-3 bottom-3 w-px bg-primary-foreground/25"
+                  style={{
+                    backgroundImage:
+                      "linear-gradient(to bottom, hsl(var(--primary-foreground) / 0.35) 50%, transparent 50%)",
+                    backgroundSize: "1px 8px",
+                    backgroundRepeat: "repeat-y",
+                  }}
+                />
 
-              <H3>Phase 2 — Foundation build</H3>
-              <P>
-                <strong>10 sessions · <Price was="£5,000" now="£4,000" /> · split across two months (£2,000/mo)</strong>
-              </P>
-              <BulletList
-                items={[
-                  <>CRM replacing Monday — contacts, bookings, enquiry pipeline, customer history.</>,
-                  <>Customer journey automations — confirmation, payment reminders, joining instructions, post-voyage follow-up.</>,
-                  <>Voyage Records — crew manifest, pre-sail checks, skipper sign-offs, incident log.</>,
-                  <>Daily ops dashboard — your view, Sharon's view, James's event schedule.</>,
-                  <>Notion Mail — Gmail triage from within the workspace.</>,
-                  <>Guest pages — joining instructions and skipper packs, no login required.</>,
-                  <>FreeAgent invoice automation — booking confirmed triggers invoice.</>,
-                  <>Squarespace event integration — investigated in Phase 1, built where feasible.</>,
-                  <>Two onboarding sessions — team working in the system comfortably before handover.</>,
-                ]}
-              />
+                {/* Phase 1 */}
+                <div className="relative pb-14">
+                  <span
+                    aria-hidden
+                    className="absolute -left-8 sm:-left-12 top-1 h-4 w-4 rounded-full bg-primary ring-4 ring-background"
+                  />
+                  <span className="inline-flex items-center rounded-full bg-primary px-4 py-1 text-xs font-bold tracking-[0.18em] uppercase text-primary-foreground">
+                    Phase 1 · Mapping
+                  </span>
+                  <h3 className="mt-4 font-serif text-2xl sm:text-3xl leading-tight">
+                    In-person mapping session
+                  </h3>
+                  <P>
+                    <strong>1 session · <Price was="£500" now="£400" /></strong>
+                  </P>
+                  <P>
+                    One focused half-day together, in person. We walk the current systems, confirm priorities, map
+                    what the foundation build needs to contain. You leave with a shared brief, agreed before
+                    anything gets built.
+                  </P>
+                  <P>
+                    <strong>Before the session:</strong> access to Monday, and a short conversation with whoever
+                    handles day-to-day admin alongside you.
+                  </P>
+                </div>
 
-              <H3>Ongoing — monthly support</H3>
-              <P>
-                <strong>1 half-day session · <Price was="£500" now="£400" /> (3 months minimum)</strong>
-              </P>
-              <P>
-                Retainer operates on a 3-month minimum commitment, but lets you flexibly scale up. Based on your
-                own technical ability, we could use these days as co-building sessions to super-charge value.
-              </P>
-              <BulletList
-                items={[
-                  <><strong>Month 1</strong> → sort out any adoption issues.</>,
-                  <><strong>Month 2</strong> → identify potential improvements, automations, workflows you'd like to see.</>,
-                  <><strong>Month 3</strong> → new agents, refining workflows, ensuring success.</>,
-                ]}
-              />
+                {/* Phase 2 */}
+                <div className="relative pb-14">
+                  <span
+                    aria-hidden
+                    className="absolute -left-8 sm:-left-12 top-1 h-4 w-4 rounded-full bg-primary ring-4 ring-background"
+                  />
+                  <span className="inline-flex items-center rounded-full bg-primary px-4 py-1 text-xs font-bold tracking-[0.18em] uppercase text-primary-foreground">
+                    Phase 2 · Build
+                  </span>
+                  <h3 className="mt-4 font-serif text-2xl sm:text-3xl leading-tight">
+                    Foundation build
+                  </h3>
+                  <P>
+                    <strong>10 sessions · <Price was="£5,000" now="£4,000" /> · split across two months (£2,000/mo)</strong>
+                  </P>
+                  <BulletList
+                    items={[
+                      <>CRM replacing Monday — contacts, bookings, enquiry pipeline, customer history.</>,
+                      <>Customer journey automations — confirmation, payment reminders, joining instructions, post-voyage follow-up.</>,
+                      <>Voyage Records — crew manifest, pre-sail checks, skipper sign-offs, incident log.</>,
+                      <>Daily ops dashboard — your view, Sharon's view, James's event schedule.</>,
+                      <>Notion Mail — Gmail triage from within the workspace.</>,
+                      <>Guest pages — joining instructions and skipper packs, no login required.</>,
+                      <>FreeAgent invoice automation — booking confirmed triggers invoice.</>,
+                      <>Squarespace event integration — investigated in Phase 1, built where feasible.</>,
+                      <>Two onboarding sessions — team working in the system comfortably before handover.</>,
+                    ]}
+                  />
+                </div>
+
+                {/* Phase 3 */}
+                <div className="relative">
+                  <span
+                    aria-hidden
+                    className="absolute -left-8 sm:-left-12 top-1 h-4 w-4 rounded-full bg-primary ring-4 ring-background"
+                  />
+                  <span className="inline-flex items-center rounded-full border border-primary/60 bg-primary/10 px-4 py-1 text-xs font-bold tracking-[0.18em] uppercase text-primary">
+                    Phase 3 · Ongoing
+                  </span>
+                  <h3 className="mt-4 font-serif text-2xl sm:text-3xl leading-tight">
+                    Monthly support
+                  </h3>
+                  <P>
+                    <strong>1 half-day session · <Price was="£500" now="£400" /> (3 months minimum)</strong>
+                  </P>
+                  <P>
+                    Retainer operates on a 3-month minimum commitment, but lets you flexibly scale up. Based on your
+                    own technical ability, we could use these days as co-building sessions to super-charge value.
+                  </P>
+                  <BulletList
+                    items={[
+                      <><strong>Month 1</strong> → sort out any adoption issues.</>,
+                      <><strong>Month 2</strong> → identify potential improvements, automations, workflows you'd like to see.</>,
+                      <><strong>Month 3</strong> → new agents, refining workflows, ensuring success.</>,
+                    ]}
+                  />
+                </div>
+              </div>
             </section>
 
             <Rule />
