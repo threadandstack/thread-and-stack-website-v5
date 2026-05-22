@@ -1,7 +1,15 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowRight, Download, Anchor, X } from "lucide-react";
+import { ArrowRight, Download, Anchor, X, Send, Check } from "lucide-react";
 import { PillButton } from "@/components/ui/pill-button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+import { z } from "zod";
+import { trackContactFormSubmit } from "@/hooks/useAnalytics";
 import WhiteStacked from "@/assets/logos/White_TS_Stacked.svg";
 import BlackStacked from "@/assets/logos/Black_TS_Stacked.svg";
 import GreyStacked from "@/assets/logos/Grey_TS_Stacked.svg";
@@ -13,6 +21,219 @@ import IconNotion from "@/assets/proposal/icons/notion.png";
 import IconNotionAI from "@/assets/proposal/icons/notion-ai.png";
 import IconLassie from "@/assets/proposal/icons/lassie.png";
 import IconZapier from "@/assets/proposal/icons/zapier.svg";
+
+/* ---------------------------- Reply Drawer ---------------------------- */
+
+const INTENT_OPTIONS = [
+  { value: "yes", label: "Yes, let's begin" },
+  { value: "questions", label: "I have a few questions" },
+  { value: "call", label: "Let's schedule a call" },
+] as const;
+
+type Intent = typeof INTENT_OPTIONS[number]["value"];
+
+const replySchema = z.object({
+  name: z.string().trim().min(1, "Please add your name").max(100),
+  email: z.string().trim().email("Please enter a valid email").max(255),
+  message: z.string().max(2000).optional(),
+});
+
+const ReplyDrawer = ({ open, onOpenChange }: { open: boolean; onOpenChange: (o: boolean) => void }) => {
+  const [name, setName] = useState("Ruaraidh");
+  const [email, setEmail] = useState("");
+  const [intent, setIntent] = useState<Intent>("yes");
+  const [message, setMessage] = useState("");
+  const [honeypot, setHoneypot] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (honeypot) return;
+
+    const validation = replySchema.safeParse({
+      name: name.trim(),
+      email: email.trim(),
+      message: message.trim() || undefined,
+    });
+    if (!validation.success) {
+      toast({
+        title: "Just a moment",
+        description: validation.error.errors[0]?.message || "Please check your input",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+    const intentLabel = INTENT_OPTIONS.find((o) => o.value === intent)?.label ?? "";
+    const fullMessage = [`Intent: ${intentLabel}`, message.trim()].filter(Boolean).join("\n\n");
+    const source = "lss-proposal";
+
+    try {
+      const leadId = crypto.randomUUID();
+      const cleanName = name.trim();
+      const cleanEmail = email.trim();
+
+      const { error } = await supabase.from("leads").insert({
+        id: leadId,
+        name: cleanName,
+        email: cleanEmail,
+        message: fullMessage,
+        source,
+      });
+      if (error) throw error;
+
+      trackContactFormSubmit(source);
+
+      supabase.functions
+        .invoke("sync-lead-to-notion", {
+          body: { name: cleanName, email: cleanEmail, message: fullMessage, source },
+        })
+        .catch((err) => console.error("Notion sync error:", err));
+
+      supabase.functions
+        .invoke("send-transactional-email", {
+          body: {
+            templateName: "lead-visitor-confirmation",
+            recipientEmail: cleanEmail,
+            idempotencyKey: `lead-visitor-${leadId}`,
+            templateData: { name: cleanName },
+          },
+        })
+        .catch((err) => console.error("Visitor email error:", err));
+
+      supabase.functions
+        .invoke("send-transactional-email", {
+          body: {
+            templateName: "lead-admin-notification",
+            idempotencyKey: `lead-admin-${leadId}`,
+            templateData: {
+              name: cleanName,
+              email: cleanEmail,
+              source,
+              message: fullMessage,
+              submittedAt: new Date().toISOString(),
+            },
+          },
+        })
+        .catch((err) => console.error("Admin email error:", err));
+
+      toast({
+        title: "Reply sent",
+        description: "Thanks Ruaraidh — I'll be in touch shortly.",
+      });
+      setEmail("");
+      setMessage("");
+      setIntent("yes");
+      onOpenChange(false);
+    } catch (err: any) {
+      console.error("LSS proposal reply error:", err);
+      toast({
+        title: "Something went wrong",
+        description: "Please try again or email br@brendanrodgers.uk directly.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetContent className="w-full sm:max-w-md overflow-y-auto">
+        <SheetHeader className="mb-2">
+          <SheetTitle className="font-serif-pro text-2xl italic font-semibold">Reply to begin</SheetTitle>
+        </SheetHeader>
+        <p className="font-sans text-sm text-muted-foreground leading-relaxed mb-6">
+          A short note straight to Brendan. Pick what fits — adjust anything you need to.
+        </p>
+
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div>
+            <Label htmlFor="lss-name" className="text-sm text-muted-foreground">Name</Label>
+            <Input
+              id="lss-name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="bg-background rounded-lg mt-1"
+              required
+            />
+          </div>
+
+          <div>
+            <Label htmlFor="lss-email" className="text-sm text-muted-foreground">Email *</Label>
+            <Input
+              id="lss-email"
+              type="email"
+              placeholder="you@lss.co.uk"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="bg-background rounded-lg mt-1"
+            />
+          </div>
+
+          <div>
+            <Label className="text-sm text-muted-foreground">My reply</Label>
+            <div className="flex flex-wrap gap-2 mt-2">
+              {INTENT_OPTIONS.map((opt) => {
+                const selected = intent === opt.value;
+                return (
+                  <button
+                    key={opt.value}
+                    type="button"
+                    onClick={() => setIntent(opt.value)}
+                    className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-sans transition-all border ${
+                      selected
+                        ? "bg-accent text-accent-foreground border-accent"
+                        : "bg-background text-muted-foreground border-border hover:border-accent/50"
+                    }`}
+                  >
+                    {selected && <Check className="w-3.5 h-3.5" />}
+                    {opt.label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <div>
+            <Label htmlFor="lss-message" className="text-sm text-muted-foreground">
+              Anything to add <span className="text-muted-foreground/60">(optional)</span>
+            </Label>
+            <Textarea
+              id="lss-message"
+              placeholder="Questions, tweaks, or a couple of dates that work…"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              className="bg-background rounded-lg mt-1 min-h-[110px]"
+            />
+          </div>
+
+          <div className="absolute -left-[9999px]" aria-hidden="true">
+            <Input
+              type="text"
+              name="website"
+              tabIndex={-1}
+              autoComplete="off"
+              value={honeypot}
+              onChange={(e) => setHoneypot(e.target.value)}
+            />
+          </div>
+
+          <PillButton type="submit" disabled={isSubmitting} className="w-full" icon={Send}>
+            {isSubmitting ? "Sending…" : "Send reply"}
+          </PillButton>
+
+          <p className="font-sans text-[11px] text-muted-foreground/70 text-center pt-1">
+            Goes directly to br@brendanrodgers.uk
+          </p>
+        </form>
+      </SheetContent>
+    </Sheet>
+  );
+};
 
 
 /* ---------------------------- Helpers ---------------------------- */
@@ -282,6 +503,7 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => (
 
 const LSSProposalPage = () => {
   const [opened, setOpened] = useState(false);
+  const [replyOpen, setReplyOpen] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -813,10 +1035,8 @@ const LSSProposalPage = () => {
                   book the mapping session. The aim is a system that fits the way LSS actually runs, not the way
                   a brief assumes it does.
                 </p>
-                <PillButton size="lg" icon={Anchor} asChild>
-                  <a href="mailto:br@brendanrodgers.uk?subject=LSS%20Proposal%20—%20next%20steps">
-                    Reply to begin
-                  </a>
+                <PillButton size="lg" icon={Anchor} onClick={() => setReplyOpen(true)}>
+                  Reply to begin
                 </PillButton>
               </motion.div>
             </section>
@@ -839,6 +1059,7 @@ const LSSProposalPage = () => {
           </div>
         </footer>
       </motion.main>
+      <ReplyDrawer open={replyOpen} onOpenChange={setReplyOpen} />
     </>
   );
 };
