@@ -363,33 +363,35 @@ const EditorialTable = ({
     {...fadeUp}
     className="my-8 overflow-hidden rounded-2xl border border-border bg-card/40 shadow-[0_2px_24px_-12px_rgba(0,0,0,0.08)]"
   >
-    <table className="w-full font-sans text-[14.5px] md:text-[15px]">
-      {head && (
-        <thead>
-          <tr className="bg-muted/40">
-            {head.map((h, i) => (
-              <th
-                key={i}
-                className="text-left px-4 md:px-5 py-3 font-semibold text-[11px] tracking-[0.18em] uppercase text-muted-foreground"
-              >
-                {h}
-              </th>
-            ))}
-          </tr>
-        </thead>
-      )}
-      <tbody>
-        {rows.map((row, r) => (
-          <tr key={r} className="border-t border-border/60">
-            {row.map((cell, c) => (
-              <td key={c} className="px-4 md:px-5 py-3 align-top text-foreground/85 leading-[1.6]">
-                {cell}
-              </td>
-            ))}
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <div className="overflow-x-auto">
+      <table className="w-full font-sans text-[13.5px] sm:text-[15px] min-w-[420px]">
+        {head && (
+          <thead>
+            <tr className="bg-muted/40">
+              {head.map((h, i) => (
+                <th
+                  key={i}
+                  className="text-left px-3 sm:px-5 py-2.5 sm:py-3 font-semibold text-[10px] sm:text-[11px] tracking-[0.16em] sm:tracking-[0.18em] uppercase text-muted-foreground"
+                >
+                  {h}
+                </th>
+              ))}
+            </tr>
+          </thead>
+        )}
+        <tbody>
+          {rows.map((row, r) => (
+            <tr key={r} className="border-t border-border/60">
+              {row.map((cell, c) => (
+                <td key={c} className="px-3 sm:px-5 py-2.5 sm:py-3 align-top text-foreground/85 leading-[1.55] sm:leading-[1.6]">
+                  {cell}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   </motion.div>
 );
 
