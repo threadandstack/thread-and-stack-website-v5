@@ -105,6 +105,57 @@ const PullQuote = ({ children, rotate = 0.2 }: { children: React.ReactNode; rota
   </motion.blockquote>
 );
 
+// Editorial table — soft card, brand-book treatment
+const EditorialTable = ({
+  head,
+  rows,
+}: {
+  head?: React.ReactNode[];
+  rows: React.ReactNode[][];
+}) => (
+  <motion.div
+    {...fadeUp}
+    className="my-8 overflow-hidden rounded-2xl border border-border bg-card/40 shadow-[0_2px_24px_-12px_rgba(0,0,0,0.08)]"
+  >
+    <table className="w-full font-sans text-[14.5px] md:text-[15px]">
+      {head && (
+        <thead>
+          <tr className="bg-muted/40">
+            {head.map((h, i) => (
+              <th
+                key={i}
+                className="text-left px-4 md:px-5 py-3 font-semibold text-[11px] tracking-[0.18em] uppercase text-muted-foreground"
+              >
+                {h}
+              </th>
+            ))}
+          </tr>
+        </thead>
+      )}
+      <tbody>
+        {rows.map((row, r) => (
+          <tr key={r} className="border-t border-border/60">
+            {row.map((cell, c) => (
+              <td key={c} className="px-4 md:px-5 py-3 align-top text-foreground/85 leading-[1.6]">
+                {cell}
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </motion.div>
+);
+
+// Price strike → new (brand-book pink/blue treatment, kept subtle)
+const Price = ({ was, now }: { was: string; now: string }) => (
+  <span className="whitespace-nowrap">
+    <span className="line-through text-muted-foreground/60 mr-2">{was}</span>
+    <span className="text-accent font-semibold">{now}</span>
+  </span>
+);
+
+
 
 /* ---------------------------- Welcome ---------------------------- */
 
@@ -326,256 +377,206 @@ const LSSProposalPage = () => {
         {/* ============== BODY ============== */}
         <article className="px-5 sm:px-8 pb-24">
           <div className="max-w-2xl mx-auto">
-            {/* 01 — Outgrown the tool-sprawl stage */}
+            {/* (legacy intro removed — replaced by new section 01 below) */}
+
+
+            {/* 01 — The problem */}
             <section>
               <SectionHead
                 num="01"
-                eyebrow="Where LSS is now"
+                eyebrow="The problem"
                 rotate={-0.4}
-                title={<>LSS has outgrown the <Hl>tool-sprawl</Hl> stage.</>}
+                title={<>LSS has grown faster than its <Hl>systems.</Hl></>}
               />
               <P>
-                LSS is now scaling at a pace where the systems that got you here will quietly start to cost you
-                more than they're worth. What you need now is operational strength that scales with the team, the
-                customer base, and the ambition behind the business.
+                Same client volume in two quarters as your entire first year. Three to four hundred WhatsApp
+                notifications a day. Inbox Zero hit once in six months, at three hundred unread. Monday too slow
+                to load. Customer data in Monday, comms in Gmail and WhatsApp, event details in Squarespace,
+                accounts in FreeAgent — all of it separate, none of it talking, <em>all of it routing through you</em>.
               </P>
-              <P>What you're really buying is:</P>
-              <BulletList
-                items={[
-                  <><strong>Less reactive comms</strong> (email, WhatsApp, phone) landing on you personally.</>,
-                  <><strong>Centralised knowledge</strong> — LSS team and collaborators can find answers, faster.</>,
-                  <><strong>Clear accountability</strong> across the team — who owns what, what's next, what's overdue.</>,
-                  <><strong>Repeatable customer delivery</strong> (pre-voyage → on-voyage → post-voyage).</>,
-                  <><strong>A founder setup that stops you being the bottleneck.</strong></>,
-                ]}
-              />
+              <P>
+                <strong>The tools that got you here are now costing you more than they're worth.</strong> Not just
+                in money. In time, in cognitive load, in the mental overhead of holding it all together
+                personally. The business is thriving. The infrastructure needs an update.
+              </P>
             </section>
-
 
             <Rule />
 
-            {/* 02 — Voyage Tracking */}
+            {/* 02 — Walls and dams to lakes and rivers */}
             <section>
               <SectionHead
                 num="02"
-                eyebrow="Systems that build safety"
+                eyebrow="The philosophy"
                 rotate={0.3}
-                title={<>Voyage <Hl shift={-1}>Tracking.</Hl></>}
+                title={<>From walls and dams to <Hl shift={-1}>lakes and rivers.</Hl></>}
               />
               <P>
-                As I reviewed our notes, something we didn't discuss became obvious — we should build a live
-                Voyage Tracking system. It gives you:
+                Most software is designed to make leaving difficult. Over time, the tools you pay for become the
+                walls around your business — not yours to move, not yours to connect, often training on your data
+                in the process.
               </P>
-              <BulletList
-                items={[
-                  <><strong>Safety and compliance, systematised</strong> — crew details, requirements, sign-offs, incident notes, all in one place.</>,
-                  <><strong>Clarity of responsibility</strong> — who checked what, when, and who signed it off.</>,
-                  <><strong>A stronger paper trail</strong> for a commercial sailing operation, in a world that increasingly rewards businesses that can show their working.</>,
-                ]}
-              />
               <P>
-                And crucially: built in a way that utilises offline tools, so that intermittent signal on a boat
-                becomes less of an issue. When you next find signal, the system updates and resumes. From the
-                boat, in the harbour, mid-Solent, wherever the work actually happens.
+                The approach here is different. We build around a <strong>knowledge lake that LSS owns
+                entirely</strong>, where every tool earns its place and none of them hold you hostage.
               </P>
               <PullQuote rotate={-0.4}>
-                This shouldn't feel heavy. It should feel like: <em className="text-accent not-italic font-semibold">we run a tight ship, and the system proves it.</em>
+                Own the lake. Let the <Hl shift={-2}>rivers</Hl> come and go.
               </PullQuote>
             </section>
 
             <Rule />
 
-            {/* 03 — Operational continuity */}
+            {/* 03 — The solve: LSS OS */}
             <section>
               <SectionHead
                 num="03"
-                eyebrow="The brief underneath the brief"
+                eyebrow="The solve"
                 rotate={-0.3}
-                title={<>Operational <Hl>continuity.</Hl></>}
+                title={<><Hl>LSS OS</Hl> — a five-layer system.</>}
               />
-              <P>This is not about any one team member, but about designing LSS its own OS. We want to enable:</P>
+              <P>
+                One coherent operation, replacing the fragmentation. Each layer connects to the same knowledge
+                base. Each one is replaceable if something better comes along.
+              </P>
               <BulletList
                 items={[
-                  <>You can add staff without adding chaos.</>,
-                  <>Contractors and skippers can be onboarded without you reinventing the wheel each time.</>,
-                  <>The business doesn't slow down because information is stuck in one person's inbox, memory, or WhatsApp thread.</>,
+                  <><strong>Claude — your co-founder assistant.</strong> Connected to all Notion context. Reads and edits Notion directly. Knows LSS's history, priorities and how you think. Claude Pro includes Claude Code — the tool used to build and maintain the system. One subscription, two roles.</>,
+                  <><strong>Notion Workspace — the single source of truth.</strong> Customer records, event history, procedures, team knowledge. Staff find answers without asking you. New people onboard from the system itself.</>,
+                  <><strong>Notion AI — the knowledge layer.</strong> Anyone on the team asks a question in plain English and gets an answer from the workspace. Sharon, James, a new skipper, a future hire. No training required.</>,
+                  <><strong>Custom agents — purpose-built AI tools.</strong> Lassie handles first-line enquiries. Booking intelligence surfaces patterns. They reason over context — not just follow rules.</>,
+                  <><strong>Automations — the pipes.</strong> Booking confirmed, joining instructions sent. Payment due, reminder raised, FreeAgent invoice created. Event in Notion, product pushed to Squarespace. Dumb, reliable, running quietly in the background.</>,
                 ]}
               />
-              <PullQuote rotate={0.5}>
-                <Hl shift={-2}>Continuity</Hl> is what lets LSS grow without it costing you the life you want outside the business.
-              </PullQuote>
             </section>
 
             <Rule />
 
-            {/* 04 — Four windows of work */}
+            {/* 04 — Four things that change */}
             <section>
               <SectionHead
                 num="04"
-                eyebrow="The shape of the work"
+                eyebrow="What changes"
                 rotate={0.4}
-                title={<>Four windows of <Hl shift={-1}>work.</Hl></>}
+                title={<>Four things that <Hl shift={-1}>change.</Hl></>}
               />
 
-              <H3>1) Communications triage</H3>
+              <H3>1) Fewer interruptions</H3>
               <P>
-                Right now, too much lands on you personally. WhatsApp, email, phone — all the same inbox in
-                practice. The goal here isn't to depersonalise LSS. It's to give the business an{" "}
-                <em>intentional front door</em>.
+                Three to four hundred WhatsApp notifications a day is a tax, not a strategy. The business needs
+                an intentional front door.
               </P>
-              <P><strong>What changes:</strong></P>
               <BulletList
                 items={[
-                  <>Clear routing for enquiries — what gets answered, what gets escalated, what gets scheduled.</>,
-                  <>A practical system for managing WhatsApp + email volume without losing the personal touch you're known for.</>,
-                  <>A way to handle the high-frequency, repeatable questions so they stop interrupting deep work.</>,
+                  <>Lassie handles first-line enquiries — availability, pricing, how to book — in LSS's voice, from the knowledge base.</>,
+                  <>Enquiries that need a human arrive with context already attached.</>,
+                  <>Notion Mail triages Gmail — client comms surfaced, everything else filtered.</>,
+                  <>The forwarding loop between you and Sharon breaks.</>,
                 ]}
               />
-              <P>
-                <strong>Outcome:</strong> fewer interruptions, faster replies, less mental load — and a customer
-                experience that feels <em>more</em> attentive, not less.
-              </P>
 
-              <H3>2) LSS OS — a Notion operating system for the business</H3>
-              <P>This is the core build: a single, calm source of truth that the business runs on.</P>
-              <P><strong>Bundled inside LSS OS:</strong></P>
+              <H3>2) One place the business runs from</H3>
+              <P>A CRM that replaces Monday and a daily view for every person on the team.</P>
               <BulletList
                 items={[
-                  <><strong>CRM migration</strong> (replacing Monday as the system of record).</>,
-                  <><strong>Customer journey automation</strong> — reminders and prompts that stop things slipping.</>,
-                  <><strong>Daily ops management</strong> — what's happening this week, what's blocked, what needs attention.</>,
-                  <><strong>Email triage inside Notion</strong> — so the inbox stops being the control centre.</>,
-                  <><strong>Marketing management (CMS)</strong> — kept lightweight, switched on if and when you want it.</>,
+                  <><strong>Contacts</strong>, bookings, enquiry pipeline, customer history — all in one place.</>,
+                  <><strong>Your view:</strong> priorities, decisions, the week ahead, cash flow.</>,
+                  <><strong>Sharon's view:</strong> active bookings, customers needing follow-up, this week's events.</>,
+                  <><strong>James's view:</strong> event schedule, skipper assignments, logistics.</>,
+                  <><strong>Joining instructions and skipper packs</strong> as guest pages — clean, no login required.</>,
+                  <><strong>FreeAgent invoice</strong> raised automatically when a booking is confirmed.</>,
+                  <><strong>Squarespace event integration</strong> — investigated in Phase 1, built where the API allows.</>,
                 ]}
               />
-              <P>
-                <strong>Designed in three layers</strong> so each person sees only what they need:
-              </P>
-              <BulletList
-                items={[
-                  <><strong>Founder OS</strong> — your view: priorities, decisions, money in and out, the week ahead.</>,
-                  <><strong>Team OS</strong> — Sharon, James, future hires: tasks, customer records, event logistics.</>,
-                  <><strong>Customer OS</strong> — the experience your customers feel: clear, consistent, branded touchpoints.</>,
-                ]}
-              />
-              <P>
-                <strong>Outcome:</strong> the business becomes easier to <em>steer</em>, not just survive.
-              </P>
 
-              <H3>3) Growth automations</H3>
-              <P>
-                This is where the CRM stops being a messy spreadsheet and becomes a place you genuinely{" "}
-                <em>learn</em> from.
-              </P>
-              <P><strong>Bundled inside Growth Automations:</strong></P>
+              <H3>3) Voyages that run themselves</H3>
+              <P>Every customer gets the same experience, every time, without anyone chasing.</P>
               <BulletList
                 items={[
-                  <><strong>Customer journey automations</strong> — sharpened, prompts that drive review collection, upsells and re-engagement.</>,
-                  <><strong>CRM Enricher agents</strong> — small, focused AI agents that enrich customer records: repeat patterns, lifetime value, segments, context you'd never have time to add manually.</>,
-                  <><strong>Decision visibility</strong> — what's converting, what's not, what's worth repeating, what's worth dropping.</>,
+                  <><strong>Booking confirmed</strong> — right information sent automatically.</>,
+                  <><strong>Payment reminder</strong> at the six- to eight-week mark.</>,
+                  <><strong>Joining instructions</strong> two weeks before departure, no manual send.</>,
+                  <><strong>Post-voyage message:</strong> thank you, review request, seed for the next trip.</>,
+                  <><strong>Voyage Records:</strong> crew manifest, pre-sail checks, skipper sign-off, incident log — works offline, syncs when signal returns.</>,
+                  <><strong>Legal protection built in</strong> — given the active solicitor claim, a documented paper trail is due diligence, not a nice-to-have.</>,
                 ]}
               />
-              <P>
-                <strong>Outcome:</strong> better decisions, faster, with less guesswork — and a CRM you actually
-                want to open.
-              </P>
 
-              <H3>4) Customer onboarding</H3>
-              <P>This is the repeatable delivery layer — the experience customers and skippers feel.</P>
-              <P><strong>Bundled inside Customer Onboarding:</strong></P>
+              <H3>4) A business that learns from itself</H3>
+              <P>The CRM becomes a place you learn from, not just a place you log things.</P>
               <BulletList
                 items={[
-                  <><strong>Customer-facing page management system</strong> — joining instructions, what to bring, expectations, FAQs, all live and up to date.</>,
-                  <><strong>Pre-voyage comms framework</strong> that runs consistently every time, without you chasing.</>,
-                  <><strong>Repeatable guidance framework</strong> so customers arrive informed and confident.</>,
-                  <><strong>Skipper packs</strong> per voyage so contractors have everything they need without messaging you.</>,
+                  <>Which events are most profitable?</>,
+                  <>Which customers return, and what brings them back?</>,
+                  <>Which enquiry types convert and which don't?</>,
+                  <><strong>Post-event upsell prompts</strong> triggered automatically.</>,
+                  <><strong>Cross-reference knowledge</strong> for strategic evaluation.</>,
+                  <><strong>Content pipeline:</strong> Ruaraidh's expertise turned into blog posts, newsletter, social — voice notes or bullet points in, publishable content out.</>,
                 ]}
               />
-              <P>
-                <strong>Outcome:</strong> smoother voyages, fewer "where is that info?" messages, more trust per
-                touchpoint.
-              </P>
+              <PullQuote rotate={-0.4}>
+                A tight ship, and the <Hl shift={-2}>system proves it.</Hl>
+              </PullQuote>
             </section>
 
             <Rule />
 
-            {/* 05 — How it works */}
+            {/* 05 — Practical realities (new stack) */}
             <section>
               <SectionHead
                 num="05"
-                eyebrow="How it works"
+                eyebrow="Practical realities"
                 rotate={-0.3}
-                title={<>Tools and tasks, without <Hl>overwhelm.</Hl></>}
+                title={<>The new stack: <Hl>~£82/month.</Hl></>}
               />
-
-              <H3>What I do</H3>
-              <BulletList
-                items={[
-                  <>Design the system architecture (databases, dashboards, permissions, templates).</>,
-                  <>Build the workflows, automations, and CRM Enricher agents.</>,
-                  <>Migrate and structure the data that matters.</>,
-                  <>Set you and the team up to actually <em>use</em> it day to day — not just admire it.</>,
+              <P>
+                This is not a chatbot subscription. It is base infrastructure for a business that thinks, learns
+                and runs — with a co-founder-level assistant that knows what you're building and helps you build
+                it. Roughly what you currently spend on Monday alone.
+              </P>
+              <EditorialTable
+                head={["Layer", "Tool", "Monthly"]}
+                rows={[
+                  ["Knowledge lake", "Notion Business — 3 users, AI included", "~£35"],
+                  ["Notion AI", "Included in Business plan", "£0 extra"],
+                  ["Co-founder assistant", "Claude Pro — Cowork, Projects, Claude Code", "~£16"],
+                  ["Custom agents", "Notion AI agents — included", "£0 extra"],
+                  ["Automations", "Make or Zapier starter", "~£18"],
+                  [<strong>Base total</strong>, "", <strong>~£82/month</strong>],
                 ]}
               />
-
-              <H3>What you do</H3>
-              <BulletList
-                items={[
-                  <>Give access to current systems (Monday, Drive, Squarespace, etc.).</>,
-                  <>Walk me through how things really run — not how they "should".</>,
-                  <>Make a few key decisions when options branch.</>,
-                ]}
-              />
-
-              <H3>What you get</H3>
-              <BulletList
-                items={[
-                  <>A working LSS OS that reduces comms load, strengthens delivery, and supports growth.</>,
-                  <>Voyage Tracking that systematises safety and accountability.</>,
-                  <>A system that can scale with new people and new volume.</>,
-                ]}
-              />
+              <P>
+                Scaling is linear. Each additional team member: ~£12/month for Notion, ~£16/month for Claude if
+                they want the full assistant layer. Everything else stays flat.
+              </P>
             </section>
 
             <Rule />
 
-            {/* 06 — Relationship rate */}
+            {/* 06 — What goes */}
             <section>
               <SectionHead
                 num="06"
-                eyebrow="Family-first, permanently"
+                eyebrow="And cutting"
                 rotate={0.3}
-                title={<>Relationship <Hl shift={-1}>rate.</Hl></>}
+                title={<>What <Hl shift={-1}>goes.</Hl> ~£79+/month back.</>}
               />
-              <P>My standard rate is £500 per half-day.</P>
-              <PullQuote rotate={-0.4}>
-                Your rate is <Hl shift={-2}>£400</Hl> per half-day. Permanently.
-              </PullQuote>
-              <P>
-                This isn't a discount. It's a deliberate, structural decision about the kind of relationship I
-                want this to be.
-              </P>
-              <P>
-                If I hadn't been close friends with Mike at primary school, Joey and Anna might never have met.
-                The Thomsons — and now the Plummers — sit on a very short inner-circle list. That's not a
-                sentimental footnote. It changes how I'll show up, how I prioritise, and how flexibly I work with
-                you.
-              </P>
-              <P>
-                On top of the £400 rate, we'll layer <strong>flexible arrangements</strong> so price never
-                becomes a deterrent to doing the right thing:
-              </P>
-              <BulletList
-                items={[
-                  <>Phasing payments around your cash flow rhythms (Fastnet years, busy season, lumpy invoices).</>,
-                  <>Splitting larger pieces of work across months when it helps.</>,
-                  <>Quietly absorbing the small stuff (a quick call, a fix, a "can you take a look?") inside the ongoing relationship rather than nickel-and-diming you for it.</>,
+              <EditorialTable
+                head={["What goes", "Why", "Monthly"]}
+                rows={[
+                  ["Monday.com", "Walled garden. Data locked in boards. £950/year for 20% utilisation. Slow, expensive, hard to leave.", "~£79"],
+                  ["Squarespace transaction fees", "~£15 per £500 booking on top of Stripe's fee. Worth quantifying precisely in Phase 1.", "Variable"],
                 ]}
               />
               <P>
-                <strong>My honest position:</strong> I do not think you should do this work with anyone else. The
-                mix of context, care, continuity, and inner-circle priority you'll get here isn't something a
-                stranger can replicate, no matter how good their build deck looks.
+                You're not adding cost. You're redirecting existing spend into infrastructure that's genuinely
+                connected, and pragmatic, with far higher ROI.
+              </P>
+              <P>
+                <strong>On Gemini.</strong> If it's bundled into your Google Workspace subscription it can't be
+                removed and there's no saving. Claude sits alongside it at ~£16/month and does what Gemini
+                cannot: maintains context across conversations, connects to the Notion knowledge lake, works
+                within the system rather than separately from it.
               </P>
             </section>
 
@@ -587,55 +588,156 @@ const LSSProposalPage = () => {
                 num="07"
                 eyebrow="The journey"
                 rotate={-0.4}
-                title={<>Three stages, <Hl>shaped</Hl> around you.</>}
+                title={<>Three phases, <Hl>shaped</Hl> around you.</>}
               />
 
-              <H3>1) Audit &amp; Workshop — an in-person day with you</H3>
-              <P>A full day in person to map:</P>
-              <BulletList
-                items={[
-                  <>How the business runs today (tools, handoffs, bottlenecks).</>,
-                  <>What "operational continuity" actually needs to look like for LSS specifically.</>,
-                  <>What the first version of LSS OS needs to contain — and, just as importantly, what it doesn't.</>,
-                ]}
-              />
+              <H3>Phase 1 — In-person mapping session</H3>
               <P>
-                <strong>Output:</strong> a shared plan you can see, agree, and trust before the build begins.
+                <strong>1 session · <Price was="£500" now="£400" /></strong>
+              </P>
+              <P>
+                One focused half-day together, in person. We walk the current systems, confirm priorities, map
+                what the foundation build needs to contain. You leave with a shared brief, agreed before anything
+                gets built.
+              </P>
+              <P>
+                <strong>Before the session:</strong> access to Monday, and a short conversation with whoever
+                handles day-to-day admin alongside you.
               </P>
 
-              <H3>2) LSS OS Build</H3>
-              <P>Build and implement:</P>
+              <H3>Phase 2 — Foundation build</H3>
+              <P>
+                <strong>10 sessions · <Price was="£5,000" now="£4,000" /> · split across two months (£2,000/mo)</strong>
+              </P>
               <BulletList
                 items={[
-                  <>The operating system (CRM, dashboards, customer journey prompts, inbox triage, Founder / Team / Customer OS layers).</>,
-                  <>Voyage Tracking (safety, sign-offs, clarity of responsibility).</>,
-                  <>Customer-facing onboarding pages + skipper packs.</>,
-                  <>The first wave of growth automations and CRM Enricher agents.</>,
+                  <>CRM replacing Monday — contacts, bookings, enquiry pipeline, customer history.</>,
+                  <>Customer journey automations — confirmation, payment reminders, joining instructions, post-voyage follow-up.</>,
+                  <>Voyage Records — crew manifest, pre-sail checks, skipper sign-offs, incident log.</>,
+                  <>Daily ops dashboard — your view, Sharon's view, James's event schedule.</>,
+                  <>Notion Mail — Gmail triage from within the workspace.</>,
+                  <>Guest pages — joining instructions and skipper packs, no login required.</>,
+                  <>FreeAgent invoice automation — booking confirmed triggers invoice.</>,
+                  <>Squarespace event integration — investigated in Phase 1, built where feasible.</>,
+                  <>Two onboarding sessions — team working in the system comfortably before handover.</>,
                 ]}
               />
+
+              <H3>Ongoing — monthly support</H3>
               <P>
-                <strong>Output:</strong> a system your week can actually run on.
+                <strong>1 half-day session · <Price was="£500" now="£400" /> (3 months minimum)</strong>
+              </P>
+              <P>
+                Retainer operates on a 3-month minimum commitment, but lets you flexibly scale up. Based on your
+                own technical ability, we could use these days as co-building sessions to super-charge value.
+              </P>
+              <BulletList
+                items={[
+                  <><strong>Month 1</strong> → sort out any adoption issues.</>,
+                  <><strong>Month 2</strong> → identify potential improvements, automations, workflows you'd like to see.</>,
+                  <><strong>Month 3</strong> → new agents, refining workflows, ensuring success.</>,
+                ]}
+              />
+            </section>
+
+            <Rule />
+
+            {/* 08 — Flexible payment options */}
+            <section>
+              <SectionHead
+                num="08"
+                eyebrow="Flexible payment"
+                rotate={0.3}
+                title={<>Three ways to <Hl shift={-1}>structure it.</Hl></>}
+              />
+              <P>
+                Same scope, same rate, same outcome — choose what suits your cash flow.
               </P>
 
-              <H3>3) Ongoing — 3+ months of monthly support</H3>
-              <P>One half-day per month to iterate, tighten, and build on what's working.</P>
-              <P><strong>Included every month:</strong></P>
-              <BulletList
-                items={[
-                  <><strong>Asynchronous access</strong> to me all month, with a 48-hour response time.</>,
-                  <><strong>One dedicated working session</strong> focused on whatever matters most that month.</>,
+              <H3>Option 1 — Per deliverable</H3>
+              <P>The most straightforward option. Each payment follows work delivered.</P>
+              <EditorialTable
+                head={["Milestone", "When", "Amount"]}
+                rows={[
+                  ["Phase 1 — mapping session", "On booking", "£400"],
+                  ["Phase 2 — first half of build", "End of month one", "£2,000"],
+                  ["Phase 2 — second half of build", "End of month two", "£2,000"],
+                  ["Ongoing — month one", "End of month three", "£400"],
+                  ["Ongoing — month two", "End of month four", "£400"],
+                  ["Ongoing — month three", "End of month five", "£400"],
+                  [<strong>Total</strong>, "", <strong>£5,600</strong>],
                 ]}
               />
+
+              <H3>Option 2 — Monthly programme</H3>
+              <P>Five equal payments. Predictable, simple, no surprises.</P>
+              <EditorialTable
+                head={["Month", "Amount"]}
+                rows={[
+                  ["Month 1", "£1,120"],
+                  ["Month 2", "£1,120"],
+                  ["Month 3", "£1,120"],
+                  ["Month 4", "£1,120"],
+                  ["Month 5", "£1,120"],
+                  [<strong>Total</strong>, <strong>£5,600</strong>],
+                ]}
+              />
+
+              <H3>Option 3 — Paid in full</H3>
+              <P>The cheapest route — an extra £200 off for paying in full, upfront.</P>
+              <EditorialTable
+                rows={[
+                  ["Full engagement, paid upfront", <strong>£5,400</strong>],
+                  ["Saving", <span className="text-accent font-semibold">£200</span>],
+                ]}
+              />
+
               <P>
-                If you ever want to move faster, we can scale up by adding more dedicated sessions in a given
-                month — a genuinely cost-efficient way to get ambitious things done together without committing
-                to a full new project each time.
+                All options cover the same five-month engagement: Phase 1, the full foundation build, and three
+                months of ongoing support. By the end, LSS is in a fundamentally different operational place.
               </P>
             </section>
 
             <Rule />
 
-            {/* 08 — Next steps / CTA */}
+            {/* 09 — Engagement at a glance */}
+            <section>
+              <SectionHead
+                num="09"
+                eyebrow="At a glance"
+                rotate={-0.3}
+                title={<>The engagement, in <Hl>one view.</Hl></>}
+              />
+              <EditorialTable
+                rows={[
+                  [<strong>Client</strong>, "Ruaraidh Plummer, London School of Sailing"],
+                  [<strong>Consultant</strong>, "Brendan Rodgers, Thread & Stack"],
+                  [<strong>Standard rate</strong>, <span className="line-through text-muted-foreground/60">£500</span>],
+                  [<strong>Defined rate</strong>, "£400 per half-day (relationship rate, permanently)"],
+                  [<strong>Phase 1</strong>, "In-person mapping session — 1 block"],
+                  [<strong>Phase 2</strong>, "Foundation build — ~10 blocks"],
+                  [<strong>Ongoing</strong>, "Monthly support block — 1 block/month"],
+                  [<strong>Phase 1 total</strong>, "£400"],
+                  [<strong>Phase 2 total</strong>, "£4,000"],
+                  [<strong>Ongoing</strong>, "£400/month × 3 months"],
+                  [<strong>Total (Phase 1 + 2 + 3mo)</strong>, <strong>£5,600</strong>],
+                  [<strong>Terms</strong>, "No VAT. No large upfront. Flexible payment schedules available."],
+                ]}
+              />
+
+              <H3>What we need from you to begin</H3>
+              <BulletList
+                items={[
+                  <>Reply with yes, questions, or call.</>,
+                  <>Read-only access to Monday.com.</>,
+                  <>A short conversation with whoever handles your day-to-day admin.</>,
+                ]}
+              />
+            </section>
+
+            <Rule />
+
+            {/* 10 — Next steps / CTA */}
             <section className="text-center">
               <motion.div {...fadeUp}>
                 <div className="font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-accent mb-5">
@@ -653,8 +755,8 @@ const LSSProposalPage = () => {
                 </h2>
                 <p className="font-sans text-[16px] text-muted-foreground leading-relaxed max-w-xl mx-auto mb-10">
                   Anything in here that doesn't match what you had in mind, just say — easy to adjust before we
-                  book the Audit &amp; Workshop day. The aim is a system that fits the way LSS actually runs, not
-                  the way a brief assumes it does.
+                  book the mapping session. The aim is a system that fits the way LSS actually runs, not the way
+                  a brief assumes it does.
                 </p>
                 <PillButton size="lg" icon={Anchor} asChild>
                   <a href="mailto:br@brendanrodgers.uk?subject=LSS%20Proposal%20—%20next%20steps">
@@ -687,3 +789,4 @@ const LSSProposalPage = () => {
 };
 
 export default LSSProposalPage;
+
