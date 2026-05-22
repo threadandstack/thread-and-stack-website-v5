@@ -350,6 +350,17 @@ const LSSProposalPage = () => {
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.05 }}
+              className="flex items-center justify-center gap-10 sm:gap-14 md:gap-20 mb-12 sm:mb-14"
+            >
+              <img src={BlackStacked} alt="Thread & Stack" className="h-16 sm:h-20 md:h-24 w-auto" />
+              <X aria-hidden="true" className="w-5 h-5 sm:w-6 sm:h-6 text-foreground/25" strokeWidth={1} />
+              <img src={LssLogoBlack} alt="London School of Sailing" className="h-16 sm:h-20 md:h-24 w-auto" />
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.1 }}
               className="font-sans text-[11px] tracking-[0.28em] uppercase text-muted-foreground mb-10"
             >
