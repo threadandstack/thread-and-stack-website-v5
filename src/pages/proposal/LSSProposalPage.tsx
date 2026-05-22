@@ -614,12 +614,13 @@ const LSSProposalPage = () => {
                 title={<>Three phases, <Hl>shaped</Hl> around you.</>}
               />
 
-              <div className="relative mt-8 pl-8 sm:pl-12">
-                {/* Timeline rail */}
+              <div className="relative mt-8 pl-6 sm:pl-8">
+                {/* Timeline rail — sits under the left edge of the pills */}
                 <div
                   aria-hidden
-                  className="absolute left-[7px] sm:left-[11px] top-2 bottom-2 w-[2px] rounded-full bg-accent/40"
+                  className="absolute left-0 top-3 bottom-3 w-[2px] rounded-full bg-accent/40"
                 />
+
 
 
                 {/* Phase 1 */}
