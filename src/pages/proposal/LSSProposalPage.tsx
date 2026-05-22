@@ -479,7 +479,7 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => (
             </p>
 
             <p>
-              The good news is that both Squarespace and FreeAgent have working APIs, which means we can work a lot of the optimisation you're after into the third phase of the engagement. That's automation that actually sticks.
+              The good news is that both Squarespace and FreeAgent have working APIs, which means we can work a lot of the optimisation you're after into the third phase of the engagement.
             </p>
 
             <p>So give this a read. It's probably best to grab a brew or a cup of coffee and a comfy seat.</p>
