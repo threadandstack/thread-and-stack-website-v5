@@ -838,7 +838,7 @@ const SFFireProposalPage = () => {
                 new system. That is included in the build.
               </P>
 
-              <motion.ul {...fadeUp} className="space-y-4 mb-8 list-none pl-0">
+              <ul className="mt-8 space-y-5">
                 {[
                   {
                     title: "Company Home",
@@ -873,17 +873,26 @@ const SFFireProposalPage = () => {
                     body: "A simple form submitted from the phone at the end of every job. Photos, time on site, checklist confirmation, incident report if needed. No Notion account required for field crew. The record is created automatically and linked to the customer.",
                   },
                 ].map((item, i) => (
-                  <li
+                  <motion.li
                     key={i}
-                    className="rounded-2xl border-l-4 border-accent bg-card/50 px-5 py-4 shadow-[0_1px_8px_rgba(0,0,0,0.04)]"
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.6, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
+                    className="flex gap-5 items-start bg-card/60 rounded-2xl p-5 shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
                   >
-                    <strong className="font-serif-pro italic text-lg text-foreground block mb-1.5">
-                      {item.title}
-                    </strong>
-                    <span className="font-sans text-[15.5px] leading-[1.7] text-foreground/80">{item.body}</span>
-                  </li>
+                    <div className="flex-shrink-0 w-14 h-14 rounded-xl bg-background flex items-center justify-center shadow-[0_1px_4px_rgba(0,0,0,0.06)]">
+                      <span className="font-serif-pro italic text-lg text-accent">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                    </div>
+                    <div className="flex-1 pt-1">
+                      <strong className="font-serif-pro italic text-lg text-primary block mb-1">{item.title}</strong>
+                      <span className="text-foreground/75 leading-relaxed">{item.body}</span>
+                    </div>
+                  </motion.li>
                 ))}
-              </motion.ul>
+              </ul>
 
               <EditorialTable
                 head={["Component", "Included"]}
