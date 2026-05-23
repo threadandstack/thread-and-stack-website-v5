@@ -682,8 +682,8 @@ const SFFireProposalPage = () => {
                   },
                   {
                     n: "02",
-                    title: "Data transfer",
-                    body: "Anything already in digital form (spreadsheets, shared folders, CSV exports) is migrated and structured inside the new system. Included in the build. Paper-based records are a separate conversation.",
+                    title: "Data migration",
+                    body: "Anything already in digital form (spreadsheets, shared folders, CSV exports) is migrated and structured inside the new system. Included in the build. Paper-based records are scoped separately if needed.",
                   },
                   {
                     n: "03",
@@ -992,25 +992,36 @@ const SFFireProposalPage = () => {
 
             <Rule />
 
-            {/* 06 - The engagement, one clear view */}
+            {/* 06 - The engagement in one view */}
             <section>
               <SectionHead
                 num="06"
                 eyebrow="The engagement"
                 rotate={0.3}
-                title={<>One engagement, <Hl shift={-1}>one price.</Hl></>}
+                title={<>The engagement <Hl shift={-1}>in one view.</Hl></>}
               />
               <EditorialTable
                 head={["Phase", "Included", "Amount"]}
                 rows={[
                   [<strong>01 · Build</strong>, "Eight components, fully built and tested", "£7,650 (~CA$14,000)"],
-                  [<strong>02 · Data transfer</strong>, "All existing digital records migrated and structured", "Included"],
-                  [<strong>03 · Embedding</strong>, "3 months, included with the build", "£900/mo (~CA$1,650)"],
+                  [<strong>02 · Data migration</strong>, "All existing digital records migrated and structured", "Included"],
+                  [<strong>03 · Embedding</strong>, "3 months, included with the build (£900/mo)", "£1,800 (~CA$3,300)"],
+                  [<strong>Build + 3-month embedding total</strong>, "", <strong>£9,450 (~CA$17,300)</strong>],
                   [<strong>04 · Rolling, optional</strong>, "Month-to-month after embedding, no tie-in", "£900/mo (~CA$1,650)"],
-                  [<strong>Paper digitisation</strong>, "Scoped together if needed", "To be discussed"],
+                  [<strong>Paper digitisation</strong>, "Scoped separately if needed", "To be discussed"],
                   [<strong>Timeline</strong>, "Build typically completes in 8–10 weeks", ""],
                 ]}
               />
+
+              <PullQuote rotate={-0.2}>
+                I know we discussed a figure around $5,000 on our call, and this comes in above that. For
+                context, the builds I do typically sit between £4,000 and £10,000, and this is a fairly
+                standard build size for the scope we've mapped. The upfront sits slightly above the initial
+                number because of the depth of what we covered together. I'm open to discussing flexibility
+                on the structure, though I'd strongly suggest keeping the three months of embedding in
+                place. A system this connected needs the team around it for the habits to land, and without
+                that period the risk of it quietly going unused is real.
+              </PullQuote>
             </section>
 
             <Rule />
