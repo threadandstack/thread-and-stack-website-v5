@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowRight, ArrowUpRight, Download, X, Send, Check, Linkedin } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Download, X, Send, Check, Linkedin, Slack } from "lucide-react";
 import NotionBadges from "@/assets/notion-badges.png";
 import { PillButton } from "@/components/ui/pill-button";
 import { Input } from "@/components/ui/input";
