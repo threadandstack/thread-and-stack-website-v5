@@ -635,7 +635,7 @@ const SFFireProposalPage = () => {
         <article className="px-5 sm:px-8 pb-24">
           <div className="max-w-2xl mx-auto">
 
-            {/* 01 — The problem */}
+            {/* 01 - The problem */}
             <section>
               <SectionHead
                 num="01"
@@ -643,60 +643,90 @@ const SFFireProposalPage = () => {
                 rotate={-0.4}
                 title={<>SF Property Fire Prevention has outgrown its current way of <Hl>working.</Hl></>}
               />
-              <P>
-                For 20 years the system has been Stephen, Carol, and Joe. Three people with deep expertise,
-                complete trust in one another, and a speed that comes from knowing the work in their bones. A
-                restaurant kitchen job that used to take eight hours takes three. That is what 20 years of
-                doing something properly looks like.
-              </P>
-              <P>
-                But the business is at an inflection point. Stephen has stepped back from field work. Two new
-                hires are in place. The next stage — scaling to two full crews, moving out of the home, creating
-                a business that holds value beyond its founder — depends on one thing going right first:
-                <em> the knowledge that lives in Stephen, Carol, and Joe's heads needs to come out of their
-                heads and into a system.</em>
-              </P>
-              <P>
-                Right now it hasn't. Training is Joe on every job, every night, catching the things that get
-                missed because repetition is not the same as documentation. Procedures exist on paper and in
-                memory. Checklists live in monthly folders. The caustic bottle incident and the security
-                situation that left Joe in an unjust position are not stories about individual errors. They
-                are stories about what happens when a business that runs on experience brings in people who
-                don't have it yet.
-              </P>
 
               <PullQuote rotate={-0.4}>
-                "I'm the system right now — and I've now become the <Hl shift={-2}>weakest link.</Hl>"
+                "I've got to have it so that I'm never in this position again where the system needs to be
+                out front. Because I'm <Hl shift={-2}>the system</Hl> right now and I've now become the
+                weakest link."
+                <footer className="mt-4 not-italic font-sans text-[12px] tracking-[0.18em] uppercase text-muted-foreground">
+                  Stephen Hart · Discovery Call · May 2026
+                </footer>
               </PullQuote>
 
               <P>
-                The question you asked about what would break first if you stepped away for two weeks is exactly
-                the right question. The answer at the moment is <strong>almost everything</strong>.
+                <strong>Stephen, for 20 years the system has been you, Carol, and Joe.</strong> Three people
+                with deep expertise, complete trust in one another, and a speed that comes from knowing the
+                work in your bones. A restaurant kitchen job that used to take eight hours takes three, skill
+                became instinct, instinct became your system. But now the business is at an inflection point.
+              </P>
+
+              <P>
+                You have stepped back from field work. Two new hires are in place. The next stage, scaling to
+                two full crews, moving out of the home, creating a business that holds value beyond its
+                founder, depends on one thing going right first: the knowledge that lives in your heads needs
+                to come out of your heads and into a system.
+              </P>
+
+              <P>
+                Procedures exist on paper and in memory. Checklists live in monthly folders. The caustic
+                bottle incident and the security situation that left Joe in an unjust position are not stories
+                about individual errors. They are stories about what happens when a business that runs on
+                experience brings in people who don't have it yet. Joe is on every job, every night, catching
+                the things that get missed because repetition is not the same as documentation - and your
+                business needs both.
               </P>
             </section>
 
             <Rule />
 
-            {/* 02 — The solve */}
+            {/* 02 - The solve */}
             <section>
               <SectionHead
                 num="02"
                 eyebrow="The solve"
                 rotate={0.3}
-                title={<>A coherent operational <Hl shift={-1}>system.</Hl> Not just Notion.</>}
+                title={<>A knowledge lake for <Hl shift={-1}>SF Property Fire Prevention.</Hl></>}
               />
               <P>
-                Notion is where the work will live. But getting SF Property Fire Prevention to a place of
-                genuine operational independence means building a small, connected stack of tools with a
-                clear role for each layer.
+                <em>You can learn more about Thread &amp; Stack's approach to building technology stacks for
+                company knowledge management, but for you, this is achievable almost entirely within Notion.</em>
               </P>
+              <P>
+                Every piece of operational knowledge your business runs on, the procedures, the checklists,
+                the safety protocols, the customer records, the job history, will live in a single connected
+                system. Not a folder on a desktop. Not a paper monthly system. Not in anyone's head. In one
+                place that anyone on the team can access, at the level they need, from wherever they are.
+              </P>
+              <P>
+                That system is built in Notion. Notion excels at this kind of knowledge architecture.
+                Flexible enough to hold your operational complexity, simple enough for a crew member to use
+                on a phone between jobs, and open enough to connect to other tools where they genuinely add
+                value.
+              </P>
+              <P>The knowledge lake works across four layers.</P>
 
               <ul className="mt-8 space-y-5">
                 {[
-                  { icon: IconNotion, title: "Notion Workspace — the single source of truth.", body: "Training modules, onboarding stages, job records, customer data, safety checklists, compliance tracking. Everything that currently lives in folders, on Stephen's desktop, or in the heads of three people who have been doing this for two decades. Built mobile-first, so crews can access what they need from a phone on-site without needing a Notion account." },
-                  { icon: IconLassie, title: "Notion AI — the knowledge layer.", body: "Once the content is in the system, anyone on the team can ask a question in plain language and get an answer drawn from the workspace. Carol doesn't need to know where things are stored. Joe can check a procedure mid-job without calling Stephen." },
-                  { icon: IconFormLink, title: "Forms and public web links — the field interface.", body: "How the field crew interact with the system without requiring full accounts. Job completion submitted via a simple mobile form. Photos uploaded. Incident reports filed. The data flows in without the cost of additional Notion seats." },
-                  { icon: IconZapier, title: "Automations — the reliable background layer.", body: "Job due reminders triggered by the re-booking cycle. Training stage progressions flagged when a crew member completes a module. QC alerts for Joe when a new hire's first solo job is ready for review." },
+                  {
+                    icon: IconNotion,
+                    title: "The workspace - the single source of truth.",
+                    body: "Training modules, onboarding stages, job records, customer data, safety checklists, compliance tracking. Structured, searchable, and accessible from any device.",
+                  },
+                  {
+                    icon: IconLassie,
+                    title: "The knowledge layer - Notion AI sits across the workspace.",
+                    body: "Anyone on the team can ask a question in plain language and get an answer. Carol doesn't need to know where things are stored. Joe can check a procedure mid-job without calling you.",
+                  },
+                  {
+                    icon: IconFormLink,
+                    title: "The field interface - crew members update jobs from the phone in their pocket.",
+                    body: "No Notion account required. Photos uploaded, job completion confirmed, incidents reported. The data flows in automatically.",
+                  },
+                  {
+                    icon: IconZapier,
+                    title: "The background layer - automations that run quietly.",
+                    body: "Job due reminders. Training stage progressions. QC alerts for Joe when a new hire's first solo job is ready for review.",
+                  },
                 ].map((layer, i) => (
                   <motion.li
                     key={i}
@@ -716,222 +746,241 @@ const SFFireProposalPage = () => {
                   </motion.li>
                 ))}
               </ul>
-
-              <P>
-                My job across this engagement is to design the architecture, build the system, train the team,
-                and make sure it is running before I hand it over. <strong>The technical choices serve the
-                people using the system, not the other way around.</strong>
-              </P>
             </section>
 
             <Rule />
 
-            {/* 03 — What changes */}
+            {/* 03 - What changes */}
             <section>
               <SectionHead
                 num="03"
                 eyebrow="What changes"
                 rotate={-0.3}
-                title={<>Four things that <Hl>change.</Hl></>}
+                title={<>Five things that <Hl>change.</Hl></>}
               />
 
-              <H3>01 — Joe gets his evenings back</H3>
+              <H3>01 - The team works from one place</H3>
               <P>
-                Right now Joe is on every job, every night, covering the gap that a training system would
-                otherwise fill. That is not a sustainable position and Stephen knows it. Once the Training
-                Content Library is live, new crew members follow documented procedures instead of watching Joe.
-                Joe monitors quality through the system rather than being physically present at every step.
-                The goal is not to remove Joe from the picture. It is to make his 20 years of expertise
-                available to the whole team without requiring him to be in two places at once.
+                For 20 years the three of you have operated on instinct, each knowing your role without
+                needing to be told. That dynamic is the business's greatest strength and this build honours
+                it rather than disrupts it. You have a clear view of jobs, staff progress, and the state of
+                the business. Carol runs scheduling, customer records, and documentation from a single
+                organised system rather than paper folders. Joe oversees field operations and crew progress
+                without needing to be physically present at every step. The same knowledge base, three
+                different ways of working with it.
               </P>
 
-              <H3>02 — Carol gets one place to run from</H3>
+              <H3>02 - Carol gets a control centre</H3>
               <P>
-                Carol's recordkeeping is, by Stephen's account, exceptional. An accountant praised it under
-                audit conditions. The current paper folder system works because Carol makes it work. The job
-                of this build is not to fix Carol. It is to give her infrastructure that is <em>as organised
-                as she already is.</em> A single digital system for job records, customer history, re-booking
-                cycles, and compliance dates. Something she can hand off to a future hire and trust that it
-                still works.
+                Carol's ability to take something complex, make it orderly, and hold it that way is not a
+                common thing. The current paper folder system works because Carol makes it work. This build
+                gives her infrastructure that matches how she already thinks. Job records, customer history,
+                re-booking cycles, compliance dates, all connected, all in one place. Something she can hand
+                to a future hire and trust that it still works.
               </P>
 
-              <H3>03 — The crew has structure, not just instructions</H3>
+              <H3>03 - Jobs update from the field</H3>
+              <P>
+                Every job your crew does generates information: what was done, how long it took, what photos
+                were taken, whether anything went wrong. Right now that information lives on cameras, on
+                paper, and in memory. In this system, crew members submit a simple form from their phone at
+                the end of every job. Photos attached. Checklist confirmed. Incident flagged if needed. The
+                record is created automatically, linked to the customer, and visible to Joe and Carol without
+                anyone having to chase it.
+              </P>
+
+              <H3>04 - The crew has structure, not just instructions</H3>
               <P>
                 A new hire who has been shown something twice by Joe and told to get on with it is not a
-                failure of hiring. It is a failure of system. The mobile-first training modules in this build
-                give every crew member access to the documented procedure for every task, from the phone in
-                their pocket, before a job starts and during it if they need to check. The safety incidents
-                that have already occurred are a signal and not a one-off. <strong>This is the part of the
-                build with the most immediate urgency.</strong>
+                failure of hiring. It is a failure of system. The training modules in this build give every
+                crew member access to the documented procedure for every task, from the phone in their
+                pocket, before a job starts and during it if they need to check. The safety incidents that
+                have already occurred are a signal and not a one-off. This is the part of the build with the
+                most immediate urgency.
               </P>
 
-              <H3>04 — Stephen gets his business back</H3>
+              <H3>05 - Structure becomes a source of strength</H3>
               <P>
-                Not from the field. You're already out of the field. From the position of being the only
-                person who knows how all the moving parts connect. When the system holds the operational
-                knowledge, you can focus on sales, troubleshooting, and the conversations that move the
-                business forward. And when the time comes — whether that is scaling to a second full crew,
-                stepping further back, or eventually making the business something that could be sold or
-                handed on — the system is what makes that possible. A business that runs without its founder
-                is worth more than one that doesn't. This build is part of that longer story.
+                You stepped back from the field a month ago. The business is at the stage where the next
+                move, whether that is two full crews, a dedicated premises, or simply being able to take two
+                weeks away without anything breaking, depends on the operational knowledge being somewhere
+                other than in your heads. This build doesn't change what SF Property Fire Prevention is. It
+                makes what it already is available to everyone who needs it.
               </P>
-
-              <PullQuote rotate={0.3}>
-                Take what's in their heads, and put it into a system that <Hl shift={-2}>holds.</Hl>
-              </PullQuote>
             </section>
 
             <Rule />
 
-            {/* 04 — The phases */}
+            {/* 04 - What's included */}
             <section>
               <SectionHead
                 num="04"
-                eyebrow="The phases"
+                eyebrow="What's included"
                 rotate={0.3}
-                title={<>Two phases. <Hl shift={-1}>Start where it hurts most.</Hl></>}
+                title={<>The build and the data migration, <Hl shift={-1}>together.</Hl></>}
               />
               <P>
-                The build is structured in two phases. <strong>Phase A</strong> addresses the burning platform.
-                <strong> Phase B</strong> builds the operational layer that makes the whole thing
-                system-dependent. You can start with Phase A and confirm Phase B once you have seen it working.
-                That is the approach I would recommend.
+                This engagement has two parts before the ongoing cadence begins. The build and the data
+                migration happen together and depend on each other. Neither is optional. Once both are
+                complete and the system is live, the ongoing cadence takes over.
               </P>
 
-              <H3>Phase A — The training system</H3>
+              <H3>Part 1 - The build and data migration</H3>
               <P>
-                The immediate priority. Joe's burnout risk, the safety incidents, two new hires working
-                without proper onboarding. This phase resolves all three.
+                Each component has a preparation step. Before we build each part I will tell you exactly what
+                I need from your side - usually existing procedures, customer records, or examples of how
+                things currently work. Carol will likely be the key contact for this. The more organised the
+                input, the cleaner the build.
               </P>
+              <P>
+                Where data already exists in digital form, whether that is a spreadsheet, a shared folder, or
+                a CSV export from an existing tool, I will handle the migration and structure it within the
+                new system. That is included in the build.
+              </P>
+
+              <motion.ul {...fadeUp} className="space-y-4 mb-8 list-none pl-0">
+                {[
+                  {
+                    title: "Company Home",
+                    body: "The front door to the system. When any of you opens Notion, this is where you land: today's jobs, outstanding actions, staff progress, upcoming re-bookings. Each view is tailored to the person using it. Stephen sees the business. Carol sees the schedule and admin. Joe sees his crew.",
+                  },
+                  {
+                    title: "Task Operating System",
+                    body: "How follow-ups, actions, and responsibilities get tracked and completed without living in anyone's head. Deficiency callbacks, certification renewals, training updates, customer follow-ups - anything that needs to happen gets logged, assigned, and tracked. Nothing falls through the gap between a job finishing and the next one starting.",
+                  },
+                  {
+                    title: "Internal Knowledge Base and Training Library",
+                    body: "Your procedures, checklists, and safety protocols structured, searchable, and accessible from any device. The training material you built before COVID gets a proper home. Everything a new crew member needs, in the order they need it.",
+                  },
+                  {
+                    title: "Custom Notion AI Assistant",
+                    body: "Notion AI configured specifically for SF Property Fire Prevention. The assistant knows your terminology, your workflows, and your procedures. When Joe needs to check a safety protocol on-site, the answer comes from your documentation. When a new crew member asks a question, they get the right answer for your business, not a generic one.",
+                  },
+                  {
+                    title: "Training Sessions",
+                    body: "Two hands-on sessions with you, Carol, and Joe. Screen-shared, tested against real scenarios from your own jobs. Every session recorded so Carol can return to it independently.",
+                  },
+                  {
+                    title: "Employee Onboarding System",
+                    body: "A stage-gated tracker that moves each new hire through defined stages before they work independently. Joe can see at a glance where each person is. The system replaces memory as the record of who is ready for what.",
+                  },
+                  {
+                    title: "Customer Relationship Management",
+                    body: "Every customer SF Property Fire Prevention serves, with their full job history, compliance dates, and re-booking schedule in one place. The paper folder system organised by month is replaced by a database that surfaces the right customer at the right time. When a restaurant's six-month clean is coming due, the system flags it. Carol manages it. Joe references it before a job.",
+                  },
+                  {
+                    title: "Mobile Job Completion",
+                    body: "A simple form submitted from the phone at the end of every job. Photos, time on site, checklist confirmation, incident report if needed. No Notion account required for field crew. The record is created automatically and linked to the customer.",
+                  },
+                ].map((item, i) => (
+                  <li
+                    key={i}
+                    className="rounded-2xl border-l-4 border-accent bg-card/50 px-5 py-4 shadow-[0_1px_8px_rgba(0,0,0,0.04)]"
+                  >
+                    <strong className="font-serif-pro italic text-lg text-foreground block mb-1.5">
+                      {item.title}
+                    </strong>
+                    <span className="font-sans text-[15.5px] leading-[1.7] text-foreground/80">{item.body}</span>
+                  </li>
+                ))}
+              </motion.ul>
+
               <EditorialTable
-                head={["Phase", "Work", "Blocks", "Cost"]}
+                head={["Component", "Included"]}
                 rows={[
-                  ["0 · Discovery", "Scoping call (complete), proposal, alignment with Carol", "1.5", "£675"],
-                  ["1 · Architecture", "Training system design, onboarding workflow, mobile form structure", "1.5", "£675"],
-                  ["2 · Core Build", "Training Content Library (procedures, checklists, safety protocols), Employee Onboarding Tracker (stage-gated progress), Mobile Job Completion Form (photos, time, incidents — public link, no Notion account required)", "3.5", "£1,575"],
-                  ["3 · Training", "Two sessions with Stephen, Carol, and Joe. Screen-shared, hands-on, tested against real scenarios from your own jobs. All sessions recorded.", "2", "£900"],
-                  [<strong>Phase A Total</strong>, "", <strong>8.5 blocks</strong>, <strong>£3,825<br /><span className="text-muted-foreground font-normal">(~CA$7,000)</span></strong>],
+                  ["Company Home", "✓"],
+                  ["Task Operating System", "✓"],
+                  ["Internal Knowledge Base and Training Library", "✓"],
+                  ["Custom Notion AI Assistant", "✓"],
+                  ["Training Sessions (x2, recorded)", "✓"],
+                  ["Employee Onboarding System", "✓"],
+                  ["Customer Relationship Management", "✓"],
+                  ["Mobile Job Completion", "✓"],
+                  ["Data migration (from existing digital records)", "✓"],
+                  [<strong>Build Total</strong>, <strong>£7,650 (~CA$14,000)</strong>],
                 ]}
               />
 
-              <H3>Phase A + B — The full operational build</H3>
+              <H3>A note on paper-based materials</H3>
               <P>
-                Everything above, plus the layer that gives the whole business a single place to run from.
+                You mentioned on our call that a significant amount of SF Property Fire Prevention's
+                materials currently sit in paper stacks, folders, and drawers. Carol is probably best placed
+                to confirm how much of that is already digital and how much remains paper-based.
               </P>
-              <EditorialTable
-                head={["Phase", "Work", "Blocks", "Cost"]}
-                rows={[
-                  ["Phase A", "Training system (as above)", "8.5", "£3,825"],
-                  ["2b · Core Build", "Customer Database (contact info, job history, compliance dates, re-booking cycles), Job Records Database (replaces the paper folder system, linked to customers), QC Dashboard for Joe", "4", "£1,800"],
-                  ["Complexity", "Mobile-first views and content migration preparation", "1.5", "£675"],
-                  [<strong>Full Build Total</strong>, "", <strong>14 blocks</strong>, <strong>£6,300<br /><span className="text-muted-foreground font-normal">(~CA$11,500)</span></strong>],
-                ]}
-              />
+              <P>
+                Materials that are not yet digital will need to be digitised before they can live in the
+                system. As I am based in London, physically handling that process is not something I can
+                offer, and it is likely not the best use of a senior consultant's time in any case. How to
+                approach it practically is a conversation worth having early, and there may be better options
+                than either of us doing it manually. I would rather we explore that together than make
+                assumptions about the scale of the task.
+              </P>
+
+              <H3>A loose timeline</H3>
+              <P>
+                At our working pace the build typically completes within eight to ten weeks of starting. The
+                pace is partly yours: if you need time to review progress or gather materials, that shapes
+                the schedule. If you have a specific deadline driving things, a planned next hire or a
+                period where you need to step back, talk to me early and we will work out what is possible.
+              </P>
             </section>
 
             <Rule />
 
-            {/* 05 — Monthly support */}
+            {/* 05 - The ongoing cadence */}
             <section>
               <SectionHead
                 num="05"
-                eyebrow="Monthly support"
+                eyebrow="Part 2 - The ongoing cadence"
                 rotate={-0.3}
-                title={<>A full day a month, <Hl>delivered properly.</Hl></>}
+                title={<>You will not be handed a complex system and left to <Hl>work it out.</Hl></>}
               />
               <P>
-                Every client gets a support arrangement that fits the reality of what remote delivery actually
-                requires.
+                Most of the real value in a build like this surfaces in the months after launch, not before
+                it. New crew members join and need onboarding. Requirements emerge that nobody anticipated on
+                paper. Ways of working shift as the team gets comfortable with the system. That is not a sign
+                that the build was wrong. It is a sign that the business is actually using it.
               </P>
               <P>
-                For Stephen, Carol, and Joe, that means <strong>a full day per month delivered across two
-                focused sessions</strong>, with asynchronous support between them. Every session is recorded.
-                Every working session produces documentation or written guidance that Carol can return to
-                independently, in her own time.
+                The ongoing cadence is how we make sure the system keeps working for how SF Property Fire
+                Prevention actually operates, not just how it operated when we planned it. You will have
+                dedicated and asynchronous access to me each month - time to surface emerging pain points,
+                smooth over the new ways of operating, and develop the system as the business develops.
               </P>
               <P>
-                The first two months are for adoption, adjustment, and the questions that always surface once
-                a system goes live. From month three onwards the sessions shift toward optimisation and
-                whatever the business needs next.
+                The first months are for embedding: making sure you, Carol, Joe, and the crew are using the
+                system confidently and that the habits are forming. Once that foundation is solid, the
+                sessions shift toward whatever the business needs next.
               </P>
               <EditorialTable
+                head={["Monthly cadence", "£900 per month (~CA$1,650)"]}
                 rows={[
-                  [<strong>Monthly support</strong>, <strong>£900 / month <span className="text-muted-foreground font-normal">(~CA$1,650)</span></strong>],
-                  [<strong>Minimum</strong>, "Three months post-launch. No lock-in beyond that."],
+                  ["Minimum", "Three months post-launch"],
+                  ["After that", "Continues for as long as it is useful"],
                 ]}
               />
             </section>
 
             <Rule />
 
-            {/* 06 — Payment */}
+            {/* 06 - At a glance */}
             <section>
               <SectionHead
                 num="06"
-                eyebrow="Payment"
-                rotate={0.3}
-                title={<>Two ways to <Hl shift={-1}>structure it.</Hl></>}
-              />
-              <P>Both require a deposit on signing.</P>
-
-              <H3>Option 1 — Per phase</H3>
-              <P>
-                Start with Phase A. Invoiced at completion of each phase. If you proceed to Phase B, it is
-                scoped and invoiced as a second engagement on the same terms.
-              </P>
-              <EditorialTable
-                head={["Milestone", "When", "Amount"]}
-                rows={[
-                  ["Deposit", "On signing", "£1,000"],
-                  ["Phase A completion", "On handover", "£2,825"],
-                  [<strong>Phase A Total</strong>, "", <strong>£3,825</strong>],
-                  ["Support · Month 1", "End of month", "£900"],
-                  ["Support · Month 2", "End of month", "£900"],
-                  ["Support · Month 3", "End of month", "£900"],
-                ]}
-              />
-
-              <H3>Option 2 — Monthly programme</H3>
-              <P>
-                Commit to the full Phase A+B build from the start. Equal payments, no surprises.
-              </P>
-              <EditorialTable
-                head={["Month", "Amount"]}
-                rows={[
-                  ["Deposit (on signing)", "£1,500"],
-                  ["Month 1", "£1,200"],
-                  ["Month 2", "£1,200"],
-                  ["Month 3", "£1,200"],
-                  ["Month 4", "£1,200"],
-                  [<strong>Phase A+B Total</strong>, <strong>£6,300</strong>],
-                ]}
-              />
-              <p className="font-sans text-[13px] text-muted-foreground/80 mt-2">
-                Monthly support invoiced separately at £900/month from month five.
-              </p>
-            </section>
-
-            <Rule />
-
-            {/* 07 — At a glance */}
-            <section>
-              <SectionHead
-                num="07"
                 eyebrow="At a glance"
-                rotate={-0.3}
-                title={<>The engagement, in <Hl>one view.</Hl></>}
+                rotate={0.3}
+                title={<>The engagement, in <Hl shift={-1}>one view.</Hl></>}
               />
               <EditorialTable
                 rows={[
                   [<strong>Client</strong>, "Stephen Hart, SF Property Fire Prevention"],
                   [<strong>Consultant</strong>, "Brendan Rodgers, Thread & Stack"],
-                  [<strong>Rate</strong>, "£450 per half-day block"],
-                  [<strong>Phase A</strong>, "Training system — 8.5 blocks"],
-                  [<strong>Phase A+B</strong>, "Full operational build — 14 blocks"],
-                  [<strong>Phase A total</strong>, "£3,825 (~CA$7,000)"],
-                  [<strong>Phase A+B total</strong>, "£6,300 (~CA$11,500)"],
-                  [<strong>Monthly support</strong>, "£900 (~CA$1,650) per month"],
-                  [<strong>Deposit</strong>, "Required on signing for both options"],
+                  [<strong>Part 1</strong>, "Build and data migration, all eight components"],
+                  [<strong>Build total</strong>, "£7,650 (~CA$14,000)"],
+                  [<strong>Paper-based digitisation</strong>, "To be discussed"],
+                  [<strong>Part 2</strong>, "Ongoing cadence, £900 (~CA$1,650) per month"],
+                  [<strong>Loose timeline</strong>, "8-10 weeks for the build"],
+                  [<strong>Deposit</strong>, "Required on signing"],
                   [<strong>Terms</strong>, "No VAT charged to Canadian clients."],
                 ]}
               />
@@ -939,22 +988,68 @@ const SFFireProposalPage = () => {
 
             <Rule />
 
-            {/* 08 — What we need from you */}
+            {/* 07 - Flexible payment structures */}
+            <section>
+              <SectionHead
+                num="07"
+                eyebrow="Payment"
+                rotate={-0.3}
+                title={<>Flexible payment <Hl>structures.</Hl></>}
+              />
+              <P>Two options. Both require a deposit on signing.</P>
+
+              <H3>Option 1 - On completion</H3>
+              <P><em>Deposit to begin. Balance on handover.</em></P>
+              <EditorialTable
+                head={["Milestone", "When", "Amount"]}
+                rows={[
+                  ["Deposit", "On signing", "£2,000"],
+                  ["Build completion", "On handover", "£5,650"],
+                  [<strong>Build Total</strong>, "", <strong>£7,650</strong>],
+                  ["Monthly cadence · Month 1", "End of month", "£900"],
+                  ["Monthly cadence · Month 2", "End of month", "£900"],
+                  ["Monthly cadence · Month 3", "End of month", "£900"],
+                ]}
+              />
+
+              <H3>Option 2 - Monthly programme</H3>
+              <P><em>Deposit to begin. Equal monthly payments across the build. No surprises.</em></P>
+              <EditorialTable
+                head={["Month", "Amount"]}
+                rows={[
+                  ["Deposit (on signing)", "£1,650"],
+                  ["Month 1", "£1,500"],
+                  ["Month 2", "£1,500"],
+                  ["Month 3", "£1,500"],
+                  ["Month 4", "£1,500"],
+                  [<strong>Build Total</strong>, <strong>£7,650</strong>],
+                ]}
+              />
+              <p className="font-sans text-[13px] italic text-muted-foreground/80 mt-2">
+                Monthly cadence invoiced separately at £900/month from month five.
+              </p>
+            </section>
+
+            <Rule />
+
+            {/* 08 - To begin */}
             <section>
               <SectionHead
                 num="08"
                 eyebrow="To begin"
                 rotate={0.3}
-                title={<>What I need from <Hl shift={-1}>you.</Hl></>}
+                title={<>Reply to this proposal with a <Hl shift={-1}>yes.</Hl></>}
               />
-              <BulletList
-                items={[
-                  <>A reply from Stephen and Carol confirming which phase and which payment option.</>,
-                  <>A sample of existing training materials, procedures, or checklists (scanned or photographed is fine) so I can assess what is already usable.</>,
-                  <>An example of Carol's current paper job record or after-service report, so I understand what the database needs to capture.</>,
-                  <>A rough sense of timing: is there a next hire coming, or a period where you need to step back? That shapes the sequencing.</>,
-                ]}
-              />
+              <P>
+                I will send you a deposit link and we will get started. Everything else, the kickoff session,
+                the materials, the detailed timeline, follows from there.
+              </P>
+              <P>
+                <strong>Brendan Rodgers</strong><br />
+                Thread &amp; Stack<br />
+                <a href="mailto:br@threadandstack.com" className="text-accent hover:underline">br@threadandstack.com</a><br />
+                <a href="https://threadandstack.com" className="text-accent hover:underline">threadandstack.com</a>
+              </P>
             </section>
 
             <Rule />
