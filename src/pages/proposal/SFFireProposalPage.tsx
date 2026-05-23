@@ -458,36 +458,43 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => (
             <p className="text-primary-foreground/90 font-medium">Stephen,</p>
 
             <p>
-              This isn't a pitch document in the way that word usually means something slick and a little
-              impersonal. It's closer to a working plan, written after a conversation in which you were honest
-              about the gaps in your business in a way that a lot of people aren't. I want to meet that honesty
-              with something useful.
+              Thank you for your time last week. And to Carol and Joe, who I haven't met yet, hello.
             </p>
 
             <p>
-              I run Thread & Stack as a solo practice, deliberately. I work with businesses led by real people —
-              people who have built something with their hands and their years and are now asking the right
-              questions about how to make it last beyond themselves. I find myself drawn to that work because
-              I understand the weight of it. The things you're trying to solve — how to hold something together
-              as it grows, how to stop being the single point of failure in the thing you've built — are the
-              same problems that make this work worth doing.
+              What follows is my version of a proposal. It's tailored to you specifically, and in truth it's
+              closer to a working plan than a pitch document.
             </p>
 
             <p>
-              What I'm going to propose here isn't simply a Notion build. Getting you, Carol, and Joe where you
-              want to be will involve a <strong>small, coherent stack of tools</strong> with a clear job for each
-              layer. My role is to help you understand what each part does and why it's there, and then to make
-              sure the whole thing is genuinely usable rather than just built.
+              I want to say something about the call before I get into it. You came to that conversation
+              having already done the thinking. You knew what the problem was, you knew what had caused it,
+              and you knew what needed to happen. Your self-awareness made the conversation genuinely useful
+              rather than just exploratory, and it's meant I can be specific for you in this proposal.
             </p>
 
             <p>
-              That's why, when you work with me, you get a relationship and not a handoff. You'll have
-              asynchronous support throughout, the ability to ask questions as they come up, session recordings,
-              and documentation that Carol can return to in her own time. It will always be me you're working
-              with.
+              You described SF Property Fire Prevention as a twenty year-long partnership of three. Yourself,
+              Carol and Joe working together so closely that your collective instincts became the system
+              itself. Putting it plainly - what I'm proposing is the closest thing to a translation of that
+              into something the next generation of your team can use.
             </p>
 
-            <p>This document sets out a vision, a phasing plan, and clear numbers. Read it with Carol. Come back with questions.</p>
+            <p>
+              Carol will be a cornerstone of this. From what you described, Carol's gift for taking something
+              complex and making it orderly, and holding it that way, is going to be vital. That's not a
+              common thing. It's exactly what a system like this needs to take root properly.
+            </p>
+
+            <p>
+              In the document ahead, I'll also detail my philosophy around your technology stack. But the
+              shorthand is: Notion doesn't get a free pass just because that's how you found me. The
+              philosophy is rooted in your goals, and while Notion does feel like the right solution for this
+              path forward - I will always prioritise your actual desired goals and outcomes (what I think of
+              as your "thread").
+            </p>
+
+            <p>Share it with Carol. I'm here when you're ready.</p>
 
             <img
               src={BrSignature}
