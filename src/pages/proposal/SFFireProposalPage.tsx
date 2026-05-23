@@ -1013,12 +1013,12 @@ const SFFireProposalPage = () => {
               <EditorialTable
                 head={["Milestone", "When", "Amount"]}
                 rows={[
-                  ["Deposit", "On signing", "£2,000"],
-                  ["Build completion", "On handover", "£5,650"],
-                  [<strong>Build Total</strong>, "", <strong>£7,650</strong>],
-                  ["Monthly cadence · Month 1", "End of month", "£900"],
-                  ["Monthly cadence · Month 2", "End of month", "£900"],
-                  ["Monthly cadence · Month 3", "End of month", "£900"],
+                   ["Deposit", "On signing", "£2,000 (~CA$3,660)"],
+                  ["Build completion", "On handover", "£5,650 (~CA$10,340)"],
+                  [<strong>Build Total</strong>, "", <strong>£7,650 (~CA$14,000)</strong>],
+                  ["Monthly cadence · Month 1", "End of month", "£900 (~CA$1,650)"],
+                  ["Monthly cadence · Month 2", "End of month", "£900 (~CA$1,650)"],
+                  ["Monthly cadence · Month 3", "End of month", "£900 (~CA$1,650)"],
                 ]}
               />
 
