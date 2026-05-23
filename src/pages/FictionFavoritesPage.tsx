@@ -232,7 +232,7 @@ export default function FictionFavoritesPage() {
               "Content-Type": "application/json",
               Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`
             },
-            body: JSON.stringify({ answer: item.answer, id: item.id, metadata })
+            body: JSON.stringify({ answer: item.answer, id: item.id })
           }
         )
       );
