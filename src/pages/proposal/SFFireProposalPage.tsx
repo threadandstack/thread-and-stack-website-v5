@@ -974,9 +974,16 @@ const SFFireProposalPage = () => {
                 title={<>You won't be handed a complex system and left to <Hl>work it out.</Hl></>}
               />
               <P>
-                Three months of embedding is included with every build. Dedicated time with me each month,
-                plus asynchronous access in between, to surface emerging pain points, smooth over new ways
-                of operating, and develop the system as the business develops.
+                Three months of embedding is included with every build. You get dedicated time with me banked
+                at one day per month as a floor, scalable up in any given month if the team needs more. Stephen
+                also gets mentorship inside that time, so the strategic side of running the system is part of
+                what we work on together, not just the mechanics.
+              </P>
+              <P>
+                Alongside the dedicated time, the whole team gets a private Slack channel for asynchronous
+                questions. Stephen, Carol, Joe, and any crew member can drop in a question and I guarantee a
+                48-hour response, light-touch by design. The point is to keep momentum and habits forming
+                without anyone waiting on a scheduled call.
               </P>
               <P>
                 Most of the real value in a build like this surfaces in the months after launch. New crew
