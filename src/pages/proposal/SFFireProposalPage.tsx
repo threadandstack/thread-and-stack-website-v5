@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowRight, ArrowUpRight, Download, X, Send, Check, Linkedin } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Download, X, Send, Check, Linkedin, Slack } from "lucide-react";
 import NotionBadges from "@/assets/notion-badges.png";
 import { PillButton } from "@/components/ui/pill-button";
 import { Input } from "@/components/ui/input";
@@ -683,12 +683,12 @@ const SFFireProposalPage = () => {
                   {
                     n: "02",
                     title: "Data migration",
-                    body: "Anything already in digital form (spreadsheets, shared folders, CSV exports) is migrated and structured inside the new system. Included in the build. Paper-based records are scoped separately if needed.",
+                    body: "Anything already in digital form (spreadsheets, shared folders, CSV exports) is migrated and structured inside the new system. Two days of remote digitisation support are included for paper-based records. Anything beyond that can be scoped separately if needed.",
                   },
                   {
                     n: "03",
-                    title: "Embedding · 3 months, included",
-                    body: "Dedicated time with me each month and asynchronous access in between, so you, Carol, Joe, and the crew adopt the system confidently and the habits actually form.",
+                    title: "Support, Adoption & Guidance · 3 months, included",
+                    body: "One dedicated day with me each month, which can be broken into two half-days if that suits the week better. A private Slack channel stays open the whole time for the little questions that come up between sessions, available to Stephen, Carol, Joe and the wider crew. The dedicated time can also be used as 1:1 with different team members inside that month, so the people who need help get it directly.",
                   },
                   {
                     n: "04",
@@ -760,19 +760,37 @@ const SFFireProposalPage = () => {
                 ))}
               </ul>
 
-              <motion.div
-                {...fadeUp}
-                className="mt-10 bg-card/60 rounded-2xl p-6 md:p-7 shadow-[0_2px_8px_rgba(0,0,0,0.04)] border-l-4 border-accent"
-              >
-                <div className="font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-accent mb-3">
-                  A note on Carol
-                </div>
-                <p className="font-sans text-[16.5px] md:text-[17px] leading-[1.8] text-foreground/85">
-                  Carol will be a cornerstone of this. From what you described, her gift for taking
-                  something complex, making it orderly, and holding it that way is exactly what a system
-                  like this needs to take root properly. The build is shaped around how she already thinks.
-                </p>
-              </motion.div>
+              <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
+                <motion.div
+                  {...fadeUp}
+                  className="bg-card/60 rounded-2xl p-6 md:p-7 shadow-[0_2px_8px_rgba(0,0,0,0.04)] border-l-4 border-accent"
+                >
+                  <div className="font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-accent mb-3">
+                    A note on Carol
+                  </div>
+                  <p className="font-sans text-[16.5px] md:text-[17px] leading-[1.8] text-foreground/85">
+                    Carol will be a cornerstone of this. From what you described, her gift for taking
+                    something complex, making it orderly, and holding it that way is exactly what a system
+                    like this needs to take root properly. The build is shaped around how she already thinks.
+                  </p>
+                </motion.div>
+
+                <motion.div
+                  {...fadeUp}
+                  className="bg-card/60 rounded-2xl p-6 md:p-7 shadow-[0_2px_8px_rgba(0,0,0,0.04)] border-l-4 border-accent"
+                >
+                  <div className="font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-accent mb-3">
+                    A note on Joe
+                  </div>
+                  <p className="font-sans text-[16.5px] md:text-[17px] leading-[1.8] text-foreground/85">
+                    Joe holds twenty years of field knowledge that newer hires haven't been able to absorb
+                    in a few weeks of working alongside him. The training stages, the QC sign-off, and the
+                    AI knowledge layer are designed so Joe's expertise becomes the standard the crew works
+                    to, without him needing to be on every job. The system is built to take pressure off
+                    him, not add to it.
+                  </p>
+                </motion.div>
+              </div>
             </section>
 
             <Rule />
@@ -860,12 +878,24 @@ const SFFireProposalPage = () => {
               </P>
 
               <H3>A loose timeline</H3>
-              <P>
-                At our working pace the build typically completes within eight to ten weeks of starting. The
-                pace is partly yours: if you need time to review progress or gather materials, that shapes
-                the schedule. If you have a specific deadline driving things, talk to me early and we'll
-                work out what is possible.
-              </P>
+              <motion.div {...fadeUp} className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+                <div>
+                  <p className="font-sans text-[16.5px] md:text-[17px] leading-[1.8] text-foreground/85">
+                    At our working pace, a typical build completes from kickoff to handover within this
+                    window. The pace is partly yours: if you need time to review progress or gather materials,
+                    that shapes the schedule. If a specific deadline is driving things, talk to me early and
+                    we'll work out what's possible.
+                  </p>
+                </div>
+                <div className="text-right">
+                  <span className="font-serif-pro text-[48px] sm:text-[64px] md:text-[72px] italic font-bold text-accent leading-none tracking-tight">
+                    8–10
+                  </span>
+                  <span className="block font-sans text-[13px] sm:text-[14px] tracking-[0.18em] uppercase text-muted-foreground mt-2">
+                    weeks
+                  </span>
+                </div>
+              </motion.div>
             </section>
 
             <Rule />
@@ -965,35 +995,68 @@ const SFFireProposalPage = () => {
 
             <Rule />
 
-            {/* 05 - Embedding */}
+            {/* 05 - Support, Adoption & Guidance */}
             <section>
               <SectionHead
                 num="05"
-                eyebrow="Embedding"
+                eyebrow="Support, Adoption & Guidance"
                 rotate={-0.3}
                 title={<>You won't be handed a complex system and left to <Hl>work it out.</Hl></>}
               />
               <P>
-                Three months of embedding is included with every build. You get dedicated time with me banked
-                at one day per month as a floor, scalable up in any given month if the team needs more. Stephen
-                also gets mentorship inside that time, so the strategic side of running the system is part of
-                what we work on together, not just the mechanics.
+                Three months of Support, Adoption & Guidance are included with every build. You get one
+                dedicated day with me each month, which can be split into two half-days if that works better
+                for the team's week. Stephen also gets mentorship inside that time, so the strategic side of
+                running the system is part of what we work on together, not just the mechanics.
               </P>
-              <P>
-                Alongside the dedicated time, the whole team gets a private Slack channel for asynchronous
-                questions. Stephen, Carol, Joe, and any crew member can drop in a question and I guarantee a
-                48-hour response, light-touch by design. The point is to keep momentum and habits forming
-                without anyone waiting on a scheduled call.
-              </P>
+
+              <ul className="mt-6 space-y-4">
+                {[
+                  {
+                    icon: Slack,
+                    title: "A private Slack channel for the team",
+                    body: "Open to Stephen, Carol, Joe and the wider crew, for the small questions that come up between sessions. 48-hour response guarantee, light-touch by design, so habits keep forming without anyone waiting on a scheduled call.",
+                  },
+                  {
+                    icon: Check,
+                    title: "Flexible 1:1 time with the people who need it",
+                    body: "The dedicated monthly day can be used as 1:1 with multiple team members inside that month, so Carol gets the admin and CRM deep-dives, Joe gets the field and QC walk-throughs, and new hires get help directly when they need it.",
+                  },
+                  {
+                    icon: ArrowUpRight,
+                    title: "Scalable when the month demands it",
+                    body: "One day per month is a floor, not a cap. If a new hire arrives or a busy stretch lands, the time can be scaled up in that month so the system supports the team instead of slowing them down.",
+                  },
+                ].map((item, i) => {
+                  const Icon = item.icon;
+                  return (
+                    <motion.li
+                      key={i}
+                      initial={{ opacity: 0, y: 16 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, amount: 0.3 }}
+                      transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                      whileHover={{ scale: 1.015, y: -2 }}
+                      className="flex gap-5 items-start bg-card/60 hover:bg-card rounded-2xl p-5 shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] transition-colors duration-300 cursor-default"
+                    >
+                      <div className="flex-shrink-0 w-14 h-14 rounded-xl bg-background flex items-center justify-center shadow-[0_1px_4px_rgba(0,0,0,0.06)]">
+                        <Icon className="w-7 h-7 text-accent" strokeWidth={1.5} />
+                      </div>
+                      <div className="flex-1 pt-1">
+                        <strong className="font-serif-pro italic text-lg text-primary block mb-1">{item.title}</strong>
+                        <span className="text-foreground/75 leading-relaxed">{item.body}</span>
+                      </div>
+                    </motion.li>
+                  );
+                })}
+              </ul>
+
               <P>
                 Most of the real value in a build like this surfaces in the months after launch. New crew
                 members join and need onboarding. Requirements emerge that nobody anticipated on paper. Ways
                 of working shift as the team gets comfortable with the system. That's the sign the business
-                is actually using it.
-              </P>
-              <P>
-                After the three months, many clients find it useful to continue on a rolling monthly basis.
-                Some don't. There's no tie-in either way.
+                is actually using it. After the three months, many clients find it useful to continue on a
+                rolling monthly basis. Some don't. There's no tie-in either way.
               </P>
             </section>
 
@@ -1007,33 +1070,22 @@ const SFFireProposalPage = () => {
                 rotate={0.3}
                 title={<>The engagement <Hl shift={-1}>in one view.</Hl></>}
               />
+              <P>
+                One engagement, one price. The build, the data migration, and three months of Support,
+                Adoption & Guidance are bundled into a single number, so there's nothing to add up and
+                nothing left to discover later.
+              </P>
               <EditorialTable
-                head={["Phase", "Included", "Amount"]}
+                head={["What's included", "Detail", "Amount"]}
                 rows={[
-                  [<strong>01 · Build</strong>, "Eight components, fully built and tested", "£7,650 (~CA$14,000)"],
-                  [<strong>02 · Data migration</strong>, "All existing digital records migrated and structured", "Included"],
-                  [<strong>03 · Embedding</strong>, "3 months, included with the build (£900/mo)", "£1,800 (~CA$3,300)"],
-                  [<strong>Build + 3-month embedding total</strong>, "", <strong>£9,450 (~CA$17,300)</strong>],
-                  [<strong>04 · Rolling, optional</strong>, "Month-to-month after embedding, no tie-in", "£900/mo (~CA$1,650)"],
-                  [<strong>Paper digitisation</strong>, "Scoped separately if needed", "To be discussed"],
+                  [<strong>Build</strong>, "Eight components, fully built and tested", ""],
+                  [<strong>Data migration</strong>, "All existing digital records migrated and structured. Two days of remote digitisation support included for paper records.", ""],
+                  [<strong>Support, Adoption & Guidance</strong>, "3 months included. One dedicated day per month, private Slack channel, 1:1 time across the team.", ""],
+                  [<strong>Build + 3 months, all-in</strong>, "One engagement, one price", <strong>£9,450 (~CA$17,300)</strong>],
+                  [<strong>Rolling monthly, optional</strong>, "Month-to-month continuation after the three months. No tie-in.", "£900/mo (~CA$1,650)"],
+                  [<strong>Additional paper digitisation</strong>, "If volume exceeds the included two days, a remote VA in Canada is typically the cleanest option.", "~CA$500–1,500"],
                 ]}
               />
-
-              <motion.div {...fadeUp} className="my-10 md:my-14 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
-                <div>
-                  <p className="font-sans text-[16.5px] md:text-[17px] leading-[1.8] text-foreground/85">
-                    A typical build completes in eight to ten weeks from kickoff to handover. Embedding begins the month after.
-                  </p>
-                </div>
-                <div className="text-right">
-                  <span className="font-serif-pro text-[48px] sm:text-[64px] md:text-[72px] italic font-bold text-accent leading-none tracking-tight">
-                    8–10
-                  </span>
-                  <span className="block font-sans text-[13px] sm:text-[14px] tracking-[0.18em] uppercase text-muted-foreground mt-2">
-                    weeks
-                  </span>
-                </div>
-              </motion.div>
 
               <PullQuote rotate={-0.2}>
                 What you're investing in here is an asset the business owns. An AI-ready workspace with clear
@@ -1041,10 +1093,10 @@ const SFFireProposalPage = () => {
                 compounds the more your expertise feeds into it. Knowledge stops living only in three heads,
                 paper records stop being a single point of failure, and you build the kind of accountability
                 and audit trail the business can lean on for years. New team members can step into roles
-                without re-learning the company from scratch. I know this lands at the top end of the budget
-                we discussed, and the three months of embedding is where that compounding actually starts. It
-                is the period where habits form, where the AI layer becomes genuinely useful, and where I help
-                you get the most out of what you've just built.
+                without re-learning the company from scratch. The three months of Support, Adoption & Guidance
+                bundled into this price is where that compounding actually starts. It is the period where
+                habits form, where the AI layer becomes genuinely useful, and where I help you get the most
+                out of what you've just built.
               </PullQuote>
             </section>
 
@@ -1188,9 +1240,12 @@ const SFFireProposalPage = () => {
 
               {/* Trust-building testimonials carousel */}
               <motion.div {...fadeUp} className="mx-auto max-w-4xl mt-14 sm:mt-16">
-                <div className="text-center font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-accent mb-5">
+                <div className="text-center font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-accent mb-2">
                   Kind words
                 </div>
+                <p className="text-center font-serif-pro italic text-[15px] md:text-[16px] text-foreground/70 mb-5">
+                  Different sectors, same problem: building systems that hold.
+                </p>
                 <Carousel
                   opts={{ align: "start", loop: true, dragFree: true }}
                   className="w-full"
