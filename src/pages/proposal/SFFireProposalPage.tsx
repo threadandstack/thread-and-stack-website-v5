@@ -759,54 +759,107 @@ const SFFireProposalPage = () => {
                 title={<>Five things that <Hl>change.</Hl></>}
               />
 
-              <H3>The team works from one place</H3>
-              <P>
-                For 20 years the three of you have operated on instinct, each knowing your role without
-                needing to be told. That dynamic is the business's greatest strength and this build honours
-                it rather than disrupts it. You have a clear view of jobs, staff progress, and the state of
-                the business. Carol runs scheduling, customer records, and documentation from a single
-                organised system rather than paper folders. Joe oversees field operations and crew progress
-                without needing to be physically present at every step. The same knowledge base, three
-                different ways of working with it.
-              </P>
+              <ul className="mt-8 space-y-5 list-none pl-0">
+                {[
+                  {
+                    title: "The team works from one place",
+                    lead: "Three people, three ways of working, one shared base of knowledge.",
+                    body: (
+                      <>
+                        For 20 years the three of you have operated on instinct, each knowing your role
+                        without needing to be told. That dynamic is the business's greatest strength and this
+                        build honours it rather than disrupts it.
+                        <br /><br />
+                        You have a clear view of jobs, staff progress, and the state of the business. Carol
+                        runs scheduling, customer records, and documentation from a single organised system
+                        rather than paper folders. Joe oversees field operations and crew progress without
+                        needing to be physically present at every step.
+                      </>
+                    ),
+                  },
+                  {
+                    title: "Carol gets a control centre",
+                    lead: "Infrastructure that matches how she already thinks.",
+                    body: (
+                      <>
+                        Carol's ability to take something complex, make it orderly, and hold it that way is
+                        not a common thing. The current paper folder system works because Carol makes it
+                        work.
+                        <br /><br />
+                        Job records, customer history, re-booking cycles, compliance dates — all connected,
+                        all in one place. Something she can hand to a future hire and trust that it still
+                        works.
+                      </>
+                    ),
+                  },
+                  {
+                    title: "Jobs update from the field",
+                    lead: "Information flows in automatically, instead of being chased.",
+                    body: (
+                      <>
+                        Every job your crew does generates information: what was done, how long it took, what
+                        photos were taken, whether anything went wrong. Right now that information lives on
+                        cameras, on paper, and in memory.
+                        <br /><br />
+                        In this system, crew members submit a simple form from their phone at the end of
+                        every job. Photos attached. Checklist confirmed. Incident flagged if needed. The
+                        record is created automatically, linked to the customer, and visible to Joe and Carol
+                        without anyone having to chase it.
+                      </>
+                    ),
+                  },
+                  {
+                    title: "The crew has structure, not just instructions",
+                    lead: "Documented procedure, accessible from the phone in their pocket.",
+                    body: (
+                      <>
+                        A new hire who has been shown something twice by Joe and told to get on with it is
+                        not a failure of hiring. It is a failure of system.
+                        <br /><br />
+                        The training modules in this build give every crew member access to the documented
+                        procedure for every task, before a job starts and during it if they need to check.
+                        The safety incidents that have already occurred are a signal and not a one-off — this
+                        is the part of the build with the most immediate urgency.
+                      </>
+                    ),
+                  },
+                  {
+                    title: "Structure becomes a source of strength",
+                    lead: "The next move depends on the knowledge living somewhere other than in your heads.",
+                    body: (
+                      <>
+                        You stepped back from the field a month ago. The business is at the stage where the
+                        next move — whether that is two full crews, a dedicated premises, or simply being
+                        able to take two weeks away without anything breaking — depends on the operational
+                        knowledge being somewhere other than in your heads.
+                        <br /><br />
+                        This build doesn't change what SF Property Fire Prevention is. It makes what it
+                        already is available to everyone who needs it.
+                      </>
+                    ),
+                  },
+                ].map((item, i) => (
+                  <motion.li
+                    key={i}
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                    className="bg-card/60 rounded-2xl p-6 md:p-7 shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
+                  >
+                    <h3 className="font-serif-pro text-[22px] md:text-[26px] italic font-semibold text-foreground mb-3 leading-snug">
+                      {item.title}
+                    </h3>
+                    <p className="font-serif-pro italic text-lg text-primary mb-4 leading-snug">
+                      {item.lead}
+                    </p>
+                    <div className="font-sans text-[16.5px] md:text-[17px] leading-[1.8] text-foreground/85">
+                      {item.body}
+                    </div>
+                  </motion.li>
+                ))}
+              </ul>
 
-              <H3>02 - Carol gets a control centre</H3>
-              <P>
-                Carol's ability to take something complex, make it orderly, and hold it that way is not a
-                common thing. The current paper folder system works because Carol makes it work. This build
-                gives her infrastructure that matches how she already thinks. Job records, customer history,
-                re-booking cycles, compliance dates, all connected, all in one place. Something she can hand
-                to a future hire and trust that it still works.
-              </P>
-
-              <H3>03 - Jobs update from the field</H3>
-              <P>
-                Every job your crew does generates information: what was done, how long it took, what photos
-                were taken, whether anything went wrong. Right now that information lives on cameras, on
-                paper, and in memory. In this system, crew members submit a simple form from their phone at
-                the end of every job. Photos attached. Checklist confirmed. Incident flagged if needed. The
-                record is created automatically, linked to the customer, and visible to Joe and Carol without
-                anyone having to chase it.
-              </P>
-
-              <H3>04 - The crew has structure, not just instructions</H3>
-              <P>
-                A new hire who has been shown something twice by Joe and told to get on with it is not a
-                failure of hiring. It is a failure of system. The training modules in this build give every
-                crew member access to the documented procedure for every task, from the phone in their
-                pocket, before a job starts and during it if they need to check. The safety incidents that
-                have already occurred are a signal and not a one-off. This is the part of the build with the
-                most immediate urgency.
-              </P>
-
-              <H3>05 - Structure becomes a source of strength</H3>
-              <P>
-                You stepped back from the field a month ago. The business is at the stage where the next
-                move, whether that is two full crews, a dedicated premises, or simply being able to take two
-                weeks away without anything breaking, depends on the operational knowledge being somewhere
-                other than in your heads. This build doesn't change what SF Property Fire Prevention is. It
-                makes what it already is available to everyone who needs it.
-              </P>
             </section>
 
             <Rule />
