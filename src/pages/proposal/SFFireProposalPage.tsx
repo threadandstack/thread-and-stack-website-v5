@@ -878,12 +878,24 @@ const SFFireProposalPage = () => {
               </P>
 
               <H3>A loose timeline</H3>
-              <P>
-                At our working pace the build typically completes within eight to ten weeks of starting. The
-                pace is partly yours: if you need time to review progress or gather materials, that shapes
-                the schedule. If you have a specific deadline driving things, talk to me early and we'll
-                work out what is possible.
-              </P>
+              <motion.div {...fadeUp} className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+                <div>
+                  <p className="font-sans text-[16.5px] md:text-[17px] leading-[1.8] text-foreground/85">
+                    At our working pace, a typical build completes from kickoff to handover within this
+                    window. The pace is partly yours: if you need time to review progress or gather materials,
+                    that shapes the schedule. If a specific deadline is driving things, talk to me early and
+                    we'll work out what's possible.
+                  </p>
+                </div>
+                <div className="text-right">
+                  <span className="font-serif-pro text-[48px] sm:text-[64px] md:text-[72px] italic font-bold text-accent leading-none tracking-tight">
+                    8–10
+                  </span>
+                  <span className="block font-sans text-[13px] sm:text-[14px] tracking-[0.18em] uppercase text-muted-foreground mt-2">
+                    weeks
+                  </span>
+                </div>
+              </motion.div>
             </section>
 
             <Rule />
