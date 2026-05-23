@@ -1021,13 +1021,15 @@ const SFFireProposalPage = () => {
               />
 
               <PullQuote rotate={-0.2}>
-                I know we discussed a figure around $5,000 on our call, and this comes in above that. For
-                context, the builds I do typically sit between £4,000 and £10,000, and this is a fairly
-                standard build size for the scope we've mapped. The upfront sits slightly above the initial
-                number because of the depth of what we covered together. I'm open to discussing flexibility
-                on the structure, though I'd strongly suggest keeping the three months of embedding in
-                place. A system this connected needs the team around it for the habits to land, and without
-                that period the risk of it quietly going unused is real.
+                What you're investing in here is an asset the business owns. An AI-ready workspace with clear
+                operations and internal support structures gives the business organisational strength that
+                compounds the more your expertise feeds into it. Knowledge stops living only in three heads,
+                paper records stop being a single point of failure, and you build the kind of accountability
+                and audit trail the business can lean on for years. New team members can step into roles
+                without re-learning the company from scratch. I know this lands at the top end of the budget
+                we discussed, and the three months of embedding is where that compounding actually starts. It
+                is the period where habits form, where the AI layer becomes genuinely useful, and where I help
+                you get the most out of what you've just built.
               </PullQuote>
             </section>
 
