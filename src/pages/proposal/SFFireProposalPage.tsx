@@ -467,31 +467,16 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => (
             </p>
 
             <p>
-              I want to say something about the call before I get into it. You came to that conversation
-              having already done the thinking. You knew what the problem was, you knew what had caused it,
-              and you knew what needed to happen. Your self-awareness made the conversation genuinely useful
-              rather than just exploratory, and it's meant I can be specific for you in this proposal.
+              You came to our call already knowing the shape of the problem, what had caused it, and what
+              needed to happen next. That made the conversation genuinely useful, and it's the reason I can
+              be this specific now.
             </p>
 
             <p>
-              You described SF Property Fire Prevention as a twenty year-long partnership of three. Yourself,
-              Carol and Joe working together so closely that your collective instincts became the system
-              itself. Putting it plainly - what I'm proposing is the closest thing to a translation of that
-              into something the next generation of your team can use.
-            </p>
-
-            <p>
-              Carol will be a cornerstone of this. From what you described, Carol's gift for taking something
-              complex and making it orderly, and holding it that way, is going to be vital. That's not a
-              common thing. It's exactly what a system like this needs to take root properly.
-            </p>
-
-            <p>
-              In the document ahead, I'll also detail my philosophy around your technology stack. But the
-              shorthand is: Notion doesn't get a free pass just because that's how you found me. The
-              philosophy is rooted in your goals, and while Notion does feel like the right solution for this
-              path forward - I will always prioritise your actual desired goals and outcomes (what I think of
-              as your "thread").
+              You described SF Property Fire Prevention as a twenty-year partnership of three. Yourself,
+              Carol and Joe, working together so closely that your collective instincts became the system
+              itself. What I'm proposing is the closest thing to a translation of that into something the
+              next generation of your team can use.
             </p>
 
             <p>Share it with Carol. I'm here when you're ready.</p>
@@ -668,12 +653,15 @@ const SFFireProposalPage = () => {
               </P>
 
               <P>
-                Procedures exist on paper and in memory. Checklists live in monthly folders. The caustic
-                bottle incident and the security situation that left Joe in an unjust position are not stories
-                about individual errors. They are stories about what happens when a business that runs on
-                experience brings in people who don't have it yet. Joe is on every job, every night, catching
-                the things that get missed because repetition is not the same as documentation - and your
-                business needs both.
+                Procedures exist on paper and in memory. Checklists live in monthly folders.
+              </P>
+
+              <P>
+                The caustic bottle incident and the security situation that left Joe in an unjust position
+                show what happens when a business that runs on experience brings in people who don't have it
+                yet. Joe is on every job, every night, catching the things that get missed. Repetition
+                builds skill, but documentation is what lets that skill travel beyond the person who has it,
+                and your business needs both.
               </P>
             </section>
 
@@ -692,16 +680,23 @@ const SFFireProposalPage = () => {
                 company knowledge management</a>, but for you, this is achievable almost entirely within Notion.</em>
               </P>
               <P>
-                Every piece of operational knowledge your business runs on, the procedures, the checklists,
-                the safety protocols, the customer records, the job history, will live in a single connected
-                system. Not a folder on a desktop. Not a paper monthly system. Not in anyone's head. In one
-                place that anyone on the team can access, at the level they need, from wherever they are.
+                A note on the philosophy before we go further. Notion doesn't get a free pass just because
+                that's how you found me. My approach is rooted in your goals first, and while Notion does
+                feel like the right solution for the path forward, I will always prioritise your actual
+                outcomes (what I think of as your "thread") over any particular tool.
               </P>
               <P>
-                That system is built in Notion. Notion excels at this kind of knowledge architecture.
-                Flexible enough to hold your operational complexity, simple enough for a crew member to use
-                on a phone between jobs, and open enough to connect to other tools where they genuinely add
-                value.
+                Every piece of operational knowledge your business runs on, from procedures and checklists
+                through to safety protocols, customer records and job history, will live in a single
+                connected system. One place that anyone on the team can access, at the level they need, from
+                wherever they are. No more folders on a desktop, paper monthly systems, or knowledge held
+                only in someone's head.
+              </P>
+              <P>
+                That system is built in Notion, which excels at this kind of knowledge architecture. It is
+                flexible enough to hold your operational complexity and simple enough for a crew member to
+                use on a phone between jobs, and it stays open to connecting with other tools where they
+                genuinely add value.
               </P>
               <P>The knowledge lake works across four layers.</P>
 
@@ -746,6 +741,20 @@ const SFFireProposalPage = () => {
                   </motion.li>
                 ))}
               </ul>
+
+              <motion.div
+                {...fadeUp}
+                className="mt-10 bg-card/60 rounded-2xl p-6 md:p-7 shadow-[0_2px_8px_rgba(0,0,0,0.04)] border-l-4 border-accent"
+              >
+                <div className="font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-accent mb-3">
+                  A note on Carol
+                </div>
+                <p className="font-sans text-[16.5px] md:text-[17px] leading-[1.8] text-foreground/85">
+                  Carol will be a cornerstone of this. From what you described, her gift for taking
+                  something complex, making it orderly, and holding it that way is exactly what a system
+                  like this needs to take root properly. The build is shaped around how she already thinks.
+                </p>
+              </motion.div>
             </section>
 
             <Rule />
@@ -763,7 +772,7 @@ const SFFireProposalPage = () => {
                 {[
                   {
                     title: "The team works from one place",
-                    lead: "Three people, three ways of working, one shared base of knowledge.",
+                    lead: "One shared base of knowledge that respects how each of you already works.",
                     body: (
                       <>
                         For 20 years the three of you have operated on instinct, each knowing your role
@@ -786,9 +795,9 @@ const SFFireProposalPage = () => {
                         not a common thing. The current paper folder system works because Carol makes it
                         work.
                         <br /><br />
-                        Job records, customer history, re-booking cycles, compliance dates — all connected,
-                        all in one place. Something she can hand to a future hire and trust that it still
-                        works.
+                        Job records, customer history, re-booking cycles and compliance dates sit
+                        connected in one place. Something she can hand to a future hire and trust that it
+                        still works.
                       </>
                     ),
                   },
@@ -813,13 +822,13 @@ const SFFireProposalPage = () => {
                     lead: "Documented procedure, accessible from the phone in their pocket.",
                     body: (
                       <>
-                        A new hire who has been shown something twice by Joe and told to get on with it is
-                        not a failure of hiring. It is a failure of system.
+                        A new hire who has been shown something twice by Joe and told to get on with it
+                        needs a system to fall back on, not a sharper memory.
                         <br /><br />
                         The training modules in this build give every crew member access to the documented
                         procedure for every task, before a job starts and during it if they need to check.
-                        The safety incidents that have already occurred are a signal and not a one-off — this
-                        is the part of the build with the most immediate urgency.
+                        The safety incidents that have already occurred read as a signal rather than a
+                        one-off, which is why this is the part of the build with the most immediate urgency.
                       </>
                     ),
                   },
@@ -829,9 +838,9 @@ const SFFireProposalPage = () => {
                     body: (
                       <>
                         You stepped back from the field a month ago. The business is at the stage where the
-                        next move — whether that is two full crews, a dedicated premises, or simply being
-                        able to take two weeks away without anything breaking — depends on the operational
-                        knowledge being somewhere other than in your heads.
+                        next move, whether that is two full crews, a dedicated premises, or simply being
+                        able to take two weeks away without anything breaking, depends on the operational
+                        knowledge living somewhere other than in your heads.
                         <br /><br />
                         This build doesn't change what SF Property Fire Prevention is. It makes what it
                         already is available to everyone who needs it.
@@ -948,21 +957,17 @@ const SFFireProposalPage = () => {
                 ))}
               </ul>
 
-              <EditorialTable
-                head={["Component", "Included"]}
-                rows={[
-                  ["Company Home", "✓"],
-                  ["Task Operating System", "✓"],
-                  ["Internal Knowledge Base and Training Library", "✓"],
-                  ["Custom Notion AI Assistant", "✓"],
-                  ["Training Sessions (x2, recorded)", "✓"],
-                  ["Employee Onboarding System", "✓"],
-                  ["Customer Relationship Management", "✓"],
-                  ["Mobile Job Completion", "✓"],
-                  ["Data migration (from existing digital records)", "✓"],
-                  [<strong>Build Total</strong>, <strong>£7,650 (~CA$14,000)</strong>],
-                ]}
-              />
+              <motion.div
+                {...fadeUp}
+                className="mt-10 rounded-2xl bg-card/60 shadow-[0_2px_8px_rgba(0,0,0,0.04)] p-6 md:p-7 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3"
+              >
+                <div className="font-serif-pro italic text-lg text-primary">
+                  Build Total · all eight components, including data migration
+                </div>
+                <div className="font-serif-pro italic text-2xl font-semibold text-foreground">
+                  £7,650 <span className="text-foreground/60 text-lg">(~CA$14,000)</span>
+                </div>
+              </motion.div>
 
               <H3>Practical Reality: Offline Records</H3>
               <P>
@@ -999,16 +1004,15 @@ const SFFireProposalPage = () => {
                 title={<>You will not be handed a complex system and left to <Hl>work it out.</Hl></>}
               />
               <P>
-                Most of the real value in a build like this surfaces in the months after launch, not before
-                it. New crew members join and need onboarding. Requirements emerge that nobody anticipated on
-                paper. Ways of working shift as the team gets comfortable with the system. That is not a sign
-                that the build was wrong. It is a sign that the business is actually using it.
+                You will have dedicated time with me each month, plus asynchronous access in between, to
+                surface emerging pain points, smooth over new ways of operating, and develop the system as
+                the business develops.
               </P>
               <P>
-                The ongoing cadence is how we make sure the system keeps working for how SF Property Fire
-                Prevention actually operates, not just how it operated when we planned it. You will have
-                dedicated and asynchronous access to me each month - time to surface emerging pain points,
-                smooth over the new ways of operating, and develop the system as the business develops.
+                Most of the real value in a build like this surfaces in the months after launch. New crew
+                members join and need onboarding. Requirements emerge that nobody anticipated on paper. Ways
+                of working shift as the team gets comfortable with the system. That isn't a sign the build
+                was wrong, it's a sign the business is actually using it.
               </P>
               <P>
                 The first months are for embedding: making sure you, Carol, Joe, and the crew are using the
@@ -1036,15 +1040,10 @@ const SFFireProposalPage = () => {
               />
               <EditorialTable
                 rows={[
-                  [<strong>Client</strong>, "Stephen Hart, SF Property Fire Prevention"],
-                  [<strong>Consultant</strong>, "Brendan Rodgers, Thread & Stack"],
-                  [<strong>Part 1</strong>, "Build and data migration, all eight components"],
-                  [<strong>Build total</strong>, "£7,650 (~CA$14,000)"],
+                  [<strong>Part 1 · Build and data migration</strong>, "£7,650 (~CA$14,000)"],
                   [<strong>Paper-based digitisation</strong>, "To be discussed"],
-                  [<strong>Part 2</strong>, "Ongoing cadence, £900 (~CA$1,650) per month"],
-                  [<strong>Loose timeline</strong>, "8-10 weeks for the build"],
-                  [<strong>Deposit</strong>, "Required on signing"],
-                  [<strong>Terms</strong>, "No VAT charged to Canadian clients."],
+                  [<strong>Part 2 · Ongoing cadence</strong>, "£900 (~CA$1,650) per month"],
+                  [<strong>Loose timeline</strong>, "8–10 weeks for the build"],
                 ]}
               />
             </section>
