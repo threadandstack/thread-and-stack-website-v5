@@ -688,8 +688,8 @@ const SFFireProposalPage = () => {
                 title={<>A knowledge lake for <Hl shift={-1}>SF Property Fire Prevention.</Hl></>}
               />
               <P>
-                <em>You can learn more about Thread &amp; Stack's approach to building technology stacks for
-                company knowledge management, but for you, this is achievable almost entirely within Notion.</em>
+                <em>You can learn more about <a href="https://threadandstack.notion.site/The-Intentional-Tool-Stack-3678863b87d4815a8f72c285e27b320b?pvs=74" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 text-accent hover:text-accent/80 transition-colors">Thread &amp; Stack's approach to building technology stacks for
+                company knowledge management</a>, but for you, this is achievable almost entirely within Notion.</em>
               </P>
               <P>
                 Every piece of operational knowledge your business runs on, the procedures, the checklists,
