@@ -318,7 +318,7 @@ const SectionHead = ({
 );
 
 const P = ({ children }: { children: React.ReactNode }) => (
-  <motion.p {...fadeUp} className="font-sans text-[16.5px] md:text-[17px] leading-[1.8] text-foreground/85 mb-6">
+  <motion.p {...fadeUp} className="font-sans text-[16.5px] md:text-[17px] leading-[1.8] text-foreground/85 mb-6 font-bold">
     {children}
   </motion.p>
 );
