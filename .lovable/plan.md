@@ -1,64 +1,71 @@
-## Goal
+## Scope
 
-Create a general-purpose lead magnet landing page modelled on `/charity-meetup-april26`, repositioned for any purpose-driven / impact-focused team. Same resources, same email gate, same Power-Hour offer — but with a new headline, framing, and a 15% off coupon (`IMPACT15`).
+Single file: `src/pages/proposal/SFFireProposalPage.tsx`. Copy and small structural changes only. No design system, routing, or backend changes.
 
-## New route
+## 1. Welcome letter (WelcomeScreen)
 
-- `src/pages/UnleashYourTeamPage.tsx` mounted at:
-  - `/unleash-your-team` (canonical)
-  - `/Unleash-Your-Team` (case-insensitive convenience, mirroring the existing pattern)
-- Registered in `src/App.tsx` alongside the charity meetup routes (lazy-loaded).
+Replace the eight-paragraph letter with the trimmed five-paragraph version:
 
-## Page content
+- Greeting (Stephen / hello to Carol and Joe)
+- "Working plan, not pitch document" framing
+- "You came to our call already knowing the shape of the problem…" (rewritten to remove the rule-of-three "you knew / you knew / you knew")
+- "Twenty-year partnership of three… translation of that…"
+- "Share it with Carol. I'm here when you're ready." + signature
 
-Built from the same components as `CharityMeetupApril26Page` (avatar + logo, gradient headline, email-gate card, three resource cards, 4 C's / 4 D's framework, LinkedIn + email CTAs, Footer, `PowerHourBookingDrawer`).
+Remove from the letter:
+- Carol-as-cornerstone paragraph (moves to §02)
+- Notion-philosophy paragraph (moves to §02)
 
-Differences:
+## 2. §02 — The solve
 
-- **Eyebrow**: "For purpose-driven teams · AI that frees you up"
-- **Headline (gradient)**: *"Unleash your team's power"* with sub-line: *"AI workflows that free your team to be more strategic and creative."*
-- **Intro copy** — reframed for impact-led orgs (charities, social enterprises, mission-driven teams). Names the "creative tax" / admin chaos and positions AI as a way to reclaim time for strategy and creative work, not to replace people. Removes Charity Meetup / Oliver Wyman / Dawn Newton references.
-- **Resources**: same three Notion links and copy (already evergreen).
-- **Email gate**: same component pattern; lead `source = "unleash-your-team-resources"` so we can attribute leads separately. Same consent + honeypot + sessionStorage unlock key (`unleash-your-team-resources-unlocked`).
-- **Power-Hour offer card**: copy updated to "15% off — for purpose-driven teams". Shows £395 → £335.75 (15% off), voucher `IMPACT15`, no "first 10 claimed" line (we can frame it as an ongoing offer for impact-led teams). Opens `PowerHourBookingDrawer` with `source="unleash-your-team"` and `defaultCoupon="IMPACT15"`.
-- **Frameworks (4 C's / 4 D's)** and **Stay connected** sections kept verbatim — they're brand-level.
+- Add a short Carol callout (lifted from the welcome letter) near the four-layer list, framed as why the system suits how she already works.
+- Fold the Notion-philosophy paragraph ("Notion doesn't get a free pass just because that's how you found me…") into the existing intro that links to the Intentional Tool Stack post.
+- Rewrite the rule-of-three sentence "Flexible enough to hold…, simple enough for…, and open enough to…" into two sentences.
+- Rewrite "Not a folder on a desktop. Not a paper monthly system. Not in anyone's head." as a single declarative line.
 
-## Coupon plumbing — `IMPACT15` (15% off)
+## 3. §01 — The problem
 
-The existing flow only supports the £100 flat-rate `CHARITYMEETUP100` coupon. We need to add a second coupon without breaking the first.
+- Rewrite "They are not stories about individual errors. They are stories about what happens when…" to remove the banned "X isn't Y, it's Z" pattern.
+- Rewrite "repetition is not the same as documentation" similarly.
+- Light paragraph break so the caustic-bottle / Joe beat sits on its own.
 
-### `src/components/PowerHourBookingDrawer.tsx`
+## 4. §03 — What changes
 
-- Replace the single-coupon constants with a small lookup:
-  ```ts
-  const COUPONS = {
-    CHARITYMEETUP100: { kind: "amount", amountOff: 10000, label: "£100 off" },
-    IMPACT15:         { kind: "percent", percentOff: 15,  label: "15% off" },
-  } as const;
-  ```
-- Compute `displayedTotal` from the matched coupon (flat amount or percent of `FULL_PRICE`, rounded to nearest pence).
-- Update the green confirmation row to show the coupon's own label (e.g. "Coupon IMPACT15 — 15% off") instead of the hard-coded charity copy.
-- `couponLooksValid` becomes "is the normalized code a key in `COUPONS`".
+- Card 4 ("The crew has structure"): rewrite "is not a failure of hiring. It is a failure of system." into a positive declarative.
+- Card 1 lead: rewrite "Three people, three ways of working, one shared base of knowledge." to break the rule-of-three.
 
-### `supabase/functions/create-power-hour-checkout/index.ts`
+## 5. §04 — What's included
 
-- Replace the single `COUPON_CODE` / `COUPON_DISCOUNT_PENCE` constants with a `COUPONS` map keyed by code, each entry holding either `{ kind: "amount", amountOff }` or `{ kind: "percent", percentOff }`, plus a `maxUses` (keep `CHARITYMEETUP100` at 10; `IMPACT15` set to a higher cap, e.g. 100, since it's an ongoing impact-org offer).
-- Validation flow:
-  1. Normalise the code; reject if not in the map.
-  2. Use the existing `count_coupon_redemptions` RPC against the normalized code; reject if `>= maxUses` for that coupon.
-- Stripe coupon creation: derive a deterministic Stripe coupon id per code + env, e.g. `impact15_v1_${env}` / keep `charitymeetup100_v2_${env}`. For percent coupons, create with `percent_off: 15` instead of `amount_off`. For amount coupons, keep current behaviour.
-- Pass through `coupon_code: couponNormalized` on the booking insert and metadata as today, so attribution works for both.
+- Keep the eight component cards as-is.
+- Remove the redundant `EditorialTable` checkmark table beneath the cards.
+- Replace it with a compact single-row cost block showing `Build Total · £7,650 (~CA$14,000)`.
+- "Practical Reality: Offline Records" and "A loose timeline" sections unchanged in content; em-dash sweep only.
 
-The `count_coupon_redemptions` RPC already takes the code as an argument, so no DB migration is required — `IMPACT15` redemptions will be counted naturally as bookings come in with that code stored in `power_hour_bookings.coupon_code`.
+## 6. §05 — Ongoing cadence
 
-## Tracking / attribution
+- Reorder the opening: lead with what the client gets (dedicated monthly time, asynchronous access, embedding period). The current "Most of the real value surfaces in the months after launch" line becomes the second paragraph.
+- Em-dash sweep.
 
-- Lead capture uses `source: "unleash-your-team-resources"`.
-- Power-Hour bookings from this page will land with `source: "unleash-your-team"` and `coupon_code: "IMPACT15"`, so you can pull them out the same way you pulled the charity meetup numbers.
+## 7. §06 — At a glance
+
+Trim the nine-row table to four rows:
+- Part 1 — Build and data migration · £7,650 (~CA$14,000)
+- Paper-based digitisation · To be discussed
+- Part 2 — Ongoing cadence · £900 (~CA$1,650) per month
+- Loose timeline · 8–10 weeks for the build
+
+Drop Client, Consultant, Deposit, Terms rows (Deposit and Terms remain visible in §07).
+
+## 8. Global em-dash sweep
+
+Replace every `—` across the page with a comma, full stop, or sentence restructure. Normalise the rogue ASCII ` - ` em-dash substitutes (e.g. "Putting it plainly -", "Deficiency callbacks… -", "dedicated and asynchronous access to me each month -") to proper punctuation.
 
 ## Out of scope
 
-- No changes to the existing `/charity-meetup-april26` page or its coupon.
-- No new database columns or migrations.
-- No new edge function — we extend the existing `create-power-hour-checkout`.
-- No sitemap / nav changes (this is a direct-link lead magnet, like the charity page).
+- No changes to the reply drawer, lead capture flow, or any backend wiring.
+- No changes to typography, colour tokens, animations, or layout components.
+- §07 (payment) and §08 (to begin) copy stays as-is apart from the em-dash sweep.
+
+## Optional follow-up (not in this pass)
+
+Save the Hard Ban & Pre-Publish Checklist as a project memory so the rules apply automatically to future Thread & Stack copy work. Confirm separately if you want this.
