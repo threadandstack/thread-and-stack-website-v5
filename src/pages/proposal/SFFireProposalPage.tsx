@@ -654,7 +654,7 @@ const SFFireProposalPage = () => {
               </PullQuote>
 
               <P>
-                <strong>Stephen, for 20 years the system has been you, Carol, and Joe.</strong> Three people
+                Stephen, for 20 years the system has been you, Carol, and Joe. Three people
                 with deep expertise, complete trust in one another, and a speed that comes from knowing the
                 work in your bones. A restaurant kitchen job that used to take eight hours takes three, skill
                 became instinct, instinct became your system. But now the business is at an inflection point.
