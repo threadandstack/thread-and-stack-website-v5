@@ -536,7 +536,7 @@ const SFFireProposalPage = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = "Proposal — SF Property Fire Prevention · Thread & Stack";
+    document.title = "Proposal · SF Property Fire Prevention · Thread & Stack";
 
     const metaRobots = document.createElement("meta");
     metaRobots.name = "robots";
