@@ -1240,9 +1240,12 @@ const SFFireProposalPage = () => {
 
               {/* Trust-building testimonials carousel */}
               <motion.div {...fadeUp} className="mx-auto max-w-4xl mt-14 sm:mt-16">
-                <div className="text-center font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-accent mb-5">
+                <div className="text-center font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-accent mb-2">
                   Kind words
                 </div>
+                <p className="text-center font-serif-pro italic text-[15px] md:text-[16px] text-foreground/70 mb-5">
+                  Different sectors, same problem: building systems that hold.
+                </p>
                 <Carousel
                   opts={{ align: "start", loop: true, dragFree: true }}
                   className="w-full"
