@@ -521,17 +521,26 @@ const SFFireProposalPage = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = "Proposal · SF Property Fire Prevention · Thread & Stack";
+    const socialTitle = "Thread & Stack × SF Property Fire Prevention: a working plan for Steve, Carol and Joe";
+    document.title = socialTitle;
 
-    const metaRobots = document.createElement("meta");
-    metaRobots.name = "robots";
-    metaRobots.content = "noindex, nofollow";
-    document.head.appendChild(metaRobots);
+    const tags: HTMLMetaElement[] = [];
+    const addMeta = (attr: "name" | "property", key: string, content: string) => {
+      const m = document.createElement("meta");
+      m.setAttribute(attr, key);
+      m.content = content;
+      document.head.appendChild(m);
+      tags.push(m);
+    };
+    addMeta("name", "robots", "noindex, nofollow");
+    addMeta("property", "og:title", socialTitle);
+    addMeta("name", "twitter:title", socialTitle);
 
     return () => {
-      document.head.removeChild(metaRobots);
+      tags.forEach((t) => document.head.removeChild(t));
     };
   }, []);
+
 
   useEffect(() => {
     if (!opened) {
@@ -1158,15 +1167,8 @@ const SFFireProposalPage = () => {
                 I will send you a deposit link and we will get started. Everything else, the kickoff session,
                 the materials, the detailed timeline, follows from there.
               </P>
-              <P>
-                Brendan Rodgers<br />
-                Thread &amp; Stack<br />
-                <a href="mailto:br@threadandstack.com" className="text-accent hover:underline">br@threadandstack.com</a><br />
-                <a href="https://threadandstack.com" className="text-accent hover:underline">threadandstack.com</a>
-              </P>
             </section>
 
-            <Rule />
 
             {/* 09 — Business card */}
             <section>
