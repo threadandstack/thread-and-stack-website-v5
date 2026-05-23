@@ -759,7 +759,7 @@ const SFFireProposalPage = () => {
                 title={<>Five things that <Hl>change.</Hl></>}
               />
 
-              <H3>01 - The team works from one place</H3>
+              <H3>The team works from one place</H3>
               <P>
                 For 20 years the three of you have operated on instinct, each knowing your role without
                 needing to be told. That dynamic is the business's greatest strength and this build honours
