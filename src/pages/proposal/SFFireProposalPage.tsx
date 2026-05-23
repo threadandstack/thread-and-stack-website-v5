@@ -760,19 +760,37 @@ const SFFireProposalPage = () => {
                 ))}
               </ul>
 
-              <motion.div
-                {...fadeUp}
-                className="mt-10 bg-card/60 rounded-2xl p-6 md:p-7 shadow-[0_2px_8px_rgba(0,0,0,0.04)] border-l-4 border-accent"
-              >
-                <div className="font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-accent mb-3">
-                  A note on Carol
-                </div>
-                <p className="font-sans text-[16.5px] md:text-[17px] leading-[1.8] text-foreground/85">
-                  Carol will be a cornerstone of this. From what you described, her gift for taking
-                  something complex, making it orderly, and holding it that way is exactly what a system
-                  like this needs to take root properly. The build is shaped around how she already thinks.
-                </p>
-              </motion.div>
+              <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
+                <motion.div
+                  {...fadeUp}
+                  className="bg-card/60 rounded-2xl p-6 md:p-7 shadow-[0_2px_8px_rgba(0,0,0,0.04)] border-l-4 border-accent"
+                >
+                  <div className="font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-accent mb-3">
+                    A note on Carol
+                  </div>
+                  <p className="font-sans text-[16.5px] md:text-[17px] leading-[1.8] text-foreground/85">
+                    Carol will be a cornerstone of this. From what you described, her gift for taking
+                    something complex, making it orderly, and holding it that way is exactly what a system
+                    like this needs to take root properly. The build is shaped around how she already thinks.
+                  </p>
+                </motion.div>
+
+                <motion.div
+                  {...fadeUp}
+                  className="bg-card/60 rounded-2xl p-6 md:p-7 shadow-[0_2px_8px_rgba(0,0,0,0.04)] border-l-4 border-accent"
+                >
+                  <div className="font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-accent mb-3">
+                    A note on Joe
+                  </div>
+                  <p className="font-sans text-[16.5px] md:text-[17px] leading-[1.8] text-foreground/85">
+                    Joe holds twenty years of field knowledge that newer hires haven't been able to absorb
+                    in a few weeks of working alongside him. The training stages, the QC sign-off, and the
+                    AI knowledge layer are designed so Joe's expertise becomes the standard the crew works
+                    to, without him needing to be on every job. The system is built to take pressure off
+                    him, not add to it.
+                  </p>
+                </motion.div>
+              </div>
             </section>
 
             <Rule />
