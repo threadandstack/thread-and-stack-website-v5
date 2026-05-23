@@ -1055,7 +1055,7 @@ const SFFireProposalPage = () => {
                 the materials, the detailed timeline, follows from there.
               </P>
               <P>
-                <strong>Brendan Rodgers</strong><br />
+                Brendan Rodgers<br />
                 Thread &amp; Stack<br />
                 <a href="mailto:br@threadandstack.com" className="text-accent hover:underline">br@threadandstack.com</a><br />
                 <a href="https://threadandstack.com" className="text-accent hover:underline">threadandstack.com</a>
