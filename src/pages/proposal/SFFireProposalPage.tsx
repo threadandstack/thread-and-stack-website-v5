@@ -1016,9 +1016,24 @@ const SFFireProposalPage = () => {
                   [<strong>Build + 3-month embedding total</strong>, "", <strong>£9,450 (~CA$17,300)</strong>],
                   [<strong>04 · Rolling, optional</strong>, "Month-to-month after embedding, no tie-in", "£900/mo (~CA$1,650)"],
                   [<strong>Paper digitisation</strong>, "Scoped separately if needed", "To be discussed"],
-                  [<strong>Timeline</strong>, "Build typically completes in 8–10 weeks", ""],
                 ]}
               />
+
+              <motion.div {...fadeUp} className="my-10 md:my-14 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+                <div>
+                  <p className="font-sans text-[16.5px] md:text-[17px] leading-[1.8] text-foreground/85">
+                    A typical build completes in eight to ten weeks from kickoff to handover. Embedding begins the month after.
+                  </p>
+                </div>
+                <div className="text-right">
+                  <span className="font-serif-pro text-[48px] sm:text-[64px] md:text-[72px] italic font-bold text-accent leading-none tracking-tight">
+                    8–10
+                  </span>
+                  <span className="block font-sans text-[13px] sm:text-[14px] tracking-[0.18em] uppercase text-muted-foreground mt-2">
+                    weeks
+                  </span>
+                </div>
+              </motion.div>
 
               <PullQuote rotate={-0.2}>
                 What you're investing in here is an asset the business owns. An AI-ready workspace with clear
