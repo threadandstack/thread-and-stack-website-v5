@@ -1160,7 +1160,6 @@ const SFFireProposalPage = () => {
               </P>
             </section>
 
-            <Rule />
 
             {/* 09 — Business card */}
             <section>
