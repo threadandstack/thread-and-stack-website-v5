@@ -1036,7 +1036,7 @@ const SFFireProposalPage = () => {
                 ]}
               />
               <p className="font-sans text-[13px] italic text-muted-foreground/80 mt-2">
-                Monthly cadence invoiced separately at £900/month from month five.
+                Monthly cadence invoiced separately at £900 (~CA$1,650)/month from month five.
               </p>
             </section>
 
