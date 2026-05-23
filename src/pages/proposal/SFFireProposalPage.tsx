@@ -911,7 +911,7 @@ const SFFireProposalPage = () => {
                 ]}
               />
 
-              <H3>A note on paper-based materials</H3>
+              <H3>Practical Reality: Offline Records</H3>
               <P>
                 You mentioned on our call that a significant amount of SF Property Fire Prevention's
                 materials currently sit in paper stacks, folders, and drawers. Carol is probably best placed
