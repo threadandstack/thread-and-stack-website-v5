@@ -825,7 +825,7 @@ const SFFireProposalPage = () => {
                 complete and the system is live, the ongoing cadence takes over.
               </P>
 
-              <H3>Part 1 - The build and data migration</H3>
+              <H3>The Notion Workspace</H3>
               <P>
                 Each component has a preparation step. Before we build each part I will tell you exactly what
                 I need from your side - usually existing procedures, customer records, or examples of how
