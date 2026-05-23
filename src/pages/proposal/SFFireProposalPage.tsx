@@ -683,12 +683,12 @@ const SFFireProposalPage = () => {
                   {
                     n: "02",
                     title: "Data migration",
-                    body: "Anything already in digital form (spreadsheets, shared folders, CSV exports) is migrated and structured inside the new system. Included in the build. Paper-based records are scoped separately if needed.",
+                    body: "Anything already in digital form (spreadsheets, shared folders, CSV exports) is migrated and structured inside the new system. Two days of remote digitisation support are included for paper-based records. Anything beyond that can be scoped separately if needed.",
                   },
                   {
                     n: "03",
-                    title: "Embedding · 3 months, included",
-                    body: "Dedicated time with me each month and asynchronous access in between, so you, Carol, Joe, and the crew adopt the system confidently and the habits actually form.",
+                    title: "Support, Adoption & Guidance · 3 months, included",
+                    body: "One dedicated day with me each month, which can be broken into two half-days if that suits the week better. A private Slack channel stays open the whole time for the little questions that come up between sessions, available to Stephen, Carol, Joe and the wider crew. The dedicated time can also be used as 1:1 with different team members inside that month, so the people who need help get it directly.",
                   },
                   {
                     n: "04",
