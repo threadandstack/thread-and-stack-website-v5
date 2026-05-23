@@ -974,9 +974,16 @@ const SFFireProposalPage = () => {
                 title={<>You won't be handed a complex system and left to <Hl>work it out.</Hl></>}
               />
               <P>
-                Three months of embedding is included with every build. Dedicated time with me each month,
-                plus asynchronous access in between, to surface emerging pain points, smooth over new ways
-                of operating, and develop the system as the business develops.
+                Three months of embedding is included with every build. You get dedicated time with me banked
+                at one day per month as a floor, scalable up in any given month if the team needs more. Stephen
+                also gets mentorship inside that time, so the strategic side of running the system is part of
+                what we work on together, not just the mechanics.
+              </P>
+              <P>
+                Alongside the dedicated time, the whole team gets a private Slack channel for asynchronous
+                questions. Stephen, Carol, Joe, and any crew member can drop in a question and I guarantee a
+                48-hour response, light-touch by design. The point is to keep momentum and habits forming
+                without anyone waiting on a scheduled call.
               </P>
               <P>
                 Most of the real value in a build like this surfaces in the months after launch. New crew
@@ -1014,13 +1021,15 @@ const SFFireProposalPage = () => {
               />
 
               <PullQuote rotate={-0.2}>
-                I know we discussed a figure around $5,000 on our call, and this comes in above that. For
-                context, the builds I do typically sit between £4,000 and £10,000, and this is a fairly
-                standard build size for the scope we've mapped. The upfront sits slightly above the initial
-                number because of the depth of what we covered together. I'm open to discussing flexibility
-                on the structure, though I'd strongly suggest keeping the three months of embedding in
-                place. A system this connected needs the team around it for the habits to land, and without
-                that period the risk of it quietly going unused is real.
+                What you're investing in here is an asset the business owns. An AI-ready workspace with clear
+                operations and internal support structures gives the business organisational strength that
+                compounds the more your expertise feeds into it. Knowledge stops living only in three heads,
+                paper records stop being a single point of failure, and you build the kind of accountability
+                and audit trail the business can lean on for years. New team members can step into roles
+                without re-learning the company from scratch. I know this lands at the top end of the budget
+                we discussed, and the three months of embedding is where that compounding actually starts. It
+                is the period where habits form, where the AI layer becomes genuinely useful, and where I help
+                you get the most out of what you've just built.
               </PullQuote>
             </section>
 
