@@ -521,17 +521,26 @@ const SFFireProposalPage = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = "Proposal · SF Property Fire Prevention · Thread & Stack";
+    const socialTitle = "Thread & Stack × SF Property Fire Prevention: a working plan for Steve, Carol and Joe";
+    document.title = socialTitle;
 
-    const metaRobots = document.createElement("meta");
-    metaRobots.name = "robots";
-    metaRobots.content = "noindex, nofollow";
-    document.head.appendChild(metaRobots);
+    const tags: HTMLMetaElement[] = [];
+    const addMeta = (attr: "name" | "property", key: string, content: string) => {
+      const m = document.createElement("meta");
+      m.setAttribute(attr, key);
+      m.content = content;
+      document.head.appendChild(m);
+      tags.push(m);
+    };
+    addMeta("name", "robots", "noindex, nofollow");
+    addMeta("property", "og:title", socialTitle);
+    addMeta("name", "twitter:title", socialTitle);
 
     return () => {
-      document.head.removeChild(metaRobots);
+      tags.forEach((t) => document.head.removeChild(t));
     };
   }, []);
+
 
   useEffect(() => {
     if (!opened) {
