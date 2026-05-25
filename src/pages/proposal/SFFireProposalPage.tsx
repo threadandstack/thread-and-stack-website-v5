@@ -1095,15 +1095,15 @@ const SFFireProposalPage = () => {
               />
 
               <PullQuote rotate={-0.2}>
-                What you're investing in here is an asset the business owns. An AI-ready workspace with clear
-                operations and internal support structures gives the business organisational strength that
-                compounds the more your expertise feeds into it. Knowledge stops living only in three heads,
-                paper records stop being a single point of failure, and you build the kind of accountability
-                and audit trail the business can lean on for years. New team members can step into roles
-                without re-learning the company from scratch. The three months of Support, Adoption & Guidance
-                included with the build is where that compounding actually starts. It is the period where
-                habits form, where the AI layer becomes genuinely useful, and where I help you get the most
-                out of what you've just built.
+                What you're investing in here is an AI-ready workspace that compounds the more your team
+                feeds into it. Knowledge stops living in three heads, records become structured and
+                searchable, and new team members can step into roles without having to relearn the business
+                from scratch.
+                <br />
+                <br />
+                The three months of Support, Adoption & Guidance is where that starts to feel real - it's
+                less a handover and more a period of hands-on guidance, making sure the system becomes
+                genuinely useful and the habits actually form.
               </PullQuote>
             </section>
 
