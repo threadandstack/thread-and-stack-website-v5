@@ -1097,15 +1097,43 @@ const SFFireProposalPage = () => {
               <div className="mt-8">
                 <H3>Flexible payment structures</H3>
                 <P>Two flexible payment structures are available.</P>
-                <ul className="font-sans text-[15px] leading-relaxed text-foreground/85 list-disc pl-5 space-y-1 my-3">
-                  <li><strong>Pay On Completion</strong> (initial deposit required)</li>
-                  <li><strong>Monthly Cadence</strong> (initial deposit, 4 months × evenly split payments)</li>
+                <ul className="mt-4 space-y-3 list-none pl-0">
+                  {[
+                    {
+                      icon: CheckCircle2,
+                      title: "Pay On Completion",
+                      body: "Initial deposit required.",
+                    },
+                    {
+                      icon: CalendarClock,
+                      title: "Monthly Cadence",
+                      body: "Initial deposit, then 4 months of evenly split payments.",
+                    },
+                  ].map((item, i) => {
+                    const Icon = item.icon;
+                    return (
+                      <motion.li
+                        key={i}
+                        initial={{ opacity: 0, y: 12 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.3 }}
+                        transition={{ duration: 0.5, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                        whileHover={{ scale: 1.01, y: -1 }}
+                        className="flex gap-4 items-center bg-card/60 hover:bg-card rounded-xl px-4 py-3 shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.07)] transition-colors duration-300 cursor-default"
+                      >
+                        <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-background flex items-center justify-center shadow-[0_1px_4px_rgba(0,0,0,0.06)]">
+                          <Icon className="w-5 h-5 text-accent" strokeWidth={1.75} />
+                        </div>
+                        <div className="flex-1">
+                          <strong className="font-serif-pro italic text-base text-primary block leading-tight">{item.title}</strong>
+                          <span className="font-sans text-[14px] text-foreground/75 leading-snug">{item.body}</span>
+                        </div>
+                      </motion.li>
+                    );
+                  })}
                 </ul>
-                <P>
-                  Both options require a deposit. Reply with a yes and we'll talk through which works
-                  best for you.
-                </P>
               </div>
+
 
 
               <PullQuote rotate={-0.2}>
