@@ -1094,6 +1094,20 @@ const SFFireProposalPage = () => {
                 ]}
               />
 
+              <div className="mt-8">
+                <H3>Flexible payment structures</H3>
+                <P>Two flexible payment structures are available.</P>
+                <ul className="font-sans text-[15px] leading-relaxed text-foreground/85 list-disc pl-5 space-y-1 my-3">
+                  <li><strong>Pay On Completion</strong> (initial deposit required)</li>
+                  <li><strong>Monthly Cadence</strong> (initial deposit, 4 months × evenly split payments)</li>
+                </ul>
+                <P>
+                  Both options require a deposit. Reply with a yes and we'll talk through which works
+                  best for you.
+                </P>
+              </div>
+
+
               <PullQuote rotate={-0.2}>
                 What you're investing in here is an AI-ready workspace that compounds the more your team
                 feeds into it. Knowledge stops living in three heads, records become structured and
@@ -1109,49 +1123,6 @@ const SFFireProposalPage = () => {
 
             <Rule />
 
-            {/* 07 - Flexible payment structures */}
-            <section>
-              <SectionHead
-                num="07"
-                eyebrow="Payment"
-                rotate={-0.3}
-                title={<>Flexible payment <Hl>structures.</Hl></>}
-              />
-              <P>Two options. Both require a deposit on signing.</P>
-
-              <H3>Option 1 · On completion</H3>
-              <P><em>Deposit to begin. Balance on handover.</em></P>
-              <EditorialTable
-                head={["Milestone", "When", "Amount"]}
-                rows={[
-                   ["Deposit", "On signing", "£2,000 (~CA$3,660)"],
-                  ["Build completion", "On handover", "£5,650 (~CA$10,340)"],
-                  [<strong>Build Total</strong>, "", <strong>£7,650 (~CA$14,000)</strong>],
-                  ["Monthly cadence · Month 1", "End of month", "£900 (~CA$1,650)"],
-                  ["Monthly cadence · Month 2", "End of month", "£900 (~CA$1,650)"],
-                  ["Monthly cadence · Month 3", "End of month", "£900 (~CA$1,650)"],
-                ]}
-              />
-
-              <H3>Option 2 · Monthly programme</H3>
-              <P><em>Deposit to begin. Equal monthly payments across the build. No surprises.</em></P>
-              <EditorialTable
-                head={["Month", "Amount"]}
-                rows={[
-                   ["Deposit (on signing)", "£1,650 (~CA$3,020)"],
-                  ["Month 1", "£1,500 (~CA$2,750)"],
-                  ["Month 2", "£1,500 (~CA$2,750)"],
-                  ["Month 3", "£1,500 (~CA$2,750)"],
-                  ["Month 4", "£1,500 (~CA$2,750)"],
-                  [<strong>Build Total</strong>, <strong>£7,650 (~CA$14,000)</strong>],
-                ]}
-              />
-              <p className="font-sans text-[13px] italic text-muted-foreground/80 mt-2">
-                Monthly cadence invoiced separately at £900 (~CA$1,650)/month from month five.
-              </p>
-            </section>
-
-            <Rule />
 
             {/* 08 - To begin */}
             <section>
