@@ -1,8 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import brendanAvatar from "@/assets/brendan-speaking.jpg";
 import { Loader2, Download } from "lucide-react";
+import { PillButton } from "@/components/ui/pill-button";
+
+const PDF_URL = "https://drive.google.com/file/d/1QyrRitOcRqJ0zBZwx_O5WYVTjIVNK4cl/view";
 
 interface CVContact {
   icon: string;
