@@ -1152,10 +1152,11 @@ const SFFireProposalPage = () => {
             <Rule />
 
 
-            {/* 08 - To begin */}
+            {/* 07 - To begin */}
             <section>
               <SectionHead
-                num="08"
+                num="07"
+
                 eyebrow="To begin"
                 rotate={0.3}
                 title={<>Reply to this proposal with a <Hl shift={-1}>yes.</Hl></>}
