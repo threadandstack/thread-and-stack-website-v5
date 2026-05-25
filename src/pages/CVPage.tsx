@@ -126,15 +126,15 @@ const CVPage = () => {
               </section>
             )}
 
-            {skillsSection && (
-              <section>
-                <SectionHeading>{skillsSection.title}</SectionHeading>
+            {extraSections.map((section) => (
+              <section key={section.id}>
+                <SectionHeading>{section.title}</SectionHeading>
                 <div
                   className="cv-skills"
-                  dangerouslySetInnerHTML={{ __html: skillsSection.html }}
+                  dangerouslySetInnerHTML={{ __html: section.html }}
                 />
               </section>
-            )}
+            ))}
 
             {educationSection && (
               <section>
