@@ -94,8 +94,8 @@ const CVPage = () => {
               <img
                 src={brendanAvatar}
                 alt={data.name}
-                className="w-full h-full object-cover scale-[1.35]"
-                style={{ objectPosition: "50% 20%" }}
+                className="w-full h-full object-cover scale-[1.4]"
+                style={{ objectPosition: "48% 22%" }}
               />
             </div>
             <div>
