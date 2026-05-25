@@ -95,22 +95,29 @@ const CVPage = () => {
 
   return (
     <div className="min-h-screen bg-background font-sans">
-      {/* Floating PDF CTA — sits at top of viewport, retreats on scroll */}
+      {/* Floating PDF CTA — aligned above the sidebar About Me box, retreats on scroll */}
       <div
-        className={`fixed top-0 left-0 right-0 z-50 flex justify-center pointer-events-none transition-all duration-500 ease-out ${
+        className={`fixed top-0 left-0 right-0 z-50 pointer-events-none transition-all duration-500 ease-out ${
           scrolled ? "-translate-y-full opacity-0" : "translate-y-4 opacity-100"
         }`}
       >
-        <PillButton
-          asChild
-          variant="indigo"
-          icon={Download}
-          className="pointer-events-auto shadow-lg shadow-indigo/20"
-        >
-          <a href={PDF_URL} target="_blank" rel="noopener noreferrer">
-            Download CV as PDF
-          </a>
-        </PillButton>
+        <div className="max-w-6xl mx-auto px-6 lg:px-12">
+          <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
+            <div className="hidden lg:block lg:w-[62%]" aria-hidden="true" />
+            <div className="lg:w-[38%] flex justify-center lg:justify-stretch">
+              <PillButton
+                asChild
+                variant="indigo"
+                icon={Download}
+                className="pointer-events-auto shadow-lg shadow-indigo/20 lg:w-full lg:justify-center"
+              >
+                <a href={PDF_URL} target="_blank" rel="noopener noreferrer">
+                  Download CV as PDF
+                </a>
+              </PillButton>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Hero header */}
@@ -132,7 +139,7 @@ const CVPage = () => {
               <h1 className="text-3xl lg:text-4xl font-serif-pro font-semibold italic tracking-tight text-foreground">
                 {data.name}
               </h1>
-              <p className="text-xs lg:text-sm font-sans uppercase tracking-[0.2em] text-muted-foreground mt-1.5">
+              <p className="text-xs lg:text-sm font-sans uppercase tracking-[0.2em] text-muted-foreground mt-1.5 max-w-[22ch] lg:max-w-[28ch]">
                 {data.title}
               </p>
             </div>
