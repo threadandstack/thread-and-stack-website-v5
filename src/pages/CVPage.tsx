@@ -49,6 +49,15 @@ const CVPage = () => {
     staleTime: 1000 * 60 * 30,
   });
 
+  // Track scroll to swap floating CTA <-> inline CTA
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 220);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
