@@ -139,7 +139,7 @@ const CVPage = () => {
               <h1 className="text-3xl lg:text-4xl font-serif-pro font-semibold italic tracking-tight text-foreground">
                 {data.name}
               </h1>
-              <p className="text-xs lg:text-sm font-sans uppercase tracking-[0.2em] text-muted-foreground mt-1.5">
+              <p className="text-xs lg:text-sm font-sans uppercase tracking-[0.2em] text-muted-foreground mt-1.5 max-w-[22ch] lg:max-w-[28ch]">
                 {data.title}
               </p>
             </div>
