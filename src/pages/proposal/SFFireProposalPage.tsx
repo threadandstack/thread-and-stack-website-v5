@@ -1094,6 +1094,20 @@ const SFFireProposalPage = () => {
                 ]}
               />
 
+              <div className="mt-8">
+                <H3>Flexible payment structures</H3>
+                <P>Two flexible payment structures are available.</P>
+                <ul className="font-sans text-[15px] leading-relaxed text-foreground/85 list-disc pl-5 space-y-1 my-3">
+                  <li><strong>Pay On Completion</strong> (initial deposit required)</li>
+                  <li><strong>Monthly Cadence</strong> (initial deposit, 4 months × evenly split payments)</li>
+                </ul>
+                <P>
+                  Both options require a deposit. Reply with a yes and we'll talk through which works
+                  best for you.
+                </P>
+              </div>
+
+
               <PullQuote rotate={-0.2}>
                 What you're investing in here is an AI-ready workspace that compounds the more your team
                 feeds into it. Knowledge stops living in three heads, records become structured and
