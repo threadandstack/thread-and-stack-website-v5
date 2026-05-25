@@ -241,16 +241,18 @@ const CVPage = () => {
                   </div>
                 )}
 
-                {/* Download PDF link */}
-                <a
-                  href="https://drive.google.com/file/d/1QyrRitOcRqJ0zBZwx_O5WYVTjIVNK4cl/view"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors pt-4 border-t border-white/10"
+                {/* Download PDF — fades in as user scrolls past the floating CTA */}
+                <div
+                  className={`pt-4 border-t border-white/10 transition-all duration-500 ease-out ${
+                    scrolled ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+                  }`}
                 >
-                  <Download className="w-4 h-4" />
-                  Download CV as PDF
-                </a>
+                  <PillButton asChild variant="indigo" icon={Download} className="w-full sm:w-auto">
+                    <a href={PDF_URL} target="_blank" rel="noopener noreferrer">
+                      Download CV as PDF
+                    </a>
+                  </PillButton>
+                </div>
               </div>
 
               {/* Last updated footer */}
