@@ -1,8 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import brendanAvatar from "@/assets/brendan-speaking.jpg";
 import { Loader2, Download } from "lucide-react";
+import { PillButton } from "@/components/ui/pill-button";
+
+const PDF_URL = "https://drive.google.com/file/d/1QyrRitOcRqJ0zBZwx_O5WYVTjIVNK4cl/view";
 
 interface CVContact {
   icon: string;
@@ -46,6 +49,15 @@ const CVPage = () => {
     staleTime: 1000 * 60 * 30,
   });
 
+  // Track scroll to swap floating CTA <-> inline CTA
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 220);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
@@ -83,6 +95,24 @@ const CVPage = () => {
 
   return (
     <div className="min-h-screen bg-background font-sans">
+      {/* Floating PDF CTA — sits at top of viewport, retreats on scroll */}
+      <div
+        className={`fixed top-0 left-0 right-0 z-50 flex justify-center pointer-events-none transition-all duration-500 ease-out ${
+          scrolled ? "-translate-y-full opacity-0" : "translate-y-4 opacity-100"
+        }`}
+      >
+        <PillButton
+          asChild
+          variant="indigo"
+          icon={Download}
+          className="pointer-events-auto shadow-lg shadow-indigo/20"
+        >
+          <a href={PDF_URL} target="_blank" rel="noopener noreferrer">
+            Download CV as PDF
+          </a>
+        </PillButton>
+      </div>
+
       {/* Hero header */}
       <header className="relative overflow-hidden">
         {/* Subtle gradient wash */}
@@ -211,16 +241,18 @@ const CVPage = () => {
                   </div>
                 )}
 
-                {/* Download PDF link */}
-                <a
-                  href="https://drive.google.com/file/d/1QyrRitOcRqJ0zBZwx_O5WYVTjIVNK4cl/view"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors pt-4 border-t border-white/10"
+                {/* Download PDF — fades in as user scrolls past the floating CTA */}
+                <div
+                  className={`pt-4 border-t border-white/10 transition-all duration-500 ease-out ${
+                    scrolled ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+                  }`}
                 >
-                  <Download className="w-4 h-4" />
-                  Download CV as PDF
-                </a>
+                  <PillButton asChild variant="indigo" icon={Download} className="w-full sm:w-auto">
+                    <a href={PDF_URL} target="_blank" rel="noopener noreferrer">
+                      Download CV as PDF
+                    </a>
+                  </PillButton>
+                </div>
               </div>
 
               {/* Last updated footer */}
