@@ -67,10 +67,19 @@ const CVPage = () => {
   const experienceSection = data.sections.find(
     (s) => s.id === "employment-history"
   );
-  const skillsSection = data.sections.find(
-    (s) => s.id === "skills-capabilities"
-  );
   const educationSection = data.sections.find((s) => s.id === "education");
+
+  // Render any other sections (Tools & Platforms, Certifications,
+  // Notion Ambassador & Community, Skills & Capabilities, etc.) in the
+  // main column between Experience and Education so new Notion sections
+  // don't silently disappear.
+  const reservedIds = new Set([
+    "profile",
+    "expertise",
+    "employment-history",
+    "education",
+  ]);
+  const extraSections = data.sections.filter((s) => !reservedIds.has(s.id));
 
   return (
     <div className="min-h-screen bg-background font-sans">
