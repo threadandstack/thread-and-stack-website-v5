@@ -1086,10 +1086,11 @@ const SFFireProposalPage = () => {
               <EditorialTable
                 head={["What's included", "Detail", "Amount"]}
                 rows={[
-                  [<strong>Build</strong>, "Eight components, fully built and tested. Includes three months of Support, Adoption & Guidance.", <strong>£7,650 (~CA$14,000)</strong>],
-                  [<strong>Data migration</strong>, "All existing digital records migrated and structured. Two days of remote digitisation support included for paper records.", "Included"],
-                  [<strong>Rolling monthly support</strong>, "Month-to-month continuation after the three months. No tie-in.", "£900/mo (~CA$1,650)"],
-                  [<strong>Additional paper digitisation</strong>, "If volume exceeds the included two days, a remote VA in Canada is typically the cleanest option.", "~CA$500–1,500"],
+                  [<strong>Build</strong>, "Eight components, fully built and tested.", <strong>£7,650 (~CA$14,000)</strong>],
+                  [<strong>Data migration</strong>, "All existing digital records migrated and structured. In the case of paper-based records, two dedicated days of data structuring are included.", "Included"],
+                  [<strong>Support, Adoption & Guidance</strong>, "Three months recommended post-launch. One dedicated day per month, async access all month.", <strong>£2,700 (~CA$4,950) all in</strong>],
+                  [<strong>Rolling monthly</strong>, "No tie-in. Can be scaled on a per half-day basis.", "£900/mo (~CA$1,650)"],
+                  [<strong>Additional paper digitisation</strong>, "If volume exceeds the included two days, we will scope together whether it makes sense for me to handle it or whether a remote VA in Canada is the cleaner option.", "To be scoped"],
                 ]}
               />
 
