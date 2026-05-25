@@ -95,6 +95,24 @@ const CVPage = () => {
 
   return (
     <div className="min-h-screen bg-background font-sans">
+      {/* Floating PDF CTA — sits at top of viewport, retreats on scroll */}
+      <div
+        className={`fixed top-0 left-0 right-0 z-50 flex justify-center pointer-events-none transition-all duration-500 ease-out ${
+          scrolled ? "-translate-y-full opacity-0" : "translate-y-4 opacity-100"
+        }`}
+      >
+        <PillButton
+          asChild
+          variant="indigo"
+          icon={Download}
+          className="pointer-events-auto shadow-lg shadow-indigo/20"
+        >
+          <a href={PDF_URL} target="_blank" rel="noopener noreferrer">
+            Download CV as PDF
+          </a>
+        </PillButton>
+      </div>
+
       {/* Hero header */}
       <header className="relative overflow-hidden">
         {/* Subtle gradient wash */}
