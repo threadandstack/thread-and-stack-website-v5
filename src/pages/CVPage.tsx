@@ -90,12 +90,12 @@ const CVPage = () => {
 
         <div className="relative max-w-6xl mx-auto px-6 lg:px-12 pt-10 pb-8 lg:pt-14 lg:pb-10">
           <div className="flex items-center gap-5 lg:gap-6">
-            <div className="w-20 h-20 lg:w-28 lg:h-28 rounded-full ring-2 ring-accent/20 overflow-hidden shadow-md shrink-0">
+            <div className="w-20 h-20 lg:w-28 lg:h-28 rounded-2xl ring-2 ring-accent/20 overflow-hidden shadow-md shrink-0">
               <img
                 src={brendanAvatar}
                 alt={data.name}
-                className="w-full h-full object-cover scale-[1.4]"
-                style={{ objectPosition: "48% 22%" }}
+                className="w-full h-full object-cover"
+                style={{ objectPosition: "50% 35%" }}
               />
             </div>
             <div>
