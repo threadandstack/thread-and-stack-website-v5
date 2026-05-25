@@ -1012,7 +1012,7 @@ const SFFireProposalPage = () => {
                 title={<>You won't be handed a complex system and left to <Hl>work it out.</Hl></>}
               />
               <P>
-                Three months of Support, Adoption & Guidance are included with every build. You get one
+                Three months of Support, Adoption & Guidance follows the build as its own commitment. You get one
                 dedicated day with me each month, which can be split into two half-days if that works better
                 for the team's week. Stephen also gets mentorship inside that time, so the strategic side of
                 running the system is part of what we work on together, not just the mechanics.
@@ -1080,8 +1080,8 @@ const SFFireProposalPage = () => {
               />
               <P>
                 The build is the primary commitment. Support follows it as its own line. The build
-                covers the workspace, data migration, and three months of Support, Adoption & Guidance.
-                After that, continuation is optional and invoiced separately at the rolling rate.
+                covers the workspace and data migration. After that, continuation is optional and invoiced
+                separately at the rolling rate.
               </P>
               <EditorialTable
                 head={["What's included", "Detail", "Amount"]}
