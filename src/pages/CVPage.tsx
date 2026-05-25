@@ -94,6 +94,7 @@ const CVPage = () => {
               src={brendanAvatar}
               alt={data.name}
               className="w-20 h-20 lg:w-24 lg:h-24 rounded-full ring-2 ring-accent/20 object-cover shadow-md"
+              style={{ objectPosition: "50% 30%" }}
             />
             <div>
               <h1 className="text-3xl lg:text-4xl font-serif-pro font-semibold italic tracking-tight text-foreground">
