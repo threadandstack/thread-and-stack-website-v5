@@ -1080,8 +1080,8 @@ const SFFireProposalPage = () => {
               />
               <P>
                 The build is the primary commitment. Support follows it as its own line. The build
-                covers the workspace, data migration, and three months of Support, Adoption & Guidance.
-                After that, continuation is optional and invoiced separately at the rolling rate.
+                covers the workspace and data migration. After that, continuation is optional and invoiced
+                separately at the rolling rate.
               </P>
               <EditorialTable
                 head={["What's included", "Detail", "Amount"]}
