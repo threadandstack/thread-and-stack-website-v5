@@ -5,7 +5,7 @@ import brendanAvatar from "@/assets/brendan-speaking.jpg";
 import { Loader2, Download } from "lucide-react";
 import { PillButton } from "@/components/ui/pill-button";
 
-const PDF_URL = "https://drive.google.com/file/d/1QyrRitOcRqJ0zBZwx_O5WYVTjIVNK4cl/view";
+const PDF_URL = "https://docs.google.com/document/d/1jtu2E1p6-fS9bJMIHG-dLO1x3Y5wATQ5ok9aIAEHcMw/edit?usp=sharing";
 
 interface CVContact {
   icon: string;
