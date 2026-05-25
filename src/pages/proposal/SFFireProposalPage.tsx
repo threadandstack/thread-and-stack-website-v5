@@ -676,10 +676,11 @@ const SFFireProposalPage = () => {
 
               <H3>How the engagement runs</H3>
               <P>
-                The work moves in clear phases, but it's one engagement and one price. Every build I do
-                includes three months of embedding by default, so the team isn't handed a complex system
-                and left to work it out. After those three months, many clients find it useful to continue
-                on a rolling monthly basis. Some don't. Either is fine.
+                The work moves in clear phases. The build is the primary commitment, and support
+                follows it as its own line. Every build I do includes three months of embedding by
+                default, so the team isn't handed a complex system and left to work it out. After those
+                three months, many clients find it useful to continue on a rolling monthly basis. Some
+                don't. Either is fine.
               </P>
 
               <ul className="mt-8 space-y-5">
@@ -792,11 +793,9 @@ const SFFireProposalPage = () => {
                     A note on Joe
                   </div>
                   <p className="font-sans text-[16.5px] md:text-[17px] leading-[1.8] text-foreground/85">
-                    Joe holds twenty years of field knowledge that newer hires haven't been able to absorb
-                    in a few weeks of working alongside him. The training stages, the QC sign-off, and the
-                    AI knowledge layer are designed so Joe's expertise becomes the standard the crew works
-                    to, without him needing to be on every job. The system is built to take pressure off
-                    him, not add to it.
+                    Joe's expertise will be instrumental in shaping the training content. A key part of
+                    the first working session will be reviewing existing materials and identifying what
+                    needs to be built or formalised.
                   </p>
                 </motion.div>
               </div>
@@ -1080,18 +1079,16 @@ const SFFireProposalPage = () => {
                 title={<>The engagement <Hl shift={-1}>in one view.</Hl></>}
               />
               <P>
-                One engagement, one price. The build, the data migration, and three months of Support,
-                Adoption & Guidance are bundled into a single number, so there's nothing to add up and
-                nothing left to discover later.
+                The build is the primary commitment. Support follows it as its own line. The build
+                covers the workspace, data migration, and three months of Support, Adoption & Guidance.
+                After that, continuation is optional and invoiced separately at the rolling rate.
               </P>
               <EditorialTable
                 head={["What's included", "Detail", "Amount"]}
                 rows={[
-                  [<strong>Build</strong>, "Eight components, fully built and tested", ""],
-                  [<strong>Data migration</strong>, "All existing digital records migrated and structured. Two days of remote digitisation support included for paper records.", ""],
-                  [<strong>Support, Adoption & Guidance</strong>, "3 months included. One dedicated day per month, private Slack channel, 1:1 time across the team.", ""],
-                  [<strong>Build + 3 months, all-in</strong>, "One engagement, one price", <strong>£9,450 (~CA$17,300)</strong>],
-                  [<strong>Rolling monthly, optional</strong>, "Month-to-month continuation after the three months. No tie-in.", "£900/mo (~CA$1,650)"],
+                  [<strong>Build</strong>, "Eight components, fully built and tested. Includes three months of Support, Adoption & Guidance.", <strong>£7,650 (~CA$14,000)</strong>],
+                  [<strong>Data migration</strong>, "All existing digital records migrated and structured. Two days of remote digitisation support included for paper records.", "Included"],
+                  [<strong>Rolling monthly support</strong>, "Month-to-month continuation after the three months. No tie-in.", "£900/mo (~CA$1,650)"],
                   [<strong>Additional paper digitisation</strong>, "If volume exceeds the included two days, a remote VA in Canada is typically the cleanest option.", "~CA$500–1,500"],
                 ]}
               />
@@ -1103,7 +1100,7 @@ const SFFireProposalPage = () => {
                 paper records stop being a single point of failure, and you build the kind of accountability
                 and audit trail the business can lean on for years. New team members can step into roles
                 without re-learning the company from scratch. The three months of Support, Adoption & Guidance
-                bundled into this price is where that compounding actually starts. It is the period where
+                included with the build is where that compounding actually starts. It is the period where
                 habits form, where the AI layer becomes genuinely useful, and where I help you get the most
                 out of what you've just built.
               </PullQuote>
