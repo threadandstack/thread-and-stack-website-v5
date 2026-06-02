@@ -76,7 +76,7 @@ export function KindWords() {
           </div>
           <h2 className="font-sans not-italic max-w-3xl text-4xl font-semibold leading-[1.03] tracking-[-0.025em] md:text-[52px]">
             A stack of{" "}
-            <span className="font-serif-pro italic text-[1.08em] text-clay">kind words.</span>
+            <span className="font-serif-pro italic text-clay text-7xl">kind words.</span>
           </h2>
         </div>
       </div>
