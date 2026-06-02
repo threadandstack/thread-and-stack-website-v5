@@ -53,16 +53,12 @@ export function Problem() {
               The pattern
             </div>
             <h2 className="mt-5 text-4xl font-medium leading-[1.03] tracking-[-0.025em] md:text-[56px]">
-              Six tools.
-              <br />
-              <span className="font-serif-pro italic text-clay">One bottleneck.</span>{" "}
-              <span className="text-muted-foreground">(you.)</span>
+              The <span className="font-serif-pro italic text-clay">Thread & Stack</span> Way
             </h2>
           </div>
           <p className="max-w-sm text-[15px] text-ink-soft">
-            When the founder is the only router between the tools, the team waits.
-            The fix is an intentional stack, built in four phases. You only continue
-            when the last one earned the next.
+            An intentional approach to your knowledge stack. Built in four phases
+            — each one earns the next.
           </p>
         </div>
 
