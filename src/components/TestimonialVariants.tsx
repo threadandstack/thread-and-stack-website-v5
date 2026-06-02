@@ -23,11 +23,58 @@ const tagByAuthor: Record<string, { tag: string; tagColor: string }> = {
 
 export const TestimonialVariants = ({ testimonials }: Props) => {
   return (
-    <section className="pb-12 px-4">
-      <div className="max-w-[1500px] mx-auto px-2">
+    <section className="pb-12 md:px-4">
+      {/* Mobile: clean swipe carousel */}
+      <div className="md:hidden">
+        <MobileCarousel testimonials={testimonials} />
+      </div>
+      {/* Desktop: scatter board */}
+      <div className="hidden md:block max-w-[1500px] mx-auto px-2">
         <KanbanScatter testimonials={testimonials} />
       </div>
     </section>
+  );
+};
+
+const MobileCarousel = ({ testimonials }: Props) => {
+  return (
+    <div className="relative">
+      <div className="px-5 mb-3 flex items-center justify-between">
+        <span className="text-[11px] font-sans uppercase tracking-widest text-muted-foreground/70">
+          ← Swipe →
+        </span>
+        <span className="text-[11px] font-sans text-muted-foreground/70">
+          {testimonials.length} kind words
+        </span>
+      </div>
+      <div className="flex gap-3 overflow-x-auto snap-x snap-mandatory px-5 pb-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+        {testimonials.map((t, idx) => {
+          const meta = tagByAuthor[t.author] ?? { tag: "Testimonial", tagColor: "bg-muted text-muted-foreground" };
+          return (
+            <article
+              key={idx}
+              className="snap-start shrink-0 w-[82vw] max-w-[320px] bg-white rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.06)] p-5"
+            >
+              <div className="flex items-center gap-2 mb-3">
+                <span className={`text-[10px] font-sans font-medium px-2 py-0.5 rounded ${meta.tagColor}`}>
+                  {meta.tag}
+                </span>
+              </div>
+              <p className="font-serif-pro italic text-[18px] leading-snug mb-2 text-foreground">
+                {t.headline}
+              </p>
+              <p className="text-[13px] font-sans text-muted-foreground leading-relaxed mb-4">
+                "{t.quote}"
+              </p>
+              <div className="pt-3 border-t border-border/40 flex items-baseline justify-between gap-2">
+                <p className="text-[12px] font-sans font-medium text-foreground truncate">{t.author}</p>
+                <p className="text-[11px] font-sans text-muted-foreground/70 truncate">{t.date}</p>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </div>
   );
 };
 
