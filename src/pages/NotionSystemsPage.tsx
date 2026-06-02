@@ -83,8 +83,8 @@ const NotionSystemsPage = () => {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
           <div className="absolute bottom-6 left-6 z-10">
-            <h1 className="text-4xl font-semibold italic text-white w-[70vw]">
-              Notion & Systems Consultancy
+            <h1 className="text-4xl font-medium leading-[0.98] tracking-[-0.035em] text-white w-[70vw]">
+              Notion &amp; <span className="font-serif-pro italic font-normal">Systems Consultancy</span>
             </h1>
           </div>
         </div>
@@ -121,8 +121,8 @@ const NotionSystemsPage = () => {
 
         <div className="relative z-10 w-full px-6 pb-44 pt-32">
           <div className="max-w-6xl mx-auto">
-            <h1 className="text-6xl lg:text-7xl font-semibold italic text-white mb-8" style={{ textShadow: '0 2px 12px rgba(0,0,0,0.3)' }}>
-              Notion & Systems Consultancy
+            <h1 className="text-6xl lg:text-[84px] font-medium leading-[0.98] tracking-[-0.035em] text-white mb-8" style={{ textShadow: '0 2px 12px rgba(0,0,0,0.3)' }}>
+              Notion &amp; <span className="font-serif-pro italic font-normal">Systems Consultancy</span>
             </h1>
             <div className="space-y-4 text-lg leading-relaxed text-white/90 max-w-2xl">
               <p>
@@ -209,8 +209,8 @@ const NotionSystemsPage = () => {
               <span className="inline-flex items-center rounded-full bg-accent/10 text-accent text-xs font-sans font-semibold px-3 py-1 mb-4">
                 System Build Example
               </span>
-              <h2 className="text-3xl md:text-4xl font-semibold italic mb-4">
-                Notion + Lovable CMS Build
+              <h2 className="text-3xl md:text-[42px] font-medium leading-[1.05] tracking-[-0.025em] mb-4">
+                Notion + <span className="font-serif-pro italic font-normal text-clay">Lovable CMS Build</span>
               </h2>
               <p className="font-sans text-muted-foreground leading-relaxed mb-4">
                 A three-tier content management system combining Notion as the editorial backend, Supabase Edge Functions as the API layer, and a custom-built Lovable frontend — all working in sync.
@@ -261,8 +261,8 @@ const NotionSystemsPage = () => {
               <span className="inline-flex items-center rounded-full bg-accent/10 text-accent text-xs font-sans font-semibold px-3 py-1 mb-4">
                 Fractional Ops Example
               </span>
-              <h2 className="text-3xl md:text-4xl font-semibold italic mb-4">
-                Custom Agents & Automations
+              <h2 className="text-3xl md:text-[42px] font-medium leading-[1.05] tracking-[-0.025em] mb-4">
+                Custom Agents &amp; <span className="font-serif-pro italic font-normal text-clay">Automations</span>
               </h2>
               <p className="font-sans text-muted-foreground leading-relaxed mb-4">
                 A custom Notion AI agent designed to process and triage a busy inbox every morning — summarising action items, flagging replies, and delivering a structured daily briefing straight to your phone.
@@ -347,8 +347,8 @@ const NotionSystemsPage = () => {
       <section className="py-24 px-6">
         <div className="max-w-5xl mx-auto">
           <div className="bg-indigo rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.15)] p-10 md:p-12 text-center max-w-2xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-semibold italic mb-4 text-white">
-              Not sure which is right?
+            <h2 className="text-3xl md:text-[42px] font-medium leading-[1.05] tracking-[-0.025em] mb-4 text-white">
+              Not sure which is <span className="font-serif-pro italic font-normal">right?</span>
             </h2>
             <p className="font-sans text-white/70 text-lg mb-8">
               Start with a conversation. We'll figure out the right shape together.
