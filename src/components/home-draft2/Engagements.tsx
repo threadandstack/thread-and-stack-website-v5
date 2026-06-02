@@ -168,7 +168,7 @@ export function Engagements() {
                     ["--c" as string]: `hsl(var(--${t.accent}))`,
                   }}
                   className={`absolute left-1/2 top-1/2 flex w-[340px] flex-col gap-5 rounded-2xl p-7 text-left [backface-visibility:hidden] md:w-[400px] md:p-8 ${
-                    isFeatured ? "bg-ink text-foreground" : "bg-background text-foreground"
+                    isFeatured ? "bg-card text-card-foreground" : "bg-background text-foreground"
                   } ${
                     isActive
                       ? "shadow-[0_30px_70px_rgba(0,0,0,0.28)] ring-1 ring-foreground/15"
@@ -178,7 +178,7 @@ export function Engagements() {
                   {isFeatured && "badge" in t && t.badge && (
                     <span
                       className={`inline-flex w-fit items-center gap-1.5 rounded-full px-2.5 py-1 text-[10.5px] font-medium uppercase tracking-wider transition-all ${
-                        isActive ? "text-accent-foreground" : "bg-white/10 text-foreground/70"
+                        isActive ? "text-accent-foreground" : "bg-foreground/10 text-foreground/70"
                       }`}
                       style={isActive ? { backgroundImage: "linear-gradient(90deg, var(--gradient-3color-even))" } : undefined}
                     >
