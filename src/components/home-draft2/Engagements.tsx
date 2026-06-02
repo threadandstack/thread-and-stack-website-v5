@@ -274,7 +274,7 @@ export function Engagements() {
                   Stack Diagnostic · £395
                 </span>
               </div>
-              <h2 className="mt-4 max-w-xl text-[28px] font-medium leading-tight tracking-tight md:text-[36px] font-sans">
+              <h2 className="mt-4 max-w-xl text-[28px] font-medium leading-tight tracking-tight md:text-[36px] font-sans not-italic">
                 A paid 90-minute session.{" "}
                 <span className="font-serif-pro italic text-clay text-3xl">A written blueprint.</span>
               </h2>
