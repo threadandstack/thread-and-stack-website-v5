@@ -22,7 +22,7 @@ export function CaseStudy() {
             Case study · The IMMA Collective
           </div>
           <h2 className="mt-5 text-4xl font-medium leading-[1.05] tracking-[-0.025em] md:text-[56px]">
-            Marketing that finally{" "}
+            Ops that finally{" "}
             <span className="font-serif-pro italic text-clay-soft">felt joined up.</span>
           </h2>
           <p className="mt-6 text-[15.5px] leading-relaxed text-foreground/70">
