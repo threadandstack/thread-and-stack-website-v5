@@ -76,8 +76,7 @@ export function Problem() {
               stroke="url(#phaseFlow)"
               strokeWidth="1.5"
               strokeLinecap="round"
-              strokeDasharray="2 6"
-              opacity="0.7"
+              opacity="0.6"
             />
           </svg>
 
