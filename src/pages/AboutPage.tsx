@@ -21,7 +21,7 @@ const AboutPage = () => {
             className="absolute inset-0 w-full h-full object-cover object-[65%_20%]"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-          <h1 className="absolute bottom-6 left-6 z-10 text-5xl font-medium leading-[0.98] tracking-[-0.035em] text-white w-[50vw] text-left">
+          <h1 className="font-sans not-italic absolute bottom-6 left-6 z-10 text-5xl font-medium leading-[0.98] tracking-[-0.035em] text-white w-[50vw] text-left">
             Background &amp; <span className="font-serif-pro italic font-normal">Experience</span>
           </h1>
         </div>
@@ -60,7 +60,7 @@ const AboutPage = () => {
 
         <div className="relative z-10 w-full px-6 pb-16 pt-32">
           <div className="max-w-6xl mx-auto">
-            <h1 className="text-6xl lg:text-[84px] font-medium leading-[0.98] tracking-[-0.035em] text-white mb-8">
+            <h1 className="font-sans not-italic text-6xl lg:text-[84px] font-medium leading-[0.98] tracking-[-0.035em] text-white mb-8">
               Background &amp; <span className="font-serif-pro italic font-normal">Experience</span>
             </h1>
             <div className="space-y-4 text-lg leading-relaxed text-white/90 max-w-2xl">
@@ -89,7 +89,7 @@ const AboutPage = () => {
       {/* More about Brendan — credential cards */}
       <section className="py-24 px-6">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl md:text-[52px] font-medium leading-[1.03] tracking-[-0.025em] mb-12">
+          <h2 className="font-sans not-italic text-4xl md:text-[52px] font-medium leading-[1.03] tracking-[-0.025em] mb-12">
             More about <span className="font-serif-pro italic font-normal text-clay">Brendan</span>
           </h2>
 

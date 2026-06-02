@@ -52,7 +52,7 @@ export function Problem() {
             <div className="inline-flex items-center gap-2 rounded-full border border-hairline bg-background px-3 py-1 text-[11.5px] uppercase tracking-wider text-muted-foreground">
               The pattern
             </div>
-            <h2 className="mt-5 text-4xl font-medium leading-[1.03] tracking-[-0.025em] md:text-[56px]">
+            <h2 className="font-sans not-italic mt-5 text-4xl font-medium leading-[1.03] tracking-[-0.025em] md:text-[56px]">
               The <span className="font-serif-pro italic text-clay">Thread & Stack</span> Way
             </h2>
           </div>
