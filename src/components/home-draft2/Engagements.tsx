@@ -100,7 +100,7 @@ export function Engagements() {
               Engagements
             </div>
             <h2 className="font-sans not-italic mt-5 max-w-2xl text-4xl font-semibold leading-[1.03] tracking-[-0.025em] md:text-[52px]">
-              Four ways <span className="font-serif-pro italic text-clay text-7xl">forward.</span>
+              Four ways <span className="font-serif-pro italic text-clay text-3xl">forward.</span>
             </h2>
           </div>
           <p className="max-w-sm text-[14.5px] text-ink-soft">
@@ -274,9 +274,9 @@ export function Engagements() {
                   Stack Diagnostic · £395
                 </span>
               </div>
-              <h2 className="mt-4 max-w-xl text-[28px] font-medium leading-tight tracking-tight md:text-[36px]">
+              <h2 className="mt-4 max-w-xl text-[28px] font-medium leading-tight tracking-tight md:text-[36px] font-sans">
                 A paid 90-minute session.{" "}
-                <span className="font-serif-pro italic text-clay text-7xl">A written blueprint.</span>
+                <span className="font-serif-pro italic text-clay text-3xl">A written blueprint.</span>
               </h2>
               <p className="mt-3 max-w-lg text-[14.5px] leading-relaxed text-ink-soft">
                 Bring your stack, your sprawl, and the questions your team keeps asking.

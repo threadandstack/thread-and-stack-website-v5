@@ -23,7 +23,7 @@ export function CaseStudy() {
           </div>
           <h2 className="mt-5 text-4xl font-sans font-semibold not-italic leading-[1.05] tracking-[-0.025em] md:text-[56px]">
             Ops that finally{" "}
-            <span className="font-serif-pro italic font-normal text-clay text-[1.08em]">felt joined up.</span>
+            <span className="font-serif-pro italic font-normal text-clay text-7xl">felt joined up.</span>
           </h2>
           <p className="mt-6 text-[15.5px] leading-relaxed text-foreground/70">
             Lilli came in with a marketing function spread across half a dozen tools, a

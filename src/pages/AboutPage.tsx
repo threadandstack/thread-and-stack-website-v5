@@ -90,7 +90,7 @@ const AboutPage = () => {
       <section className="py-24 px-6">
         <div className="max-w-6xl mx-auto">
           <h2 className="font-sans not-italic text-4xl md:text-[52px] font-semibold leading-[1.03] tracking-[-0.025em] mb-12">
-            More about <span className="font-serif-pro italic text-clay text-7xl">Brendan</span>
+            More about <span className="font-serif-pro italic text-clay text-3xl">Brendan</span>
           </h2>
 
           <div className="grid md:grid-cols-2 gap-6">
