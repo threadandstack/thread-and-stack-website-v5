@@ -120,7 +120,7 @@ const KanbanScatter = ({ testimonials }: Props) => {
             key={idx}
             onPointerDown={(e) => onPointerDown(e, idx)}
             style={style}
-            className="absolute w-[260px] md:w-[280px] bg-white rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_30px_rgba(0,0,0,0.14)] cursor-grab active:cursor-grabbing transition-shadow p-4 select-none"
+            className="kindwords-card absolute w-[260px] md:w-[280px] bg-white rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_30px_rgba(0,0,0,0.14)] cursor-grab active:cursor-grabbing transition-shadow p-4 select-none"
           >
             <div className="flex items-center gap-2 mb-2">
               <span className={`text-[10px] font-sans font-medium px-2 py-0.5 rounded ${meta.tagColor}`}>
