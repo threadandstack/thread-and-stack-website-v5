@@ -71,7 +71,7 @@ export function Problem() {
               </linearGradient>
             </defs>
             <path
-              d="M 125 40 C 200 -20, 300 100, 375 40 S 550 -20, 625 40 S 800 100, 875 40"
+              d="M 125 40 C 215 -15, 285 -15, 375 40 S 535 95, 625 40 S 785 -15, 875 40"
               fill="none"
               stroke="url(#phaseFlow)"
               strokeWidth="1.5"
