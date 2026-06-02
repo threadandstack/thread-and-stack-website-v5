@@ -210,7 +210,7 @@ const NotionSystemsPage = () => {
                 System Build Example
               </span>
               <h2 className="text-3xl md:text-[42px] font-medium leading-[1.05] tracking-[-0.025em] mb-4">
-                Notion + <span className="font-serif-pro italic text-clay text-7xl">Lovable CMS Build</span>
+                Notion + <span className="font-serif-pro italic text-clay text-3xl">Lovable CMS Build</span>
               </h2>
               <p className="font-sans text-muted-foreground leading-relaxed mb-4">
                 A three-tier content management system combining Notion as the editorial backend, Supabase Edge Functions as the API layer, and a custom-built Lovable frontend — all working in sync.
