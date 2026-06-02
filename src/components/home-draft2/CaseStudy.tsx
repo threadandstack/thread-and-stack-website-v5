@@ -82,17 +82,43 @@ export function CaseStudy() {
         </figure>
 
         <div className="mt-14 max-w-3xl">
-          <div className="aspect-video overflow-hidden rounded-2xl border border-hairline bg-black">
-            <iframe
-              className="h-full w-full"
-              src="https://www.youtube.com/embed/aoHXlRb_bAI"
-              title="The IMMA Collective testimonial"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-            />
-          </div>
+          <VideoEmbed />
         </div>
       </div>
     </section>
+  );
+}
+
+function VideoEmbed() {
+  const [playing, setPlaying] = useState(false);
+
+  return (
+    <div className="aspect-video overflow-hidden rounded-2xl border border-hairline bg-black">
+      {!playing ? (
+        <button
+          onClick={() => setPlaying(true)}
+          className="group relative h-full w-full"
+        >
+          <img
+            src="https://img.youtube.com/vi/aoHXlRb_bAI/maxresdefault.jpg"
+            alt="The IMMA Collective testimonial"
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+          />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white/90 shadow-lg backdrop-blur-sm transition-transform duration-300 group-hover:scale-110">
+              <Play className="ml-1 h-6 w-6 text-foreground" fill="currentColor" />
+            </div>
+          </div>
+        </button>
+      ) : (
+        <iframe
+          className="h-full w-full"
+          src="https://www.youtube-nocookie.com/embed/aoHXlRb_bAI?autoplay=1&modestbranding=1&rel=0"
+          title="The IMMA Collective testimonial"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+        />
+      )}
+    </div>
   );
 }
