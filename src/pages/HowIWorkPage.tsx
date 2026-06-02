@@ -101,7 +101,7 @@ const HowIWorkPage = () => {
         <div className="absolute inset-0 bg-black/25" />
         <div className="relative h-full max-w-6xl mx-auto px-6 flex items-end pb-12 md:items-center md:pb-0 pt-24">
           <div className="bg-background/95 backdrop-blur-sm rounded-2xl p-8 md:p-10 max-w-lg shadow-[0_8px_30px_rgba(0,0,0,0.12)]">
-            <h1 className="text-5xl md:text-6xl mb-6 text-balance font-medium leading-[0.98] tracking-[-0.035em]">
+            <h1 className="font-sans not-italic text-5xl md:text-6xl mb-6 text-balance font-medium leading-[0.98] tracking-[-0.035em]">
               My <span className="font-serif-pro italic font-normal text-clay">Approach</span>
             </h1>
             <p className="text-lg leading-relaxed text-muted-foreground">
@@ -122,7 +122,7 @@ const HowIWorkPage = () => {
           <p className="text-accent text-sm font-light tracking-wide uppercase mb-4">
             The 4 C's Framework
           </p>
-          <h2 className="text-4xl md:text-[52px] mb-6 text-balance font-medium leading-[1.03] tracking-[-0.025em]">
+          <h2 className="font-sans not-italic text-4xl md:text-[52px] mb-6 text-balance font-medium leading-[1.03] tracking-[-0.025em]">
             What AI must <span className="font-serif-pro italic font-normal text-clay">never replace.</span>
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed max-w-3xl mb-16">
@@ -160,7 +160,7 @@ const HowIWorkPage = () => {
           <p className="text-accent text-sm font-light tracking-wide uppercase mb-4">
             Practitioner Perspective
           </p>
-          <h2 className="text-4xl md:text-[52px] mb-6 text-balance font-medium leading-[1.03] tracking-[-0.025em]">
+          <h2 className="font-sans not-italic text-4xl md:text-[52px] mb-6 text-balance font-medium leading-[1.03] tracking-[-0.025em]">
             The discipline <span className="font-serif-pro italic font-normal text-clay">behind the tools.</span>
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed max-w-3xl mb-6">
@@ -204,7 +204,7 @@ const HowIWorkPage = () => {
       {/* CTA */}
       <section className="py-24 px-6 bg-accent">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-4xl md:text-[52px] font-medium leading-[1.03] tracking-[-0.025em] mb-6 text-accent-foreground">
+          <h2 className="font-sans not-italic text-4xl md:text-[52px] font-medium leading-[1.03] tracking-[-0.025em] mb-6 text-accent-foreground">
             Ready to work with <span className="font-serif-pro italic font-normal">intention?</span>
           </h2>
           <p className="text-lg text-accent-foreground/80 leading-relaxed mb-12">

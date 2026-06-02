@@ -83,7 +83,7 @@ const NotionSystemsPage = () => {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
           <div className="absolute bottom-6 left-6 z-10">
-            <h1 className="text-4xl font-medium leading-[0.98] tracking-[-0.035em] text-white w-[70vw]">
+            <h1 className="font-sans not-italic text-4xl font-medium leading-[0.98] tracking-[-0.035em] text-white w-[70vw]">
               Notion &amp; <span className="font-serif-pro italic font-normal">Systems Consultancy</span>
             </h1>
           </div>
@@ -121,7 +121,7 @@ const NotionSystemsPage = () => {
 
         <div className="relative z-10 w-full px-6 pb-44 pt-32">
           <div className="max-w-6xl mx-auto">
-            <h1 className="text-6xl lg:text-[84px] font-medium leading-[0.98] tracking-[-0.035em] text-white mb-8" style={{ textShadow: '0 2px 12px rgba(0,0,0,0.3)' }}>
+            <h1 className="font-sans not-italic text-6xl lg:text-[84px] font-medium leading-[0.98] tracking-[-0.035em] text-white mb-8" style={{ textShadow: '0 2px 12px rgba(0,0,0,0.3)' }}>
               Notion &amp; <span className="font-serif-pro italic font-normal">Systems Consultancy</span>
             </h1>
             <div className="space-y-4 text-lg leading-relaxed text-white/90 max-w-2xl">
