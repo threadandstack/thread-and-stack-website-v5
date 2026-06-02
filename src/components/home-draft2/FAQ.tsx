@@ -4,27 +4,27 @@ import { Plus } from "lucide-react";
 const faqs = [
   {
     q: "Why is the Diagnostic paid?",
-    a: "Because it's the work, not the pitch. Ninety minutes live plus a written blueprint within 48 hours — you leave with a plan you could execute alone. The £395 is credited in full against any build you choose afterwards, so the only people who pay and don't continue are the ones who genuinely just needed the plan.",
+    a: "Because it's the work, not the pitch. Ninety minutes live plus a written blueprint within 48 hours. You leave with a plan you could execute alone. The £395 is credited in full against any build you choose afterwards.",
   },
   {
     q: "Why do your build prices look higher than other Notion consultants?",
-    a: "Because adoption support is included, not bolted on. Other quotes look cheaper until you find out the system arrives, the team doesn't use it, and there's no one wired in for the questions that surface in week three. Every build here includes training, a Loom library, and 30–90 days of adoption support depending on tier.",
+    a: "Adoption support is included by default. Other quotes look cheaper until the system arrives, the team doesn't use it, and no one is wired in for the questions that surface in week three. Every build here includes training, a Loom library, and 30–90 days of adoption support depending on tier.",
   },
   {
     q: "Will an AI agent put our data or our clients at risk?",
-    a: "Architectural, not administrative. Notion holds the knowledge. Claude reasons over it through Cowork — it reads and writes in your workspace, it doesn't absorb your data into someone else's model. Custom agents are scoped to specific tasks with permissioned access. No black boxes.",
+    a: "Notion holds the knowledge. Claude reasons over it through Cowork. It reads and writes in your workspace and does not absorb your data into someone else's model. Custom agents are scoped to specific tasks with permissioned access. No black boxes.",
   },
   {
     q: "Won't building on Notion lock us in?",
-    a: "You own the lake. Notion is the most open data store of any modern workspace — exportable in standard formats whenever you want. Claude, the agents, and the automations around it are all interchangeable on merit. The architecture survives the tools.",
+    a: "You own the lake. Notion is the most open data store of any modern workspace, exportable in standard formats whenever you want. Claude, the agents, and the automations around it are all interchangeable on merit. The architecture survives the tools.",
   },
   {
     q: "Can you migrate us off Monday / ClickUp / Asana / Sheets?",
-    a: "Yes — that's most engagements. Migration is mapped in the Diagnostic so you know the shape, the cost, and what stays vs. goes before anything is touched. Data moves safely. The team trains on the new system before the old one is shut down.",
+    a: "Yes. That's most engagements. Migration is mapped in the Diagnostic so you know the cost and what stays vs. goes before anything is touched. Data moves safely. The team trains on the new system before the old one is shut down.",
   },
   {
     q: "What happens after the build is done?",
-    a: "Rolling Stack Support — from £495/mo, async access, scaled per half-day, no tie-in, cancel any month. The lake keeps growing, the agents keep getting smarter, and you keep your sovereignty. Most clients stay 6–12 months; the ones who don't, leave with a system that holds.",
+    a: "Rolling Stack Support. From £495/mo, async access, scaled per half-day, no tie-in, cancel any month. The lake keeps growing and the agents keep getting smarter. Most clients stay 6 to 12 months.",
   },
 ];
 

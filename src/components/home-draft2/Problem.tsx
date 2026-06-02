@@ -8,7 +8,7 @@ const phases = [
     title: "Diagnose",
     duration: "Paid Stack Diagnostic · 90 min + blueprint",
     body:
-      "We map the tools, the data, the people, and where the leader has become the routing layer. You leave with a written plan — credited against whatever build comes next.",
+      "We map the tools, the data, the people, and where the leader has become the routing layer. You leave with a written plan. Credited against whatever build comes next.",
     bullets: ["Stack + knowledge audit", "Architecture sketch", "Phased proposal"],
   },
   {
@@ -18,7 +18,7 @@ const phases = [
     title: "Build",
     duration: "In your Notion, in public, with support included",
     body:
-      "The lake is built in your workspace, not a sandbox. Daily updates, async access, every decision documented. Training and 30–90 days of adoption support are part of the build, not an upsell.",
+      "The lake is built in your workspace, not a sandbox. Daily updates, async access, every decision documented. Training and 30–90 days of adoption support are part of the build.",
     bullets: ["Notion-native build", "Claude + custom agents", "Training + Loom library"],
   },
   {
@@ -28,7 +28,7 @@ const phases = [
     title: "Compound",
     duration: "Rolling Stack Support · no tie-in",
     body:
-      "Once the system holds, we keep it growing. Async access, scaled per half-day, cancel any month. The lake deepens, the agents get sharper, you keep sovereignty over the whole thing.",
+      "Once the system holds, we keep it growing. Async access, scaled per half-day, cancel any month. The lake keeps deepening while you keep sovereignty over the whole thing.",
     bullets: ["From £495/mo", "Cancel anytime", "Async + half-day"],
   },
 ] as const;
@@ -51,8 +51,8 @@ export function Problem() {
           </div>
           <p className="max-w-sm text-[15px] text-ink-soft">
             When the founder is the only router between the tools, the team waits.
-            The fix isn't another tool — it's an intentional stack, built in three
-            phases. You only continue when the last one earned the next.
+            The fix is an intentional stack, built in three phases. You only continue
+            when the last one earned the next.
           </p>
         </div>
 
