@@ -8,7 +8,7 @@ export function CTA() {
   return (
     <section
       id="contact"
-      className="relative overflow-hidden border-b border-hairline bg-ink text-foreground"
+      className="relative overflow-hidden border-b border-hairline bg-card text-card-foreground"
     >
       <div
         aria-hidden
@@ -19,7 +19,7 @@ export function CTA() {
         }}
       />
       <div className="relative mx-auto max-w-3xl px-6 py-24 md:py-32 text-center">
-        <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-3 py-1 text-[11.5px] uppercase tracking-wider text-foreground/70">
+        <div className="inline-flex items-center gap-2 rounded-full border border-hairline bg-foreground/[0.04] px-3 py-1 text-[11.5px] uppercase tracking-wider text-foreground/70">
           <Sparkles className="h-3 w-3 text-indigo" strokeWidth={2} />
           Stack Diagnostic · £395
         </div>
@@ -43,7 +43,7 @@ export function CTA() {
           </button>
           <a
             href="mailto:br@brendanrodgers.uk"
-            className="inline-flex h-12 items-center gap-2 rounded-md border border-white/20 px-6 text-[14.5px] font-medium text-foreground/90 transition-colors hover:bg-white/[0.06]"
+            className="inline-flex h-12 items-center gap-2 rounded-md border border-hairline px-6 text-[14.5px] font-medium text-foreground/90 transition-colors hover:bg-foreground/[0.06]"
           >
             Email instead
           </a>

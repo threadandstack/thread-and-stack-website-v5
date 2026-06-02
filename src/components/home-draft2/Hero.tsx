@@ -26,7 +26,7 @@ export function Hero({ theme, onToggleTheme }: HeroProps) {
       <div className="relative mx-auto max-w-6xl px-6 pb-20 pt-16 md:pb-28 md:pt-24">
         <div className="flex flex-col items-center text-center">
           <div className="fade-up mb-8">
-            <LogoTilt className="h-28 sm:h-36 md:h-44" />
+            <LogoTilt className="h-28 sm:h-36 md:h-44" theme={theme} />
           </div>
 
           {/* Light / dark mode pill */}

@@ -1,11 +1,14 @@
-import logoBase from "@/assets/logos/White_TS_Stacked.svg";
+import logoWhite from "@/assets/logos/White_TS_Stacked.svg";
+import logoBlack from "@/assets/logos/Black_TS_Stacked.svg";
 import logoIndigo from "@/assets/logos/Indigo_TS_Stacked.svg";
 
 interface LogoTiltProps {
   className?: string;
+  theme?: "dark" | "light";
 }
 
-export function LogoTilt({ className = "h-32 sm:h-44 md:h-56" }: LogoTiltProps) {
+export function LogoTilt({ className = "h-32 sm:h-44 md:h-56", theme = "dark" }: LogoTiltProps) {
+  const logoBase = theme === "light" ? logoBlack : logoWhite;
   return (
     <div
       className="relative group cursor-pointer [perspective:800px]"
@@ -51,7 +54,7 @@ export function LogoTilt({ className = "h-32 sm:h-44 md:h-56" }: LogoTiltProps) 
           className={`relative w-auto transition-[filter] duration-200 ${className}`}
           style={{
             filter:
-              "drop-shadow(calc(var(--sx) * -1) calc(var(--sy) * -1) 12px hsl(var(--indigo) / 0.45)) drop-shadow(var(--sx) var(--sy) 6px rgba(0,0,0,0.45))",
+              "drop-shadow(calc(var(--sx) * -1) calc(var(--sy) * -1) 14px hsl(var(--indigo) / 0.55)) drop-shadow(var(--sx) var(--sy) 6px hsl(var(--indigo) / 0.25))",
           }}
         />
         <img

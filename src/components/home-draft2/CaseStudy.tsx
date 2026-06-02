@@ -9,13 +9,13 @@ export function CaseStudy() {
   return (
     <section
       id="work"
-      className="relative overflow-hidden border-b border-hairline bg-ink text-foreground"
+      className="relative overflow-hidden border-b border-hairline bg-card text-card-foreground"
     >
       <div aria-hidden className="bg-noise pointer-events-none absolute inset-0 opacity-30" />
       <div className="relative mx-auto max-w-6xl px-6 py-24 md:py-32">
         <div className="grid gap-12 md:grid-cols-[1.1fr_1fr] md:items-end">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-3 py-1 text-[11.5px] uppercase tracking-wider text-foreground/70">
+            <div className="inline-flex items-center gap-2 rounded-full border border-hairline bg-foreground/[0.04] px-3 py-1 text-[11.5px] uppercase tracking-wider text-foreground/70">
               Case study · The IMMA Collective
             </div>
             <h2 className="mt-5 text-4xl font-medium leading-[1.05] tracking-[-0.025em] md:text-[56px]">
@@ -38,16 +38,16 @@ export function CaseStudy() {
               </a>
               <a
                 href="#how"
-                className="inline-flex h-11 items-center rounded-md border border-white/20 px-5 text-[14px] font-medium text-foreground/90 transition-colors hover:bg-white/[0.06]"
+                className="inline-flex h-11 items-center rounded-md border border-hairline px-5 text-[14px] font-medium text-foreground/90 transition-colors hover:bg-foreground/[0.06]"
               >
                 See the architecture
               </a>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/12 bg-white/12">
+          <div className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-hairline bg-hairline">
             {stats.map((s) => (
-              <div key={s.l} className="bg-ink p-6 md:p-7">
+              <div key={s.l} className="bg-card p-6 md:p-7">
                 <div className="font-serif-pro italic text-[44px] leading-none text-clay-soft md:text-[56px]">
                   {s.v}
                 </div>
