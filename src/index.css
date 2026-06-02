@@ -851,6 +851,39 @@ All colors MUST be HSL.
 
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* Light-mode variant for Notion Canvas page */
+.notion-canvas[data-theme="light"] {
+  --background: 35 30% 98%;
+  --foreground: 30 12% 10%;
+  --muted-foreground: 30 8% 42%;
+  --card: 0 0% 100%;
+  --card-foreground: 30 12% 10%;
+  --accent: 18 75% 55%;
+  --accent-foreground: 0 0% 100%;
+
+  --paper: 35 25% 96%;
+  --ink: 30 12% 10%;
+  --ink-soft: 30 10% 32%;
+  --hairline: 30 10% 88%;
+
+  --clay: 18 75% 48%;
+  --clay-soft: 18 70% 38%;
+}
+
+.notion-canvas[data-theme="light"] .aurora::before,
+.notion-canvas[data-theme="light"] .aurora::after,
+.notion-canvas[data-theme="light"] .aurora > span {
+  opacity: 0.35;
+}
+.notion-canvas[data-theme="light"] .bg-noise {
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    hsl(var(--ink) / 0.18) 1px,
+    transparent 0
+  );
 }
 
 /* Utilities used by Notion Canvas sections */
