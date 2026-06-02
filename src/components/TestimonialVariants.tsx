@@ -91,7 +91,7 @@ const KanbanScatter = ({ testimonials }: Props) => {
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
       onPointerLeave={() => setDragState(null)}
-      className="relative w-full h-[280px] md:h-[260px] rounded-3xl border border-border/60 shadow-[0_10px_30px_-12px_rgba(0,0,0,0.18)] bg-[radial-gradient(circle_at_1px_1px,hsl(var(--muted-foreground)/0.18)_1px,transparent_0)] [background-size:20px_20px] bg-muted/20 overflow-visible touch-none"
+      className="kindwords-board relative w-full h-[280px] md:h-[260px] rounded-3xl border border-border/60 shadow-[0_10px_30px_-12px_rgba(0,0,0,0.18)] bg-[radial-gradient(circle_at_1px_1px,hsl(var(--muted-foreground)/0.18)_1px,transparent_0)] [background-size:20px_20px] bg-muted/20 overflow-visible touch-none"
     >
       <div className="absolute top-3 left-6 text-[11px] font-sans uppercase tracking-widest text-muted-foreground/70 pointer-events-none">
         ↕ Drag the cards around
@@ -120,7 +120,7 @@ const KanbanScatter = ({ testimonials }: Props) => {
             key={idx}
             onPointerDown={(e) => onPointerDown(e, idx)}
             style={style}
-            className="absolute w-[260px] md:w-[280px] bg-white rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_30px_rgba(0,0,0,0.14)] cursor-grab active:cursor-grabbing transition-shadow p-4 select-none"
+            className="kindwords-card absolute w-[260px] md:w-[280px] bg-white rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_30px_rgba(0,0,0,0.14)] cursor-grab active:cursor-grabbing transition-shadow p-4 select-none"
           >
             <div className="flex items-center gap-2 mb-2">
               <span className={`text-[10px] font-sans font-medium px-2 py-0.5 rounded ${meta.tagColor}`}>
@@ -136,7 +136,7 @@ const KanbanScatter = ({ testimonials }: Props) => {
             <p className="text-[11px] font-sans text-muted-foreground leading-relaxed mb-2 line-clamp-2">
               "{t.quote}"
             </p>
-            <div className="pt-1.5 border-t border-border/40 flex items-baseline justify-between gap-2">
+            <div className="kindwords-divider pt-1.5 border-t border-border/40 flex items-baseline justify-between gap-2">
               <p className="text-[11px] font-sans text-foreground truncate">{t.author}</p>
               <p className="text-[10px] font-sans text-muted-foreground/70 truncate">{t.date}</p>
             </div>

@@ -821,6 +821,8 @@ All colors MUST be HSL.
   --muted-foreground: 30 8% 62%;
   --card: 30 8% 14%;
   --card-foreground: 35 25% 95%;
+  --muted: 30 8% 18%;
+  --border: 30 6% 22%;
   --accent: 18 75% 60%;
   --accent-foreground: 30 12% 8%;
 
@@ -868,9 +870,29 @@ All colors MUST be HSL.
   --ink: 30 12% 10%;
   --ink-soft: 30 10% 32%;
   --hairline: 30 10% 88%;
+  --muted: 35 20% 92%;
+  --border: 30 10% 88%;
 
   --clay: 18 75% 48%;
   --clay-soft: 18 70% 38%;
+}
+
+/* Adapt drag-to-scatter testimonial cards in dark Notion Canvas */
+.notion-canvas[data-theme="dark"] .kindwords-board {
+  background-color: hsl(var(--paper) / 0.4);
+  border-color: hsl(var(--hairline));
+}
+.notion-canvas[data-theme="dark"] .kindwords-card {
+  background-color: hsl(var(--card));
+  color: hsl(var(--card-foreground));
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  border: 1px solid hsl(var(--hairline));
+}
+.notion-canvas[data-theme="dark"] .kindwords-card:hover {
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.55);
+}
+.notion-canvas[data-theme="dark"] .kindwords-card .kindwords-divider {
+  border-color: hsl(var(--hairline));
 }
 
 .notion-canvas[data-theme="light"] .aurora::before,
