@@ -21,9 +21,9 @@ export function CaseStudy() {
           <div className="inline-flex items-center gap-2 rounded-full border border-hairline bg-foreground/[0.04] px-3 py-1 text-[11.5px] uppercase tracking-wider text-foreground/70">
             Case study · The IMMA Collective
           </div>
-          <h2 className="mt-5 text-4xl font-medium leading-[1.05] tracking-[-0.025em] md:text-[56px]">
+          <h2 className="mt-5 text-4xl font-sans font-semibold not-italic leading-[1.05] tracking-[-0.025em] md:text-[56px]">
             Ops that finally{" "}
-            <span className="font-serif-pro italic text-clay-soft">felt joined up.</span>
+            <span className="font-serif-pro italic font-normal text-clay text-[1.08em]">felt joined up.</span>
           </h2>
           <p className="mt-6 text-[15.5px] leading-relaxed text-foreground/70">
             Lilli came in with a marketing function spread across half a dozen tools, a
