@@ -41,7 +41,7 @@ export function FAQ() {
             </div>
             <h2 className="font-sans not-italic mt-5 text-4xl font-semibold leading-[1.03] tracking-[-0.025em] md:text-[56px]">
               Hard<br />
-              <span className="font-serif-pro italic text-clay text-3xl">questions.</span>
+              <span className="font-serif-pro italic text-clay text-7xl">questions.</span>
             </h2>
             <p className="mt-6 max-w-xs text-[14.5px] text-ink-soft">
               Still curious? Email{" "}
