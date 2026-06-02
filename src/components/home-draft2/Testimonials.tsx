@@ -32,7 +32,7 @@ export function Testimonials() {
               What clients say
             </div>
             <h2 className="font-sans not-italic mt-5 max-w-2xl text-4xl font-semibold leading-[1.03] tracking-[-0.025em] md:text-[56px]">
-              Receipts, not <span className="font-serif-pro italic text-clay">promises.</span>
+              Receipts, not <span className="font-serif-pro italic text-[1.08em] text-clay">promises.</span>
             </h2>
           </div>
           <a

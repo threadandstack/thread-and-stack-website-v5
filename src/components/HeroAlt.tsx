@@ -79,10 +79,10 @@ export const HeroAlt = () => {
 
           <h1 className="font-sans not-italic text-5xl md:text-6xl lg:text-7xl font-semibold leading-[0.98] tracking-[-0.035em] mb-6 text-balance">
             Stories that{" "}
-            <span className="font-serif-pro italic font-normal text-accent">land</span>.
+            <span className="font-serif-pro italic text-[1.08em] font-normal text-accent">land</span>.
             <br />
             Systems that{" "}
-            <span className="font-serif-pro italic font-normal text-accent">stick</span>.
+            <span className="font-serif-pro italic text-[1.08em] font-normal text-accent">stick</span>.
           </h1>
 
           <div ref={ref}>
