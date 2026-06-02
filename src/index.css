@@ -808,3 +808,110 @@ All colors MUST be HSL.
   .shadow-lg, .shadow-md { box-shadow: none !important; }
   .ring-2 { box-shadow: none !important; }
 }
+
+/* =========================================================================
+   Notion Canvas page scope (used by /home-draft2)
+   Warm premium dark palette + tokens ported from the Notion Canvas remix.
+   Scoped to .notion-canvas so it never leaks into the rest of the site.
+   ========================================================================= */
+.notion-canvas {
+  /* Override base surface to warm premium dark */
+  --background: 30 10% 9%;
+  --foreground: 35 25% 95%;
+  --muted-foreground: 30 8% 62%;
+  --card: 30 8% 14%;
+  --card-foreground: 35 25% 95%;
+  --accent: 18 75% 60%;
+  --accent-foreground: 30 12% 8%;
+
+  /* New warm tokens */
+  --paper: 30 8% 14%;
+  --ink: 30 12% 6%;
+  --ink-soft: 35 10% 72%;
+  --hairline: 30 6% 22%;
+
+  /* Accent palette */
+  --clay: 18 75% 60%;
+  --clay-soft: 28 70% 80%;
+  --orange: 28 88% 62%;
+  --sky: 210 70% 65%;
+  --violet: 280 70% 65%;
+  --crimson: 8 80% 55%;
+
+  /* Scorecard ladder */
+  --step-1: hsl(var(--crimson));
+  --step-2: hsl(var(--orange));
+  --step-3: hsl(var(--indigo));
+  --step-4: hsl(var(--violet));
+
+  /* Gradient stop lists for inline backgroundImage */
+  --gradient-3color: hsl(var(--orange)), hsl(var(--violet));
+  --gradient-3color-even: hsl(var(--orange)), hsl(var(--violet));
+  --gradient-4color: hsl(var(--orange)) 0%, hsl(var(--violet)) 100%;
+
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+/* Utilities used by Notion Canvas sections */
+.notion-canvas .bg-grid {
+  background-image:
+    linear-gradient(to right, hsl(var(--hairline)) 1px, transparent 1px),
+    linear-gradient(to bottom, hsl(var(--hairline)) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+.notion-canvas .bg-noise {
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    hsl(var(--ink) / 0.6) 1px,
+    transparent 0
+  );
+  background-size: 22px 22px;
+}
+.notion-canvas .aurora {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.notion-canvas .aurora::before,
+.notion-canvas .aurora::after,
+.notion-canvas .aurora > span {
+  content: "";
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(80px);
+  opacity: 0.55;
+}
+.notion-canvas .aurora::before {
+  width: 620px; height: 620px; top: -180px; left: 8%;
+  background: radial-gradient(closest-side, hsl(var(--orange) / 0.7), transparent);
+}
+.notion-canvas .aurora::after {
+  width: 540px; height: 540px; top: -120px; right: 6%;
+  background: radial-gradient(closest-side, hsl(var(--crimson) / 0.65), transparent);
+  opacity: 0.5;
+}
+.notion-canvas .aurora > span {
+  width: 720px; height: 480px; top: 60px; left: 50%;
+  transform: translateX(-50%);
+  background: radial-gradient(closest-side, hsl(var(--violet) / 0.55), transparent);
+  opacity: 0.45;
+}
+
+@keyframes nc-fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.notion-canvas .fade-up { animation: nc-fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.notion-canvas .fade-up-1 { animation-delay: 0.05s; }
+.notion-canvas .fade-up-2 { animation-delay: 0.15s; }
+.notion-canvas .fade-up-3 { animation-delay: 0.25s; }
+.notion-canvas .fade-up-4 { animation-delay: 0.35s; }
+.notion-canvas .fade-up-5 { animation-delay: 0.45s; }
+
+@keyframes nc-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.notion-canvas .marquee-track { animation: nc-marquee 38s linear infinite; }
