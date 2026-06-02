@@ -63,10 +63,9 @@ export function CaseStudy() {
 
         <figure className="mt-14 max-w-3xl border-l-2 border-indigo pl-6">
           <blockquote className="font-serif-pro italic text-2xl leading-snug text-foreground md:text-[32px]">
-            "Brendan is like a Swiss army knife when it comes to marketing, strategic and
-            hands-on. He helped me build a system that actually works for The IMMA
-            Collective. I've got real peace of mind, a clear vision for the business, and
-            marketing that feels properly joined up."
+            "Brendan is like a Swiss army knife, strategic and hands-on. He helped me build
+            a system that actually works for The IMMA Collective. I've got real peace of
+            mind, a clear vision for the business, and content ops that feel properly joined up."
           </blockquote>
           <figcaption className="mt-4 flex items-center gap-3 text-[13px] text-foreground/60">
             <span
