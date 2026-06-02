@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { Play } from "lucide-react";
+
 const stats = [
   { v: "1", l: "Joined-up system", d: "marketing, ops, and CRM in one place" },
   { v: "5+", l: "Tools consolidated", d: "TBC · replaced by a single Notion workspace" },
