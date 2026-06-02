@@ -51,8 +51,8 @@ export function Problem() {
           </div>
           <p className="max-w-sm text-[15px] text-ink-soft">
             When the founder is the only router between the tools, the team waits.
-            The fix isn't another tool — it's an intentional stack, built in three
-            phases. You only continue when the last one earned the next.
+            The fix is an intentional stack, built in three phases. You only continue
+            when the last one earned the next.
           </p>
         </div>
 
