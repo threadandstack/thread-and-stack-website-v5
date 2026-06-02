@@ -53,7 +53,7 @@ export function Hero({ theme, onToggleTheme }: HeroProps) {
             </span>
           </button>
 
-          <h1 className="font-sans not-italic fade-up fade-up-2 mt-7 max-w-5xl text-balance text-5xl font-medium leading-[0.98] tracking-[-0.035em] md:text-[84px]">
+          <h1 className="font-sans not-italic fade-up fade-up-2 mt-7 max-w-5xl text-balance text-5xl font-semibold leading-[0.98] tracking-[-0.035em] md:text-[84px]">
             One central knowledge hub.
             <br />
             <span

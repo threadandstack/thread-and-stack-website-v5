@@ -99,8 +99,8 @@ export function Engagements() {
             <div className="inline-flex items-center gap-2 rounded-full border border-hairline bg-background px-3 py-1 text-[11.5px] uppercase tracking-wider text-muted-foreground">
               Engagements
             </div>
-            <h2 className="font-sans not-italic mt-5 max-w-2xl text-4xl font-medium leading-[1.03] tracking-[-0.025em] md:text-[52px]">
-              Four ways <span className="font-serif-pro italic text-clay">forward.</span>
+            <h2 className="font-sans not-italic mt-5 max-w-2xl text-4xl font-semibold leading-[1.03] tracking-[-0.025em] md:text-[52px]">
+              Four ways <span className="font-serif-pro italic text-[1.08em] text-clay">forward.</span>
             </h2>
           </div>
           <p className="max-w-sm text-[14.5px] text-ink-soft">
@@ -276,7 +276,7 @@ export function Engagements() {
               </div>
               <h2 className="mt-4 max-w-xl text-[28px] font-medium leading-tight tracking-tight md:text-[36px]">
                 A paid 90-minute session.{" "}
-                <span className="font-serif-pro italic text-clay">A written blueprint.</span>
+                <span className="font-serif-pro italic text-[1.08em] text-clay">A written blueprint.</span>
               </h2>
               <p className="mt-3 max-w-lg text-[14.5px] leading-relaxed text-ink-soft">
                 Bring your stack, your sprawl, and the questions your team keeps asking.

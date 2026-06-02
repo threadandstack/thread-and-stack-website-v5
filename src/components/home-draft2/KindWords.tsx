@@ -74,9 +74,9 @@ export function KindWords() {
           <div className="inline-flex w-fit items-center gap-2 rounded-full border border-hairline bg-paper px-3 py-1 text-[11.5px] uppercase tracking-wider text-muted-foreground">
             What clients say
           </div>
-          <h2 className="font-sans not-italic max-w-3xl text-4xl font-medium leading-[1.03] tracking-[-0.025em] md:text-[52px]">
+          <h2 className="font-sans not-italic max-w-3xl text-4xl font-semibold leading-[1.03] tracking-[-0.025em] md:text-[52px]">
             A stack of{" "}
-            <span className="font-serif-pro italic text-clay">kind words.</span>
+            <span className="font-serif-pro italic text-[1.08em] text-clay">kind words.</span>
           </h2>
         </div>
       </div>
