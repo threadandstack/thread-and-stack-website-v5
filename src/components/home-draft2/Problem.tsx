@@ -71,12 +71,12 @@ export function Problem() {
               </linearGradient>
             </defs>
             <path
-              d="M 125 40 C 215 -15, 285 -15, 375 40 S 535 95, 625 40 S 785 -15, 875 40"
+              d="M 165 40 Q 250 -10 335 40 M 415 40 Q 500 90 585 40 M 665 40 Q 750 -10 835 40"
               fill="none"
               stroke="url(#phaseFlow)"
               strokeWidth="1.5"
               strokeLinecap="round"
-              opacity="0.6"
+              opacity="0.7"
             />
           </svg>
 
