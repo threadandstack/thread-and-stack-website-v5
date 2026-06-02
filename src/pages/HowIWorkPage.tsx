@@ -102,7 +102,7 @@ const HowIWorkPage = () => {
         <div className="relative h-full max-w-6xl mx-auto px-6 flex items-end pb-12 md:items-center md:pb-0 pt-24">
           <div className="bg-background/95 backdrop-blur-sm rounded-2xl p-8 md:p-10 max-w-lg shadow-[0_8px_30px_rgba(0,0,0,0.12)]">
             <h1 className="font-sans not-italic text-5xl md:text-6xl mb-6 text-balance font-semibold leading-[0.98] tracking-[-0.035em]">
-              My <span className="font-serif-pro italic text-[1.08em] font-normal text-clay">Approach</span>
+              My <span className="font-serif-pro italic text-clay text-7xl">Approach</span>
             </h1>
             <p className="text-lg leading-relaxed text-muted-foreground">
               A map to building human connection in the age of AI — and protecting the creativity, judgment, and meaning that no model can replace.
@@ -123,7 +123,7 @@ const HowIWorkPage = () => {
             The 4 C's Framework
           </p>
           <h2 className="font-sans not-italic text-4xl md:text-[52px] mb-6 text-balance font-semibold leading-[1.03] tracking-[-0.025em]">
-            What AI must <span className="font-serif-pro italic text-[1.08em] font-normal text-clay">never replace.</span>
+            What AI must <span className="font-serif-pro italic text-clay text-7xl">never replace.</span>
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed max-w-3xl mb-16">
             As AI becomes more capable, the question isn't <em>what it can do</em> — it's <em>what it should leave alone</em>. These four drivers form the foundation of the human condition. They shape how we work, create, and connect. Any AI strategy worth its salt protects them.
@@ -161,7 +161,7 @@ const HowIWorkPage = () => {
             Practitioner Perspective
           </p>
           <h2 className="font-sans not-italic text-4xl md:text-[52px] mb-6 text-balance font-semibold leading-[1.03] tracking-[-0.025em]">
-            The discipline <span className="font-serif-pro italic text-[1.08em] font-normal text-clay">behind the tools.</span>
+            The discipline <span className="font-serif-pro italic text-clay text-7xl">behind the tools.</span>
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed max-w-3xl mb-6">
             Knowing <em>what</em> to protect is only half the picture. The other half is knowing how to use AI with skill, intention, and accountability.
@@ -205,7 +205,7 @@ const HowIWorkPage = () => {
       <section className="py-24 px-6 bg-accent">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="font-sans not-italic text-4xl md:text-[52px] font-semibold leading-[1.03] tracking-[-0.025em] mb-6 text-accent-foreground">
-            Ready to work with <span className="font-serif-pro italic text-[1.08em] font-normal">intention?</span>
+            Ready to work with <span className="font-serif-pro italic text-7xl">intention?</span>
           </h2>
           <p className="text-lg text-accent-foreground/80 leading-relaxed mb-12">
             Whether you need brand strategy, creative direction, or AI-informed systems that protect what matters — let's talk about what's possible.
