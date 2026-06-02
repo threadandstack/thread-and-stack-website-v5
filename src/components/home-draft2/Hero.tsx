@@ -1,7 +1,12 @@
-import { ArrowRight, ArrowDown, BadgeCheck, Repeat, MapPin } from "lucide-react";
+import { ArrowRight, ArrowDown, BadgeCheck, Repeat, MapPin, Sun, Moon } from "lucide-react";
 import { LogoTilt } from "./LogoTilt";
 
-export function Hero() {
+interface HeroProps {
+  theme: "dark" | "light";
+  onToggleTheme: () => void;
+}
+
+export function Hero({ theme, onToggleTheme }: HeroProps) {
   return (
     <section className="relative overflow-hidden border-b border-hairline">
       <div aria-hidden className="aurora">
@@ -23,22 +28,30 @@ export function Hero() {
           <div className="fade-up mb-8">
             <LogoTilt className="h-28 sm:h-36 md:h-44" />
           </div>
-          <a
-            href="#how"
-            className="fade-up fade-up-1 group inline-flex items-center gap-2 rounded-full border border-hairline bg-paper/70 py-1 pl-1 pr-3 text-[12px] text-ink-soft backdrop-blur transition-colors hover:border-indigo/50"
+
+          {/* Light / dark mode pill */}
+          <button
+            type="button"
+            onClick={onToggleTheme}
+            aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+            className="fade-up fade-up-1 relative inline-flex h-8 w-[72px] items-center rounded-full border border-hairline bg-paper/70 px-1 backdrop-blur transition-colors hover:border-indigo/50"
           >
             <span
-              className="rounded-full px-2 py-0.5 text-[10.5px] font-medium uppercase tracking-wider text-accent-foreground"
+              className={`absolute top-1 grid h-6 w-6 place-items-center rounded-full text-accent-foreground shadow-[0_2px_8px_-2px_rgba(0,0,0,0.35)] transition-all duration-300 ease-out ${
+                theme === "dark" ? "left-1" : "left-[calc(100%-1.75rem)]"
+              }`}
               style={{
                 backgroundImage:
-                  "linear-gradient(90deg, hsl(var(--indigo)), hsl(var(--violet)))",
+                  "linear-gradient(135deg, hsl(var(--orange)), hsl(var(--violet)))",
               }}
             >
-              For ops-led teams
+              {theme === "dark" ? <Moon className="h-3 w-3" /> : <Sun className="h-3 w-3" />}
             </span>
-            <span>Notion · Claude · custom agents</span>
-            <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
-          </a>
+            <span className="flex w-full items-center justify-between px-1.5 text-ink-soft/60">
+              <Sun className={`h-3 w-3 transition-opacity ${theme === "light" ? "opacity-0" : "opacity-100"}`} />
+              <Moon className={`h-3 w-3 transition-opacity ${theme === "dark" ? "opacity-0" : "opacity-100"}`} />
+            </span>
+          </button>
 
           <h1 className="fade-up fade-up-2 mt-7 max-w-5xl text-balance text-5xl font-medium leading-[0.98] tracking-[-0.035em] md:text-[84px]">
             One central knowledge hub.
