@@ -1,11 +1,14 @@
-import logoBase from "@/assets/logos/White_TS_Stacked.svg";
+import logoWhite from "@/assets/logos/White_TS_Stacked.svg";
+import logoBlack from "@/assets/logos/Black_TS_Stacked.svg";
 import logoIndigo from "@/assets/logos/Indigo_TS_Stacked.svg";
 
 interface LogoTiltProps {
   className?: string;
+  theme?: "dark" | "light";
 }
 
-export function LogoTilt({ className = "h-32 sm:h-44 md:h-56" }: LogoTiltProps) {
+export function LogoTilt({ className = "h-32 sm:h-44 md:h-56", theme = "dark" }: LogoTiltProps) {
+  const logoBase = theme === "light" ? logoBlack : logoWhite;
   return (
     <div
       className="relative group cursor-pointer [perspective:800px]"
