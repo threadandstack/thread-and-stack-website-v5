@@ -71,8 +71,8 @@ export function Hero({ theme, onToggleTheme }: HeroProps) {
             For 5–50 person teams who've outgrown their tool stack.
             <br />
             We build your information architecture and create a Knowledge Lake that
-            grows in value, as your team does. Reducing cognitive load,
-            eliminating busy work, unleashing your team's brilliance.
+            grows in value as your team does. It reduces cognitive load and gives
+            your team back time to do their best work.
           </p>
 
           <div className="fade-up fade-up-4 mt-10 flex flex-wrap items-center justify-center gap-3">
@@ -84,7 +84,7 @@ export function Hero({ theme, onToggleTheme }: HeroProps) {
                   "linear-gradient(95deg, var(--gradient-3color))",
               }}
             >
-              Book the Stack Diagnostic — £395
+              Book the Stack Diagnostic · £395
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </a>
             <a
