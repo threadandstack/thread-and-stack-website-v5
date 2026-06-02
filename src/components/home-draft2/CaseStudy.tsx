@@ -77,6 +77,18 @@ export function CaseStudy() {
             </span>
           </figcaption>
         </figure>
+
+        <div className="mt-14 max-w-3xl">
+          <div className="aspect-video overflow-hidden rounded-2xl border border-hairline bg-black">
+            <iframe
+              className="h-full w-full"
+              src="https://www.youtube.com/embed/aoHXlRb_bAI"
+              title="The IMMA Collective testimonial"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            />
+          </div>
+        </div>
       </div>
     </section>
   );
