@@ -1,8 +1,8 @@
 const stats = [
-  { v: "−40%", l: "Internal meetings", d: "after lake + agents shipped" },
-  { v: "£82", l: "Monthly infra", d: "down from ~£640 across 7 tools" },
-  { v: "94%", l: "Team adoption", d: "measured at day 30" },
-  { v: "1", l: "Source of truth", d: "Notion replaced 6 walled gardens" },
+  { v: "1", l: "Joined-up system", d: "marketing, ops, and CRM in one place" },
+  { v: "5+", l: "Tools consolidated", d: "TBC · replaced by a single Notion workspace" },
+  { v: "Weeks", l: "To first wins", d: "TBC · adoption felt fast across the team" },
+  { v: "Peace", l: "Of mind", d: "founder out of the routing layer" },
 ];
 
 export function CaseStudy() {
@@ -16,17 +16,18 @@ export function CaseStudy() {
         <div className="grid gap-12 md:grid-cols-[1.1fr_1fr] md:items-end">
           <div>
             <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-3 py-1 text-[11.5px] uppercase tracking-wider text-foreground/70">
-              Case study · London School of Sailing
+              Case study · The IMMA Collective
             </div>
             <h2 className="mt-5 text-4xl font-medium leading-[1.05] tracking-[-0.025em] md:text-[56px]">
-              We replaced 7 tools with{" "}
-              <span className="font-serif-pro italic text-clay-soft">one lake.</span>
+              Marketing that finally{" "}
+              <span className="font-serif-pro italic text-clay-soft">felt joined up.</span>
             </h2>
             <p className="mt-6 max-w-lg text-[15.5px] leading-relaxed text-foreground/70">
-              LSS came in with Monday, Squarespace, WhatsApp, Sheets, and three more —
-              knowledge scattered, the leadership team routing every question by hand.
-              We built the lake in their Notion, wired Claude over it with Cowork, and
-              shipped two custom agents for booking triage and invoice capture.
+              Lilli came in with a marketing function spread across half a dozen tools, a
+              growing community, and no single place to plan from. We built one Notion
+              workspace as the operating layer for the business. Strategy, content,
+              campaigns, and CRM in one place, with a clear vision the team could plan
+              against.
             </p>
             <div className="mt-8 flex items-center gap-3">
               <a
@@ -59,19 +60,20 @@ export function CaseStudy() {
 
         <figure className="mt-14 max-w-3xl border-l-2 border-indigo pl-6">
           <blockquote className="font-serif-pro italic text-2xl leading-snug text-foreground md:text-[32px]">
-            "Thread &amp; Stack didn't sell us Notion. They sold us back the
-            evenings and weekends our leadership team was losing to admin."
+            "Brendan is like a Swiss army knife when it comes to marketing, strategic and
+            hands-on. He helped me build a system that actually works for The IMMA
+            Collective. I've got real peace of mind, a clear vision for the business, and
+            marketing that feels properly joined up."
           </blockquote>
           <figcaption className="mt-4 flex items-center gap-3 text-[13px] text-foreground/60">
             <span
               className="grid h-8 w-8 place-items-center rounded-full text-[12px] font-semibold text-accent-foreground"
               style={{ backgroundImage: "linear-gradient(135deg, hsl(var(--indigo)), hsl(var(--orange)))" }}
             >
-              RP
+              LG
             </span>
             <span>
-              <span className="text-foreground">Ruaraidh Plummer</span> —
-              Principal, London School of Sailing
+              <span className="text-foreground">Lilli Graf</span>, Founder, The IMMA Collective
             </span>
           </figcaption>
         </figure>
