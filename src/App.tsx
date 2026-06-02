@@ -22,6 +22,7 @@ const FractionalDeepEngagement = lazy(() => import("./pages/FractionalDeepEngage
 const NotFound = lazy(() => import("./pages/NotFound"));
 const BlogPage = lazy(() => import("./pages/BlogPage"));
 const HomePageDraft = lazy(() => import("./pages/HomePageDraft"));
+const HomePageDraft2 = lazy(() => import("./pages/HomePageDraft2"));
 const BlogPostPage = lazy(() => import("./pages/BlogPostPage"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const DataGuarantee = lazy(() => import("./pages/DataGuarantee"));
@@ -98,6 +99,7 @@ const App = () => (
             <Route path="/deep-engagement" element={<FractionalDeepEngagement />} />
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/home-draft" element={<HomePageDraft />} />
+            <Route path="/home-draft2" element={<HomePageDraft2 />} />
             <Route path="/blog/:slug" element={<BlogPostPage />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/data-guarantee" element={<DataGuarantee />} />
