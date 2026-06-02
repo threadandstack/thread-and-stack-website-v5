@@ -136,7 +136,7 @@ const KanbanScatter = ({ testimonials }: Props) => {
             <p className="text-[11px] font-sans text-muted-foreground leading-relaxed mb-2 line-clamp-2">
               "{t.quote}"
             </p>
-            <div className="pt-1.5 border-t border-border/40 flex items-baseline justify-between gap-2">
+            <div className="kindwords-divider pt-1.5 border-t border-border/40 flex items-baseline justify-between gap-2">
               <p className="text-[11px] font-sans text-foreground truncate">{t.author}</p>
               <p className="text-[10px] font-sans text-muted-foreground/70 truncate">{t.date}</p>
             </div>
