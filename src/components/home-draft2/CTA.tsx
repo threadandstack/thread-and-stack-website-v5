@@ -38,7 +38,7 @@ export function CTA() {
             className="group inline-flex h-12 items-center gap-2 rounded-md px-6 text-[14.5px] font-medium text-accent-foreground shadow-[0_8px_20px_-8px_rgba(0,0,0,0.35)] transition-all hover:-translate-y-px"
             style={{ backgroundImage: "linear-gradient(95deg, var(--gradient-3color))" }}
           >
-            Book the Diagnostic — £395
+            Book the Diagnostic · £395
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
           </button>
           <a

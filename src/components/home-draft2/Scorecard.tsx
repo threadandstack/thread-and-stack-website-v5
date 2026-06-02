@@ -29,7 +29,7 @@ const questions: Question[] = [
       { label: "Almost never", score: 3 },
       { label: "A few times a month", score: 2 },
       { label: "Weekly", score: 1 },
-      { label: "Daily — it's a feature of the role", score: 0 },
+      { label: "Daily. It's a feature of the role", score: 0 },
     ],
   },
   {
@@ -84,13 +84,13 @@ const levels = [
     min: 0, max: 8, name: "Fragmented", color: "step-1",
     summary: "Knowledge lives in heads and threads. The leader is the routing layer. Cost compounds quietly.",
     recommend: "Stack Diagnostic",
-    why: "Start with the 90-min audit — you need a map before you build.",
+    why: "Start with the 90-min audit. You need a map before you build.",
   },
   {
     min: 9, max: 14, name: "Patchworked", color: "step-2",
     summary: "You've stitched tools together. They mostly hold. AI is occasional. Retrieval is unreliable.",
     recommend: "Knowledge Lake Starter",
-    why: "One core system + one well-built agent makes the difference visible fast.",
+    why: "One core system plus one well-built agent makes the difference visible fast.",
   },
   {
     min: 15, max: 19, name: "Consolidating", color: "step-3",
@@ -158,7 +158,7 @@ export function Scorecard() {
                   <span className="font-serif-pro italic text-clay">knowledge stack?</span>
                 </h2>
                 <p className="mt-4 max-w-md text-[14.5px] text-ink-soft">
-                  Eight honest questions. You'll see where you sit on the ladder —
+                  Eight honest questions. You'll see where you sit on the ladder,
                   and the engagement that fits.
                 </p>
                 <button
