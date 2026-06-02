@@ -1,4 +1,4 @@
-import { Compass, Hammer, Repeat } from "lucide-react";
+import { Compass, Hammer, Rocket, Repeat } from "lucide-react";
 
 const phases = [
   {
@@ -16,19 +16,29 @@ const phases = [
     icon: Hammer,
     color: "orange",
     title: "Build",
-    duration: "In your Notion, in public, with support included",
+    duration: "Notion as your knowledge lake",
     body:
-      "The lake is built in your workspace, not a sandbox. Daily updates, async access, every decision documented. Training and 30–90 days of adoption support are part of the build.",
-    bullets: ["Notion-native build", "Claude + custom agents", "Training + Loom library"],
+      "We build Notion as your knowledge lake, with connecting streams set up to all your vital tools. The work happens in your workspace, in public, with every decision documented.",
+    bullets: ["Notion-native build", "Connected streams", "Claude + custom agents"],
   },
   {
     n: "03",
-    icon: Repeat,
+    icon: Rocket,
     color: "violet",
+    title: "Launch",
+    duration: "30–90 days of adoption support",
+    body:
+      "Every package includes 30–90 days of built-in adoption support and guidance. Training, async access, and a Loom library so the team actually uses what we've built.",
+    bullets: ["Adoption support", "Team training", "Loom library"],
+  },
+  {
+    n: "04",
+    icon: Repeat,
+    color: "sky",
     title: "Compound",
     duration: "Rolling Stack Support · no tie-in",
     body:
-      "Once the system holds, we keep it growing. Async access, scaled per half-day, cancel any month. The lake keeps deepening while you keep sovereignty over the whole thing.",
+      "The more you use the system, the deeper the lake becomes — filling with knowledge, resource, and value. Async access, scaled per half-day, cancel any month.",
     bullets: ["From £495/mo", "Cancel anytime", "Async + half-day"],
   },
 ] as const;
@@ -51,63 +61,80 @@ export function Problem() {
           </div>
           <p className="max-w-sm text-[15px] text-ink-soft">
             When the founder is the only router between the tools, the team waits.
-            The fix is an intentional stack, built in three phases. You only continue
+            The fix is an intentional stack, built in four phases. You only continue
             when the last one earned the next.
           </p>
         </div>
 
-        <ol className="grid gap-px overflow-hidden rounded-2xl border border-hairline bg-hairline md:grid-cols-3">
+        {/* Timeline */}
+        <ol className="relative grid gap-10 md:grid-cols-4 md:gap-6">
+          {/* Horizontal rail (desktop) */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute left-0 right-0 top-5 hidden h-px md:block"
+            style={{
+              backgroundImage:
+                "linear-gradient(90deg, hsl(var(--indigo)) 0%, hsl(var(--orange)) 33%, hsl(var(--violet)) 66%, hsl(var(--sky)) 100%)",
+              opacity: 0.5,
+            }}
+          />
+
           {phases.map((p) => {
             const Icon = p.icon;
             return (
               <li
                 key={p.n}
-                className="group relative flex flex-col gap-4 overflow-hidden bg-background p-7 md:p-8"
+                className="group relative flex flex-col gap-4"
                 style={{ ["--c" as string]: `hsl(var(--${p.color}))` }}
               >
-                <span
-                  aria-hidden
-                  className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full opacity-0 blur-3xl transition-opacity group-hover:opacity-40"
-                  style={{
-                    background:
-                      "radial-gradient(closest-side, var(--c), transparent)",
-                  }}
-                />
-                <div className="relative flex items-center justify-between">
-                  <div
-                    className="grid h-10 w-10 place-items-center rounded-lg border border-hairline bg-paper"
+                {/* Node marker */}
+                <div className="relative flex items-center gap-3 md:block">
+                  <span
+                    className="relative z-10 grid h-10 w-10 place-items-center rounded-full border border-hairline bg-background shadow-[0_2px_8px_-2px_rgba(0,0,0,0.08)]"
                     style={{ color: "var(--c)" }}
                   >
                     <Icon className="h-[18px] w-[18px]" strokeWidth={1.75} />
-                  </div>
+                  </span>
                   <span
-                    className="text-[11px] font-medium uppercase tracking-[0.18em]"
+                    className="text-[11px] font-medium uppercase tracking-[0.18em] md:absolute md:right-0 md:top-3"
                     style={{ color: "var(--c)" }}
                   >
                     {p.n}
                   </span>
                 </div>
-                <div className="relative">
-                  <h3 className="text-[20px] font-medium tracking-tight">
-                    {p.title}
-                  </h3>
-                  <div className="mt-0.5 text-[11.5px] uppercase tracking-wider text-muted-foreground">
-                    {p.duration}
+
+                {/* Card */}
+                <div className="relative flex flex-1 flex-col gap-3 overflow-hidden rounded-2xl border border-hairline bg-background p-5 md:p-6">
+                  <span
+                    aria-hidden
+                    className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full opacity-0 blur-3xl transition-opacity group-hover:opacity-40"
+                    style={{
+                      background:
+                        "radial-gradient(closest-side, var(--c), transparent)",
+                    }}
+                  />
+                  <div className="relative">
+                    <h3 className="text-[20px] font-medium tracking-tight">
+                      {p.title}
+                    </h3>
+                    <div className="mt-0.5 text-[11.5px] uppercase tracking-wider text-muted-foreground">
+                      {p.duration}
+                    </div>
+                    <p className="mt-3 text-[14px] leading-relaxed text-ink-soft">
+                      {p.body}
+                    </p>
                   </div>
-                  <p className="mt-3 text-[14px] leading-relaxed text-ink-soft">
-                    {p.body}
-                  </p>
+                  <ul className="relative mt-auto flex flex-wrap gap-1.5 pt-2 text-[12px]">
+                    {p.bullets.map((b) => (
+                      <li
+                        key={b}
+                        className="rounded-full border border-hairline bg-paper px-2.5 py-1 text-ink-soft"
+                      >
+                        {b}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <ul className="relative mt-auto flex flex-wrap gap-1.5 text-[12px]">
-                  {p.bullets.map((b) => (
-                    <li
-                      key={b}
-                      className="rounded-full border border-hairline bg-paper px-2.5 py-1 text-ink-soft"
-                    >
-                      {b}
-                    </li>
-                  ))}
-                </ul>
               </li>
             );
           })}
