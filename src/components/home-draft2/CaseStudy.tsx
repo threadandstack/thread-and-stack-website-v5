@@ -118,7 +118,7 @@ function VideoEmbed() {
       ) : (
         <iframe
           className="h-full w-full"
-          src="https://www.youtube-nocookie.com/embed/aoHXlRb_bAI?autoplay=1&modestbranding=1&rel=0"
+          src="https://www.youtube.com/embed/aoHXlRb_bAI?autoplay=1&modestbranding=1&rel=0&playsinline=1"
           title="The IMMA Collective testimonial"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowFullScreen
