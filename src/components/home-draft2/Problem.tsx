@@ -3,7 +3,7 @@ import { Compass, Hammer, Rocket, Repeat } from "lucide-react";
 const phases = [
   {
     icon: Compass,
-    color: "indigo",
+    color: "sky",
     title: "Diagnose",
     duration: "Paid Stack Diagnostic · 90 min + blueprint",
     body:
@@ -27,7 +27,7 @@ const phases = [
   },
   {
     icon: Repeat,
-    color: "sky",
+    color: "indigo",
     title: "Compound",
     duration: "Rolling Stack Support · no tie-in",
     body:
@@ -58,20 +58,20 @@ export function Problem() {
         <div className="relative">
           <svg
             aria-hidden
-            viewBox="0 0 1000 140"
+            viewBox="0 0 1000 80"
             preserveAspectRatio="none"
-            className="pointer-events-none absolute left-0 right-0 top-[30px] hidden h-[120px] w-full md:block"
+            className="pointer-events-none absolute left-0 right-0 top-0 hidden h-20 w-full md:block"
           >
             <defs>
               <linearGradient id="phaseFlow" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0%" stopColor="hsl(var(--indigo))" />
+                <stop offset="0%" stopColor="hsl(var(--sky))" />
                 <stop offset="33%" stopColor="hsl(var(--orange))" />
                 <stop offset="66%" stopColor="hsl(var(--violet))" />
-                <stop offset="100%" stopColor="hsl(var(--sky))" />
+                <stop offset="100%" stopColor="hsl(var(--indigo))" />
               </linearGradient>
             </defs>
             <path
-              d="M 60 70 Q 200 -10 375 70 T 690 70 T 940 70"
+              d="M 125 40 C 200 -20, 300 100, 375 40 S 550 -20, 625 40 S 800 100, 875 40"
               fill="none"
               stroke="url(#phaseFlow)"
               strokeWidth="1.5"
