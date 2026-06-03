@@ -223,10 +223,13 @@ export function Engagements() {
                     <a
                       href="#contact"
                       onClick={(e) => e.stopPropagation()}
-                      className="mt-auto inline-flex h-11 items-center justify-center rounded-md px-5 text-[13.5px] font-medium text-accent-foreground transition-transform hover:-translate-y-px"
+                      className="group mt-auto inline-flex h-11 items-center justify-center rounded-md px-5 text-[13.5px] font-medium text-accent-foreground transition-transform hover:-translate-y-px"
                       style={{ backgroundImage: "linear-gradient(95deg, var(--gradient-3color))" }}
                     >
-                      {t.cta} →
+                      {t.cta}
+                      <span className="inline-flex w-0 items-center justify-center overflow-hidden opacity-0 scale-75 transition-all duration-300 group-hover:w-4 group-hover:opacity-100 group-hover:scale-100 group-hover:ml-1.5">
+                        <ArrowRight className="h-4 w-4 shrink-0" />
+                      </span>
                     </a>
                   ) : (
                     <span className={`mt-auto inline-flex h-11 items-center justify-center rounded-md border px-5 text-[13.5px] font-medium ${
