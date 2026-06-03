@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Play } from "lucide-react";
+import { Play, ArrowRight } from "lucide-react";
 
 const stats = [
   { v: "1", l: "Joined-up system", d: "marketing, ops, and CRM in one place" },
