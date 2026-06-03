@@ -78,21 +78,25 @@ export function Hero({ theme, onToggleTheme }: HeroProps) {
           <div className="fade-up fade-up-4 mt-10 flex flex-wrap items-center justify-center gap-3">
             <a
               href="#contact"
-              className="group inline-flex h-12 items-center gap-2 rounded-md px-6 text-[14.5px] font-medium text-accent-foreground shadow-[0_8px_20px_-8px_rgba(0,0,0,0.35)] transition-all hover:-translate-y-px"
+              className="group inline-flex h-12 items-center rounded-md px-6 text-[14.5px] font-medium text-accent-foreground shadow-[0_8px_20px_-8px_rgba(0,0,0,0.35)] transition-all hover:-translate-y-px"
               style={{
                 backgroundImage:
                   "linear-gradient(95deg, var(--gradient-3color))",
               }}
             >
               Book the Stack Diagnostic · £395
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+              <span className="inline-flex w-0 items-center justify-center overflow-hidden opacity-0 scale-75 transition-all duration-300 group-hover:w-5 group-hover:opacity-100 group-hover:scale-100 group-hover:ml-1.5">
+                <ArrowRight className="h-4 w-4 shrink-0" />
+              </span>
             </a>
             <a
               href="#scorecard"
-              className="inline-flex h-12 items-center gap-2 rounded-md border border-hairline bg-background px-6 text-[14.5px] font-medium text-foreground transition-colors hover:bg-paper"
+              className="group inline-flex h-12 items-center rounded-md border border-hairline bg-background px-6 text-[14.5px] font-medium text-foreground transition-colors hover:bg-paper"
             >
               Take the 2-min Scorecard
-              <ArrowDown className="h-4 w-4" />
+              <span className="inline-flex w-0 items-center justify-center overflow-hidden opacity-0 scale-75 transition-all duration-300 group-hover:w-5 group-hover:opacity-100 group-hover:scale-100 group-hover:ml-1.5">
+                <ArrowDown className="h-4 w-4 shrink-0" />
+              </span>
             </a>
           </div>
 
