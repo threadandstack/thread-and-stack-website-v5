@@ -76,9 +76,12 @@ export function CaseStudy() {
           <div className="flex flex-wrap items-center gap-3 md:justify-end">
             <a
               href="#contact"
-              className="inline-flex h-11 items-center rounded-md bg-background px-5 text-[14px] font-medium text-foreground transition-transform hover:-translate-y-px"
+              className="group inline-flex h-11 items-center rounded-md bg-background px-5 text-[14px] font-medium text-foreground transition-transform hover:-translate-y-px"
             >
-              Book the Diagnostic →
+              Book the Diagnostic
+              <span className="inline-flex w-0 items-center justify-center overflow-hidden opacity-0 scale-75 transition-all duration-300 group-hover:w-4 group-hover:opacity-100 group-hover:scale-100 group-hover:ml-1.5">
+                <ArrowRight className="h-4 w-4 shrink-0" />
+              </span>
             </a>
             <a
               href="#how"
