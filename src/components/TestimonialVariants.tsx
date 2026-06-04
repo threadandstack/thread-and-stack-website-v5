@@ -10,15 +10,15 @@ export type Testimonial = {
 type Props = { testimonials: Testimonial[] };
 
 const tagByAuthor: Record<string, { tag: string; tagColor: string }> = {
-  "Jasmine Stone": { tag: "Notion Mentorship", tagColor: "bg-orange-100 text-orange-700" },
-  "Lilli Graf": { tag: "AI Workflows", tagColor: "bg-blue-100 text-blue-700" },
-  "Lucian James": { tag: "Task OS", tagColor: "bg-purple-100 text-purple-700" },
-  "Alex Aggidis": { tag: "Strategy", tagColor: "bg-green-100 text-green-700" },
-  "Courtney Evans": { tag: "Leadership", tagColor: "bg-yellow-100 text-yellow-700" },
-  "Gary O'Donnell": { tag: "Operations", tagColor: "bg-pink-100 text-pink-700" },
-  "Chris Mejaski": { tag: "Content Strategy", tagColor: "bg-indigo-100 text-indigo-700" },
-  "Xania Khan": { tag: "Content Strategy", tagColor: "bg-teal-100 text-teal-700" },
-  "Matthew Ivo": { tag: "Campaigns", tagColor: "bg-rose-100 text-rose-700" },
+  "Jasmine Stone": { tag: "Notion Mentorship", tagColor: "bg-orange-100 text-orange-700 dark:bg-orange-500/15 dark:text-orange-300" },
+  "Lilli Graf": { tag: "AI Workflows", tagColor: "bg-blue-100 text-blue-700 dark:bg-blue-500/15 dark:text-blue-300" },
+  "Lucian James": { tag: "Task OS", tagColor: "bg-purple-100 text-purple-700 dark:bg-purple-500/15 dark:text-purple-300" },
+  "Alex Aggidis": { tag: "Strategy", tagColor: "bg-green-100 text-green-700 dark:bg-green-500/15 dark:text-green-300" },
+  "Courtney Evans": { tag: "Leadership", tagColor: "bg-yellow-100 text-yellow-700 dark:bg-yellow-500/15 dark:text-yellow-300" },
+  "Gary O'Donnell": { tag: "Operations", tagColor: "bg-pink-100 text-pink-700 dark:bg-pink-500/15 dark:text-pink-300" },
+  "Chris Mejaski": { tag: "Content Strategy", tagColor: "bg-indigo-100 text-indigo-700 dark:bg-indigo-500/15 dark:text-indigo-300" },
+  "Xania Khan": { tag: "Content Strategy", tagColor: "bg-teal-100 text-teal-700 dark:bg-teal-500/15 dark:text-teal-300" },
+  "Matthew Ivo": { tag: "Campaigns", tagColor: "bg-rose-100 text-rose-700 dark:bg-rose-500/15 dark:text-rose-300" },
 };
 
 export const TestimonialVariants = ({ testimonials }: Props) => {
@@ -53,7 +53,7 @@ const MobileCarousel = ({ testimonials }: Props) => {
           return (
             <article
               key={idx}
-              className="snap-start shrink-0 w-[82vw] max-w-[320px] bg-white rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.06)] p-5"
+              className="snap-start shrink-0 w-[82vw] max-w-[320px] bg-card text-card-foreground rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.06)] border border-hairline p-5"
             >
               <div className="flex items-center gap-2 mb-3">
                 <span className={`text-[10px] font-sans font-medium px-2 py-0.5 rounded ${meta.tagColor}`}>
@@ -66,7 +66,7 @@ const MobileCarousel = ({ testimonials }: Props) => {
               <p className="text-[13px] font-sans text-muted-foreground leading-relaxed mb-4">
                 "{t.quote}"
               </p>
-              <div className="pt-3 border-t border-border/40 flex items-baseline justify-between gap-2">
+              <div className="pt-3 border-t border-hairline flex items-baseline justify-between gap-2">
                 <p className="text-[12px] font-sans font-medium text-foreground truncate">{t.author}</p>
                 <p className="text-[11px] font-sans text-muted-foreground/70 truncate">{t.date}</p>
               </div>
