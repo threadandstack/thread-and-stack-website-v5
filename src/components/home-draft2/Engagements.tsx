@@ -262,44 +262,6 @@ export function Engagements() {
           </button>
         </div>
 
-        <div className="relative mt-8 overflow-hidden rounded-2xl border border-hairline bg-background p-7 md:p-10">
-          <span
-            aria-hidden
-            className="pointer-events-none absolute -left-32 -top-32 h-72 w-72 rounded-full opacity-30 blur-3xl"
-            style={{ background: "radial-gradient(closest-side, hsl(var(--indigo)), transparent)" }}
-          />
-          <div className="relative grid gap-8 md:grid-cols-[1fr_auto] md:items-center">
-            <div>
-              <div className="flex items-center gap-3">
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-indigo/10 px-2.5 py-1 text-[10.5px] font-medium uppercase tracking-wider text-indigo">
-                  <Sparkles className="h-3 w-3" strokeWidth={2} /> Start here
-                </span>
-                <span className="text-[11.5px] uppercase tracking-wider text-muted-foreground">
-                  Stack Diagnostic · £395
-                </span>
-              </div>
-              <h2 className="mt-4 max-w-xl text-[28px] font-medium leading-tight tracking-tight md:text-[36px] font-sans not-italic">
-                A paid 90-minute session.
-                <span className="block font-serif-pro italic text-clay text-4xl md:text-5xl">A written blueprint.</span>
-              </h2>
-              <p className="mt-3 max-w-lg text-[14.5px] leading-relaxed text-ink-soft">
-                Bring your stack, your sprawl, and the questions your team keeps asking.
-                Leave with a plan you could execute alone. Credited in full against any
-                build you choose afterwards.
-              </p>
-            </div>
-            <a
-              href="#contact"
-              className="group inline-flex h-12 items-center justify-center rounded-md px-6 text-[14.5px] font-medium text-accent-foreground transition-transform hover:-translate-y-px"
-              style={{ backgroundImage: "linear-gradient(95deg, var(--gradient-3color))" }}
-            >
-              Book the Diagnostic
-              <span className="inline-flex w-0 items-center justify-center overflow-hidden opacity-0 scale-75 transition-all duration-300 group-hover:w-5 group-hover:opacity-100 group-hover:scale-100 group-hover:ml-1.5">
-                <ArrowRight className="h-4 w-4 shrink-0" />
-              </span>
-            </a>
-          </div>
-        </div>
       </div>
     </section>
   );

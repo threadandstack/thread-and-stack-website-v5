@@ -11,10 +11,13 @@ import { KindWords } from "@/components/home-draft2/KindWords";
 import { Credentials } from "@/components/home-draft2/Credentials";
 import { FAQ } from "@/components/home-draft2/FAQ";
 import { CTA } from "@/components/home-draft2/CTA";
+import { DiagnosticDrawer } from "@/components/home-draft2/DiagnosticDrawer";
 
 const HomePageDraft2 = () => {
   const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const [diagnosticOpen, setDiagnosticOpen] = useState(false);
   const toggleTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
+  const openDiagnostic = () => setDiagnosticOpen(true);
 
   return (
     <div className="notion-canvas min-h-screen overflow-x-hidden" data-theme={theme}>
@@ -34,18 +37,24 @@ const HomePageDraft2 = () => {
       </div>
 
       <main>
-        <Hero theme={theme} onToggleTheme={toggleTheme} />
+        <Hero theme={theme} onToggleTheme={toggleTheme} onBookDiagnostic={openDiagnostic} />
         <Logos />
         <Problem />
         <Scorecard />
         <Engagements />
-        <CaseStudy />
+        <CaseStudy onBookDiagnostic={openDiagnostic} />
+        <FAQ />
         <KindWords />
         <Credentials />
-        <FAQ />
         <CTA />
       </main>
       <Footer />
+
+      <DiagnosticDrawer
+        open={diagnosticOpen}
+        onOpenChange={setDiagnosticOpen}
+        theme={theme}
+      />
     </div>
   );
 };
