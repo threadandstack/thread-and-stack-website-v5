@@ -100,7 +100,7 @@ export function Engagements() {
               Engagements
             </div>
             <h2 className="font-sans not-italic mt-5 max-w-2xl text-4xl font-semibold leading-[1.03] tracking-[-0.025em] md:text-[52px]">
-              Four ways <span className="font-serif-pro italic text-clay text-7xl">forward.</span>
+              Four ways <span className="font-serif-pro italic text-clay text-5xl md:text-7xl">forward.</span>
             </h2>
           </div>
           <p className="max-w-sm text-[14.5px] text-ink-soft">
