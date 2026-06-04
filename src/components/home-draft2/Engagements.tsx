@@ -168,7 +168,7 @@ export function Engagements() {
                     pointerEvents: abs > 1 ? "none" : "auto",
                     ["--c" as string]: `hsl(var(--${t.accent}))`,
                   }}
-                  className={`absolute left-1/2 top-1/2 flex w-[340px] flex-col gap-5 rounded-2xl p-7 text-left [backface-visibility:hidden] md:w-[400px] md:p-8 ${
+                  className={`absolute left-1/2 top-1/2 flex w-[280px] flex-col gap-5 rounded-2xl p-6 text-left [backface-visibility:hidden] sm:w-[340px] sm:p-7 md:w-[400px] md:p-8 ${
                     isFeatured ? "bg-card text-card-foreground" : "bg-background text-foreground"
                   } ${
                     isActive
