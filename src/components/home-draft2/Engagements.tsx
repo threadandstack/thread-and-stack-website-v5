@@ -279,7 +279,7 @@ export function Engagements() {
               </div>
               <h2 className="mt-4 max-w-xl text-[28px] font-medium leading-tight tracking-tight md:text-[36px] font-sans not-italic">
                 A paid 90-minute session.
-                <span className="block font-serif-pro italic text-clay text-5xl">A written blueprint.</span>
+                <span className="block font-serif-pro italic text-clay text-4xl md:text-5xl">A written blueprint.</span>
               </h2>
               <p className="mt-3 max-w-lg text-[14.5px] leading-relaxed text-ink-soft">
                 Bring your stack, your sprawl, and the questions your team keeps asking.
