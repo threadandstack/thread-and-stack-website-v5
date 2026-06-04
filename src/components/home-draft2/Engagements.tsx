@@ -147,8 +147,9 @@ export function Engagements() {
               if (offset < -len / 2) offset += len;
               const abs = Math.abs(offset);
               const isActive = offset === 0;
-              const angle = offset * 38;
-              const translateX = offset * 260;
+              const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+              const angle = offset * (isMobile ? 28 : 38);
+              const translateX = offset * (isMobile ? 180 : 260);
               const translateZ = isActive ? 0 : -180 - (abs - 1) * 80;
               const scale = isActive ? 1.02 : 0.9;
               const opacity = abs > 1 ? 0 : isActive ? 1 : 0.45;
