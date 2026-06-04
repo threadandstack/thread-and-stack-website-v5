@@ -17,7 +17,7 @@ const HomePageDraft2 = () => {
   const toggleTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
 
   return (
-    <div className="notion-canvas min-h-screen" data-theme={theme}>
+    <div className="notion-canvas min-h-screen overflow-x-hidden" data-theme={theme}>
       <Navigation variant={theme === "dark" ? "image-hero" : "default"} hideLogo />
 
       {/* Floating "Currently booking Q3" pill where the logo used to sit */}
