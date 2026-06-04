@@ -100,7 +100,7 @@ export function Engagements() {
               Engagements
             </div>
             <h2 className="font-sans not-italic mt-5 max-w-2xl text-4xl font-semibold leading-[1.03] tracking-[-0.025em] md:text-[52px]">
-              Four ways <span className="font-serif-pro italic text-clay text-7xl">forward.</span>
+              Four ways <span className="font-serif-pro italic text-clay text-5xl md:text-7xl">forward.</span>
             </h2>
           </div>
           <p className="max-w-sm text-[14.5px] text-ink-soft">
@@ -110,7 +110,7 @@ export function Engagements() {
 
         <div
           ref={stageRef}
-          className="relative h-[600px] [perspective:1800px] select-none md:h-[640px]"
+          className="relative h-[560px] [perspective:1800px] select-none md:h-[640px]"
           style={{ touchAction: "pan-y" }}
           onTouchStart={(e) => {
             const t = e.touches[0];
@@ -147,8 +147,9 @@ export function Engagements() {
               if (offset < -len / 2) offset += len;
               const abs = Math.abs(offset);
               const isActive = offset === 0;
-              const angle = offset * 38;
-              const translateX = offset * 260;
+              const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+              const angle = offset * (isMobile ? 28 : 38);
+              const translateX = offset * (isMobile ? 180 : 260);
               const translateZ = isActive ? 0 : -180 - (abs - 1) * 80;
               const scale = isActive ? 1.02 : 0.9;
               const opacity = abs > 1 ? 0 : isActive ? 1 : 0.45;
@@ -167,7 +168,7 @@ export function Engagements() {
                     pointerEvents: abs > 1 ? "none" : "auto",
                     ["--c" as string]: `hsl(var(--${t.accent}))`,
                   }}
-                  className={`absolute left-1/2 top-1/2 flex w-[340px] flex-col gap-5 rounded-2xl p-7 text-left [backface-visibility:hidden] md:w-[400px] md:p-8 ${
+                  className={`absolute left-1/2 top-1/2 flex w-[280px] flex-col gap-5 rounded-2xl p-6 text-left [backface-visibility:hidden] sm:w-[340px] sm:p-7 md:w-[400px] md:p-8 ${
                     isFeatured ? "bg-card text-card-foreground" : "bg-background text-foreground"
                   } ${
                     isActive
@@ -279,7 +280,7 @@ export function Engagements() {
               </div>
               <h2 className="mt-4 max-w-xl text-[28px] font-medium leading-tight tracking-tight md:text-[36px] font-sans not-italic">
                 A paid 90-minute session.
-                <span className="block font-serif-pro italic text-clay text-5xl">A written blueprint.</span>
+                <span className="block font-serif-pro italic text-clay text-4xl md:text-5xl">A written blueprint.</span>
               </h2>
               <p className="mt-3 max-w-lg text-[14.5px] leading-relaxed text-ink-soft">
                 Bring your stack, your sprawl, and the questions your team keeps asking.
