@@ -4,9 +4,10 @@ import { LogoTilt } from "./LogoTilt";
 interface HeroProps {
   theme: "dark" | "light";
   onToggleTheme: () => void;
+  onBookDiagnostic: () => void;
 }
 
-export function Hero({ theme, onToggleTheme }: HeroProps) {
+export function Hero({ theme, onToggleTheme, onBookDiagnostic }: HeroProps) {
   return (
     <section className="relative overflow-hidden border-b border-hairline">
       <div aria-hidden className="aurora">
@@ -76,8 +77,9 @@ export function Hero({ theme, onToggleTheme }: HeroProps) {
           </p>
 
           <div className="fade-up fade-up-4 mt-10 flex flex-wrap items-center justify-center gap-3">
-            <a
-              href="#contact"
+            <button
+              type="button"
+              onClick={onBookDiagnostic}
               className="group inline-flex h-12 items-center rounded-md px-6 text-[14.5px] font-medium text-accent-foreground shadow-[0_8px_20px_-8px_rgba(0,0,0,0.35)] transition-all hover:-translate-y-px"
               style={{
                 backgroundImage:
@@ -88,7 +90,7 @@ export function Hero({ theme, onToggleTheme }: HeroProps) {
               <span className="inline-flex w-0 items-center justify-center overflow-hidden opacity-0 scale-75 transition-all duration-300 group-hover:w-5 group-hover:opacity-100 group-hover:scale-100 group-hover:ml-1.5">
                 <ArrowRight className="h-4 w-4 shrink-0" />
               </span>
-            </a>
+            </button>
             <a
               href="#scorecard"
               className="group inline-flex h-12 items-center rounded-md border border-hairline bg-background px-6 text-[14.5px] font-medium text-foreground transition-colors hover:bg-paper"
