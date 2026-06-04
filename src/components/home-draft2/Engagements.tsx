@@ -110,7 +110,7 @@ export function Engagements() {
 
         <div
           ref={stageRef}
-          className="relative h-[600px] [perspective:1800px] select-none md:h-[640px]"
+          className="relative h-[560px] [perspective:1800px] select-none md:h-[640px]"
           style={{ touchAction: "pan-y" }}
           onTouchStart={(e) => {
             const t = e.touches[0];
