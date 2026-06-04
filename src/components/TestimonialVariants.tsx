@@ -53,7 +53,7 @@ const MobileCarousel = ({ testimonials }: Props) => {
           return (
             <article
               key={idx}
-              className="snap-start shrink-0 w-[82vw] max-w-[320px] bg-white rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.06)] p-5"
+              className="snap-start shrink-0 w-[82vw] max-w-[320px] bg-card text-card-foreground rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.06)] border border-hairline p-5"
             >
               <div className="flex items-center gap-2 mb-3">
                 <span className={`text-[10px] font-sans font-medium px-2 py-0.5 rounded ${meta.tagColor}`}>
@@ -66,7 +66,7 @@ const MobileCarousel = ({ testimonials }: Props) => {
               <p className="text-[13px] font-sans text-muted-foreground leading-relaxed mb-4">
                 "{t.quote}"
               </p>
-              <div className="pt-3 border-t border-border/40 flex items-baseline justify-between gap-2">
+              <div className="pt-3 border-t border-hairline flex items-baseline justify-between gap-2">
                 <p className="text-[12px] font-sans font-medium text-foreground truncate">{t.author}</p>
                 <p className="text-[11px] font-sans text-muted-foreground/70 truncate">{t.date}</p>
               </div>
