@@ -10,15 +10,15 @@ export type Testimonial = {
 type Props = { testimonials: Testimonial[] };
 
 const tagByAuthor: Record<string, { tag: string; tagColor: string }> = {
-  "Jasmine Stone": { tag: "Notion Mentorship", tagColor: "bg-orange-100 text-orange-700" },
-  "Lilli Graf": { tag: "AI Workflows", tagColor: "bg-blue-100 text-blue-700" },
-  "Lucian James": { tag: "Task OS", tagColor: "bg-purple-100 text-purple-700" },
-  "Alex Aggidis": { tag: "Strategy", tagColor: "bg-green-100 text-green-700" },
-  "Courtney Evans": { tag: "Leadership", tagColor: "bg-yellow-100 text-yellow-700" },
-  "Gary O'Donnell": { tag: "Operations", tagColor: "bg-pink-100 text-pink-700" },
-  "Chris Mejaski": { tag: "Content Strategy", tagColor: "bg-indigo-100 text-indigo-700" },
-  "Xania Khan": { tag: "Content Strategy", tagColor: "bg-teal-100 text-teal-700" },
-  "Matthew Ivo": { tag: "Campaigns", tagColor: "bg-rose-100 text-rose-700" },
+  "Jasmine Stone": { tag: "Notion Mentorship", tagColor: "bg-orange-100 text-orange-700 dark:bg-orange-500/15 dark:text-orange-300" },
+  "Lilli Graf": { tag: "AI Workflows", tagColor: "bg-blue-100 text-blue-700 dark:bg-blue-500/15 dark:text-blue-300" },
+  "Lucian James": { tag: "Task OS", tagColor: "bg-purple-100 text-purple-700 dark:bg-purple-500/15 dark:text-purple-300" },
+  "Alex Aggidis": { tag: "Strategy", tagColor: "bg-green-100 text-green-700 dark:bg-green-500/15 dark:text-green-300" },
+  "Courtney Evans": { tag: "Leadership", tagColor: "bg-yellow-100 text-yellow-700 dark:bg-yellow-500/15 dark:text-yellow-300" },
+  "Gary O'Donnell": { tag: "Operations", tagColor: "bg-pink-100 text-pink-700 dark:bg-pink-500/15 dark:text-pink-300" },
+  "Chris Mejaski": { tag: "Content Strategy", tagColor: "bg-indigo-100 text-indigo-700 dark:bg-indigo-500/15 dark:text-indigo-300" },
+  "Xania Khan": { tag: "Content Strategy", tagColor: "bg-teal-100 text-teal-700 dark:bg-teal-500/15 dark:text-teal-300" },
+  "Matthew Ivo": { tag: "Campaigns", tagColor: "bg-rose-100 text-rose-700 dark:bg-rose-500/15 dark:text-rose-300" },
 };
 
 export const TestimonialVariants = ({ testimonials }: Props) => {
