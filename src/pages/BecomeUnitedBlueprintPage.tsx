@@ -546,8 +546,11 @@ const BecomeUnitedBlueprintPage = () => {
               </p>
             </div>
             <div className="mt-8 rounded-xl border border-hairline bg-muted/40 px-5 py-4 text-[13.5px] text-ink-soft">
-              Use my affiliate link for a free month on a small team plan. Add me to your workspace
-              if you want a hand getting started.{" "}
+              Use my{" "}
+              <a className="text-indigo underline underline-offset-4 hover:opacity-80" href="https://affiliate.notion.so/bktd2h" target="_blank" rel="noopener noreferrer">
+                affiliate link
+              </a>{" "}
+              for a free month on a small team plan. Add me to your workspace if you want a hand getting started.{" "}
               <a className="text-indigo underline underline-offset-4 hover:opacity-80" href="mailto:br@threadandstack.com">
                 br@threadandstack.com
               </a>
