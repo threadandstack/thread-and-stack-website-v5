@@ -167,7 +167,7 @@ const SectionLabel = ({ children }: { children: React.ReactNode }) => (
 );
 
 const ServicesCarousel = () => {
-  const [selected, setSelected] = useState(1);
+  const [selected, setSelected] = useState(0);
   const stageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
