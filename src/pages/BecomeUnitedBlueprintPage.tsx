@@ -567,16 +567,22 @@ const BecomeUnitedBlueprintPage = () => {
               pieces, in roughly the order you'd reach for them.
             </p>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {possible.map((p) => (
-                <div
-                  key={p.name}
-                  className="rounded-2xl border border-hairline bg-paper/40 p-6 backdrop-blur-sm"
-                >
-                  <Sparkles className="h-4 w-4 text-violet mb-3" />
-                  <h3 className="font-serif-pro italic text-xl mb-2">{p.name}</h3>
-                  <p className="text-[14px] leading-relaxed text-ink-soft">{p.body}</p>
-                </div>
-              ))}
+              {possible.map((p) => {
+                const Icon = p.icon;
+                return (
+                  <div
+                    key={p.name}
+                    className="rounded-2xl border border-hairline bg-paper/40 p-6 backdrop-blur-sm"
+                  >
+                    <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl border border-hairline bg-background/60">
+                      <Icon className="h-5 w-5 text-indigo" strokeWidth={1.75} />
+                    </div>
+                    <h3 className="font-serif-pro italic text-xl mb-2">{p.name}</h3>
+                    <p className="text-[14px] leading-relaxed text-ink-soft">{p.body}</p>
+                  </div>
+                );
+              })}
+
             </div>
 
             <h3 className="font-serif-pro italic text-3xl md:text-4xl tracking-tight mt-16 mb-6">
