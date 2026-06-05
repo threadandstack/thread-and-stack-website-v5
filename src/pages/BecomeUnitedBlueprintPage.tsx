@@ -9,7 +9,7 @@ import brendanPhoto from "@/assets/brendan-cafe.webp";
 
 const journey = [
   {
-    stage: "Stage 1 — Now",
+    stage: "Stage 1 - Now",
     title: "Consolidate",
     body: "One intentional tool stack. Your work lives in Notion. AI can read it.",
     highlight: true,
@@ -45,7 +45,7 @@ const tools = [
   },
   {
     tool: "Wispr Flow",
-    where: "Strong habit — extend it further",
+    where: "Strong habit - extend it further",
     flag: "Turn Privacy Mode on. Do not dictate beneficiary names or safeguarding notes.",
   },
   {
@@ -60,7 +60,7 @@ const tools = [
   },
   {
     tool: "Google Drive",
-    where: "Useful but isolated — AI cannot search across it",
+    where: "Useful but isolated - AI cannot search across it",
     flag: "If this is a personal account rather than a paid Workspace tenant, charity files should not be stored here.",
   },
   {
@@ -116,7 +116,7 @@ const possible = [
   {
     name: "Notion Workers",
     icon: Workflow,
-    body: "Custom integrations built with Notion's CLI and SDK. Let your agents connect to your other tools. More technical to build well — worth doing with support.",
+    body: "Custom integrations built with Notion's CLI and SDK. Let your agents connect to your other tools. More technical to build well - worth doing with support.",
   },
   {
     name: "Claude Cowork",
@@ -131,7 +131,7 @@ const services = [
     name: "Async Monthly Support",
     price: "£800/month",
     sub: "10 hours · async across the month",
-    body: "You do most of the building. Ten dedicated hours across the month — for questions, reviews, and unblocking anything that needs a second pair of eyes.",
+    body: "You do most of the building. Ten dedicated hours across the month - for questions, reviews, and unblocking anything that needs a second pair of eyes.",
     accent: "clay",
   },
   {
@@ -372,7 +372,7 @@ const BecomeUnitedBlueprintPage = () => {
               </h1>
 
               <p className="fade-up fade-up-3 mt-7 max-w-2xl text-[15px] leading-relaxed text-ink-soft">
-                Become United — AI Blueprint
+                Become United - AI Blueprint
                 <br />
                 <span className="text-muted-foreground text-[13px]">
                   Session: 2 June 2026 · Delivered by Brendan Rodgers, Thread &amp; Stack
@@ -407,7 +407,7 @@ const BecomeUnitedBlueprintPage = () => {
                   This is a practical guide to where to go from here, that pays attention to Data Protection, and the obvious goal of giving you more time to do your best work.
                 </p>
                 <p className="mt-6 font-serif-pro italic text-lg text-foreground">
-                  — Brendan
+                  - Brendan
                 </p>
               </div>
             </div>
@@ -453,7 +453,7 @@ const BecomeUnitedBlueprintPage = () => {
               <p>
                 Right now, your tools don't talk to each other. Files live in Drive, tasks in Asana,
                 conversations in ChatGPT and Claude, notes in Otter, scheduling in Hootsuite. None of
-                it shares context. So the human — you — does all the bridging. Every time you move
+                it shares context. So the human - you - does all the bridging. Every time you move
                 between tools you carry the context in your head, paste it across, and rebuild the
                 picture from scratch.
               </p>
@@ -491,7 +491,7 @@ const BecomeUnitedBlueprintPage = () => {
                     <div className="text-[14.5px] leading-relaxed text-ink-soft">{t.where}</div>
                     <div className="text-[14px] leading-relaxed text-amber-500 dark:text-amber-400 flex gap-2">
                       {t.flag && <AlertTriangle className="h-4 w-4 mt-0.5 shrink-0" />}
-                      <span>{t.flag || <span className="text-muted-foreground/50">—</span>}</span>
+                      <span>{t.flag || <span className="text-muted-foreground/50">-</span>}</span>
                     </div>
                   </li>
                 ))}
@@ -533,7 +533,7 @@ const BecomeUnitedBlueprintPage = () => {
             </h2>
             <div className="space-y-5 text-[16px] leading-relaxed text-ink-soft">
               <p>
-                Notion connects to Claude and ChatGPT natively. That matters — it means your
+                Notion connects to Claude and ChatGPT natively. That matters - it means your
                 workspace becomes the shared memory those tools draw on, rather than yet another
                 place you have to manage on the side. For a team of your size, Notion also works
                 comfortably as a CRM, so your contacts, partners, and funders all live next to the
@@ -541,7 +541,7 @@ const BecomeUnitedBlueprintPage = () => {
               </p>
               <p>
                 We built a working session manager live in the session today. That same approach
-                scales — every recurring process you run can become a small, structured area inside
+                scales - every recurring process you run can become a small, structured area inside
                 Notion that your AI tools can read, reason about, and update.
               </p>
             </div>
@@ -564,10 +564,10 @@ const BecomeUnitedBlueprintPage = () => {
             </h2>
             <div className="space-y-5 text-[16px] leading-relaxed text-ink-soft">
               <p>
-                Most CRM platforms are built for sales teams. They assume pipelines, deal stages, and revenue targets. Become United does not need any of that — what you need is a clear, searchable record of your people: session leads, volunteers, funders, partner organisations, and beneficiary contacts, all in one place, organised the way your work actually runs.
+                Most CRM platforms are built for sales teams. They assume pipelines, deal stages, and revenue targets. Become United does not need any of that - what you need is a clear, searchable record of your people: session leads, volunteers, funders, partner organisations, and beneficiary contacts, all in one place, organised the way your work actually runs.
               </p>
               <p>
-                Notion gives you that, and something no off-the-shelf CRM does: because your workspace is readable by both Claude and Notion AI, your contact records become active, not just stored. You can ask questions across your data in plain language. Who has not submitted a session form in the last month? Which funders are coming up for renewal? What did we agree with this partner in our last meeting? The answer is already in your workspace — you just need to ask.
+                Notion gives you that, and something no off-the-shelf CRM does: because your workspace is readable by both Claude and Notion AI, your contact records become active, not just stored. You can ask questions across your data in plain language. Who has not submitted a session form in the last month? Which funders are coming up for renewal? What did we agree with this partner in our last meeting? The answer is already in your workspace - you just need to ask.
               </p>
               <p>
                 A lightweight Become United CRM in Notion would typically include a contacts database covering session leads, volunteers, and funders with relevant fields for each, a relationship log linking contacts to sessions, meetings, and grant applications, and a simple tagging system that lets you filter and segment without needing a developer to set it up.
