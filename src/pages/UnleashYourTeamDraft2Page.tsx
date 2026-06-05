@@ -237,7 +237,7 @@ const UnleashYourTeamDraft2Page = () => {
           <div className="mx-auto max-w-3xl px-6 py-20 md:py-28">
             <SectionLabel>An open letter</SectionLabel>
             <h2 className="font-serif-pro italic text-4xl md:text-5xl tracking-tight mb-8">
-              The creative tax — and how to lift it
+              Remove the systemic tax
             </h2>
             <div className="space-y-5 text-[16px] leading-relaxed text-ink-soft">
               <p>
