@@ -52,6 +52,7 @@ export function DiagnosticDrawer({
   onOpenChange,
   theme,
   source = "home-draft2-diagnostic",
+  defaultCoupon = "",
 }: DiagnosticDrawerProps) {
   const { toast } = useToast();
   const [submitting, setSubmitting] = useState(false);
@@ -63,10 +64,14 @@ export function DiagnosticDrawer({
     email: "",
     roleOrg: "",
     focus: "",
-    couponCode: "",
+    couponCode: defaultCoupon,
     consent: false,
     honeypot: "",
   });
+
+  useEffect(() => {
+    setForm((f) => ({ ...f, couponCode: defaultCoupon }));
+  }, [defaultCoupon]);
 
   useEffect(() => {
     if (!open) {
