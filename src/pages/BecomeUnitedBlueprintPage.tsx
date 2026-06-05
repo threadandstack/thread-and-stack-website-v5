@@ -567,17 +567,38 @@ const BecomeUnitedBlueprintPage = () => {
             </h2>
             <div className="space-y-5 text-[16px] leading-relaxed text-ink-soft">
               <p>
-                Most CRM platforms are built for sales teams. They assume pipelines, deal stages, and revenue targets. Become United does not need any of that - what you need is a clear, searchable record of your people: session leads, volunteers, funders, partner organisations, and beneficiary contacts, all in one place, organised the way your work actually runs.
+                Most CRM platforms are built for sales teams. They assume pipelines, deal stages, and revenue targets. Become United does not need any of that; what you need is a clear, searchable record of your people: session leads, volunteers, funders, partner organisations, and beneficiary contacts, all in one place, organised the way your work actually runs.
               </p>
               <p>
-                Notion gives you that, and something no off-the-shelf CRM does: because your workspace is readable by both Claude and Notion AI, your contact records become active, not just stored. You can ask questions across your data in plain language. Who has not submitted a session form in the last month? Which funders are coming up for renewal? What did we agree with this partner in our last meeting? The answer is already in your workspace - you just need to ask.
+                Notion gives you that, and something no off-the-shelf CRM does: because your workspace is readable by both Claude and Notion AI, your contact records become active, not just stored. You can ask questions across your data in plain language. Who has not submitted a session form in the last month? Which funders are coming up for renewal? What did we agree with this partner in our last meeting? The answer is already in your workspace; you just need to ask.
               </p>
               <p>
-                A lightweight Become United CRM in Notion would typically include a contacts database covering session leads, volunteers, and funders with relevant fields for each, a relationship log linking contacts to sessions, meetings, and grant applications, and a simple tagging system that lets you filter and segment without needing a developer to set it up.
+                In practice this is a multi-database setup: a database for sessions, a database for volunteers, a database for funders, with relations between each so a single contact connects to every session they have run, every grant they have touched, and every meeting you have had with them. External forms feed sessions and sign-ups directly into the workspace, so nothing has to be copied across by hand.
+              </p>
+              <p>
+                All of this can be further systematised and automated with the introduction of agents, two exciting examples of which are sketched out for Become United in the section below.
+              </p>
+              <p>
+                One worth calling out specifically: Notion Meeting Notes does the same job as Otter AI, with one significant advantage. It can log meeting notes directly into your CRM against the right contact, session, or funder, so relationships are tracked properly and accurately without you ever having to re-file a transcript.
+              </p>
+              <p>
+                Setting this up well is best done with a Notion consultant, and I can help you here. Once it is built, though, it does not require developer skills to maintain. You will be able to run and extend it yourself with relative ease.
               </p>
             </div>
             <div className="mt-8 rounded-xl border border-hairline bg-muted/40 px-5 py-4 text-[13.5px] text-ink-soft">
-              You remain in full control of the structure. There is no vendor lock-in, no per-seat pricing as your volunteer base grows, and no data leaving a system you do not own. If your needs change, the workspace changes with you.
+              I have included a package at the bottom of the page for a full{" "}
+              <a
+                href="#service-setup"
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.dispatchEvent(new CustomEvent("select-service", { detail: 2 }));
+                  document.getElementById("how-i-can-help")?.scrollIntoView({ behavior: "smooth", block: "start" });
+                }}
+                className="text-indigo underline underline-offset-4 hover:opacity-80"
+              >
+                Notion Workspace Setup (£3,600)
+              </a>{" "}
+              which I recommend if you are interested in building out your CRM properly. I can tailor the workspace to how Become United actually runs: the right databases, the right relations, the right forms feeding in, and the agents and meeting-note flows wired up so the system starts working for you from day one.
             </div>
           </div>
         </section>
