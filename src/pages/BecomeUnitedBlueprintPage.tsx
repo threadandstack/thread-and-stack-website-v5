@@ -24,7 +24,13 @@ const journey = [
     title: "Scale",
     body: "Custom workers connect agents to every tool you use. Become United runs like a larger team.",
   },
+  {
+    stage: "Stage 4",
+    title: "Grow",
+    body: "More income, more ambition, higher successes. Faster processes and better systems mean Become United reaches further than it ever could before.",
+  },
 ];
+
 
 const tools = [
   {
