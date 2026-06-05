@@ -264,8 +264,8 @@ const UnleashYourTeamDraft2Page = () => {
               </p>
               <p>Below are three free resources to get you started.</p>
               <p>
-                I've also included a discounted 1:1 Power-Hour for impact-focused teams, should
-                you want hands-on support.
+                I've also included a discounted Stack Diagnostic for impact-focused teams,
+                should you want hands-on support.
               </p>
               <p className="font-serif-pro italic text-foreground text-lg">
                 Warm wishes,
