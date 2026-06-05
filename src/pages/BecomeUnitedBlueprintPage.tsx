@@ -105,24 +105,35 @@ const recommended = [
 const possible = [
   {
     name: "Claude",
+    icon: Brain,
     body: "Connected to a well-structured Notion workspace, your primary thinking and writing partner becomes something closer to a chief of staff.",
   },
   {
     name: "Notion custom agents",
+    icon: Bot,
     body: "Programmable AIs that act on a schedule or a trigger, inside Notion, with no device needing to stay on. You can build these yourself. They run on credits.",
   },
   {
     name: "Notion Workers",
+    icon: Workflow,
     body: "Custom integrations built with Notion's CLI and SDK. Let your agents connect to your other tools. More technical to build well — worth doing with support.",
   },
   {
-    name: "Claude Coworker",
+    name: "Claude Cowork",
+    icon: Monitor,
     body: "A desktop tool that lets Claude take actions on your computer. Requires a dedicated device that stays on. One to return to when the time is right.",
   },
 ];
 
 
 const services = [
+  {
+    name: "Async Monthly Support",
+    price: "£800/month",
+    sub: "10 hours · async across the month",
+    body: "You do most of the building. Ten dedicated hours across the month — for questions, reviews, and unblocking anything that needs a second pair of eyes.",
+    accent: "clay",
+  },
   {
     name: "Co-Design Sprint",
     price: "£2,000",
@@ -145,14 +156,8 @@ const services = [
     body: "Everything in the setup package, plus automated workflows that handle recurring tasks without you initiating them.",
     accent: "sky",
   },
-  {
-    name: "Async Monthly Support",
-    price: "£800/month",
-    sub: "10 hours · async across the month",
-    body: "You do most of the building. Ten dedicated hours across the month — for questions, reviews, and unblocking anything that needs a second pair of eyes.",
-    accent: "clay",
-  },
 ] as const;
+
 
 
 const SectionLabel = ({ children }: { children: React.ReactNode }) => (
