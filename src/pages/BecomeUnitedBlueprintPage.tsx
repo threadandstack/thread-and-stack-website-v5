@@ -86,6 +86,10 @@ const recommended = [
     body: "Meetings, deadlines, and tasks in one view. No context-switching.",
   },
   {
+    name: "Notion Meeting Notes",
+    body: "Structured meeting notes live inside the same workspace as your projects, tasks, and goals. No more scattered docs.",
+  },
+  {
     name: "Buffer",
     body: "Simpler and more affordable than Hootsuite for social scheduling.",
   },
@@ -334,11 +338,14 @@ const BecomeUnitedBlueprintPage = () => {
                   key={r.name}
                   className="rounded-2xl border border-hairline bg-paper/40 p-6 backdrop-blur-sm hover:border-indigo/40 transition-colors"
                 >
-                  <h3 className="font-serif-pro italic text-2xl mb-2">{r.name}</h3>
+              <h3 className="font-serif-pro italic text-2xl mb-2">{r.name}</h3>
                   <p className="text-[14.5px] leading-relaxed text-ink-soft">{r.body}</p>
                 </div>
               ))}
             </div>
+            <p className="mt-6 text-[13px] text-muted-foreground">
+              All Notion tools listed above are included with the Notion Business Plan.
+            </p>
           </div>
         </section>
 
