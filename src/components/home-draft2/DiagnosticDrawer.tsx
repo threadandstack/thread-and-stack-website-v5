@@ -27,6 +27,7 @@ interface DiagnosticDrawerProps {
   onOpenChange: (open: boolean) => void;
   theme: "dark" | "light";
   source?: string;
+  defaultCoupon?: string;
 }
 
 const FULL_PRICE = 39500;
