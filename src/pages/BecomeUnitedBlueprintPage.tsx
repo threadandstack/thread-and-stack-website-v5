@@ -257,7 +257,7 @@ const ServicesCarousel = () => {
               }}
               className={`absolute left-1/2 top-1/2 flex w-[280px] flex-col gap-5 rounded-2xl p-6 text-left [backface-visibility:hidden] sm:w-[340px] sm:p-7 md:w-[400px] md:p-8 bg-paper/80 backdrop-blur-sm ${
                 isActive
-                  ? `shadow-[0_30px_70px_rgba(0,0,0,0.28)] ring-1 ${isHighlight ? "ring-indigo/40 border border-indigo/40" : "ring-foreground/15"}`
+                  ? `shadow-[0_30px_70px_rgba(0,0,0,0.28)] ring-1 ${isHighlight ? "ring-orange/40 border border-orange/40" : "ring-foreground/15"}`
                   : "shadow-[0_8px_24px_rgba(0,0,0,0.10)] border border-hairline"
               }`}
             >
@@ -356,7 +356,7 @@ const BecomeUnitedBlueprintPage = () => {
                 type="button"
                 onClick={toggleTheme}
                 aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-                className="fade-up fade-up-1 relative inline-flex h-8 w-[72px] items-center rounded-full border border-hairline bg-paper/70 px-1 backdrop-blur transition-colors hover:border-indigo/50"
+                className="fade-up fade-up-1 relative inline-flex h-8 w-[72px] items-center rounded-full border border-hairline bg-paper/70 px-1 backdrop-blur transition-colors hover:border-orange/50"
               >
                 <span
                   className={`absolute top-1 grid h-6 w-6 place-items-center rounded-full text-accent-foreground shadow-[0_2px_8px_-2px_rgba(0,0,0,0.35)] transition-all duration-300 ease-out ${
@@ -436,7 +436,7 @@ const BecomeUnitedBlueprintPage = () => {
                 <Fragment key={j.title}>
                   <div
                     className={`rounded-2xl border ${
-                      j.highlight ? "border-indigo/60 ring-1 ring-indigo/30" : "border-hairline"
+                      j.highlight ? "border-orange/60 ring-1 ring-orange/30" : "border-hairline"
                     } bg-paper/40 p-6 md:p-7 backdrop-blur-sm`}
                   >
                     <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
@@ -523,7 +523,7 @@ const BecomeUnitedBlueprintPage = () => {
               {recommended.map((r) => (
                 <div
                   key={r.name}
-                  className="rounded-2xl border border-hairline bg-paper/40 p-6 backdrop-blur-sm hover:border-indigo/40 transition-colors"
+                  className="rounded-2xl border border-hairline bg-paper/40 p-6 backdrop-blur-sm hover:border-orange/40 transition-colors"
                 >
               <h3 className="font-serif-pro italic text-2xl mb-2">{r.name}</h3>
                   <p className="text-[14.5px] leading-relaxed text-ink-soft">{r.body}</p>
@@ -559,11 +559,11 @@ const BecomeUnitedBlueprintPage = () => {
             </div>
             <div className="mt-8 rounded-xl border border-hairline bg-muted/40 px-5 py-4 text-[13.5px] text-ink-soft">
               Use my{" "}
-              <a className="text-indigo underline underline-offset-4 hover:opacity-80" href="https://affiliate.notion.so/bktd2h" target="_blank" rel="noopener noreferrer">
+              <a className="text-orange underline underline-offset-4 hover:opacity-80" href="https://affiliate.notion.so/bktd2h" target="_blank" rel="noopener noreferrer">
                 affiliate link
               </a>{" "}
               for a free month on a small team plan. Add me to your workspace if you want a hand getting started.{" "}
-              <a className="text-indigo underline underline-offset-4 hover:opacity-80" href="mailto:br@threadandstack.com">
+              <a className="text-orange underline underline-offset-4 hover:opacity-80" href="mailto:br@threadandstack.com">
                 br@threadandstack.com
               </a>
             </div>
@@ -606,7 +606,7 @@ const BecomeUnitedBlueprintPage = () => {
                   window.dispatchEvent(new CustomEvent("select-service", { detail: 2 }));
                   document.getElementById("how-i-can-help")?.scrollIntoView({ behavior: "smooth", block: "start" });
                 }}
-                className="text-indigo underline underline-offset-4 hover:opacity-80"
+                className="text-orange underline underline-offset-4 hover:opacity-80"
               >
                 Notion Workspace Setup (£3,600)
               </a>{" "}
@@ -635,7 +635,7 @@ const BecomeUnitedBlueprintPage = () => {
                     className="rounded-2xl border border-hairline bg-paper/40 p-6 backdrop-blur-sm"
                   >
                     <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl border border-hairline bg-background/60">
-                      <Icon className="h-5 w-5 text-indigo" strokeWidth={1.75} />
+                      <Icon className="h-5 w-5 text-orange" strokeWidth={1.75} />
                     </div>
                     <h3 className="font-serif-pro italic text-xl mb-2">{p.name}</h3>
                     <p className="text-[14px] leading-relaxed text-ink-soft">{p.body}</p>
@@ -661,7 +661,7 @@ const BecomeUnitedBlueprintPage = () => {
               ].map((e) => (
                 <div
                   key={e.title}
-                  className="rounded-2xl border border-hairline border-l-[3px] border-l-indigo bg-paper/40 p-6 md:p-7 backdrop-blur-sm"
+                  className="rounded-2xl border border-hairline border-l-[3px] border-l-orange bg-paper/40 p-6 md:p-7 backdrop-blur-sm"
                 >
                   <h4 className="font-serif-pro italic text-2xl mb-3">{e.title}</h4>
                   <p className="text-[14.5px] leading-relaxed text-ink-soft">{e.body}</p>
