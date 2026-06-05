@@ -555,6 +555,30 @@ const BecomeUnitedBlueprintPage = () => {
           </div>
         </section>
 
+        {/* NOTION AS YOUR CRM */}
+        <section className="border-b border-hairline">
+          <div className="mx-auto max-w-3xl px-6 py-20 md:py-28">
+            <SectionLabel>The system</SectionLabel>
+            <h2 className="font-serif-pro italic text-4xl md:text-5xl tracking-tight mb-8">
+              Notion as Your CRM
+            </h2>
+            <div className="space-y-5 text-[16px] leading-relaxed text-ink-soft">
+              <p>
+                Most CRM platforms are built for sales teams. They assume pipelines, deal stages, and revenue targets. Become United does not need any of that — what you need is a clear, searchable record of your people: session leads, volunteers, funders, partner organisations, and beneficiary contacts, all in one place, organised the way your work actually runs.
+              </p>
+              <p>
+                Notion gives you that, and something no off-the-shelf CRM does: because your workspace is readable by both Claude and Notion AI, your contact records become active, not just stored. You can ask questions across your data in plain language. Who has not submitted a session form in the last month? Which funders are coming up for renewal? What did we agree with this partner in our last meeting? The answer is already in your workspace — you just need to ask.
+              </p>
+              <p>
+                A lightweight Become United CRM in Notion would typically include a contacts database covering session leads, volunteers, and funders with relevant fields for each, a relationship log linking contacts to sessions, meetings, and grant applications, and a simple tagging system that lets you filter and segment without needing a developer to set it up.
+              </p>
+            </div>
+            <div className="mt-8 rounded-xl border border-hairline bg-muted/40 px-5 py-4 text-[13.5px] text-ink-soft">
+              You remain in full control of the structure. There is no vendor lock-in, no per-seat pricing as your volunteer base grows, and no data leaving a system you do not own. If your needs change, the workspace changes with you.
+            </div>
+          </div>
+        </section>
+
         {/* WHAT BECOMES POSSIBLE */}
         <section className="border-b border-hairline">
           <div className="mx-auto max-w-6xl px-6 py-20 md:py-28">
