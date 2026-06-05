@@ -151,6 +151,8 @@ const App = () => (
             <Route path="/unleash-your-team" element={<UnleashYourTeamPage />} />
             <Route path="/power-hour/thank-you" element={<PowerHourThankYouPage />} />
             <Route path="/blueprint/become-united" element={<BecomeUnitedBlueprintPage />} />
+            <Route path="/Unleash-Your-Team/draft2" element={<UnleashYourTeamDraft2Page />} />
+            <Route path="/unleash-your-team/draft2" element={<UnleashYourTeamDraft2Page />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
