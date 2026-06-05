@@ -221,7 +221,7 @@ const UnleashYourTeamDraft2Page = () => {
                   className="font-serif-pro italic font-normal bg-clip-text text-transparent text-5xl md:text-7xl"
                   style={{ backgroundImage: "linear-gradient(100deg, var(--gradient-4color))" }}
                 >
-                  power
+                  create meaningful change
                 </span>
               </h1>
 

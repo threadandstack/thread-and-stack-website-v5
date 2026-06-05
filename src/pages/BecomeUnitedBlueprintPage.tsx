@@ -223,7 +223,7 @@ const BecomeUnitedBlueprintPage = () => {
                   Hi Mohammed,
                 </p>
                 <p className="mt-4 text-[15px] leading-relaxed text-ink-soft">
-                  It was great to meet you, thanks for joining me for an AI Power Hour.
+                  It was great to meet you, thanks for joining me for an AI session to create meaningful change.
                 </p>
                 <p className="mt-4 text-[15px] leading-relaxed text-ink-soft">
                   You are already doing the hard part: you are using AI regularly, thinking critically about it, and asking the right questions about what comes next.
