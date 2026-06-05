@@ -241,8 +241,8 @@ const UnleashYourTeamDraft2Page = () => {
             </h2>
             <div className="space-y-5 text-[16px] leading-relaxed text-ink-soft">
               <p>
-                Mission-led teams carry a quiet{" "}
-                <span className="text-foreground font-medium">creative tax</span>: the admin
+                Mission-led teams carry a{" "}
+                <span className="text-foreground font-medium">systemic tax</span>: the admin
                 chaos, the inbox sprawl, the half-finished docs that swallow the time you'd
                 rather spend on strategy, story, and the work that actually moves the needle.
                 It's the visible symptom of a deeper cognitive load.
