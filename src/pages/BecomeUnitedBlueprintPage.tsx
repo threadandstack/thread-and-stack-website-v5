@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useRef, useState } from "react";
-import { ArrowRight, Sun, Moon, AlertTriangle, Sparkles, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight, Sun, Moon, AlertTriangle, ChevronLeft, ChevronRight, Brain, Bot, Workflow, Monitor } from "lucide-react";
 import { LogoTilt } from "@/components/home-draft2/LogoTilt";
 import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
@@ -24,7 +24,13 @@ const journey = [
     title: "Scale",
     body: "Custom workers connect agents to every tool you use. Become United runs like a larger team.",
   },
+  {
+    stage: "Stage 4",
+    title: "Grow",
+    body: "More income, more ambition, higher successes. Faster processes and better systems mean Become United reaches further than it ever could before.",
+  },
 ];
+
 
 const tools = [
   {
@@ -99,24 +105,35 @@ const recommended = [
 const possible = [
   {
     name: "Claude",
+    icon: Brain,
     body: "Connected to a well-structured Notion workspace, your primary thinking and writing partner becomes something closer to a chief of staff.",
   },
   {
     name: "Notion custom agents",
+    icon: Bot,
     body: "Programmable AIs that act on a schedule or a trigger, inside Notion, with no device needing to stay on. You can build these yourself. They run on credits.",
   },
   {
     name: "Notion Workers",
+    icon: Workflow,
     body: "Custom integrations built with Notion's CLI and SDK. Let your agents connect to your other tools. More technical to build well — worth doing with support.",
   },
   {
-    name: "Claude Coworker",
+    name: "Claude Cowork",
+    icon: Monitor,
     body: "A desktop tool that lets Claude take actions on your computer. Requires a dedicated device that stays on. One to return to when the time is right.",
   },
 ];
 
 
 const services = [
+  {
+    name: "Async Monthly Support",
+    price: "£800/month",
+    sub: "10 hours · async across the month",
+    body: "You do most of the building. Ten dedicated hours across the month — for questions, reviews, and unblocking anything that needs a second pair of eyes.",
+    accent: "clay",
+  },
   {
     name: "Co-Design Sprint",
     price: "£2,000",
@@ -139,14 +156,8 @@ const services = [
     body: "Everything in the setup package, plus automated workflows that handle recurring tasks without you initiating them.",
     accent: "sky",
   },
-  {
-    name: "Async Monthly Support",
-    price: "£800/month",
-    sub: "10 hours · async across the month",
-    body: "You do most of the building. Ten dedicated hours across the month — for questions, reviews, and unblocking anything that needs a second pair of eyes.",
-    accent: "clay",
-  },
 ] as const;
+
 
 
 const SectionLabel = ({ children }: { children: React.ReactNode }) => (
@@ -156,7 +167,7 @@ const SectionLabel = ({ children }: { children: React.ReactNode }) => (
 );
 
 const ServicesCarousel = () => {
-  const [selected, setSelected] = useState(1);
+  const [selected, setSelected] = useState(0);
   const stageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -408,7 +419,7 @@ const BecomeUnitedBlueprintPage = () => {
           <div className="mx-auto max-w-6xl px-6 py-20 md:py-28">
             <SectionLabel>Where we're going</SectionLabel>
             <h2 className="font-serif-pro italic text-4xl md:text-5xl tracking-tight mb-12">The Journey</h2>
-            <div className="grid gap-4 md:grid-cols-[1fr_auto_1fr_auto_1fr] md:items-stretch">
+            <div className="grid gap-4 md:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] md:items-stretch">
               {journey.map((j, i) => (
                 <Fragment key={j.title}>
                   <div
@@ -556,16 +567,22 @@ const BecomeUnitedBlueprintPage = () => {
               pieces, in roughly the order you'd reach for them.
             </p>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {possible.map((p) => (
-                <div
-                  key={p.name}
-                  className="rounded-2xl border border-hairline bg-paper/40 p-6 backdrop-blur-sm"
-                >
-                  <Sparkles className="h-4 w-4 text-violet mb-3" />
-                  <h3 className="font-serif-pro italic text-xl mb-2">{p.name}</h3>
-                  <p className="text-[14px] leading-relaxed text-ink-soft">{p.body}</p>
-                </div>
-              ))}
+              {possible.map((p) => {
+                const Icon = p.icon;
+                return (
+                  <div
+                    key={p.name}
+                    className="rounded-2xl border border-hairline bg-paper/40 p-6 backdrop-blur-sm"
+                  >
+                    <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl border border-hairline bg-background/60">
+                      <Icon className="h-5 w-5 text-indigo" strokeWidth={1.75} />
+                    </div>
+                    <h3 className="font-serif-pro italic text-xl mb-2">{p.name}</h3>
+                    <p className="text-[14px] leading-relaxed text-ink-soft">{p.body}</p>
+                  </div>
+                );
+              })}
+
             </div>
 
             <h3 className="font-serif-pro italic text-3xl md:text-4xl tracking-tight mt-16 mb-6">
