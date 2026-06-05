@@ -672,7 +672,7 @@ const BecomeUnitedBlueprintPage = () => {
         </section>
 
         {/* HOW I CAN HELP */}
-        <section>
+        <section id="how-i-can-help" className="scroll-mt-24">
           <div className="mx-auto max-w-6xl px-6 py-20 md:py-28">
             <SectionLabel>Working together</SectionLabel>
             <h2 className="font-serif-pro italic text-4xl md:text-5xl tracking-tight mb-10">
