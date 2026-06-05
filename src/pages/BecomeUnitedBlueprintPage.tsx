@@ -414,7 +414,7 @@ const BecomeUnitedBlueprintPage = () => {
           <div className="mx-auto max-w-6xl px-6 py-20 md:py-28">
             <SectionLabel>Where we're going</SectionLabel>
             <h2 className="font-serif-pro italic text-4xl md:text-5xl tracking-tight mb-12">The Journey</h2>
-            <div className="grid gap-4 md:grid-cols-[1fr_auto_1fr_auto_1fr] md:items-stretch">
+            <div className="grid gap-4 md:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] md:items-stretch">
               {journey.map((j, i) => (
                 <Fragment key={j.title}>
                   <div
