@@ -86,6 +86,10 @@ const recommended = [
     body: "Meetings, deadlines, and tasks in one view. No context-switching.",
   },
   {
+    name: "Notion Meeting Notes",
+    body: "Structured meeting notes live inside the same workspace as your projects, tasks, and goals. No more scattered docs.",
+  },
+  {
     name: "Buffer",
     body: "Simpler and more affordable than Hootsuite for social scheduling.",
   },
