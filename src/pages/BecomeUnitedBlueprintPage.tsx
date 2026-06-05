@@ -115,24 +115,39 @@ const possible = [
   },
 ];
 
+
 const services = [
+  {
+    name: "Co-Design Sprint",
+    price: "£2,000",
+    sub: "6 weeks · weekly check-ins",
+    body: "We design and build the system together. You learn the patterns, your team feels the shift, and the work stays in your hands. For founders and team leads who want to own the craft, not just the output.",
+    accent: "violet",
+  },
   {
     name: "Notion Workspace Setup",
     price: "£3,600",
+    sub: "Fixed scope · ready to use",
     body: "A fully built workspace tailored to Become United. Databases, templates, and connected tools, set up and ready to use.",
     highlight: true,
+    accent: "orange",
   },
   {
     name: "Workspace + Automated Workflows",
     price: "On request",
+    sub: "Scoped to your processes",
     body: "Everything in the setup package, plus automated workflows that handle recurring tasks without you initiating them.",
+    accent: "sky",
   },
   {
     name: "Async Monthly Support",
     price: "£800/month",
+    sub: "10 hours · async across the month",
     body: "You do most of the building. Ten dedicated hours across the month — for questions, reviews, and unblocking anything that needs a second pair of eyes.",
+    accent: "clay",
   },
-];
+] as const;
+
 
 const SectionLabel = ({ children }: { children: React.ReactNode }) => (
   <div className="mb-3 text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
