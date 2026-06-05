@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { ArrowRight, Sun, Moon, AlertTriangle, Sparkles } from "lucide-react";
 import { LogoTilt } from "@/components/home-draft2/LogoTilt";
 import { Footer } from "@/components/Footer";
@@ -208,9 +208,8 @@ const BecomeUnitedBlueprintPage = () => {
             <h2 className="font-serif-pro italic text-4xl md:text-5xl tracking-tight mb-12">The Journey</h2>
             <div className="grid gap-4 md:grid-cols-[1fr_auto_1fr_auto_1fr] md:items-stretch">
               {journey.map((j, i) => (
-                <>
+                <Fragment key={j.title}>
                   <div
-                    key={j.title}
                     className={`rounded-2xl border ${
                       j.highlight ? "border-indigo/60 ring-1 ring-indigo/30" : "border-hairline"
                     } bg-paper/40 p-6 md:p-7 backdrop-blur-sm`}
@@ -226,7 +225,7 @@ const BecomeUnitedBlueprintPage = () => {
                       <ArrowRight className="h-5 w-5" />
                     </div>
                   )}
-                </>
+                </Fragment>
               ))}
             </div>
           </div>
