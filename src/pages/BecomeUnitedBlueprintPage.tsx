@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useRef, useState } from "react";
-import { ArrowRight, Sun, Moon, AlertTriangle, Sparkles, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight, Sun, Moon, AlertTriangle, Sparkles, ChevronLeft, ChevronRight, Brain, Bot, Workflow, Monitor, TrendingUp } from "lucide-react";
 import { LogoTilt } from "@/components/home-draft2/LogoTilt";
 import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
