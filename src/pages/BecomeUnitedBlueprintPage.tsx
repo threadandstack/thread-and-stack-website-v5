@@ -453,25 +453,8 @@ const BecomeUnitedBlueprintPage = () => {
             <h2 className="font-serif-pro italic text-4xl md:text-5xl tracking-tight mb-10">
               How I Can Help
             </h2>
-            <div className="grid gap-4 md:grid-cols-3">
-              {services.map((s) => (
-                <div
-                  key={s.name}
-                  className={`rounded-2xl border ${
-                    s.highlight ? "border-indigo/60 ring-1 ring-indigo/30" : "border-hairline"
-                  } bg-paper/40 p-6 md:p-7 backdrop-blur-sm flex flex-col`}
-                >
-                  <h3 className="font-serif-pro italic text-2xl mb-2">{s.name}</h3>
-                  <div
-                    className="text-2xl font-medium mb-4 bg-clip-text text-transparent"
-                    style={{ backgroundImage: "linear-gradient(95deg, var(--gradient-3color))" }}
-                  >
-                    {s.price}
-                  </div>
-                  <p className="text-[14.5px] leading-relaxed text-ink-soft">{s.body}</p>
-                </div>
-              ))}
-            </div>
+            <ServicesCarousel />
+
 
             <div className="mt-12 text-center">
               <a
