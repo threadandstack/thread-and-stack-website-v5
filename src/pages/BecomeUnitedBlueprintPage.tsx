@@ -191,6 +191,8 @@ const ServicesCarousel = () => {
     };
     window.addEventListener("select-service", onSelect as EventListener);
     return () => window.removeEventListener("select-service", onSelect as EventListener);
+  }, []);
+
 
   return (
     <div
