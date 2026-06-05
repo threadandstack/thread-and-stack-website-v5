@@ -185,7 +185,7 @@ export function DiagnosticDrawer({
                 <SheetTitle className="font-sans not-italic text-3xl font-semibold leading-[1.05] tracking-[-0.02em] sm:text-[34px]">
                   Book your{" "}
                   <span className="font-serif-pro italic font-normal text-clay">
-                    90-minute session.
+                    90-minute session to create meaningful change.
                   </span>
                 </SheetTitle>
                 <SheetDescription className="text-[14.5px] leading-relaxed text-ink-soft">
