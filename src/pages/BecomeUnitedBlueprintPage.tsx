@@ -3,6 +3,8 @@ import { ArrowRight, Sun, Moon, AlertTriangle, Sparkles } from "lucide-react";
 import { LogoTilt } from "@/components/home-draft2/LogoTilt";
 import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
+import brendanPhoto from "@/assets/brendan-cafe.webp";
+
 
 const journey = [
   {
@@ -197,6 +199,38 @@ const BecomeUnitedBlueprintPage = () => {
                   Session: 2 June 2026 · Delivered by Brendan Rodgers, Thread &amp; Stack
                 </span>
               </p>
+            </div>
+          </div>
+        </section>
+
+        {/* PERSONAL INTRO */}
+        <section className="border-b border-hairline">
+          <div className="mx-auto max-w-4xl px-6 py-16 md:py-24">
+            <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
+              <div className="shrink-0">
+                <img
+                  src={brendanPhoto}
+                  alt="Brendan Rodgers"
+                  className="h-40 w-40 md:h-52 md:w-52 rounded-2xl object-cover shadow-[0_8px_30px_-10px_rgba(0,0,0,0.3)] border border-hairline"
+                />
+              </div>
+              <div className="text-center md:text-left">
+                <p className="text-[15px] leading-relaxed text-ink-soft">
+                  Hi Mohammed,
+                </p>
+                <p className="mt-4 text-[15px] leading-relaxed text-ink-soft">
+                  It was great to meet you, thanks for joining me for an AI Power Hour.
+                </p>
+                <p className="mt-4 text-[15px] leading-relaxed text-ink-soft">
+                  You are already doing the hard part: you are using AI regularly, thinking critically about it, and asking the right questions about what comes next.
+                </p>
+                <p className="mt-4 text-[15px] leading-relaxed text-ink-soft">
+                  This is a practical guide to where to go from here, that pays attention to Data Protection, and the obvious goal of giving you more time to do your best work.
+                </p>
+                <p className="mt-6 font-serif-pro italic text-lg text-foreground">
+                  — Brendan
+                </p>
+              </div>
             </div>
           </div>
         </section>
