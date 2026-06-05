@@ -68,6 +68,7 @@ const UnleashYourTeamPage = lazy(() => import("./pages/UnleashYourTeamPage"));
 const PowerHourThankYouPage = lazy(() => import("./pages/PowerHourThankYouPage"));
 const UnsubscribePage = lazy(() => import("./pages/UnsubscribePage"));
 const BecomeUnitedBlueprintPage = lazy(() => import("./pages/BecomeUnitedBlueprintPage"));
+const UnleashYourTeamDraft2Page = lazy(() => import("./pages/UnleashYourTeamDraft2Page"));
 
 const queryClient = new QueryClient();
 
@@ -150,6 +151,8 @@ const App = () => (
             <Route path="/unleash-your-team" element={<UnleashYourTeamPage />} />
             <Route path="/power-hour/thank-you" element={<PowerHourThankYouPage />} />
             <Route path="/blueprint/become-united" element={<BecomeUnitedBlueprintPage />} />
+            <Route path="/Unleash-Your-Team/draft2" element={<UnleashYourTeamDraft2Page />} />
+            <Route path="/unleash-your-team/draft2" element={<UnleashYourTeamDraft2Page />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
