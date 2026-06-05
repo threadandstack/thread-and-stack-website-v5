@@ -182,6 +182,16 @@ const ServicesCarousel = () => {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
+  useEffect(() => {
+    const onSelect = (e: Event) => {
+      const detail = (e as CustomEvent<number>).detail;
+      if (typeof detail === "number" && detail >= 0 && detail < services.length) {
+        setSelected(detail);
+      }
+    };
+    window.addEventListener("select-service", onSelect as EventListener);
+    return () => window.removeEventListener("select-service", onSelect as EventListener);
+
   return (
     <div
       ref={stageRef}
