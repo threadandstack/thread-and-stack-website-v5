@@ -327,14 +327,15 @@ const UnleashYourTeamDraft2Page = () => {
                     </span>
                   </div>
                   <h3 className="mt-3 font-serif-pro italic text-2xl md:text-3xl tracking-tight">
-                    AI Power-Hour
+                    Stack Diagnostic
                   </h3>
                   <p className="mt-3 max-w-md text-[14.5px] leading-relaxed text-ink-soft">
-                    One hour, one workflow. Normally{" "}
+                    A paid 90-minute session plus a written blueprint. Normally{" "}
                     <span className="text-foreground">£395</span>, yours for{" "}
-                    <span className="text-foreground font-medium">£335.75</span>. Pick a
-                    workflow that's eating your team's time, and we'll spend an hour together
-                    getting it running with AI properly.
+                    <span className="text-foreground font-medium">£335.75</span>. Bring your
+                    stack, your sprawl, and the questions your team keeps asking, and leave
+                    with a plan you could execute alone. Credited in full against any build
+                    you choose afterwards.
                   </p>
                 </div>
 
