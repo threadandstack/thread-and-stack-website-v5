@@ -215,7 +215,7 @@ const UnleashYourTeamDraft2Page = () => {
               </p>
 
               <h1 className="font-sans not-italic fade-up fade-up-2 mt-5 max-w-5xl text-balance text-5xl font-semibold leading-[0.98] tracking-[-0.035em] md:text-[78px]">
-                Unleash your team's
+                Unleash your team
                 <br />
                 <span
                   className="font-serif-pro italic font-normal bg-clip-text text-transparent text-5xl md:text-7xl"
