@@ -1,84 +1,60 @@
-# Brain — Voice Notes → Notion
+# Brain — Voice notes → Notion
 
-A standalone, mobile-first PWA. Tap to record (or type), get a clean, auto-tagged note, and have it land in your Notion "Brain" database automatically.
+Mobile-first PWA. Tap to record, get a clean auto-tagged note, ship it to your Notion "Brain" DB.
 
-## Core experience
+## Design pivot — inspired by Thread & Stack `/home-draft2`
 
-1. **Capture (home)** — One giant record button. Tap to start, tap to stop. Live waveform + timer. Secondary "type a note" tab. `captured_at` timestamp recorded the moment you start.
-2. **Processing** — Audio → ElevenLabs Scribe → Lovable AI structures into `{ title, subject, summary, body, tags }`.
-3. **Review** — Edit inline. Subject + tag chips are editable. "Save to Notion" or "Discard". Auto-saves a local draft.
-4. **Library** — Reverse-chronological list. Filter by subject/tag. Tap to view, edit, or re-sync.
+Adopting the "Notion Canvas" warm premium dark palette and serif/sans pairing instead of the earlier crimson + off-white direction.
 
-## Design direction
+**Palette (dark default, light variant)**
+- bg `30 10% 9%` · fg `35 25% 95%` · paper `30 8% 14%` · hairline `30 6% 22%`
+- accents: clay `18 75% 60%`, orange `28 88% 62%`, violet `280 70% 65%`, crimson `8 80% 55%`, sky `210 70% 65%`
+- signature gradient: `linear-gradient(95deg, orange → violet)` used on the record button + display headline word
 
-**Palette** — Warm off-white + black + crimson + electric blue-indigo.
-- `--background`: `oklch(0.97 0.01 80)`
-- `--foreground`: `oklch(0.15 0 0)`
-- `--primary`: `oklch(0.55 0.22 25)` (crimson)
-- `--accent`: `oklch(0.48 0.28 270)` (electric indigo)
+**Typography**
+- Sans display: tight tracking (`-0.035em`), 5xl→8xl, semibold
+- Serif italic accent ("your second brain.") with gradient text-clip — same trick as Hero's "Your centre of truth"
+- Body: relaxed leading, `ink-soft` color
 
-**Typography** — `Instrument Serif` display + `Inter` body. Big confident headlines, generous whitespace.
+**Atmosphere**
+- Aurora blurs (orange + crimson + violet radial blobs, 80px blur) behind the recorder
+- Faint grid background with radial mask
+- `fade-up` staggered entrance animations
+- Theme toggle pill (sun/moon, gradient knob) — top-right
 
-**Vibe** — Swiss-editorial meets recording studio. Oversized timer numerals. Single bold accent per screen. Subtle framer-motion micro-interactions.
+## Core flow
 
-## Routes
+1. **Capture (`/`)** — Oversized gradient record button at center, live waveform ring, big timer numerals. Aurora behind. Secondary "type instead" toggle. `captured_at` stamped on tap.
+2. **Processing** — Audio → ElevenLabs `scribe_v2` → Lovable AI (`gemini-3-flash-preview`) → `{title, subject, summary, body, tags[]}`.
+3. **Review (`/review/$draftId`)** — Editable serif title, subject + tag chips (clay/violet), body. "Send to Notion" (gradient) / "Discard" (ghost). Local draft autosave.
+4. **Library (`/library`)** — Reverse-chron list, filter by subject/tag chips, status dots (synced=clay, draft=ink-soft, failed=crimson). `/library/$noteId` for detail + re-sync.
+5. **Settings (`/settings`)** — Notion parent page picker, formatting prompt, theme.
 
-- `/` — Capture
-- `/review/$draftId` — Review formatted note
-- `/library` — All notes with filters
-- `/library/$noteId` — Single note
-- `/settings` — Notion DB target, formatting prompt
-- `/login` — Email auth
-
-## Technical approach
-
-**Stack additions**
-- Lovable Cloud (auth, DB, server functions)
-- Lovable Notion connector — **reusing existing connection** in this workspace
-- ElevenLabs `scribe_v2` — **reusing existing `ELEVENLABS_API_KEY`**
-- Lovable AI Gateway with `google/gemini-3-flash-preview` for structured output via tool-calling
-- `framer-motion`
+## Technical
 
 **Data model**
-- `notes` — `id, user_id, title, subject, summary, body, tags (text[]), raw_transcript, source (voice|typed), audio_duration_s, captured_at, status (draft|synced|failed), notion_page_id, notion_page_url, created_at, updated_at`
-- `user_settings` — `user_id, notion_database_id, notion_parent_page_id, formatting_prompt`
-- RLS: each user owns their rows.
+- `notes` — title, subject, summary, body, tags text[], raw_transcript, source (voice|typed), audio_duration_s, captured_at, status (draft|synced|failed), notion_page_id, notion_page_url
+- `user_settings` — notion_database_id, notion_parent_page_id, formatting_prompt
+- RLS per user.
+
+**Notion DB schema** (auto-created on first run)
+Title · Subject (select) · Tags (multi_select) · Captured (datetime) · Summary (rich_text) · Source (select) · Duration (number). Page body = formatted note + collapsible raw transcript.
 
 **Server functions**
-- `transcribeAudio` — audio blob → ElevenLabs Scribe transcript
-- `formatNote` — transcript + captured_at → `{ title, subject, summary, body, tags[] }`. Prompt instructs the model to infer one short subject and 2–5 lowercase tags.
-- `bootstrapNotion` — first-run: creates "Brain" DB under a parent page the user picks
-- `syncToNotion` — creates Notion page in the Brain DB with all properties
+`transcribeAudio` · `formatNote` (infers subject + 2–5 lowercase tags) · `bootstrapNotion` · `syncToNotion`.
 
-**Notion DB schema**
-- `Title` (title)
-- `Subject` (select, grows over time)
-- `Tags` (multi_select, grows over time)
-- `Captured` (date with time)
-- `Summary` (rich_text)
-- `Source` (select: voice | typed)
-- `Duration (s)` (number)
-- Page body: formatted note + collapsible "Raw transcript".
+**Capture** — `MediaRecorder` audio/webm;opus, `AnalyserNode` for waveform, 10-min cap.
 
-**Auth** — Lovable Cloud email auth. Routes protected via `_authenticated` layout.
+**Auth** — Lovable Cloud email; `_authenticated` layout gates app.
 
-**Capture** — `MediaRecorder` (audio/webm;opus), live waveform via `AnalyserNode`. Max 10 minutes/note.
+## Phases (status)
 
-## What I'll need from you during build
-
-1. Approve enabling **Lovable Cloud**.
-2. On first run inside the app, pick the **Notion parent page** for the Brain DB (uses existing connection).
-
-## Build phases
-
-1. **Foundations** — Enable Cloud, link existing Notion connection + ELEVENLABS_API_KEY to this project, design tokens, routes, email auth, DB schema with RLS.
-2. **Capture + transcribe** — Recording UI, waveform, timer, `transcribeAudio`.
-3. **Format + review** — `formatNote` with subject/tag inference, review screen with editable chips, draft persistence.
-4. **Notion sync** — `bootstrapNotion` first-run flow, `syncToNotion`, settings screen.
-5. **Library + polish** — Filters, detail view, animations, empty states, 429/402 error handling.
+1. ✅ Cloud enabled · ✅ ElevenLabs linked · ✅ Notion linked
+2. **→ Now:** design tokens (Notion Canvas palette + serif/sans + aurora/grid utilities), route shell, email auth, `notes` + `user_settings` migration with RLS
+3. Capture screen + `transcribeAudio`
+4. `formatNote` + review screen with editable chips
+5. `bootstrapNotion` first-run + `syncToNotion` + settings
+6. Library, filters, detail view, polish (fade-up motion, error toasts)
 
 ## Out of scope
-
-- WhatsApp/Telegram ingestion
-- Multi-user sharing, full-text search
-- Realtime streaming transcription
+WhatsApp/Telegram ingestion, sharing, full-text search, realtime streaming STT.
