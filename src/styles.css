@@ -112,6 +112,9 @@
 /* Utilities */
 .font-serif-pro { font-family: var(--font-serif); }
 
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
 .bg-grid {
   background-image:
     linear-gradient(to right, var(--hairline) 1px, transparent 1px),
