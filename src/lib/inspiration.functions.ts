@@ -112,12 +112,113 @@ function extractMeta(html: string) {
   return { title, description, image, body: stripped };
 }
 
+// ──────────────────────────────────────────────────────────────────────────────
+// Web video / oEmbed detection
+// ──────────────────────────────────────────────────────────────────────────────
+type VideoKind = "youtube" | "vimeo" | "loom" | "tiktok" | "twitter" | null;
+
+function detectVideoKind(rawUrl: string): VideoKind {
+  try {
+    const u = new URL(rawUrl);
+    const h = u.hostname.replace(/^www\./, "");
+    if (h === "youtube.com" || h === "m.youtube.com" || h === "youtu.be" || h === "youtube-nocookie.com") return "youtube";
+    if (h === "vimeo.com" || h.endsWith(".vimeo.com")) return "vimeo";
+    if (h === "loom.com" || h.endsWith(".loom.com")) return "loom";
+    if (h === "tiktok.com" || h.endsWith(".tiktok.com")) return "tiktok";
+    if (h === "twitter.com" || h === "x.com" || h.endsWith(".twitter.com") || h.endsWith(".x.com")) return "twitter";
+  } catch { /* noop */ }
+  return null;
+}
+
+function oEmbedEndpoint(kind: NonNullable<VideoKind>, target: string): string {
+  const enc = encodeURIComponent(target);
+  switch (kind) {
+    case "youtube": return `https://www.youtube.com/oembed?url=${enc}&format=json`;
+    case "vimeo":   return `https://vimeo.com/api/oembed.json?url=${enc}`;
+    case "loom":    return `https://www.loom.com/v1/oembed?url=${enc}&format=json`;
+    case "tiktok":  return `https://www.tiktok.com/oembed?url=${enc}`;
+    case "twitter": return `https://publish.twitter.com/oembed?url=${enc}&omit_script=1`;
+  }
+}
+
+type OEmbed = {
+  title?: string;
+  author_name?: string;
+  provider_name?: string;
+  thumbnail_url?: string;
+  html?: string;
+  duration?: number; // vimeo
+};
+
+async function fetchOEmbed(kind: NonNullable<VideoKind>, target: string): Promise<OEmbed | null> {
+  try {
+    const r = await fetch(oEmbedEndpoint(kind, target), {
+      headers: { Accept: "application/json", "User-Agent": "Mozilla/5.0 (compatible; BrainInspirationBot/1.0)" },
+    });
+    if (!r.ok) return null;
+    return (await r.json()) as OEmbed;
+  } catch { return null; }
+}
+
 export const fetchLinkPreview = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((input: unknown) =>
     z.object({ url: z.string().url() }).parse(input)
   )
   .handler(async ({ data }) => {
+    const kind = detectVideoKind(data.url);
+
+    // For known web-video providers, prefer oEmbed (richer + reliable thumbnails)
+    if (kind) {
+      const [oe, htmlRes] = await Promise.all([
+        fetchOEmbed(kind, data.url),
+        fetch(data.url, {
+          headers: {
+            "User-Agent": "Mozilla/5.0 (compatible; BrainInspirationBot/1.0)",
+            Accept: "text/html,application/xhtml+xml",
+          },
+          redirect: "follow",
+        }).catch(() => null),
+      ]);
+
+      let pageDescription = "";
+      let pageTitleFallback = "";
+      let ogImage = "";
+      if (htmlRes && htmlRes.ok) {
+        const html = await htmlRes.text();
+        const meta = extractMeta(html);
+        pageDescription = meta.description;
+        pageTitleFallback = meta.title;
+        ogImage = meta.image;
+      }
+
+      const title = oe?.title || pageTitleFallback || data.url;
+      const author = oe?.author_name || "";
+      const provider = oe?.provider_name || kind;
+      let coverUrl = oe?.thumbnail_url || ogImage || "";
+      if (coverUrl && !/^https?:\/\//i.test(coverUrl)) {
+        try { coverUrl = new URL(coverUrl, data.url).toString(); } catch { coverUrl = ""; }
+      }
+
+      const userMsg = `Source: ${provider} video
+URL: ${data.url}
+Video title: ${title}
+${author ? `Creator: ${author}` : ""}
+${oe?.duration ? `Duration: ${oe.duration}s` : ""}
+
+Page description / context:
+${pageDescription || "(none)"}`;
+
+      const formatted = await callAI(
+        SYSTEM_BASE +
+          `\nThe source is a ${provider} video the user wants to remember. You CANNOT see the video itself — work from title, creator, and description. ` +
+          `In "body": (1) a short note on what this video is about based on the metadata, (2) a "## Why it caught my eye" section with a thoughtful guess at the hook based on the title/creator/description, (3) a "## Watch" section with a markdown link back to the source. Be honest where info is thin; don't invent specifics.`,
+        userMsg
+      );
+      return { ...formatted, coverUrl, sourceUrl: data.url, pageTitle: title };
+    }
+
+    // Generic web link path
     const res = await fetch(data.url, {
       headers: {
         "User-Agent": "Mozilla/5.0 (compatible; BrainInspirationBot/1.0)",
@@ -129,7 +230,6 @@ export const fetchLinkPreview = createServerFn({ method: "POST" })
     const html = await res.text();
     const meta = extractMeta(html);
 
-    // Resolve relative image URLs
     let coverUrl = meta.image;
     if (coverUrl && !/^https?:\/\//i.test(coverUrl)) {
       try { coverUrl = new URL(coverUrl, data.url).toString(); } catch { coverUrl = ""; }
