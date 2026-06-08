@@ -1,13 +1,15 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
-import { ArrowLeft, X, Send, Loader2, Plus } from "lucide-react";
+import { ArrowLeft, X, Send, Loader2, Plus, Check, ExternalLink } from "lucide-react";
 import { toast } from "sonner";
 import { getDraft, updateDraft, deleteDraft, syncDraftToNotion } from "@/lib/review.functions";
 
 export const Route = createFileRoute("/_authenticated/review/$draftId")({
   component: Review,
 });
+
+type DraftExtra = { cover_image_url?: string | null; source?: string; source_url?: string | null };
 
 function Review() {
   const { draftId } = Route.useParams();
