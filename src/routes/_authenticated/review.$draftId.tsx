@@ -29,14 +29,14 @@ function Review() {
 
   useEffect(() => {
     fetchDraft({ data: { id: draftId } })
-      .then((d) => {
+      .then((d: { title: string; subject: string | null; summary: string | null; body: string | null; tags: string[] }) => {
         setTitle(d.title);
         setSubject(d.subject ?? "");
         setSummary(d.summary ?? "");
         setBody(d.body ?? "");
         setTags(d.tags);
       })
-      .catch((e) => toast.error(e.message))
+      .catch((e: Error) => toast.error(e.message))
       .finally(() => setLoading(false));
   }, [draftId, fetchDraft]);
 
