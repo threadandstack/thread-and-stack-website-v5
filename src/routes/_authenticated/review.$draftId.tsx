@@ -28,15 +28,19 @@ function Review() {
   const [body, setBody] = useState("");
   const [tags, setTags] = useState<string[]>([]);
   const [newTag, setNewTag] = useState("");
+  const [extra, setExtra] = useState<DraftExtra>({});
+  const [notionUrl, setNotionUrl] = useState<string | null>(null);
 
   useEffect(() => {
     fetchDraft({ data: { id: draftId } })
-      .then((d: { title: string; subject: string | null; summary: string | null; body: string | null; tags: string[] }) => {
+      .then((d) => {
         setTitle(d.title);
         setSubject(d.subject ?? "");
         setSummary(d.summary ?? "");
         setBody(d.body ?? "");
         setTags(d.tags);
+        setExtra({ cover_image_url: d.cover_image_url, source: d.source, source_url: d.source_url });
+        setNotionUrl(d.notion_page_url);
       })
       .catch((e: Error) => toast.error(e.message))
       .finally(() => setLoading(false));
