@@ -114,7 +114,24 @@ function Review() {
         </button>
       </header>
 
-      <div className="mx-auto max-w-2xl px-6 py-8 pb-32">
+      <div className="mx-auto max-w-2xl px-5 py-6 pb-40">
+        {extra.cover_image_url && (
+          <img
+            src={extra.cover_image_url}
+            alt=""
+            className="mb-6 max-h-80 w-full rounded-xl border border-hairline object-cover"
+          />
+        )}
+        {extra.source_url && (
+          <a
+            href={extra.source_url}
+            target="_blank"
+            rel="noreferrer"
+            className="mb-3 inline-flex items-center gap-1.5 text-[11px] text-ink-soft hover:text-clay"
+          >
+            source ↗ {new URL(extra.source_url).hostname.replace(/^www\./, "")}
+          </a>
+        )}
         <input
           value={title}
           onChange={(e) => setTitle(e.target.value)}
@@ -170,25 +187,23 @@ function Review() {
         />
       </div>
 
-      <div className="fixed inset-x-0 bottom-0 border-t border-hairline bg-background/90 px-6 py-4 backdrop-blur">
-        <div className="mx-auto flex max-w-2xl items-center justify-between gap-3">
+      <div className="fixed inset-x-0 bottom-0 border-t border-hairline bg-background/90 px-5 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur">
+        <div className="mx-auto flex max-w-2xl items-center gap-2">
           <button
-            onClick={discard}
-            className="rounded-md border border-hairline px-4 py-2 text-sm text-ink-soft hover:bg-paper hover:text-foreground"
+            onClick={done}
+            className="inline-flex h-11 flex-1 items-center justify-center rounded-md bg-gradient-warm px-5 text-sm font-medium text-accent-foreground shadow-[0_8px_20px_-8px_rgba(0,0,0,0.5)]"
           >
-            Discard
+            <Check className="mr-2 h-4 w-4" /> Save to library
           </button>
           <button
             onClick={send}
-            disabled={syncing}
-            className="group inline-flex h-11 flex-1 items-center justify-center rounded-md bg-gradient-warm px-5 text-sm font-medium text-accent-foreground shadow-[0_8px_20px_-8px_rgba(0,0,0,0.5)] transition-all hover:-translate-y-px disabled:opacity-60"
+            disabled={syncing || !!notionUrl}
+            title={notionUrl ?? "Send to Notion"}
+            className="inline-flex h-11 items-center justify-center rounded-md border border-hairline bg-paper/60 px-3 text-xs text-ink-soft hover:text-foreground disabled:opacity-60"
           >
-            {syncing ? <Loader2 className="h-4 w-4 animate-spin" /> : (
-              <>
-                <Send className="mr-2 h-4 w-4" />
-                Send to Notion
-              </>
-            )}
+            {syncing ? <Loader2 className="h-4 w-4 animate-spin" /> :
+              notionUrl ? <><ExternalLink className="mr-1.5 h-3.5 w-3.5" /> Notion ✓</> :
+              <><Send className="mr-1.5 h-3.5 w-3.5" /> Notion</>}
           </button>
         </div>
       </div>
