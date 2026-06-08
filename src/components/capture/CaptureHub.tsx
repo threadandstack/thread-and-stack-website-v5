@@ -1,19 +1,17 @@
 import { useState } from "react";
-import { Mic, Link2, ImageIcon, Type, Video } from "lucide-react";
+import { Mic, Link2, ImageIcon, Type } from "lucide-react";
 import { VoiceCapture } from "./modes/VoiceCapture";
 import { LinkCapture } from "./modes/LinkCapture";
 import { TextCapture } from "./modes/TextCapture";
 import { ImageCapture } from "./modes/ImageCapture";
-import { VideoCapture } from "./modes/VideoCapture";
 
-type Mode = "voice" | "link" | "image" | "text" | "video";
+type Mode = "voice" | "link" | "image" | "text";
 
 const MODES: { id: Mode; label: string; Icon: typeof Mic }[] = [
   { id: "voice", label: "Voice", Icon: Mic },
   { id: "link", label: "Link", Icon: Link2 },
   { id: "image", label: "Image", Icon: ImageIcon },
   { id: "text", label: "Text", Icon: Type },
-  { id: "video", label: "Video", Icon: Video },
 ];
 
 export function CaptureHub() {
@@ -27,7 +25,6 @@ export function CaptureHub() {
           {mode === "link" && <LinkCapture />}
           {mode === "image" && <ImageCapture />}
           {mode === "text" && <TextCapture />}
-          {mode === "video" && <VideoCapture />}
         </div>
       </div>
 
@@ -36,7 +33,7 @@ export function CaptureHub() {
         className="fixed inset-x-0 bottom-0 z-20 border-t border-hairline bg-background/85 px-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-2 backdrop-blur-xl"
         aria-label="Source type"
       >
-        <div className="mx-auto grid max-w-md grid-cols-5 gap-1">
+        <div className="mx-auto grid max-w-md grid-cols-4 gap-1">
           {MODES.map(({ id, label, Icon }) => {
             const active = mode === id;
             return (
