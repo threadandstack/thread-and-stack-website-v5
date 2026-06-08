@@ -14,7 +14,93 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      notes: {
+        Row: {
+          audio_duration_s: number | null
+          body: string | null
+          captured_at: string
+          created_at: string
+          id: string
+          notion_page_id: string | null
+          notion_page_url: string | null
+          raw_transcript: string | null
+          source: Database["public"]["Enums"]["note_source"]
+          status: Database["public"]["Enums"]["note_status"]
+          subject: string | null
+          summary: string | null
+          sync_error: string | null
+          tags: string[]
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          audio_duration_s?: number | null
+          body?: string | null
+          captured_at?: string
+          created_at?: string
+          id?: string
+          notion_page_id?: string | null
+          notion_page_url?: string | null
+          raw_transcript?: string | null
+          source?: Database["public"]["Enums"]["note_source"]
+          status?: Database["public"]["Enums"]["note_status"]
+          subject?: string | null
+          summary?: string | null
+          sync_error?: string | null
+          tags?: string[]
+          title?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          audio_duration_s?: number | null
+          body?: string | null
+          captured_at?: string
+          created_at?: string
+          id?: string
+          notion_page_id?: string | null
+          notion_page_url?: string | null
+          raw_transcript?: string | null
+          source?: Database["public"]["Enums"]["note_source"]
+          status?: Database["public"]["Enums"]["note_status"]
+          subject?: string | null
+          summary?: string | null
+          sync_error?: string | null
+          tags?: string[]
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_settings: {
+        Row: {
+          created_at: string
+          formatting_prompt: string | null
+          notion_database_id: string | null
+          notion_parent_page_id: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          formatting_prompt?: string | null
+          notion_database_id?: string | null
+          notion_parent_page_id?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          formatting_prompt?: string | null
+          notion_database_id?: string | null
+          notion_parent_page_id?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +109,8 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      note_source: "voice" | "typed"
+      note_status: "draft" | "synced" | "failed"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +237,9 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      note_source: ["voice", "typed"],
+      note_status: ["draft", "synced", "failed"],
+    },
   },
 } as const
