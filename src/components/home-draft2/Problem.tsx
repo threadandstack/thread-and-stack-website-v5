@@ -91,7 +91,7 @@ export function Problem() {
                 >
                   {/* Circle node */}
                   <span
-                    className="relative z-10 grid h-20 w-20 place-items-center rounded-full border bg-background shadow-[0_8px_24px_-12px_rgba(0,0,0,0.18)] transition-transform group-hover:-translate-y-0.5"
+                    className="relative z-10 grid h-20 w-20 place-items-center rounded-full border bg-background shadow-[0_8px_24px_-12px_rgba(0,0,0,0.18)] transition-all duration-500 ease-out group-hover:scale-110 group-hover:shadow-[0_12px_32px_-8px_rgba(0,0,0,0.22)]"
                     style={{ borderColor: "var(--c)", color: "var(--c)" }}
                   >
                     <span
