@@ -66,13 +66,17 @@ function Review() {
     setSyncing(true);
     try {
       const { url } = await sync({ data: { id: draftId } });
-      toast.success("Sent to Notion", { description: url ? "Tap to open" : undefined, action: url ? { label: "Open", onClick: () => window.open(url, "_blank") } : undefined });
-      navigate({ to: "/library" });
+      setNotionUrl(url);
+      toast.success("Sent to Notion");
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Notion sync failed");
     } finally {
       setSyncing(false);
     }
+  }
+
+  function done() {
+    navigate({ to: "/library" });
   }
 
   async function discard() {
