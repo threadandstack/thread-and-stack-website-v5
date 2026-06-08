@@ -19,12 +19,19 @@ export type Database = {
           audio_duration_s: number | null
           body: string | null
           captured_at: string
+          cover_height: number | null
+          cover_image_path: string | null
+          cover_image_url: string | null
+          cover_width: number | null
           created_at: string
+          extracted_text: string | null
           id: string
+          media_path: string | null
           notion_page_id: string | null
           notion_page_url: string | null
           raw_transcript: string | null
           source: Database["public"]["Enums"]["note_source"]
+          source_url: string | null
           status: Database["public"]["Enums"]["note_status"]
           subject: string | null
           summary: string | null
@@ -38,12 +45,19 @@ export type Database = {
           audio_duration_s?: number | null
           body?: string | null
           captured_at?: string
+          cover_height?: number | null
+          cover_image_path?: string | null
+          cover_image_url?: string | null
+          cover_width?: number | null
           created_at?: string
+          extracted_text?: string | null
           id?: string
+          media_path?: string | null
           notion_page_id?: string | null
           notion_page_url?: string | null
           raw_transcript?: string | null
           source?: Database["public"]["Enums"]["note_source"]
+          source_url?: string | null
           status?: Database["public"]["Enums"]["note_status"]
           subject?: string | null
           summary?: string | null
@@ -57,12 +71,19 @@ export type Database = {
           audio_duration_s?: number | null
           body?: string | null
           captured_at?: string
+          cover_height?: number | null
+          cover_image_path?: string | null
+          cover_image_url?: string | null
+          cover_width?: number | null
           created_at?: string
+          extracted_text?: string | null
           id?: string
+          media_path?: string | null
           notion_page_id?: string | null
           notion_page_url?: string | null
           raw_transcript?: string | null
           source?: Database["public"]["Enums"]["note_source"]
+          source_url?: string | null
           status?: Database["public"]["Enums"]["note_status"]
           subject?: string | null
           summary?: string | null
@@ -109,7 +130,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      note_source: "voice" | "typed"
+      note_source: "voice" | "typed" | "link" | "image" | "text" | "video"
       note_status: "draft" | "synced" | "failed"
     }
     CompositeTypes: {
@@ -238,7 +259,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      note_source: ["voice", "typed"],
+      note_source: ["voice", "typed", "link", "image", "text", "video"],
       note_status: ["draft", "synced", "failed"],
     },
   },
