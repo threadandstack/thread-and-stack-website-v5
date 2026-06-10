@@ -676,7 +676,7 @@ const LSSProposalPage = () => {
                 in the process.
               </P>
               <P>
-                The approach here is different. We build around a <strong>knowledge lake that LSS owns
+                The approach here is different. We build around a <strong>knowledge base that LSS owns
                 entirely</strong>, where every tool earns its place and none of them hold you hostage.
               </P>
 
@@ -826,7 +826,7 @@ const LSSProposalPage = () => {
               <EditorialTable
                 head={["Layer", "Tool", "Monthly"]}
                 rows={[
-                  ["Knowledge lake", "Notion Business — 3 users, AI included", "~£35"],
+                  ["Knowledge base", "Notion Business — 3 users, AI included", "~£35"],
                   ["Notion AI", "Included in Business plan", "£0 extra"],
                   ["Co-founder assistant", "Claude Pro — Cowork, Projects, Claude Code", "~£16"],
                   ["Custom agents", "Notion AI agents — included", "£0 extra"],
@@ -867,7 +867,7 @@ const LSSProposalPage = () => {
               <P>
                 <strong>On Gemini.</strong> If it's bundled into your Google Workspace subscription it can't be
                 removed and there's no saving. Claude sits alongside it at ~£16/month and does what Gemini
-                cannot: maintains context across conversations, connects to the Notion knowledge lake, works
+                cannot: maintains context across conversations, connects to the Notion knowledge base, works
                 within the system rather than separately from it.
               </P>
               <p className="font-sans text-[13px] text-muted-foreground/70 mt-2">

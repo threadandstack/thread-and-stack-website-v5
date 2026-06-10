@@ -89,14 +89,14 @@ const levels = [
   {
     min: 9, max: 14, name: "Patchworked", color: "step-2",
     summary: "You've stitched tools together. They mostly hold. AI is occasional. Retrieval is unreliable.",
-    recommend: "Knowledge Lake Starter",
+    recommend: "Knowledge Base Starter",
     why: "One core system plus one well-built agent makes the difference visible fast.",
   },
   {
     min: 15, max: 19, name: "Consolidating", color: "step-3",
     summary: "You're on the path. A clear source of truth is forming. Now the layered architecture earns its place.",
     recommend: "Knowledge Infrastructure Build",
-    why: "Wire the full five-layer lake, support included, so the team feels the shift end-to-end.",
+    why: "Wire the full five-layer base, support included, so the team feels the shift end-to-end.",
   },
   {
     min: 20, max: 24, name: "Compounding", color: "step-4",

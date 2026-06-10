@@ -13,9 +13,9 @@ const phases = [
     icon: Hammer,
     color: "orange",
     title: "Build",
-    duration: "Notion as your knowledge lake",
+    duration: "Notion as your knowledge base",
     body:
-      "We build Notion as your knowledge lake, with connecting streams set up to all your vital tools. The work happens in your workspace, in public, with every decision documented.",
+      "We build Notion as your knowledge base, with connecting streams set up to all your vital tools. The work happens in your workspace, in public, with every decision documented.",
   },
   {
     icon: Rocket,
@@ -31,7 +31,7 @@ const phases = [
     title: "Compound",
     duration: "Rolling Stack Support · no tie-in",
     body:
-      "The more you use the system, the deeper the lake becomes — filling with knowledge, resource, and value. Async access, scaled per half-day, cancel any month.",
+      "The more you use the system, the deeper the base becomes — filling with knowledge, resource, and value. Async access, scaled per half-day, cancel any month.",
   },
 ] as const;
 

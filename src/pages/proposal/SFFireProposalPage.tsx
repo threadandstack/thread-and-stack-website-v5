@@ -663,7 +663,7 @@ const SFFireProposalPage = () => {
                 num="02"
                 eyebrow="The solve"
                 rotate={0.3}
-                title={<>A knowledge lake for <Hl shift={-1}>SF Property Fire Prevention.</Hl></>}
+                title={<>A knowledge base for <Hl shift={-1}>SF Property Fire Prevention.</Hl></>}
               />
               <P>
                 Every piece of operational knowledge your business runs on, from procedures and checklists

@@ -21,11 +21,11 @@ const tiers = [
   },
   {
     n: "02",
-    name: "Knowledge Lake Starter",
+    name: "Knowledge Base Starter",
     price: "from £3,400",
     sub: "~2 weeks · fixed scope · support included",
     blurb:
-      "One core system built around the lake, plus one purpose-built agent wired in. The fastest way to feel what an intentional stack actually does. 30 days of adoption support baked in.",
+      "One core system built around the base, plus one purpose-built agent wired in. The fastest way to feel what an intentional stack actually does. 30 days of adoption support baked in.",
     features: [
       "One core system (wiki · CRM · projects)",
       "One custom agent",
@@ -42,7 +42,7 @@ const tiers = [
     price: "from £6,900",
     sub: "scoped · phased · support included",
     blurb:
-      "The full five-layer Knowledge Lake in your Notion — Claude reasoning wired in, custom agents around it, automations doing the dumb mechanical work. For teams ready to consolidate properly.",
+      "The full five-layer Knowledge Base in your Notion — Claude reasoning wired in, custom agents around it, automations doing the dumb mechanical work. For teams ready to consolidate properly.",
     features: [
       "Deep Discovery blueprint",
       "Full five-layer build",

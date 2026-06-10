@@ -16,7 +16,7 @@ const faqs = [
   },
   {
     q: "Won't building on Notion lock us in?",
-    a: "You own the lake. Notion is the most open data store of any modern workspace, exportable in standard formats whenever you want. Claude, the agents, and the automations around it are all interchangeable on merit. The architecture survives the tools.",
+    a: "You own the base. Notion is the most open data store of any modern workspace, exportable in standard formats whenever you want. Claude, the agents, and the automations around it are all interchangeable on merit. The architecture survives the tools.",
   },
   {
     q: "Can you migrate us off Monday / ClickUp / Asana / Sheets?",
@@ -24,7 +24,7 @@ const faqs = [
   },
   {
     q: "What happens after the build is done?",
-    a: "Rolling Stack Support. From £495/mo, async access, scaled per half-day, no tie-in, cancel any month. The lake keeps growing and the agents keep getting smarter. Most clients stay 6 to 12 months.",
+    a: "Rolling Stack Support. From £495/mo, async access, scaled per half-day, no tie-in, cancel any month. The base keeps growing and the agents keep getting smarter. Most clients stay 6 to 12 months.",
   },
 ];
 

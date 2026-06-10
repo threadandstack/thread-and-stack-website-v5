@@ -71,7 +71,7 @@ export function Hero({ theme, onToggleTheme, onBookDiagnostic }: HeroProps) {
           <p className="fade-up fade-up-3 mt-7 max-w-2xl text-[17px] leading-relaxed text-ink-soft">
             For 5–50 person teams who've outgrown their tool stack.
             <br />
-            We build your information architecture and create a Knowledge Lake that
+            We build your information architecture and create a Knowledge Base that
             grows in value as your team does. It reduces cognitive load and gives
             your team back time to do their best work.
           </p>
