@@ -37,56 +37,45 @@ export function LogoTilt({ className = "h-32 sm:h-44 md:h-56", theme = "dark" }:
       el.style.setProperty("--sy", `${sy}px`);
     };
 
+    let logoOffsetInSection = 0;
+
+    const measure = () => {
+      if (!section) return;
+      const prev = el.style.transform;
+      el.style.transform = "";
+      const elTop = el.getBoundingClientRect().top;
+      const secTop = section.getBoundingClientRect().top;
+      logoOffsetInSection = Math.max(0, elTop - secTop);
+      el.style.transform = prev;
+    };
+
     const update = () => {
       raf = 0;
       if (!section) return;
-      const sectionRect = section.getBoundingClientRect();
+      const rect = section.getBoundingClientRect();
       const vh = window.innerHeight;
       const logoH = el.offsetHeight;
-      const topOffset = 72; // distance from viewport top while pinned
+      const topOffset = 72;
 
-      // Follow scroll: translate the logo down as the section scrolls up,
-      // keeping it pinned near the top until the section's natural bottom
-      // would force it to release.
-      const naturalTop = sectionRect.top; // top of section vs viewport
-      // How far we'd need to translate the logo so that its top sits at topOffset
-      const desired = -naturalTop + topOffset - getInitialOffsetTop();
-      // Clamp so it never moves above its original position…
-      const minTranslate = 0;
-      // …and never escapes the bottom of the section.
+      // Translate the logo so it stays pinned near topOffset as the section scrolls.
+      const desired = -rect.top + topOffset - logoOffsetInSection;
       const maxTranslate = Math.max(
         0,
-        sectionRect.height - logoH - topOffset - getInitialOffsetTop() - 16
+        rect.height - logoH - logoOffsetInSection - topOffset - 24
       );
-      const translate = Math.min(Math.max(desired, minTranslate), maxTranslate);
-      el.style.transform = `translateY(${translate}px)`;
+      const translate = Math.min(Math.max(desired, 0), maxTranslate);
+      el.style.transform = `translate3d(0, ${translate}px, 0)`;
 
-      // Progress 0 → 1 across the hero section.
-      const total = Math.max(1, sectionRect.height - vh);
-      const scrolled = Math.min(Math.max(-sectionRect.top, 0), total);
-      const p = scrolled / total; // 0 at top, 1 at end
+      // Progress 0 → 1 across the hero scroll range.
+      const total = Math.max(1, rect.height - vh);
+      const scrolled = Math.min(Math.max(-rect.top, 0), total);
+      const p = scrolled / total;
 
-      // Map progress to a gentle sweeping tilt + glow position.
       const tx = (p - 0.5) * 16; // ±8°
-      const ty = Math.sin(p * Math.PI) * 6; // 0 → +6 → 0
-      const mx = 20 + p * 60; // 20% → 80%
-      const my = 80 - p * 60; // 80% → 20%
+      const ty = Math.sin(p * Math.PI) * 6;
+      const mx = 20 + p * 60;
+      const my = 80 - p * 60;
       setVars(tx, ty, mx, my);
-    };
-
-    let cachedInitialTop: number | null = null;
-    const getInitialOffsetTop = () => {
-      if (cachedInitialTop != null) return cachedInitialTop;
-      // Distance from section top to the logo's natural top.
-      if (!section) return 0;
-      const elTop = el.getBoundingClientRect().top - el.style.transform.length * 0; // ignore current transform
-      const secTop = section.getBoundingClientRect().top;
-      cachedInitialTop = Math.max(0, elTop - secTop - getCurrentTranslate());
-      return cachedInitialTop;
-    };
-    const getCurrentTranslate = () => {
-      const m = el.style.transform.match(/translateY\(([-\d.]+)px\)/);
-      return m ? parseFloat(m[1]) : 0;
     };
 
     const onScroll = () => {
@@ -94,7 +83,7 @@ export function LogoTilt({ className = "h-32 sm:h-44 md:h-56", theme = "dark" }:
       raf = requestAnimationFrame(update);
     };
     const onResize = () => {
-      cachedInitialTop = null;
+      measure();
       onScroll();
     };
 
@@ -112,8 +101,8 @@ export function LogoTilt({ className = "h-32 sm:h-44 md:h-56", theme = "dark" }:
       if (attached) return;
       section = el.closest("section");
       if (!section) return;
-      cachedInitialTop = null;
       attached = true;
+      measure();
       window.addEventListener("scroll", onScroll, { passive: true });
       window.addEventListener("resize", onResize);
       update();
