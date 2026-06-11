@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import logoWhite from "@/assets/logos/White_TS_Stacked.svg";
 import logoBlack from "@/assets/logos/Black_TS_Stacked.svg";
 import logoIndigo from "@/assets/logos/Indigo_TS_Stacked.svg";
@@ -9,9 +10,133 @@ interface LogoTiltProps {
 
 export function LogoTilt({ className = "h-32 sm:h-44 md:h-56", theme = "dark" }: LogoTiltProps) {
   const logoBase = theme === "light" ? logoBlack : logoWhite;
+  const rootRef = useRef<HTMLDivElement>(null);
+  const touchActiveRef = useRef(false);
+
+  // Mobile: scroll-linked tilt + sticky follow within the hero section.
+  useEffect(() => {
+    const el = rootRef.current;
+    if (!el) return;
+
+    const mqMobile = window.matchMedia("(max-width: 767px)");
+    const mqReduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    let raf = 0;
+    let attached = false;
+    let section: HTMLElement | null = null;
+
+    const setVars = (tx: number, ty: number, mx: number, my: number) => {
+      if (touchActiveRef.current) return; // touch drag wins
+      const sx = (50 - mx) / 4;
+      const sy = (50 - my) / 4;
+      el.style.setProperty("--mx", `${mx}%`);
+      el.style.setProperty("--my", `${my}%`);
+      el.style.setProperty("--tx", `${tx}deg`);
+      el.style.setProperty("--ty", `${ty}deg`);
+      el.style.setProperty("--sx", `${sx}px`);
+      el.style.setProperty("--sy", `${sy}px`);
+    };
+
+    let logoOffsetInSection = 0;
+
+    const measure = () => {
+      if (!section) return;
+      const prev = el.style.transform;
+      el.style.transform = "";
+      const elTop = el.getBoundingClientRect().top;
+      const secTop = section.getBoundingClientRect().top;
+      logoOffsetInSection = Math.max(0, elTop - secTop);
+      el.style.transform = prev;
+    };
+
+    const update = () => {
+      raf = 0;
+      if (!section) return;
+      const rect = section.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const logoH = el.offsetHeight;
+      const topOffset = 72;
+
+      // Translate the logo so it stays pinned near topOffset as the section scrolls.
+      const desired = -rect.top + topOffset - logoOffsetInSection;
+      const maxTranslate = Math.max(
+        0,
+        rect.height - logoH - logoOffsetInSection - topOffset - 24
+      );
+      const translate = Math.min(Math.max(desired, 0), maxTranslate);
+      el.style.transform = `translate3d(0, ${translate}px, 0)`;
+
+      // Progress 0 → 1 across the hero scroll range.
+      const total = Math.max(1, rect.height - vh);
+      const scrolled = Math.min(Math.max(-rect.top, 0), total);
+      const p = scrolled / total;
+
+      const tx = (p - 0.5) * 16; // ±8°
+      const ty = Math.sin(p * Math.PI) * 6;
+      const mx = 20 + p * 60;
+      const my = 80 - p * 60;
+      setVars(tx, ty, mx, my);
+    };
+
+    const onScroll = () => {
+      if (raf) return;
+      raf = requestAnimationFrame(update);
+    };
+    const onResize = () => {
+      measure();
+      onScroll();
+    };
+
+    const reset = () => {
+      el.style.transform = "";
+      el.style.setProperty("--tx", "0deg");
+      el.style.setProperty("--ty", "0deg");
+      el.style.setProperty("--sx", "0px");
+      el.style.setProperty("--sy", "0px");
+      el.style.setProperty("--mx", "50%");
+      el.style.setProperty("--my", "50%");
+    };
+
+    const attach = () => {
+      if (attached) return;
+      section = el.closest("section");
+      if (!section) return;
+      attached = true;
+      measure();
+      window.addEventListener("scroll", onScroll, { passive: true });
+      window.addEventListener("resize", onResize);
+      update();
+    };
+    const detach = () => {
+      if (!attached) return;
+      attached = false;
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onResize);
+      if (raf) cancelAnimationFrame(raf);
+      raf = 0;
+      reset();
+    };
+
+    const apply = () => {
+      if (mqMobile.matches && !mqReduce.matches) attach();
+      else detach();
+    };
+
+    apply();
+    mqMobile.addEventListener("change", apply);
+    mqReduce.addEventListener("change", apply);
+
+    return () => {
+      mqMobile.removeEventListener("change", apply);
+      mqReduce.removeEventListener("change", apply);
+      detach();
+    };
+  }, []);
+
   return (
     <div
-      className="relative group cursor-pointer [perspective:800px]"
+      ref={rootRef}
+      className="relative group cursor-pointer [perspective:800px] will-change-transform"
       onMouseMove={(e) => {
         const el = e.currentTarget as HTMLDivElement;
         const r = el.getBoundingClientRect();
@@ -34,6 +159,34 @@ export function LogoTilt({ className = "h-32 sm:h-44 md:h-56", theme = "dark" }:
         el.style.setProperty("--ty", `0deg`);
         el.style.setProperty("--sx", `0px`);
         el.style.setProperty("--sy", `0px`);
+      }}
+      onTouchStart={() => {
+        touchActiveRef.current = true;
+      }}
+      onTouchMove={(e) => {
+        const el = e.currentTarget as HTMLDivElement;
+        const t = e.touches[0];
+        if (!t) return;
+        const r = el.getBoundingClientRect();
+        const x = ((t.clientX - r.left) / r.width) * 100;
+        const y = ((t.clientY - r.top) / r.height) * 100;
+        const tx = (x - 50) / 6;
+        const ty = (50 - y) / 6;
+        const sx = (50 - x) / 4;
+        const sy = (50 - y) / 4;
+        el.style.setProperty("--mx", `${x}%`);
+        el.style.setProperty("--my", `${y}%`);
+        el.style.setProperty("--tx", `${tx}deg`);
+        el.style.setProperty("--ty", `${ty}deg`);
+        el.style.setProperty("--sx", `${sx}px`);
+        el.style.setProperty("--sy", `${sy}px`);
+      }}
+      onTouchEnd={() => {
+        // Release back to scroll-driven values on next frame.
+        setTimeout(() => {
+          touchActiveRef.current = false;
+          window.dispatchEvent(new Event("scroll"));
+        }, 80);
       }}
       style={{
         ["--mx" as never]: "50%",
@@ -61,7 +214,7 @@ export function LogoTilt({ className = "h-32 sm:h-44 md:h-56", theme = "dark" }:
           src={logoIndigo}
           alt=""
           aria-hidden="true"
-          className={`absolute inset-0 w-auto opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none ${className}`}
+          className={`absolute inset-0 w-auto opacity-0 group-hover:opacity-100 md:group-hover:opacity-100 max-md:opacity-100 transition-opacity duration-200 pointer-events-none ${className}`}
           style={{
             WebkitMaskImage:
               "radial-gradient(circle 70px at var(--mx) var(--my), rgba(0,0,0,0.95), rgba(0,0,0,0) 75%)",
@@ -70,7 +223,7 @@ export function LogoTilt({ className = "h-32 sm:h-44 md:h-56", theme = "dark" }:
           }}
         />
         <div
-          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none blur-xl"
+          className="absolute inset-0 opacity-0 group-hover:opacity-100 max-md:opacity-100 transition-opacity duration-300 pointer-events-none blur-xl"
           style={{
             background:
               "radial-gradient(circle 90px at var(--mx) var(--my), hsl(var(--indigo) / 0.55), transparent 70%)",
