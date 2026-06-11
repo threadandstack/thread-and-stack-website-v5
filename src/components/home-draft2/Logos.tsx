@@ -7,6 +7,7 @@ import canvaSvg from "@/assets/tool-logos/canva.svg";
 import microsoftSvg from "@/assets/tool-logos/microsoft.svg";
 import openaiSvg from "@/assets/tool-logos/openai.svg";
 import mondaySvg from "@/assets/tool-logos/monday.svg";
+import slackSvg from "@/assets/tool-logos/slack.svg";
 import notionMailPng from "@/assets/tool-logos/notion-mail.png";
 import notionCalendarSvg from "@/assets/tool-logos/notion-calendar.svg";
 import notionDevelopersPng from "@/assets/tool-logos/notion-developers.png";
@@ -15,17 +16,19 @@ interface LogosProps {
   theme?: "dark" | "light";
 }
 
-type Tool = { name: string; src: string };
+// `keepColor` disables the monochrome tint for icons whose detail would be
+// lost when flattened to a silhouette (e.g. Notion's product icons, which use
+// inner cut-outs against a colored tile).
+type Tool = { name: string; src: string; keepColor?: boolean };
 
 const cdn = (slug: string) => `https://cdn.simpleicons.org/${slug}`;
 
-// Notion family grouped together at the start of the list.
 const tools: Tool[] = [
   { name: "Notion", src: cdn("notion") },
-  { name: "Notion Mail", src: notionMailPng },
-  { name: "Notion Calendar", src: notionCalendarSvg },
-  { name: "Notion Developer Platform", src: notionDevelopersPng },
-  { name: "Slack", src: cdn("slack") },
+  { name: "Notion Mail", src: notionMailPng, keepColor: true },
+  { name: "Notion Calendar", src: notionCalendarSvg, keepColor: true },
+  { name: "Notion Developer Platform", src: notionDevelopersPng, keepColor: true },
+  { name: "Slack", src: slackSvg },
   { name: "Figma", src: cdn("figma") },
   { name: "Zapier", src: cdn("zapier") },
   { name: "n8n", src: cdn("n8n") },
@@ -53,11 +56,13 @@ const tools: Tool[] = [
 
 export function Logos({ theme = "dark" }: LogosProps) {
   const isDark = theme === "dark";
-  // brightness(0) flattens any colored source to pure black, then we lift it
-  // to the desired tint. Works equally well for SVG and PNG sources.
   const tint = isDark
     ? "brightness(0) invert(1) opacity(0.72)"
     : "brightness(0) opacity(0.42)";
+  // Colorful icons keep their own palette but get nudged toward the section's
+  // muted tone with a gentle opacity reduction so they sit beside the tinted
+  // silhouettes without shouting.
+  const keepColorFilter = isDark ? "opacity(0.9)" : "opacity(0.85)";
 
   const items = [...tools, ...tools];
 
@@ -79,8 +84,6 @@ export function Logos({ theme = "dark" }: LogosProps) {
         />
         <div
           className="marquee-track flex w-max items-center gap-14 whitespace-nowrap"
-          // Start the loop mid-way through so the eye lands on the middle of
-          // the tool list first (half of the 80s duration).
           style={{ animationDelay: "-40s" }}
         >
           {items.map((tool, i) => (
@@ -90,10 +93,15 @@ export function Logos({ theme = "dark" }: LogosProps) {
               alt={tool.name}
               loading="lazy"
               className="h-7 w-auto shrink-0 select-none transition-[filter] duration-300"
-              style={{ filter: tint }}
+              style={{ filter: tool.keepColor ? keepColorFilter : tint }}
               draggable={false}
             />
           ))}
+        </div>
+      </div>
+    </section>
+  );
+}
         </div>
       </div>
     </section>
