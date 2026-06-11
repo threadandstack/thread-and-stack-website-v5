@@ -125,21 +125,6 @@ export function LogoTilt({ className = "h-32 sm:h-44 md:h-56", theme = "dark" }:
   }, []);
 
 
-    const apply = () => {
-      if (mqMobile.matches && !mqReduce.matches) attach();
-      else detach();
-    };
-
-    apply();
-    mqMobile.addEventListener("change", apply);
-    mqReduce.addEventListener("change", apply);
-
-    return () => {
-      mqMobile.removeEventListener("change", apply);
-      mqReduce.removeEventListener("change", apply);
-      detach();
-    };
-  }, []);
 
   return (
     <div
