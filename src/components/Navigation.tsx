@@ -132,9 +132,24 @@ export const Navigation = ({ variant = "default", hideLogo = false }: Navigation
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0 pointer-events-none"}`}>
         <div className="max-w-7xl mx-auto px-6 py-3">
           <div className="flex items-center justify-between bg-background/95 backdrop-blur-md rounded-full px-4 py-2 shadow-[0_4px_24px_rgba(0,0,0,0.1)] border border-border/30">
-            <a href="/" className="block relative" onMouseEnter={() => setIsLogoHovered(true)} onMouseLeave={() => setIsLogoHovered(false)}>
-              <img src={GreyStacked} alt="Thread & Stack" className="h-8 md:h-10 w-auto transition-opacity duration-500" style={{ opacity: isLogoHovered ? 0 : 1 }} />
-              <img src={IndigoStacked} alt="" className="h-8 md:h-10 w-auto absolute inset-0 transition-opacity duration-500" style={{ opacity: isLogoHovered ? 1 : 0 }} />
+            <a href="/" className="block relative h-8 md:h-10 aspect-square" onMouseEnter={() => setIsLogoHovered(true)} onMouseLeave={() => setIsLogoHovered(false)}>
+              <img src={isDark ? WhiteStacked : BlackStacked} alt="Thread & Stack" className="h-8 md:h-10 w-auto transition-opacity duration-500" style={{ opacity: isLogoHovered ? 0 : 1 }} />
+              <div
+                aria-hidden
+                className="absolute inset-0 h-8 md:h-10 transition-opacity duration-500 pointer-events-none"
+                style={{
+                  opacity: isLogoHovered ? 1 : 0,
+                  background: "linear-gradient(135deg, hsl(var(--orange)), hsl(var(--violet)))",
+                  WebkitMaskImage: `url(${isDark ? WhiteStacked : BlackStacked})`,
+                  maskImage: `url(${isDark ? WhiteStacked : BlackStacked})`,
+                  WebkitMaskRepeat: "no-repeat",
+                  maskRepeat: "no-repeat",
+                  WebkitMaskSize: "contain",
+                  maskSize: "contain",
+                  WebkitMaskPosition: "left center",
+                  maskPosition: "left center",
+                }}
+              />
             </a>
 
             <div className="hidden md:flex items-center gap-1">
