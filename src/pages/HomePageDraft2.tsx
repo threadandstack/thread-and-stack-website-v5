@@ -38,7 +38,7 @@ const HomePageDraft2 = () => {
 
       <main>
         <Hero theme={theme} onToggleTheme={toggleTheme} onBookDiagnostic={openDiagnostic} />
-        <Logos />
+        <Logos theme={theme} />
         <Problem />
         <Scorecard />
         <Engagements />
