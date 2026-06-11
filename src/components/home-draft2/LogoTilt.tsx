@@ -17,8 +17,7 @@ export function LogoTilt({ className = "h-32 sm:h-44 md:h-56", theme = "dark" }:
   // No sticky pinning (it conflicts with the fixed nav). No indigo glow on mobile.
   useEffect(() => {
     const root = rootRef.current;
-    const inner = innerRef.current;
-    if (!root || !inner) return;
+    if (!root) return;
 
     const mqMobile = window.matchMedia("(max-width: 767px)");
     const mqReduce = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -26,23 +25,27 @@ export function LogoTilt({ className = "h-32 sm:h-44 md:h-56", theme = "dark" }:
     let raf = 0;
     let attached = false;
     let startCenterX = 0;
-    let startTopAbs = 0; // absolute Y (document space) of logo top at rest
+    let startTopAbs = 0;
+    let startWidth = 0;
     let startHeight = 0;
 
-    // Target position: matches the floating nav's logo placement on mobile.
-    // Floating nav: outer px-6 py-3 → 24px/12px; inner pill px-4 py-2 → 16px/8px.
-    // Nav logo is h-8 (32px) on mobile. So logo top-left sits at ~(40, 20).
+    // Floating nav: outer px-6 py-3, inner pill px-4 py-2, logo h-8.
+    // Logo top-left lives around (40, 20) on mobile.
     const NAV_LOGO_LEFT = 40;
     const NAV_LOGO_TOP = 20;
     const NAV_LOGO_HEIGHT = 32;
+    const RANGE = 280; // px of scroll over which the dock animation completes
+
+    const easeInOut = (p: number) =>
+      p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
 
     const measure = () => {
-      // Clear transform to read natural rect.
       const prev = root.style.transform;
       root.style.transform = "";
       const r = root.getBoundingClientRect();
       startCenterX = r.left + r.width / 2;
       startTopAbs = r.top + window.scrollY;
+      startWidth = r.width || 1;
       startHeight = r.height || 1;
       root.style.transform = prev;
     };
@@ -50,30 +53,26 @@ export function LogoTilt({ className = "h-32 sm:h-44 md:h-56", theme = "dark" }:
     const update = () => {
       raf = 0;
       const sy = window.scrollY;
-      // Animate over the first ~55% of viewport height of scroll.
-      const range = Math.max(240, window.innerHeight * 0.55);
-      const p = Math.min(Math.max(sy / range, 0), 1);
-      // Ease in-out for smoothness.
-      const e = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+      const rawP = Math.min(Math.max(sy / RANGE, 0), 1);
+      const e = easeInOut(rawP);
 
       const targetScale = NAV_LOGO_HEIGHT / startHeight;
       const scale = 1 + (targetScale - 1) * e;
 
-      // Where the logo's top-left currently sits in viewport space (untransformed):
-      const naturalLeft = startCenterX - (startHeight / 2); // approximate; logos are roughly square
-      const naturalTop = startTopAbs - sy;
-
-      // We want the scaled logo's top-left to land at (NAV_LOGO_LEFT, NAV_LOGO_TOP).
-      // Because transform-origin is top-left, translate = target - natural.
+      // Freeze the dock target once the animation completes, so we don't keep
+      // tracking scroll forever (would otherwise escape the hero's clipped box).
+      const trackScroll = Math.min(sy, RANGE);
+      const naturalLeft = startCenterX - startWidth / 2;
+      const naturalTop = startTopAbs - trackScroll;
       const dx = (NAV_LOGO_LEFT - naturalLeft) * e;
       const dy = (NAV_LOGO_TOP - naturalTop) * e;
 
-      // Fade out near the end so the floating nav logo can take over cleanly.
-      const op = p < 0.85 ? 1 : Math.max(0, 1 - (p - 0.85) / 0.15);
+      // Fade out near the end so the floating nav logo carries the brand.
+      const op = rawP < 0.7 ? 1 : Math.max(0, 1 - (rawP - 0.7) / 0.3);
 
       root.style.transform = `translate3d(${dx}px, ${dy}px, 0) scale(${scale})`;
       root.style.opacity = String(op);
-      root.style.pointerEvents = p > 0.6 ? "none" : "";
+      root.style.pointerEvents = rawP > 0.5 ? "none" : "";
     };
 
     const onScroll = () => {
@@ -81,7 +80,6 @@ export function LogoTilt({ className = "h-32 sm:h-44 md:h-56", theme = "dark" }:
       raf = requestAnimationFrame(update);
     };
     const onResize = () => {
-      // Reset, remeasure, reapply.
       root.style.transform = "";
       root.style.opacity = "";
       measure();
@@ -91,7 +89,6 @@ export function LogoTilt({ className = "h-32 sm:h-44 md:h-56", theme = "dark" }:
     const attach = () => {
       if (attached) return;
       attached = true;
-      // Mobile-specific transform origin for the dock.
       root.style.transformOrigin = "top left";
       measure();
       window.addEventListener("scroll", onScroll, { passive: true });
@@ -110,6 +107,23 @@ export function LogoTilt({ className = "h-32 sm:h-44 md:h-56", theme = "dark" }:
       root.style.transformOrigin = "";
       root.style.pointerEvents = "";
     };
+
+    const apply = () => {
+      if (mqMobile.matches && !mqReduce.matches) attach();
+      else detach();
+    };
+
+    apply();
+    mqMobile.addEventListener("change", apply);
+    mqReduce.addEventListener("change", apply);
+
+    return () => {
+      mqMobile.removeEventListener("change", apply);
+      mqReduce.removeEventListener("change", apply);
+      detach();
+    };
+  }, []);
+
 
     const apply = () => {
       if (mqMobile.matches && !mqReduce.matches) attach();
