@@ -11,6 +11,7 @@ import {
 import GreyStacked from "@/assets/logos/Grey_TS_Stacked.svg";
 import IndigoStacked from "@/assets/logos/Indigo_TS_Stacked.svg";
 import WhiteStacked from "@/assets/logos/White_TS_Stacked.svg";
+import BlackStacked from "@/assets/logos/Black_TS_Stacked.svg";
 import { trackNavClick, trackCtaClick } from "@/hooks/useAnalytics";
 
 interface NavigationProps {
