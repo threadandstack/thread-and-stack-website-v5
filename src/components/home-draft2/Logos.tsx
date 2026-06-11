@@ -102,8 +102,3 @@ export function Logos({ theme = "dark" }: LogosProps) {
     </section>
   );
 }
-        </div>
-      </div>
-    </section>
-  );
-}
