@@ -136,7 +136,7 @@ export function LogoTilt({ className = "h-32 sm:h-44 md:h-56", theme = "dark" }:
   return (
     <div
       ref={rootRef}
-      className="relative group cursor-pointer [perspective:800px] transition-transform duration-200 ease-out will-change-transform"
+      className="relative group cursor-pointer [perspective:800px] will-change-transform"
       onMouseMove={(e) => {
         const el = e.currentTarget as HTMLDivElement;
         const r = el.getBoundingClientRect();
