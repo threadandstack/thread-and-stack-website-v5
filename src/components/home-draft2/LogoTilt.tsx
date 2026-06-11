@@ -11,71 +11,69 @@ interface LogoTiltProps {
 export function LogoTilt({ className = "h-32 sm:h-44 md:h-56", theme = "dark" }: LogoTiltProps) {
   const logoBase = theme === "light" ? logoBlack : logoWhite;
   const rootRef = useRef<HTMLDivElement>(null);
-  const touchActiveRef = useRef(false);
+  const innerRef = useRef<HTMLDivElement>(null);
 
-  // Mobile: scroll-linked tilt + sticky follow within the hero section.
+  // Mobile: scroll-driven shrink-and-dock toward the floating nav logo position.
+  // No sticky pinning (it conflicts with the fixed nav). No indigo glow on mobile.
   useEffect(() => {
-    const el = rootRef.current;
-    if (!el) return;
+    const root = rootRef.current;
+    const inner = innerRef.current;
+    if (!root || !inner) return;
 
     const mqMobile = window.matchMedia("(max-width: 767px)");
     const mqReduce = window.matchMedia("(prefers-reduced-motion: reduce)");
 
     let raf = 0;
     let attached = false;
-    let section: HTMLElement | null = null;
+    let startCenterX = 0;
+    let startTopAbs = 0; // absolute Y (document space) of logo top at rest
+    let startHeight = 0;
 
-    const setVars = (tx: number, ty: number, mx: number, my: number) => {
-      if (touchActiveRef.current) return; // touch drag wins
-      const sx = (50 - mx) / 4;
-      const sy = (50 - my) / 4;
-      el.style.setProperty("--mx", `${mx}%`);
-      el.style.setProperty("--my", `${my}%`);
-      el.style.setProperty("--tx", `${tx}deg`);
-      el.style.setProperty("--ty", `${ty}deg`);
-      el.style.setProperty("--sx", `${sx}px`);
-      el.style.setProperty("--sy", `${sy}px`);
-    };
-
-    let logoOffsetInSection = 0;
+    // Target position: matches the floating nav's logo placement on mobile.
+    // Floating nav: outer px-6 py-3 → 24px/12px; inner pill px-4 py-2 → 16px/8px.
+    // Nav logo is h-8 (32px) on mobile. So logo top-left sits at ~(40, 20).
+    const NAV_LOGO_LEFT = 40;
+    const NAV_LOGO_TOP = 20;
+    const NAV_LOGO_HEIGHT = 32;
 
     const measure = () => {
-      if (!section) return;
-      const prev = el.style.transform;
-      el.style.transform = "";
-      const elTop = el.getBoundingClientRect().top;
-      const secTop = section.getBoundingClientRect().top;
-      logoOffsetInSection = Math.max(0, elTop - secTop);
-      el.style.transform = prev;
+      // Clear transform to read natural rect.
+      const prev = root.style.transform;
+      root.style.transform = "";
+      const r = root.getBoundingClientRect();
+      startCenterX = r.left + r.width / 2;
+      startTopAbs = r.top + window.scrollY;
+      startHeight = r.height || 1;
+      root.style.transform = prev;
     };
 
     const update = () => {
       raf = 0;
-      if (!section) return;
-      const rect = section.getBoundingClientRect();
-      const vh = window.innerHeight;
-      const logoH = el.offsetHeight;
-      const topOffset = 72;
+      const sy = window.scrollY;
+      // Animate over the first ~55% of viewport height of scroll.
+      const range = Math.max(240, window.innerHeight * 0.55);
+      const p = Math.min(Math.max(sy / range, 0), 1);
+      // Ease in-out for smoothness.
+      const e = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
 
-      // Translate the logo so it stays pinned near topOffset as the section scrolls.
-      const desired = -rect.top + topOffset - logoOffsetInSection;
-      const maxTranslate = Math.max(
-        0,
-        rect.height - logoH - logoOffsetInSection - topOffset - 24
-      );
-      const translate = Math.min(Math.max(desired, 0), maxTranslate);
-      el.style.transform = `translate3d(0, ${translate}px, 0)`;
+      const targetScale = NAV_LOGO_HEIGHT / startHeight;
+      const scale = 1 + (targetScale - 1) * e;
 
-      // Progress 0 → 1 across the hero scroll range.
-      const total = Math.max(1, rect.height - vh);
-      const scrolled = Math.min(Math.max(-rect.top, 0), total);
-      const p = scrolled / total;
+      // Where the logo's top-left currently sits in viewport space (untransformed):
+      const naturalLeft = startCenterX - (startHeight / 2); // approximate; logos are roughly square
+      const naturalTop = startTopAbs - sy;
 
-      const tx = (p - 0.5) * 16; // ±8°
-      const ty = Math.sin(p * Math.PI) * 6;
-      const mx = 20 + p * 60;
-      const my = 80 - p * 60;
-      setVars(tx, ty, mx, my);
+      // We want the scaled logo's top-left to land at (NAV_LOGO_LEFT, NAV_LOGO_TOP).
+      // Because transform-origin is top-left, translate = target - natural.
+      const dx = (NAV_LOGO_LEFT - naturalLeft) * e;
+      const dy = (NAV_LOGO_TOP - naturalTop) * e;
+
+      // Fade out near the end so the floating nav logo can take over cleanly.
+      const op = p < 0.85 ? 1 : Math.max(0, 1 - (p - 0.85) / 0.15);
+
+      root.style.transform = `translate3d(${dx}px, ${dy}px, 0) scale(${scale})`;
+      root.style.opacity = String(op);
+      root.style.pointerEvents = p > 0.6 ? "none" : "";
     };
 
     const onScroll = () => {
@@ -83,25 +81,18 @@ export function LogoTilt({ className = "h-32 sm:h-44 md:h-56", theme = "dark" }:
       raf = requestAnimationFrame(update);
     };
     const onResize = () => {
+      // Reset, remeasure, reapply.
+      root.style.transform = "";
+      root.style.opacity = "";
       measure();
       onScroll();
     };
 
-    const reset = () => {
-      el.style.transform = "";
-      el.style.setProperty("--tx", "0deg");
-      el.style.setProperty("--ty", "0deg");
-      el.style.setProperty("--sx", "0px");
-      el.style.setProperty("--sy", "0px");
-      el.style.setProperty("--mx", "50%");
-      el.style.setProperty("--my", "50%");
-    };
-
     const attach = () => {
       if (attached) return;
-      section = el.closest("section");
-      if (!section) return;
       attached = true;
+      // Mobile-specific transform origin for the dock.
+      root.style.transformOrigin = "top left";
       measure();
       window.addEventListener("scroll", onScroll, { passive: true });
       window.addEventListener("resize", onResize);
@@ -114,7 +105,10 @@ export function LogoTilt({ className = "h-32 sm:h-44 md:h-56", theme = "dark" }:
       window.removeEventListener("resize", onResize);
       if (raf) cancelAnimationFrame(raf);
       raf = 0;
-      reset();
+      root.style.transform = "";
+      root.style.opacity = "";
+      root.style.transformOrigin = "";
+      root.style.pointerEvents = "";
     };
 
     const apply = () => {
@@ -136,7 +130,7 @@ export function LogoTilt({ className = "h-32 sm:h-44 md:h-56", theme = "dark" }:
   return (
     <div
       ref={rootRef}
-      className="relative group cursor-pointer [perspective:800px] will-change-transform"
+      className="relative group [perspective:800px] will-change-transform md:cursor-pointer"
       onMouseMove={(e) => {
         const el = e.currentTarget as HTMLDivElement;
         const r = el.getBoundingClientRect();
@@ -160,34 +154,6 @@ export function LogoTilt({ className = "h-32 sm:h-44 md:h-56", theme = "dark" }:
         el.style.setProperty("--sx", `0px`);
         el.style.setProperty("--sy", `0px`);
       }}
-      onTouchStart={() => {
-        touchActiveRef.current = true;
-      }}
-      onTouchMove={(e) => {
-        const el = e.currentTarget as HTMLDivElement;
-        const t = e.touches[0];
-        if (!t) return;
-        const r = el.getBoundingClientRect();
-        const x = ((t.clientX - r.left) / r.width) * 100;
-        const y = ((t.clientY - r.top) / r.height) * 100;
-        const tx = (x - 50) / 6;
-        const ty = (50 - y) / 6;
-        const sx = (50 - x) / 4;
-        const sy = (50 - y) / 4;
-        el.style.setProperty("--mx", `${x}%`);
-        el.style.setProperty("--my", `${y}%`);
-        el.style.setProperty("--tx", `${tx}deg`);
-        el.style.setProperty("--ty", `${ty}deg`);
-        el.style.setProperty("--sx", `${sx}px`);
-        el.style.setProperty("--sy", `${sy}px`);
-      }}
-      onTouchEnd={() => {
-        // Release back to scroll-driven values on next frame.
-        setTimeout(() => {
-          touchActiveRef.current = false;
-          window.dispatchEvent(new Event("scroll"));
-        }, 80);
-      }}
       style={{
         ["--mx" as never]: "50%",
         ["--my" as never]: "50%",
@@ -198,6 +164,7 @@ export function LogoTilt({ className = "h-32 sm:h-44 md:h-56", theme = "dark" }:
       }}
     >
       <div
+        ref={innerRef}
         className="relative transition-transform duration-200 ease-out [transform-style:preserve-3d]"
         style={{ transform: "rotateX(var(--ty)) rotateY(var(--tx))" }}
       >
@@ -210,11 +177,12 @@ export function LogoTilt({ className = "h-32 sm:h-44 md:h-56", theme = "dark" }:
               "drop-shadow(calc(var(--sx) * -1) calc(var(--sy) * -1) 10px rgba(0,0,0,0.18)) drop-shadow(var(--sx) var(--sy) 6px rgba(0,0,0,0.22))",
           }}
         />
+        {/* Indigo glow + reveal: desktop only (hover-driven). Hidden on mobile. */}
         <img
           src={logoIndigo}
           alt=""
           aria-hidden="true"
-          className={`absolute inset-0 w-auto opacity-0 group-hover:opacity-100 md:group-hover:opacity-100 max-md:opacity-100 transition-opacity duration-200 pointer-events-none ${className}`}
+          className={`absolute inset-0 w-auto opacity-0 transition-opacity duration-200 pointer-events-none hidden md:block md:group-hover:opacity-100 ${className}`}
           style={{
             WebkitMaskImage:
               "radial-gradient(circle 70px at var(--mx) var(--my), rgba(0,0,0,0.95), rgba(0,0,0,0) 75%)",
@@ -223,7 +191,7 @@ export function LogoTilt({ className = "h-32 sm:h-44 md:h-56", theme = "dark" }:
           }}
         />
         <div
-          className="absolute inset-0 opacity-0 group-hover:opacity-100 max-md:opacity-100 transition-opacity duration-300 pointer-events-none blur-xl"
+          className="absolute inset-0 opacity-0 transition-opacity duration-300 pointer-events-none blur-xl hidden md:block md:group-hover:opacity-100"
           style={{
             background:
               "radial-gradient(circle 90px at var(--mx) var(--my), hsl(var(--indigo) / 0.55), transparent 70%)",
