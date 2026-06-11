@@ -969,4 +969,4 @@ All colors MUST be HSL.
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
 }
-.notion-canvas .marquee-track { animation: nc-marquee 38s linear infinite; }
+.notion-canvas .marquee-track { animation: nc-marquee 80s linear infinite; }
