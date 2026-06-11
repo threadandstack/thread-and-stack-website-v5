@@ -1,27 +1,33 @@
-## Replace "Knowledge Lake" with "Knowledge Base"
+# Mobile interactivity for the hero LogoTilt
 
-### Goal
-Remove the branded/conflicting "Knowledge Lake" term everywhere it functions as a product or system name. Replace with "Knowledge Base" (plain, universally understood). Keep a medium depth of water metaphor in select poetic copy where the imagery is the point.
+Bring the desktop "discovery moment" to touch devices without permissions, prompts, or aimless idle motion. The logo pins inside the hero on small screens and tilts in response to scroll — the one gesture every mobile user makes within the first second. Touch drag remains silently available on top for anyone who happens to try it.
 
-### What changes
+## Behaviour
 
-| File | What to replace |
-|------|-----------------|
-| `src/components/home-draft2/Hero.tsx` | "Knowledge Lake" → "Knowledge Base" |
-| `src/components/home-draft2/Problem.tsx` | "knowledge lake" → "knowledge base"; "the lake" → "the base" |
-| `src/components/home-draft2/Scorecard.tsx` | "Knowledge Lake Starter" → "Knowledge Base Starter"; "five-layer lake" → "five-layer base" |
-| `src/components/home-draft2/Engagements.tsx` | "Knowledge Lake Starter" → "Knowledge Base Starter"; "the lake" → "the base"; "five-layer Knowledge Lake" → "five-layer Knowledge Base" |
-| `src/components/home-draft2/FAQ.tsx` | "You own the lake" → "You own the base"; "The lake keeps growing" → "The base keeps growing" |
-| `src/pages/proposal/SFFireProposalPage.tsx` | "knowledge lake" → "knowledge base" |
-| `src/pages/proposal/LSSProposalPage.tsx` | "knowledge lake" → "knowledge base"; "Knowledge lake" (table row) → "Knowledge base"; "Notion knowledge lake" → "Notion knowledge base" |
+**Desktop (≥768px)** — unchanged. Mouse-move drives the existing 3D tilt, indigo radial reveal, and drop shadows.
 
-### What stays (medium metaphor depth)
+**Mobile (<768px)**
+1. **Sticky pin during the hero.** The logo's wrapper becomes `sticky` near the top of the viewport while the user scrolls the first ~100vh. Once the hero section scrolls past, the logo releases and flows away naturally with the rest of the page.
+2. **Scroll-linked tilt.** An IntersectionObserver + scroll listener measures the logo's position relative to the viewport centre. That progress (roughly -1 → 0 → +1 as the hero scrolls past) drives the same `--tx`, `--ty`, `--sx`, `--sy` CSS variables the desktop hover already uses. The same indigo-glow reveal and shadow logic light up — no new visual language.
+   - Tilt range: ±8° X / ±6° Y (slightly stronger than mouse so the effect reads clearly on small viewports).
+   - The radial mask centre (`--mx`, `--my`) sweeps diagonally with scroll so the indigo glow travels across the mark.
+3. **Touch drag bonus.** `onTouchMove` / `onTouchEnd` mirror the existing `onMouseMove` / `onMouseLeave` handlers. A finger drag temporarily overrides the scroll-driven values, then releases back to scroll control after touch end. No hint, no affordance — pure easter egg for the curious.
 
-- **LSS Proposal heading**: "From walls and dams to lakes and rivers" — kept as a poetic metaphor, not a product name.
-- **LSS Pull quote**: "Own the lake. Let the rivers come and go." — kept; the water imagery is the literary device here.
-- **Problem.tsx Compound phase**: "the deeper the base becomes — filling with knowledge, resource, and value" — the water logic remains in the verb "filling" even though "lake" is replaced by "base".
+## Edge cases & guardrails
 
-### Not in scope
+- `prefers-reduced-motion: reduce` → disable scroll-linked tilt and touch drag; logo stays still. Sticky pin remains so layout is consistent.
+- The sticky pin uses a hero-scoped container so it never bleeds into sections below.
+- All transforms route through the existing CSS variables, so the indigo mask, shadows, and 200ms easing stay identical to desktop — no parallel animation system.
+- Scroll listener is `passive: true` and throttled via `requestAnimationFrame` to keep the hero buttery on low-end devices.
+- Breakpoint switch (resize crossing 768px) cleanly tears down the scroll listener and observer.
 
-- No changes to Notion page titles, database names, or external links. Those are outside the code.
-- No changes to the "Knowledge Infrastructure Build" tier name (it already avoids "Lake").
+## Files
+
+- `src/components/home-draft2/LogoTilt.tsx` — add the mobile branch (sticky wrapper, scroll listener, touch handlers, reduced-motion guard). Desktop path untouched.
+- `src/components/home-draft2/Hero.tsx` — no change expected; the sticky behaviour lives inside `LogoTilt` so the Hero layout stays as-is. If the existing `fade-up mb-8` wrapper interferes with `position: sticky`, move the sticky onto the wrapper inside `LogoTilt` itself.
+
+## Out of scope
+
+- Gyroscope / `deviceorientation` (ruled out — permission prompt feels invasive).
+- Auto-orbit or idle drift (ruled out — reads as a gimmick).
+- Any new visual element, hint pill, or affordance text near the logo.
