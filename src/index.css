@@ -815,22 +815,22 @@ All colors MUST be HSL.
    Scoped to .notion-canvas so it never leaks into the rest of the site.
    ========================================================================= */
 .notion-canvas {
-  /* Override base surface to warm premium dark */
-  --background: 30 10% 9%;
-  --foreground: 35 25% 95%;
-  --muted-foreground: 30 8% 62%;
-  --card: 30 8% 14%;
-  --card-foreground: 35 25% 95%;
-  --muted: 30 8% 18%;
-  --border: 30 6% 22%;
+  /* Sharper charcoal dark surface (cool neutral, no warm brown) */
+  --background: 240 6% 7%;
+  --foreground: 220 15% 96%;
+  --muted-foreground: 220 6% 64%;
+  --card: 240 5% 11%;
+  --card-foreground: 220 15% 96%;
+  --muted: 240 5% 15%;
+  --border: 240 4% 20%;
   --accent: 18 75% 60%;
-  --accent-foreground: 30 12% 8%;
+  --accent-foreground: 240 6% 7%;
 
-  /* New warm tokens */
-  --paper: 30 8% 14%;
-  --ink: 30 12% 6%;
-  --ink-soft: 35 10% 72%;
-  --hairline: 30 6% 22%;
+  /* Neutral cool tokens (replaces warm brown paper) */
+  --paper: 240 5% 11%;
+  --ink: 240 6% 5%;
+  --ink-soft: 220 8% 74%;
+  --hairline: 240 4% 20%;
 
   /* Accent palette */
   --clay: 18 75% 60%;
