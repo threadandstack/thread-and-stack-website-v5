@@ -153,6 +153,8 @@ export const Navigation = ({ variant = "default", hideLogo = false, floatingBadg
               />
             </a>
 
+            {floatingBadge && <div className="ml-2 hidden sm:flex items-center">{floatingBadge}</div>}
+
             <div className="hidden md:flex items-center gap-1">
               <NavItem href="/about" label="About" icon={User} onClick={() => trackNavClick('About', 'floating')} />
               <NavItem href="/how-i-work" label="How I Work" icon={Compass} onClick={() => trackNavClick('How I Work', 'floating')} />
