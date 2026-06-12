@@ -18,6 +18,7 @@ interface NavigationProps {
   variant?: "default" | "dark" | "image-hero";
   hideLogo?: boolean;
   floatingBadge?: React.ReactNode;
+  themeToggle?: React.ReactNode;
 }
 
 export const Navigation = ({ variant = "default", hideLogo = false, floatingBadge }: NavigationProps) => {
