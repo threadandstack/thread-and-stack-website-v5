@@ -154,6 +154,8 @@ export const Navigation = ({ variant = "default", hideLogo = false, floatingBadg
               />
             </a>
 
+            {themeToggle && <div className="ml-2 flex items-center">{themeToggle}</div>}
+
             {floatingBadge && <div className="ml-2 hidden sm:flex items-center">{floatingBadge}</div>}
 
             <div className="hidden md:flex items-center gap-1">
