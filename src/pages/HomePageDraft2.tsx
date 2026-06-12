@@ -55,28 +55,7 @@ const HomePageDraft2 = () => {
       </div>
 
       <main>
-        {/* Duplicate Hero — charcoal black variant for comparison */}
-        <div
-          style={{
-            background: "#111114",
-            // override the canvas token within this block only
-            ['--background' as any]: '240 6% 7%',
-            ['--paper' as any]: '240 5% 11%',
-          }}
-          className="relative"
-        >
-          <div className="pointer-events-none absolute left-4 top-4 z-10 rounded-full border border-hairline bg-paper/70 px-2.5 py-1 text-[11px] text-ink-soft backdrop-blur">
-            Charcoal variant
-          </div>
-          <Hero theme={theme} onToggleTheme={toggleTheme} onBookDiagnostic={openDiagnostic} />
-        </div>
-
-        <div className="relative">
-          <div className="pointer-events-none absolute left-4 top-4 z-10 rounded-full border border-hairline bg-paper/70 px-2.5 py-1 text-[11px] text-ink-soft backdrop-blur">
-            Current (warm)
-          </div>
-          <Hero theme={theme} onToggleTheme={toggleTheme} onBookDiagnostic={openDiagnostic} />
-        </div>
+        <Hero theme={theme} onToggleTheme={toggleTheme} onBookDiagnostic={openDiagnostic} />
         <Logos theme={theme} />
         <Problem />
         <Scorecard />
