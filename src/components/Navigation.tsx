@@ -21,7 +21,7 @@ interface NavigationProps {
   themeToggle?: React.ReactNode;
 }
 
-export const Navigation = ({ variant = "default", hideLogo = false, floatingBadge }: NavigationProps) => {
+export const Navigation = ({ variant = "default", hideLogo = false, floatingBadge, themeToggle }: NavigationProps) => {
   const isDark = variant === "dark" || variant === "image-hero";
   const isImageHero = variant === "image-hero";
   const [isScrolled, setIsScrolled] = useState(false);
