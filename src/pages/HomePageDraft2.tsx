@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Sun, Moon } from "lucide-react";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/home-draft2/Hero";
@@ -24,6 +25,15 @@ const HomePageDraft2 = () => {
       <Navigation
         variant={theme === "dark" ? "image-hero" : "default"}
         hideLogo
+        themeToggle={
+          <button
+            onClick={toggleTheme}
+            className="flex h-8 w-8 items-center justify-center rounded-full border border-border/40 bg-muted/60 text-foreground/70 backdrop-blur-sm transition-all hover:bg-muted hover:text-foreground"
+            aria-label="Toggle theme"
+          >
+            {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+          </button>
+        }
         floatingBadge={
           <span className="inline-flex items-center gap-2 rounded-full border border-hairline bg-paper/80 px-3 py-1.5 text-[12px] text-ink-soft backdrop-blur-md">
             <span className="relative grid h-2 w-2 place-items-center">

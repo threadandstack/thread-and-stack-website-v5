@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Menu, X, ChevronDown, User, Compass, Layers, BookOpen, Rocket } from "lucide-react";
+import { Menu, X, ChevronDown, User, Compass, Layers, BookOpen, Rocket, Sun, Moon } from "lucide-react";
 import { ContactDrawer } from "@/components/ContactDrawer";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,9 +18,10 @@ interface NavigationProps {
   variant?: "default" | "dark" | "image-hero";
   hideLogo?: boolean;
   floatingBadge?: React.ReactNode;
+  themeToggle?: React.ReactNode;
 }
 
-export const Navigation = ({ variant = "default", hideLogo = false, floatingBadge }: NavigationProps) => {
+export const Navigation = ({ variant = "default", hideLogo = false, floatingBadge, themeToggle }: NavigationProps) => {
   const isDark = variant === "dark" || variant === "image-hero";
   const isImageHero = variant === "image-hero";
   const [isScrolled, setIsScrolled] = useState(false);
@@ -152,6 +153,8 @@ export const Navigation = ({ variant = "default", hideLogo = false, floatingBadg
                 }}
               />
             </a>
+
+            {themeToggle && <div className="ml-2 flex items-center">{themeToggle}</div>}
 
             {floatingBadge && <div className="ml-2 hidden sm:flex items-center">{floatingBadge}</div>}
 
