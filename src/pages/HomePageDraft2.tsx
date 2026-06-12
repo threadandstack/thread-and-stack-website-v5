@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Sun, Moon } from "lucide-react";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/home-draft2/Hero";
