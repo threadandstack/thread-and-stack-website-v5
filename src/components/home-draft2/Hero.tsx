@@ -92,7 +92,7 @@ export function Hero({ theme, onToggleTheme, onBookDiagnostic }: HeroProps) {
               </span>
             </button>
             <a
-              href="#scorecard"
+              href="/home-draft2/scorecard"
               className="group inline-flex h-12 items-center rounded-md border border-hairline bg-background px-6 text-[14.5px] font-medium text-foreground transition-colors hover:bg-paper"
             >
               Take the 2-min Scorecard
