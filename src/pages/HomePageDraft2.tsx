@@ -21,7 +21,25 @@ const HomePageDraft2 = () => {
 
   return (
     <div className="notion-canvas min-h-screen overflow-x-hidden" data-theme={theme}>
-      <Navigation variant={theme === "dark" ? "image-hero" : "default"} hideLogo />
+      <Navigation
+        variant={theme === "dark" ? "image-hero" : "default"}
+        hideLogo
+        floatingBadge={
+          <span className="inline-flex items-center gap-2 rounded-full border border-hairline bg-paper/80 px-3 py-1.5 text-[12px] text-ink-soft backdrop-blur-md">
+            <span className="relative grid h-2 w-2 place-items-center">
+              <span
+                className="absolute inset-0 animate-ping rounded-full opacity-60"
+                style={{ background: "linear-gradient(135deg, hsl(var(--orange)), hsl(var(--violet)))" }}
+              />
+              <span
+                className="relative h-2 w-2 rounded-full"
+                style={{ background: "linear-gradient(135deg, hsl(var(--orange)), hsl(var(--violet)))" }}
+              />
+            </span>
+            Currently booking Q3
+          </span>
+        }
+      />
 
       {/* Floating "Currently booking Q3" pill where the logo used to sit */}
       <div className="pointer-events-none absolute left-0 right-0 top-0 z-40 px-6 pt-5">
