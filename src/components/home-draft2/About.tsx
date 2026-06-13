@@ -1,5 +1,6 @@
 import { ArrowRight, User } from "lucide-react";
 import brendanPhoto from "@/assets/photos/shoreditch/brendan-34.webp";
+import { SectionHeader } from "./SectionHeader";
 
 interface AboutProps {
   onBookDiagnostic?: () => void;
@@ -8,17 +9,10 @@ interface AboutProps {
 export function About({ onBookDiagnostic }: AboutProps) {
   return (
     <section>
-      <div className="mx-auto max-w-6xl px-6 py-24 md:py-32">
-        <div className="mb-16 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
-          <div>
-            <h2 className="font-serif-pro italic font-normal text-5xl leading-[1.05] tracking-[-0.02em] md:text-[64px]">
-              About <span className="text-clay">Thread & Stack.</span>
-            </h2>
-          </div>
-          <p className="max-w-sm text-[15px] text-ink-soft">
-            Twelve years of brand, marketing, and systems work, now pointed at one problem worth solving.
-          </p>
-        </div>
+      <div className="mx-auto max-w-5xl px-6 py-24 md:px-10 md:py-32">
+        <SectionHeader eyebrow="About">
+          About <span className="text-clay">Thread & Stack.</span>
+        </SectionHeader>
 
         <div className="grid items-start gap-10 md:grid-cols-5 md:gap-14">
           <div className="md:col-span-2">

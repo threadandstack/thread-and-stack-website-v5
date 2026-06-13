@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { SectionHeader } from "./SectionHeader";
 
 const audiences = [
   {
@@ -33,23 +34,16 @@ const audiences = [
 export function WhoItsFor() {
   return (
     <section>
-      <div className="mx-auto max-w-6xl px-6 py-24 md:py-32">
-        <div className="mb-16 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
-          <div>
-            <h2 className="font-serif-pro italic font-normal max-w-3xl text-balance text-5xl leading-[1.05] tracking-[-0.02em] md:text-[64px]">
-              For makers, founders, <span className="text-clay">and teams.</span>
-            </h2>
-          </div>
-          <p className="max-w-sm text-[15px] text-ink-soft">
-            Three signals that the gap between intention and execution has become too costly to leave alone.
-          </p>
-        </div>
+      <div className="mx-auto max-w-5xl px-6 py-24 md:px-10 md:py-32">
+        <SectionHeader eyebrow="For makers, founders, and teams">
+          Three signals it's <span className="text-clay">time.</span>
+        </SectionHeader>
 
         <div className="grid gap-6 md:grid-cols-3">
           {audiences.map((a) => (
             <article
               key={a.title}
-              className="flex flex-col rounded-2xl border border-hairline bg-background p-8 shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
+              className="flex flex-col items-center rounded-2xl border border-hairline bg-background p-8 text-center shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
             >
               <div className="mb-5">
                 <span
@@ -59,7 +53,7 @@ export function WhoItsFor() {
                 </span>
               </div>
 
-              <h3 className="font-serif-pro italic text-[26px] leading-tight">
+              <h3 className="font-serif-pro italic text-[24px] leading-tight">
                 {a.title}
               </h3>
 
