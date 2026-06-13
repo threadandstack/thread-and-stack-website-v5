@@ -50,7 +50,7 @@ export function FAQ() {
             </p>
           </div>
 
-          <div className="overflow-hidden rounded-2xl border border-hairline bg-paper">
+          <div className="overflow-hidden rounded-2xl border border-hairline bg-background shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
             {faqs.map((f, i) => {
               const isOpen = open === i;
               return (
