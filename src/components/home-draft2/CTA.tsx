@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { ContactDrawer } from "@/components/ContactDrawer";
 
 export function CTA() {
