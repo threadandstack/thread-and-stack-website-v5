@@ -53,8 +53,9 @@ export function LogoTilt({ className = "h-32 sm:h-44 md:h-56", theme = "dark" }:
           alt="Thread & Stack"
           className={`relative w-auto transition-[filter] duration-200 ${className}`}
           style={{
-            filter:
-              "drop-shadow(calc(var(--sx) * -1) calc(var(--sy) * -1) 10px rgba(0,0,0,0.18)) drop-shadow(var(--sx) var(--sy) 6px rgba(0,0,0,0.22))",
+            filter: theme === "dark"
+              ? "drop-shadow(calc(var(--sx) * -1) calc(var(--sy) * -1) 10px rgba(0,0,0,0.18)) drop-shadow(var(--sx) var(--sy) 6px rgba(0,0,0,0.22))"
+              : "none",
           }}
         />
         <img

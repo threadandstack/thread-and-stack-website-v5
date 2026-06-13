@@ -87,7 +87,7 @@ export const Navigation = ({ variant = "default", hideLogo = false, floatingBadg
           )}
 
           {/* Desktop pill nav */}
-          <div className="hidden md:flex items-center gap-1 bg-background/90 backdrop-blur-md rounded-full px-2 py-1.5 border border-border/30">
+          <div className="hidden md:flex items-center gap-1 bg-background/90 backdrop-blur-md rounded-full px-2 py-1.5 shadow-[0_2px_20px_rgba(0,0,0,0.08)] border border-border/30">
             <NavItem href="/about" label="About" icon={User} onClick={() => trackNavClick('About', 'header')} />
             <NavItem href="/how-i-work" label="How I Work" icon={Compass} onClick={() => trackNavClick('How I Work', 'header')} />
 
@@ -133,7 +133,7 @@ export const Navigation = ({ variant = "default", hideLogo = false, floatingBadg
       {/* Floating Navigation - pill on scroll */}
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0 pointer-events-none"}`}>
         <div className="max-w-7xl mx-auto px-6 py-3">
-          <div className="flex items-center justify-between bg-background/95 backdrop-blur-md rounded-full px-4 py-2 border border-border/30">
+          <div className="flex items-center justify-between bg-background/95 backdrop-blur-md rounded-full px-4 py-2 shadow-[0_4px_24px_rgba(0,0,0,0.1)] border border-border/30">
             <a href="/" className="block relative h-8 md:h-10 aspect-square" onMouseEnter={() => setIsLogoHovered(true)} onMouseLeave={() => setIsLogoHovered(false)}>
               <img src={isDark ? WhiteStacked : BlackStacked} alt="Thread & Stack" className="h-8 md:h-10 w-auto transition-opacity duration-500" style={{ opacity: isLogoHovered ? 0 : 1 }} />
               <div
