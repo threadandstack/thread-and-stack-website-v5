@@ -2,29 +2,29 @@ import { Link } from "react-router-dom";
 
 const audiences = [
   {
-    title: "Your story has moved on.",
+    title: "Your marketing no longer feels like you.",
     description:
-      "Your values and ambition have shifted, but the brand still speaks in an older voice. You need clarity, updated language, and creative direction that reflect who you are today.",
-    linkText: "Want to tell your story with soul?",
-    linkUrl: "/blog/storytelling-with-a-soul",
+      "The brand made sense when you started. Now it doesn't. Your values and ambition have shifted, but your story still speaks in an older voice. You need clarity, updated language, and direction that reflect who you are today.",
+    linkText: "Explore narrative realignment",
+    linkUrl: "/narratives-strategy",
     tag: "Narrative",
     tagClass: "bg-orange-100 text-orange-700",
   },
   {
-    title: "Your brand is becoming a universe.",
+    title: "You're working harder but it's not compounding.",
     description:
-      "You are expanding across new touchpoints and channels. The brand needs coherence, expression, and a visual system that keeps everything connected and true.",
-    linkText: "What is a brand universe?",
-    linkUrl: "/blog/what-is-a-brand-universe",
-    tag: "Creative",
+      "You've hired the right specialists — an agency, a freelancer, a website provider — but nobody owns the whole picture. Your GTM strategy is overwhelmed by fragmentation. The work isn't landing where it should.",
+    linkText: "See how integration changes the game",
+    linkUrl: "/how-i-work",
+    tag: "Strategy",
     tagClass: "bg-pink-100 text-pink-700",
   },
   {
-    title: "Your team needs clarity and creative support.",
+    title: "You can feel the leakage but can't see it.",
     description:
-      "You want to grow without sacrificing wellbeing or creative integrity. Your team needs systems and support that protect their energy and strengthen the work they produce.",
-    linkText: "The role of strategic clarity",
-    linkUrl: "/blog/why-you-and-your-team-care-about-clarity",
+      "You know there's a cost somewhere. Your marketing, brand, and operations grew up separately and they aren't talking to each other. The founder is absorbing increasing risk from disconnected signals.",
+    linkText: "Discover the systems layer",
+    linkUrl: "/notion-systems",
     tag: "Systems",
     tagClass: "bg-blue-100 text-blue-700",
   },
