@@ -90,8 +90,8 @@ export function CollapsibleSection({
             <span
               className={`shrink-0 text-[11px] uppercase tracking-[0.22em] transition-opacity duration-300 ${
                 open
-                  ? "text-clay opacity-100"
-                  : "text-ink-soft opacity-0 group-hover/toggle:opacity-100"
+                  ? "text-orange opacity-100"
+                  : "text-orange opacity-0 group-hover/toggle:opacity-100"
               }`}
             >
               {open ? "Collapse" : "Reveal"}
