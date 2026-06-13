@@ -8,7 +8,7 @@ export function CTA() {
   return (
     <section
       id="contact"
-      className="relative overflow-hidden border-b border-hairline bg-card text-card-foreground"
+      className="relative overflow-hidden bg-card text-card-foreground"
     >
       <div
         aria-hidden
@@ -19,15 +19,11 @@ export function CTA() {
         }}
       />
       <div className="relative mx-auto max-w-3xl px-6 py-24 md:py-32 text-center">
-        <div className="inline-flex items-center gap-2 rounded-full border border-hairline bg-foreground/[0.04] px-3 py-1 text-[11.5px] uppercase tracking-wider text-foreground/70">
-          <Sparkles className="h-3 w-3 text-indigo" strokeWidth={2} />
-          Stack Diagnostic · £395
-        </div>
-        <h2 className="mx-auto mt-6 max-w-3xl text-balance text-4xl font-medium leading-[1.02] tracking-[-0.03em] md:text-6xl">
+        <h2 className="font-serif-pro italic font-normal mx-auto max-w-3xl text-balance text-5xl leading-[1.05] tracking-[-0.02em] md:text-[64px]">
           Book the Diagnostic.<br />
-          <span className="font-serif-pro italic text-clay-soft">Leave with a plan.</span>
+          <span className="text-clay-soft">Leave with a plan.</span>
         </h2>
-        <p className="mx-auto mt-5 max-w-md text-[15px] text-foreground/70">
+        <p className="mx-auto mt-6 max-w-md text-[15px] text-foreground/70">
           90 minutes live. A written blueprint within 48 hours. Credited in full against
           any build you choose afterwards.
         </p>
