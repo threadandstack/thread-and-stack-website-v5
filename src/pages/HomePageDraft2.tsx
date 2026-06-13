@@ -53,18 +53,6 @@ const HomePageDraft2 = () => {
         }
       />
 
-      {/* Floating "Currently booking Q3" pill where the logo used to sit */}
-      <div className="pointer-events-none absolute left-0 right-0 top-0 z-40 px-6 pt-5">
-        <div className="mx-auto flex max-w-7xl">
-          <span className="pointer-events-auto inline-flex items-center gap-2 rounded-full border border-hairline bg-paper/80 px-3 py-1.5 text-[12px] text-ink-soft backdrop-blur-md">
-            <span className="relative grid h-2 w-2 place-items-center">
-              <span className="absolute inset-0 animate-ping rounded-full bg-indigo/60" />
-              <span className="relative h-2 w-2 rounded-full bg-indigo" />
-            </span>
-            Currently booking Q3
-          </span>
-        </div>
-      </div>
 
       <main>
         <Hero theme={theme} onToggleTheme={toggleTheme} onBookDiagnostic={openDiagnostic} />
