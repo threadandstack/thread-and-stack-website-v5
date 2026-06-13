@@ -14,6 +14,7 @@ import { FAQ } from "@/components/home-draft2/FAQ";
 import { CTA } from "@/components/home-draft2/CTA";
 import { WhoItsFor } from "@/components/home-draft2/WhoItsFor";
 import { About } from "@/components/home-draft2/About";
+import { CollapsibleSection } from "@/components/home-draft2/CollapsibleSection";
 import { DiagnosticDrawer } from "@/components/home-draft2/DiagnosticDrawer";
 
 const HomePageDraft2 = () => {
