@@ -14,6 +14,7 @@ import { FAQ } from "@/components/home-draft2/FAQ";
 import { CTA } from "@/components/home-draft2/CTA";
 import { WhoItsFor } from "@/components/home-draft2/WhoItsFor";
 import { About } from "@/components/home-draft2/About";
+import { CollapsibleSection } from "@/components/home-draft2/CollapsibleSection";
 import { DiagnosticDrawer } from "@/components/home-draft2/DiagnosticDrawer";
 
 const HomePageDraft2 = () => {
@@ -57,14 +58,70 @@ const HomePageDraft2 = () => {
       <main>
         <Hero theme={theme} onToggleTheme={toggleTheme} onBookDiagnostic={openDiagnostic} />
         <Logos theme={theme} />
-        <Problem />
-        <WhoItsFor />
-        <Engagements />
-        <CaseStudy onBookDiagnostic={openDiagnostic} />
-        <FAQ />
-        <KindWords />
-        <Credentials />
-        <About onBookDiagnostic={openDiagnostic} />
+
+        <CollapsibleSection
+          eyebrow="The Thread & Stack Way"
+          title={<>How we <span className="text-clay">work together.</span></>}
+          preview="A four-phase journey: diagnose the leakage, build the base, launch with adoption, and compound the gains."
+          defaultOpen
+        >
+          <Problem />
+        </CollapsibleSection>
+
+        <CollapsibleSection
+          eyebrow="Who it's for"
+          title={<>Three signals it's <span className="text-clay">time.</span></>}
+          preview="Your marketing no longer feels like you. The work isn't compounding. The leakage is real but invisible."
+        >
+          <WhoItsFor />
+        </CollapsibleSection>
+
+        <CollapsibleSection
+          eyebrow="Engagements"
+          title={<>Four ways <span className="text-clay">forward.</span></>}
+          preview="From a co-design sprint to a bespoke multi-team build. Pricing and scope are clear up front."
+        >
+          <Engagements />
+        </CollapsibleSection>
+
+        <CollapsibleSection
+          eyebrow="Case study"
+          title={<>Proof in <span className="text-clay">practice.</span></>}
+          preview="What a real engagement looks like, from diagnostic to compounding adoption."
+        >
+          <CaseStudy onBookDiagnostic={openDiagnostic} />
+        </CollapsibleSection>
+
+        <CollapsibleSection
+          eyebrow="FAQ"
+          title={<>Hard <span className="text-clay">questions.</span></>}
+          preview="Why the diagnostic is paid, why the build prices look higher, and what happens with your data."
+        >
+          <FAQ />
+        </CollapsibleSection>
+
+        <CollapsibleSection
+          eyebrow="Kind words"
+          title={<>What clients <span className="text-clay">say.</span></>}
+        >
+          <KindWords />
+        </CollapsibleSection>
+
+        <CollapsibleSection
+          eyebrow="Credentials"
+          title={<>Certified, <span className="text-clay">embedded.</span></>}
+        >
+          <Credentials />
+        </CollapsibleSection>
+
+        <CollapsibleSection
+          eyebrow="About"
+          title={<>The person <span className="text-clay">behind it.</span></>}
+          preview="Designer and strategist. Notion Certified. Based in the UK."
+        >
+          <About onBookDiagnostic={openDiagnostic} />
+        </CollapsibleSection>
+
         <CTA />
       </main>
       <Footer />
