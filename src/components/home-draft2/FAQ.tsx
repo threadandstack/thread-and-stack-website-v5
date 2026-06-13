@@ -32,16 +32,12 @@ export function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="border-b border-hairline bg-background">
+    <section id="faq">
       <div className="mx-auto max-w-6xl px-6 py-24 md:py-32">
         <div className="grid gap-14 md:grid-cols-[1fr_1.5fr]">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-hairline bg-paper px-3 py-1 text-[11.5px] uppercase tracking-wider text-muted-foreground">
-              FAQ
-            </div>
-            <h2 className="font-sans not-italic mt-5 text-4xl font-semibold leading-[1.03] tracking-[-0.025em] md:text-[56px]">
-              Hard<br />
-              <span className="font-serif-pro italic text-clay text-5xl md:text-7xl">questions.</span>
+            <h2 className="font-serif-pro italic font-normal text-5xl leading-[1.05] tracking-[-0.02em] md:text-[64px]">
+              Hard <span className="text-clay">questions.</span>
             </h2>
             <p className="mt-6 max-w-xs text-[14.5px] text-ink-soft">
               Still curious? Email{" "}
@@ -54,7 +50,7 @@ export function FAQ() {
             </p>
           </div>
 
-          <div className="overflow-hidden rounded-2xl border border-hairline bg-paper">
+          <div className="overflow-hidden rounded-2xl border border-hairline bg-background shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
             {faqs.map((f, i) => {
               const isOpen = open === i;
               return (

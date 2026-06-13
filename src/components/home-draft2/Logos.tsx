@@ -67,7 +67,7 @@ export function Logos({ theme = "dark" }: LogosProps) {
   const items = [...tools, ...tools];
 
   return (
-    <section className="border-b border-hairline bg-background">
+    <section className="bg-background">
       <div className="mx-auto max-w-6xl px-6 py-12">
         <p className="text-center text-[11.5px] uppercase tracking-[0.22em] text-muted-foreground">
           Tools we work with

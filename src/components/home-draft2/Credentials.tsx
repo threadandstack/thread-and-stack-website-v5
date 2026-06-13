@@ -3,10 +3,10 @@ import notionBadges from "@/assets/notion-badges.png";
 
 export function Credentials() {
   return (
-    <section className="border-b border-hairline bg-background">
+    <section>
       <div className="mx-auto max-w-6xl px-6 py-20 md:py-24">
         <div className="grid gap-6 md:grid-cols-2">
-          <div className="rounded-2xl border border-hairline bg-paper p-8 md:p-10">
+          <div className="rounded-2xl border border-hairline bg-background p-8 md:p-10 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
             <div className="flex items-center gap-3 mb-4">
               <div className="grid h-10 w-10 place-items-center rounded-xl bg-indigo/15 text-indigo">
                 <Shield className="h-5 w-5" strokeWidth={2} />
@@ -31,7 +31,7 @@ export function Credentials() {
             </p>
           </div>
 
-          <div className="rounded-2xl border border-hairline bg-paper p-8 md:p-10">
+          <div className="rounded-2xl border border-hairline bg-background p-8 md:p-10 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
             <div className="flex items-center gap-3 mb-4">
               <div className="grid h-10 w-10 place-items-center rounded-xl bg-violet/15 text-violet">
                 <Bot className="h-5 w-5" strokeWidth={2} />
