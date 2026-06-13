@@ -13,7 +13,7 @@ import { Credentials } from "@/components/home-draft2/Credentials";
 import { FAQ } from "@/components/home-draft2/FAQ";
 import { CTA } from "@/components/home-draft2/CTA";
 import { WhoItsFor } from "@/components/home-draft2/WhoItsFor";
-import { About } from "@/components/home-draft2/About";
+import { AboutIntro } from "@/components/home-draft2/AboutIntro";
 import { CollapsibleSection } from "@/components/home-draft2/CollapsibleSection";
 import { DiagnosticDrawer } from "@/components/home-draft2/DiagnosticDrawer";
 
@@ -59,6 +59,11 @@ const HomePageDraft2 = () => {
         <Hero theme={theme} onToggleTheme={toggleTheme} onBookDiagnostic={openDiagnostic} />
         <Logos theme={theme} />
 
+        {/* Personal welcome — not collapsible */}
+        <AboutIntro onBookDiagnostic={openDiagnostic} />
+
+        <div id="how" />
+
         <CollapsibleSection
           eyebrow="The Thread & Stack Way"
           title={<>How we <span className="text-clay">work together.</span></>}
@@ -84,12 +89,14 @@ const HomePageDraft2 = () => {
           <Engagements />
         </CollapsibleSection>
 
+        {/* Combined: Case study + Kind words */}
         <CollapsibleSection
-          eyebrow="Case study"
-          title={<>Proof in <span className="text-clay">practice.</span></>}
-          preview="What a real engagement looks like, from diagnostic to compounding adoption."
+          eyebrow="Proof"
+          title={<>Proof in practice, in <span className="text-clay">clients' words.</span></>}
+          preview="A real engagement from diagnostic to adoption, alongside a stack of kind words from people I've worked with."
         >
           <CaseStudy onBookDiagnostic={openDiagnostic} />
+          <KindWords />
         </CollapsibleSection>
 
         <CollapsibleSection
@@ -101,25 +108,10 @@ const HomePageDraft2 = () => {
         </CollapsibleSection>
 
         <CollapsibleSection
-          eyebrow="Kind words"
-          title={<>What clients <span className="text-clay">say.</span></>}
-        >
-          <KindWords />
-        </CollapsibleSection>
-
-        <CollapsibleSection
           eyebrow="Credentials"
           title={<>Certified, <span className="text-clay">embedded.</span></>}
         >
           <Credentials />
-        </CollapsibleSection>
-
-        <CollapsibleSection
-          eyebrow="About"
-          title={<>The person <span className="text-clay">behind it.</span></>}
-          preview="Designer and strategist. Notion Certified. Based in the UK."
-        >
-          <About onBookDiagnostic={openDiagnostic} />
         </CollapsibleSection>
 
         <CTA />
