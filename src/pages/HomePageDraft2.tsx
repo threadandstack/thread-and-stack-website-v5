@@ -12,6 +12,8 @@ import { KindWords } from "@/components/home-draft2/KindWords";
 import { Credentials } from "@/components/home-draft2/Credentials";
 import { FAQ } from "@/components/home-draft2/FAQ";
 import { CTA } from "@/components/home-draft2/CTA";
+import { WhoItsFor } from "@/components/home-draft2/WhoItsFor";
+import { About } from "@/components/home-draft2/About";
 import { DiagnosticDrawer } from "@/components/home-draft2/DiagnosticDrawer";
 
 const HomePageDraft2 = () => {
@@ -68,12 +70,13 @@ const HomePageDraft2 = () => {
         <Hero theme={theme} onToggleTheme={toggleTheme} onBookDiagnostic={openDiagnostic} />
         <Logos theme={theme} />
         <Problem />
-        
+        <WhoItsFor />
         <Engagements />
         <CaseStudy onBookDiagnostic={openDiagnostic} />
         <FAQ />
         <KindWords />
         <Credentials />
+        <About onBookDiagnostic={openDiagnostic} />
         <CTA />
       </main>
       <Footer />

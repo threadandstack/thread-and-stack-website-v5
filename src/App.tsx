@@ -24,6 +24,8 @@ const BlogPage = lazy(() => import("./pages/BlogPage"));
 const HomePageDraft = lazy(() => import("./pages/HomePageDraft"));
 const HomePageDraft2 = lazy(() => import("./pages/HomePageDraft2"));
 const ScorecardPage = lazy(() => import("./pages/ScorecardPage"));
+const HowIWorkDraft2Page = lazy(() => import("./pages/HowIWorkDraft2Page"));
+const JournalDraft2Page = lazy(() => import("./pages/JournalDraft2Page"));
 const BlogPostPage = lazy(() => import("./pages/BlogPostPage"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const DataGuarantee = lazy(() => import("./pages/DataGuarantee"));
@@ -104,6 +106,8 @@ const App = () => (
             <Route path="/home-draft" element={<HomePageDraft />} />
             <Route path="/home-draft2" element={<HomePageDraft2 />} />
             <Route path="/home-draft2/scorecard" element={<ScorecardPage />} />
+            <Route path="/home-draft2/how-i-work" element={<HowIWorkDraft2Page />} />
+            <Route path="/home-draft2/journal" element={<JournalDraft2Page />} />
             <Route path="/scorecard" element={<ScorecardPage />} />
             <Route path="/blog/:slug" element={<BlogPostPage />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
