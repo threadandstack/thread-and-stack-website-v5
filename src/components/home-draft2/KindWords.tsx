@@ -1,4 +1,5 @@
 import { TestimonialVariants, type Testimonial } from "@/components/TestimonialVariants";
+import { SectionHeader } from "./SectionHeader";
 
 const testimonials: Testimonial[] = [
   {
@@ -69,10 +70,10 @@ const testimonials: Testimonial[] = [
 export function KindWords() {
   return (
     <section>
-      <div className="mx-auto max-w-6xl px-6 pt-20 md:pt-24">
-        <h2 className="font-serif-pro italic font-normal max-w-3xl text-5xl leading-[1.05] tracking-[-0.02em] md:text-[64px]">
+      <div className="mx-auto max-w-5xl px-6 pt-20 md:px-10 md:pt-24">
+        <SectionHeader eyebrow="Testimonials">
           A stack of <span className="text-clay">kind words.</span>
-        </h2>
+        </SectionHeader>
       </div>
       <TestimonialVariants testimonials={testimonials} />
     </section>

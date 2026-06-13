@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Plus } from "lucide-react";
+import { SectionHeader } from "./SectionHeader";
 
 const faqs = [
   {
@@ -33,24 +34,13 @@ export function FAQ() {
 
   return (
     <section id="faq">
-      <div className="mx-auto max-w-6xl px-6 py-24 md:py-32">
-        <div className="grid gap-14 md:grid-cols-[1fr_1.5fr]">
-          <div>
-            <h2 className="font-serif-pro italic font-normal text-5xl leading-[1.05] tracking-[-0.02em] md:text-[64px]">
-              Hard <span className="text-clay">questions.</span>
-            </h2>
-            <p className="mt-6 max-w-xs text-[14.5px] text-ink-soft">
-              Still curious? Email{" "}
-              <a
-                href="mailto:br@brendanrodgers.uk"
-                className="text-foreground underline decoration-indigo decoration-2 underline-offset-4 hover:decoration-foreground"
-              >
-                br@brendanrodgers.uk
-              </a>.
-            </p>
-          </div>
+      <div className="mx-auto max-w-4xl px-6 py-24 md:px-10 md:py-32">
+        <SectionHeader eyebrow="FAQ">
+          Hard <span className="text-clay">questions.</span>
+        </SectionHeader>
 
-          <div className="overflow-hidden rounded-2xl border border-hairline bg-background shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+        <div className="overflow-hidden rounded-2xl border border-hairline bg-background shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+
             {faqs.map((f, i) => {
               const isOpen = open === i;
               return (
@@ -76,8 +66,17 @@ export function FAQ() {
                 </div>
               );
             })}
-          </div>
         </div>
+
+        <p className="mt-10 text-center text-[14.5px] text-ink-soft">
+          Still curious? Email{" "}
+          <a
+            href="mailto:br@brendanrodgers.uk"
+            className="text-foreground underline decoration-indigo decoration-2 underline-offset-4 hover:decoration-foreground"
+          >
+            br@brendanrodgers.uk
+          </a>.
+        </p>
       </div>
     </section>
   );

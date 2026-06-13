@@ -1,10 +1,14 @@
 import { Shield, Bot } from "lucide-react";
 import notionBadges from "@/assets/notion-badges.png";
+import { SectionHeader } from "./SectionHeader";
 
 export function Credentials() {
   return (
     <section>
-      <div className="mx-auto max-w-6xl px-6 py-20 md:py-24">
+      <div className="mx-auto max-w-5xl px-6 py-20 md:px-10 md:py-24">
+        <SectionHeader eyebrow="Credentials">
+          Built on a stack of <span className="text-clay">credentials.</span>
+        </SectionHeader>
         <div className="grid gap-6 md:grid-cols-2">
           <div className="rounded-2xl border border-hairline bg-background p-8 md:p-10 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
             <div className="flex items-center gap-3 mb-4">

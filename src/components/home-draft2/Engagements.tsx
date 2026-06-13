@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Check, ArrowRight, Sparkles, ChevronLeft, ChevronRight } from "lucide-react";
+import { SectionHeader } from "./SectionHeader";
 
 const tiers = [
   {
@@ -93,17 +94,11 @@ export function Engagements() {
 
   return (
     <section id="engagements">
-      <div className="mx-auto max-w-6xl px-6 py-24 md:py-28">
-        <div className="mb-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-          <div>
-            <h2 className="font-serif-pro italic font-normal max-w-2xl text-5xl leading-[1.05] tracking-[-0.02em] md:text-[64px]">
-              Four ways <span className="text-clay">forward.</span>
-            </h2>
-          </div>
-          <p className="max-w-sm text-[14.5px] text-ink-soft">
-            One offer in focus at a time. Click, drag, or use the arrow keys to cycle through.
-          </p>
-        </div>
+      <div className="mx-auto max-w-5xl px-6 py-24 md:px-10 md:py-28">
+        <SectionHeader eyebrow="Engagements">
+          Four ways <span className="text-clay">forward.</span>
+        </SectionHeader>
+
 
         <div
           ref={stageRef}
