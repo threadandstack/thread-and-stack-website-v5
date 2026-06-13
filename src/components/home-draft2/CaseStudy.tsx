@@ -16,25 +16,22 @@ export function CaseStudy({ onBookDiagnostic }: CaseStudyProps) {
   return (
     <section
       id="work"
-      className="relative overflow-hidden border-b border-hairline bg-card text-card-foreground"
+      className="relative overflow-hidden bg-card text-card-foreground"
     >
       <div aria-hidden className="bg-noise pointer-events-none absolute inset-0 opacity-30" />
       <div className="relative mx-auto max-w-6xl px-6 py-24 md:py-32">
         {/* Header */}
         <div className="max-w-3xl">
-          <div className="inline-flex items-center gap-2 rounded-full border border-hairline bg-foreground/[0.04] px-3 py-1 text-[11.5px] uppercase tracking-wider text-foreground/70">
-            Case study · The IMMA Collective
-          </div>
-          <h2 className="mt-5 text-4xl font-sans font-semibold not-italic leading-[1.05] tracking-[-0.025em] md:text-[56px]">
-            Ops that finally{" "}
-            <span className="font-serif-pro italic font-normal text-clay text-5xl md:text-7xl">felt joined up.</span>
+          <h2 className="font-serif-pro italic font-normal text-5xl leading-[1.05] tracking-[-0.02em] md:text-[64px]">
+            Ops that finally <span className="text-clay">felt joined up.</span>
           </h2>
           <p className="mt-6 text-[15.5px] leading-relaxed text-foreground/70">
-            Lilli came in with a marketing function spread across half a dozen tools, a
-            growing community, and no single place to plan from. We built one Notion
-            workspace as the operating layer for the business — strategy, content,
-            campaigns, and CRM in one place, with a clear vision the team could plan
-            against.
+            A case study from The IMMA Collective. Lilli came in with a
+            marketing function spread across half a dozen tools, a growing
+            community, and no single place to plan from. We built one Notion
+            workspace as the operating layer for the business — strategy,
+            content, campaigns, and CRM in one place, with a clear vision the
+            team could plan against.
           </p>
         </div>
 
