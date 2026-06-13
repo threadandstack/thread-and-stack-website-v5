@@ -106,6 +106,8 @@ const App = () => (
             <Route path="/home-draft" element={<HomePageDraft />} />
             <Route path="/home-draft2" element={<HomePageDraft2 />} />
             <Route path="/home-draft2/scorecard" element={<ScorecardPage />} />
+            <Route path="/home-draft2/how-i-work" element={<HowIWorkDraft2Page />} />
+            <Route path="/home-draft2/journal" element={<JournalDraft2Page />} />
             <Route path="/scorecard" element={<ScorecardPage />} />
             <Route path="/blog/:slug" element={<BlogPostPage />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
