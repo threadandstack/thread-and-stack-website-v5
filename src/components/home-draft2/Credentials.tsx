@@ -31,7 +31,7 @@ export function Credentials() {
             </p>
           </div>
 
-          <div className="rounded-2xl border border-hairline bg-paper p-8 md:p-10">
+          <div className="rounded-2xl border border-hairline bg-background p-8 md:p-10 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
             <div className="flex items-center gap-3 mb-4">
               <div className="grid h-10 w-10 place-items-center rounded-xl bg-violet/15 text-violet">
                 <Bot className="h-5 w-5" strokeWidth={2} />
