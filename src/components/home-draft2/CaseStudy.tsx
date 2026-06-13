@@ -17,10 +17,10 @@ export function CaseStudy({ onBookDiagnostic }: CaseStudyProps) {
   return (
     <section
       id="work"
-      className="relative overflow-hidden bg-card text-card-foreground"
+      className="relative overflow-hidden"
     >
-      <div aria-hidden className="bg-noise pointer-events-none absolute inset-0 opacity-30" />
-      <div className="relative mx-auto max-w-5xl px-6 py-24 md:px-10 md:py-32">
+      <div className="relative mx-auto max-w-5xl px-6 md:px-10">
+
         {/* Header */}
         <SectionHeader eyebrow="Case study">
           Ops that finally <span className="text-clay">felt joined up.</span>
