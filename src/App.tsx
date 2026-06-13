@@ -24,6 +24,8 @@ const BlogPage = lazy(() => import("./pages/BlogPage"));
 const HomePageDraft = lazy(() => import("./pages/HomePageDraft"));
 const HomePageDraft2 = lazy(() => import("./pages/HomePageDraft2"));
 const ScorecardPage = lazy(() => import("./pages/ScorecardPage"));
+const HowIWorkDraft2Page = lazy(() => import("./pages/HowIWorkDraft2Page"));
+const JournalDraft2Page = lazy(() => import("./pages/JournalDraft2Page"));
 const BlogPostPage = lazy(() => import("./pages/BlogPostPage"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const DataGuarantee = lazy(() => import("./pages/DataGuarantee"));
