@@ -10,7 +10,10 @@ interface SectionHeaderProps {
  */
 export function SectionHeader({ children, eyebrow, className = "" }: SectionHeaderProps) {
   return (
-    <header className={`mx-auto mb-16 flex max-w-3xl flex-col items-center text-center ${className}`}>
+    <header
+      data-section-header
+      className={`mx-auto mb-16 flex max-w-3xl flex-col items-center text-center ${className}`}
+    >
       {eyebrow && (
         <span className="mb-5 text-[11px] uppercase tracking-[0.22em] text-ink-soft">
           {eyebrow}
