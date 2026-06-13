@@ -68,17 +68,11 @@ const testimonials: Testimonial[] = [
 
 export function KindWords() {
   return (
-    <section className="border-b border-hairline bg-background">
+    <section>
       <div className="mx-auto max-w-6xl px-6 pt-20 md:pt-24">
-        <div className="mb-6 flex flex-col gap-3">
-          <div className="inline-flex w-fit items-center gap-2 rounded-full border border-hairline bg-paper px-3 py-1 text-[11.5px] uppercase tracking-wider text-muted-foreground">
-            What clients say
-          </div>
-          <h2 className="font-sans not-italic max-w-3xl text-4xl font-semibold leading-[1.03] tracking-[-0.025em] md:text-[52px]">
-            A stack of{" "}
-            <span className="font-serif-pro italic text-clay text-5xl md:text-7xl">kind words.</span>
-          </h2>
-        </div>
+        <h2 className="font-serif-pro italic font-normal max-w-3xl text-5xl leading-[1.05] tracking-[-0.02em] md:text-[64px]">
+          A stack of <span className="text-clay">kind words.</span>
+        </h2>
       </div>
       <TestimonialVariants testimonials={testimonials} />
     </section>
