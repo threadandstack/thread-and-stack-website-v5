@@ -37,20 +37,17 @@ const phases = [
 
 export function Problem() {
   return (
-    <section id="how" className="border-b border-hairline bg-paper">
+    <section id="how">
       <div className="mx-auto max-w-6xl px-6 py-24 md:py-32">
         <div className="mb-16 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-hairline bg-background px-3 py-1 text-[11.5px] uppercase tracking-wider text-muted-foreground">
-              The pattern
-            </div>
-            <h2 className="font-sans not-italic mt-5 text-4xl font-semibold leading-[1.03] tracking-[-0.025em] md:text-[56px]">
-              The <span className="font-serif-pro italic text-clay text-5xl md:text-7xl">Thread & Stack</span> Way
+            <h2 className="font-serif-pro italic font-normal max-w-2xl text-balance text-5xl leading-[1.05] tracking-[-0.02em] md:text-[64px]">
+              The Thread & Stack <span className="text-clay">Way.</span>
             </h2>
           </div>
           <p className="max-w-sm text-[15px] text-ink-soft">
-            An intentional approach to your knowledge stack. A connected journey
-            — each step earns the next.
+            An intentional approach to your knowledge stack. A connected journey,
+            each step earning the next.
           </p>
         </div>
 
