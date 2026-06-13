@@ -87,7 +87,7 @@ export const Navigation = ({ variant = "default", hideLogo = false, floatingBadg
           )}
 
           {/* Desktop pill nav */}
-          <div className="hidden md:flex items-center gap-1 bg-background/90 backdrop-blur-md rounded-full px-2 py-1.5 shadow-[0_2px_20px_rgba(0,0,0,0.08)] border border-border/30">
+          <div className="hidden md:flex items-center gap-1 bg-background/90 backdrop-blur-md rounded-full px-2 py-1.5 border border-border/30">
             <NavItem href="/about" label="About" icon={User} onClick={() => trackNavClick('About', 'header')} />
             <NavItem href="/how-i-work" label="How I Work" icon={Compass} onClick={() => trackNavClick('How I Work', 'header')} />
 
