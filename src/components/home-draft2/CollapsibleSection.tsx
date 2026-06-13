@@ -9,10 +9,14 @@ interface CollapsibleSectionProps {
 }
 
 /**
- * Notion-style toggle: title acts as a click target with a rotating triangle
- * disclosure. When open, the body sits on a barely-there tinted panel that
- * feathers in/out via gradient masks so it feels like the content is emerging
- * from the dividing line rather than living inside a hard window.
+ * Notion-style toggle.
+ * - Triangle disclosure sits on the LEFT of the H2 title and rotates 0° → 90° on open.
+ * - Header column is a fixed max-width, centered on the page, text-left inside,
+ *   so every section's title shares the same left edge (visual spine).
+ * - Click toggles. Hover provides a quiet "telegraph" so users know it's interactive,
+ *   without actually expanding anything (works identically on touch).
+ * - Body uses a split layer: a feathered tint background + a non-feathered content
+ *   layer with generous padding, so the fade never overlaps real content.
  */
 export function CollapsibleSection({
   eyebrow,
@@ -30,73 +34,96 @@ export function CollapsibleSection({
         .collapsible-section [data-collapsible-body] section > div { padding-top: 0 !important; }
       `}</style>
 
+      {/* Header — centered column, left-aligned content */}
       <div className="mx-auto max-w-5xl px-6 py-10 md:px-10 md:py-14">
         <button
           type="button"
           onClick={() => setOpen((o) => !o)}
           aria-expanded={open}
-          className="group mx-auto flex w-full max-w-3xl flex-col items-center text-center"
+          className="group/toggle mx-auto block w-full max-w-2xl text-left"
         >
           {eyebrow && (
-            <span className="mb-5 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-ink-soft transition-colors group-hover:text-foreground">
-              {/* Notion-style triangle disclosure */}
-              <svg
-                aria-hidden
-                viewBox="0 0 10 10"
-                className={`h-2.5 w-2.5 shrink-0 transition-transform duration-300 ease-out ${
-                  open ? "rotate-90" : "rotate-0"
-                }`}
-                style={{ color: "hsl(var(--clay))" }}
-              >
-                <path d="M3 1.5 L7.5 5 L3 8.5 Z" fill="currentColor" />
-              </svg>
+            <span className="mb-4 block text-[11px] uppercase tracking-[0.22em] text-ink-soft">
               {eyebrow}
             </span>
           )}
-          <h2 className="font-serif-pro italic font-normal text-balance text-4xl leading-[1.05] tracking-[-0.02em] md:text-[56px]">
+
+          <h2 className="relative font-serif-pro italic font-normal text-balance text-4xl leading-[1.05] tracking-[-0.02em] md:text-[56px]">
+            {/* Triangle: inline, sized in em so it scales with the heading */}
+            <span
+              aria-hidden
+              className="mr-3 inline-block align-[0.18em] transition-colors duration-300 text-ink-soft group-hover/toggle:text-clay"
+              style={{ color: open ? "hsl(var(--clay))" : undefined }}
+            >
+              <svg
+                viewBox="0 0 10 10"
+                className={`inline-block h-[0.5em] w-[0.5em] transition-transform duration-300 ease-out ${
+                  open ? "rotate-90" : "rotate-0"
+                }`}
+              >
+                <path d="M2.5 1 L8 5 L2.5 9 Z" fill="currentColor" />
+              </svg>
+            </span>
             {title}
           </h2>
-          {/* The dividing line — widens slightly when open, acting as the lip the panel emerges from */}
+
+          {/* Divider — breathes wider on hover/open as the hover telegraph */}
           <span
             aria-hidden
             className={`mt-7 block h-px transition-all duration-500 ease-out ${
-              open ? "w-40" : "w-16"
+              open ? "w-40" : "w-16 group-hover/toggle:w-28"
             }`}
             style={{
               background:
-                "linear-gradient(90deg, transparent, hsl(var(--clay) / 0.55), transparent)",
+                "linear-gradient(90deg, hsl(var(--clay) / 0.55), transparent)",
             }}
           />
-          {preview && !open && (
-            <p className="mt-6 max-w-xl text-[14.5px] leading-relaxed text-ink-soft">
-              {preview}
-            </p>
-          )}
+
+          <div className="mt-5 flex items-baseline justify-between gap-6">
+            {preview && !open ? (
+              <p className="max-w-xl text-[14.5px] leading-relaxed text-ink-soft">
+                {preview}
+              </p>
+            ) : (
+              <span />
+            )}
+            <span
+              className={`shrink-0 text-[11px] uppercase tracking-[0.22em] transition-opacity duration-300 ${
+                open
+                  ? "text-clay opacity-100"
+                  : "text-ink-soft opacity-0 group-hover/toggle:opacity-100"
+              }`}
+            >
+              {open ? "Collapse" : "Reveal"}
+            </span>
+          </div>
         </button>
       </div>
 
-      {/* Body container — soft tinted panel that feathers top/bottom so the
-          continuous background never feels broken. */}
+      {/* Body — animated open/close */}
       <div
         data-collapsible-body
-        className={`relative grid transition-[grid-template-rows,opacity] duration-500 ease-out ${
+        className={`grid transition-[grid-template-rows,opacity] duration-500 ease-out ${
           open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
         }`}
       >
         <div className="overflow-hidden">
-          <div
-            className="relative"
-            style={{
-              // Slightly different background, feathered at the edges via mask
-              background:
-                "linear-gradient(180deg, hsl(var(--foreground) / 0.018), hsl(var(--foreground) / 0.028) 18%, hsl(var(--foreground) / 0.028) 82%, hsl(var(--foreground) / 0.018))",
-              WebkitMaskImage:
-                "linear-gradient(180deg, transparent 0, #000 56px, #000 calc(100% - 56px), transparent 100%)",
-              maskImage:
-                "linear-gradient(180deg, transparent 0, #000 56px, #000 calc(100% - 56px), transparent 100%)",
-            }}
-          >
-            {/* Faint hairline mirror of the divider, hugging the top of the panel */}
+          {/* Two-layer panel: feathered tint behind, full-opacity content in front */}
+          <div className="relative">
+            {/* Tint layer — feathered top/bottom only */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(180deg, hsl(var(--foreground) / 0.022), hsl(var(--foreground) / 0.032) 20%, hsl(var(--foreground) / 0.032) 80%, hsl(var(--foreground) / 0.022))",
+                WebkitMaskImage:
+                  "linear-gradient(180deg, transparent 0, #000 40px, #000 calc(100% - 40px), transparent 100%)",
+                maskImage:
+                  "linear-gradient(180deg, transparent 0, #000 40px, #000 calc(100% - 40px), transparent 100%)",
+              }}
+            />
+            {/* Clay hairline at panel top — the bit content "spills" out of */}
             <span
               aria-hidden
               className="pointer-events-none absolute left-1/2 top-0 block h-px w-40 -translate-x-1/2"
@@ -105,7 +132,11 @@ export function CollapsibleSection({
                   "linear-gradient(90deg, transparent, hsl(var(--clay) / 0.35), transparent)",
               }}
             />
-            {children}
+
+            {/* Content layer — full opacity, generous padding so the feather never overlaps */}
+            <div className="relative pt-16 pb-16 md:pt-24 md:pb-24">
+              {children}
+            </div>
           </div>
         </div>
       </div>

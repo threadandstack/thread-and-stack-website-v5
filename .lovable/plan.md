@@ -1,33 +1,62 @@
-# Mobile interactivity for the hero LogoTilt
+## What I'm changing and why
 
-Bring the desktop "discovery moment" to touch devices without permissions, prompts, or aimless idle motion. The logo pins inside the hero on small screens and tilts in response to scroll — the one gesture every mobile user makes within the first second. Touch drag remains silently available on top for anyone who happens to try it.
+### 1. Move the toggle affordance onto the main title (not the eyebrow)
+The pre-title triangle reads as decoration. Putting the disclosure on the H2 makes the whole title feel like the thing you click, which is the Notion behaviour we want.
 
-## Behaviour
+- The triangle sits to the **left of the title**, vertically centred against the cap-height of the first line.
+- It's sized to feel like part of the heading (around 0.55em of the title), in the clay tone, and rotates 0° → 90° on open with a 300ms ease.
+- The eyebrow goes back to being a quiet label with no icon.
 
-**Desktop (≥768px)** — unchanged. Mouse-move drives the existing 3D tilt, indigo radial reveal, and drop shadows.
+### 2. "Central yet left-aligned" title block
+Each section's header lives in a fixed-width column (around `max-w-2xl`, ~640px) that is `mx-auto` centred on the page. Inside that column, everything is `text-left`:
 
-**Mobile (<768px)**
-1. **Sticky pin during the hero.** The logo's wrapper becomes `sticky` near the top of the viewport while the user scrolls the first ~100vh. Once the hero section scrolls past, the logo releases and flows away naturally with the rest of the page.
-2. **Scroll-linked tilt.** An IntersectionObserver + scroll listener measures the logo's position relative to the viewport centre. That progress (roughly -1 → 0 → +1 as the hero scrolls past) drives the same `--tx`, `--ty`, `--sx`, `--sy` CSS variables the desktop hover already uses. The same indigo-glow reveal and shadow logic light up — no new visual language.
-   - Tilt range: ±8° X / ±6° Y (slightly stronger than mouse so the effect reads clearly on small viewports).
-   - The radial mask centre (`--mx`, `--my`) sweeps diagonally with scroll so the indigo glow travels across the mark.
-3. **Touch drag bonus.** `onTouchMove` / `onTouchEnd` mirror the existing `onMouseMove` / `onMouseLeave` handlers. A finger drag temporarily overrides the scroll-driven values, then releases back to scroll control after touch end. No hint, no affordance — pure easter egg for the curious.
+```text
+            ┌────────── max-w-2xl (centred) ──────────┐
+            │ EYEBROW                                  │
+            │ ▸ Big italic title runs here, left edge  │
+            │   shared with eyebrow and divider        │
+            │ ───── (clay divider, left-aligned)       │
+            │ One-line preview when closed.            │
+            └──────────────────────────────────────────┘
+```
 
-## Edge cases & guardrails
+This gives every section the same left edge, so as you scroll the page the titles form a visual spine, while still being optically centred on the page.
 
-- `prefers-reduced-motion: reduce` → disable scroll-linked tilt and touch drag; logo stays still. Sticky pin remains so layout is consistent.
-- The sticky pin uses a hero-scoped container so it never bleeds into sections below.
-- All transforms route through the existing CSS variables, so the indigo mask, shadows, and 200ms easing stay identical to desktop — no parallel animation system.
-- Scroll listener is `passive: true` and throttled via `requestAnimationFrame` to keep the hero buttery on low-end devices.
-- Breakpoint switch (resize crossing 768px) cleanly tears down the scroll listener and observer.
+### 3. Reveal behaviour — my recommendation
+I considered three options and want to flag the trade-offs before committing:
 
-## Files
+- **Hover-to-peek + click-to-lock** (what you suggested): elegant on desktop, but on touch there is no hover, so the first tap has to act as a click. It also gets twitchy when the mouse passes over several titles quickly — they pop open and shut.
+- **Scroll-to-open**: opens sections as they enter the viewport. Removes user agency and re-floods the page with everything you originally wanted to suppress. I would not recommend this — it defeats the purpose of the toggles.
+- **Click-to-toggle, with a hover *telegraph*** (my recommendation): clicking is the only thing that actually opens or closes a section. On hover, the title gets a subtle signal that it's interactive — triangle tints to clay, divider line breathes out from 64px to ~120px, and a "Reveal" micro-label fades in next to the divider. Nothing structural moves, so the page stays calm and the interaction is identical on touch.
 
-- `src/components/home-draft2/LogoTilt.tsx` — add the mobile branch (sticky wrapper, scroll listener, touch handlers, reduced-motion guard). Desktop path untouched.
-- `src/components/home-draft2/Hero.tsx` — no change expected; the sticky behaviour lives inside `LogoTilt` so the Hero layout stays as-is. If the existing `fade-up mb-8` wrapper interferes with `position: sticky`, move the sticky onto the wrapper inside `LogoTilt` itself.
+I'd build option 3. If after seeing it you still want the actual peek-on-hover, it's a small follow-up: add a 250ms hover-intent timer that previews the body at ~30% height, and lock to full open on click. Happy to do that as a v2.
 
-## Out of scope
+### 4. Fix the panel feather clipping content
+The current 56px mask gradient sits on top of the section's first/last elements, so headings and cards inside fade out instead of appearing fully. Two changes:
 
-- Gyroscope / `deviceorientation` (ruled out — permission prompt feels invasive).
-- Auto-orbit or idle drift (ruled out — reads as a gimmick).
-- Any new visual element, hint pill, or affordance text near the logo.
+- **Increase the panel's internal top/bottom padding** to ~96px (md) / 64px (sm), so the feather lives in empty space, never over content.
+- **Shrink the mask feather** slightly (32–40px) and apply it only to the background tint layer, not to the content layer. The tint feathers; the content stays at full opacity.
+
+Mechanically this means splitting the panel into two stacked layers inside the same container:
+
+```text
+┌─ panel wrapper (relative) ─────────────────┐
+│  ┌─ tint layer (absolute inset-0) ─────┐   │   ← mask-image feathers this only
+│  │  bg gradient, ~2.8% foreground      │   │
+│  └─────────────────────────────────────┘   │
+│  ┌─ content layer (relative, pt/pb-24)─┐   │
+│  │  children render here, full opacity │   │
+│  └─────────────────────────────────────┘   │
+└────────────────────────────────────────────┘
+```
+
+The clay hairline at the very top of the panel stays — it's the bit that makes the content feel like it's spilling out of the divider.
+
+## Files touched
+
+- `src/components/home-draft2/CollapsibleSection.tsx` — full rework of the header layout (left-aligned centred column, triangle on title), hover telegraph, and the split tint/content panel with corrected padding.
+- No changes needed in `HomePageDraft2.tsx` or the individual section files — the API stays the same (`eyebrow`, `title`, `preview`, `defaultOpen`, `children`).
+
+## Open question for you
+
+Are you happy with **click-to-toggle + hover telegraph** as the v1, or do you want me to go straight to the **hover-peek + click-to-lock** version with the hover-intent timer? My vote is the first — it's calmer and works identically on mobile — but it's your call.
