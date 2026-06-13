@@ -7,22 +7,16 @@ interface AboutProps {
 
 export function About({ onBookDiagnostic }: AboutProps) {
   return (
-    <section className="border-b border-hairline bg-paper">
+    <section>
       <div className="mx-auto max-w-6xl px-6 py-24 md:py-32">
         <div className="mb-16 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-hairline bg-background px-3 py-1 text-[11.5px] uppercase tracking-wider text-muted-foreground">
-              The human behind it
-            </div>
-            <h2 className="font-sans not-italic mt-5 text-4xl font-semibold leading-[1.03] tracking-[-0.025em] md:text-[56px]">
-              About{" "}
-              <span className="font-serif-pro italic text-clay text-5xl md:text-7xl">
-                Thread & Stack
-              </span>
+            <h2 className="font-serif-pro italic font-normal text-5xl leading-[1.05] tracking-[-0.02em] md:text-[64px]">
+              About <span className="text-clay">Thread & Stack.</span>
             </h2>
           </div>
           <p className="max-w-sm text-[15px] text-ink-soft">
-            Twelve years of brand, marketing, and systems work — now pointed at one problem worth solving.
+            Twelve years of brand, marketing, and systems work, now pointed at one problem worth solving.
           </p>
         </div>
 
