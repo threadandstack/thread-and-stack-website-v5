@@ -66,8 +66,17 @@ export function FAQ() {
                 </div>
               );
             })}
-          </div>
         </div>
+
+        <p className="mt-10 text-center text-[14.5px] text-ink-soft">
+          Still curious? Email{" "}
+          <a
+            href="mailto:br@brendanrodgers.uk"
+            className="text-foreground underline decoration-indigo decoration-2 underline-offset-4 hover:decoration-foreground"
+          >
+            br@brendanrodgers.uk
+          </a>.
+        </p>
       </div>
     </section>
   );
