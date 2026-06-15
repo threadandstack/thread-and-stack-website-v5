@@ -83,34 +83,18 @@ export function LogoTilt({
             className={`absolute inset-0 w-auto opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none ${className}`}
             style={{
               backgroundColor: "hsl(var(--indigo))",
-              WebkitMaskImage: `url(${logoBase})`,
-              maskImage: `url(${logoBase})`,
-              WebkitMaskRepeat: "no-repeat",
-              maskRepeat: "no-repeat",
-              WebkitMaskSize: "contain",
-              maskSize: "contain",
-              WebkitMaskPosition: "center",
-              maskPosition: "center",
-              filter: `url('#tsway-noop')`,
-              ["--reveal" as never]: "radial-gradient(circle 70px at var(--mx) var(--my), rgba(0,0,0,0.95), rgba(0,0,0,0) 75%)",
-              clipPath: undefined,
+              WebkitMaskImage: `url(${logoBase}), radial-gradient(circle 70px at var(--mx) var(--my), rgba(0,0,0,0.95), rgba(0,0,0,0) 75%)`,
+              maskImage: `url(${logoBase}), radial-gradient(circle 70px at var(--mx) var(--my), rgba(0,0,0,0.95), rgba(0,0,0,0) 75%)`,
+              WebkitMaskRepeat: "no-repeat, no-repeat",
+              maskRepeat: "no-repeat, no-repeat",
+              WebkitMaskSize: "contain, 100% 100%",
+              maskSize: "contain, 100% 100%",
+              WebkitMaskPosition: "center, center",
+              maskPosition: "center, center",
+              WebkitMaskComposite: "source-in",
+              maskComposite: "intersect",
             }}
-          >
-            <div
-              className="absolute inset-0"
-              style={{
-                backgroundColor: "hsl(var(--indigo))",
-                WebkitMaskImage: `url(${logoBase})`,
-                maskImage: `url(${logoBase})`,
-                WebkitMaskRepeat: "no-repeat",
-                maskRepeat: "no-repeat",
-                WebkitMaskSize: "contain",
-                maskSize: "contain",
-                WebkitMaskPosition: "center",
-                maskPosition: "center",
-              }}
-            />
-          </div>
+          />
         ) : (
           <img
             src={indigoOverlay}
