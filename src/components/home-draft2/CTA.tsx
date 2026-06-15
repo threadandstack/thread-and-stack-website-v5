@@ -1,8 +1,12 @@
 import { useState } from "react";
 import { ArrowRight } from "lucide-react";
-import { ContactDrawer } from "@/components/ContactDrawer";
+import { DiagnosticDrawer } from "./DiagnosticDrawer";
 
-export function CTA() {
+interface CTAProps {
+  theme?: "light" | "dark";
+}
+
+export function CTA({ theme = "light" }: CTAProps = {}) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -10,6 +14,7 @@ export function CTA() {
       id="contact"
       className="relative overflow-hidden bg-card text-card-foreground"
     >
+
       <div
         aria-hidden
         className="pointer-events-none absolute inset-x-0 -top-20 mx-auto h-[600px] max-w-4xl opacity-60 blur-3xl"
@@ -20,11 +25,12 @@ export function CTA() {
       />
       <div className="relative mx-auto max-w-3xl px-6 py-24 md:py-32 text-center">
         <h2 className="font-serif-pro italic font-normal mx-auto max-w-3xl text-balance text-5xl leading-[1.05] tracking-[-0.02em] md:text-[64px]">
-          Book the Diagnostic.<br />
+          Start with a call.<br />
           <span className="text-clay-soft">Leave with a plan.</span>
         </h2>
         <p className="mx-auto mt-6 max-w-md text-[15px] text-foreground/70">
-          90 minutes live. A written blueprint within 48 hours. Credited in full against
+          Book a free 30-minute intro call. If a paid Stack Diagnostic is the
+          right next step, we can book it from there — credited in full against
           any build you choose afterwards.
         </p>
         <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
@@ -34,7 +40,7 @@ export function CTA() {
             className="group inline-flex h-12 items-center rounded-md px-6 text-[14.5px] font-medium text-accent-foreground shadow-[0_8px_20px_-8px_rgba(0,0,0,0.35)] transition-all hover:-translate-y-px"
             style={{ backgroundImage: "linear-gradient(95deg, var(--gradient-3color))" }}
           >
-            Book the Diagnostic · £395
+            Book a free intro call
             <span className="inline-flex w-0 items-center justify-center overflow-hidden opacity-0 scale-75 transition-all duration-300 group-hover:w-5 group-hover:opacity-100 group-hover:scale-100 group-hover:ml-1.5">
               <ArrowRight className="h-4 w-4 shrink-0" />
             </span>
@@ -47,7 +53,7 @@ export function CTA() {
           </a>
         </div>
       </div>
-      <ContactDrawer open={open} onOpenChange={setOpen} />
+      <DiagnosticDrawer open={open} onOpenChange={setOpen} theme={theme} source="home-draft2-cta" initialMode="intro" />
     </section>
   );
 }

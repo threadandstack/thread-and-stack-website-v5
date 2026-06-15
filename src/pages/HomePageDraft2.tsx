@@ -89,7 +89,7 @@ const HomePageDraft2 = () => {
           <Credentials />
         </CollapsibleSection>
 
-        <CTA />
+        <CTA theme={theme} />
       </main>
       <Footer />
 

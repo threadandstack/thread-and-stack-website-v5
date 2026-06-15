@@ -620,6 +620,7 @@ const UnleashYourTeamDraft2Page = () => {
         theme={theme}
         source="unleash-your-team-draft2"
         defaultCoupon="IMPACT15"
+        initialMode="diagnostic"
       />
     </div>
   );
