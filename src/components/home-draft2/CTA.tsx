@@ -13,27 +13,27 @@ export function CTA({ theme = "light" }: CTAProps = {}) {
   return (
     <section id="contact" className="relative">
       <div className="mx-auto max-w-5xl px-6 py-24 md:py-32">
-        <div className="grid items-center gap-12 md:grid-cols-[1.1fr_1fr] md:gap-16">
-          {/* Copy column */}
-          <div>
-            <span className="mb-5 block text-[11px] uppercase tracking-[0.22em] text-ink-soft">
-              Next step
-            </span>
-            <h2 className="font-serif-pro italic font-normal text-balance text-4xl leading-[1.05] tracking-[-0.02em] md:text-[56px]">
-              Start with a call.<br />
-              <span className="text-clay">Leave with a plan.</span>
-            </h2>
-            <p className="mt-6 max-w-md text-[15px] leading-relaxed text-ink-soft">
-              Book a free 30-minute intro call. If a paid Stack Diagnostic is
-              the right next step, we can book it from there, credited in full
-              against any build you choose afterwards.
-            </p>
-          </div>
+        <Tilt3D maxX={7} maxY={5} className="w-full">
+          <div className="relative rounded-2xl border border-hairline bg-background/70 p-8 backdrop-blur-sm shadow-[0_2px_8px_rgba(0,0,0,0.04)] md:p-12">
+            <div className="grid items-center gap-10 md:grid-cols-[1.1fr_1fr] md:gap-14">
+              {/* Copy */}
+              <div>
+                <span className="mb-4 block text-[11px] uppercase tracking-[0.22em] text-ink-soft">
+                  Next step
+                </span>
+                <h2 className="font-serif-pro italic font-normal text-balance text-4xl leading-[1.05] tracking-[-0.02em] md:text-[52px]">
+                  Start with a call.<br />
+                  <span className="text-clay">Leave with a plan.</span>
+                </h2>
+                <p className="mt-5 max-w-md text-[15px] leading-relaxed text-ink-soft">
+                  Book a free 30-minute intro call. If a paid Stack Diagnostic is
+                  the right next step, we can book it from there — credited in full
+                  against any build you choose afterwards.
+                </p>
+              </div>
 
-          {/* Tilted action card */}
-          <Tilt3D maxX={7} maxY={5} className="w-full">
-            <div className="relative rounded-2xl border border-hairline bg-background/70 p-7 backdrop-blur-sm shadow-[0_2px_8px_rgba(0,0,0,0.04)] md:p-8">
-              <div className="flex flex-col gap-5">
+              {/* Actions */}
+              <div className="flex flex-col gap-4">
                 <button
                   type="button"
                   onClick={() => setOpen(true)}
@@ -63,8 +63,8 @@ export function CTA({ theme = "light" }: CTAProps = {}) {
                 </p>
               </div>
             </div>
-          </Tilt3D>
-        </div>
+          </div>
+        </Tilt3D>
       </div>
 
       <DiagnosticDrawer
