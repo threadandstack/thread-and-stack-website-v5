@@ -186,30 +186,55 @@ export function DiagnosticDrawer({
               <SheetHeader className="relative space-y-3 text-left">
                 <div className="inline-flex w-fit items-center gap-1.5 rounded-full border border-hairline bg-background/70 px-2.5 py-1 text-[10.5px] font-medium uppercase tracking-wider text-ink-soft backdrop-blur">
                   <Sparkles className="h-3 w-3 text-indigo" strokeWidth={2} />
-                  Stack Diagnostic
+                  {mode === "intro" ? "Free intro call" : "Stack Diagnostic"}
                 </div>
-                <SheetTitle className="font-sans not-italic text-3xl font-semibold leading-[1.05] tracking-[-0.02em] sm:text-[34px]">
-                  Book your{" "}
-                  <span className="font-serif-pro italic font-normal text-clay">
-                    90-minute session to create meaningful change.
-                  </span>
-                </SheetTitle>
-                <SheetDescription className="text-[14.5px] leading-relaxed text-ink-soft">
-                  One paid session. A written blueprint within 48 hours. Credited in full
-                  against any build you choose afterwards.
-                </SheetDescription>
-
-                <ul className="mt-2 flex flex-wrap gap-x-5 gap-y-1.5 text-[12px] text-ink-soft">
-                  <li className="inline-flex items-center gap-1.5">
-                    <Clock className="h-3.5 w-3.5 text-indigo" strokeWidth={2} /> 90 min live
-                  </li>
-                  <li className="inline-flex items-center gap-1.5">
-                    <FileText className="h-3.5 w-3.5 text-violet" strokeWidth={2} /> Written blueprint
-                  </li>
-                  <li className="inline-flex items-center gap-1.5">
-                    <CheckCircle2 className="h-3.5 w-3.5 text-orange" strokeWidth={2} /> Credited against builds
-                  </li>
-                </ul>
+                {mode === "intro" ? (
+                  <>
+                    <SheetTitle className="font-sans not-italic text-3xl font-semibold leading-[1.05] tracking-[-0.02em] sm:text-[34px]">
+                      Start with a{" "}
+                      <span className="font-serif-pro italic font-normal text-clay">
+                        free 30-minute introductory call.
+                      </span>
+                    </SheetTitle>
+                    <SheetDescription className="text-[14.5px] leading-relaxed text-ink-soft">
+                      A no-pressure conversation about your stack, your team, and
+                      what you're trying to unlock. If the Diagnostic is a fit, we
+                      can book it from there.
+                    </SheetDescription>
+                    <ul className="mt-2 flex flex-wrap gap-x-5 gap-y-1.5 text-[12px] text-ink-soft">
+                      <li className="inline-flex items-center gap-1.5">
+                        <Clock className="h-3.5 w-3.5 text-indigo" strokeWidth={2} /> 30 min live
+                      </li>
+                      <li className="inline-flex items-center gap-1.5">
+                        <CheckCircle2 className="h-3.5 w-3.5 text-orange" strokeWidth={2} /> No cost, no obligation
+                      </li>
+                    </ul>
+                  </>
+                ) : (
+                  <>
+                    <SheetTitle className="font-sans not-italic text-3xl font-semibold leading-[1.05] tracking-[-0.02em] sm:text-[34px]">
+                      Book your{" "}
+                      <span className="font-serif-pro italic font-normal text-clay">
+                        90-minute session to create meaningful change.
+                      </span>
+                    </SheetTitle>
+                    <SheetDescription className="text-[14.5px] leading-relaxed text-ink-soft">
+                      One paid session. A written blueprint within 48 hours. Credited in full
+                      against any build you choose afterwards.
+                    </SheetDescription>
+                    <ul className="mt-2 flex flex-wrap gap-x-5 gap-y-1.5 text-[12px] text-ink-soft">
+                      <li className="inline-flex items-center gap-1.5">
+                        <Clock className="h-3.5 w-3.5 text-indigo" strokeWidth={2} /> 90 min live
+                      </li>
+                      <li className="inline-flex items-center gap-1.5">
+                        <FileText className="h-3.5 w-3.5 text-violet" strokeWidth={2} /> Written blueprint
+                      </li>
+                      <li className="inline-flex items-center gap-1.5">
+                        <CheckCircle2 className="h-3.5 w-3.5 text-orange" strokeWidth={2} /> Credited against builds
+                      </li>
+                    </ul>
+                  </>
+                )}
               </SheetHeader>
             </div>
 
