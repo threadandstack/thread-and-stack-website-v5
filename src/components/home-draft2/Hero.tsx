@@ -25,7 +25,7 @@ export function Hero({ theme, onBookDiagnostic }: HeroProps) {
             <NotionWorkspaceMock
               theme={theme}
               hotspots={[
-                {
+              {
                   id: "newsletter",
                   // "Welcome to Milestone Mint!" newsletter block
                   x: 62,
@@ -40,11 +40,11 @@ export function Hero({ theme, onBookDiagnostic }: HeroProps) {
                   id: "vacation",
                   // "Vacation Policy" near the bottom
                   x: 26,
-                  y: 82,
+                  y: 92,
                   label: "Policy page",
                   overlaySrc: theme === "dark" ? vacationLight.url : vacationDark.url,
                   overlayX: 6,
-                  overlayY: 38,
+                  overlayY: 56,
                   overlayWidth: 58,
                 },
               ]}
