@@ -50,7 +50,7 @@ const HowIWorkDraft2Page = () => {
           <div className="relative mx-auto max-w-5xl px-6 pb-24 pt-24 md:pb-32 md:pt-32">
             <div className="flex flex-col items-center text-center">
               <Link
-                to="/home-draft2"
+                to="/"
                 className="fade-up mb-8 inline-flex items-center gap-1.5 text-[12.5px] text-ink-soft hover:text-foreground transition-colors"
               >
                 <ArrowLeft className="h-3.5 w-3.5" />
