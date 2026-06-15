@@ -124,7 +124,7 @@ export function Engagements() {
     <section id="engagements">
       <div className="mx-auto max-w-5xl px-6 py-24 md:px-10 md:py-28">
         <SectionHeader eyebrow="Engagements">
-          Four ways <span className="text-clay">forward.</span>
+          Five ways <span className="text-clay">forward.</span>
         </SectionHeader>
 
 
