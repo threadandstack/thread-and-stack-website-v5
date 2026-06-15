@@ -52,19 +52,20 @@ const HomePageDraft2 = () => {
         <CTA theme={theme} />
 
         <CollapsibleSection
+          eyebrow="Credentials"
+          title={<>Certified, <span className="text-clay">embedded.</span></>}
+          defaultOpen
+        >
+          <Credentials />
+        </CollapsibleSection>
+
+        <CollapsibleSection
           eyebrow="FAQ"
           title={<>Hard <span className="text-clay">questions.</span></>}
           preview="Why the diagnostic is paid, why the build prices look higher, and what happens with your data."
           defaultOpen
         >
           <FAQ />
-        </CollapsibleSection>
-
-        <CollapsibleSection
-          eyebrow="Credentials"
-          title={<>Certified, <span className="text-clay">embedded.</span></>}
-        >
-          <Credentials />
         </CollapsibleSection>
       </main>
       <Footer />
