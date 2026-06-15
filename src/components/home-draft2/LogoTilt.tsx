@@ -5,10 +5,29 @@ import logoIndigo from "@/assets/logos/Indigo_TS_Stacked.svg";
 interface LogoTiltProps {
   className?: string;
   theme?: "dark" | "light";
+  /** Optional override for the base logo (dark theme version). */
+  darkSrc?: string;
+  /** Optional override for the base logo (light theme version). */
+  lightSrc?: string;
+  /** Optional override for the indigo overlay. If omitted with custom srcs, an indigo mask of the base is used. */
+  indigoSrc?: string;
+  alt?: string;
 }
 
-export function LogoTilt({ className = "h-32 sm:h-44 md:h-56", theme = "dark" }: LogoTiltProps) {
-  const logoBase = theme === "light" ? logoBlack : logoWhite;
+export function LogoTilt({
+  className = "h-32 sm:h-44 md:h-56",
+  theme = "dark",
+  darkSrc,
+  lightSrc,
+  indigoSrc,
+  alt = "Thread & Stack",
+}: LogoTiltProps) {
+  const isCustom = !!(darkSrc || lightSrc);
+  const logoBase = theme === "light"
+    ? (lightSrc ?? logoBlack)
+    : (darkSrc ?? logoWhite);
+  const indigoOverlay = indigoSrc ?? (isCustom ? logoBase : logoIndigo);
+  const useMaskOverlay = isCustom && !indigoSrc;
   return (
     <div
       className="relative group cursor-pointer [perspective:800px]"
@@ -50,7 +69,7 @@ export function LogoTilt({ className = "h-32 sm:h-44 md:h-56", theme = "dark" }:
       >
         <img
           src={logoBase}
-          alt="Thread & Stack"
+          alt={alt}
           className={`relative w-auto transition-[filter] duration-200 ${className}`}
           style={{
             filter: theme === "dark"
@@ -58,18 +77,38 @@ export function LogoTilt({ className = "h-32 sm:h-44 md:h-56", theme = "dark" }:
               : "none",
           }}
         />
-        <img
-          src={logoIndigo}
-          alt=""
-          aria-hidden="true"
-          className={`absolute inset-0 w-auto opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none ${className}`}
-          style={{
-            WebkitMaskImage:
-              "radial-gradient(circle 70px at var(--mx) var(--my), rgba(0,0,0,0.95), rgba(0,0,0,0) 75%)",
-            maskImage:
-              "radial-gradient(circle 70px at var(--mx) var(--my), rgba(0,0,0,0.95), rgba(0,0,0,0) 75%)",
-          }}
-        />
+        {useMaskOverlay ? (
+          <div
+            aria-hidden="true"
+            className={`absolute inset-0 w-auto opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none ${className}`}
+            style={{
+              backgroundColor: "hsl(var(--indigo))",
+              WebkitMaskImage: `url(${logoBase}), radial-gradient(circle 70px at var(--mx) var(--my), rgba(0,0,0,0.95), rgba(0,0,0,0) 75%)`,
+              maskImage: `url(${logoBase}), radial-gradient(circle 70px at var(--mx) var(--my), rgba(0,0,0,0.95), rgba(0,0,0,0) 75%)`,
+              WebkitMaskRepeat: "no-repeat, no-repeat",
+              maskRepeat: "no-repeat, no-repeat",
+              WebkitMaskSize: "contain, 100% 100%",
+              maskSize: "contain, 100% 100%",
+              WebkitMaskPosition: "center, center",
+              maskPosition: "center, center",
+              WebkitMaskComposite: "source-in",
+              maskComposite: "intersect",
+            }}
+          />
+        ) : (
+          <img
+            src={indigoOverlay}
+            alt=""
+            aria-hidden="true"
+            className={`absolute inset-0 w-auto opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none ${className}`}
+            style={{
+              WebkitMaskImage:
+                "radial-gradient(circle 70px at var(--mx) var(--my), rgba(0,0,0,0.95), rgba(0,0,0,0) 75%)",
+              maskImage:
+                "radial-gradient(circle 70px at var(--mx) var(--my), rgba(0,0,0,0.95), rgba(0,0,0,0) 75%)",
+            }}
+          />
+        )}
         <div
           className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none blur-xl"
           style={{
