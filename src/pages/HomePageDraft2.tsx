@@ -44,7 +44,7 @@ const HomePageDraft2 = () => {
         <Logos theme={theme} />
 
         {/* Personal welcome — not collapsible */}
-        <AboutIntro onBookDiagnostic={openDiagnostic} />
+        <AboutIntro />
 
         <div id="how" />
 
