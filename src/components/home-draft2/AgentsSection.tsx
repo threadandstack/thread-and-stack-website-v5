@@ -33,11 +33,11 @@ export function AgentsSection() {
           {/* Left column — headline */}
           <div>
             <span className="mb-4 inline-block text-[11px] uppercase tracking-[0.22em] text-ink-soft">
-              Capabilities
+              Agents & Connectivity
             </span>
             <h2 className="font-serif-pro italic font-normal text-balance text-3xl leading-[1.1] tracking-[-0.02em] md:text-[44px]">
-              Agents that do{" "}
-              <span className="text-clay">the heavy lifting.</span>
+              Custom Agents that <br />
+              <span className="text-clay">lighten your load.</span>
             </h2>
           </div>
 
