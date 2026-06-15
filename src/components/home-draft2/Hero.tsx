@@ -80,13 +80,6 @@ export function Hero({ theme, onBookDiagnostic }: HeroProps) {
             </span>
           </div>
         </div>
-
-        <div className="mt-16 md:mt-20">
-          <NotionWorkspaceMock theme={theme} />
-          <p className="mt-4 text-center text-[12.5px] text-muted-foreground">
-            A live Knowledge Base built in Notion — the kind we'd build with you.
-          </p>
-        </div>
       </div>
     </section>
   );
