@@ -5,6 +5,9 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { CTA } from "@/components/home-draft2/CTA";
 import { Problem } from "@/components/home-draft2/Problem";
+import { LogoTilt } from "@/components/home-draft2/LogoTilt";
+import tsWayBlack from "@/assets/logos/TSWay_Black.png.asset.json";
+import tsWayWhite from "@/assets/logos/TSWay_White.png.asset.json";
 
 const fourCs = [
   {
