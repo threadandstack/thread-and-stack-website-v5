@@ -4,7 +4,6 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/home-draft2/Hero";
 import { Logos } from "@/components/home-draft2/Logos";
-import { Problem } from "@/components/home-draft2/Problem";
 
 import { Engagements } from "@/components/home-draft2/Engagements";
 import { CaseStudy } from "@/components/home-draft2/CaseStudy";
