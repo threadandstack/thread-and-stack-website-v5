@@ -48,31 +48,6 @@ const HomePageDraft2 = () => {
 
         <div id="how" />
 
-        <CollapsibleSection
-          eyebrow="Who it's for"
-          title={<>Three signals it's <span className="text-clay">time.</span></>}
-          preview="Your marketing no longer feels like you. The work isn't compounding. The leakage is real but invisible."
-        >
-          <WhoItsFor />
-        </CollapsibleSection>
-
-        <CollapsibleSection
-          eyebrow="Engagements"
-          title={<>Four ways <span className="text-clay">forward.</span></>}
-          preview="From a co-design sprint to a bespoke multi-team build. Pricing and scope are clear up front."
-        >
-          <Engagements />
-        </CollapsibleSection>
-
-        {/* Combined: Case study + Kind words */}
-        <CollapsibleSection
-          eyebrow="Proof"
-          title={<>Proof in practice, in <span className="text-clay">clients' words.</span></>}
-          preview="A real engagement from diagnostic to adoption, alongside a stack of kind words from people I've worked with."
-        >
-          <CaseStudy onBookDiagnostic={openDiagnostic} />
-          <KindWords />
-        </CollapsibleSection>
 
         <CollapsibleSection
           eyebrow="FAQ"

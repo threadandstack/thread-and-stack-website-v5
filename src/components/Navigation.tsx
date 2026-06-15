@@ -35,10 +35,8 @@ export const Navigation = ({ variant = "default", hideLogo = false, floatingBadg
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const services = [
-    { href: "/narratives-strategy", label: "Narratives & Strategy Services" },
-    { href: "/notion-systems", label: "Notion & Systems Consultancy" },
-  ];
+  const services: { href: string; label: string }[] = [];
+
 
   const navLinkClass = "text-sm font-sans transition-all not-italic";
   const defaultLinkColor = "text-foreground/70 hover:text-foreground";
