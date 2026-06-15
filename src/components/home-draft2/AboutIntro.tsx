@@ -35,10 +35,15 @@ export function AboutIntro() {
 
             <div className="mt-6 space-y-4 text-[15.5px] leading-relaxed text-ink-soft">
               <p>
-                I help organisations transform their operations and go-to-market
-                strategies. Every engagement includes a period of aftercare to
-                make sure what we build actually sticks — with adoption support
-                and technical help until your team is confident running it.
+                I help organisations transform their operations and give their
+                business a home. Some call it an operating system. I call it your
+                business's day-to-day home. Let's make sure it actually works for
+                you and your team.
+              </p>
+              <p>
+                Every engagement includes a period of aftercare to make sure
+                what we build actually sticks — with adoption support and
+                technical help until your team is confident running it.
               </p>
               <p>
                 Transformation doesn't work unless it works.
