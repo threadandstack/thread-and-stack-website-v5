@@ -64,15 +64,6 @@ const HomePageDraft2 = () => {
         <div id="how" />
 
         <CollapsibleSection
-          eyebrow="The Thread & Stack Way"
-          title={<>How we <span className="text-clay">work together.</span></>}
-          preview="A four-phase journey: diagnose the leakage, build the base, launch with adoption, and compound the gains."
-          defaultOpen
-        >
-          <Problem />
-        </CollapsibleSection>
-
-        <CollapsibleSection
           eyebrow="Who it's for"
           title={<>Three signals it's <span className="text-clay">time.</span></>}
           preview="Your marketing no longer feels like you. The work isn't compounding. The leakage is real but invisible."
