@@ -1,6 +1,10 @@
 import { ArrowRight, ArrowDown, BadgeCheck, Repeat, MapPin } from "lucide-react";
 import { LogoTilt } from "./LogoTilt";
 import { NotionWorkspaceMock } from "./NotionWorkspaceMock";
+import newsletterLight from "@/assets/notion-mock/newsletter-light.png.asset.json";
+import newsletterDark from "@/assets/notion-mock/newsletter-dark.png.asset.json";
+import vacationLight from "@/assets/notion-mock/vacation-light.png.asset.json";
+import vacationDark from "@/assets/notion-mock/vacation-dark.png.asset.json";
 
 interface HeroProps {
   theme: "dark" | "light";
