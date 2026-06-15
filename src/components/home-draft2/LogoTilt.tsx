@@ -5,10 +5,29 @@ import logoIndigo from "@/assets/logos/Indigo_TS_Stacked.svg";
 interface LogoTiltProps {
   className?: string;
   theme?: "dark" | "light";
+  /** Optional override for the base logo (dark theme version). */
+  darkSrc?: string;
+  /** Optional override for the base logo (light theme version). */
+  lightSrc?: string;
+  /** Optional override for the indigo overlay. If omitted with custom srcs, an indigo mask of the base is used. */
+  indigoSrc?: string;
+  alt?: string;
 }
 
-export function LogoTilt({ className = "h-32 sm:h-44 md:h-56", theme = "dark" }: LogoTiltProps) {
-  const logoBase = theme === "light" ? logoBlack : logoWhite;
+export function LogoTilt({
+  className = "h-32 sm:h-44 md:h-56",
+  theme = "dark",
+  darkSrc,
+  lightSrc,
+  indigoSrc,
+  alt = "Thread & Stack",
+}: LogoTiltProps) {
+  const isCustom = !!(darkSrc || lightSrc);
+  const logoBase = theme === "light"
+    ? (lightSrc ?? logoBlack)
+    : (darkSrc ?? logoWhite);
+  const indigoOverlay = indigoSrc ?? (isCustom ? logoBase : logoIndigo);
+  const useMaskOverlay = isCustom && !indigoSrc;
   return (
     <div
       className="relative group cursor-pointer [perspective:800px]"
