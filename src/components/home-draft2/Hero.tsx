@@ -17,6 +17,13 @@ export function Hero({ theme, onBookDiagnostic }: HeroProps) {
             <LogoTilt className="h-28 sm:h-36 md:h-44" theme={theme} />
           </div>
 
+          <div className="mt-6 mb-10 w-full max-w-4xl">
+            <NotionWorkspaceMock theme={theme} />
+            <p className="mt-4 text-center text-[12.5px] text-muted-foreground">
+              A live Knowledge Base built in Notion — the kind we'd build with you.
+            </p>
+          </div>
+
           <h1 className="font-serif-pro italic font-normal max-w-4xl text-balance text-5xl leading-[1.02] tracking-[-0.02em] md:text-[76px]">
             One central knowledge hub.
             <br />
