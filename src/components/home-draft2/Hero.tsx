@@ -17,10 +17,34 @@ export function Hero({ theme, onBookDiagnostic }: HeroProps) {
             <LogoTilt className="h-28 sm:h-36 md:h-44" theme={theme} />
           </div>
 
-          <div className="mt-6 mb-10 w-full max-w-4xl">
-            <NotionWorkspaceMock theme={theme} />
+          <div className="mt-6 mb-10 w-full max-w-3xl">
+            <NotionWorkspaceMock
+              theme={theme}
+              hotspots={[
+                {
+                  id: "newsletter",
+                  // "Welcome to Milestone Mint!" newsletter block
+                  x: 62,
+                  y: 28,
+                  label: "Internal newsletter",
+                  overlayX: 38,
+                  overlayY: 8,
+                  overlayWidth: 58,
+                },
+                {
+                  id: "vacation",
+                  // "Vacation Policy" near the bottom
+                  x: 26,
+                  y: 82,
+                  label: "Policy page",
+                  overlayX: 6,
+                  overlayY: 38,
+                  overlayWidth: 58,
+                },
+              ]}
+            />
             <p className="mt-4 text-center text-[12.5px] text-muted-foreground">
-              A live Knowledge Base built in Notion — the kind we'd build with you.
+              A live Knowledge Base built in Notion — hover the pins to peek inside.
             </p>
           </div>
 
