@@ -134,65 +134,73 @@ export const Navigation = ({ variant = "default", hideLogo = false, floatingBadg
       {/* Floating Navigation - pill on scroll */}
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0 pointer-events-none"}`}>
         <div className="max-w-7xl mx-auto px-6 py-3">
-          <div className="flex items-center justify-between bg-background/95 backdrop-blur-md rounded-full px-4 py-2 shadow-[0_4px_24px_rgba(0,0,0,0.1)] border border-border/30">
-            <a href="/" className="block relative h-8 md:h-10 aspect-square" onMouseEnter={() => setIsLogoHovered(true)} onMouseLeave={() => setIsLogoHovered(false)}>
-              <img src={isDark ? WhiteStacked : BlackStacked} alt="Thread & Stack" className="h-8 md:h-10 w-auto transition-opacity duration-500" style={{ opacity: isLogoHovered ? 0 : 1 }} />
-              <div
-                aria-hidden
-                className="absolute inset-0 h-8 md:h-10 transition-opacity duration-500 pointer-events-none"
-                style={{
-                  opacity: isLogoHovered ? 1 : 0,
-                  background: "linear-gradient(135deg, hsl(var(--orange)), hsl(var(--violet)))",
-                  WebkitMaskImage: `url(${isDark ? WhiteStacked : BlackStacked})`,
-                  maskImage: `url(${isDark ? WhiteStacked : BlackStacked})`,
-                  WebkitMaskRepeat: "no-repeat",
-                  maskRepeat: "no-repeat",
-                  WebkitMaskSize: "contain",
-                  maskSize: "contain",
-                  WebkitMaskPosition: "left center",
-                  maskPosition: "left center",
-                }}
-              />
-            </a>
+          <div className="flex items-center justify-center gap-3">
+            {/* Theme toggle as separate floating pill */}
+            {themeToggle && (
+              <div className="flex items-center bg-background/95 backdrop-blur-md rounded-full px-2 py-2 shadow-[0_4px_24px_rgba(0,0,0,0.1)] border border-border/30">
+                {themeToggle}
+              </div>
+            )}
 
-            {themeToggle && <div className="ml-2 flex items-center">{themeToggle}</div>}
+            {/* Main nav pill */}
+            <div className="flex items-center justify-between bg-background/95 backdrop-blur-md rounded-full px-4 py-2 shadow-[0_4px_24px_rgba(0,0,0,0.1)] border border-border/30">
+              <a href="/" className="block relative h-8 md:h-10 aspect-square" onMouseEnter={() => setIsLogoHovered(true)} onMouseLeave={() => setIsLogoHovered(false)}>
+                <img src={isDark ? WhiteStacked : BlackStacked} alt="Thread & Stack" className="h-8 md:h-10 w-auto transition-opacity duration-500" style={{ opacity: isLogoHovered ? 0 : 1 }} />
+                <div
+                  aria-hidden
+                  className="absolute inset-0 h-8 md:h-10 transition-opacity duration-500 pointer-events-none"
+                  style={{
+                    opacity: isLogoHovered ? 1 : 0,
+                    background: "linear-gradient(135deg, hsl(var(--orange)), hsl(var(--violet)))",
+                    WebkitMaskImage: `url(${isDark ? WhiteStacked : BlackStacked})`,
+                    maskImage: `url(${isDark ? WhiteStacked : BlackStacked})`,
+                    WebkitMaskRepeat: "no-repeat",
+                    maskRepeat: "no-repeat",
+                    WebkitMaskSize: "contain",
+                    maskSize: "contain",
+                    WebkitMaskPosition: "left center",
+                    maskPosition: "left center",
+                  }}
+                />
+              </a>
 
-            {floatingBadge && <div className="ml-2 hidden sm:flex items-center">{floatingBadge}</div>}
+              {floatingBadge && <div className="ml-2 hidden sm:flex items-center">{floatingBadge}</div>}
 
-            <div className="hidden md:flex items-center gap-1">
-              <NavItem href="/" label="Home" icon={Home} onClick={() => trackNavClick('Home', 'floating')} />
-              <NavItem href="/about" label="About" icon={User} onClick={() => trackNavClick('About', 'floating')} />
-              <NavItem href="/how-i-work" label="The T&S Way" icon={Compass} onClick={() => trackNavClick('How I Work', 'floating')} />
+              <div className="hidden md:flex items-center gap-1">
+                <NavItem href="/" label="Home" icon={Home} onClick={() => trackNavClick('Home', 'floating')} />
+                <NavItem href="/about" label="About" icon={User} onClick={() => trackNavClick('About', 'floating')} />
+                <NavItem href="/how-i-work" label="The T&S Way" icon={Compass} onClick={() => trackNavClick('How I Work', 'floating')} />
 
-              <DropdownMenu>
-                <DropdownMenuTrigger className={`group flex items-center gap-0 ${navLinkClass} ${defaultLinkColor} pl-4 pr-4 py-2 rounded-full hover:bg-muted transition-all`}>
+                <DropdownMenu>
+                  <DropdownMenuTrigger className={`group flex items-center gap-0 ${navLinkClass} ${defaultLinkColor} pl-4 pr-4 py-2 rounded-full hover:bg-muted transition-all`}>
+                    <span className="w-0 h-5 flex items-center justify-center overflow-hidden transition-all duration-300 opacity-0 scale-75 group-hover:w-5 group-hover:opacity-100 group-hover:scale-100 group-hover:mr-1.5">
+                      <Layers className="w-4 h-4 shrink-0" />
+                    </span>
+                    Services <ChevronDown className="w-3.5 h-3.5 ml-1" />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="center" className="bg-background border border-border z-50 min-w-[280px] rounded-xl">
+                    {services.map((s) => (
+                      <DropdownMenuItem key={s.href} asChild>
+                        <a href={s.href} className="cursor-pointer" onClick={() => trackNavClick(s.label, 'floating')}>{s.label}</a>
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+
+                <NavItem href="/blog" label="Journal" icon={BookOpen} onClick={() => trackNavClick('Journal', 'floating')} />
+
+                <Button size="sm" className="group bg-accent text-accent-foreground hover:bg-accent/90 rounded-full px-5 ml-1 not-italic font-sans text-sm" onClick={() => { trackCtaClick('Get Started', 'floating-nav'); setIsContactOpen(true); }}>
                   <span className="w-0 h-5 flex items-center justify-center overflow-hidden transition-all duration-300 opacity-0 scale-75 group-hover:w-5 group-hover:opacity-100 group-hover:scale-100 group-hover:mr-1.5">
-                    <Layers className="w-4 h-4 shrink-0" />
+                    <Rocket className="w-4 h-4 shrink-0" />
                   </span>
-                  Services <ChevronDown className="w-3.5 h-3.5 ml-1" />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="center" className="bg-background border border-border z-50 min-w-[280px] rounded-xl">
-                  {services.map((s) => (
-                    <DropdownMenuItem key={s.href} asChild>
-                      <a href={s.href} className="cursor-pointer" onClick={() => trackNavClick(s.label, 'floating')}>{s.label}</a>
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
+                  Get Started
+                </Button>
+              </div>
 
-              <NavItem href="/blog" label="Journal" icon={BookOpen} onClick={() => trackNavClick('Journal', 'floating')} />
-
-              <Button size="sm" className="group bg-accent text-accent-foreground hover:bg-accent/90 rounded-full px-5 ml-1 not-italic font-sans text-sm" onClick={() => { trackCtaClick('Get Started', 'floating-nav'); setIsContactOpen(true); }}>
-                <span className="w-0 h-5 flex items-center justify-center overflow-hidden transition-all duration-300 opacity-0 scale-75 group-hover:w-5 group-hover:opacity-100 group-hover:scale-100 group-hover:mr-1.5">
-                  <Rocket className="w-4 h-4 shrink-0" />
-                </span>
-                Get Started
+              <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+                {isMobileMenuOpen ? <X /> : <Menu />}
               </Button>
             </div>
-
-            <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-              {isMobileMenuOpen ? <X /> : <Menu />}
-            </Button>
           </div>
         </div>
       </nav>
