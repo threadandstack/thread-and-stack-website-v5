@@ -56,8 +56,10 @@ export function DiagnosticDrawer({
   theme,
   source = "home-draft2-diagnostic",
   defaultCoupon = "",
+  initialMode = "intro",
 }: DiagnosticDrawerProps) {
   const { toast } = useToast();
+  const [mode, setMode] = useState<"intro" | "diagnostic">(initialMode);
   const [submitting, setSubmitting] = useState(false);
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [stripeInstance, setStripeInstance] = useState<Stripe | null>(null);
