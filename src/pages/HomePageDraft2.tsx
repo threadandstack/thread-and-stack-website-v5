@@ -47,6 +47,8 @@ const HomePageDraft2 = () => {
         {/* Personal welcome — not collapsible */}
         <AboutIntro />
 
+        <AgentsSection />
+
         <div id="how" />
 
 
