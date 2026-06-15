@@ -4,28 +4,36 @@ import { SectionHeader } from "./SectionHeader";
 
 const faqs = [
   {
-    q: "Why is the Diagnostic paid?",
-    a: "Because it's the work, not the pitch. Ninety minutes live plus a written blueprint within 48 hours. You leave with a plan you could execute alone. The £395 is credited in full against any build you choose afterwards.",
+    q: "Who is Brendan, and why does this matter?",
+    a: "Brendan has spent fifteen years at the intersection of marketing and operations — inside global enterprises like eBay and Dentsu, at small nonprofits where no one person could afford to own just one thing, and at startups where the process and the product were being invented simultaneously. In every context, the same pattern surfaced: organisations with genuine motivation and talented people, quietly held back by the way their knowledge was stored, shared, and lost. Operations, more than strategy or ambition, tends to be the real blocker to growth — and having led marketing while almost always inheriting the operational infrastructure around it, he knows how inseparable those two things are in practice. He is a certified Notion Consulting Partner and an Official Notion Ambassador, and built Thread and Stack to bring that full span of experience to the problem most consultancies quietly ignore.",
   },
   {
-    q: "Why do your build prices look higher than other Notion consultants?",
-    a: "Adoption support is included by default. Other quotes look cheaper until the system arrives, the team doesn't use it, and no one is wired in for the questions that surface in week three. Every build here includes training, a Loom library, and 30–90 days of adoption support depending on tier.",
+    q: "Who is Thread and Stack actually built for?",
+    a: "Five to fifty-person teams who have outgrown the stack they started with. Usually there is a leader who has quietly become the routing layer — every decision passes through them because no one else has the context to act independently. The work here is to build the information architecture that changes that: a knowledge base that grows in value as the team does, reduces cognitive load, and gives people back the time to do their best work. Most clients come from purpose-led sectors — health, education, communities, impact organisations — though the operational challenge is largely universal.",
   },
   {
-    q: "Will an AI agent put our data or our clients at risk?",
-    a: "Notion holds the knowledge. Claude reasons over it through Cowork. It reads and writes in your workspace and does not absorb your data into someone else's model. Custom agents are scoped to specific tasks with permissioned access. No black boxes.",
+    q: "Why do we need a single knowledge hub? We already have folders.",
+    a: "When knowledge is structured intentionally and connected properly, it gets more useful over time rather than more outdated. Teams operate with greater confidence. Leaders have access to more cohesive strategy. The business itself becomes more valuable — structurally, and in terms of what it is actually worth when the knowledge it holds is no longer locked inside the heads of people who might leave. You may already have folders, or a system that is fragmented but technically functional. What you may also have is a leader acting as the router for everything — the person all decisions pass through because no one else has the full picture. A genuine centre of truth is what makes that problem structural rather than personal, and fixable rather than permanent.",
   },
   {
     q: "Won't building on Notion lock us in?",
-    a: "You own the base. Notion is the most open data store of any modern workspace, exportable in standard formats whenever you want. Claude, the agents, and the automations around it are all interchangeable on merit. The architecture survives the tools.",
+    a: "First: Thread and Stack workspaces are designed to survive any individual tool in them. What your organisation should own is not a platform membership — it is the quality of its thinking and the structure it has built. That survives everything. On Notion specifically: like every major platform it exists within a commercial reality, and yet it locks you in less than almost anything else on the market. Notion has become known for a genuinely porous philosophy — inviting other tools into its ecosystem rather than closing them out. It exports to standard formats, connects openly with external services, and treats integrations as a feature rather than a threat. Every agent and automation built around your workspace is chosen on merit and is interchangeable. The architecture is built to outlast the tools.",
+  },
+  {
+    q: "What is the Stack Diagnostic, and why is it paid?",
+    a: "Because it is the work, not the pitch. It is a 90 to 120 minute working session where we map every operational challenge facing your team right now — tools, data, decision-making, the places where growth is quietly being strangled by process. Within 48 hours, you receive a written blueprint: a full picture of what is holding you back and what a solution would actually involve. You could take that and execute it yourself. Most people choose not to, but the point is it has real standalone value. The Diagnostic fee is credited in full against any build that follows.",
   },
   {
     q: "Can you migrate us off Monday / ClickUp / Asana / Sheets?",
-    a: "Yes. That's most engagements. Migration is mapped in the Diagnostic so you know the cost and what stays vs. goes before anything is touched. Data moves safely. The team trains on the new system before the old one is shut down.",
+    a: "Yes. That is most engagements. Migration is mapped during the Diagnostic so before anything is touched, you know what stays, what goes, what the sequence looks like, and what it costs. Data moves safely, and the team trains on the new system before the old one is switched off. One distinction worth naming: there is a difference between data migration and data digitisation. If significant materials still exist on paper or in formats that need converting before they can move, that is scoped separately — it is handled carefully and priced on a case-by-case basis. If that is relevant to your situation, it is worth raising on the first call.",
   },
   {
-    q: "What happens after the build is done?",
-    a: "Rolling Stack Support. From £495/mo, async access, scaled per half-day, no tie-in, cancel any month. The base keeps growing and the agents keep getting smarter. Most clients stay 6 to 12 months.",
+    q: "I'm cautious about AI and data security. How do you handle that?",
+    a: "Carefully and with genuine scrutiny. Every tool recommended here is assessed against an intentional framework that covers GDPR compliance, data residency, security posture, and — increasingly — sustainability and ethical considerations. No tool enters the stack on convenience alone. I am opinionated about tool stacks, but honest about the fact that even people who follow this space closely struggle to keep up. Policies change, ownerships shift, and what was safe last year may warrant a second look this year. That is why there is a standing practice of maintaining a running record of every tool in use, and routinely searching for new learnings about each one. The aim is not to claim certainty — it is to stay genuinely on top of it. For AI agents specifically: they are scoped to specific tasks with permissioned access only. Your data sits in Notion, which you own and control. Any AI working across it reads and writes within your workspace — it does not absorb your data into a third-party model or use it for training. The choice of which AI providers to work with is always yours. The architecture is model-agnostic by design.",
+  },
+  {
+    q: "What does the relationship look like once the build is done?",
+    a: "Something interesting happens when a build is complete: we enter adoption, and adoption surfaces problems that could not have been foreseen during the build phase. That period matters. It is where I stay close — helping the team settle into the new way of working, fixing what needs fixing, and making sure no one gets stranded by a part of the system they do not yet understand. Once adoption is genuinely underway, something shifts. Tasks start flowing. Decisions that used to bottleneck start resolving. The team starts behaving differently in ways that are hard to predict in advance but are unmistakable when they arrive. And a natural question follows: what can we do next? That is where the longer relationship becomes genuinely creative. Systems built for specific functions — content ops, revenue ops, marketing, customer onboarding, website integrations — and the gradual expansion of what the agents can do. Async support, scaled to your rhythm, no tie-in, cancel any month. The base keeps growing. Most clients stay six to twelve months, not because they have to, but because there is always a meaningful next horizon.",
   },
 ];
 
