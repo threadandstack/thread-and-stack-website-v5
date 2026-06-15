@@ -5,6 +5,7 @@ import newsletterLight from "@/assets/notion-mock/newsletter-light.png.asset.jso
 import newsletterDark from "@/assets/notion-mock/newsletter-dark.png.asset.json";
 import vacationLight from "@/assets/notion-mock/vacation-light.png.asset.json";
 import vacationDark from "@/assets/notion-mock/vacation-dark.png.asset.json";
+import onboardingMobile from "@/assets/notion-mock/onboarding-mobile.png.asset.json";
 
 interface HeroProps {
   theme: "dark" | "light";
@@ -79,6 +80,16 @@ export function Hero({ theme, onBookDiagnostic }: HeroProps) {
                       overlayX: 6,
                       overlayY: 56,
                       overlayWidth: 58,
+                    },
+                    {
+                      id: "onboarding",
+                      x: 84,
+                      y: 86,
+                      label: "AI onboarding",
+                      overlaySrc: onboardingMobile.url,
+                      overlayX: 56,
+                      overlayY: 8,
+                      overlayWidth: 36,
                     },
                   ]}
                 />
