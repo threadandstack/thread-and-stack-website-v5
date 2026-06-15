@@ -2,9 +2,51 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
-const Card = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("rounded-lg border bg-card text-card-foreground shadow-sm", className)} {...props} />
-));
+interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+  disableTilt?: boolean;
+}
+
+const Card = React.forwardRef<HTMLDivElement, CardProps>(({ className, disableTilt, ...props }, ref) => {
+  const card = (
+    <div
+      ref={ref}
+      className={cn(
+        "rounded-lg border bg-card text-card-foreground shadow-sm",
+        !disableTilt && "transition-transform duration-300 ease-out [transform-style:preserve-3d]",
+        className
+      )}
+      style={disableTilt ? undefined : {
+        transform: "rotateX(var(--g-ty, 0deg)) rotateY(var(--g-tx, 0deg))",
+      }}
+      {...props}
+    />
+  );
+
+  if (disableTilt) return card;
+
+  return (
+    <div
+      style={{ perspective: "1400px" }}
+      onMouseMove={(e) => {
+        const el = e.currentTarget;
+        const r = el.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width;
+        const py = (e.clientY - r.top) / r.height;
+        const tx = (px - 0.5) * 2 * 6;
+        const ty = (0.5 - py) * 2 * 5;
+        el.style.setProperty("--g-tx", `${tx}deg`);
+        el.style.setProperty("--g-ty", `${ty}deg`);
+      }}
+      onMouseLeave={(e) => {
+        const el = e.currentTarget;
+        el.style.setProperty("--g-tx", `0deg`);
+        el.style.setProperty("--g-ty", `0deg`);
+      }}
+    >
+      {card}
+    </div>
+  );
+});
 Card.displayName = "Card";
 
 const CardHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
