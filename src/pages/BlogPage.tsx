@@ -8,6 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import journalLogo from "@/assets/journal-logo.webp";
 import { BlogNewsletterCTA } from "@/components/BlogNewsletterCTA";
 import { SubscribeLightbox } from "@/components/SubscribeLightbox";
+import { Tilt3D } from "@/components/Tilt3D";
 interface BlogPost {
   id: string;
   slug: string;
