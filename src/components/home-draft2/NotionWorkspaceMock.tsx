@@ -98,7 +98,7 @@ export function NotionWorkspaceMock({ theme, className = "", hotspots = [], grou
         style={{
           transformStyle: "preserve-3d",
           ...(groupTilt
-            ? { transform: "perspective(1400px) rotateX(var(--g-ty, 0deg)) rotateY(var(--g-tx, 0deg))" }
+            ? { transform: "none" }
             : {}),
         }}
       >
