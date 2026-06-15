@@ -12,6 +12,8 @@ interface LogoTiltProps {
   /** Optional override for the indigo overlay. If omitted with custom srcs, an indigo mask of the base is used. */
   indigoSrc?: string;
   alt?: string;
+  /** When true, the 3D rotation is driven by parent CSS vars (--g-tx, --g-ty) instead of local mouse. */
+  groupTilt?: boolean;
 }
 
 export function LogoTilt({
@@ -21,6 +23,7 @@ export function LogoTilt({
   lightSrc,
   indigoSrc,
   alt = "Thread & Stack",
+  groupTilt = false,
 }: LogoTiltProps) {
   const isCustom = !!(darkSrc || lightSrc);
   const logoBase = theme === "light"
@@ -36,18 +39,20 @@ export function LogoTilt({
         const r = el.getBoundingClientRect();
         const x = ((e.clientX - r.left) / r.width) * 100;
         const y = ((e.clientY - r.top) / r.height) * 100;
+        el.style.setProperty("--mx", `${x}%`);
+        el.style.setProperty("--my", `${y}%`);
+        if (groupTilt) return;
         const tx = (x - 50) / 6;
         const ty = (50 - y) / 6;
         const sx = (50 - x) / 4;
         const sy = (50 - y) / 4;
-        el.style.setProperty("--mx", `${x}%`);
-        el.style.setProperty("--my", `${y}%`);
         el.style.setProperty("--tx", `${tx}deg`);
         el.style.setProperty("--ty", `${ty}deg`);
         el.style.setProperty("--sx", `${sx}px`);
         el.style.setProperty("--sy", `${sy}px`);
       }}
       onMouseLeave={(e) => {
+        if (groupTilt) return;
         const el = e.currentTarget as HTMLDivElement;
         el.style.setProperty("--tx", `0deg`);
         el.style.setProperty("--ty", `0deg`);
@@ -64,8 +69,12 @@ export function LogoTilt({
       }}
     >
       <div
-        className="relative transition-transform duration-200 ease-out [transform-style:preserve-3d]"
-        style={{ transform: "rotateX(var(--ty)) rotateY(var(--tx))" }}
+        className="relative transition-transform duration-300 ease-out [transform-style:preserve-3d]"
+        style={{
+          transform: groupTilt
+            ? "rotateX(var(--g-ty, 0deg)) rotateY(var(--g-tx, 0deg))"
+            : "rotateX(var(--ty)) rotateY(var(--tx))",
+        }}
       >
         <img
           src={logoBase}

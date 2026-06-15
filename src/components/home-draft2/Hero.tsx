@@ -17,42 +17,67 @@ export function Hero({ theme, onBookDiagnostic }: HeroProps) {
     <section className="relative">
       <div className="relative mx-auto max-w-5xl px-6 pb-24 pt-20 md:pb-32 md:pt-28">
         <div className="flex flex-col items-center text-center">
-          <div className="mb-10">
-            <LogoTilt className="h-28 sm:h-36 md:h-44" theme={theme} />
+          <div
+            className="w-full"
+            style={{
+              ["--g-tx" as never]: "0deg",
+              ["--g-ty" as never]: "0deg",
+            }}
+            onMouseMove={(e) => {
+              const el = e.currentTarget as HTMLDivElement;
+              const r = el.getBoundingClientRect();
+              const px = (e.clientX - r.left) / r.width;
+              const py = (e.clientY - r.top) / r.height;
+              const tx = (px - 0.5) * 8;   // rotateY
+              const ty = (0.5 - py) * 6;   // rotateX
+              el.style.setProperty("--g-tx", `${tx}deg`);
+              el.style.setProperty("--g-ty", `${ty}deg`);
+            }}
+            onMouseLeave={(e) => {
+              const el = e.currentTarget as HTMLDivElement;
+              el.style.setProperty("--g-tx", `0deg`);
+              el.style.setProperty("--g-ty", `0deg`);
+            }}
+          >
+            <div className="mb-10 flex justify-center">
+              <LogoTilt className="h-28 sm:h-36 md:h-44" theme={theme} groupTilt />
+            </div>
+
+            <div className="mt-6 mb-10 w-full max-w-3xl mx-auto">
+              <NotionWorkspaceMock
+                theme={theme}
+                groupTilt
+                hotspots={[
+                {
+                    id: "newsletter",
+                    // "Welcome to Milestone Mint!" newsletter block
+                    x: 28,
+                    y: 62,
+                    label: "Internal newsletter",
+                    overlaySrc: theme === "dark" ? newsletterLight.url : newsletterDark.url,
+                    overlayX: 38,
+                    overlayY: 8,
+                    overlayWidth: 58,
+                  },
+                  {
+                    id: "vacation",
+                    // "Vacation Policy" near the bottom
+                    x: 56,
+                    y: 92,
+                    label: "Policy page",
+                    overlaySrc: theme === "dark" ? vacationLight.url : vacationDark.url,
+                    overlayX: 6,
+                    overlayY: 56,
+                    overlayWidth: 58,
+                  },
+                ]}
+              />
+              <p className="mt-4 text-center text-[12.5px] text-muted-foreground">
+                A live Knowledge Base built in Notion — hover the pins to peek inside.
+              </p>
+            </div>
           </div>
 
-          <div className="mt-6 mb-10 w-full max-w-3xl">
-            <NotionWorkspaceMock
-              theme={theme}
-              hotspots={[
-              {
-                  id: "newsletter",
-                  // "Welcome to Milestone Mint!" newsletter block
-                  x: 28,
-                  y: 62,
-                  label: "Internal newsletter",
-                  overlaySrc: theme === "dark" ? newsletterLight.url : newsletterDark.url,
-                  overlayX: 38,
-                  overlayY: 8,
-                  overlayWidth: 58,
-                },
-                {
-                  id: "vacation",
-                  // "Vacation Policy" near the bottom
-                  x: 56,
-                  y: 92,
-                  label: "Policy page",
-                  overlaySrc: theme === "dark" ? vacationLight.url : vacationDark.url,
-                  overlayX: 6,
-                  overlayY: 56,
-                  overlayWidth: 58,
-                },
-              ]}
-            />
-            <p className="mt-4 text-center text-[12.5px] text-muted-foreground">
-              A live Knowledge Base built in Notion — hover the pins to peek inside.
-            </p>
-          </div>
 
           <h1 className="font-serif-pro italic font-normal max-w-4xl text-balance text-5xl leading-[1.02] tracking-[-0.02em] md:text-[76px]">
             One central knowledge hub.

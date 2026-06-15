@@ -22,6 +22,8 @@ interface Props {
   theme: "dark" | "light";
   className?: string;
   hotspots?: Hotspot[];
+  /** When true, the 3D rotation is driven by parent CSS vars (--g-tx, --g-ty). */
+  groupTilt?: boolean;
 }
 
 /**
@@ -32,7 +34,7 @@ interface Props {
  * highlight. Optional hotspots reveal overlay screenshots that inherit the
  * same 3D transform. Disabled for touch + prefers-reduced-motion.
  */
-export function NotionWorkspaceMock({ theme, className = "", hotspots = [] }: Props) {
+export function NotionWorkspaceMock({ theme, className = "", hotspots = [], groupTilt = false }: Props) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
@@ -57,9 +59,11 @@ export function NotionWorkspaceMock({ theme, className = "", hotspots = [] }: Pr
     const rect = el.getBoundingClientRect();
     const px = (e.clientX - rect.left) / rect.width;   // 0..1
     const py = (e.clientY - rect.top) / rect.height;   // 0..1
-    const rx = (0.5 - py) * 6;   // tilt up/down deg
-    const ry = (px - 0.5) * 8;   // tilt left/right deg
-    inner.style.transform = `perspective(1400px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+    if (!groupTilt) {
+      const rx = (0.5 - py) * 6;   // tilt up/down deg
+      const ry = (px - 0.5) * 8;   // tilt left/right deg
+      inner.style.transform = `perspective(1400px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+    }
     if (glow) {
       glow.style.background = `radial-gradient(420px circle at ${px * 100}% ${py * 100}%, hsl(var(--accent) / 0.18), transparent 60%)`;
       glow.style.opacity = "1";
@@ -69,7 +73,7 @@ export function NotionWorkspaceMock({ theme, className = "", hotspots = [] }: Pr
   const onLeave = () => {
     const inner = innerRef.current;
     const glow = glowRef.current;
-    if (inner) inner.style.transform = "perspective(1400px) rotateX(0) rotateY(0)";
+    if (inner && !groupTilt) inner.style.transform = "perspective(1400px) rotateX(0) rotateY(0)";
     if (glow) glow.style.opacity = "0";
   };
 
@@ -91,7 +95,12 @@ export function NotionWorkspaceMock({ theme, className = "", hotspots = [] }: Pr
       <div
         ref={innerRef}
         className="relative rounded-2xl will-change-transform transition-transform duration-300 ease-out"
-        style={{ transformStyle: "preserve-3d" }}
+        style={{
+          transformStyle: "preserve-3d",
+          ...(groupTilt
+            ? { transform: "perspective(1400px) rotateX(var(--g-ty, 0deg)) rotateY(var(--g-tx, 0deg))" }
+            : {}),
+        }}
       >
         <img
           src={src}
