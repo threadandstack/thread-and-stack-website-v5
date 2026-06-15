@@ -69,7 +69,7 @@ export function LogoTilt({
       >
         <img
           src={logoBase}
-          alt="Thread & Stack"
+          alt={alt}
           className={`relative w-auto transition-[filter] duration-200 ${className}`}
           style={{
             filter: theme === "dark"
@@ -77,18 +77,54 @@ export function LogoTilt({
               : "none",
           }}
         />
-        <img
-          src={logoIndigo}
-          alt=""
-          aria-hidden="true"
-          className={`absolute inset-0 w-auto opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none ${className}`}
-          style={{
-            WebkitMaskImage:
-              "radial-gradient(circle 70px at var(--mx) var(--my), rgba(0,0,0,0.95), rgba(0,0,0,0) 75%)",
-            maskImage:
-              "radial-gradient(circle 70px at var(--mx) var(--my), rgba(0,0,0,0.95), rgba(0,0,0,0) 75%)",
-          }}
-        />
+        {useMaskOverlay ? (
+          <div
+            aria-hidden="true"
+            className={`absolute inset-0 w-auto opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none ${className}`}
+            style={{
+              backgroundColor: "hsl(var(--indigo))",
+              WebkitMaskImage: `url(${logoBase})`,
+              maskImage: `url(${logoBase})`,
+              WebkitMaskRepeat: "no-repeat",
+              maskRepeat: "no-repeat",
+              WebkitMaskSize: "contain",
+              maskSize: "contain",
+              WebkitMaskPosition: "center",
+              maskPosition: "center",
+              filter: `url('#tsway-noop')`,
+              ["--reveal" as never]: "radial-gradient(circle 70px at var(--mx) var(--my), rgba(0,0,0,0.95), rgba(0,0,0,0) 75%)",
+              clipPath: undefined,
+            }}
+          >
+            <div
+              className="absolute inset-0"
+              style={{
+                backgroundColor: "hsl(var(--indigo))",
+                WebkitMaskImage: `url(${logoBase})`,
+                maskImage: `url(${logoBase})`,
+                WebkitMaskRepeat: "no-repeat",
+                maskRepeat: "no-repeat",
+                WebkitMaskSize: "contain",
+                maskSize: "contain",
+                WebkitMaskPosition: "center",
+                maskPosition: "center",
+              }}
+            />
+          </div>
+        ) : (
+          <img
+            src={indigoOverlay}
+            alt=""
+            aria-hidden="true"
+            className={`absolute inset-0 w-auto opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none ${className}`}
+            style={{
+              WebkitMaskImage:
+                "radial-gradient(circle 70px at var(--mx) var(--my), rgba(0,0,0,0.95), rgba(0,0,0,0) 75%)",
+              maskImage:
+                "radial-gradient(circle 70px at var(--mx) var(--my), rgba(0,0,0,0.95), rgba(0,0,0,0) 75%)",
+            }}
+          />
+        )}
         <div
           className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none blur-xl"
           style={{
