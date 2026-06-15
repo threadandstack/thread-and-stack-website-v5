@@ -132,21 +132,17 @@ const HowIWorkDraft2Page = () => {
                 How I work · principles & practice
               </div>
 
-              <h1 className="fade-up fade-up-2 mt-7 max-w-4xl text-balance text-5xl font-semibold leading-[0.98] tracking-[-0.035em] md:text-[76px]">
-                Human first.
-                <br />
-                <span
-                  className="font-serif-pro italic font-normal bg-clip-text text-transparent text-5xl md:text-7xl"
-                  style={{
-                    backgroundImage:
-                      "linear-gradient(100deg, var(--gradient-4color))",
-                  }}
-                >
-                  AI with intention.
-                </span>
-              </h1>
+              <div className="fade-up fade-up-2 mt-10 flex justify-center">
+                <LogoTilt
+                  className="h-40 sm:h-52 md:h-64"
+                  theme={theme}
+                  darkSrc={tsWayWhite.url}
+                  lightSrc={tsWayBlack.url}
+                  alt="The Thread & Stack Way"
+                />
+              </div>
 
-              <p className="fade-up fade-up-3 mt-7 max-w-2xl text-[17px] leading-relaxed text-ink-soft">
+              <p className="fade-up fade-up-3 mt-10 max-w-2xl text-[17px] leading-relaxed text-ink-soft">
                 A map for protecting the creativity, judgment, and meaning that no model can replace — and using AI with the skill, restraint, and accountability the work deserves.
               </p>
             </div>
