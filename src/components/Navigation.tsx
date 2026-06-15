@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Menu, X, ChevronDown, User, Compass, Layers, BookOpen, Rocket, Sun, Moon } from "lucide-react";
+import { Menu, X, ChevronDown, User, Home, Compass, Layers, BookOpen, Rocket, Sun, Moon } from "lucide-react";
 import { ContactDrawer } from "@/components/ContactDrawer";
 import { Button } from "@/components/ui/button";
 import {
@@ -88,6 +88,7 @@ export const Navigation = ({ variant = "default", hideLogo = false, floatingBadg
 
           {/* Desktop pill nav */}
           <div className="hidden md:flex items-center gap-1 bg-background/90 backdrop-blur-md rounded-full px-2 py-1.5 shadow-[0_2px_20px_rgba(0,0,0,0.08)] border border-border/30">
+            <NavItem href="/" label="Home" icon={Home} onClick={() => trackNavClick('Home', 'header')} />
             <NavItem href="/about" label="About" icon={User} onClick={() => trackNavClick('About', 'header')} />
             <NavItem href="/how-i-work" label="The T&S Way" icon={Compass} onClick={() => trackNavClick('How I Work', 'header')} />
 
@@ -159,6 +160,7 @@ export const Navigation = ({ variant = "default", hideLogo = false, floatingBadg
             {floatingBadge && <div className="ml-2 hidden sm:flex items-center">{floatingBadge}</div>}
 
             <div className="hidden md:flex items-center gap-1">
+              <NavItem href="/" label="Home" icon={Home} onClick={() => trackNavClick('Home', 'floating')} />
               <NavItem href="/about" label="About" icon={User} onClick={() => trackNavClick('About', 'floating')} />
               <NavItem href="/how-i-work" label="The T&S Way" icon={Compass} onClick={() => trackNavClick('How I Work', 'floating')} />
 
@@ -208,6 +210,9 @@ export const Navigation = ({ variant = "default", hideLogo = false, floatingBadg
           </div>
 
           <div className="px-6 py-4 space-y-4 overflow-y-auto h-full">
+            <a href="/" className="block py-3 text-lg font-sans text-foreground/80 hover:text-foreground transition-colors not-italic" onClick={() => setIsMobileMenuOpen(false)}>
+              Home
+            </a>
             <a href="/about" className="block py-3 text-lg font-sans text-foreground/80 hover:text-foreground transition-colors not-italic" onClick={() => setIsMobileMenuOpen(false)}>
               About
             </a>

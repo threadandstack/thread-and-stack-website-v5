@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Sun, Moon, ArrowLeft, Compass, Brain } from "lucide-react";
+import { Sun, Moon, ArrowLeft, Brain } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
@@ -127,14 +127,9 @@ const HowIWorkDraft2Page = () => {
                 Back to home
               </Link>
 
-              <div className="fade-up fade-up-1 inline-flex items-center gap-2 rounded-full border border-hairline bg-paper/70 px-3 py-1 text-[11.5px] uppercase tracking-wider text-muted-foreground backdrop-blur">
-                <Compass className="h-3 w-3 text-indigo" strokeWidth={2} />
-                How I work · principles & practice
-              </div>
-
-              <div className="fade-up fade-up-2 mt-10 flex justify-center">
+              <div className="fade-up fade-up-1 mt-10 flex justify-center">
                 <LogoTilt
-                  className="h-40 sm:h-52 md:h-64"
+                  className="h-[13.5rem] sm:h-[17.5rem] md:h-[21.5rem]"
                   theme={theme}
                   darkSrc={tsWayWhite.url}
                   lightSrc={tsWayBlack.url}
