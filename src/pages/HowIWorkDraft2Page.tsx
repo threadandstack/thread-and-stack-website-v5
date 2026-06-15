@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { CTA } from "@/components/home-draft2/CTA";
+import { Problem } from "@/components/home-draft2/Problem";
 
 const fourCs = [
   {
@@ -148,6 +149,9 @@ const HowIWorkDraft2Page = () => {
             </div>
           </div>
         </section>
+
+        {/* How we work together — moved from home-draft2 */}
+        <Problem />
 
         {/* 4 C's */}
         <section

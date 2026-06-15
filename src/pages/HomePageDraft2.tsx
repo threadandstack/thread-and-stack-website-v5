@@ -4,7 +4,6 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/home-draft2/Hero";
 import { Logos } from "@/components/home-draft2/Logos";
-import { Problem } from "@/components/home-draft2/Problem";
 
 import { Engagements } from "@/components/home-draft2/Engagements";
 import { CaseStudy } from "@/components/home-draft2/CaseStudy";
@@ -63,15 +62,6 @@ const HomePageDraft2 = () => {
         <AboutIntro onBookDiagnostic={openDiagnostic} />
 
         <div id="how" />
-
-        <CollapsibleSection
-          eyebrow="The Thread & Stack Way"
-          title={<>How we <span className="text-clay">work together.</span></>}
-          preview="A four-phase journey: diagnose the leakage, build the base, launch with adoption, and compound the gains."
-          defaultOpen
-        >
-          <Problem />
-        </CollapsibleSection>
 
         <CollapsibleSection
           eyebrow="Who it's for"
