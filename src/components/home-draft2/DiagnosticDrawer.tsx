@@ -22,12 +22,15 @@ import {
 } from "lucide-react";
 import type { Stripe } from "@stripe/stripe-js";
 
+import { IntroCallForm } from "./IntroCallForm";
+
 interface DiagnosticDrawerProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   theme: "dark" | "light";
   source?: string;
   defaultCoupon?: string;
+  initialMode?: "intro" | "diagnostic";
 }
 
 const FULL_PRICE = 39500;
