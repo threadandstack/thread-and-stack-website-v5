@@ -39,7 +39,7 @@ export function Hero({ theme, onBookDiagnostic }: HeroProps) {
                 {
                   id: "vacation",
                   // "Vacation Policy" near the bottom
-                  x: 26,
+                  x: 56,
                   y: 92,
                   label: "Policy page",
                   overlaySrc: theme === "dark" ? vacationLight.url : vacationDark.url,
