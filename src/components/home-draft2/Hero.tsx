@@ -81,6 +81,16 @@ export function Hero({ theme, onBookDiagnostic }: HeroProps) {
                       overlayY: 56,
                       overlayWidth: 58,
                     },
+                    {
+                      id: "onboarding",
+                      x: 84,
+                      y: 86,
+                      label: "AI onboarding",
+                      overlaySrc: onboardingMobile.url,
+                      overlayX: 56,
+                      overlayY: 8,
+                      overlayWidth: 36,
+                    },
                   ]}
                 />
                 <p className="mt-4 text-center text-[12.5px] text-muted-foreground">
