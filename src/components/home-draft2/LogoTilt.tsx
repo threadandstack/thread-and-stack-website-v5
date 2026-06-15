@@ -72,7 +72,7 @@ export function LogoTilt({
         className="relative transition-transform duration-300 ease-out [transform-style:preserve-3d]"
         style={{
           transform: groupTilt
-            ? "rotateX(calc(var(--g-ty, 0deg) * 2)) rotateY(calc(var(--g-tx, 0deg) * 2))"
+            ? "rotateX(calc(var(--g-ty, 0deg) * 4)) rotateY(calc(var(--g-tx, 0deg) * 3))"
             : "rotateX(var(--ty)) rotateY(var(--tx))",
         }}
       >
