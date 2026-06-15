@@ -14,10 +14,10 @@ export function AboutIntro({ onBookDiagnostic }: AboutIntroProps) {
   return (
     <section aria-label="A welcome from Brendan">
       <div className="mx-auto max-w-5xl px-6 py-14 md:px-10 md:py-20">
-        <div className="grid items-center gap-10 md:grid-cols-[auto_1fr] md:gap-14">
+        <div className="grid items-center gap-10 md:grid-cols-[1fr_2fr] md:gap-14">
           {/* Portrait */}
-          <div className="flex flex-col items-center md:items-start">
-            <div className="relative h-32 w-32 overflow-hidden rounded-full border border-hairline shadow-[0_16px_40px_-24px_rgba(0,0,0,0.35)] md:h-40 md:w-40">
+          <div className="flex flex-col items-center justify-center">
+            <div className="relative h-44 w-44 overflow-hidden rounded-full border border-hairline shadow-[0_16px_40px_-24px_rgba(0,0,0,0.35)] md:h-56 md:w-56">
               <img
                 src={brendanPhoto}
                 alt="Brendan, founder of Thread & Stack"
