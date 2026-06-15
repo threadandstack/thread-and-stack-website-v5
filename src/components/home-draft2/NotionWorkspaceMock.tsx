@@ -22,6 +22,8 @@ interface Props {
   theme: "dark" | "light";
   className?: string;
   hotspots?: Hotspot[];
+  /** When true, the 3D rotation is driven by parent CSS vars (--g-tx, --g-ty). */
+  groupTilt?: boolean;
 }
 
 /**
