@@ -12,6 +12,8 @@ interface LogoTiltProps {
   /** Optional override for the indigo overlay. If omitted with custom srcs, an indigo mask of the base is used. */
   indigoSrc?: string;
   alt?: string;
+  /** When true, the 3D rotation is driven by parent CSS vars (--g-tx, --g-ty) instead of local mouse. */
+  groupTilt?: boolean;
 }
 
 export function LogoTilt({
