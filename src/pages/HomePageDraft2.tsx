@@ -49,10 +49,13 @@ const HomePageDraft2 = () => {
         <div id="how" />
 
 
+        <CTA theme={theme} />
+
         <CollapsibleSection
           eyebrow="FAQ"
           title={<>Hard <span className="text-clay">questions.</span></>}
           preview="Why the diagnostic is paid, why the build prices look higher, and what happens with your data."
+          defaultOpen
         >
           <FAQ />
         </CollapsibleSection>
@@ -63,8 +66,6 @@ const HomePageDraft2 = () => {
         >
           <Credentials />
         </CollapsibleSection>
-
-        <CTA theme={theme} />
       </main>
       <Footer />
 
