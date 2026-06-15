@@ -36,17 +36,19 @@ export function AgentsSection() {
               Agents & Connectivity
             </span>
             <h2 className="font-serif-pro italic font-normal text-balance text-3xl leading-[1.1] tracking-[-0.02em] md:text-[44px]">
-              Custom Agents that <br />
-              <span className="text-clay">lighten your load.</span>
+              Custom Agents that solve
+              <span className="text-clay"> the hassle.</span>
             </h2>
           </div>
 
           {/* Right column — intro + cards */}
           <div className="max-w-2xl">
             <p className="text-[15.5px] leading-relaxed text-ink-soft">
-              The systems I build don't just sit there — they think. I design and
-              embed intelligent agents into your operational backbone so work
-              moves forward even when nobody is manually pushing it.
+              The systems I build don't just sit there — they think, watch and do. This means your operating system, your SOPs, your tasks — get where they need to be, without adding pointless busy work. Meaning you and your team can focus on the real value: connecting with customers, creative problem solving, and contributing to those around us.
+            </p>
+
+            <p className="mt-4 text-[15.5px] leading-relaxed text-ink-soft">
+              Using my own architected THREAD Agent Framework, I design and embed intelligent agents that are token efficient, guardrailed, and targeted.
             </p>
 
             <div className="mt-8 grid gap-4 sm:grid-cols-2">
