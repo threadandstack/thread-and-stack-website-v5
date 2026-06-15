@@ -35,10 +35,8 @@ export const Navigation = ({ variant = "default", hideLogo = false, floatingBadg
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const services = [
-    { href: "/narratives-strategy", label: "Narratives & Strategy Services" },
-    { href: "/notion-systems", label: "Notion & Systems Consultancy" },
-  ];
+  const services: { href: string; label: string }[] = [];
+
 
   const navLinkClass = "text-sm font-sans transition-all not-italic";
   const defaultLinkColor = "text-foreground/70 hover:text-foreground";
@@ -98,22 +96,8 @@ export const Navigation = ({ variant = "default", hideLogo = false, floatingBadg
             <NavItem href="/about" label="About" icon={User} onClick={() => trackNavClick('About', 'header')} />
             <NavItem href="/how-i-work" label="The T&S Way" icon={Compass} onClick={() => trackNavClick('How I Work', 'header')} />
 
-            <DropdownMenu>
-              <DropdownMenuTrigger className={`group flex items-center gap-0 ${navLinkClass} ${defaultLinkColor} pl-4 pr-4 py-2 rounded-full hover:bg-muted transition-all`}>
-                <span className="w-0 h-5 flex items-center justify-center overflow-hidden transition-all duration-300 opacity-0 scale-75 group-hover:w-5 group-hover:opacity-100 group-hover:scale-100 group-hover:mr-1.5">
-                  <Layers className="w-4 h-4 shrink-0" />
-                </span>
-                Services
-                <ChevronDown className="w-3.5 h-3.5 ml-1" />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="center" className="bg-background border border-border z-50 min-w-[280px] rounded-xl">
-                {services.map((s) => (
-                  <DropdownMenuItem key={s.href} asChild>
-                    <a href={s.href} className="cursor-pointer" onClick={() => trackNavClick(s.label, 'header')}>{s.label}</a>
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <NavItem href="/services" label="Services" icon={Layers} onClick={() => trackNavClick('Services', 'header')} />
+
 
             <NavItem href="/blog" label="Journal" icon={BookOpen} onClick={() => trackNavClick('Journal', 'header')} />
 
@@ -179,21 +163,8 @@ export const Navigation = ({ variant = "default", hideLogo = false, floatingBadg
                 <NavItem href="/about" label="About" icon={User} onClick={() => trackNavClick('About', 'floating')} />
                 <NavItem href="/how-i-work" label="The T&S Way" icon={Compass} onClick={() => trackNavClick('How I Work', 'floating')} />
 
-                <DropdownMenu>
-                  <DropdownMenuTrigger className={`group flex items-center gap-0 ${navLinkClass} ${defaultLinkColor} pl-4 pr-4 py-2 rounded-full hover:bg-muted transition-all`}>
-                    <span className="w-0 h-5 flex items-center justify-center overflow-hidden transition-all duration-300 opacity-0 scale-75 group-hover:w-5 group-hover:opacity-100 group-hover:scale-100 group-hover:mr-1.5">
-                      <Layers className="w-4 h-4 shrink-0" />
-                    </span>
-                    Services <ChevronDown className="w-3.5 h-3.5 ml-1" />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="center" className="bg-background border border-border z-50 min-w-[280px] rounded-xl">
-                    {services.map((s) => (
-                      <DropdownMenuItem key={s.href} asChild>
-                        <a href={s.href} className="cursor-pointer" onClick={() => trackNavClick(s.label, 'floating')}>{s.label}</a>
-                      </DropdownMenuItem>
-                    ))}
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                <NavItem href="/services" label="Services" icon={Layers} onClick={() => trackNavClick('Services', 'floating')} />
+
 
                 <NavItem href="/blog" label="Journal" icon={BookOpen} onClick={() => trackNavClick('Journal', 'floating')} />
 
@@ -237,13 +208,11 @@ export const Navigation = ({ variant = "default", hideLogo = false, floatingBadg
             </a>
 
             <div className="border-t border-border/50 pt-4">
-              <p className="text-xs text-muted-foreground mb-3 not-italic font-sans">Services</p>
-              {services.map((s) => (
-                <a key={s.href} href={s.href} className="block py-3 text-lg font-sans text-foreground/80 hover:text-foreground transition-colors pl-4 not-italic" onClick={() => setIsMobileMenuOpen(false)}>
-                  {s.label}
-                </a>
-              ))}
+              <a href="/services" className="block py-3 text-lg font-sans text-foreground/80 hover:text-foreground transition-colors not-italic" onClick={() => setIsMobileMenuOpen(false)}>
+                Services
+              </a>
             </div>
+
 
             <div className="border-t border-border/50 pt-4">
               <a href="/blog" className="block py-3 text-lg font-sans text-foreground/80 hover:text-foreground transition-colors not-italic" onClick={() => setIsMobileMenuOpen(false)}>

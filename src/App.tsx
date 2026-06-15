@@ -73,6 +73,8 @@ const UnsubscribePage = lazy(() => import("./pages/UnsubscribePage"));
 const BecomeUnitedBlueprintPage = lazy(() => import("./pages/BecomeUnitedBlueprintPage"));
 const UnleashYourTeamDraft2Page = lazy(() => import("./pages/UnleashYourTeamDraft2Page"));
 const IntroCallPage = lazy(() => import("./pages/IntroCallPage"));
+const ServicesPage = lazy(() => import("./pages/ServicesPage"));
+
 
 const queryClient = new QueryClient();
 
@@ -94,16 +96,23 @@ const App = () => (
             <Route path="/" element={<HomePageDraft2 />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/how-i-work" element={<HowIWorkDraft2Page />} />
-            <Route path="/sessions-and-sprints" element={<SessionsAndSprints />} />
-            <Route path="/narratives-strategy" element={<FractionalDeepEngagement />} />
-            <Route path="/fractional-deep-engagement" element={<FractionalDeepEngagement />} />
+            <Route path="/services" element={<ServicesPage />} />
+            {/* Depreciated service pages — redirect to the new unified /services */}
+            <Route path="/sessions-and-sprints" element={<Navigate to="/services" replace />} />
+            <Route path="/narratives-strategy" element={<Navigate to="/services" replace />} />
+            <Route path="/fractional-deep-engagement" element={<Navigate to="/services" replace />} />
             <Route path="/workshops" element={<Workshops />} />
-            <Route path="/notion-systems" element={<NotionSystemsPage />} />
+            <Route path="/notion-systems" element={<Navigate to="/services" replace />} />
+            {/* Originals kept under /depreciate for reference */}
+            <Route path="/depreciate/narratives-strategy" element={<FractionalDeepEngagement />} />
+            <Route path="/depreciate/notion-systems" element={<NotionSystemsPage />} />
+            <Route path="/depreciate/sessions-and-sprints" element={<SessionsAndSprints />} />
             {/* Legacy routes - redirect to new combined pages */}
-            <Route path="/clarity-sessions" element={<SessionsAndSprints />} />
-            <Route path="/mentorship-sprint" element={<SessionsAndSprints />} />
-            <Route path="/fractional-strategy" element={<FractionalDeepEngagement />} />
-            <Route path="/deep-engagement" element={<FractionalDeepEngagement />} />
+            <Route path="/clarity-sessions" element={<Navigate to="/services" replace />} />
+            <Route path="/mentorship-sprint" element={<Navigate to="/services" replace />} />
+            <Route path="/fractional-strategy" element={<Navigate to="/services" replace />} />
+            <Route path="/deep-engagement" element={<Navigate to="/services" replace />} />
+
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/home-draft" element={<HomePageDraft />} />
             {/* Backward-compat redirects for old draft2 paths */}
