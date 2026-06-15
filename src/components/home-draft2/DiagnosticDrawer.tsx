@@ -83,8 +83,9 @@ export function DiagnosticDrawer({
       setClientSecret(null);
       setSubmitting(false);
       setStripeError(null);
+      setMode(initialMode);
     }
-  }, [open]);
+  }, [open, initialMode]);
 
   useEffect(() => {
     if (!clientSecret) return;
