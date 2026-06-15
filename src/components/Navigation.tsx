@@ -238,7 +238,7 @@ export const Navigation = ({ variant = "default", hideLogo = false, floatingBadg
       )}
 
       <ContactDrawer open={isContactOpen} onOpenChange={setIsContactOpen} source="nav-get-started" />
-      <DiagnosticDrawer open={isDiagnosticOpen} onOpenChange={setIsDiagnosticOpen} source="nav-get-started" initialMode="intro" />
+      <DiagnosticDrawer open={isDiagnosticOpen} onOpenChange={setIsDiagnosticOpen} source="nav-get-started" initialMode="intro" theme={isDark ? "dark" : "light"} />
 
     </>
   );
