@@ -239,145 +239,182 @@ export function DiagnosticDrawer({
             </div>
 
             <div className="space-y-6 px-6 py-7 sm:px-8">
-              <div className="rounded-xl border border-hairline bg-card p-4 text-card-foreground">
-                <div className="flex items-baseline justify-between">
-                  <span className="text-[13px] text-muted-foreground">Stack Diagnostic</span>
-                  <span className="font-sans text-[22px] font-semibold tracking-tight">
-                    £{(displayedTotal / 100).toFixed(2).replace(/\.00$/, "")}
-                  </span>
-                </div>
-                {matchedCoupon && (
-                  <div className="mt-1.5 flex items-center justify-between text-[12px] text-indigo">
-                    <span className="inline-flex items-center gap-1">
-                      <CheckCircle2 className="h-3.5 w-3.5" />
-                      Coupon {couponNormalized} — {matchedCoupon.label}
-                    </span>
-                    <span className="line-through text-muted-foreground">£395</span>
-                  </div>
-                )}
-              </div>
-
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <input
-                  type="text"
-                  tabIndex={-1}
-                  autoComplete="off"
-                  value={form.honeypot}
-                  onChange={(e) => setForm({ ...form, honeypot: e.target.value })}
-                  className="absolute -left-[9999px] h-px w-px opacity-0"
-                  aria-hidden="true"
-                />
-
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <div className="space-y-1.5">
-                    <Label htmlFor="diag-name">Name *</Label>
-                    <Input
-                      id="diag-name"
-                      required
-                      maxLength={120}
-                      value={form.name}
-                      onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    />
-                  </div>
-                  <div className="space-y-1.5">
-                    <Label htmlFor="diag-email">Email *</Label>
-                    <Input
-                      id="diag-email"
-                      type="email"
-                      required
-                      maxLength={255}
-                      value={form.email}
-                      onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-1.5">
-                  <Label htmlFor="diag-role">Role &amp; organisation</Label>
-                  <Input
-                    id="diag-role"
-                    placeholder="e.g. Founder, Acme Studio"
-                    maxLength={255}
-                    value={form.roleOrg}
-                    onChange={(e) => setForm({ ...form, roleOrg: e.target.value })}
+              {mode === "intro" ? (
+                <>
+                  <IntroCallForm
+                    source={`${source}-intro`}
+                    onSuccess={() => {
+                      // Close the drawer shortly after success
+                      setTimeout(() => onOpenChange(false), 2500);
+                    }}
                   />
-                </div>
-
-                <div className="space-y-1.5">
-                  <Label htmlFor="diag-focus">What you'd like to focus on</Label>
-                  <Textarea
-                    id="diag-focus"
-                    rows={4}
-                    maxLength={2000}
-                    placeholder="Your stack, your sprawl, and the questions your team keeps asking."
-                    value={form.focus}
-                    onChange={(e) => setForm({ ...form, focus: e.target.value })}
-                  />
-                </div>
-
-                <div className="space-y-1.5">
-                  <Label htmlFor="diag-coupon" className="inline-flex items-center gap-1.5">
-                    <BadgePercent className="h-3.5 w-3.5" /> Coupon code (optional)
-                  </Label>
-                  <Input
-                    id="diag-coupon"
-                    placeholder="Got a code? Add it here"
-                    maxLength={40}
-                    value={form.couponCode}
-                    onChange={(e) =>
-                      setForm({ ...form, couponCode: e.target.value.toUpperCase() })
-                    }
-                    className="uppercase tracking-wider"
-                  />
-                  {form.couponCode && !couponLooksValid && (
-                    <p className="text-[11.5px] text-muted-foreground">
-                      We'll check this when you continue.
+                  <div className="rounded-xl border border-dashed border-hairline bg-paper/60 p-4 text-center">
+                    <p className="text-[13px] text-ink-soft">
+                      Already know what you need?
                     </p>
-                  )}
-                </div>
+                    <button
+                      type="button"
+                      onClick={() => setMode("diagnostic")}
+                      className="mt-1 inline-flex items-center gap-1.5 text-[14px] font-medium text-indigo underline-offset-4 hover:underline"
+                    >
+                      I'm ready to book my Diagnostic session now
+                      <ArrowRight className="h-4 w-4" />
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="flex items-center justify-between">
+                    <button
+                      type="button"
+                      onClick={() => setMode("intro")}
+                      className="text-[12.5px] text-muted-foreground underline-offset-4 hover:underline"
+                    >
+                      ← Back to intro call
+                    </button>
+                  </div>
 
-                <div className="flex items-start gap-3 pt-1">
-                  <Checkbox
-                    id="diag-consent"
-                    checked={form.consent}
-                    onCheckedChange={(v) => setForm({ ...form, consent: v === true })}
-                  />
-                  <Label
-                    htmlFor="diag-consent"
-                    className="text-xs font-normal leading-relaxed text-muted-foreground sm:text-sm"
-                  >
-                    I'm happy for Brendan to contact me about my booking and the Diagnostic. See the{" "}
-                    <a href="/privacy" target="_blank" className="underline">
-                      privacy policy
-                    </a>
-                    .
-                  </Label>
-                </div>
-
-                <Button
-                  type="submit"
-                  disabled={submitting}
-                  className="group h-12 w-full text-accent-foreground transition-transform hover:-translate-y-px"
-                  style={{ backgroundImage: "linear-gradient(95deg, var(--gradient-3color))" }}
-                >
-                  {submitting ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Starting checkout…
-                    </>
-                  ) : (
-                    <>
-                      Continue to payment
-                      <span className="inline-flex w-0 items-center justify-center overflow-hidden opacity-0 scale-75 transition-all duration-300 group-hover:w-5 group-hover:opacity-100 group-hover:scale-100 group-hover:ml-1.5">
-                        <ArrowRight className="h-4 w-4 shrink-0" />
+                  <div className="rounded-xl border border-hairline bg-card p-4 text-card-foreground">
+                    <div className="flex items-baseline justify-between">
+                      <span className="text-[13px] text-muted-foreground">Stack Diagnostic</span>
+                      <span className="font-sans text-[22px] font-semibold tracking-tight">
+                        £{(displayedTotal / 100).toFixed(2).replace(/\.00$/, "")}
                       </span>
-                    </>
-                  )}
-                </Button>
+                    </div>
+                    {matchedCoupon && (
+                      <div className="mt-1.5 flex items-center justify-between text-[12px] text-indigo">
+                        <span className="inline-flex items-center gap-1">
+                          <CheckCircle2 className="h-3.5 w-3.5" />
+                          Coupon {couponNormalized} — {matchedCoupon.label}
+                        </span>
+                        <span className="line-through text-muted-foreground">£395</span>
+                      </div>
+                    )}
+                  </div>
 
-                <p className="inline-flex w-full items-center justify-center gap-1.5 text-[11px] text-muted-foreground">
-                  <ShieldCheck className="h-3 w-3" /> Secure payment via Stripe.
-                </p>
-              </form>
+                  <form onSubmit={handleSubmit} className="space-y-4">
+                    <input
+                      type="text"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      value={form.honeypot}
+                      onChange={(e) => setForm({ ...form, honeypot: e.target.value })}
+                      className="absolute -left-[9999px] h-px w-px opacity-0"
+                      aria-hidden="true"
+                    />
+
+                    <div className="grid gap-4 sm:grid-cols-2">
+                      <div className="space-y-1.5">
+                        <Label htmlFor="diag-name">Name *</Label>
+                        <Input
+                          id="diag-name"
+                          required
+                          maxLength={120}
+                          value={form.name}
+                          onChange={(e) => setForm({ ...form, name: e.target.value })}
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <Label htmlFor="diag-email">Email *</Label>
+                        <Input
+                          id="diag-email"
+                          type="email"
+                          required
+                          maxLength={255}
+                          value={form.email}
+                          onChange={(e) => setForm({ ...form, email: e.target.value })}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <Label htmlFor="diag-role">Role &amp; organisation</Label>
+                      <Input
+                        id="diag-role"
+                        placeholder="e.g. Founder, Acme Studio"
+                        maxLength={255}
+                        value={form.roleOrg}
+                        onChange={(e) => setForm({ ...form, roleOrg: e.target.value })}
+                      />
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <Label htmlFor="diag-focus">What you'd like to focus on</Label>
+                      <Textarea
+                        id="diag-focus"
+                        rows={4}
+                        maxLength={2000}
+                        placeholder="Your stack, your sprawl, and the questions your team keeps asking."
+                        value={form.focus}
+                        onChange={(e) => setForm({ ...form, focus: e.target.value })}
+                      />
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <Label htmlFor="diag-coupon" className="inline-flex items-center gap-1.5">
+                        <BadgePercent className="h-3.5 w-3.5" /> Coupon code (optional)
+                      </Label>
+                      <Input
+                        id="diag-coupon"
+                        placeholder="Got a code? Add it here"
+                        maxLength={40}
+                        value={form.couponCode}
+                        onChange={(e) =>
+                          setForm({ ...form, couponCode: e.target.value.toUpperCase() })
+                        }
+                        className="uppercase tracking-wider"
+                      />
+                      {form.couponCode && !couponLooksValid && (
+                        <p className="text-[11.5px] text-muted-foreground">
+                          We'll check this when you continue.
+                        </p>
+                      )}
+                    </div>
+
+                    <div className="flex items-start gap-3 pt-1">
+                      <Checkbox
+                        id="diag-consent"
+                        checked={form.consent}
+                        onCheckedChange={(v) => setForm({ ...form, consent: v === true })}
+                      />
+                      <Label
+                        htmlFor="diag-consent"
+                        className="text-xs font-normal leading-relaxed text-muted-foreground sm:text-sm"
+                      >
+                        I'm happy for Brendan to contact me about my booking and the Diagnostic. See the{" "}
+                        <a href="/privacy" target="_blank" className="underline">
+                          privacy policy
+                        </a>
+                        .
+                      </Label>
+                    </div>
+
+                    <Button
+                      type="submit"
+                      disabled={submitting}
+                      className="group h-12 w-full text-accent-foreground transition-transform hover:-translate-y-px"
+                      style={{ backgroundImage: "linear-gradient(95deg, var(--gradient-3color))" }}
+                    >
+                      {submitting ? (
+                        <>
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Starting checkout…
+                        </>
+                      ) : (
+                        <>
+                          Continue to payment
+                          <span className="inline-flex w-0 items-center justify-center overflow-hidden opacity-0 scale-75 transition-all duration-300 group-hover:w-5 group-hover:opacity-100 group-hover:scale-100 group-hover:ml-1.5">
+                            <ArrowRight className="h-4 w-4 shrink-0" />
+                          </span>
+                        </>
+                      )}
+                    </Button>
+
+                    <p className="inline-flex w-full items-center justify-center gap-1.5 text-[11px] text-muted-foreground">
+                      <ShieldCheck className="h-3 w-3" /> Secure payment via Stripe.
+                    </p>
+                  </form>
+                </>
+              )}
             </div>
           </div>
         ) : (
