@@ -1,6 +1,10 @@
 import { ArrowRight, ArrowDown, BadgeCheck, Repeat, MapPin } from "lucide-react";
 import { LogoTilt } from "./LogoTilt";
 import { NotionWorkspaceMock } from "./NotionWorkspaceMock";
+import newsletterLight from "@/assets/notion-mock/newsletter-light.png.asset.json";
+import newsletterDark from "@/assets/notion-mock/newsletter-dark.png.asset.json";
+import vacationLight from "@/assets/notion-mock/vacation-light.png.asset.json";
+import vacationDark from "@/assets/notion-mock/vacation-dark.png.asset.json";
 
 interface HeroProps {
   theme: "dark" | "light";
@@ -27,6 +31,7 @@ export function Hero({ theme, onBookDiagnostic }: HeroProps) {
                   x: 62,
                   y: 28,
                   label: "Internal newsletter",
+                  overlaySrc: theme === "dark" ? newsletterLight.url : newsletterDark.url,
                   overlayX: 38,
                   overlayY: 8,
                   overlayWidth: 58,
@@ -37,6 +42,7 @@ export function Hero({ theme, onBookDiagnostic }: HeroProps) {
                   x: 26,
                   y: 82,
                   label: "Policy page",
+                  overlaySrc: theme === "dark" ? vacationLight.url : vacationDark.url,
                   overlayX: 6,
                   overlayY: 38,
                   overlayWidth: 58,
