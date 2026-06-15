@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { Menu, X, ChevronDown, User, Home, Compass, Layers, BookOpen, Rocket, Sun, Moon } from "lucide-react";
 import { ContactDrawer } from "@/components/ContactDrawer";
+import { DiagnosticDrawer } from "@/components/home-draft2/DiagnosticDrawer";
+
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -28,6 +30,11 @@ export const Navigation = ({ variant = "default", hideLogo = false, floatingBadg
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLogoHovered, setIsLogoHovered] = useState(false);
   const [isContactOpen, setIsContactOpen] = useState(false);
+  const [isDiagnosticOpen, setIsDiagnosticOpen] = useState(false);
+  const gradientBtnStyle = {
+    backgroundImage: "linear-gradient(95deg, hsl(320 85% 55%), hsl(var(--orange)))",
+  } as const;
+
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
