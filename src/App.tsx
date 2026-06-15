@@ -90,9 +90,10 @@ const App = () => (
       <BrowserRouter>
         <Suspense fallback={<PageLoader />}>
           <Routes>
-            <Route path="/" element={<Index />} />
+            {/* New official homepage (formerly home-draft2) */}
+            <Route path="/" element={<HomePageDraft2 />} />
             <Route path="/about" element={<AboutPage />} />
-            <Route path="/how-i-work" element={<HowIWorkPage />} />
+            <Route path="/how-i-work" element={<HowIWorkDraft2Page />} />
             <Route path="/sessions-and-sprints" element={<SessionsAndSprints />} />
             <Route path="/narratives-strategy" element={<FractionalDeepEngagement />} />
             <Route path="/fractional-deep-engagement" element={<FractionalDeepEngagement />} />
@@ -105,10 +106,14 @@ const App = () => (
             <Route path="/deep-engagement" element={<FractionalDeepEngagement />} />
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/home-draft" element={<HomePageDraft />} />
-            <Route path="/home-draft2" element={<HomePageDraft2 />} />
-            <Route path="/home-draft2/scorecard" element={<ScorecardPage />} />
-            <Route path="/home-draft2/how-i-work" element={<HowIWorkDraft2Page />} />
+            {/* Backward-compat redirects for old draft2 paths */}
+            <Route path="/home-draft2" element={<Navigate to="/" replace />} />
+            <Route path="/home-draft2/how-i-work" element={<Navigate to="/how-i-work" replace />} />
+            <Route path="/home-draft2/scorecard" element={<Navigate to="/scorecard" replace />} />
             <Route path="/home-draft2/journal" element={<JournalDraft2Page />} />
+            {/* Depreciated originals — kept available for reference */}
+            <Route path="/depreciate/home" element={<Index />} />
+            <Route path="/depreciate/how-i-work" element={<HowIWorkPage />} />
             <Route path="/scorecard" element={<ScorecardPage />} />
             <Route path="/blog/:slug" element={<BlogPostPage />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
