@@ -148,64 +148,62 @@ const BlogPage = () => {
                   {(() => {
                     const featuredPost = filteredPosts.find(p => p.featured)!;
                     return (
-                      <Tilt3D maxX={5} maxY={4}>
-                        <Link
-                          to={`/blog/${featuredPost.slug}`}
-                          className="group cursor-pointer block"
-                        >
-                          <Card className="transition-all hover:shadow-lg overflow-hidden">
-                            <div className="grid md:grid-cols-2 gap-0">
-                              {featuredPost.headerImage && (
-                                <div className="aspect-[16/10] md:aspect-auto overflow-hidden">
-                                  <img 
-                                    src={featuredPost.headerImage} 
-                                    alt={featuredPost.title}
-                                    className="w-full h-full object-cover transition-transform group-hover:scale-105"
-                                  />
-                                </div>
-                              )}
-                              <div className="p-8 flex flex-col justify-center">
-                                <div className="flex items-center gap-3 mb-4">
-                                  <span className="px-3 py-1 text-sm rounded-full bg-accent text-accent-foreground">
-                                    Featured
+                      <Link
+                        to={`/blog/${featuredPost.slug}`}
+                        className="group cursor-pointer block"
+                      >
+                        <Card className="transition-all hover:shadow-lg overflow-hidden">
+                          <div className="grid md:grid-cols-2 gap-0">
+                            {featuredPost.headerImage && (
+                              <div className="aspect-[16/10] md:aspect-auto overflow-hidden">
+                                <img 
+                                  src={featuredPost.headerImage} 
+                                  alt={featuredPost.title}
+                                  className="w-full h-full object-cover transition-transform group-hover:scale-105"
+                                />
+                              </div>
+                            )}
+                            <div className="p-8 flex flex-col justify-center">
+                              <div className="flex items-center gap-3 mb-4">
+                                <span className="px-3 py-1 text-sm rounded-full bg-accent text-accent-foreground">
+                                  Featured
+                                </span>
+                                {featuredPost.theme && (
+                                  <span className={`px-3 py-1 text-sm rounded-full ${getThemeColors(featuredPost.theme)}`}>
+                                    {featuredPost.theme}
                                   </span>
-                                  {featuredPost.theme && (
-                                    <span className={`px-3 py-1 text-sm rounded-full ${getThemeColors(featuredPost.theme)}`}>
-                                      {featuredPost.theme}
-                                    </span>
-                                  )}
-                                  {featuredPost.readingTime && (
-                                    <span className="text-sm text-muted-foreground">
-                                      {featuredPost.readingTime} min read
-                                    </span>
-                                  )}
-                                </div>
-
-                                <h2 className="text-3xl md:text-4xl mb-4 group-hover:text-accent transition-colors font-light">
-                                  {featuredPost.title}
-                                </h2>
-
-                                {featuredPost.description && (
-                                  <p className="text-muted-foreground mb-6 text-lg leading-relaxed">
-                                    {featuredPost.description}
-                                  </p>
                                 )}
-
-                                <div className="flex items-center justify-between text-sm text-muted-foreground">
-                                  <span className="italic">
-                                    Brendan @ Thread and Stack
+                                {featuredPost.readingTime && (
+                                  <span className="text-sm text-muted-foreground">
+                                    {featuredPost.readingTime} min read
                                   </span>
-                                  {featuredPost.publishedDate && (
-                                    <span>
-                                      {formatPublishedDate(featuredPost.publishedDate)}
-                                    </span>
-                                  )}
-                                </div>
+                                )}
+                              </div>
+
+                              <h2 className="text-3xl md:text-4xl mb-4 group-hover:text-accent transition-colors font-light">
+                                {featuredPost.title}
+                              </h2>
+
+                              {featuredPost.description && (
+                                <p className="text-muted-foreground mb-6 text-lg leading-relaxed">
+                                  {featuredPost.description}
+                                </p>
+                              )}
+
+                              <div className="flex items-center justify-between text-sm text-muted-foreground">
+                                <span className="italic">
+                                  Brendan @ Thread and Stack
+                                </span>
+                                {featuredPost.publishedDate && (
+                                  <span>
+                                    {formatPublishedDate(featuredPost.publishedDate)}
+                                  </span>
+                                )}
                               </div>
                             </div>
-                          </Card>
-                        </Link>
-                      </Tilt3D>
+                          </div>
+                        </Card>
+                      </Link>
                     );
                   })()}
                 </div>
@@ -214,59 +212,58 @@ const BlogPage = () => {
               {/* Regular Articles Grid */}
               <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                 {(activeTheme ? filteredPosts : filteredPosts.filter(p => !p.featured)).map((post) => (
-                  <Tilt3D key={post.id} maxX={6} maxY={5} className="h-full">
-                    <Link
-                      to={`/blog/${post.slug}`}
-                      className="group cursor-pointer block h-full"
-                    >
-                      <Card className="h-full transition-all hover:shadow-lg overflow-hidden">
-                        {post.headerImage && (
-                          <div className="aspect-[16/9] overflow-hidden">
-                            <img 
-                              src={post.headerImage} 
-                              alt={post.title}
-                              className="w-full h-full object-cover transition-transform group-hover:scale-105"
-                            />
-                          </div>
-                        )}
-                        <div className="p-6">
-                          <div className="flex items-center gap-3 mb-4">
-                            {post.theme && (
-                              <span className={`px-3 py-1 text-sm rounded-full ${getThemeColors(post.theme)}`}>
-                                {post.theme}
-                              </span>
-                            )}
-                            {post.readingTime && (
-                              <span className="text-sm text-muted-foreground">
-                                {post.readingTime} min read
-                              </span>
-                            )}
-                          </div>
-
-                          <h2 className="text-2xl mb-3 group-hover:text-accent transition-colors">
-                            {post.title}
-                          </h2>
-
-                          {post.intro && (
-                            <p className="text-muted-foreground mb-4 line-clamp-2">
-                              {post.intro}
-                            </p>
-                          )}
-
-                          <div className="flex items-center justify-between text-sm text-muted-foreground">
-                            <span className="italic">
-                              Brendan @ Thread and Stack
-                            </span>
-                            {post.publishedDate && (
-                              <span>
-                                {formatPublishedDate(post.publishedDate)}
-                              </span>
-                            )}
-                          </div>
+                  <Link
+                    key={post.id}
+                    to={`/blog/${post.slug}`}
+                    className="group cursor-pointer block h-full"
+                  >
+                    <Card className="h-full transition-all hover:shadow-lg overflow-hidden">
+                      {post.headerImage && (
+                        <div className="aspect-[16/9] overflow-hidden">
+                          <img 
+                            src={post.headerImage} 
+                            alt={post.title}
+                            className="w-full h-full object-cover transition-transform group-hover:scale-105"
+                          />
                         </div>
-                      </Card>
-                    </Link>
-                  </Tilt3D>
+                      )}
+                      <div className="p-6">
+                        <div className="flex items-center gap-3 mb-4">
+                          {post.theme && (
+                            <span className={`px-3 py-1 text-sm rounded-full ${getThemeColors(post.theme)}`}>
+                              {post.theme}
+                            </span>
+                          )}
+                          {post.readingTime && (
+                            <span className="text-sm text-muted-foreground">
+                              {post.readingTime} min read
+                            </span>
+                          )}
+                        </div>
+
+                        <h2 className="text-2xl mb-3 group-hover:text-accent transition-colors">
+                          {post.title}
+                        </h2>
+
+                        {post.intro && (
+                          <p className="text-muted-foreground mb-4 line-clamp-2">
+                            {post.intro}
+                          </p>
+                        )}
+
+                        <div className="flex items-center justify-between text-sm text-muted-foreground">
+                          <span className="italic">
+                            Brendan @ Thread and Stack
+                          </span>
+                          {post.publishedDate && (
+                            <span>
+                              {formatPublishedDate(post.publishedDate)}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </Card>
+                  </Link>
                 ))}
 
                 {(activeTheme ? filteredPosts : filteredPosts.filter(p => !p.featured)).length === 0 && !isLoading && (
