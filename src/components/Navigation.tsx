@@ -212,7 +212,7 @@ export const Navigation = ({ variant = "default", hideLogo = false, floatingBadg
               About
             </a>
             <a href="/how-i-work" className="block py-3 text-lg font-sans text-foreground/80 hover:text-foreground transition-colors not-italic" onClick={() => setIsMobileMenuOpen(false)}>
-              How I Work
+              The T&S Way
             </a>
 
             <div className="border-t border-border/50 pt-4">
