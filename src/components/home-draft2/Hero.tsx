@@ -1,5 +1,6 @@
 import { ArrowRight, ArrowDown, BadgeCheck, Repeat, MapPin } from "lucide-react";
 import { LogoTilt } from "./LogoTilt";
+import { NotionWorkspaceMock } from "./NotionWorkspaceMock";
 
 interface HeroProps {
   theme: "dark" | "light";
@@ -71,6 +72,13 @@ export function Hero({ theme, onBookDiagnostic }: HeroProps) {
               UK-based · booking Q3
             </span>
           </div>
+        </div>
+
+        <div className="mt-16 md:mt-20">
+          <NotionWorkspaceMock theme={theme} />
+          <p className="mt-4 text-center text-[12.5px] text-muted-foreground">
+            A live Knowledge Base built in Notion — the kind we'd build with you.
+          </p>
         </div>
       </div>
     </section>
