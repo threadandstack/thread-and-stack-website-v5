@@ -1,16 +1,12 @@
-import { ArrowRight, Calendar } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import brendanPhoto from "@/assets/photos/shoreditch/brendan-34.webp";
-
-interface AboutIntroProps {
-  onBookDiagnostic?: () => void;
-}
 
 /**
  * Personal welcome at the top of the page — NOT a collapsible.
- * A short hello from Brendan with a portrait, an inline video placeholder,
- * and a nudge to explore the toggles below or book a call.
+ * A short hello from Brendan with a portrait, and links to
+ * the About page and How I Work page.
  */
-export function AboutIntro({ onBookDiagnostic }: AboutIntroProps) {
+export function AboutIntro() {
   return (
     <section aria-label="A welcome from Brendan">
       <div className="mx-auto max-w-5xl px-6 py-14 md:px-10 md:py-20">
@@ -40,40 +36,29 @@ export function AboutIntro({ onBookDiagnostic }: AboutIntroProps) {
             <div className="mt-6 space-y-4 text-[15.5px] leading-relaxed text-ink-soft">
               <p>
                 I help organisations transform their operations and go-to-market
-                strategies. The way I work is laid out below — each title opens
-                into a fuller picture, so you can take it at your own pace.
+                strategies. Every engagement includes a period of aftercare to
+                make sure what we build actually sticks — with adoption support
+                and technical help until your team is confident running it.
               </p>
               <p>
-                Go ahead and{" "}
-                <span className="text-orange font-medium">expand any title</span>{" "}
-                to explore, or skip the reading and book a call. I'd be happy to
-                walk you through it together.
+                Transformation doesn't work unless it works.
               </p>
             </div>
 
-            <div className="mt-8 flex flex-wrap gap-3">
-              {onBookDiagnostic && (
-                <button
-                  type="button"
-                  onClick={onBookDiagnostic}
-                  className="group inline-flex h-11 items-center rounded-md px-5 text-[14px] font-medium text-accent-foreground shadow-[0_8px_20px_-8px_rgba(0,0,0,0.35)] transition-all hover:-translate-y-px"
-                  style={{
-                    backgroundImage:
-                      "linear-gradient(95deg, var(--gradient-3color))",
-                  }}
-                >
-                  <Calendar className="mr-2 h-4 w-4" strokeWidth={1.75} />
-                  Book a call
-                  <span className="inline-flex w-0 items-center justify-center overflow-hidden opacity-0 scale-75 transition-all duration-300 group-hover:w-5 group-hover:opacity-100 group-hover:scale-100 group-hover:ml-1.5">
-                    <ArrowRight className="h-4 w-4 shrink-0" />
-                  </span>
-                </button>
-              )}
+            <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 text-[14px]">
               <a
-                href="#how"
-                className="inline-flex h-11 items-center rounded-md border border-hairline bg-background px-5 text-[14px] font-medium text-foreground transition-colors hover:bg-paper"
+                href="/about"
+                className="group inline-flex items-center gap-1.5 font-medium text-foreground transition-colors hover:text-clay"
               >
-                Explore below
+                About me
+                <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+              </a>
+              <a
+                href="/how-i-work"
+                className="group inline-flex items-center gap-1.5 font-medium text-foreground transition-colors hover:text-clay"
+              >
+                The Thread & Stack way
+                <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
               </a>
             </div>
           </div>
