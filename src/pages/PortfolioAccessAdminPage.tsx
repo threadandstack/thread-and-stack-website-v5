@@ -68,7 +68,7 @@ const PortfolioAccessAdminPage = () => {
         .from("portfolio_access_logs")
         .select("*")
         .order("created_at", { ascending: false })
-        .limit(200);
+        .limit(1000);
       if (error) throw error;
       return logsData as AccessLog[];
     },
