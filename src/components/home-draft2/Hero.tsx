@@ -125,7 +125,7 @@ export function Hero({ theme, onBookDiagnostic }: HeroProps) {
                   "linear-gradient(95deg, var(--gradient-3color))",
               }}
             >
-              Book the Stack Diagnostic · £395
+              Book a free intro call
               <span className="inline-flex w-0 items-center justify-center overflow-hidden opacity-0 scale-75 transition-all duration-300 group-hover:w-5 group-hover:opacity-100 group-hover:scale-100 group-hover:ml-1.5">
                 <ArrowRight className="h-4 w-4 shrink-0" />
               </span>
