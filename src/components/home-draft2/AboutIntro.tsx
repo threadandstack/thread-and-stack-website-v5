@@ -29,25 +29,25 @@ export function AboutIntro() {
               Hello
             </span>
             <h1 className="font-serif-pro italic font-normal text-balance text-3xl leading-[1.1] tracking-[-0.02em] md:text-[44px]">
-              I'm Brendan, and it's good to{" "}
-              <span className="text-clay">have you here.</span>
+              I'm Brendan, your{" "}
+              <span className="text-clay">AI Ops Consultant.</span>
             </h1>
 
             <div className="mt-6 space-y-4 text-[15.5px] leading-relaxed text-ink-soft">
               <p>
-                I help organisations transform their operations and give their
-                business a home. Some call it an operating system. I call it your
-                business's day-to-day home. Let's make sure it actually works for
-                you and your team.
+                Most teams come to me wanting to fix a fragmented system or build
+                a new team OS from scratch. What that usually means, when you get
+                underneath it, is that running the business is harder than it
+                should be — and a business's operating system is really just the
+                place the team spends most of its time. In a person's life,
+                that's a home. It should feel like one.
               </p>
               <p>
-                Every engagement includes a period of aftercare to make sure
-                what we build actually sticks — with adoption support and
-                technical help until your team is confident running it.
+                That's why teams trust me with building their workspace, and
+                why I build specific adoption support into every engagement. A
+                new system only counts when the team is actually living in it.
               </p>
-              <p>
-                Transformation doesn't work unless it works.
-              </p>
+              <p>Transformation doesn't work until it works.</p>
             </div>
 
             <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 text-[14px]">
