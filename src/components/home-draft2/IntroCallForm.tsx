@@ -26,7 +26,9 @@ const EMPLOYEE_BANDS = [
   "11 – 25",
   "26 – 50",
   "51 – 200",
-  "200+",
+  "201 – 500",
+  "501 – 1,000",
+  "1,000+",
 ] as const;
 
 const schema = z.object({
