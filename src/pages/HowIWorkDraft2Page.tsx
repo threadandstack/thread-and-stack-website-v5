@@ -11,7 +11,7 @@ import tsWayWhite from "@/assets/logos/TSWay_White.png.asset.json";
 
 
 const HowIWorkDraft2Page = () => {
-  const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const [theme, setTheme] = useState<"dark" | "light">("light");
   const toggleTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
 
   return (
