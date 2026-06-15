@@ -108,12 +108,13 @@ export const Navigation = ({ variant = "default", hideLogo = false, floatingBadg
 
             <NavItem href="/blog" label="Journal" icon={BookOpen} onClick={() => trackNavClick('Journal', 'header')} />
 
-            <Button size="sm" className="group bg-accent text-accent-foreground hover:bg-accent/90 rounded-full px-5 ml-1 not-italic font-sans text-sm" onClick={() => { trackCtaClick('Get Started', 'header'); setIsContactOpen(true); }}>
+            <Button size="sm" style={gradientBtnStyle} className="group text-white hover:opacity-90 rounded-full px-5 ml-1 not-italic font-sans text-sm border-0" onClick={() => { trackCtaClick('Get Started', 'header'); setIsDiagnosticOpen(true); }}>
               <span className="w-0 h-5 flex items-center justify-center overflow-hidden transition-all duration-300 opacity-0 scale-75 group-hover:w-5 group-hover:opacity-100 group-hover:scale-100 group-hover:mr-1.5">
                 <Rocket className="w-4 h-4 shrink-0" />
               </span>
               Get Started
             </Button>
+
             </div>
           </div>
 
@@ -175,12 +176,13 @@ export const Navigation = ({ variant = "default", hideLogo = false, floatingBadg
 
                 <NavItem href="/blog" label="Journal" icon={BookOpen} onClick={() => trackNavClick('Journal', 'floating')} />
 
-                <Button size="sm" className="group bg-accent text-accent-foreground hover:bg-accent/90 rounded-full px-5 ml-1 not-italic font-sans text-sm" onClick={() => { trackCtaClick('Get Started', 'floating-nav'); setIsContactOpen(true); }}>
+                <Button size="sm" style={gradientBtnStyle} className="group text-white hover:opacity-90 rounded-full px-5 ml-1 not-italic font-sans text-sm border-0" onClick={() => { trackCtaClick('Get Started', 'floating-nav'); setIsDiagnosticOpen(true); }}>
                   <span className="w-0 h-5 flex items-center justify-center overflow-hidden transition-all duration-300 opacity-0 scale-75 group-hover:w-5 group-hover:opacity-100 group-hover:scale-100 group-hover:mr-1.5">
                     <Rocket className="w-4 h-4 shrink-0" />
                   </span>
                   Get Started
                 </Button>
+
               </div>
 
               <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
@@ -227,14 +229,17 @@ export const Navigation = ({ variant = "default", hideLogo = false, floatingBadg
               </a>
             </div>
 
-            <Button size="lg" className="w-full bg-accent text-accent-foreground hover:bg-accent/90 rounded-full mt-4 font-sans not-italic" onClick={() => { setIsMobileMenuOpen(false); setIsContactOpen(true); }}>
+            <Button size="lg" style={gradientBtnStyle} className="w-full text-white hover:opacity-90 rounded-full mt-4 font-sans not-italic border-0" onClick={() => { setIsMobileMenuOpen(false); setIsDiagnosticOpen(true); }}>
               Get Started
             </Button>
+
           </div>
         </div>
       )}
 
       <ContactDrawer open={isContactOpen} onOpenChange={setIsContactOpen} source="nav-get-started" />
+      <DiagnosticDrawer open={isDiagnosticOpen} onOpenChange={setIsDiagnosticOpen} source="nav-get-started" initialMode="intro" />
+
     </>
   );
 };
