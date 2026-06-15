@@ -28,8 +28,8 @@ export function Hero({ theme, onBookDiagnostic }: HeroProps) {
               {
                   id: "newsletter",
                   // "Welcome to Milestone Mint!" newsletter block
-                  x: 62,
-                  y: 28,
+                  x: 28,
+                  y: 62,
                   label: "Internal newsletter",
                   overlaySrc: theme === "dark" ? newsletterLight.url : newsletterDark.url,
                   overlayX: 38,
