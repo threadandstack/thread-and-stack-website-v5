@@ -1,8 +1,12 @@
 import { useState } from "react";
 import { ArrowRight } from "lucide-react";
-import { ContactDrawer } from "@/components/ContactDrawer";
+import { DiagnosticDrawer } from "./DiagnosticDrawer";
 
-export function CTA() {
+interface CTAProps {
+  theme?: "light" | "dark";
+}
+
+export function CTA({ theme = "light" }: CTAProps = {}) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -10,6 +14,7 @@ export function CTA() {
       id="contact"
       className="relative overflow-hidden bg-card text-card-foreground"
     >
+
       <div
         aria-hidden
         className="pointer-events-none absolute inset-x-0 -top-20 mx-auto h-[600px] max-w-4xl opacity-60 blur-3xl"
