@@ -20,6 +20,7 @@ export function Hero({ theme, onBookDiagnostic }: HeroProps) {
           <div
             className="w-full"
             style={{
+              perspective: "1400px",
               ["--g-tx" as never]: "0deg",
               ["--g-ty" as never]: "0deg",
             }}
@@ -39,42 +40,52 @@ export function Hero({ theme, onBookDiagnostic }: HeroProps) {
               el.style.setProperty("--g-ty", `0deg`);
             }}
           >
-            <div className="mb-10 flex justify-center">
-              <LogoTilt className="h-28 sm:h-36 md:h-44" theme={theme} groupTilt />
-            </div>
+            {/* Shared physical body: both logo and mock rotate around the
+                mock's center, so the logo swings above it like a sign
+                attached to the same gravity point. */}
+            <div
+              className="transition-transform duration-300 ease-out [transform-style:preserve-3d]"
+              style={{
+                transformOrigin: "50% 75%",
+                transform:
+                  "rotateX(var(--g-ty, 0deg)) rotateY(var(--g-tx, 0deg))",
+              }}
+            >
+              <div className="mb-10 flex justify-center">
+                <LogoTilt className="h-28 sm:h-36 md:h-44" theme={theme} groupTilt />
+              </div>
 
-            <div className="mt-6 mb-10 w-full max-w-3xl mx-auto">
-              <NotionWorkspaceMock
-                theme={theme}
-                groupTilt
-                hotspots={[
-                {
-                    id: "newsletter",
-                    // "Welcome to Milestone Mint!" newsletter block
-                    x: 28,
-                    y: 62,
-                    label: "Internal newsletter",
-                    overlaySrc: theme === "dark" ? newsletterLight.url : newsletterDark.url,
-                    overlayX: 38,
-                    overlayY: 8,
-                    overlayWidth: 58,
-                  },
+              <div className="mt-6 mb-10 w-full max-w-3xl mx-auto">
+                <NotionWorkspaceMock
+                  theme={theme}
+                  groupTilt
+                  hotspots={[
                   {
-                    id: "vacation",
-                    // "Vacation Policy" near the bottom
-                    x: 56,
-                    y: 92,
-                    label: "Policy page",
-                    overlaySrc: theme === "dark" ? vacationLight.url : vacationDark.url,
-                    overlayX: 6,
-                    overlayY: 56,
-                    overlayWidth: 58,
-                  },
-                ]}
-              />
-              <p className="mt-4 text-center text-[12.5px] text-muted-foreground">
-                A live Knowledge Base built in Notion — hover the pins to peek inside.
-              </p>
+                      id: "newsletter",
+                      x: 28,
+                      y: 62,
+                      label: "Internal newsletter",
+                      overlaySrc: theme === "dark" ? newsletterLight.url : newsletterDark.url,
+                      overlayX: 38,
+                      overlayY: 8,
+                      overlayWidth: 58,
+                    },
+                    {
+                      id: "vacation",
+                      x: 56,
+                      y: 92,
+                      label: "Policy page",
+                      overlaySrc: theme === "dark" ? vacationLight.url : vacationDark.url,
+                      overlayX: 6,
+                      overlayY: 56,
+                      overlayWidth: 58,
+                    },
+                  ]}
+                />
+                <p className="mt-4 text-center text-[12.5px] text-muted-foreground">
+                  A live Knowledge Base built in Notion — hover the pins to peek inside.
+                </p>
+              </div>
             </div>
           </div>
 
