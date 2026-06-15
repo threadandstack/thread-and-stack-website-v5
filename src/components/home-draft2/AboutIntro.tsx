@@ -1,4 +1,4 @@
-import { ArrowRight, Play, Calendar } from "lucide-react";
+import { ArrowRight, Calendar } from "lucide-react";
 import brendanPhoto from "@/assets/photos/shoreditch/brendan-34.webp";
 
 interface AboutIntroProps {
@@ -15,8 +15,8 @@ export function AboutIntro({ onBookDiagnostic }: AboutIntroProps) {
     <section aria-label="A welcome from Brendan">
       <div className="mx-auto max-w-5xl px-6 py-14 md:px-10 md:py-20">
         <div className="grid items-center gap-10 md:grid-cols-[auto_1fr] md:gap-14">
-          {/* Portrait + video placeholder stacked */}
-          <div className="flex flex-col items-center gap-4 md:items-start">
+          {/* Portrait */}
+          <div className="flex flex-col items-center md:items-start">
             <div className="relative h-32 w-32 overflow-hidden rounded-full border border-hairline shadow-[0_16px_40px_-24px_rgba(0,0,0,0.35)] md:h-40 md:w-40">
               <img
                 src={brendanPhoto}
@@ -25,22 +25,6 @@ export function AboutIntro({ onBookDiagnostic }: AboutIntroProps) {
                 loading="lazy"
               />
             </div>
-
-            {/* Video placeholder — Brendan to record later */}
-            <button
-              type="button"
-              className="group relative aspect-video w-64 overflow-hidden rounded-xl border border-dashed border-hairline bg-paper/40 text-left transition-colors hover:bg-paper md:w-72"
-              aria-label="Video coming soon"
-            >
-              <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-ink-soft">
-                <span className="grid h-10 w-10 place-items-center rounded-full bg-background shadow-sm">
-                  <Play className="ml-0.5 h-4 w-4 text-orange" fill="currentColor" />
-                </span>
-                <span className="text-[11px] uppercase tracking-[0.22em]">
-                  Video coming soon
-                </span>
-              </div>
-            </button>
           </div>
 
           {/* Welcome copy */}
