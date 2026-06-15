@@ -72,6 +72,7 @@ const PowerHourThankYouPage = lazy(() => import("./pages/PowerHourThankYouPage")
 const UnsubscribePage = lazy(() => import("./pages/UnsubscribePage"));
 const BecomeUnitedBlueprintPage = lazy(() => import("./pages/BecomeUnitedBlueprintPage"));
 const UnleashYourTeamDraft2Page = lazy(() => import("./pages/UnleashYourTeamDraft2Page"));
+const IntroCallPage = lazy(() => import("./pages/IntroCallPage"));
 
 const queryClient = new QueryClient();
 
