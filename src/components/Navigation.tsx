@@ -89,7 +89,7 @@ export const Navigation = ({ variant = "default", hideLogo = false, floatingBadg
           {/* Desktop pill nav */}
           <div className="hidden md:flex items-center gap-1 bg-background/90 backdrop-blur-md rounded-full px-2 py-1.5 shadow-[0_2px_20px_rgba(0,0,0,0.08)] border border-border/30">
             <NavItem href="/about" label="About" icon={User} onClick={() => trackNavClick('About', 'header')} />
-            <NavItem href="/how-i-work" label="How I Work" icon={Compass} onClick={() => trackNavClick('How I Work', 'header')} />
+            <NavItem href="/how-i-work" label="The T&S Way" icon={Compass} onClick={() => trackNavClick('How I Work', 'header')} />
 
             <DropdownMenu>
               <DropdownMenuTrigger className={`group flex items-center gap-0 ${navLinkClass} ${defaultLinkColor} pl-4 pr-4 py-2 rounded-full hover:bg-muted transition-all`}>
@@ -160,7 +160,7 @@ export const Navigation = ({ variant = "default", hideLogo = false, floatingBadg
 
             <div className="hidden md:flex items-center gap-1">
               <NavItem href="/about" label="About" icon={User} onClick={() => trackNavClick('About', 'floating')} />
-              <NavItem href="/how-i-work" label="How I Work" icon={Compass} onClick={() => trackNavClick('How I Work', 'floating')} />
+              <NavItem href="/how-i-work" label="The T&S Way" icon={Compass} onClick={() => trackNavClick('How I Work', 'floating')} />
 
               <DropdownMenu>
                 <DropdownMenuTrigger className={`group flex items-center gap-0 ${navLinkClass} ${defaultLinkColor} pl-4 pr-4 py-2 rounded-full hover:bg-muted transition-all`}>
