@@ -1,4 +1,4 @@
-import { ArrowRight, ArrowDown, BadgeCheck, Repeat, MapPin } from "lucide-react";
+import { ArrowRight, ArrowDown } from "lucide-react";
 import { LogoTilt } from "./LogoTilt";
 import { NotionWorkspaceMock } from "./NotionWorkspaceMock";
 import newsletterLight from "@/assets/notion-mock/newsletter-light.png.asset.json";
@@ -93,22 +93,6 @@ export function Hero({ theme, onBookDiagnostic }: HeroProps) {
             </a>
           </div>
 
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[12.5px] text-muted-foreground">
-            <span className="inline-flex items-center gap-1.5">
-              <BadgeCheck className="h-3.5 w-3.5 text-indigo" strokeWidth={2} />
-              Notion Certified
-            </span>
-            <span className="hidden h-3 w-px bg-hairline sm:block" />
-            <span className="inline-flex items-center gap-1.5">
-              <Repeat className="h-3.5 w-3.5 text-violet" strokeWidth={2} />
-              Rolling support, no tie-in
-            </span>
-            <span className="hidden h-3 w-px bg-hairline sm:block" />
-            <span className="inline-flex items-center gap-1.5">
-              <MapPin className="h-3.5 w-3.5 text-orange" strokeWidth={2} />
-              UK-based · booking Q3
-            </span>
-          </div>
         </div>
       </div>
     </section>
