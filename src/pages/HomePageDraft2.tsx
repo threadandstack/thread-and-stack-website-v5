@@ -13,6 +13,7 @@ import { FAQ } from "@/components/home-draft2/FAQ";
 import { CTA } from "@/components/home-draft2/CTA";
 import { WhoItsFor } from "@/components/home-draft2/WhoItsFor";
 import { AboutIntro } from "@/components/home-draft2/AboutIntro";
+import { AgentsSection } from "@/components/home-draft2/AgentsSection";
 import { CollapsibleSection } from "@/components/home-draft2/CollapsibleSection";
 import { DiagnosticDrawer } from "@/components/home-draft2/DiagnosticDrawer";
 
