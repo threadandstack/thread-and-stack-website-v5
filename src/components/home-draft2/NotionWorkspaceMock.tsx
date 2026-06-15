@@ -126,7 +126,7 @@ export function NotionWorkspaceMock({ theme, className = "", hotspots = [] }: Pr
             <div
               key={`overlay-${h.id}`}
               aria-hidden
-              className="pointer-events-none absolute rounded-xl overflow-hidden ring-1 ring-black/10 shadow-[0_24px_60px_-24px_rgba(0,0,0,0.55)] transition-all duration-500 ease-out"
+              className="pointer-events-none absolute rounded-xl overflow-hidden shadow-[0_24px_60px_-24px_rgba(0,0,0,0.55)] transition-all duration-500 ease-out"
               style={{
                 top: `${h.overlayY ?? 10}%`,
                 left: `${h.overlayX ?? 10}%`,
