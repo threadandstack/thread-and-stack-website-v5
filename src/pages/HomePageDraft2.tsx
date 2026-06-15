@@ -17,7 +17,7 @@ import { CollapsibleSection } from "@/components/home-draft2/CollapsibleSection"
 import { DiagnosticDrawer } from "@/components/home-draft2/DiagnosticDrawer";
 
 const HomePageDraft2 = () => {
-  const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const [theme, setTheme] = useState<"dark" | "light">("light");
   const [diagnosticOpen, setDiagnosticOpen] = useState(false);
   const toggleTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
   const openDiagnostic = () => setDiagnosticOpen(true);
