@@ -87,7 +87,7 @@ export function Hero({ theme, onBookDiagnostic }: HeroProps) {
                       x: 84,
                       y: 86,
                       label: "AI onboarding",
-                      overlaySrc: onboardingMobile.url,
+                      overlaySrc: theme === "dark" ? onboardingMobileLight.url : onboardingMobileDark.url,
                       overlayX: 56,
                       overlayY: 8,
                       overlayWidth: 36,
