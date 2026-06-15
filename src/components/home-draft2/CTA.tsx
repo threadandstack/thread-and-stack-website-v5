@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Phone, Mail } from "lucide-react";
+import { Tilt3D } from "@/components/Tilt3D";
 import { DiagnosticDrawer } from "./DiagnosticDrawer";
 
 interface CTAProps {
@@ -10,50 +11,69 @@ export function CTA({ theme = "light" }: CTAProps = {}) {
   const [open, setOpen] = useState(false);
 
   return (
-    <section
-      id="contact"
-      className="relative overflow-hidden bg-card text-card-foreground"
-    >
-
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 -top-20 mx-auto h-[600px] max-w-4xl opacity-60 blur-3xl"
-        style={{
-          background:
-            "radial-gradient(40% 60% at 25% 40%, hsl(var(--indigo) / 0.6), transparent 70%), radial-gradient(40% 60% at 75% 50%, hsl(var(--orange) / 0.55), transparent 70%), radial-gradient(50% 60% at 50% 80%, hsl(var(--violet) / 0.45), transparent 70%)",
-        }}
-      />
-      <div className="relative mx-auto max-w-3xl px-6 py-24 md:py-32 text-center">
-        <h2 className="font-serif-pro italic font-normal mx-auto max-w-3xl text-balance text-5xl leading-[1.05] tracking-[-0.02em] md:text-[64px]">
-          Start with a call.<br />
-          <span className="text-clay-soft">Leave with a plan.</span>
-        </h2>
-        <p className="mx-auto mt-6 max-w-md text-[15px] text-foreground/70">
-          Book a free 30-minute intro call. If a paid Stack Diagnostic is the
-          right next step, we can book it from there — credited in full against
-          any build you choose afterwards.
-        </p>
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-          <button
-            type="button"
-            onClick={() => setOpen(true)}
-            className="group inline-flex h-12 items-center rounded-md px-6 text-[14.5px] font-medium text-accent-foreground shadow-[0_8px_20px_-8px_rgba(0,0,0,0.35)] transition-all hover:-translate-y-px"
-            style={{ backgroundImage: "linear-gradient(95deg, var(--gradient-3color))" }}
-          >
-            Book a free intro call
-            <span className="inline-flex w-0 items-center justify-center overflow-hidden opacity-0 scale-75 transition-all duration-300 group-hover:w-5 group-hover:opacity-100 group-hover:scale-100 group-hover:ml-1.5">
-              <ArrowRight className="h-4 w-4 shrink-0" />
+    <section id="contact" className="relative">
+      <div className="mx-auto max-w-5xl px-6 py-24 md:py-32">
+        <div className="grid items-center gap-12 md:grid-cols-[1.1fr_1fr] md:gap-16">
+          {/* Copy column */}
+          <div>
+            <span className="mb-5 block text-[11px] uppercase tracking-[0.22em] text-ink-soft">
+              Next step
             </span>
-          </button>
-          <a
-            href="mailto:br@brendanrodgers.uk"
-            className="inline-flex h-12 items-center gap-2 rounded-md border border-hairline px-6 text-[14.5px] font-medium text-foreground/90 transition-colors hover:bg-foreground/[0.06]"
-          >
-            Email instead
-          </a>
+            <h2 className="font-serif-pro italic font-normal text-balance text-4xl leading-[1.05] tracking-[-0.02em] md:text-[56px]">
+              Start with a call.<br />
+              <span className="text-clay">Leave with a plan.</span>
+            </h2>
+            <p className="mt-6 max-w-md text-[15px] leading-relaxed text-ink-soft">
+              Book a free 30-minute intro call. If a paid Stack Diagnostic is
+              the right next step, we can book it from there, credited in full
+              against any build you choose afterwards.
+            </p>
+          </div>
+
+          {/* Tilted action card */}
+          <Tilt3D maxX={7} maxY={5} className="w-full">
+            <div className="relative rounded-2xl border border-hairline bg-background/70 p-7 backdrop-blur-sm shadow-[0_2px_8px_rgba(0,0,0,0.04)] md:p-8">
+              <div className="flex flex-col gap-5">
+                <button
+                  type="button"
+                  onClick={() => setOpen(true)}
+                  className="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-full px-6 text-[14px] font-medium text-white transition-all hover:-translate-y-px"
+                  style={{
+                    backgroundImage:
+                      "linear-gradient(95deg, hsl(320 85% 55%), hsl(var(--orange)))",
+                  }}
+                >
+                  <Phone className="h-4 w-4" />
+                  Book a free intro call
+                  <span className="inline-flex w-0 items-center justify-center overflow-hidden opacity-0 scale-75 transition-all duration-300 group-hover:w-5 group-hover:opacity-100 group-hover:scale-100">
+                    <ArrowRight className="h-4 w-4 shrink-0" />
+                  </span>
+                </button>
+
+                <a
+                  href="mailto:br@brendanrodgers.uk"
+                  className="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-full border border-hairline bg-background px-6 text-[14px] font-medium text-foreground/80 transition-colors hover:bg-muted hover:text-foreground"
+                >
+                  <Mail className="h-4 w-4" />
+                  Email instead
+                </a>
+
+                <p className="text-center text-[12px] text-ink-soft">
+                  30 minutes · no obligation · usually within the week
+                </p>
+              </div>
+            </div>
+          </Tilt3D>
         </div>
       </div>
-      <DiagnosticDrawer open={open} onOpenChange={setOpen} theme={theme} source="home-draft2-cta" initialMode="intro" />
+
+      <DiagnosticDrawer
+        open={open}
+        onOpenChange={setOpen}
+        theme={theme}
+        source="home-draft2-cta"
+        initialMode="intro"
+      />
     </section>
   );
 }
