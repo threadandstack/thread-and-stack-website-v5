@@ -150,6 +150,9 @@ const HowIWorkDraft2Page = () => {
           </div>
         </section>
 
+        {/* How we work together — moved from home-draft2 */}
+        <Problem />
+
         {/* 4 C's */}
         <section
           ref={cRef}
