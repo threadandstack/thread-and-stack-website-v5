@@ -36,21 +36,6 @@ const HomePageDraft2 = () => {
             {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </button>
         }
-        floatingBadge={
-          <span className="inline-flex items-center gap-2 rounded-full border border-hairline bg-paper/80 px-3 py-1.5 text-[12px] text-ink-soft backdrop-blur-md">
-            <span className="relative grid h-2 w-2 place-items-center">
-              <span
-                className="absolute inset-0 animate-ping rounded-full opacity-60"
-                style={{ background: "linear-gradient(135deg, hsl(var(--orange)), hsl(var(--violet)))" }}
-              />
-              <span
-                className="relative h-2 w-2 rounded-full"
-                style={{ background: "linear-gradient(135deg, hsl(var(--orange)), hsl(var(--violet)))" }}
-              />
-            </span>
-            Currently booking Q3
-          </span>
-        }
       />
 
 
