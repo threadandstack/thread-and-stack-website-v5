@@ -9,55 +9,6 @@ import { LogoTilt } from "@/components/home-draft2/LogoTilt";
 import tsWayBlack from "@/assets/logos/TSWay_Black.png.asset.json";
 import tsWayWhite from "@/assets/logos/TSWay_White.png.asset.json";
 
-const fourCs = [
-  {
-    word: "Connection",
-    color: "indigo",
-    description:
-      "The need to belong, relate, and build trust. AI can scale reach, but it can't manufacture genuine rapport. Connection is where brand loyalty actually lives.",
-  },
-  {
-    word: "Creativity",
-    color: "orange",
-    description:
-      "The drive to make, shape, and express. AI can generate options, but creative judgment, taste, and the courage to commit to a direction is irreplaceably human.",
-  },
-  {
-    word: "Curiosity",
-    color: "violet",
-    description:
-      "The pull to explore, question, and reframe. AI can retrieve and summarise, but the instinct to ask a better question, or challenge a brief, is what produces breakthrough work.",
-  },
-  {
-    word: "Contribution",
-    color: "sky",
-    description:
-      "The desire to matter and leave something behind. AI optimises for metrics; humans optimise for meaning. The best brands are built on purpose, not just performance.",
-  },
-] as const;
-
-const fourDs = [
-  {
-    letter: "Delegation",
-    description:
-      "Knowing whether, when, and how to engage AI. Not every task benefits from automation. The skill is in choosing wisely, protecting the work that deserves human attention.",
-  },
-  {
-    letter: "Description",
-    description:
-      "Articulating goals clearly enough to prompt useful AI behaviour. This is where strategic thinking meets practical fluency — vague inputs produce vague outputs.",
-  },
-  {
-    letter: "Discernment",
-    description:
-      "Accurately assessing AI outputs. Knowing what's good enough, what needs reworking, and what should be thrown away entirely. This is taste, applied to a new medium.",
-  },
-  {
-    letter: "Diligence",
-    description:
-      "Taking responsibility for what we do with AI and how we do it. Ethics, transparency, and accountability aren't optional extras — they're the foundation of trust.",
-  },
-] as const;
 
 const HowIWorkDraft2Page = () => {
   const [theme, setTheme] = useState<"dark" | "light">("dark");
