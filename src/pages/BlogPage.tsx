@@ -214,58 +214,59 @@ const BlogPage = () => {
               {/* Regular Articles Grid */}
               <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                 {(activeTheme ? filteredPosts : filteredPosts.filter(p => !p.featured)).map((post) => (
-                  <Link
-                    key={post.id}
-                    to={`/blog/${post.slug}`}
-                    className="group cursor-pointer"
-                  >
-                    <Card className="h-full transition-all hover:shadow-lg overflow-hidden">
-                      {post.headerImage && (
-                        <div className="aspect-[16/9] overflow-hidden">
-                          <img 
-                            src={post.headerImage} 
-                            alt={post.title}
-                            className="w-full h-full object-cover transition-transform group-hover:scale-105"
-                          />
-                        </div>
-                      )}
-                      <div className="p-6">
-                        <div className="flex items-center gap-3 mb-4">
-                          {post.theme && (
-                            <span className={`px-3 py-1 text-sm rounded-full ${getThemeColors(post.theme)}`}>
-                              {post.theme}
-                            </span>
-                          )}
-                          {post.readingTime && (
-                            <span className="text-sm text-muted-foreground">
-                              {post.readingTime} min read
-                            </span>
-                          )}
-                        </div>
-
-                        <h2 className="text-2xl mb-3 group-hover:text-accent transition-colors">
-                          {post.title}
-                        </h2>
-
-                        {post.intro && (
-                          <p className="text-muted-foreground mb-4 line-clamp-2">
-                            {post.intro}
-                          </p>
+                  <Tilt3D key={post.id} maxX={6} maxY={5} className="h-full">
+                    <Link
+                      to={`/blog/${post.slug}`}
+                      className="group cursor-pointer block h-full"
+                    >
+                      <Card className="h-full transition-all hover:shadow-lg overflow-hidden">
+                        {post.headerImage && (
+                          <div className="aspect-[16/9] overflow-hidden">
+                            <img 
+                              src={post.headerImage} 
+                              alt={post.title}
+                              className="w-full h-full object-cover transition-transform group-hover:scale-105"
+                            />
+                          </div>
                         )}
+                        <div className="p-6">
+                          <div className="flex items-center gap-3 mb-4">
+                            {post.theme && (
+                              <span className={`px-3 py-1 text-sm rounded-full ${getThemeColors(post.theme)}`}>
+                                {post.theme}
+                              </span>
+                            )}
+                            {post.readingTime && (
+                              <span className="text-sm text-muted-foreground">
+                                {post.readingTime} min read
+                              </span>
+                            )}
+                          </div>
 
-                        <div className="flex items-center justify-between text-sm text-muted-foreground">
-                          <span className="italic">
-                            Brendan @ Thread and Stack
-                          </span>
-                          {post.publishedDate && (
-                            <span>
-                              {formatPublishedDate(post.publishedDate)}
-                            </span>
+                          <h2 className="text-2xl mb-3 group-hover:text-accent transition-colors">
+                            {post.title}
+                          </h2>
+
+                          {post.intro && (
+                            <p className="text-muted-foreground mb-4 line-clamp-2">
+                              {post.intro}
+                            </p>
                           )}
+
+                          <div className="flex items-center justify-between text-sm text-muted-foreground">
+                            <span className="italic">
+                              Brendan @ Thread and Stack
+                            </span>
+                            {post.publishedDate && (
+                              <span>
+                                {formatPublishedDate(post.publishedDate)}
+                              </span>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    </Card>
-                  </Link>
+                      </Card>
+                    </Link>
+                  </Tilt3D>
                 ))}
 
                 {(activeTheme ? filteredPosts : filteredPosts.filter(p => !p.featured)).length === 0 && !isLoading && (
