@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { Sun, Moon, ArrowLeft, Brain } from "lucide-react";
+import { useState } from "react";
+import { Sun, Moon, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
