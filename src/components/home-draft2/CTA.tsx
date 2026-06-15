@@ -53,7 +53,7 @@ export function CTA({ theme = "light" }: CTAProps = {}) {
           </a>
         </div>
       </div>
-      <ContactDrawer open={open} onOpenChange={setOpen} />
+      <DiagnosticDrawer open={open} onOpenChange={setOpen} theme={theme} source="home-draft2-cta" initialMode="intro" />
     </section>
   );
 }
