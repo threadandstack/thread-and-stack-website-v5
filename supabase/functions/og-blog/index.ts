@@ -113,7 +113,7 @@ serve(async (req) => {
     // Get the site URL from environment or default
     const siteUrl = Deno.env.get('SITE_URL') || 'https://threadandstack.co.uk'
     const pageUrl = `${siteUrl}/blog/${slug}`
-    const ogImage = headerImage || `${siteUrl}/images/websiteshare.png`
+    const ogImage = headerImage || `https://threadandstack.com/__l5e/assets-v1/6bce079b-d3c5-4c8b-a9d7-79c333d9d9ca/OpenGraph_TS2026.png`
 
     // Generate HTML with OG meta tags
     const html = `<!DOCTYPE html>
