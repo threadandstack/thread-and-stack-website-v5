@@ -18,23 +18,14 @@ export const Footer = () => {
   return (
     <footer className="py-12 px-6 bg-[hsl(234,89%,8%)] text-white">
       <div className="max-w-6xl mx-auto">
-        <div className="grid md:grid-cols-3 gap-8 mb-8">
+        <div className="grid md:grid-cols-2 gap-8 mb-8">
           <div>
             <img src={stackedLogo} alt="Thread & Stack" className="h-14 mb-3" />
             <p className="font-sans text-white/80 text-sm">
-              Brands that feel human, systems that make sense.
+              Ops that feel human, systems that make sense.
             </p>
           </div>
-          
-          <div>
-            <h4 className="mb-3 font-semibold italic not-italic">Offers</h4>
-            <ul className="space-y-2 text-sm font-sans text-white/80">
-              <li><a href="/narratives-strategy" className="hover:text-white transition-colors" onClick={() => trackFooterLinkClick('Narratives & Strategy', 'internal')}>Narratives & Strategy</a></li>
-              <li><a href="/notion-systems" className="hover:text-white transition-colors" onClick={() => trackFooterLinkClick('Notion Systems', 'internal')}>Notion Systems</a></li>
-              <li><a href="/blog" className="hover:text-white transition-colors" onClick={() => trackFooterLinkClick('Thread & Stack Journal', 'internal')}>Thread & Stack Journal</a></li>
-            </ul>
-          </div>
-          
+
           <div>
             <h4 className="mb-3 font-semibold italic">Connect</h4>
             <ul className="space-y-2 text-sm font-sans text-white/80">
