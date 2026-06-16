@@ -293,8 +293,9 @@ const BlogPage = () => {
         </div>
       </section>
 
-      <Footer />
-    </main>
+        <Footer />
+      </main>
+    </div>
   );
 };
 
