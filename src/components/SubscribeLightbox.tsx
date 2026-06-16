@@ -77,7 +77,7 @@ export const SubscribeLightbox = ({ open, onOpenChange }: SubscribeLightboxProps
             Subscribe to <span className="italic">Thread & Stack Journal</span>
           </DialogTitle>
           <DialogDescription className="text-base text-muted-foreground">
-            Thoughts on brand, creativity, and the systems that build our businesses. Monthly signals on building brands that stay true while scaling.
+            Thoughts on ops, strategy, intelligence and the systems that build our businesses. Monthly signals on building brands that stay true while scaling.
           </DialogDescription>
         </DialogHeader>
         

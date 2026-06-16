@@ -69,7 +69,7 @@ export const Newsletter = () => {
       <div className="max-w-2xl mx-auto text-center">
         <h2 className="text-4xl md:text-5xl mb-6 font-light">Subscribe to Thread & Stack Journal</h2>
         <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-          Thoughts on brand, creativity, and systems that build our businesses. Subscribe here, and I'll send you monthly signals on building brands that stay true while scaling.
+          Thoughts on ops, strategy, intelligence and the systems that build our businesses. Subscribe here, and I'll send you monthly signals on building brands that stay true while scaling.
         </p>
         
         <form onSubmit={handleSubmit} className="max-w-md mx-auto relative">

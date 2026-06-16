@@ -138,7 +138,7 @@ const JournalDraft2Page = () => {
               </h1>
 
               <p className="fade-up fade-up-3 mt-7 max-w-2xl text-[17px] leading-relaxed text-ink-soft">
-                Thoughts on brand, creativity, and the systems that build the businesses around them — written between client work, never instead of it.
+                Thoughts on ops, strategy, intelligence and the systems that build our businesses.
               </p>
 
               <div className="fade-up fade-up-4 mt-9">
