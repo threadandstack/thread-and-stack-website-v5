@@ -125,7 +125,7 @@ const BlogPage = () => {
             </Tilt3D>
           </div>
           <p className="text-xl text-muted-foreground mb-8 text-center leading-relaxed max-w-2xl mx-auto">
-            Thoughts on brand, creativity, and the systems that build our businesses.
+            Thoughts on ops, strategy, intelligence and the systems that build our businesses.
           </p>
 
           <div className="flex justify-center mb-8">
