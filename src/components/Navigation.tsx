@@ -82,11 +82,21 @@ export const Navigation = ({ variant = "default", hideLogo = false, floatingBadg
                 className="h-12 md:h-14 w-auto transition-opacity duration-500 ease-in-out"
                 style={{ opacity: isLogoHovered ? 0 : 1 }}
               />
-              <img
-                src={IndigoStacked}
-                alt=""
-                className="h-12 md:h-14 w-auto absolute inset-0 transition-opacity duration-500 ease-in-out"
-                style={{ opacity: isLogoHovered ? 1 : 0 }}
+              <div
+                aria-hidden
+                className="absolute inset-0 h-12 md:h-14 transition-opacity duration-500 pointer-events-none"
+                style={{
+                  opacity: isLogoHovered ? 1 : 0,
+                  background: "linear-gradient(135deg, hsl(var(--orange)), hsl(var(--violet)))",
+                  WebkitMaskImage: `url(${isDark ? WhiteStacked : GreyStacked})`,
+                  maskImage: `url(${isDark ? WhiteStacked : GreyStacked})`,
+                  WebkitMaskRepeat: "no-repeat",
+                  maskRepeat: "no-repeat",
+                  WebkitMaskSize: "contain",
+                  maskSize: "contain",
+                  WebkitMaskPosition: "left center",
+                  maskPosition: "left center",
+                }}
               />
             </a>
           )}
@@ -167,7 +177,6 @@ export const Navigation = ({ variant = "default", hideLogo = false, floatingBadg
               {floatingBadge && <div className="ml-2 hidden sm:flex items-center">{floatingBadge}</div>}
 
               <div className="hidden md:flex items-center gap-1">
-                <NavItem href="/" label="Home" icon={Home} onClick={() => trackNavClick('Home', 'floating')} />
                 <NavItem href="/about" label="About" icon={User} onClick={() => trackNavClick('About', 'floating')} />
                 <NavItem href="/how-i-work" label="The T&S Way" icon={Compass} onClick={() => trackNavClick('How I Work', 'floating')} />
 
