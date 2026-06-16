@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Credentials } from "@/components/home-draft2/Credentials";
@@ -5,13 +6,27 @@ import { FAQ } from "@/components/home-draft2/FAQ";
 import { CTA } from "@/components/home-draft2/CTA";
 import { SectionHeader } from "@/components/home-draft2/SectionHeader";
 
-import { ArrowRight, Layers, Cpu } from "lucide-react";
+import { ArrowRight, Layers, Cpu, Heart, Compass, Sun, Moon } from "lucide-react";
 import brendanWalking from "@/assets/photos/shoreditch/brendan-27.webp";
 
 const AboutPage = () => {
+  const [theme, setTheme] = useState<"dark" | "light">("light");
+  const toggleTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
+
   return (
-    <div className="notion-canvas min-h-screen overflow-x-hidden">
-      <Navigation variant="image-hero" />
+    <div className="notion-canvas min-h-screen overflow-x-hidden" data-theme={theme}>
+      <Navigation
+        variant={theme === "dark" ? "image-hero" : "default"}
+        themeToggle={
+          <button
+            onClick={toggleTheme}
+            className="flex h-8 w-8 items-center justify-center rounded-full border border-border/40 bg-muted/60 text-foreground/70 backdrop-blur-sm transition-all hover:bg-muted hover:text-foreground"
+            aria-label="Toggle theme"
+          >
+            {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+          </button>
+        }
+      />
 
       <main>
         {/* Hero — mobile stacked */}
