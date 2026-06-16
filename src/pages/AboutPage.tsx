@@ -3,8 +3,9 @@ import { Footer } from "@/components/Footer";
 import { Credentials } from "@/components/home-draft2/Credentials";
 import { FAQ } from "@/components/home-draft2/FAQ";
 import { CTA } from "@/components/home-draft2/CTA";
+import { SectionHeader } from "@/components/home-draft2/SectionHeader";
 
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Layers, Cpu } from "lucide-react";
 import brendanWalking from "@/assets/photos/shoreditch/brendan-27.webp";
 
 const AboutPage = () => {
@@ -27,53 +28,53 @@ const AboutPage = () => {
                 About
               </span>
               <h1 className="font-serif-pro italic font-normal text-balance text-4xl leading-[1.05] tracking-[-0.02em] text-white">
-                Background &amp; <span className="text-clay">experience.</span>
+                About <span className="text-clay">Brendan</span>
               </h1>
             </div>
           </div>
 
           <div className="bg-background px-6 pb-12 pt-10">
+            <p className="mb-8 text-[15.5px] leading-relaxed text-ink-soft">
+              Fifteen years of figuring out why things don't work. This is what I do with that.
+            </p>
+
             <div className="space-y-4 text-[15.5px] leading-relaxed text-ink-soft">
               <p>
-                I studied Media, Communications &amp; Culture and Philosophy at Keele University, a
-                combination that wasn't common at the time. Media Communications were dismissed as
-                a "Mickey Mouse degree," and Philosophy was seen as a waste of time. I chose it
-                because I saw the impact these two subjects could have together. Now, these
-                disciplines underpin our modern world.
+                I studied Media, Communications and Philosophy at Keele — two disciplines that people told me were a waste of time, in combination they said made even less sense. What I understood, even then, was that the ethics of how information moves and the systems people build to hold it are the same problem looked at from different angles. That turned out to be a reasonable foundation for what came next.
               </p>
               <p>
-                That golden thread, following the ethics and impact of communications and culture,
-                took me on a path working with a really wide range of clients and products. From
-                international consultancies like Dentsu B2B working with some of the biggest brands
-                in the world, to Global Content Strategy Lead at eBay developing strategy with
-                worldwide impact.
+                The fifteen years after that took me across a range of organisations most consultants only ever see one type of. Global enterprises like eBay and Dentsu. Agencies. Nonprofits. Purpose-led startups. Marketing directorships at early-stage companies where I was almost always running operations alongside the brand work, because in organisations of that size the two are never actually separate. And across all of it, the same pattern kept surfacing — not as a strategic observation but as something you feel in the room. Great creatives bogged down in spreadsheets they never wanted to be anywhere near, carrying cognitive load that had nothing to do with the work they were hired to do. Founders who were the vision of the company spending their days as its task router, every decision passing through them because nobody else had the context to act. New team members arriving full of energy for genuinely challenging work, and finding themselves stuck in admin within a week. The blockers were never the people. They were always the ops. And ops that get fixed properly don't just make a business run better — they give the culture room to breathe.
+              </p>
+              <p className="text-foreground font-medium">
+                Ops that help culture. That's what this is.
               </p>
               <p>
-                At agencies like Funraisin, Lightful, Scoota, and Aqueduct (now Flipside), I got
-                front-row seats to best UX, CX and Accessibility practices. Among them are
-                enterprise brands, to small nonprofits. Hollywood movies to more local consumer
-                insurance ads.
+                When AI arrived as something organisations actually had to reckon with rather than just watch from a distance, my first instinct was scepticism. Not of the technology — the capability was obvious. Of the tendency to reach for it before asking what it should and shouldn't be doing. I kept coming back to the same four questions. What happens to connection when a machine handles the relationship? What happens to creativity when generation becomes automatic? What happens to curiosity when the answer always arrives instantly? What happens to contribution when effort is abstracted away? Those questions became the Four C's — the framework I use to decide where AI earns its place in a working system and where it quietly degrades the thing it was supposed to help.
               </p>
-              <p className="text-foreground">
-                Now I focus on one thing: helping purpose-led teams protect what matters while
-                building brands that actually grow. The problem is always clarity. Strategic
-                positioning paired with strong design craft. That's where I can help.
+              <p>
+                That framework sits alongside the Intentional Tool Stack approach, which governs how every tool in a client's system gets assessed — not just for what it can do, but for its data practices, its security posture, its ethical commitments, and whether it actually belongs. And the THREAD Agent Framework, which structures how AI agents are instructed, scoped, and held accountable within a Notion workspace. These aren't abstractions. They're the methodology behind every build.
+              </p>
+              <p>
+                The human-first approach that came out of that early scepticism has turned out to be one of the more durable ways of working with AI — something Anthropic's own thinking has landed on independently from a different direction. I find that alignment reassuring rather than coincidental. It suggests the instinct was right.
+              </p>
+              <p>
+                I am a certified Notion Consulting Partner and an Official Notion Ambassador. If you found this page through the Notion marketplace, hello — the work you've seen there is the same work described here. If you found it through LinkedIn or a speaking engagement, the same applies. This is what I do, and this is why.
               </p>
             </div>
 
             <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 text-[14px]">
               <a
-                href="/how-i-work"
-                className="group inline-flex items-center gap-1.5 font-medium text-foreground transition-colors hover:text-clay"
-              >
-                The Thread &amp; Stack way
-                <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-              </a>
-              <a
                 href="/services"
                 className="group inline-flex items-center gap-1.5 font-medium text-foreground transition-colors hover:text-clay"
               >
                 Services
+                <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+              </a>
+              <a
+                href="/journal"
+                className="group inline-flex items-center gap-1.5 font-medium text-foreground transition-colors hover:text-clay"
+              >
+                Journal
                 <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
               </a>
             </div>
@@ -96,45 +97,38 @@ const AboutPage = () => {
                 About
               </span>
               <h1 className="font-serif-pro italic font-normal text-balance text-5xl leading-[1.03] tracking-[-0.02em] text-white md:text-[72px]">
-                Background &amp; <span className="text-clay">experience.</span>
+                About <span className="text-clay">Brendan</span>
               </h1>
+
+              <p className="mt-6 max-w-2xl text-[16px] leading-relaxed text-white/85">
+                Fifteen years of figuring out why things don't work. This is what I do with that.
+              </p>
 
               <div className="mt-8 max-w-2xl space-y-4 text-[16px] leading-relaxed text-white/85">
                 <p>
-                  I studied Media, Communications &amp; Culture and Philosophy at Keele University,
-                  a combination that wasn't common at the time. Media Communications were
-                  dismissed as a "Mickey Mouse degree," and Philosophy was seen as a waste of
-                  time. I chose it because I saw the impact these two subjects could have
-                  together. Now, these disciplines underpin our modern world.
+                  I studied Media, Communications and Philosophy at Keele — two disciplines that people told me were a waste of time, in combination they said made even less sense. What I understood, even then, was that the ethics of how information moves and the systems people build to hold it are the same problem looked at from different angles. That turned out to be a reasonable foundation for what came next.
                 </p>
                 <p>
-                  That golden thread, following the ethics and impact of communications and
-                  culture, took me on a path working with a really wide range of clients and
-                  products. From international consultancies like Dentsu B2B working with some of
-                  the biggest brands in the world, to Global Content Strategy Lead at eBay
-                  developing strategy with worldwide impact.
+                  The fifteen years after that took me across a range of organisations most consultants only ever see one type of. Global enterprises like eBay and Dentsu. Agencies. Nonprofits. Purpose-led startups. Marketing directorships at early-stage companies where I was almost always running operations alongside the brand work, because in organisations of that size the two are never actually separate. And across all of it, the same pattern kept surfacing — not as a strategic observation but as something you feel in the room. Great creatives bogged down in spreadsheets they never wanted to be anywhere near, carrying cognitive load that had nothing to do with the work they were hired to do. Founders who were the vision of the company spending their days as its task router, every decision passing through them because nobody else had the context to act. New team members arriving full of energy for genuinely challenging work, and finding themselves stuck in admin within a week. The blockers were never the people. They were always the ops. And ops that get fixed properly don't just make a business run better — they give the culture room to breathe.
+                </p>
+                <p className="text-white font-medium">
+                  Ops that help culture. That's what this is.
                 </p>
                 <p>
-                  At agencies like Funraisin, Lightful, Scoota, and Aqueduct (now Flipside), I got
-                  front-row seats to best UX, CX and Accessibility practices. Among them are
-                  enterprise brands, to small nonprofits. Hollywood movies to more local consumer
-                  insurance ads.
+                  When AI arrived as something organisations actually had to reckon with rather than just watch from a distance, my first instinct was scepticism. Not of the technology — the capability was obvious. Of the tendency to reach for it before asking what it should and shouldn't be doing. I kept coming back to the same four questions. What happens to connection when a machine handles the relationship? What happens to creativity when generation becomes automatic? What happens to curiosity when the answer always arrives instantly? What happens to contribution when effort is abstracted away? Those questions became the Four C's — the framework I use to decide where AI earns its place in a working system and where it quietly degrades the thing it was supposed to help.
                 </p>
-                <p className="text-white">
-                  Now I focus on one thing: helping purpose-led teams protect what matters while
-                  building brands that actually grow. The problem is always clarity. Strategic
-                  positioning paired with strong design craft. That's where I can help.
+                <p>
+                  That framework sits alongside the Intentional Tool Stack approach, which governs how every tool in a client's system gets assessed — not just for what it can do, but for its data practices, its security posture, its ethical commitments, and whether it actually belongs. And the THREAD Agent Framework, which structures how AI agents are instructed, scoped, and held accountable within a Notion workspace. These aren't abstractions. They're the methodology behind every build.
+                </p>
+                <p>
+                  The human-first approach that came out of that early scepticism has turned out to be one of the more durable ways of working with AI — something Anthropic's own thinking has landed on independently from a different direction. I find that alignment reassuring rather than coincidental. It suggests the instinct was right.
+                </p>
+                <p>
+                  I am a certified Notion Consulting Partner and an Official Notion Ambassador. If you found this page through the Notion marketplace, hello — the work you've seen there is the same work described here. If you found it through LinkedIn or a speaking engagement, the same applies. This is what I do, and this is why.
                 </p>
               </div>
 
               <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-2 text-[14.5px]">
-                <a
-                  href="/how-i-work"
-                  className="group inline-flex items-center gap-1.5 font-medium text-white transition-colors hover:text-clay"
-                >
-                  The Thread &amp; Stack way
-                  <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-                </a>
                 <a
                   href="/services"
                   className="group inline-flex items-center gap-1.5 font-medium text-white transition-colors hover:text-clay"
@@ -142,6 +136,42 @@ const AboutPage = () => {
                   Services
                   <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
                 </a>
+                <a
+                  href="/journal"
+                  className="group inline-flex items-center gap-1.5 font-medium text-white transition-colors hover:text-clay"
+                >
+                  Journal
+                  <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Four C's */}
+        <section>
+          <div className="mx-auto max-w-5xl px-6 py-20 md:px-10 md:py-24">
+            <SectionHeader eyebrow="Framework">
+              The Four <span className="text-clay">C's</span>
+            </SectionHeader>
+
+            <div className="mx-auto max-w-3xl text-center">
+              <p className="text-[15.5px] leading-relaxed text-ink-soft">
+                What AI must earn the right to approach.
+              </p>
+              <p className="mt-3 text-[15.5px] leading-relaxed text-ink-soft">
+                The question I kept coming back to, resolved into four principles.
+              </p>
+
+              <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
+                {["Connection", "Creativity", "Curiosity", "Contribution"].map((c) => (
+                  <span
+                    key={c}
+                    className="inline-flex items-center rounded-full border border-hairline bg-background px-5 py-2.5 text-[13.5px] font-medium text-foreground shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
+                  >
+                    {c}
+                  </span>
+                ))}
               </div>
             </div>
           </div>
@@ -149,6 +179,45 @@ const AboutPage = () => {
 
         {/* Credentials — reuse home-draft2 styling */}
         <Credentials />
+
+        {/* Frameworks & Methodology */}
+        <section>
+          <div className="mx-auto max-w-5xl px-6 pb-20 md:px-10 md:pb-24">
+            <SectionHeader eyebrow="Methodology">
+              Frameworks that shape <span className="text-clay">every build.</span>
+            </SectionHeader>
+
+            <div className="grid gap-6 md:grid-cols-2">
+              <div className="rounded-2xl border border-hairline bg-background p-8 md:p-10 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="grid h-10 w-10 place-items-center rounded-xl bg-indigo/15 text-indigo">
+                    <Layers className="h-5 w-5" strokeWidth={2} />
+                  </div>
+                  <h3 className="text-2xl font-medium tracking-tight">
+                    Intentional <span className="font-serif-pro italic text-clay">Tool Stack</span>
+                  </h3>
+                </div>
+                <p className="text-[14.5px] leading-relaxed text-ink-soft">
+                  Every tool in a client's system gets assessed — not just for what it can do, but for its data practices, its security posture, its ethical commitments, and whether it actually belongs. No tool enters the stack on convenience alone.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-hairline bg-background p-8 md:p-10 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="grid h-10 w-10 place-items-center rounded-xl bg-violet/15 text-violet">
+                    <Cpu className="h-5 w-5" strokeWidth={2} />
+                  </div>
+                  <h3 className="text-2xl font-medium tracking-tight">
+                    THREAD <span className="font-serif-pro italic text-clay">Agent Framework</span>
+                  </h3>
+                </div>
+                <p className="text-[14.5px] leading-relaxed text-ink-soft">
+                  Structures how AI agents are instructed, scoped, and held accountable within a Notion workspace. Model-agnostic by design, permissioned by default, and built so your data stays where you own it.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* FAQ — reuse home-draft2 FAQ */}
         <FAQ />
