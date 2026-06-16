@@ -49,6 +49,8 @@ const BlogPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [showSubscribe, setShowSubscribe] = useState(searchParams.get('subscribe') === 'true');
   const [activeTheme, setActiveTheme] = useState<string | null>(null);
+  const [theme, setTheme] = useState<"dark" | "light">("light");
+  const toggleTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
 
   // Get unique themes from posts
   const themes = [...new Set(posts.map(p => p.theme).filter(Boolean))] as string[];
