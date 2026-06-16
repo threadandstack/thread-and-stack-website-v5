@@ -6,7 +6,7 @@ import { Footer } from "@/components/Footer";
 import { Scorecard } from "@/components/home-draft2/Scorecard";
 
 const ScorecardPage = () => {
-  const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const [theme, setTheme] = useState<"dark" | "light">("light");
   const toggleTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
 
   return (
