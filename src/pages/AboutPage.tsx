@@ -48,18 +48,6 @@ const AboutPage = () => {
               <p className="text-foreground font-medium">
                 Ops that help culture. That's what this is.
               </p>
-              <p>
-                When AI arrived as something organisations actually had to reckon with rather than just watch from a distance, my first instinct was scepticism. Not of the technology — the capability was obvious. Of the tendency to reach for it before asking what it should and shouldn't be doing. I kept coming back to the same four questions. What happens to connection when a machine handles the relationship? What happens to creativity when generation becomes automatic? What happens to curiosity when the answer always arrives instantly? What happens to contribution when effort is abstracted away? Those questions became the Four C's — the framework I use to decide where AI earns its place in a working system and where it quietly degrades the thing it was supposed to help.
-              </p>
-              <p>
-                That framework sits alongside the Intentional Tool Stack approach, which governs how every tool in a client's system gets assessed — not just for what it can do, but for its data practices, its security posture, its ethical commitments, and whether it actually belongs. And the THREAD Agent Framework, which structures how AI agents are instructed, scoped, and held accountable within a Notion workspace. These aren't abstractions. They're the methodology behind every build.
-              </p>
-              <p>
-                The human-first approach that came out of that early scepticism has turned out to be one of the more durable ways of working with AI — something Anthropic's own thinking has landed on independently from a different direction. I find that alignment reassuring rather than coincidental. It suggests the instinct was right.
-              </p>
-              <p>
-                I am a certified Notion Consulting Partner and an Official Notion Ambassador. If you found this page through the Notion marketplace, hello — the work you've seen there is the same work described here. If you found it through LinkedIn or a speaking engagement, the same applies. This is what I do, and this is why.
-              </p>
             </div>
 
             <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 text-[14px]">
@@ -114,18 +102,6 @@ const AboutPage = () => {
                 <p className="text-white font-medium">
                   Ops that help culture. That's what this is.
                 </p>
-                <p>
-                  When AI arrived as something organisations actually had to reckon with rather than just watch from a distance, my first instinct was scepticism. Not of the technology — the capability was obvious. Of the tendency to reach for it before asking what it should and shouldn't be doing. I kept coming back to the same four questions. What happens to connection when a machine handles the relationship? What happens to creativity when generation becomes automatic? What happens to curiosity when the answer always arrives instantly? What happens to contribution when effort is abstracted away? Those questions became the Four C's — the framework I use to decide where AI earns its place in a working system and where it quietly degrades the thing it was supposed to help.
-                </p>
-                <p>
-                  That framework sits alongside the Intentional Tool Stack approach, which governs how every tool in a client's system gets assessed — not just for what it can do, but for its data practices, its security posture, its ethical commitments, and whether it actually belongs. And the THREAD Agent Framework, which structures how AI agents are instructed, scoped, and held accountable within a Notion workspace. These aren't abstractions. They're the methodology behind every build.
-                </p>
-                <p>
-                  The human-first approach that came out of that early scepticism has turned out to be one of the more durable ways of working with AI — something Anthropic's own thinking has landed on independently from a different direction. I find that alignment reassuring rather than coincidental. It suggests the instinct was right.
-                </p>
-                <p>
-                  I am a certified Notion Consulting Partner and an Official Notion Ambassador. If you found this page through the Notion marketplace, hello — the work you've seen there is the same work described here. If you found it through LinkedIn or a speaking engagement, the same applies. This is what I do, and this is why.
-                </p>
               </div>
 
               <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-2 text-[14.5px]">
@@ -148,9 +124,23 @@ const AboutPage = () => {
           </div>
         </section>
 
+        {/* Section: The instinct was scepticism */}
+        <section>
+          <div className="mx-auto max-w-3xl px-6 py-20 md:px-10 md:py-24">
+            <SectionHeader>
+              The instinct was <span className="text-clay">scepticism.</span>
+            </SectionHeader>
+            <div className="space-y-4 text-[15.5px] leading-relaxed text-ink-soft">
+              <p>
+                When AI arrived as something organisations actually had to reckon with rather than just watch from a distance, my first instinct was scepticism. Not of the technology — the capability was obvious. Of the tendency to reach for it before asking what it should and shouldn't be doing. I kept coming back to the same four questions. What happens to connection when a machine handles the relationship? What happens to creativity when generation becomes automatic? What happens to curiosity when the answer always arrives instantly? What happens to contribution when effort is abstracted away? Those questions became the Four C's — the framework I use to decide where AI earns its place in a working system and where it quietly degrades the thing it was supposed to help.
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* Four C's */}
         <section>
-          <div className="mx-auto max-w-5xl px-6 py-20 md:px-10 md:py-24">
+          <div className="mx-auto max-w-5xl px-6 pb-20 md:px-10 md:pb-24">
             <SectionHeader eyebrow="Framework">
               The Four <span className="text-clay">C's</span>
             </SectionHeader>
@@ -177,16 +167,23 @@ const AboutPage = () => {
           </div>
         </section>
 
-        {/* Credentials — reuse home-draft2 styling */}
-        <Credentials />
+        {/* Section: Methodology */}
+        <section>
+          <div className="mx-auto max-w-3xl px-6 py-20 md:px-10 md:py-24">
+            <SectionHeader>
+              The methodology behind <span className="text-clay">every build.</span>
+            </SectionHeader>
+            <div className="space-y-4 text-[15.5px] leading-relaxed text-ink-soft">
+              <p>
+                That framework sits alongside the Intentional Tool Stack approach, which governs how every tool in a client's system gets assessed — not just for what it can do, but for its data practices, its security posture, its ethical commitments, and whether it actually belongs. And the THREAD Agent Framework, which structures how AI agents are instructed, scoped, and held accountable within a Notion workspace. These aren't abstractions. They're the methodology behind every build.
+              </p>
+            </div>
+          </div>
+        </section>
 
-        {/* Frameworks & Methodology */}
+        {/* Frameworks & Methodology cards */}
         <section>
           <div className="mx-auto max-w-5xl px-6 pb-20 md:px-10 md:pb-24">
-            <SectionHeader eyebrow="Methodology">
-              Frameworks that shape <span className="text-clay">every build.</span>
-            </SectionHeader>
-
             <div className="grid gap-6 md:grid-cols-2">
               <div className="rounded-2xl border border-hairline bg-background p-8 md:p-10 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
                 <div className="flex items-center gap-3 mb-4">
@@ -218,6 +215,34 @@ const AboutPage = () => {
             </div>
           </div>
         </section>
+
+        {/* Section: The instinct was right */}
+        <section>
+          <div className="mx-auto max-w-3xl px-6 py-20 md:px-10 md:py-24">
+            <SectionHeader>
+              The instinct was <span className="text-clay">right.</span>
+            </SectionHeader>
+            <div className="space-y-4 text-[15.5px] leading-relaxed text-ink-soft">
+              <p>
+                The human-first approach that came out of that early scepticism has turned out to be one of the more durable ways of working with AI — something Anthropic's own thinking has landed on independently from a different direction. I find that alignment reassuring rather than coincidental. It suggests the instinct was right.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Credentials — with intro paragraph */}
+        <section>
+          <div className="mx-auto max-w-3xl px-6 pb-8 pt-20 md:px-10 md:pb-10 md:pt-24">
+            <SectionHeader eyebrow="Credentials">
+              Built on a stack of <span className="text-clay">credentials.</span>
+            </SectionHeader>
+            <p className="mx-auto max-w-2xl text-center text-[15.5px] leading-relaxed text-ink-soft">
+              I am a certified Notion Consulting Partner and an Official Notion Ambassador. If you found this page through the Notion marketplace, hello — the work you've seen there is the same work described here. If you found it through LinkedIn or a speaking engagement, the same applies. This is what I do, and this is why.
+            </p>
+          </div>
+        </section>
+
+        <Credentials />
 
         {/* FAQ — reuse home-draft2 FAQ */}
         <FAQ />
