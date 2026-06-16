@@ -5,7 +5,17 @@ interface WhoItsForProps {
   onBookDiagnostic?: () => void;
 }
 
-const signs = [
+interface SignItem {
+  title: string;
+  description: string;
+  linkText: string;
+  linkUrl?: string;
+  action?: "diagnostic";
+  tag: string;
+  tagClass: string;
+}
+
+const signs: SignItem[] = [
   {
     title: "The business is working. The system isn't ready to scale with it.",
     description:
@@ -21,7 +31,7 @@ const signs = [
     description:
       "The information exists. It's just not in one place, and nobody's quite sure which version is current. Something lives in Slack, something else in a Google Drive folder nobody's opened in three months, and the thing you actually need is in someone's inbox. The team isn't the problem. The fragmentation is. When everything is scattered, every task costs more effort than it should — and the people absorbing that cost are the ones who can least afford to.",
     linkText: "Start with a diagnostic →",
-    action: "diagnostic" as const,
+    action: "diagnostic",
     tag: "Sign 02",
     tagClass: "bg-pink-100 text-pink-700",
   },
@@ -34,7 +44,7 @@ const signs = [
     tag: "Sign 03",
     tagClass: "bg-blue-100 text-blue-700",
   },
-] as const;
+];
 
 export function WhoItsFor({ onBookDiagnostic }: WhoItsForProps) {
   return (
@@ -66,7 +76,7 @@ export function WhoItsFor({ onBookDiagnostic }: WhoItsForProps) {
                 {s.description}
               </p>
 
-              {"action" in s && s.action === "diagnostic" && onBookDiagnostic ? (
+              {s.action === "diagnostic" && onBookDiagnostic ? (
                 <button
                   onClick={onBookDiagnostic}
                   className="mt-6 inline-flex items-center text-[13px] italic text-indigo hover:text-indigo/80 transition-colors bg-transparent border-none cursor-pointer"
