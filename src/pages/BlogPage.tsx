@@ -90,9 +90,21 @@ const BlogPage = () => {
   }, []);
 
   return (
-    <main className="min-h-screen relative pt-24">
-      <Navigation />
-      <SubscribeLightbox open={showSubscribe} onOpenChange={handleSubscribeChange} />
+    <div className="notion-canvas min-h-screen overflow-x-hidden" data-theme={theme}>
+      <main className="min-h-screen relative pt-24">
+        <Navigation
+          variant={theme === "dark" ? "image-hero" : "default"}
+          themeToggle={
+            <button
+              onClick={toggleTheme}
+              className="flex h-8 w-8 items-center justify-center rounded-full border border-border/40 bg-muted/60 text-foreground/70 backdrop-blur-sm transition-all hover:bg-muted hover:text-foreground"
+              aria-label="Toggle theme"
+            >
+              {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            </button>
+          }
+        />
+        <SubscribeLightbox open={showSubscribe} onOpenChange={handleSubscribeChange} />
       
       <section className="py-24 px-6">
         <div className="max-w-4xl mx-auto">
