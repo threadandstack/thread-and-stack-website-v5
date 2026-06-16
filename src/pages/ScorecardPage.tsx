@@ -27,7 +27,7 @@ const ScorecardPage = () => {
 
       <main>
         {/* Hero intro */}
-        <section className="relative overflow-hidden border-b border-hairline">
+        <section className="relative overflow-hidden">
           <div aria-hidden className="aurora">
             <span />
           </div>
@@ -36,13 +36,13 @@ const ScorecardPage = () => {
             className="bg-grid pointer-events-none absolute inset-0 opacity-[0.4]"
             style={{
               maskImage:
-                "radial-gradient(ellipse 75% 60% at 50% 25%, black 35%, transparent 85%)",
+                "radial-gradient(ellipse 60% 50% at 50% 25%, black 35%, transparent 85%)",
               WebkitMaskImage:
-                "radial-gradient(ellipse 75% 60% at 50% 25%, black 35%, transparent 85%)",
+                "radial-gradient(ellipse 60% 50% at 50% 25%, black 35%, transparent 85%)",
             }}
           />
 
-          <div className="relative mx-auto max-w-5xl px-6 pb-24 pt-24 md:pb-32 md:pt-32">
+          <div className="relative mx-auto max-w-3xl px-6 pb-16 pt-24 md:pb-20 md:pt-28">
             <div className="flex flex-col items-center text-center">
               <Link
                 to="/"
@@ -57,11 +57,11 @@ const ScorecardPage = () => {
                 Scorecard · 2 minutes · 8 questions
               </div>
 
-              <h1 className="fade-up fade-up-2 mt-7 max-w-4xl text-balance text-5xl font-semibold leading-[0.98] tracking-[-0.035em] md:text-[76px]">
+              <h1 className="fade-up fade-up-2 mt-7 max-w-3xl text-balance text-4xl font-semibold leading-[1.02] tracking-[-0.03em] md:text-6xl">
                 How mature is your
                 <br />
                 <span
-                  className="font-serif-pro italic font-normal bg-clip-text text-transparent text-5xl md:text-7xl"
+                  className="font-serif-pro italic font-normal bg-clip-text text-transparent"
                   style={{
                     backgroundImage:
                       "linear-gradient(100deg, var(--gradient-4color))",
@@ -71,23 +71,20 @@ const ScorecardPage = () => {
                 </span>
               </h1>
 
-              <p className="fade-up fade-up-3 mt-7 max-w-2xl text-[17px] leading-relaxed text-ink-soft">
+              <p className="fade-up fade-up-3 mt-6 max-w-xl text-[16px] leading-relaxed text-ink-soft">
                 Eight honest questions about how your team finds answers, hands
                 things off, and uses AI today. You'll see exactly where you sit
                 on the ladder, and the engagement that fits.
               </p>
 
-              <p className="fade-up fade-up-4 mt-6 text-[12.5px] text-muted-foreground">
+              <p className="fade-up fade-up-4 mt-5 text-[12px] text-muted-foreground">
                 Your answers stay on this device. Nothing is logged or sent.
               </p>
             </div>
           </div>
         </section>
 
-        {/* Scorecard itself, with extra vertical breathing room */}
-        <div className="py-8 md:py-16">
-          <Scorecard />
-        </div>
+        <Scorecard />
       </main>
 
       <Footer />

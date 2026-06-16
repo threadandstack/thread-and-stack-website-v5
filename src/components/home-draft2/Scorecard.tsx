@@ -143,9 +143,9 @@ export function Scorecard() {
   const selected = answers[current];
 
   return (
-    <section id="scorecard" className="border-b border-hairline bg-background">
-      <div className="mx-auto max-w-6xl px-6 py-20 md:py-24">
-        <div className="rounded-2xl border border-hairline bg-paper p-7 md:p-10">
+    <section id="scorecard" className="bg-background">
+      <div className="mx-auto max-w-3xl px-6 pb-20 md:pb-28">
+        <div className="rounded-3xl border border-hairline bg-paper p-7 shadow-[0_30px_80px_-40px_hsl(var(--foreground)/0.18)] md:p-10">
           {!started ? (
             <div className="grid items-center gap-10 md:grid-cols-[1.2fr_1fr]">
               <div>
