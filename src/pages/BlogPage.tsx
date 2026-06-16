@@ -3,7 +3,7 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Card } from "@/components/ui/card";
 import { Link, useSearchParams } from "react-router-dom";
-import { Loader2 } from "lucide-react";
+import { Loader2, Sun, Moon } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import journalLogo from "@/assets/journal-logo.webp";
 import { BlogNewsletterCTA } from "@/components/BlogNewsletterCTA";
@@ -49,6 +49,8 @@ const BlogPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [showSubscribe, setShowSubscribe] = useState(searchParams.get('subscribe') === 'true');
   const [activeTheme, setActiveTheme] = useState<string | null>(null);
+  const [theme, setTheme] = useState<"dark" | "light">("light");
+  const toggleTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
 
   // Get unique themes from posts
   const themes = [...new Set(posts.map(p => p.theme).filter(Boolean))] as string[];
@@ -88,9 +90,21 @@ const BlogPage = () => {
   }, []);
 
   return (
-    <main className="min-h-screen relative pt-24">
-      <Navigation />
-      <SubscribeLightbox open={showSubscribe} onOpenChange={handleSubscribeChange} />
+    <div className="notion-canvas min-h-screen overflow-x-hidden" data-theme={theme}>
+      <main className="min-h-screen relative pt-24">
+        <Navigation
+          variant={theme === "dark" ? "image-hero" : "default"}
+          themeToggle={
+            <button
+              onClick={toggleTheme}
+              className="flex h-8 w-8 items-center justify-center rounded-full border border-border/40 bg-muted/60 text-foreground/70 backdrop-blur-sm transition-all hover:bg-muted hover:text-foreground"
+              aria-label="Toggle theme"
+            >
+              {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            </button>
+          }
+        />
+        <SubscribeLightbox open={showSubscribe} onOpenChange={handleSubscribeChange} />
       
       <section className="py-24 px-6">
         <div className="max-w-4xl mx-auto">
@@ -279,8 +293,9 @@ const BlogPage = () => {
         </div>
       </section>
 
-      <Footer />
-    </main>
+        <Footer />
+      </main>
+    </div>
   );
 };
 

@@ -32,7 +32,7 @@ export const Navigation = ({ variant = "default", hideLogo = false, floatingBadg
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [isDiagnosticOpen, setIsDiagnosticOpen] = useState(false);
   const gradientBtnStyle = {
-    backgroundImage: "linear-gradient(95deg, hsl(320 85% 55%), hsl(var(--orange)))",
+    backgroundImage: "linear-gradient(95deg, hsl(28 88% 62%), hsl(280 70% 65%))",
   } as const;
 
 
