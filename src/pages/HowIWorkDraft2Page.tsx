@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { Sun, Moon, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
@@ -15,7 +16,16 @@ const HowIWorkDraft2Page = () => {
   const toggleTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
 
   return (
-    <div className="notion-canvas min-h-screen overflow-x-hidden" data-theme={theme}>
+    <>
+      <Helmet>
+        <title>How I Work | Thread &amp; Stack</title>
+        <meta name="description" content="My approach to brand strategy, systems design, and AI integration for teams that want to grow truer, not just faster." />
+        <link rel="canonical" href="https://threadandstack.com/how-i-work" />
+        <meta property="og:url" content="https://threadandstack.com/how-i-work" />
+        <meta property="og:title" content="How I Work | Thread & Stack" />
+        <meta property="og:description" content="My approach to brand strategy, systems design, and AI integration for teams that want to grow truer, not just faster." />
+      </Helmet>
+      <div className="notion-canvas min-h-screen overflow-x-hidden" data-theme={theme}>
       <Navigation
         variant={theme === "dark" ? "image-hero" : "default"}
         hideLogo
@@ -82,6 +92,7 @@ const HowIWorkDraft2Page = () => {
 
       <Footer />
     </div>
+    </>
   );
 };
 

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Card } from "@/components/ui/card";
@@ -90,7 +91,16 @@ const BlogPage = () => {
   }, []);
 
   return (
-    <div className="notion-canvas min-h-screen overflow-x-hidden" data-theme={theme}>
+    <>
+      <Helmet>
+        <title>Thread &amp; Stack Journal | Blog</title>
+        <meta name="description" content="Monthly signals on brand, systems, and the future of work for purpose-led founders." />
+        <link rel="canonical" href="https://threadandstack.com/blog" />
+        <meta property="og:url" content="https://threadandstack.com/blog" />
+        <meta property="og:title" content="Thread & Stack Journal | Blog" />
+        <meta property="og:description" content="Monthly signals on brand, systems, and the future of work for purpose-led founders." />
+      </Helmet>
+      <div className="notion-canvas min-h-screen overflow-x-hidden" data-theme={theme}>
       <main className="min-h-screen relative pt-24">
         <Navigation
           variant={theme === "dark" ? "image-hero" : "default"}
@@ -296,6 +306,7 @@ const BlogPage = () => {
         <Footer />
       </main>
     </div>
+    </>
   );
 };
 

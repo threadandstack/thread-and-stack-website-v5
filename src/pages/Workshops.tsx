@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import { PillButton } from "@/components/ui/pill-button";
 import { ArrowRight, Check, Rocket, MessageCircle, Send } from "lucide-react";
 import { Footer } from "@/components/Footer";
@@ -184,7 +185,16 @@ const Workshops = () => {
   ];
 
   return (
-    <div className="min-h-screen">
+    <>
+      <Helmet>
+        <title>Workshops | Thread &amp; Stack</title>
+        <meta name="description" content="A modular strategy system for purpose-driven brands. Practical workshops on positioning, narrative, and systems thinking." />
+        <link rel="canonical" href="https://threadandstack.com/workshops" />
+        <meta property="og:url" content="https://threadandstack.com/workshops" />
+        <meta property="og:title" content="Workshops | Thread & Stack" />
+        <meta property="og:description" content="A modular strategy system for purpose-driven brands. Practical workshops on positioning, narrative, and systems thinking." />
+      </Helmet>
+      <div className="min-h-screen">
       <Navigation />
       <ContactDrawer open={contactOpen} onOpenChange={setContactOpen} source="workshops" />
 
@@ -455,6 +465,7 @@ const Workshops = () => {
       ]} />
       <Footer />
     </div>
+    </>
   );
 };
 
