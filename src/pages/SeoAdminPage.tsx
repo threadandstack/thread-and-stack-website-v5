@@ -114,7 +114,7 @@ const SeoAdminPage = () => {
   const [filterType, setFilterType] = useState<"all" | "site" | "blog" | "configured" | "unconfigured">("all");
   const [inlineUploading, setInlineUploading] = useState<string | null>(null);
 
-  const GLOBAL_OG_IMAGE = "/images/websiteshare.png";
+  const GLOBAL_OG_IMAGE = "https://threadandstack.com/__l5e/assets-v1/6bce079b-d3c5-4c8b-a9d7-79c333d9d9ca/OpenGraph_TS2026.png";
 
   useEffect(() => {
     if (!authLoading && !user) {
