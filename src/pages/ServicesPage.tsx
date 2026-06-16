@@ -38,36 +38,37 @@ const ServicesPage = () => {
               Services
             </span>
             <h1 className="font-serif-pro italic font-normal text-balance text-4xl leading-[1.05] tracking-[-0.02em] md:text-[64px]">
-              Five ways <span className="text-clay">forward.</span>
+              The right engagement for where you{" "}
+              <span className="text-clay">are.</span>
             </h1>
             <p className="mx-auto mt-6 max-w-xl text-[15.5px] leading-relaxed text-ink-soft">
-              From a co-design sprint to a bespoke multi-team build. Pricing and
-              scope are clear up front. Pick the shape that fits where you are
-              right now.
+              From a co-design sprint to a bespoke multi-team build. Scope and
+              pricing are clear before anything starts. Pick the shape that fits.
             </p>
           </div>
         </section>
+
 
         {/* Services up front */}
         <Engagements />
 
         {/* Who it's for — three signals */}
         <section>
-          <WhoItsFor />
+          <WhoItsFor onBookDiagnostic={openDiagnostic} />
         </section>
+
 
         {/* Proof — case study + kind words */}
         <section>
           <div className="mx-auto max-w-3xl px-6 pt-8 text-center md:px-10 md:pt-12">
             <span className="mb-4 block text-[11px] uppercase tracking-[0.22em] text-ink-soft">
-              Proof
+              Proof in practice.
             </span>
             <h2 className="font-serif-pro italic font-normal text-balance text-4xl leading-[1.05] tracking-[-0.02em] md:text-[56px]">
-              Proof in practice, in <span className="text-clay">clients' words.</span>
+              Proof in <span className="text-clay">practice.</span>
             </h2>
             <p className="mx-auto mt-5 max-w-xl text-[15px] leading-relaxed text-ink-soft">
-              A real engagement from diagnostic to adoption, alongside a stack
-              of kind words from people I've worked with.
+              A real engagement, from diagnostic to adoption.
             </p>
           </div>
           <div className="mt-10 md:mt-14">
@@ -75,6 +76,7 @@ const ServicesPage = () => {
           </div>
           <KindWords />
         </section>
+
 
         <CTA theme={theme} />
       </main>
