@@ -230,16 +230,7 @@ const AboutPage = () => {
           </div>
         </section>
 
-        {/* Credentials intro + component */}
-        <section>
-          <div className="mx-auto max-w-3xl px-6 pb-8 pt-20 md:px-10 md:pb-10 md:pt-24">
-            <p className="mx-auto max-w-2xl text-center text-[15.5px] leading-relaxed text-ink-soft">
-              I am a certified Notion Consulting Partner and an Official Notion Ambassador. If you found this page through the Notion marketplace, hello — the work you've seen there is the same work described here. If you found it through LinkedIn or a speaking engagement, the same applies. This is what I do, and this is why.
-            </p>
-          </div>
-        </section>
-
-        <Credentials />
+        {/* Credentials */}
 
         {/* FAQ — reuse home-draft2 FAQ */}
         <FAQ />
