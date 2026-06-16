@@ -3,7 +3,7 @@ import { Footer } from "@/components/Footer";
 import { Credentials } from "@/components/home-draft2/Credentials";
 import { FAQ } from "@/components/home-draft2/FAQ";
 import { CTA } from "@/components/home-draft2/CTA";
-import { SectionHeader } from "@/components/home-draft2/SectionHeader";
+
 import { ArrowRight } from "lucide-react";
 import brendanWalking from "@/assets/photos/shoreditch/brendan-27.webp";
 
