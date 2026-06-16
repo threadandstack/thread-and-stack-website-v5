@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { Sun, Moon } from "lucide-react";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
@@ -16,7 +17,16 @@ const ServicesPage = () => {
   const openDiagnostic = () => setDiagnosticOpen(true);
 
   return (
-    <div className="notion-canvas min-h-screen overflow-x-hidden" data-theme={theme}>
+    <>
+      <Helmet>
+        <title>Services | Thread &amp; Stack</title>
+        <meta name="description" content="From strategy sessions to full system builds. Thread & Stack offers Narratives & Strategy Services and Notion & Systems Consultancy for purpose-led teams." />
+        <link rel="canonical" href="https://threadandstack.com/services" />
+        <meta property="og:url" content="https://threadandstack.com/services" />
+        <meta property="og:title" content="Services | Thread & Stack" />
+        <meta property="og:description" content="From strategy sessions to full system builds. Thread & Stack offers Narratives & Strategy Services and Notion & Systems Consultancy for purpose-led teams." />
+      </Helmet>
+      <div className="notion-canvas min-h-screen overflow-x-hidden" data-theme={theme}>
       <Navigation
         variant={theme === "dark" ? "image-hero" : "default"}
         themeToggle={
@@ -78,6 +88,7 @@ const ServicesPage = () => {
         theme={theme}
       />
     </div>
+    </>
   );
 };
 

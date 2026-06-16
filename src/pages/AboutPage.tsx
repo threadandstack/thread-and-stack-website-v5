@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Credentials } from "@/components/home-draft2/Credentials";
@@ -14,7 +15,16 @@ const AboutPage = () => {
   const toggleTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
 
   return (
-    <div className="notion-canvas min-h-screen overflow-x-hidden" data-theme={theme}>
+    <>
+      <Helmet>
+        <title>About Brendan Rodgers | Thread &amp; Stack</title>
+        <meta name="description" content="Designer, strategist, and certified Notion partner. I help purpose-led founders turn intention into execution." />
+        <link rel="canonical" href="https://threadandstack.com/about" />
+        <meta property="og:url" content="https://threadandstack.com/about" />
+        <meta property="og:title" content="About Brendan Rodgers | Thread & Stack" />
+        <meta property="og:description" content="Designer, strategist, and certified Notion partner. I help purpose-led founders turn intention into execution." />
+      </Helmet>
+      <div className="notion-canvas min-h-screen overflow-x-hidden" data-theme={theme}>
       <Navigation
         variant={theme === "dark" ? "image-hero" : "default"}
         themeToggle={
@@ -284,6 +294,7 @@ const AboutPage = () => {
 
       <Footer />
     </div>
+    </>
   );
 };
 
