@@ -151,14 +151,7 @@ const AboutPage = () => {
         <Credentials />
 
         {/* FAQ — reuse home-draft2 FAQ */}
-        <section>
-          <div className="mx-auto max-w-5xl px-6 py-20 md:px-10 md:py-24">
-            <SectionHeader eyebrow="FAQ">
-              Hard <span className="text-clay">questions.</span>
-            </SectionHeader>
-            <FAQ />
-          </div>
-        </section>
+        <FAQ />
 
         <CTA theme="light" />
       </main>
