@@ -54,21 +54,21 @@ const ServicesPage = () => {
 
         {/* Who it's for — three signals */}
         <section>
-          <WhoItsFor />
+          <WhoItsFor onBookDiagnostic={openDiagnostic} />
         </section>
+
 
         {/* Proof — case study + kind words */}
         <section>
           <div className="mx-auto max-w-3xl px-6 pt-8 text-center md:px-10 md:pt-12">
             <span className="mb-4 block text-[11px] uppercase tracking-[0.22em] text-ink-soft">
-              Proof
+              Proof in practice.
             </span>
             <h2 className="font-serif-pro italic font-normal text-balance text-4xl leading-[1.05] tracking-[-0.02em] md:text-[56px]">
-              Proof in practice, in <span className="text-clay">clients' words.</span>
+              Proof in <span className="text-clay">practice.</span>
             </h2>
             <p className="mx-auto mt-5 max-w-xl text-[15px] leading-relaxed text-ink-soft">
-              A real engagement from diagnostic to adoption, alongside a stack
-              of kind words from people I've worked with.
+              A real engagement, from diagnostic to adoption.
             </p>
           </div>
           <div className="mt-10 md:mt-14">
@@ -76,6 +76,7 @@ const ServicesPage = () => {
           </div>
           <KindWords />
         </section>
+
 
         <CTA theme={theme} />
       </main>
