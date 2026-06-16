@@ -60,22 +60,12 @@ const ServicesPage = () => {
 
         {/* Proof — case study + kind words */}
         <section>
-          <div className="mx-auto max-w-3xl px-6 pt-8 text-center md:px-10 md:pt-12">
-            <span className="mb-4 block text-[11px] uppercase tracking-[0.22em] text-ink-soft">
-              Proof in practice.
-            </span>
-            <h2 className="font-serif-pro italic font-normal text-balance text-4xl leading-[1.05] tracking-[-0.02em] md:text-[56px]">
-              Proof in <span className="text-clay">practice.</span>
-            </h2>
-            <p className="mx-auto mt-5 max-w-xl text-[15px] leading-relaxed text-ink-soft">
-              A real engagement, from diagnostic to adoption.
-            </p>
-          </div>
           <div className="mt-10 md:mt-14">
             <CaseStudy onBookDiagnostic={openDiagnostic} />
           </div>
           <KindWords />
         </section>
+
 
 
         <CTA theme={theme} />
