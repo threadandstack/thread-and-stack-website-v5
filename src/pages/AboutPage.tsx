@@ -84,9 +84,9 @@ const AboutPage = () => {
               <span className="mb-5 inline-block text-[11px] uppercase tracking-[0.22em] text-white/75">
                 About
               </span>
-              <h1 className="font-serif-pro italic font-normal text-balance text-5xl leading-[1.03] tracking-[-0.02em] text-white md:text-[72px]">
+              <div className="font-serif-pro italic font-normal text-balance text-5xl leading-[1.03] tracking-[-0.02em] text-white md:text-[72px]">
                 About <span className="text-clay">Brendan</span>
-              </h1>
+              </div>
 
               <p className="mt-6 max-w-2xl text-[16px] leading-relaxed text-white/85">
                 Fifteen years of figuring out why things don't work. This is what I do with that.
