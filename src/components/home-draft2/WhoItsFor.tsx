@@ -1,72 +1,86 @@
 import { Link } from "react-router-dom";
 import { SectionHeader } from "./SectionHeader";
 
-const audiences = [
+interface WhoItsForProps {
+  onBookDiagnostic?: () => void;
+}
+
+const signs = [
   {
-    title: "Your marketing no longer feels like you.",
+    title: "The business is working. The system isn't ready to scale with it.",
     description:
-      "The brand made sense when you started. Now it doesn't. Your values and ambition have shifted, but your story still speaks in an older voice. You need clarity, updated language, and direction that reflect who you are today.",
-    linkText: "Explore narrative realignment",
-    linkUrl: "/narratives-strategy",
-    tag: "Narrative",
+      "Revenue is growing. The team is capable. But you've quietly hit a ceiling that has nothing to do with talent or ambition — the infrastructure can't hold the weight of what's coming next. You could take on more clients tomorrow. You're choosing not to, because you know the current setup would crack under the pressure. You've paused to fix it before something breaks rather than after. That's the right instinct. This is exactly where we start.",
+    linkText: "See how the build works →",
+    linkUrl: "/how-i-work",
+    tag: "Sign 01",
     tagClass: "bg-orange-100 text-orange-700",
   },
   {
-    title: "You're working harder but it's not compounding.",
+    title:
+      "Your team is fragmented across tools, folders, and spreadsheets — and it's slowing everything down.",
     description:
-      "You've hired the right specialists — an agency, a freelancer, a website provider — but nobody owns the whole picture. Your GTM strategy is overwhelmed by fragmentation. The work isn't landing where it should.",
-    linkText: "See how integration changes the game",
-    linkUrl: "/how-i-work",
-    tag: "Strategy",
+      "The information exists. It's just not in one place, and nobody's quite sure which version is current. Something lives in Slack, something else in a Google Drive folder nobody's opened in three months, and the thing you actually need is in someone's inbox. The team isn't the problem. The fragmentation is. When everything is scattered, every task costs more effort than it should — and the people absorbing that cost are the ones who can least afford to.",
+    linkText: "Start with a diagnostic →",
+    action: "diagnostic" as const,
+    tag: "Sign 02",
     tagClass: "bg-pink-100 text-pink-700",
   },
   {
-    title: "You can feel the leakage but can't see it.",
+    title: "You serve a lot of people, and they all need their own way in.",
     description:
-      "You know there's a cost somewhere. Your marketing, brand, and operations grew up separately and they aren't talking to each other. The founder is absorbing increasing risk from disconnected signals.",
-    linkText: "Discover the systems layer",
+      "Clients, members, collaborators, beneficiaries — the people your organisation exists to serve need to see something. Their progress, their documents, their status, their slice of what's happening. Right now that probably means email threads, shared folders, or manually assembled updates that someone has to chase. A workspace that reaches beyond the building — with client portals, community spaces, and external-facing interfaces built in from the start — changes what your service actually feels like to receive.",
+    linkText: "See what an external-facing build looks like →",
     linkUrl: "/notion-systems",
-    tag: "Systems",
+    tag: "Sign 03",
     tagClass: "bg-blue-100 text-blue-700",
   },
 ] as const;
 
-export function WhoItsFor() {
+export function WhoItsFor({ onBookDiagnostic }: WhoItsForProps) {
   return (
     <section>
       <div className="mx-auto max-w-5xl px-6 py-24 md:px-10 md:py-32">
-        <SectionHeader eyebrow="For makers, founders, and teams">
-          Three signals it's <span className="text-clay">time.</span>
+        <SectionHeader eyebrow="Which one of these is you?">
+          Three signs it's <span className="text-clay">time.</span>
         </SectionHeader>
 
         <div className="grid gap-6 md:grid-cols-3">
-          {audiences.map((a) => (
+          {signs.map((s) => (
             <article
-              key={a.title}
+              key={s.title}
               className="flex flex-col items-center rounded-2xl border border-hairline bg-background p-8 text-center shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
             >
               <div className="mb-5">
                 <span
-                  className={`inline-flex items-center rounded-full px-2.5 py-1 text-[11.5px] font-medium ${a.tagClass}`}
+                  className={`inline-flex items-center rounded-full px-2.5 py-1 text-[11.5px] font-medium ${s.tagClass}`}
                 >
-                  {a.tag}
+                  {s.tag}
                 </span>
               </div>
 
               <h3 className="font-serif-pro italic text-[24px] leading-tight">
-                {a.title}
+                {s.title}
               </h3>
 
               <p className="mt-4 flex-1 text-[14.5px] leading-relaxed text-ink-soft">
-                {a.description}
+                {s.description}
               </p>
 
-              <Link
-                to={a.linkUrl}
-                className="mt-6 inline-flex items-center text-[13px] italic text-indigo hover:text-indigo/80 transition-colors"
-              >
-                {a.linkText} →
-              </Link>
+              {"action" in s && s.action === "diagnostic" && onBookDiagnostic ? (
+                <button
+                  onClick={onBookDiagnostic}
+                  className="mt-6 inline-flex items-center text-[13px] italic text-indigo hover:text-indigo/80 transition-colors bg-transparent border-none cursor-pointer"
+                >
+                  {s.linkText}
+                </button>
+              ) : (
+                <Link
+                  to={s.linkUrl!}
+                  className="mt-6 inline-flex items-center text-[13px] italic text-indigo hover:text-indigo/80 transition-colors"
+                >
+                  {s.linkText}
+                </Link>
+              )}
             </article>
           ))}
         </div>
