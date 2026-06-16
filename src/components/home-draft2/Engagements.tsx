@@ -84,24 +84,6 @@ const tiers = [
     accent: "clay",
     featured: false,
   },
-  {
-    n: "05",
-    name: "Rolling Stack Support",
-    price: "£900/month",
-    sub: "No tie-in · cancel any month",
-    blurb:
-      "Once the foundations hold, the questions that emerge tend to be the most interesting ones. Systems built for specific functions — content ops, revenue ops, marketing, customer onboarding, website integrations — and the gradual expansion of what the agents can do. Most clients stay six to twelve months.",
-    features: [
-      "Monthly system focus and optimisation",
-      "Ongoing administration and maintenance",
-      "AI workflow design and automation support",
-      "Slack access for ops questions and unblocking",
-      "Cancel any month",
-    ],
-    cta: "Start support",
-    accent: "indigo",
-    featured: false,
-  },
 ] as const;
 
 export function Engagements() {
@@ -123,9 +105,8 @@ export function Engagements() {
   return (
     <section id="engagements">
       <div className="mx-auto max-w-5xl px-6 py-24 md:px-10 md:py-28">
-        <SectionHeader eyebrow="Engagements">
-          Five ways <span className="text-clay">forward.</span>
-        </SectionHeader>
+
+
 
 
         <div

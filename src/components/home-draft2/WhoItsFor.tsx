@@ -23,7 +23,8 @@ const signs: SignItem[] = [
     linkText: "See how the build works →",
     linkUrl: "/how-i-work",
     tag: "Sign 01",
-    tagClass: "bg-orange-100 text-orange-700",
+    tagClass: "bg-white text-foreground border border-hairline",
+
   },
   {
     title:
@@ -50,9 +51,10 @@ export function WhoItsFor({ onBookDiagnostic }: WhoItsForProps) {
   return (
     <section>
       <div className="mx-auto max-w-5xl px-6 py-24 md:px-10 md:py-32">
-        <SectionHeader eyebrow="Which one of these is you?">
-          Three signs it's <span className="text-clay">time.</span>
+        <SectionHeader eyebrow="Three signs it's time for the services">
+          Which one of these is you?
         </SectionHeader>
+
 
         <div className="grid gap-6 md:grid-cols-3">
           {signs.map((s) => (
