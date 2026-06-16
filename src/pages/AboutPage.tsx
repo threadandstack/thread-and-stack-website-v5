@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Credentials } from "@/components/home-draft2/Credentials";
@@ -5,13 +6,27 @@ import { FAQ } from "@/components/home-draft2/FAQ";
 import { CTA } from "@/components/home-draft2/CTA";
 import { SectionHeader } from "@/components/home-draft2/SectionHeader";
 
-import { ArrowRight, Layers, Cpu } from "lucide-react";
+import { ArrowRight, Layers, Cpu, Heart, Compass, Sun, Moon } from "lucide-react";
 import brendanWalking from "@/assets/photos/shoreditch/brendan-27.webp";
 
 const AboutPage = () => {
+  const [theme, setTheme] = useState<"dark" | "light">("light");
+  const toggleTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
+
   return (
-    <div className="notion-canvas min-h-screen overflow-x-hidden">
-      <Navigation variant="image-hero" />
+    <div className="notion-canvas min-h-screen overflow-x-hidden" data-theme={theme}>
+      <Navigation
+        variant={theme === "dark" ? "image-hero" : "default"}
+        themeToggle={
+          <button
+            onClick={toggleTheme}
+            className="flex h-8 w-8 items-center justify-center rounded-full border border-border/40 bg-muted/60 text-foreground/70 backdrop-blur-sm transition-all hover:bg-muted hover:text-foreground"
+            aria-label="Toggle theme"
+          >
+            {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+          </button>
+        }
+      />
 
       <main>
         {/* Hero — mobile stacked */}
@@ -138,34 +153,63 @@ const AboutPage = () => {
           </div>
         </section>
 
-        {/* Four C's */}
+        {/* Four C's vs Four D's — sit alongside the frameworks below */}
         <section>
-          <div className="mx-auto max-w-5xl px-6 pb-20 md:px-10 md:pb-24">
-            <SectionHeader eyebrow="Framework">
-              The Four <span className="text-clay">C's</span>
+          <div className="mx-auto max-w-5xl px-6 pb-12 md:px-10 md:pb-16">
+            <SectionHeader eyebrow="Principles">
+              What stays human, <span className="text-clay">how to operate.</span>
             </SectionHeader>
 
-            <div className="mx-auto max-w-3xl text-center">
-              <p className="text-[15.5px] leading-relaxed text-ink-soft">
-                What AI must earn the right to approach.
-              </p>
-              <p className="mt-3 text-[15.5px] leading-relaxed text-ink-soft">
-                The question I kept coming back to, resolved into four principles.
-              </p>
+            <p className="mx-auto max-w-2xl text-center text-[15.5px] leading-relaxed text-ink-soft">
+              Two complementary frames I lean on. The Four C's name what AI must earn the right to approach. The Four D's — Anthropic's framing — describe how to operate well when you do bring AI in. Protect the C's. Practise the D's.
+            </p>
 
-              <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-                {["Connection", "Creativity", "Curiosity", "Contribution"].map((c) => (
-                  <span
-                    key={c}
-                    className="inline-flex items-center rounded-full border border-hairline bg-background px-5 py-2.5 text-[13.5px] font-medium text-foreground shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
-                  >
-                    {c}
-                  </span>
-                ))}
+            <div className="mt-10 grid gap-6 md:grid-cols-2">
+              {/* 4 C's */}
+              <div className="rounded-2xl border border-hairline bg-background p-8 md:p-10 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="grid h-10 w-10 place-items-center rounded-xl bg-indigo/15 text-indigo">
+                    <Heart className="h-5 w-5" strokeWidth={2} />
+                  </div>
+                  <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-ink-soft">
+                    The Four C's
+                  </p>
+                </div>
+                <h3 className="text-2xl font-medium tracking-tight">
+                  What <span className="font-serif-pro italic text-clay">stays human</span>
+                </h3>
+                <ul className="mt-5 space-y-2.5 text-[14.5px] leading-relaxed text-ink-soft">
+                  <li><span className="font-medium text-foreground">Connection</span> — belonging, trust, and rapport</li>
+                  <li><span className="font-medium text-foreground">Creativity</span> — judgement, taste, and craft</li>
+                  <li><span className="font-medium text-foreground">Curiosity</span> — better questions and reframes</li>
+                  <li><span className="font-medium text-foreground">Contribution</span> — purpose and meaning</li>
+                </ul>
+              </div>
+
+              {/* 4 D's */}
+              <div className="rounded-2xl border border-hairline bg-background p-8 md:p-10 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="grid h-10 w-10 place-items-center rounded-xl bg-violet/15 text-violet">
+                    <Compass className="h-5 w-5" strokeWidth={2} />
+                  </div>
+                  <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-ink-soft">
+                    The Four D's
+                  </p>
+                </div>
+                <h3 className="text-2xl font-medium tracking-tight">
+                  How to <span className="font-serif-pro italic text-clay">operate with AI</span>
+                </h3>
+                <ul className="mt-5 space-y-2.5 text-[14.5px] leading-relaxed text-ink-soft">
+                  <li><span className="font-medium text-foreground">Delegation</span> — whether, when, and how to engage AI</li>
+                  <li><span className="font-medium text-foreground">Description</span> — articulating goals well enough to prompt useful behaviour</li>
+                  <li><span className="font-medium text-foreground">Discernment</span> — accurately assessing what AI produces</li>
+                  <li><span className="font-medium text-foreground">Diligence</span> — ethics, transparency, and accountability</li>
+                </ul>
               </div>
             </div>
           </div>
         </section>
+
 
         {/* Section: Methodology */}
         <section>
@@ -235,7 +279,7 @@ const AboutPage = () => {
         {/* FAQ — reuse home-draft2 FAQ */}
         <FAQ />
 
-        <CTA theme="light" />
+        <CTA theme={theme} />
       </main>
 
       <Footer />
