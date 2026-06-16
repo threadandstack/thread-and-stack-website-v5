@@ -1,6 +1,7 @@
 import { Linkedin, Mail } from "lucide-react";
 import { trackFooterLinkClick } from "@/hooks/useAnalytics";
-import stackedLogo from "@/assets/logos/White_TS_Stacked.svg";
+import whiteStackedLogo from "@/assets/logos/White_TS_Stacked.svg";
+import blackStackedLogo from "@/assets/logos/Black_TS_Stacked.svg";
 
 const BlueskyIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 568 501" className={className} fill="currentColor">
@@ -16,32 +17,33 @@ const SubstackIcon = ({ className }: { className?: string }) => (
 
 export const Footer = () => {
   return (
-    <footer className="py-12 px-6 bg-[hsl(234,89%,8%)] text-white">
+    <footer className="py-12 px-6 bg-black text-white dark:bg-white dark:text-black">
       <div className="max-w-6xl mx-auto">
         <div className="grid md:grid-cols-2 gap-8 mb-8">
           <div>
-            <img src={stackedLogo} alt="Thread & Stack" className="h-14 mb-3" />
-            <p className="font-sans text-white/80 text-sm">
+            <img src={whiteStackedLogo} alt="Thread & Stack" className="h-14 mb-3 dark:hidden" />
+            <img src={blackStackedLogo} alt="Thread & Stack" className="h-14 mb-3 hidden dark:block" />
+            <p className="font-sans text-white/80 dark:text-black/80 text-sm">
               Ops that feel human, systems that make sense.
             </p>
           </div>
 
           <div>
             <h4 className="mb-3 font-semibold italic">Connect</h4>
-            <ul className="space-y-2 text-sm font-sans text-white/80">
-              <li><a href="#contact" className="hover:text-white transition-colors" onClick={() => trackFooterLinkClick('Get in Touch', 'internal')}>Get in Touch</a></li>
-              <li><a href="https://www.linkedin.com/in/rodgersbrendan/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors flex items-center gap-2" onClick={() => trackFooterLinkClick('LinkedIn', 'social')}><Linkedin className="h-4 w-4" />LinkedIn</a></li>
-              <li><a href="https://bsky.app/profile/threadandstack.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors flex items-center gap-2" onClick={() => trackFooterLinkClick('Bluesky', 'social')}><BlueskyIcon className="h-4 w-4" />Bluesky</a></li>
-              <li><a href="https://stackedbehaviours.substack.com/?utm_campaign=website" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors flex items-center gap-2" onClick={() => trackFooterLinkClick('Substack', 'social')}><SubstackIcon className="h-4 w-4" />Substack</a></li>
+            <ul className="space-y-2 text-sm font-sans text-white/80 dark:text-black/80">
+              <li><a href="#contact" className="hover:text-white dark:hover:text-black transition-colors" onClick={() => trackFooterLinkClick('Get in Touch', 'internal')}>Get in Touch</a></li>
+              <li><a href="https://www.linkedin.com/in/rodgersbrendan/" target="_blank" rel="noopener noreferrer" className="hover:text-white dark:hover:text-black transition-colors flex items-center gap-2" onClick={() => trackFooterLinkClick('LinkedIn', 'social')}><Linkedin className="h-4 w-4" />LinkedIn</a></li>
+              <li><a href="https://bsky.app/profile/threadandstack.com" target="_blank" rel="noopener noreferrer" className="hover:text-white dark:hover:text-black transition-colors flex items-center gap-2" onClick={() => trackFooterLinkClick('Bluesky', 'social')}><BlueskyIcon className="h-4 w-4" />Bluesky</a></li>
+              <li><a href="https://stackedbehaviours.substack.com/?utm_campaign=website" target="_blank" rel="noopener noreferrer" className="hover:text-white dark:hover:text-black transition-colors flex items-center gap-2" onClick={() => trackFooterLinkClick('Substack', 'social')}><SubstackIcon className="h-4 w-4" />Substack</a></li>
             </ul>
           </div>
         </div>
-        
-        <div className="border-t border-white/20 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm font-sans text-white/60">
-          <p className="not-italic">© {new Date().getFullYear()} Thread & Stack. All rights reserved.</p>
+
+        <div className="border-t border-white/20 dark:border-black/20 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm font-sans text-white/60 dark:text-black/60">
+          <p className="not-italic">&copy; {new Date().getFullYear()} Thread & Stack. All rights reserved.</p>
           <div className="flex gap-6">
-            <a href="/privacy" className="hover:text-white transition-colors" onClick={() => trackFooterLinkClick('Privacy Policy', 'legal')}>Privacy Policy</a>
-            <a href="/data-guarantee" className="hover:text-white transition-colors" onClick={() => trackFooterLinkClick('Data Guarantee', 'legal')}>Data Guarantee</a>
+            <a href="/privacy" className="hover:text-white dark:hover:text-black transition-colors" onClick={() => trackFooterLinkClick('Privacy Policy', 'legal')}>Privacy Policy</a>
+            <a href="/data-guarantee" className="hover:text-white dark:hover:text-black transition-colors" onClick={() => trackFooterLinkClick('Data Guarantee', 'legal')}>Data Guarantee</a>
           </div>
         </div>
       </div>
