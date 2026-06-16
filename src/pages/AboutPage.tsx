@@ -279,7 +279,7 @@ const AboutPage = () => {
         {/* FAQ — reuse home-draft2 FAQ */}
         <FAQ />
 
-        <CTA theme="light" />
+        <CTA theme={theme} />
       </main>
 
       <Footer />
