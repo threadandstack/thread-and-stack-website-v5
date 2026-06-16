@@ -6,7 +6,8 @@ import { Card } from "@/components/ui/card";
 import { Link, useSearchParams } from "react-router-dom";
 import { Loader2, Sun, Moon } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import journalLogo from "@/assets/journal-logo.webp";
+import journalLogoLight from "@/assets/journal-logo-light.png.asset.json";
+import journalLogoDark from "@/assets/journal-logo-dark.png.asset.json";
 import { BlogNewsletterCTA } from "@/components/BlogNewsletterCTA";
 import { SubscribeLightbox } from "@/components/SubscribeLightbox";
 import { Tilt3D } from "@/components/Tilt3D";
@@ -120,7 +121,7 @@ const BlogPage = () => {
         <div className="max-w-4xl mx-auto">
           <div className="flex justify-center mb-6">
             <Tilt3D>
-              <img src={journalLogo} alt="Thread & Stack Journal" className="h-40 sm:h-56 md:h-80 w-auto" />
+              <img src={theme === "dark" ? journalLogoDark.url : journalLogoLight.url} alt="Thread & Stack Journal" className="h-40 sm:h-56 md:h-80 w-auto" />
             </Tilt3D>
           </div>
           <p className="text-xl text-muted-foreground mb-8 text-center leading-relaxed max-w-2xl mx-auto">
