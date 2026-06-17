@@ -79,7 +79,8 @@ export default function PowerHourThankYouPage() {
             <NotionCalendarEmbed
               url="https://calendar.notion.so/meet/threadandstack/diagnostic"
               title="Book your Stack Diagnostic"
-              height={760}
+              meta="90 minutes • paid in full"
+              cta="Pick a time"
             />
 
             <div className="flex flex-col sm:flex-row gap-3">
