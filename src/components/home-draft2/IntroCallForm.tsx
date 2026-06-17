@@ -207,6 +207,8 @@ export function IntroCallForm({
         <NotionCalendarEmbed
           url="https://calendar.notion.so/meet/threadandstack/30min-intro"
           title="Book your intro call"
+          meta="30 minutes • free, no obligation"
+          cta="Pick a time"
         />
       </div>
     );
