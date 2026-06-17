@@ -8,6 +8,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Loader2, ArrowRight, ShieldCheck, CheckCircle2 } from "lucide-react";
 import { trackContactFormSubmit } from "@/hooks/useAnalytics";
+import { NotionCalendarEmbed } from "@/components/booking/NotionCalendarEmbed";
 
 const REVENUE_BANDS = [
   "Pre-revenue",
