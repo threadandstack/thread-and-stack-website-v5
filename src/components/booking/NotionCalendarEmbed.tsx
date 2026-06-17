@@ -1,68 +1,65 @@
-import { useState } from "react";
-import { ExternalLink, Loader2, CalendarDays } from "lucide-react";
-import { PillButton } from "@/components/ui/pill-button";
+import { ExternalLink, CalendarDays, ArrowUpRight } from "lucide-react";
 
 interface NotionCalendarEmbedProps {
   url: string;
   title?: string;
-  height?: number;
+  /** Optional context line under the title, e.g. "30 minutes • free". */
+  meta?: string;
+  /** CTA button label. */
+  cta?: string;
 }
 
 /**
- * Embeds a Notion Calendar scheduling link in an iframe.
- * Provides an "Open in new tab" fallback in case the embed is blocked
- * by the browser or Notion's frame-ancestor policy.
+ * Notion Calendar scheduling links cannot be iframed (their CSP only allows
+ * app.notion.com as a frame-ancestor). This renders a prominent CTA card that
+ * opens the scheduler in a new tab.
  */
 export function NotionCalendarEmbed({
   url,
   title = "Pick a time",
-  height = 720,
+  meta,
+  cta = "Open scheduler",
 }: NotionCalendarEmbedProps) {
-  const [loaded, setLoaded] = useState(false);
-
   return (
-    <div className="space-y-3">
-      <div className="flex items-center justify-between gap-3">
-        <div className="inline-flex items-center gap-1.5 text-[12px] uppercase tracking-wider text-ink-soft">
-          <CalendarDays className="h-3.5 w-3.5 text-indigo" strokeWidth={2} />
-          {title}
-        </div>
-        <a
-          href={url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-1 text-[12px] text-indigo underline-offset-4 hover:underline"
-        >
-          Open in new tab <ExternalLink className="h-3 w-3" />
-        </a>
-      </div>
-
-      <div
-        className="relative w-full overflow-hidden rounded-xl border border-hairline bg-card"
-        style={{ height }}
-      >
-        {!loaded && (
-          <div className="absolute inset-0 flex items-center justify-center text-muted-foreground">
-            <Loader2 className="h-5 w-5 animate-spin" />
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group relative block overflow-hidden rounded-2xl border border-hairline bg-card p-6 transition-all hover:-translate-y-px hover:shadow-lg sm:p-7"
+    >
+      <span
+        aria-hidden
+        className="pointer-events-none absolute -right-16 -top-16 h-44 w-44 rounded-full opacity-30 blur-3xl transition-opacity group-hover:opacity-50"
+        style={{ background: "radial-gradient(closest-side, hsl(var(--indigo)), transparent)" }}
+      />
+      <div className="relative flex items-start gap-4">
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-hairline bg-background text-indigo">
+          <CalendarDays className="h-5 w-5" strokeWidth={2} />
+        </span>
+        <div className="min-w-0 flex-1 space-y-1">
+          <div className="font-sans text-lg font-semibold leading-tight tracking-tight text-foreground">
+            {title}
           </div>
-        )}
-        <iframe
-          src={url}
-          title={title}
-          onLoad={() => setLoaded(true)}
-          className="h-full w-full"
-          style={{ border: 0 }}
-          allow="clipboard-write"
-        />
+          {meta && (
+            <div className="text-[13px] text-muted-foreground">{meta}</div>
+          )}
+          <div className="pt-3">
+            <span
+              className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-[13px] font-medium text-accent-foreground"
+              style={{ backgroundImage: "linear-gradient(95deg, var(--gradient-3color))" }}
+            >
+              {cta}
+              <ArrowUpRight className="h-3.5 w-3.5" strokeWidth={2.25} />
+            </span>
+          </div>
+          <p className="pt-2 text-[11.5px] text-muted-foreground">
+            Opens Notion Calendar in a new tab.{" "}
+            <span className="inline-flex items-center gap-0.5">
+              <ExternalLink className="h-3 w-3" />
+            </span>
+          </p>
+        </div>
       </div>
-
-      <p className="text-[11.5px] text-muted-foreground">
-        Trouble loading?{" "}
-        <a href={url} target="_blank" rel="noopener noreferrer" className="underline">
-          Open the booking page in a new tab
-        </a>
-        .
-      </p>
-    </div>
+    </a>
   );
 }
