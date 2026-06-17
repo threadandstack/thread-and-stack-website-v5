@@ -79,11 +79,12 @@ export function DiagnosticDrawer({
   }, [defaultCoupon]);
 
   useEffect(() => {
+    setMode(initialMode);
+
     if (!open) {
       setClientSecret(null);
       setSubmitting(false);
       setStripeError(null);
-      setMode(initialMode);
     }
   }, [open, initialMode]);
 
