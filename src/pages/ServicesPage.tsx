@@ -102,6 +102,7 @@ const ServicesPage = () => {
         open={diagnosticOpen}
         onOpenChange={setDiagnosticOpen}
         theme={theme}
+        initialMode={diagnosticMode}
       />
     </div>
     </>
