@@ -245,8 +245,7 @@ export function DiagnosticDrawer({
                   <IntroCallForm
                     source={`${source}-intro`}
                     onSuccess={() => {
-                      // Close the drawer shortly after success
-                      setTimeout(() => onOpenChange(false), 2500);
+                      // Keep drawer open so the booking embed is visible.
                     }}
                   />
                   <div className="rounded-xl border border-dashed border-hairline bg-paper/60 p-4 text-center">
