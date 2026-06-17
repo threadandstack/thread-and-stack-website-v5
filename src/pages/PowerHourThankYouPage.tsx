@@ -69,18 +69,25 @@ export default function PowerHourThankYouPage() {
               {name ? `Thank you, ${name.split(" ")[0]}.` : "Thank you."}
             </h1>
             <p className="font-sans text-[15px] sm:text-base text-muted-foreground leading-relaxed">
-              Your AI Power-Hour is booked
-              {amount !== null ? ` — £${(amount / 100).toFixed(0)} confirmed` : ""}. I'll be in
-              touch within 24 hours from{" "}
-              <span className="text-foreground font-medium">br@brendanrodgers.uk</span> with a few
-              calendar options and a short prep prompt so we hit the ground running.
+              Your Stack Diagnostic is paid
+              {amount !== null ? ` — £${(amount / 100).toFixed(0)} confirmed` : ""}.
+              Pick a 90-minute slot below and you'll get a calendar invite straight away.
+              A receipt and short prep prompt are on their way from{" "}
+              <span className="text-foreground font-medium">br@brendanrodgers.uk</span>.
             </p>
+
+            <NotionCalendarEmbed
+              url="https://calendar.notion.so/meet/threadandstack/diagnostic"
+              title="Book your Stack Diagnostic"
+              height={760}
+            />
+
             <div className="flex flex-col sm:flex-row gap-3">
               <PillButton variant="outline" icon={Mail} asChild>
                 <a href="mailto:br@brendanrodgers.uk">Email Brendan</a>
               </PillButton>
               <PillButton asChild>
-                <Link to="/charity-meetup-april26">Back to resources</Link>
+                <Link to="/">Back to home</Link>
               </PillButton>
             </div>
           </div>
