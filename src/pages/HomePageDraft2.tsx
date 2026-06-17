@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Sun, Moon } from "lucide-react";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
@@ -22,6 +22,13 @@ const HomePageDraft2 = () => {
   const [diagnosticOpen, setDiagnosticOpen] = useState(false);
   const toggleTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
   const openDiagnostic = () => setDiagnosticOpen(true);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("drawer") === "diagnostic") {
+      setDiagnosticOpen(true);
+    }
+  }, []);
 
   return (
     <div className="notion-canvas min-h-screen overflow-x-hidden" data-theme={theme}>
