@@ -6,6 +6,7 @@ import { Footer } from "@/components/Footer";
 import WhiteLogo from "@/assets/logos/White_TS_Stacked.svg";
 import { CheckCircle2, Loader2, Mail } from "lucide-react";
 import { PillButton } from "@/components/ui/pill-button";
+import { NotionCalendarEmbed } from "@/components/booking/NotionCalendarEmbed";
 
 export default function PowerHourThankYouPage() {
   const [params] = useSearchParams();
