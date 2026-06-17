@@ -87,7 +87,7 @@ const tiers = [
 ] as const;
 
 export function Engagements() {
-  const [selected, setSelected] = useState(2);
+  const [selected, setSelected] = useState(1);
   const stageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
