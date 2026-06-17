@@ -20,12 +20,21 @@ import { DiagnosticDrawer } from "@/components/home-draft2/DiagnosticDrawer";
 const HomePageDraft2 = () => {
   const [theme, setTheme] = useState<"dark" | "light">("light");
   const [diagnosticOpen, setDiagnosticOpen] = useState(false);
+  const [diagnosticMode, setDiagnosticMode] = useState<"intro" | "diagnostic">("intro");
   const toggleTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
-  const openDiagnostic = () => setDiagnosticOpen(true);
+  const openDiagnostic = () => {
+    setDiagnosticMode("intro");
+    setDiagnosticOpen(true);
+  };
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    if (params.get("drawer") === "diagnostic") {
+    const drawer = params.get("drawer");
+    if (drawer === "diagnostic") {
+      setDiagnosticMode("diagnostic");
+      setDiagnosticOpen(true);
+    } else if (drawer === "intro") {
+      setDiagnosticMode("intro");
       setDiagnosticOpen(true);
     }
   }, []);
