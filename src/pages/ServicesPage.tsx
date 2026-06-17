@@ -16,6 +16,13 @@ const ServicesPage = () => {
   const toggleTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
   const openDiagnostic = () => setDiagnosticOpen(true);
 
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("drawer") === "diagnostic") {
+      setDiagnosticOpen(true);
+    }
+  }, []);
+
   return (
     <>
       <Helmet>
