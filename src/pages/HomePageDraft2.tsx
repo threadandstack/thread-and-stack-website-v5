@@ -23,6 +23,13 @@ const HomePageDraft2 = () => {
   const toggleTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
   const openDiagnostic = () => setDiagnosticOpen(true);
 
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("drawer") === "diagnostic") {
+      setDiagnosticOpen(true);
+    }
+  }, []);
+
   return (
     <div className="notion-canvas min-h-screen overflow-x-hidden" data-theme={theme}>
       <Navigation
