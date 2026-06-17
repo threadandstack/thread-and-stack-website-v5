@@ -190,17 +190,23 @@ export function IntroCallForm({
 
   if (done) {
     return (
-      <div className="rounded-xl border border-hairline bg-card p-6 text-card-foreground">
-        <div className="flex items-start gap-3">
-          <CheckCircle2 className="mt-0.5 h-5 w-5 text-indigo" />
-          <div className="space-y-1">
-            <p className="font-sans text-lg font-semibold">Request received.</p>
-            <p className="text-sm text-muted-foreground">
-              I'll be in touch within one working day to confirm a time for our
-              introductory call. Check your inbox for a confirmation email.
-            </p>
+      <div className="space-y-5">
+        <div className="rounded-xl border border-hairline bg-card p-6 text-card-foreground">
+          <div className="flex items-start gap-3">
+            <CheckCircle2 className="mt-0.5 h-5 w-5 text-indigo" />
+            <div className="space-y-1">
+              <p className="font-sans text-lg font-semibold">Details received — now pick a time.</p>
+              <p className="text-sm text-muted-foreground">
+                Grab a 30-minute slot below. You'll get a calendar invite straight
+                away, and a confirmation email is on its way.
+              </p>
+            </div>
           </div>
         </div>
+        <NotionCalendarEmbed
+          url="https://calendar.notion.so/meet/threadandstack/30min-intro"
+          title="Book your intro call"
+        />
       </div>
     );
   }
