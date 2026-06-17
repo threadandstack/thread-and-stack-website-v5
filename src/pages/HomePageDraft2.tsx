@@ -93,6 +93,7 @@ const HomePageDraft2 = () => {
         open={diagnosticOpen}
         onOpenChange={setDiagnosticOpen}
         theme={theme}
+        initialMode={diagnosticMode}
       />
     </div>
   );
