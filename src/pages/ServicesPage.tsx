@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { Sun, Moon } from "lucide-react";
 import { Navigation } from "@/components/Navigation";
