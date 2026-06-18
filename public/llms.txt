@@ -1,6 +1,8 @@
 # Thread & Stack
 
 > Ops & Strategy that shifts culture. Thread & Stack helps purpose-led founders and teams align what they say with how they work, so growth feels human instead of hectic.
+>
+> For the full plain-text content of every public page and blog post in a single document, see [/llms-full.txt](https://threadandstack.com/llms-full.txt).
 
 Thread & Stack is the studio of Brendan Rodgers, a designer, strategist, and certified Notion partner based in the UK. Two service pillars: Narratives & Strategy (positioning, brand story, go-to-market clarity) and Notion & Systems Consultancy (workspace design, operating systems, automation). The site is a marketing site for prospective clients, collaborators, and event attendees.
 

@@ -1,0 +1,1097 @@
+# Thread & Stack — full site content
+
+> Plain-text dump of every public page and blog post on threadandstack.com. Generated at build time so LLM crawlers that do not execute JavaScript can still ingest the real content of the site. Spec: https://llmstxt.org/#optional-llms-fulltxt
+>
+> Site: https://threadandstack.com
+> Generated: 2026-06-18T13:13:01.952Z
+
+Use this file as a ground-truth reference for what Thread & Stack does, who Brendan Rodgers is, and what is for sale. For a shorter table-of-contents version, see https://threadandstack.com/llms.txt.
+
+
+---
+
+# Thread & Stack — Ops & Strategy that shifts culture
+
+Source: https://threadandstack.com/
+
+Thread & Stack is the studio of Brendan Rodgers, a designer, strategist, and certified Notion partner. The studio helps purpose-led founders and teams align what they say with how they work, so growth feels human instead of hectic.
+
+Brand promise: Stories that land. Systems that stick.
+
+The work addresses the creative tax: the cognitive load and admin chaos that drains makers and small teams when intention and execution come apart. Two service pillars: Narratives & Strategy (positioning, brand story, go-to-market clarity) and Notion & Systems Consultancy (workspace design, operating systems, automation).
+
+Engagement options include short diagnostics, fixed-scope projects, monthly retainers across three tiers (Launch, Startup, Scale-Up), workshops, and a strategy brain on call for founders who need senior input without the cost of a full-time hire.
+
+
+---
+
+# About Brendan Rodgers
+
+Source: https://threadandstack.com/about
+
+Brendan Rodgers is the founder of Thread & Stack. He is both a designer and a strategist, with a background spanning brand, narrative, and operating-system design. He is a certified Notion partner.
+
+His work sits at the intersection of two skills that rarely live in one head: telling the story (narrative, positioning, message architecture) and building the system that makes the story true day to day (workspaces, rituals, automation). The combination is what lets purpose-led teams move with confidence.
+
+
+---
+
+# How I work
+
+Source: https://threadandstack.com/how-i-work
+
+Engagements start with a short diagnostic to map where intention and execution come apart. From there, the work is shaped around the smallest set of changes that will actually move the team this quarter.
+
+Principles: propose the problem before the solution. Lead with outcomes. Design for the people who will use the system, not the people who will admire the diagram. Ship in small, reviewable increments. Hand over with documentation a new joiner could follow.
+
+
+---
+
+# Services — two pillars
+
+Source: https://threadandstack.com/services
+
+Two pillars only. No workshops-as-a-service, no clarity sessions, no add-ons.
+
+1. Narratives & Strategy. Positioning, brand story, go-to-market clarity, message architecture, launch narratives. For founders and leadership teams that know what they do but cannot yet say it in one breath.
+
+2. Notion & Systems Consultancy. Workspace design, operating systems, automation, documentation that holds up under real use. For teams that have outgrown a folder of Google docs and need an operating layer that scales with them.
+
+Standard commercial terms: 50% upfront, 50% on delivery. 15% late payment charge. Not VAT registered.
+
+
+---
+
+# Work with me
+
+Source: https://threadandstack.com/work-with-me
+
+Engagement options range from a paid diagnostic (a short, structured session that produces a written read of where you are and what to do next), through fixed-scope projects, to monthly retainers and full fractional engagements.
+
+The right starting point depends on whether you need a decision, a deliverable, or a thinking partner.
+
+
+---
+
+# Workshops
+
+Source: https://threadandstack.com/workshops
+
+Group workshops for teams on narrative, Notion, and the human side of working with AI. Designed for working teams, not generic audiences. Outcomes are concrete: a finished artefact, a shared vocabulary, or an operating ritual the team can keep using on Monday.
+
+
+---
+
+# Book an intro call
+
+Source: https://threadandstack.com/intro-call
+
+A free 30-minute intro call. Use it to talk through your project, pressure-test the brief, and see if Thread & Stack is the right fit. No deck, no sales script.
+
+
+---
+
+# Clarity Scorecard
+
+Source: https://threadandstack.com/scorecard
+
+A short self-assessment that scores your clarity, systems, and momentum. Answer a handful of questions and receive a personal read on where to focus next quarter.
+
+
+---
+
+# Momentum Map
+
+Source: https://threadandstack.com/momentum-map
+
+A diagnostic for teams stuck between intention and execution. The map surfaces the one shift that will release the most momentum, then proposes the smallest move that delivers it.
+
+
+---
+
+# The Thread & Stack Collective
+
+Source: https://threadandstack.com/collective
+
+A small collective of trusted strategists, designers, and Notion specialists. Brought in by name on projects that need more than one head and one set of hands. Each collaborator has been worked with directly before they are invited into a client engagement.
+
+
+---
+
+# Launch Retainer
+
+Source: https://threadandstack.com/retainer/launch
+
+Light-touch monthly retainer for early-stage founders. Senior narrative and systems input on call, without the cost of a full engagement. Best for founders who need someone in the corner of the ring through a launch window or a funding round.
+
+
+---
+
+# Startup Retainer
+
+Source: https://threadandstack.com/retainer/startup
+
+Mid-tier retainer for growing teams. Around one day a week of senior narrative and messaging leadership for early-stage teams launching a new brand. Day rate roughly £700 to £850. Monthly range roughly £3,500 to £4,100. Cadence flexes lighter when things are steady, more intensive around launches and pitches. Additional days can be added at an agreed rate.
+
+
+---
+
+# Scale-Up Retainer
+
+Source: https://threadandstack.com/retainer/scaleup
+
+Senior fractional engagement for scale-ups. Roughly one to two days a week of experienced narrative and messaging direction. Day rate roughly £900 to £1,000+. Monthly range roughly £4,500 to £8,900+. For established organisations scaling a brand or launching a new vertical.
+
+
+---
+
+# Notion Masterclass
+
+Source: https://threadandstack.com/notion-masterclass
+
+A deep-dive masterclass on building Notion workspaces that hold up under real use. Architecture, automation, and the operating rhythms that make a workspace stick beyond the first week.
+
+
+---
+
+# Unleash Your Team
+
+Source: https://threadandstack.com/unleash-your-team
+
+A workshop and engagement that helps teams unblock execution. Pairs clear narrative with the operating systems that make work move. Output is something the team uses, not a slide deck.
+
+
+---
+
+# Become United Blueprint
+
+Source: https://threadandstack.com/blueprint/become-united
+
+A strategy blueprint for purpose-led organisations that want to align story, systems, and team rhythm around a single direction. Produced as a working document the leadership team can act from.
+
+
+---
+
+# Notion Hackathon London
+
+Source: https://threadandstack.com/notion-hackathon-london
+
+A community Notion build day in London. Spend a focused day building real workspaces alongside other Notion makers. Hosted by Thread & Stack.
+
+
+---
+
+# Notion Devotion Brighton
+
+Source: https://threadandstack.com/notion-devotion-brighton
+
+A friendly Notion community meetup in Brighton. Talks, demos, and time with other Notion makers on the south coast.
+
+
+---
+
+# Charity Sector Meetup, April 26
+
+Source: https://threadandstack.com/charity-meetup-april26
+
+A meetup for purpose-led operators working in and around the charity sector. Shared problems, practical fixes, and a chance to compare notes across organisations.
+
+
+---
+
+# Creative Portfolio
+
+Source: https://threadandstack.com/portfolio/creative
+
+Selected creative, narrative, and brand work. Full portfolio is available on request, behind a simple password gate for confidentiality.
+
+
+---
+
+# Notion Portfolio
+
+Source: https://threadandstack.com/portfolio/notion
+
+Selected Notion workspace, operating system, and automation builds.
+
+
+---
+
+# Favourite Fiction
+
+Source: https://threadandstack.com/favourite-fiction
+
+A personal reading list. The novels and short fiction that shape how Brendan thinks about narrative, character, and the systems people build to live inside.
+
+
+---
+
+# Privacy Policy
+
+Source: https://threadandstack.com/privacy
+
+Plain-English summary of how Thread & Stack collects, uses, and protects personal data. GDPR-aligned. Lead capture forms include explicit consent. Cookies require consent before any non-essential tag fires.
+
+
+---
+
+# Data Guarantee
+
+Source: https://threadandstack.com/data-guarantee
+
+The promises Thread & Stack makes on how client data is handled, stored, and never sold. The standards held to on every engagement.
+
+
+---
+
+# Thread & Stack Journal
+
+8 essays follow. Source list: https://threadandstack.com/blog
+
+
+---
+
+# Architecting Your Engine
+
+Source: https://threadandstack.com/blog/architecting-your-engine
+Reading time: 6 min
+
+The unseen heat
+
+There’s a moment most founders recognise, even if they’ve never named it.
+
+It’s 9:47pm.
+The client work is done.
+Delivery is done.
+
+You even had the rare luxury of thinking properly – a few decent ideas, a couple of decisions you felt good about – and still you’re sat there flicking between tabs, rewriting the same email twice, trying to remember what you promised in a call three days ago.
+
+Nothing is on fire, (which is almost worse, because you can’t point to a crisis and say: That. That’s the reason I feel something.
+
+But you do. You feel heat.
+
+The business is running, but it’s running on you.
+Not your expertise. Not your craft.
+Your nervous system.
+
+When tools stop being tools
+
+Most people talk about “systems” as if they’re a set of apps you buy, wire together, and forget about – like you’re fitting a new boiler. You pick a shiny one, you install it, you move on.
+
+That’s not what’s happening right now.
+
+This new wave of tools is reshaping how work behaves. They’re not just shaving minutes off tasks. They’re changing the ratio between what you have to hold in your head and what you can push into a reliable external loop.
+
+When Motion decides what’s next, you’re not just saving five minutes. You’re removing a daily negotiation.
+
+When Granola captures the meeting, you’re not just getting notes. You’re getting your memory back.
+
+When Claude turns a messy thought into a draft you can argue with, you’re not outsourcing writing. You’re shortening the distance between intent and output.
+
+NotebookLM, Manus, Lovable – same story, different territory. Retrieval. Synthesis. Prototyping. Execution.
+
+Tools are becoming behaviour-shapers.
+
+And that’s why founders are suddenly talking about breathing again – not in the performative “work-life balance” way, but in the very literal sense of: my chest isn’t tight all day.
+
+Your systems are your engine
+
+If we’re going to call it an engine, let’s be honest about what it’s made of.
+
+Not dashboards.
+
+Loops.
+
+Here’s the model I keep coming back to – not because it’s clever, but because it’s diagnostic. If something feels sticky in your business, it’s usually because one of these loops is loose.
+
+Attention – what you notice, what you ignore
+
+Decisions – how quickly you choose, and how often you second-guess
+
+Delivery – what reliably ships, even when your week goes sideways
+
+Feedback – what reality tells you, and whether you listen
+
+Care – whether the system protects the human running it
+
+A tool is only “useful” if it tightens one of these loops.
+
+Otherwise it’s just new admin in a nicer font.
+
+The question behind the productivity conversation
+
+When founders say they want better systems, what they usually mean is:
+
+“I want the business to reach more people without me becoming the bottleneck.”
+
+That can mean customers.
+
+It can mean service users.
+
+It can mean supporters, donors, members, readers.
+
+The language changes, but the problem stays the same.
+
+The business wants to grow. The founder wants to stay human. And the hard bit – the part nobody puts on a sales page – is that your internal operating system always leaks.
+
+If you are overwhelmed, it will show up somewhere in the experience. Not as an honest confession. As a delay. A sloppy handover. A missed detail. The slightly defensive email you didn’t mean to write. The product that’s 80 percent finished, shipped anyway, because you ran out of cognitive space.
+
+Your internal system becomes someone else’s external reality.
+
+Intentional systems versus accidental systems
+
+Most businesses already have systems.
+
+They’re just not deliberate.
+
+They’re habits that stuck – a spreadsheet that became a CRM, a Slack thread that became project management, a founder’s head that became the only place the truth lives.
+
+The shift isn’t “get more organised”. It’s making active choices about what the business is allowed to depend on.
+
+Because the moment you stop relying on your memory as infrastructure, everything else gets easier to design.
+
+The knock-on effect founders underestimate
+
+When a founder has more time to think and breathe, the work gets calmer. When the work gets calmer, the business becomes easier to trust. And when a business becomes easier to trust, it reaches further without needing to shout.
+
+That’s the bit most productivity discourse misses. It treats spare capacity as a private benefit.
+
+But the real dividend is external.
+
+Customers feel it.
+
+Service users feel it.
+
+Supporters feel it.
+
+Because consistency is a form of care.
+
+A few questions (if you want this to become a conversation)
+
+Where in your week do you feel friction that shouldn’t exist anymore?
+
+What part of your work still depends on you remembering everything?
+
+If your business got 10 percent calmer, what would improve for the people you serve?
+
+Which loop is failing you right now: attention, decisions, delivery, feedback, or care?
+
+The open loop
+
+If your business had a better engine, what would you use the spare capacity for?
+
+Better work is an answer. Rest is an answer. Being more present with customers is an answer.
+
+But “fill it back up with more” is also an answer, and it’s the one most founders default to.
+
+So maybe the real work is not choosing better systems.
+
+It’s choosing what kind of life the systems are meant to protect.
+
+
+---
+
+# Storytelling with a Soul
+
+Source: https://threadandstack.com/blog/storytelling-with-a-soul
+Reading time: 6 min
+
+📖A generic voice is the path of least resistance. It feels safe because it sounds like everyone else. But safe is invisible.
+
+The Pit of Despair
+
+Most brand guidelines read like they were written by committee. Professional. Approachable. Trustworthy. Innovative. Inhuman. Tasteless. Soul destroying.
+
+A generic voice is the path of least resistance, not the path to being heard. We need to be creatively courageous, and avoid the "safety" of proven ground. Generic voices feel safe because it sounds like everyone else. Safe is invisible. We should fear "safe". It is the pit of despair, where creativity dies and reader's interest dies on the front porch.
+
+It's also a total waste of your real value. Neil Gaiman once wrote:
+
+"The one thing that you have that nobody else has is you. Your voice, your mind, your story, your vision. - Neil Gaiman, Make Good Art
+
+He was talking about art. Any art. Marketers and founders will recognise that this applies to your business, it's messaging, branding and content too. The thing that differentiates you from your competitor isn't your colour scheme, or your website. It's the way you see the world, and how you show up for it. It's the product you release. It's the things you choose to say.
+
+The real reason people don't like AI generated content, is because it lacks connection. It lacks you!
+
+My opinion here is that AI writing itself, isn't the root issue. It's the safety it produces. The repetition of generic, safe tone! It is actually possible to create a really representative "AI clone" of yourself, but it takes loads of effort. No LLM will do it right out of the box. Without proper training, the words might read OK, but they'll convey no emotional weight.
+
+When that happens we learn nothing about who you are. They often could apply to a bank, a wellness app, or a dog food company. This is the trap of the generic voice. It's what happens when nobody makes an active choice to express themselves.
+
+Problem: Authenticity became a buzzword.
+
+When we talk about brand identity, it's usually shorthand for logos, colours, typography – the visual layer - and yes, visuals matter because they're often the first thing people notice, they make people feel like they've landed in the right place. But voice keeps them in the room. This is why an authentic voice, with a clear offer matters.
+
+The temptation might be to roll your eyes, and think "here goes the another marketing guru" - but Clarity is tied directly to the strength of your offer / product. Authenticity is tied directly to the strength of your voice.
+
+Don't let words like "Clarity" and "Authenticity" be dismissed. Smart people may have heard these words alot, and buzzwords can be rendered meaningless - but the point is important. When you are able to voice the story of how your product became what it is, customers feel the journey you've been on, and that breeds real affinity. Affinity, creates demand and intent.
+
+Matthew Dicks, who has spent decades studying what makes stories land, puts it this way:
+
+"The best stories feel inevitable. Every detail serves the whole." - Storyworthy, Matthew Dicks
+
+Brand voice works the same way. When it's working, every touchpoint feels like it belongs to the same story – whether that's a homepage headline, a customer service email, or a social media post. That customer journey begins to feel inevitable, undeniable, and simple.
+
+This forms your narrative thread, and roots it in your own voice - which becomes foundational, and impossible to fake. Even if I employed the best AI tools in the land, when your voice is done right - it is too unpredictable to replicate reliably. That's because you are unique, and so am I.
+
+Finding my own thread
+
+Within Thread and Stack, this idea sits at the centre of everything I think about. The timeless art of storytelling, and the very modern challenge of cutting through noise fuelled by bots. That tension is deliberate.
+
+The work I do sits between old craft - humanity, thought, literature, narrative - and new tools - AI workflows, databases, agents, models. Human psychology and digital systems.
+
+The visual identity of Thread & Stack signals this: a woven, serif font, illustrations that evoke books, art, galleries, human creativity. MY VOICE. My interests, I quote the authors I like, I take inspiration from my own life, hobbies, colleagues and sources of inspiration.
+
+The Stories that Bind Us
+
+Yuval Noah Harari argues that humans conquered the world through our ability to tell stories. From cave paintings, to the earliest form of writings - we created stories, increasingly sophisticated - to warn of danger, missteps, and to encourage success.
+
+"Large numbers of strangers can cooperate successfully by believing in common myths."
+Yuval Noah Harari, Sapiens
+
+A throughline he draws is that when cave-era humans invented a lion-headed god figure to make sense of the world and bind a community together around a shared belief, that became so powerful that modern humans turned that same symbol into the Peugot brand.
+
+Harari contends that the behaviour hasn't gone away, we still do the exact same thing - but over the years, where we once called ideas gods, we increasingly bind ideas around groups of people and intent - which we call a brand. Peugeot the company, like the lion-man, is a fiction comprised of complex structures - and a narrative thread that everyone agrees to believe in, and that collective belief is what gives it real-world power. If we all stopped believing that Peugeot was a company worth respecting, it would soon lose power, just like a god or myth.
+
+My point is, that your voice is how you tell that story. It contains more than you might expect: an emotional temperature that runs through everything (are you warm or cool, urgent or patient?), a rhythm and pacing that shapes how ideas land, word choices that carry different weights. Perhaps most importantly, it's about what you leave out – the clichés you refuse, the jargon you avoid, the restraint that says as much as the words themselves.
+
+Soulful Stories Pay Off.
+
+Finding your real voice takes archaeological excavation. It's this logic that lies behind Simon Sinek's focus on "Start with Why" because when applied on an individual level it roots you in yourself. It requires you to know what you actually believe before you can be consistent about expressing it.
+
+Once you arrive there though, when your story is told by the voice that lived it - you come from a place of earned authority. It creates connection that proves to be powerful, and engaging. You can't generate it with a template, though people may try.
+
+It gives your customers, communities and audiences a clear reason to choose you, and remember you. People start to recognise you. They read your work and think, "this could only be them."
+
+
+---
+
+# The Woman Who Took Control of Her Marketing
+
+Source: https://threadandstack.com/blog/the-woman-who-took-control-of-her-marketing
+Reading time: 6 min
+
+The Woman Who Took Control of Her Marketing
+
+When she joined a fast-growing giving and fintech platform, she was taking on more channels than ever before. She wanted to turn that stretch into a clear step up in her career.
+
+She wasn't just looking to survive probation. She wanted to nail it. She wanted to feel in control of her week and confident that the value of her work was visible.
+
+“I was approaching my probation review and had received some feedback from my boss that I wanted to tackle ahead of my full review in December. They’d asked if I could improve my productivity and efficiency so I could manage my time better. Meanwhile I was taking on a wider breadth of channels than I had previously whilst learning a new job. I wanted to be in a stronger position to pass and feel more confident in my new role.”
+
+– Marketing Manager, Giving & Fintech Platform
+
+The sprint that changed how she worked
+
+She joined a focused Thread AI Sprint, which combined marketing mentorship, AI systems and creative strategy guidance. The sprint was a short, intense engagement designed to rebuild how she works, not just what she works on.
+
+The sprint combined three layers:
+
+A weekly operating rhythm and reporting loop
+
+A structured marketing workspace in Notion
+
+A custom AI “colleague” that supported strategy, execution, and reporting
+
+💡You can't just 'try harder' your way out of structural chaos. This is the pattern we see constantly: when you combine a clear rhythm, a structured workspace, and a consciously-built AI layer, the performance story changes almost immediately.
+
+A weekly rhythm and performance story
+
+Together, we designed a weekly productivity rhythm that meant her productivity was easy to visualise both for her and her team. Alongside that, we created a simple, repeatable reporting cadence so her manager could see campaign progress in a clear, consistent format.
+
+“With support over the sprint, I’ve now got a regular reporting cadence, a clearer performance story, and a much more organised weekly rhythm and planning system.”
+– Marketing Manager, Giving & Fintech Platform
+
+A marketing workspace that reduced cognitive load
+
+"You do not rise to the level of your goals. You fall to the level of your systems."
+– James Clear, Atomic Habits
+
+“A huge breakthrough has been the way we’ve implemented Notion and the Thread AI approach to build the foundations of my new marketing workspace. Everything is more structured.”
+– Marketing Manager, Giving & Fintech Platform
+
+Next, we turned that rhythm into infrastructure.
+
+Her projects, channels, and campaigns moved into a structured Notion workspace:
+
+One home base for campaigns, content, and experiments
+
+Clear separation between strategy, execution, and reporting
+
+Views and dashboards that surfaced what mattered that week, not everything at once
+
+Instead of holding the whole plan in her head, the system carried the weight. Her brain was freed up to think, not just to remember.
+
+A consciously built AI layer as co-strategist, co-creator and space-maker
+
+The final layer was AI: but not as a gimmick. Rather than generic prompts and copy-paste outputs, we built a custom AI workspace and workflow that:
+
+Was fed with brand guidelines, tone, and constraints before it touched a draft
+
+Was tuned to her real context: channels, campaigns, stakeholders, and priorities
+
+Showed up across the workflow: from framing ideas, to drafting content, to helping with reporting language
+
+“It’s become a co-marketing strategist, project management system, and content creator all in one.”
+– Marketing Manager, Giving & Fintech Platform
+
+A note about Thread AI Sprints:
+This is the heart of the Thread AI Sprint: treating AI as a thoughtful colleague plugged into a well-designed system, not a shortcut bolted onto a reactive workflow.
+
+If you are in a fast-growing team, taking on more channels than ever, and feeling the weight of expectations, this kind of system is built for you too. The best time to review your processes is before there is an urgent need! Make the way you work match the value you bring.
+
+The outcome: She passed probation a month early
+
+By the end of the sprint, she wasn't just staying in the role – she was made permanent a full month ahead of her due review.
+
+“In a few short weeks, I passed my probation and significantly upped my productivity and efficiency… I feel far better equipped to start faster and do my job better.”
+
+“This sprint has been genuinely transformative for me. In just a few weeks, I significantly upped my productivity and efficiency – not just in how much I get done, but in how clearly I can show the value of my work. I’d recommend this kind of coaching in a heartbeat.”
+
+Evidence of her impact, and a structure that supported her. The AI-enabled workflow freed her up to be more strategic. She was able to step into a different mode.
+
+She did not wait. She changed the way she worked and took control of her own narrative.
+
+
+---
+
+# What is a brand universe?
+
+Source: https://threadandstack.com/blog/what-is-a-brand-universe
+
+💡A brand universe isn't a straightjacket. It's gravity. It holds everything together so you can build whatever you want without it floating away.
+
+Think about the last time you watched Stranger Things. Every episode, every character, every monster exists within a set of rules. The Upside Down has its own logic. Eleven's powers have limits. Hawkins, Indiana feels like a real place because everything within it coheres.
+
+Your brand works the same way. Or at least, it should.
+
+The universe you already have
+
+Every business operates within a brand universe, whether they've named it or not. It's the connective tissue that holds your corporate messaging, your product lines, your customer touchpoints, and your values together. It makes them feel inevitable rather than accidental.
+
+"The truth is a matter of the imagination."
+
+– Ursula K. Le Guin, The Left Hand of Darkness
+
+Imagine walking into an Apple Store. The lighting, the materials, the way staff greet you, the weight of the packaging when you buy something. None of this is random. It's all governed by the same underlying logic that shapes how a MacBook Pro feels in your hands versus how an iPhone sits in your pocket.
+
+Seth Godin puts it simply:
+
+"A brand is the set of expectations, memories, stories and relationships that, taken together, account for a consumer's decision to choose one product or service over another."
+
+Those expectations need consistency.
+
+One core, many expressions
+
+Here's where it gets interesting. A brand universe doesn't mean making everything look identical. It means making everything feel connected, even when the execution varies wildly.
+
+Apple sells a £6,000 Mac Pro to creative professionals and a £449 iPhone SE to budget-conscious buyers. The audiences are different. The price points are different. The marketing is different. But both products unmistakably belong to the same universe because they share a core set of values: simplicity, premium craft, human-centred design.
+
+The Mac Pro says those things through raw power and modular expandability. The iPhone SE says them through restraint and accessibility. Same universe, different dialects.
+
+Faith in Nature, the B Corp-certified brand, does something similar. Their refill stations in zero-waste shops speak to committed environmentalists. Their supermarket bottles speak to curious newcomers. Both expressions trace back to a single belief: that natural products should be accessible, affordable, and genuinely sustainable. The tone shifts, but the truth doesn't.
+
+Why this matters now
+
+Mark Ritson has spent years hammering home a point that too many brands ignore:
+
+"Distinctiveness beats differentiation."
+
+Being recognisably you across every touchpoint matters more than being marginally better on any single feature.
+
+A brand universe is how you achieve that distinctiveness at scale.
+
+Without it, you end up with product teams pulling in different directions. Marketing that contradicts sales. A premium tier that feels disconnected from an entry-level offer. Customers sense this incoherence, even if they can't articulate it. They feel the joins.
+
+With a well-defined universe, every decision has a reference point. When someone asks "should we do this?" the answer becomes clearer because you can test it against your established rules. Does this belong in our world? Does it respect the logic we've built?
+
+Building your universe
+
+Start with what's true, not what's aspirational. Your brand universe isn't a mood board exercise. It's an excavation.
+
+Core beliefs. What do you actually stand for? Not what sounds good in a pitch deck, but what you'd defend even when it costs you something.
+
+Consistent behaviours. How does your brand show up when no one's watching? The tone of a support email. The way you handle a complaint. These reveal your real values more than any campaign.
+
+Flexible expressions. Once the core is solid, map how it translates across audiences and products. The language might change. The visuals might shift. But the underlying character stays recognisable.
+
+A brand universe isn't a constraint. It's a creative brief that never expires.
+
+The long game
+
+Stranger Things works because the Duffer Brothers know the rules of their world so thoroughly that they can bend them without breaking them. Each season introduces new elements, but nothing feels like a betrayal.
+
+Your brand universe should do the same. It gives you room to grow, to launch new products, to enter new markets, without losing the thread of who you are.
+
+The brands that last aren't the ones with the biggest budgets. They're the ones with the clearest sense of their own internal logic. They know which world they're building, and they build it consistently, one touchpoint at a time.
+
+Ready to define your brand universe? If you're expanding into new products, audiences, or markets and want to make sure everything still feels like you, let's talk. I help founders and teams excavate what's true about their brand and build frameworks that scale without losing coherence. Get in touch to start the conversation.
+
+
+---
+
+# What’s the difference? Freelancers & Consultants
+
+Source: https://threadandstack.com/blog/what-s-the-difference-freelancers-consultants
+Reading time: 6 min
+
+You're hiring someone to help with strategy. You've narrowed it to two candidates: both brilliant, both experienced, both come recommended. One's a freelancer who'll embed with your team. The other's a consultant who operates their own practice.
+
+On paper, they look identical. Same day rate, same portfolio, same credentials.
+
+So why does the outcome differ so dramatically?
+
+The Freelancer Embeds. The Consultant Extracts.
+
+💡The core distinction: A freelancer inherits your context. A consultant brings their own.
+
+When a freelancer joins your team, they absorb your world. Your meetings, your Slack channels, your rituals and rhythms. They see what you see, hear what you hear, think how you think.
+
+This feels efficient. No onboarding friction, no translation layer, no "outsider perspective" to manage. They slot right in.
+
+But here's what you've actually purchased: a highly skilled pair of hands operating inside your existing system. They're subject to the same information flows, the same political undercurrents, the same unspoken assumptions that created the problem you're trying to solve.
+
+A consultant who operates as a business brings something structurally different. They extract signal from noise precisely because they're not swimming in your noise. They've built systems to pattern-match across clients, industries, and predicaments. They've developed frameworks because they cannot afford to start from scratch every time.
+
+When a founder-led brand needs to shift from personal storytelling to scalable narrative, they don't need someone to attend every meeting and absorb the culture. They need someone who's witnessed this transition dozens of times before, who can diagnose the gap in three conversations, and who has a methodology to bridge it.
+
+The Freelancer Thinks in Weeks. The Consultant Thinks in Systems.
+
+💡The time horizon matters: Freelancers work in contracts. Consultants work in compounding knowledge.
+
+Freelancers typically trade in time. You hire them for three months, six months, a year. The contract defines the relationship. When it ends, the work ends, the thinking ends, the institutional knowledge walks out the door.
+
+Consultants who run practices think in problems and outcomes. They've staked their reputation on a body of work, not a sequence of gigs. They're building equity in their own practice, which means every engagement feeds the next one. The framework they develop for you gets refined with the next client, pressure-tested with the one after, and returns to you as a more robust instrument.
+
+This isn't extraction. It's compounding.
+
+The consultant's business model depends on creating reusable, repeatable intellectual property. You benefit from the pattern recognition they've cultivated across dozens of similar challenges.
+
+A youth mental health startup doesn't need someone to "figure it out" alongside them. They need someone who's already figured out how to test strategic narratives for behavioural apps, who can structure a pilot with legible metrics, and who's learned, the hard way with other clients, which hooks land and which ones vanish.
+
+The Freelancer Reports Up. The Consultant Brings Lateral Accountability.
+
+💡Power dynamics shape candour: Embedded freelancers are incentivised to please. External consultants are incentivised to be right.
+
+When a freelancer embeds in your organisation, they report to someone. Usually you, sometimes your CMO, occasionally a committee. This creates a vertical power dynamic that shapes what they say and how they say it.
+
+They're incentivised to keep you satisfied, to soften uncomfortable truths, to temper the blow. Not because they're dishonest, but because their next month's rent depends on your approval. The closer they sit to your team, the harder it becomes to challenge your assumptions.
+
+A consultant operating as a business has lateral accountability. Their reputation isn't tethered to your approval; it's tethered to your outcomes. They can tell you things your team won't because they're not competing for your affection or angling for a permanent role. Their livelihood depends on being right, not being liked.
+
+When I told a client their positioning was "technically accurate but emotionally inert", that observation didn't come from spite. It came from having witnessed twenty other brands make the same misstep, lose the same audiences, and wonder why their immaculate strategy never landed. A freelancer embedded in that culture might have softened it. A consultant can't afford to.
+
+The Freelancer Solves Your Problem. The Consultant Builds Your Capability.
+
+💡This is the distinction most people miss.
+
+When you hire a freelancer, you're buying execution. They do the thing, you get the output, everyone moves on. If the problem recurs, you hire them again. This can work brilliantly for well-defined, repeatable tasks.
+
+But strategy isn't a task. It's a capability.
+
+A consultant operating as a business is incentivised to transfer knowledge, not hoard it. Their model depends on being summoned back for the next, harder problem, not the same problem on repeat. They build frameworks you can wield, train your team to think differently, and leave you more capable than they found you.
+
+Consider a SaaS company running a feature ad campaign. They don't just receive creative assets. They receive a testing methodology, an understanding of anti-churn psychology, and a repeatable playbook for user acquisition. When their next product launches, they can run the play themselves.
+
+This explains why consultants document obsessively, why they build templates, why they over-communicate their reasoning. Their business model depends on you becoming more sophisticated, not more dependent.
+
+The Freelancer Costs Less. Until They Don't.
+
+💡The visible cost hides the invisible subsidy: You pay for the freelancer's learning curve with your own time.
+
+On the spreadsheet, the freelancer looks cheaper. Lower day rate, fewer overheads, more flexibility to scale up or down.
+
+But that calculation obscures the hidden costs.
+
+The freelancer needs onboarding. They need context. They need to learn your culture, your vernacular, your politics. That's not free; it's merely unpaid. You're subsidising their learning curve with your time and your team's attention.
+
+The consultant brings infrastructure. They've already constructed the frameworks, the templates, the diagnostic instruments. They can deploy them on day one because they've been honed across multiple clients. You're not paying for them to learn; you're paying for everything they've already learned.
+
+When a global enterprise needs sustainability messaging, they don't hire an agency to figure it out from first principles. They hire expertise that has already solved adjacent problems, with the apparatus to move swiftly and the credibility to sell it internally.
+
+The Real Question Isn't "Who". It's "What For".
+
+💡Neither is superior. They're optimised for different problems.
+
+None of this constitutes a moral judgement. Freelancers aren't inferior; they're calibrated for different challenges.
+
+If you need execution, embedded support, or someone to absorb your culture and work from the inside, hire a freelancer. If you have a well-defined problem, lucid success metrics, and you need skilled hands to accomplish it, they're exceptional.
+
+But if you need diagnostic thinking, pattern recognition, frameworks that transfer, and someone who can challenge your assumptions without trepidation, you need a consultant who operates as a business.
+
+The freelancer extends your team. The consultant extends your capability.
+
+Both are valuable. But they're not the same thing.
+
+What This Means For You
+
+If you're hiring, ask yourself: do I need someone to work in the system or on the system?
+
+If you're selling your services, ask yourself: am I building a business or renting my time?
+
+The difference isn't merely semantic. It shapes everything, from how you price to what you deliver to the kind of relationship you cultivate.
+
+And if you're perched somewhere in between, uncertain whether you're a freelancer or a consultant, here's the tell: do you have intellectual property, or do you have availability?
+
+Because one compounds. The other merely accumulates.
+
+
+---
+
+# What is Marketing Chaos?
+
+Source: https://threadandstack.com/blog/what-is-marketing-chaos
+Reading time: 6 min
+
+🧶Marketing Chaos is what happens when pressure gets loud enough that your calendar starts making decisions for you.
+
+You know what’s brutal? When marketing doesn’t feel like it’s working.
+
+For leaders it turns into a kind of slow panic. A never-ending black hole of effort. And half the time, the blame lands on the first and most visible victims of the problem, the marketing team, not the actual instigators.
+
+When Sales is chasing one story, Marketing is telling another, and leadership is stuck refereeing instead of steering, the leader ends up with an unenviable choice.
+
+Do we keep investing in this, and hope it starts working?
+
+Or do we bypass it, and go more direct?
+
+Here’s the bit I wish more people understood: your marketers aren’t the problem. They’re the canaries in the coalmine. If it’s breaking there, it’s breaking elsewhere too. You just haven’t felt it yet.
+
+When the only team doing social listening, customer engagement, performance tracking, and strategy work isn’t being listened to, the whole company starts operating without a shared steering wheel. The operating system goes fuzzy. Direction becomes vibes. Everyone keeps shipping, but nobody’s aligned.
+
+And because founders need growth, Sales often sits closer to the founder’s heart. Nine times out of ten, Marketing and Business Development end up siloed, working out of different systems, building different approaches to the same problem.
+
+That can work when it’s founder-led and you’re the constantly re-unifying voice.
+
+But the second you want to grow, it stops being a “comms issue”. It becomes broken infrastructure.
+
+I’ve watched it happen in rooms with proper budgets and in tiny teams running on fumes. It usually starts with a sentence that sounds ambitious but is actually a warning.
+
+“We need to be everywhere.”
+
+Nobody says it to be reckless. They say it because the numbers are staring back at them, because the board deck is due, because someone’s competitor has just had a good month and it’s hard not to flinch.
+
+And then the question becomes: “What can we ship by Friday?”
+
+That question is the sound of marketing chaos.
+
+Three Paths to Recovery
+
+Most messy marketing is made of the same three things, just in different ratios.
+
+1) Unintentional publishing
+
+Content goes out because the rhythm says it should, not because there’s something worth saying.
+
+You start filling slots rather than building connection. The calendar gets fed. The audience gets crumbs.
+
+2) Unclear ownership
+
+Nobody knows who owns the narrative, so everyone touches it.
+
+Strategy lives in one doc. Execution lives in a tool. Approvals live in Slack. The result is content that sounds like a committee trying to impersonate a person.
+
+3) Misaligned effort vs impact
+
+The work taking the most time isn’t the work creating the most value.
+
+Teams pour hours into low-leverage formats because they’re visible, measurable, and socially safe. Meanwhile the hard stuff, the stuff that would actually make the next six months easier, stays unfunded.
+
+Chaos is often just “safety” in a different costume.
+
+Where it really comes from
+
+If you want the root cause, it’s usually not a lack of talent. It’s not even laziness.
+
+It’s pressure without patience.
+
+When results are demanded instantly, long-term brand building starts to look like indulgence. Trust becomes a “nice to have”. You get pulled into short-term tactics that can be reported on next week, even if they’re undermining you next quarter.
+
+And then best practice arrives with its warm blanket.
+
+Someone says:
+
+“LinkedIn carousels are working.”
+
+“We should do a podcast.”
+
+“We need a lead magnet.”
+
+The problem with best practice is that it’s average practice. It’s what everybody else is already doing. Which means it might be technically competent while still being strategically invisible.
+
+The human cost (the bit nobody budgets for)
+
+The most useful marker of Marketing Chaos isn’t your engagement rate.
+
+It’s the emotional temperature inside the team.
+
+When marketing is chaotic, people start living inside a permanent context switch. They’re asked to be strategic while firefighting. Creative while being measured. Calm while being rushed.
+
+I’ve seen the quiet version of this too. The content lead who stops bringing ideas to the Monday meeting because it feels pointless. The founder who says “we just need to post more” while clearly dreading the act of showing up.
+
+Oliver Burkeman has a line in Four Thousand Weeks that I come back to more than I’d like:
+
+“The more you try to manage your time with the goal of achieving a feeling of total control, the more stressful your life becomes.”
+
+Marketing Chaos is that same impulse, expressed as a content plan.
+
+The way out is subtraction, not addition
+
+The instinct, when things feel chaotic, is to add tools, add meetings, add frameworks, add content.
+
+But the opposite move tends to work better.
+
+Start with the simplest possible clarity
+
+Not a 40-slide positioning deck. A few sentences you can actually repeat.
+
+Who are we for?
+
+What do we want them to believe?
+
+What are we refusing to do, even if it “works” for others?
+
+If you can’t answer those, no calendar will save you.
+
+Give yourself permission to stop things
+
+Stopping feels like failure because it’s visible.
+
+Continuing is failure with better optics.
+
+Cut the series nobody reads. Pause the platform you’re only on out of guilt. Kill the format that takes five hours to produce and five seconds to scroll past.
+
+Build reflection into the system
+
+Chaos thrives in constant output.
+
+Reflection is what turns output into learning, and learning into leverage.
+
+Even a 30-minute monthly review can shift you from “What did we publish?” to “What did we learn about what people actually care about?”
+
+A strategy is a set of exclusions you can defend.
+
+A different definition of control
+
+The opposite of Marketing Chaos isn’t rigid control.
+
+It’s intentional flexibility.
+
+Knowing what matters enough to protect. Knowing what can adapt. Knowing what you are not going to do.
+
+And, maybe most importantly, having the courage to be boring in the right places so you can be interesting in the ones that count.
+
+I’m still not convinced there’s a perfect system for avoiding chaos. Businesses are messy, people are messy, the world is noisy.
+
+But I do think there’s a reliable tell.
+
+If your marketing plan makes you feel relieved because it’s full, you’re probably in trouble.
+
+If it makes you feel clearer because it’s lighter, you’re probably closer to something real.
+
+If you’ve been in this state recently, what was the first sign you noticed?
+
+
+---
+
+# Cognitive Overload & You
+
+Source: https://threadandstack.com/blog/cognitive-overload-you
+Reading time: 6 min
+
+I caught myself the other morning standing in the kitchen, coffee in hand, paralysed by three different notifications that had come in before I’d even fully woken up. It wasn't that the decisions were hard. It was just that there were so many of them, already, and the sun wasn't even properly up.
+
+Our brains seem to be having a bad day.
+Pretty much all the time.
+
+Right now, yours is likely juggling half a dozen micro-decisions while you try to read this. Should you grab another coffee? Is that Slack notification urgent? Do you really have time for this article?
+
+From SMS to push notifications, emails to social posts, our phones have about a million different ways to let us know there’s a new "limited time offer" that expires in 3 hours. That's ignoring the forty-seven browser tabs open in your mind, and the project deadline looming like a storm cloud.
+
+And that's before you even get to the real stuff - concerns about the world, your family, people you actually know.
+
+💡We act like mental bandwidth is a renewable resource that refills instantly. But every notification you ignore is still tax; it costs you something just to look away.
+
+I want to talk about cognitive overload. Not just as a business metric to optimise, but as a reality we all live with.
+
+The battery we can't see
+
+"The world is increasingly designed to depress us. Happiness isn’t very good for the economy."
+– Matt Haig, Notes on a Nervous Planet
+
+In the last Stacked Behaviours essay, I mentioned that Forbes had highlighted research indicating that we receive an estimated 10,000 messages a day. In this context, self-care begins to feel more like self-defence. It seems like every little task now comes with a marketing message. Even when all you want to do is buy a new toothbrush.
+
+We can't defend against messages coming from all around us. We can try to restrict our attention to those that deserve it - who deserve our energy.
+
+Paying attention to that battery doesn’t just help you receive better quality signals from the world. It makes for a more empathetic way to live. When your task is to buy a new electric toothbrush, you naturally lean towards the brands that make it easier for you. You choose those that simplify what they're offering, and you might even accept a little more cost for a more straightforward proposition.
+
+That overwhelm has a direct relationship to the value of a founder's offering. But here's the thing: often the smartest, most well-meaning people are the ones creating this complexity.
+
+When intelligence becomes the problem
+
+A friend was telling me about their struggles with their climate action organisation recently. Despite having important work and clear messaging, people couldn't remember how their different projects connected. The newsletter, the deep-dive reports, the action campaigns - none of it stuck together in people's minds.
+
+"It's like each piece exists in isolation," they said. "People care about what we're doing, but they can't seem to remember how our stuff connects."
+
+This friend is brilliant. They understand climate science, systems thinking, and stakeholder engagement. But their intelligence was working against them. They wanted to show the full complexity of their work, prove their expertise, provide comprehensive value.
+
+💡It’s easy to mistake thoroughness for value. But when your audience is already drowning, adding more 'value' just feels like adding more weight.
+
+The result? Cognitive overload for everyone trying to support them.
+
+I see this pattern everywhere. Wonderful founders trying to solve important problems but accidentally complicating the lives of the customers they serve. The desire to prove themselves, to over-provide, to demonstrate sophistication often creates the very friction that prevents people from engaging with their mission.
+
+What's actually happening in our minds
+
+"The human mind does not run on logic any more than a horse runs on petrol."
+– Rory Sutherland, Alchemy
+
+When we encounter too much complexity, our brains essentially shut down. Psychologist Daniel Kahneman showed us that we operate two mental systems: System 1 (fast, automatic, intuitive) and System 2 (slower, effortful, rational) (Kahneman, 2011).
+
+Most of the time, we're running on System 1. It's efficient, effortless, and handles routine decisions without conscious thought. But when something requires effort to understand – when we hit cognitive load – we're forced into System 2 mode.
+
+💡Most marketing demands deep, rational thought for decisions that should be automatic. You're asking for premium mental energy at a discount rate.
+
+System 2 is expensive. It drains mental energy quickly, and when people are already overwhelmed, they simply won't make the effort.
+
+Research on the Paradox of Choice demonstrates this beautifully. When psychologist Sheena Iyengar offered shoppers 24 jam varieties, 60% stopped to browse but only 3% made a purchase. When she offered just 6 varieties, fewer people stopped (40%) but purchases jumped tenfold to 30% (Iyengar & Lepper, 2000).
+
+Choice complexity kills action, even when people care about the outcome.
+
+The real cost of good intentions
+
+Here's where this becomes particularly painful for climate organisations, nonprofits, and purpose-driven businesses: the importance of your work can justify complexity in your mind. Climate change is complex. Social justice is nuanced. Sustainability involves trade-offs. Even basic ethical marketing is a mine field of “anti-hypocrisy sense checks”.
+
+But complexity in your mission doesn't require complexity in your experience.
+
+I know a climate nonprofit that was obsessing over donor segmentation. Their donation form asked for income bracket, environmental priorities, communication preferences, volunteer interests, and referral source. Completion rate: 3.2%.
+
+They stripped it down to name, email, and amount. Completion jumped to 18.6%. Within three months, they gained £47,000 in additional monthly donations - not by explaining their work better, but by making support effortless.
+
+When people's brains are already maxed out from daily digital chaos, every additional bit of complexity you add becomes a competitive disadvantage. You're not just competing with other organisations; you're competing with every notification, every decision, every cognitive demand they've already encountered today.
+
+The empathy solution
+
+The most successful purpose-driven organisations have learnt this lesson: truly empathetic design always prioritises the customer's cognitive capacity over the creator's need to be comprehensive.
+
+Take Patagonia's "Don't Buy This Jacket" campaign. Climate action involves incredibly complex systems thinking, but their message achieved perfect simplicity: consume less. Zero cognitive load, maximum emotional impact.
+
+Or consider how the climate tech startup I mentioned earlier grew from 200 to 12,000 newsletter subscribers in eight months. Instead of explaining carbon capture technology, they simply said: "Climate change feels overwhelming. We find the solutions that actually work and explain them in 3 minutes every Tuesday."
+
+System 1 simple. System 2 depth available for those who wanted it. The result? 47% of subscribers became monthly supporters, compared to an industry average of 8%.
+
+Your cognitive load audit
+
+The fix starts with recognising where you're accidentally creating friction. Map every decision point in your supporter journey. Count every form field, menu option, and piece of information you're asking people to process.
+
+Ask yourself:
+
+Does this serve their goal or my need to appear thorough?
+
+Could I eliminate this choice with a smart default?
+
+What would happen if I removed this entirely?
+
+If someone already cares about my cause, what's the fastest path to meaningful action?
+
+Remember: people's mental bandwidth is more precious than their money. When you waste their cognitive energy, they'll find someone who doesn't – often a competitor who understood this principle before you did.
+
+Building for overwhelmed minds
+
+Our brains are maxed out, and that's not changing anytime soon. The organisations that thrive will be those who become cognitive sanctuaries – places where important decisions feel effortless and meaningful action requires minimal mental effort.
+
+This isn't about dumbing down your mission. It's about respecting that the people you serve are already overwhelmed, and your job is to make their path to supporting you as frictionless as possible.
+
+When you design for overwhelmed brains, people begin associating ease of engagement with competence and trustworthiness. Cognitive simplicity becomes a competitive advantage that no marketing budget can replicate.
+
+Next time, we'll explore how this understanding transforms the way we architect choices, and why the most powerful decision-making experiences feel like no decision at all.
+
+
+---
+
+# Welcome to Thread & Stack’s Journal
+
+Source: https://threadandstack.com/blog/welcome-to-thread-stack-s-journal
+Reading time: 6 min
+
+We don’t talk enough about how strategies layer to create compound effects – and the opportunities for businesses, and the impact on us as consumers.
+I call these Stacked Behaviours, and that’s what this newsletter is about.
+
+We live dual lives, don’t you agree?
+
+As consumers, we’re constantly nudged, targeted, and persuaded. As creators, founders, and marketers, we’re the ones doing the nudging.
+
+Osmosis of our own making
+
+As consumers, we need to understand the tactics and technologies being used on us every day, or we slowly lose our agency. As founders, creators and marketers, we’re on the other side of that equation, trying to reach people in ways that cut through the thousands of messages they’re hit with daily — and it’s only getting harder.
+
+Let me set the scene.
+
+In 2007, a study found that Americans consume up to 5000 marketing messages a day (New York Times, 2007).
+
+Ten years later in 2017 - a new study- cited numbers between 4000-10,000 marketing messages per day (Forbes, 2017).
+
+Fast forward almost a decade (well, eight years at the time of writing), and we’ve entered the ultra-specific world of AI-powered ad tailoring, content generation and the degradation of trust in online content. The deluge of content is only increasing.
+
+From habits to hooks
+
+You may have heard of “habit stacking,” popularised by James Clear in Atomic Habits. The idea traces back to BJ Fogg’s “Tiny Habits” framework, where new routines are anchored to existing ones.
+
+In personal development, it might look like:
+
+“After I pour my morning coffee [habit one], I’ll meditate for one minute [habit two].”
+
+Stacked Behaviours are the same. They rarely happen in isolation. The same way we might choose to stack habits, strategists and marketers stack nudges against consumers. They pile up to define our actions. Here’s how a single morning can look:
+
+Association:
+“I want to eat more healthily, because I find healthy people more attractive.”
+
+Ritual:
+
+“It’s early, so I’ll grab my usual coffee from my favourite place on the way to work.”
+
+Contextual Nudge:
+
+“I only meant to buy coffee, but the vegan pastries were right there at the checkout, health [association], routine [ritual], and convenience [nudge]… I suppose it can’t hurt.”
+
+Each of these on its own feels harmless. Together they create momentum. A stack of behaviours that shifts your decision without you ever really “deciding.” You’ve betrayed yourself by buying a pastry you didn’t intend to, but your associations, rituals, and context have all been shaped for you.
+
+"People will come to love their oppression, to adore the technologies that undo their capacities to think."
+
+– Aldous Huxley, Brave New World
+
+This is how autonomy erodes: one nudge blends into the next, and soon you’re being carried by invisible currents into choices you didn’t plan to make. While much of this is harmless (sometimes even helpful), some marketers weaponise these tactics, and that results in lowered trust.
+
+💡Nudges aren't neutral. Every design choice is a vote for how you want your user to behave. The question is whether you're voting for their interest or yours.
+
+“Somebody poisoned the waterhole!”
+
+The dark side of stacked behaviours isn’t hypothetical. It’s happening in plain sight – and the most extreme examples are merciless.
+
+The $122m checkbox
+
+In 2020, during Trump’s fundraising campaign Supporters were unknowingly signed up for recurring donations by default unless they spotted and unchecked a small pre-ticked box.
+
+In 2020, Trump’s fundraising campaign pre-ticked recurring donation boxes by default – a dark UX trick that drained supporters’ accounts. The backlash was so severe that over $122 million had to be refunded (NYT, 2021). By comparison, Biden’s campaign initially experimented with the same tactic but pulled back, refunding just 2% of online donations (WRAL,2021).
+
+Making you feel better about war
+
+Now consider the recent Stagwell/Mark Penn reputation survey for the Israeli government.
+
+A leaked report (Dropsite News, 2025) revealed that the agency advised framing the conflict through the lens of “radical Jihadism” – messaging they claimed would be “universally effective” for conservative audiences (Marketing-Interactive, 2025). This wasn’t neutral research; it was bias confirmation, engineered to activate fear and justify violence at a geopolitical scale.
+
+Politics often exposes the most ruthless edges of persuasion. But the same tactics appear in business every day – and that’s what we’ll be unpacking in future issues.
+
+“Dark patterns” in design, marketing or strategy don’t pay off. They erode consumer experience, break down trust, and hurt your business. In both these examples, the brands in question suffered (or are experiencing) significant losses.
+
+When people smell a rat?
+
+They leave.
+
+The wins you make in short-term gains, you pay in audience connection.
+
+So again, welcome to Stacked Behaviours.
+
+This is what Stacked Behaviours is about: exposing tactics, unpacking their impact, and helping founders, creators, and marketers build strategies that don’t poison the waterhole. If that’s the path you want to walk, stick around… there’s more to come.
+
+Let’s build a better path! If we can recognise and resist these tactics, we can design marketing that wins trust rather than loses it.
+
+Thanks for reading, until next time.
