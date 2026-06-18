@@ -128,6 +128,63 @@ function buildJsonLd(page: PageContent): string {
   });
 }
 
+const ORGANIZATION_LD = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Thread & Stack",
+  url: SITE,
+  logo: `${SITE}/favicon.svg`,
+  founder: {
+    "@type": "Person",
+    name: "Brendan Rodgers",
+    jobTitle: "Designer, strategist, and certified Notion partner",
+    url: `${SITE}/about`,
+  },
+  sameAs: [
+    "https://www.linkedin.com/in/brendan-rodgers",
+    "https://www.notion.com/@brendanrodgers",
+  ],
+};
+
+const PERSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Brendan Rodgers",
+  jobTitle: "Designer, strategist, and certified Notion partner",
+  url: `${SITE}/about`,
+  worksFor: { "@type": "Organization", name: "Thread & Stack", url: SITE },
+  sameAs: [
+    "https://www.linkedin.com/in/brendan-rodgers",
+    "https://www.notion.com/@brendanrodgers",
+  ],
+};
+
+function buildBreadcrumb(page: PageContent): string | null {
+  if (page.path === "/") return null;
+  const items: Array<Record<string, unknown>> = [
+    { "@type": "ListItem", position: 1, name: "Home", item: SITE },
+  ];
+  if (page.breadcrumb) {
+    items.push({
+      "@type": "ListItem",
+      position: items.length + 1,
+      name: page.breadcrumb.name,
+      item: `${SITE}${page.breadcrumb.path}`,
+    });
+  }
+  items.push({
+    "@type": "ListItem",
+    position: items.length + 1,
+    name: page.h1,
+    item: `${SITE}${page.path}`,
+  });
+  return JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items,
+  });
+}
+
 interface BlogRow {
   slug: string;
   title: string | null;
