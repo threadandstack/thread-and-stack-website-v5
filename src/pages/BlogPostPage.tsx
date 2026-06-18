@@ -129,6 +129,18 @@ const BlogPostPage = () => {
     const originalTitle = document.title;
     document.title = `${post.title} | Thread & Stack`;
 
+    // Standard description meta
+    setMetaTag('description', post.description || '', true);
+
+    // Canonical link
+    let canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+    if (!canonical) {
+      canonical = document.createElement('link');
+      canonical.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonical);
+    }
+    canonical.setAttribute('href', pageUrl);
+
     // Open Graph tags
     setMetaTag('og:title', post.title);
     setMetaTag('og:description', post.description || '');
@@ -141,6 +153,27 @@ const BlogPostPage = () => {
     setMetaTag('twitter:title', post.title, true);
     setMetaTag('twitter:description', post.description || '', true);
     setMetaTag('twitter:image', imageUrl, true);
+
+    // Article JSON-LD
+    const ldId = 'blog-post-jsonld';
+    let ld = document.getElementById(ldId) as HTMLScriptElement | null;
+    if (!ld) {
+      ld = document.createElement('script');
+      ld.id = ldId;
+      ld.type = 'application/ld+json';
+      document.head.appendChild(ld);
+    }
+    ld.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: post.title,
+      description: post.description || '',
+      image: imageUrl,
+      url: pageUrl,
+      datePublished: (post as { published_date?: string }).published_date || undefined,
+      author: { '@type': 'Person', name: 'Brendan Rodgers' },
+      publisher: { '@type': 'Organization', name: 'Thread & Stack', url: 'https://threadandstack.com' },
+    });
 
     // Cleanup on unmount
     return () => {
