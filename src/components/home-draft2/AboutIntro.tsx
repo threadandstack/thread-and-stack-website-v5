@@ -1,5 +1,7 @@
 import { ArrowRight } from "lucide-react";
-import brendanPhoto from "@/assets/photos/shoreditch/brendan-34.webp";
+import brendanPhotoAsset from "@/assets/photos/brendan-34-square.jpg.asset.json";
+
+const brendanPhoto = brendanPhotoAsset.url;
 
 /**
  * Personal welcome at the top of the page — NOT a collapsible.
