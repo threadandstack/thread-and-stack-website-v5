@@ -41,7 +41,7 @@ export const Hero = () => {
       <div className="max-w-5xl mx-auto text-center space-y-8">
         {/* 07 Subtle Application style headline */}
         <div className="space-y-4">
-          <h1 className="font-serif-pro text-4xl md:text-6xl font-semibold italic leading-tight max-w-4xl mx-auto">
+          <h1 className="font-sans not-italic text-4xl md:text-6xl font-semibold leading-[0.98] tracking-[-0.035em] max-w-4xl mx-auto">
             Marketing that feels{" "}
             <span className="inline-block" style={{ transform: "translateY(-1px)" }}>more</span>{" "}
             <span className="inline-block text-accent" style={{ transform: "translateY(1px)" }}>
