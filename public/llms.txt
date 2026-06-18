@@ -1,0 +1,50 @@
+# Thread & Stack
+
+> Ops & Strategy that shifts culture. Thread & Stack helps purpose-led founders and teams align what they say with how they work, so growth feels human instead of hectic.
+
+Thread & Stack is the studio of Brendan Rodgers, a designer, strategist, and certified Notion partner based in the UK. Two service pillars: Narratives & Strategy (positioning, brand story, go-to-market clarity) and Notion & Systems Consultancy (workspace design, operating systems, automation). The site is a marketing site for prospective clients, collaborators, and event attendees.
+
+Brand essentials: "Stories that land. Systems that stick." Addresses the creative tax that drains makers and small teams. Founder Brendan is both a designer and a strategist; not VAT registered; standard terms are 50% upfront, 50% on delivery.
+
+## Pages
+
+- [Home](https://threadandstack.com/): Overview of Thread & Stack, services, and founder positioning.
+- [About](https://threadandstack.com/about): Brendan Rodgers' background, credibility, and approach.
+- [How I Work](https://threadandstack.com/how-i-work): Process, principles, and what engagements look like.
+- [Services](https://threadandstack.com/services): Two-pillar service overview: Narratives & Strategy plus Notion & Systems.
+- [Work With Me](https://threadandstack.com/work-with-me): Engagement options and how to get started.
+- [Workshops](https://threadandstack.com/workshops): Group workshops for teams on narrative, Notion, and AI.
+- [Intro Call](https://threadandstack.com/intro-call): Book a free 30-minute intro call.
+- [Scorecard](https://threadandstack.com/scorecard): Self-assessment scorecard for clarity, systems, and momentum.
+- [Momentum Map](https://threadandstack.com/momentum-map): Diagnostic for teams stuck between intention and execution.
+- [Collective](https://threadandstack.com/collective): The Thread & Stack collective of trusted collaborators.
+
+## Services & Retainers
+
+- [Retainer: Launch](https://threadandstack.com/retainer/launch): Light-touch monthly retainer for early-stage founders.
+- [Retainer: Startup](https://threadandstack.com/retainer/startup): Mid-tier retainer for growing teams that need ongoing strategy and systems support.
+- [Retainer: Scale-Up](https://threadandstack.com/retainer/scaleup): Senior fractional engagement for scale-ups.
+- [Notion Masterclass](https://threadandstack.com/notion-masterclass): Deep-dive masterclass on building real operating systems in Notion.
+- [Unleash Your Team](https://threadandstack.com/unleash-your-team): Workshop and engagement for teams ready to unblock execution.
+- [Become United Blueprint](https://threadandstack.com/blueprint/become-united): Strategy blueprint for purpose-led organisations.
+
+## Events
+
+- [Notion Hackathon London](https://threadandstack.com/notion-hackathon-london): Community Notion build event in London.
+- [Notion Devotion Brighton](https://threadandstack.com/notion-devotion-brighton): Notion community meetup in Brighton.
+- [Charity Meetup, April 26](https://threadandstack.com/charity-meetup-april26): Charity sector meetup for purpose-led operators.
+
+## Portfolio
+
+- [Creative Portfolio](https://threadandstack.com/portfolio/creative): Selected creative and narrative work.
+- [Notion Portfolio](https://threadandstack.com/portfolio/notion): Selected Notion workspace and systems work.
+
+## Journal
+
+- [Blog index](https://threadandstack.com/blog): Thread & Stack Journal — essays on narrative, systems, Notion, AI, and the creative tax.
+
+## Optional
+
+- [Favourite Fiction](https://threadandstack.com/favourite-fiction): Personal reading list and fiction recommendations.
+- [Privacy Policy](https://threadandstack.com/privacy): Privacy and data handling policy.
+- [Data Guarantee](https://threadandstack.com/data-guarantee): How client data is handled and protected.
