@@ -391,6 +391,7 @@ async function main() {
       bodyHtml,
       jsonLdBlocks: [jsonLd],
       ogType: "article",
+      dateModified: post.synced_at || undefined,
     });
     writeRoute(distPathForRoute(`/blog/${post.slug}`), html);
     written++;
