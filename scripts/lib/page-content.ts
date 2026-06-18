@@ -16,6 +16,12 @@ export interface PageContent {
   // Optional pricing or event details for JSON-LD enrichment.
   eventLocation?: string;
   eventStartDate?: string;
+  // If set, this URL is a legacy/redirect alias. Prerender will set canonical
+  // + og:url to redirectTo, emit noindex,follow, and skip JSON-LD. Body still
+  // renders so LLMs that land here get real text instead of homepage boilerplate.
+  redirectTo?: string;
+  // Optional breadcrumb section. Used to emit BreadcrumbList JSON-LD.
+  breadcrumb?: { name: string; path: string };
 }
 
 export const SITE = "https://threadandstack.com";
@@ -366,4 +372,100 @@ export const pages: PageContent[] = [
       "The standards held to on every engagement.",
     ],
   },
+  // ---------------------------------------------------------------------------
+  // Legacy / redirect aliases. The SPA serves a <Navigate> at runtime, but
+  // crawlers that hit these URLs directly get a real, route-specific HTML
+  // document with a canonical pointing at the current home of the content.
+  // ---------------------------------------------------------------------------
+  {
+    path: "/notion-systems",
+    redirectTo: "/services",
+    title: "Notion & Systems Consultancy — Thread & Stack",
+    description:
+      "Notion workspace design, operating systems, automation, and documentation. Now part of the two-pillar services page.",
+    h1: "Notion & Systems Consultancy",
+    body: [
+      "Notion & Systems Consultancy is one of two service pillars at Thread & Stack. Workspace design, operating systems, automation, and documentation that holds up under real use.",
+      "Full details, tiers, and pricing live on the services page.",
+    ],
+  },
+  {
+    path: "/fractional-deep-engagement",
+    redirectTo: "/services",
+    title: "Fractional engagement — Thread & Stack",
+    description:
+      "Senior fractional narrative and systems leadership. Now offered through the retainer tiers.",
+    h1: "Fractional engagement",
+    body: [
+      "Senior fractional narrative and systems leadership. Now offered through the Launch, Startup, and Scale-Up retainer tiers under the services page.",
+    ],
+  },
+  {
+    path: "/sessions-and-sprints",
+    redirectTo: "/services",
+    title: "Sessions & sprints — Thread & Stack",
+    description:
+      "Short engagements and working sessions. Folded into the diagnostic and fixed-scope project routes under services.",
+    h1: "Sessions & sprints",
+    body: [
+      "Short engagements and working sessions have been folded into the paid diagnostic and fixed-scope project routes. See the services page for current options.",
+    ],
+  },
+  {
+    path: "/narratives-strategy",
+    redirectTo: "/services",
+    title: "Narratives & Strategy — Thread & Stack",
+    description:
+      "Positioning, brand story, go-to-market clarity, message architecture, launch narratives. Now part of the two-pillar services page.",
+    h1: "Narratives & Strategy",
+    body: [
+      "Narratives & Strategy is one of two service pillars at Thread & Stack. Positioning, brand story, go-to-market clarity, message architecture, and launch narratives.",
+      "Full details live on the services page.",
+    ],
+  },
+  {
+    path: "/clarity-sessions",
+    redirectTo: "/services",
+    title: "Clarity sessions — Thread & Stack",
+    description:
+      "Clarity sessions have been replaced by the paid diagnostic. See the services page for the current entry point.",
+    h1: "Clarity sessions",
+    body: [
+      "Clarity sessions have been replaced by the paid diagnostic. See the services page for the current entry point.",
+    ],
+  },
+  {
+    path: "/mentorship-sprint",
+    redirectTo: "/services",
+    title: "Mentorship sprint — Thread & Stack",
+    description:
+      "Mentorship sprints have been folded into the retainer tiers. See the services page.",
+    h1: "Mentorship sprint",
+    body: [
+      "Mentorship sprints have been folded into the Launch and Startup retainer tiers. See the services page.",
+    ],
+  },
+  {
+    path: "/fractional-strategy",
+    redirectTo: "/services",
+    title: "Fractional strategy — Thread & Stack",
+    description:
+      "Fractional strategy is offered through the Scale-Up retainer tier. See the services page.",
+    h1: "Fractional strategy",
+    body: [
+      "Fractional strategy is offered through the Scale-Up retainer tier. See the services page.",
+    ],
+  },
+  {
+    path: "/deep-engagement",
+    redirectTo: "/services",
+    title: "Deep engagement — Thread & Stack",
+    description:
+      "Long-form embedded engagements are offered through the Scale-Up retainer tier. See the services page.",
+    h1: "Deep engagement",
+    body: [
+      "Long-form embedded engagements are offered through the Scale-Up retainer tier. See the services page.",
+    ],
+  },
 ];
+

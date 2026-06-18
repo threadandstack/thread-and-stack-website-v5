@@ -128,6 +128,63 @@ function buildJsonLd(page: PageContent): string {
   });
 }
 
+const ORGANIZATION_LD = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Thread & Stack",
+  url: SITE,
+  logo: `${SITE}/favicon.svg`,
+  founder: {
+    "@type": "Person",
+    name: "Brendan Rodgers",
+    jobTitle: "Designer, strategist, and certified Notion partner",
+    url: `${SITE}/about`,
+  },
+  sameAs: [
+    "https://www.linkedin.com/in/brendan-rodgers",
+    "https://www.notion.com/@brendanrodgers",
+  ],
+};
+
+const PERSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Brendan Rodgers",
+  jobTitle: "Designer, strategist, and certified Notion partner",
+  url: `${SITE}/about`,
+  worksFor: { "@type": "Organization", name: "Thread & Stack", url: SITE },
+  sameAs: [
+    "https://www.linkedin.com/in/brendan-rodgers",
+    "https://www.notion.com/@brendanrodgers",
+  ],
+};
+
+function buildBreadcrumb(page: PageContent): string | null {
+  if (page.path === "/") return null;
+  const items: Array<Record<string, unknown>> = [
+    { "@type": "ListItem", position: 1, name: "Home", item: SITE },
+  ];
+  if (page.breadcrumb) {
+    items.push({
+      "@type": "ListItem",
+      position: items.length + 1,
+      name: page.breadcrumb.name,
+      item: `${SITE}${page.breadcrumb.path}`,
+    });
+  }
+  items.push({
+    "@type": "ListItem",
+    position: items.length + 1,
+    name: page.h1,
+    item: `${SITE}${page.path}`,
+  });
+  return JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items,
+  });
+}
+
 interface BlogRow {
   slug: string;
   title: string | null;
@@ -161,34 +218,35 @@ async function fetchBlogPosts(): Promise<BlogRow[]> {
   }
 }
 
+const BUILD_ISO = new Date().toISOString();
+
 function applyShell(
   shell: string,
   opts: {
     path: string;
+    canonicalPath?: string; // defaults to path; redirect aliases pass redirectTo here
     title: string;
     description: string;
     bodyHtml: string;
     jsonLdBlocks: string[];
     ogType?: string;
+    noindex?: boolean;
+    dateModified?: string;
   }
 ): string {
-  const url = `${SITE}${opts.path}`;
+  const canonicalUrl = `${SITE}${opts.canonicalPath || opts.path}`;
   const title = escapeHtml(opts.title);
   const desc = escapeHtml(opts.description);
   const ogType = opts.ogType || "website";
+  const dateModified = opts.dateModified || BUILD_ISO;
 
   let out = shell;
 
-  // Replace <title>
   out = out.replace(/<title>[\s\S]*?<\/title>/i, `<title>${title}</title>`);
-
-  // Replace <meta name="description">
   out = out.replace(
     /<meta\s+name=["']description["'][^>]*>/i,
     `<meta name="description" content="${desc}">`
   );
-
-  // Replace og:title, og:description, twitter:title, twitter:description, og:type
   out = out.replace(
     /<meta\s+property=["']og:title["'][^>]*>/i,
     `<meta property="og:title" content="${title}">`
@@ -210,20 +268,22 @@ function applyShell(
     `<meta property="og:type" content="${ogType}" />`
   );
 
-  // Inject canonical + og:url + extra JSON-LD just before </head>.
-  // Existing index.html does not declare canonical, so it is safe to add.
   const headExtras = [
-    `<link rel="canonical" href="${escapeAttr(url)}">`,
-    `<meta property="og:url" content="${escapeAttr(url)}">`,
+    `<link rel="canonical" href="${escapeAttr(canonicalUrl)}">`,
+    `<meta property="og:url" content="${escapeAttr(canonicalUrl)}">`,
+    `<meta name="last-modified" content="${escapeAttr(dateModified)}">`,
+    opts.noindex
+      ? `<meta name="robots" content="noindex,follow">`
+      : null,
     ...opts.jsonLdBlocks.map(
       (j) => `<script type="application/ld+json">${j}</script>`
     ),
-  ].join("\n    ");
+  ]
+    .filter(Boolean)
+    .join("\n    ");
 
   out = out.replace(/<\/head>/i, `    ${headExtras}\n  </head>`);
 
-  // Inject prerendered body content into <div id="root">.
-  // Wrap in a div React will replace on mount.
   out = out.replace(
     /<div id="root">\s*<\/div>/i,
     `<div id="root"><div data-prerender="static">\n${opts.bodyHtml}\n</div></div>`
@@ -259,18 +319,33 @@ async function main() {
   // Static authored pages
   for (const page of pages) {
     const bodyHtml = renderBody(page);
-    const jsonLd = buildJsonLd(page);
+    const jsonLdBlocks: string[] = [];
+    if (!page.redirectTo) {
+      jsonLdBlocks.push(buildJsonLd(page));
+      // Sitewide Organization on home + about; Person on about.
+      if (page.path === "/" || page.path === "/about") {
+        jsonLdBlocks.push(JSON.stringify(ORGANIZATION_LD));
+      }
+      if (page.path === "/about") {
+        jsonLdBlocks.push(JSON.stringify(PERSON_LD));
+      }
+      const crumb = buildBreadcrumb(page);
+      if (crumb) jsonLdBlocks.push(crumb);
+    }
     const html = applyShell(shell, {
       path: page.path,
+      canonicalPath: page.redirectTo || page.path,
       title: page.title,
       description: page.description,
       bodyHtml,
-      jsonLdBlocks: [jsonLd],
+      jsonLdBlocks,
       ogType: page.schemaType === "Event" ? "event" : "website",
+      noindex: Boolean(page.redirectTo),
     });
     writeRoute(distPathForRoute(page.path), html);
     written++;
   }
+
 
   // Blog posts
   const posts = await fetchBlogPosts();
@@ -316,6 +391,7 @@ async function main() {
       bodyHtml,
       jsonLdBlocks: [jsonLd],
       ogType: "article",
+      dateModified: post.synced_at || undefined,
     });
     writeRoute(distPathForRoute(`/blog/${post.slug}`), html);
     written++;

@@ -1,41 +1,69 @@
-## Plan: make Thread & Stack crawlable at the actual URLs
+## What the LLM tests actually told us
 
-Claude and ChatGPT are seeing the key problem correctly: the public routes still return a mostly empty React shell to non-JavaScript crawlers. `/llms-full.txt` is useful, but it does not replace crawlable HTML at `/services`, `/blog`, `/notion-hackathon-london`, etc.
+Reading the three crawls side by side:
 
-### What I’ll change
+- **Claude** successfully extracted the *current* positioning ("Stories that land. Systems that stick.", two-pillar services, full Notion tier pricing, payment terms). The prerender we shipped is working on the routes it covers.
+- **ChatGPT** said "almost every discovered page is exposing the same description". When I curl the live site now, that is true for `/notion-systems` and the other legacy URLs — they fall back to `dist/index.html` (the homepage prerender) because they're React `<Navigate>` redirects, not pages, so the prerender script never wrote a `/notion-systems/index.html`. Any LLM that hits a legacy URL gets the homepage's title and description.
+- **Perplexity** keeps quoting *very* old copy ("Threadwork / True Voice / Brand Therapy / Conscious AI"). That's stale third-party caches (LinkedIn, ProspEo, old Google snapshot) plus its tools timing out on subpages. Nothing we do on-site removes it instantly, but fresh, distinct, dated HTML on every URL is what eventually replaces it.
+- **Google's indexed snippet** is still the *pre-prerender* description. It only changes after Googlebot recrawls.
 
-1. **Add static HTML snapshots for public routes**
-   - Use a Vite-compatible prerender step that renders the app after build and writes real HTML into `dist/<route>/index.html`.
-   - Keep the live site as a React app for users, but give crawlers full page content in the initial HTML.
+So the gap isn't the prerender approach — it's coverage and freshness.
 
-2. **Prerender every indexable route**
-   - Include main navigation and sitemap routes.
-   - Include blog index and published blog post routes.
-   - Exclude private/admin/proposal/onboarding/thank-you/variant routes already blocked in `robots.txt`.
+## Plan
 
-3. **Keep `/sitemap.xml`, `/llms.txt`, and `/llms-full.txt` aligned**
-   - Ensure the prerender route list matches the sitemap and LLM files.
-   - Add the full LLM document reference where helpful without relying on it as the only crawl path.
+### 1. Prerender every legacy / redirect URL
 
-4. **Fix stale positioning risk**
-   - Review the generated summaries in `scripts/generate-llms-full.ts` against the current public positioning, because Perplexity surfaced older language and the file currently contains some service names that may not match the new site direction.
-   - Keep copy factual and current, with the two-pillar positioning from project memory unless the page itself says otherwise.
+The redirect routes in `src/App.tsx` (`/notion-systems`, `/fractional-deep-engagement`, `/sessions-and-sprints`, `/narratives-strategy`, `/clarity-sessions`, `/mentorship-sprint`, `/fractional-strategy`, `/deep-engagement`, plus the casing variants `/Charity-Meetup-April26` and `/Unleash-Your-Team`) all currently serve the homepage shell to crawlers. For each:
 
-5. **Validate crawler-visible output**
-   - Run the generator/build flow locally.
-   - Check sample generated HTML for `/`, `/services`, `/blog`, and `/notion-hackathon-london` to confirm the body contains readable content without executing JavaScript.
-   - Confirm `robots.txt` and `sitemap.xml` remain accessible and point to `https://threadandstack.com`.
+- Add a "redirect page" entry to `scripts/lib/page-content.ts` with a route-correct title, description, short body explaining where the content moved, and a canonical pointing at the *new* canonical URL (e.g. `/services`).
+- Extend `scripts/generate-prerendered.ts` to support a `redirectTo` field that:
+  - sets `<link rel="canonical">` to the destination,
+  - emits `<meta name="robots" content="noindex,follow">` so Google consolidates signals without indexing the duplicate,
+  - still injects readable body text + JSON-LD so an LLM that lands there gets real information instead of homepage boilerplate.
+- Result: every URL an LLM might discover (old links, sitemap, social cards) returns route-specific HTML.
 
-### Technical approach
+### 2. Add the routes the SEO crawl is missing
 
-- Prefer `vite-plugin-prerender` if it works cleanly with the existing Vite setup.
-- If that proves brittle, add a small custom post-build Playwright prerender script that:
-  - serves the built app locally,
-  - visits each public route,
-  - waits for content to render,
-  - writes the rendered DOM to route-specific `index.html` files.
-- Keep this as a build-time step only. No backend migration and no move to Next.js/Remix in this pass.
+`/notion-hackathon-london/v2`, `/notion-hackathon-london`, `/notion-devotion-brighton`, `/charity-meetup-april26`, `/unleash-your-team` are already in `page-content.ts`. Audit against `src/App.tsx` and add anything public that's missing (e.g. `/work-with-me`, `/intro-call`, `/momentum-map`, `/collective`, `/portfolio/*` already present — double-check). Anything `noindex` (admin, proposals, onboarding, thank-you, drafts, `/v/*`, `/depreciate/*`) stays out and is already covered by `robots.txt`.
 
-### Outcome
+### 3. Strengthen freshness signals so Google/Perplexity recrawl sooner
 
-Fresh crawls of real URLs should return meaningful HTML body content, page-level metadata, structured data, sitemap coverage, and LLM-friendly plain text rather than only the JavaScript shell.
+- `scripts/generate-sitemap.ts`: set `lastmod` to today's ISO date on every entry at generation time, and keep `changefreq` realistic (`weekly` for marketing pages, `daily` for `/blog`).
+- `scripts/generate-prerendered.ts`: add `<meta name="last-modified" content="…">` and an Article `dateModified` (already present for posts) plus `WebPage` `dateModified` for static pages.
+- Add a one-line note in the plan output telling you to hit "Request indexing" in Google Search Console for `/`, `/services`, `/about`, `/notion-systems` after deploy — fastest way to force Google to drop the stale snippet.
+
+### 4. Tighten the JSON-LD
+
+Currently each page emits a single `WebPage` / `Service` / `Event` block. Add:
+
+- `Organization` block on `/` and `/about` (name, url, logo, sameAs LinkedIn/Notion ambassador, founder Person).
+- `Person` block on `/about` (Brendan Rodgers, jobTitle, sameAs).
+- `BreadcrumbList` on every non-home page (Home → section → page).
+- `FAQPage` on `/services` and `/work-with-me` if their body content already lists FAQs (check first).
+
+LLMs lean heavily on these blocks to disambiguate "what does this business do".
+
+### 5. Verify
+
+After build:
+
+```
+curl -s https://threadandstack.com/notion-systems        | grep -E '<title>|description|canonical'
+curl -s https://threadandstack.com/sessions-and-sprints  | grep -E '<title>|description|canonical'
+curl -s https://threadandstack.com/services              | grep -E 'application/ld\+json' -c
+```
+
+Expected: unique title + description + correct canonical for each legacy URL; ≥2 JSON-LD blocks on `/services`.
+
+### Out of scope (call out, don't do)
+
+- True SSR / a different framework — explicit "no" from earlier in this thread.
+- Server-side bot-detection redirects — adds infra, brittle, and the prerender already covers it.
+- Forcing third-party caches (LinkedIn, ProspEo) to refresh — those are external; only time fixes them.
+
+## Files touched
+
+- `scripts/lib/page-content.ts` — add redirect-page entries + any missing public routes.
+- `scripts/generate-prerendered.ts` — `redirectTo` support, extra JSON-LD (Organization/Person/Breadcrumb), `dateModified`.
+- `scripts/generate-sitemap.ts` — fresh `lastmod` per build, include redirect URLs as `noindex` excluded.
+- No runtime React changes; SPA behaviour unchanged for real users.
