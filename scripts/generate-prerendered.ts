@@ -161,34 +161,35 @@ async function fetchBlogPosts(): Promise<BlogRow[]> {
   }
 }
 
+const BUILD_ISO = new Date().toISOString();
+
 function applyShell(
   shell: string,
   opts: {
     path: string;
+    canonicalPath?: string; // defaults to path; redirect aliases pass redirectTo here
     title: string;
     description: string;
     bodyHtml: string;
     jsonLdBlocks: string[];
     ogType?: string;
+    noindex?: boolean;
+    dateModified?: string;
   }
 ): string {
-  const url = `${SITE}${opts.path}`;
+  const canonicalUrl = `${SITE}${opts.canonicalPath || opts.path}`;
   const title = escapeHtml(opts.title);
   const desc = escapeHtml(opts.description);
   const ogType = opts.ogType || "website";
+  const dateModified = opts.dateModified || BUILD_ISO;
 
   let out = shell;
 
-  // Replace <title>
   out = out.replace(/<title>[\s\S]*?<\/title>/i, `<title>${title}</title>`);
-
-  // Replace <meta name="description">
   out = out.replace(
     /<meta\s+name=["']description["'][^>]*>/i,
     `<meta name="description" content="${desc}">`
   );
-
-  // Replace og:title, og:description, twitter:title, twitter:description, og:type
   out = out.replace(
     /<meta\s+property=["']og:title["'][^>]*>/i,
     `<meta property="og:title" content="${title}">`
@@ -210,20 +211,22 @@ function applyShell(
     `<meta property="og:type" content="${ogType}" />`
   );
 
-  // Inject canonical + og:url + extra JSON-LD just before </head>.
-  // Existing index.html does not declare canonical, so it is safe to add.
   const headExtras = [
-    `<link rel="canonical" href="${escapeAttr(url)}">`,
-    `<meta property="og:url" content="${escapeAttr(url)}">`,
+    `<link rel="canonical" href="${escapeAttr(canonicalUrl)}">`,
+    `<meta property="og:url" content="${escapeAttr(canonicalUrl)}">`,
+    `<meta name="last-modified" content="${escapeAttr(dateModified)}">`,
+    opts.noindex
+      ? `<meta name="robots" content="noindex,follow">`
+      : null,
     ...opts.jsonLdBlocks.map(
       (j) => `<script type="application/ld+json">${j}</script>`
     ),
-  ].join("\n    ");
+  ]
+    .filter(Boolean)
+    .join("\n    ");
 
   out = out.replace(/<\/head>/i, `    ${headExtras}\n  </head>`);
 
-  // Inject prerendered body content into <div id="root">.
-  // Wrap in a div React will replace on mount.
   out = out.replace(
     /<div id="root">\s*<\/div>/i,
     `<div id="root"><div data-prerender="static">\n${opts.bodyHtml}\n</div></div>`
