@@ -53,6 +53,7 @@ const WorkWithMePage = lazy(() => import("./pages/WorkWithMePage"));
 const CometEffectPage = lazy(() => import("./pages/CometEffectPage"));
 const MomentumMapPage = lazy(() => import("./pages/MomentumMapPage"));
 const NotionHackathonLondonPage = lazy(() => import("./pages/NotionHackathonLondonPage"));
+const NotionHackathonLondonV2Page = lazy(() => import("./pages/NotionHackathonLondonV2Page"));
 const NotionDevotionBrightonPage = lazy(() => import("./pages/NotionDevotionBrightonPage"));
 const GGFProposalPage = lazy(() => import("./pages/proposal/GGFProposalPage"));
 const ArcCollectiveProposalPage = lazy(() => import("./pages/proposal/ArcCollectiveProposalPage"));
@@ -153,6 +154,7 @@ const App = () => (
             <Route path="/comet-effect" element={<CometEffectPage />} />
             <Route path="/momentum-map" element={<MomentumMapPage />} />
             <Route path="/notion-hackathon-london" element={<NotionHackathonLondonPage />} />
+            <Route path="/notion-hackathon-london/v2" element={<NotionHackathonLondonV2Page />} />
             <Route path="/notion-devotion-brighton" element={<NotionDevotionBrightonPage />} />
             <Route path="/proposal/GGF" element={<GGFProposalPage />} />
             <Route path="/proposal/arc-collective" element={<ArcCollectiveProposalPage />} />
