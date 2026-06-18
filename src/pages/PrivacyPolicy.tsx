@@ -48,6 +48,11 @@ const PrivacyPolicy = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <PageSeo
+        title="Privacy Policy — Thread & Stack"
+        description="How Thread & Stack collects, uses, and protects your personal data. GDPR-aligned, plain English."
+        path="/privacy"
+      />
       <Navigation />
       
       <main className="pt-32 pb-20 px-6">

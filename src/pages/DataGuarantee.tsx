@@ -48,6 +48,11 @@ const DataGuarantee = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <PageSeo
+        title="Data Guarantee — Thread & Stack"
+        description="Our promise on how client data is handled, stored, and never sold. The standards we hold ourselves to on every engagement."
+        path="/data-guarantee"
+      />
       <Navigation />
       
       <main className="pt-32 pb-20 px-6">

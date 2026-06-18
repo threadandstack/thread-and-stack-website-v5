@@ -68,6 +68,20 @@ const NotionDevotionBrightonPage = () => {
 
   return (
     <div className="dark min-h-screen bg-background text-foreground">
+      <PageSeo
+        title="Notion Devotion Brighton — Notion meetup on the south coast"
+        description="A friendly Notion community meetup in Brighton. Talks, demos, and time with other Notion makers, hosted by Thread & Stack."
+        path="/notion-devotion-brighton"
+        ogType="event"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "Event",
+          name: "Notion Devotion Brighton",
+          eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+          location: { "@type": "Place", name: "Brighton, UK" },
+          organizer: { "@type": "Organization", name: "Thread & Stack", url: "https://threadandstack.com" },
+        }}
+      />
       <main className="max-w-2xl mx-auto px-4 sm:px-6 pt-12 pb-16 sm:py-20 space-y-8 sm:space-y-10">
         {/* Avatar + Logo */}
         <div className="flex items-center gap-4">

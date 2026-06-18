@@ -102,6 +102,20 @@ const CharityMeetupApril26Page = () => {
   };
   return (
     <div className="dark min-h-screen bg-background text-foreground">
+      <PageSeo
+        title="Charity Sector Meetup — April 26"
+        description="A meetup for purpose-led operators working in and around the charity sector. Shared problems, practical fixes, hosted by Thread & Stack."
+        path="/charity-meetup-april26"
+        ogType="event"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "Event",
+          name: "Charity Sector Meetup",
+          startDate: "2026-04-26",
+          eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+          organizer: { "@type": "Organization", name: "Thread & Stack", url: "https://threadandstack.com" },
+        }}
+      />
       <PaymentTestModeBanner />
       <main className="max-w-2xl mx-auto px-4 sm:px-6 pt-12 pb-16 sm:py-20 space-y-8 sm:space-y-10">
         {/* Avatar + Logo */}

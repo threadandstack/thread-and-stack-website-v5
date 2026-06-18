@@ -127,6 +127,17 @@ const NotionMasterclassPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <PageSeo
+        title="Notion Masterclass — build a real operating system"
+        description="A deep-dive masterclass on building Notion workspaces that hold up under real use. Architecture, automation, and operating rhythms that stick."
+        path="/notion-masterclass"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "Course",
+          name: "Notion Masterclass",
+          provider: { "@type": "Organization", name: "Thread & Stack", url: "https://threadandstack.com" },
+        }}
+      />
       <Navigation />
 
       {/* HERO */}

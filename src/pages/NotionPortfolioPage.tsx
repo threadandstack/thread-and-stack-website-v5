@@ -11,6 +11,11 @@ const NotionPortfolioPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <PageSeo
+        title="Notion Portfolio — Thread & Stack"
+        description="Selected Notion workspace, operating system, and automation builds from Thread & Stack."
+        path="/portfolio/notion"
+      />
       <Navigation />
 
       <main className="pt-32 pb-20 px-6">

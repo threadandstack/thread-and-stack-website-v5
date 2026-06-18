@@ -42,6 +42,11 @@ const HomePageDraft2 = () => {
 
   return (
     <div className="notion-canvas min-h-screen overflow-x-hidden" data-theme={theme}>
+      <PageSeo
+        title="Thread & Stack — Ops & Strategy that shifts culture"
+        description="Ops and strategy that shifts culture. We help purpose-led founders and teams align what they say with how they work, so growth feels human, not hectic."
+        path="/"
+      />
       <Navigation
         variant={theme === "dark" ? "image-hero" : "default"}
         hideLogo

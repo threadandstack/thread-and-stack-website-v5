@@ -35,6 +35,11 @@ const CollectivePage = () => {
 
   return (
     <div className="min-h-screen">
+      <PageSeo
+        title="The Thread & Stack Collective — trusted collaborators"
+        description="A small collective of trusted strategists, designers, and Notion specialists we bring in when projects need more than one head and one set of hands."
+        path="/collective"
+      />
       <Navigation />
 
       {/* Hero Section */}
