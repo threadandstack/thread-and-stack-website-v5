@@ -4,11 +4,7 @@ import {
   Sun,
   Moon,
   Sparkles,
-  Lock,
   Check,
-  GraduationCap,
-  Zap,
-  FileStack,
   Brain,
   Linkedin,
   Mail,
@@ -25,34 +21,8 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
-const UNLOCK_STORAGE_KEY = "unleash-your-team-resources-unlocked";
+const WAITLIST_STORAGE_KEY = "unleash-your-team-waitlist-joined";
 
-const RESOURCES = [
-  {
-    title: "AI Training Resources",
-    description:
-      "A curated Notion hub of AI training links for purpose-driven teams: courses, primers, and trusted starting points to build confidence with the tools.",
-    icon: GraduationCap,
-    cta: "Open the resource hub",
-    url: "https://threadandstack.notion.site/AI-Resources-for-Nonprofits-3518863b87d4802c98f0eed5afc6ecea",
-  },
-  {
-    title: "Quick Wins With AI",
-    description:
-      "Small, immediate AI moves your team can apply this week: drafting, summarising, repurposing, and reclaiming time from admin chaos.",
-    icon: Zap,
-    cta: "Open quick wins",
-    url: "https://threadandstack.notion.site/Quick-Wins-With-AI-3518863b87d480f9aaa8def89f7f1726",
-  },
-  {
-    title: "Prompts & Skills for AI",
-    description:
-      "Prompt and workflow templates designed for mission-led teams across fundraising, comms, and operations, so you can practise the skills without starting from scratch.",
-    icon: FileStack,
-    cta: "Open prompts & skills",
-    url: "https://threadandstack.notion.site/Prompts-Skills-for-AI-3518863b87d480659135cc9c9f508008",
-  },
-];
 
 const SectionLabel = ({ children }: { children: React.ReactNode }) => (
   <div className="mb-3 text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
@@ -65,7 +35,7 @@ const UnleashYourTeamDraft2Page = () => {
   const toggleTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
 
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [unlocked, setUnlocked] = useState(false);
+  const [joined, setJoined] = useState(false);
   const [email, setEmail] = useState("");
   const [consent, setConsent] = useState(false);
   const [honeypot, setHoneypot] = useState("");
@@ -78,13 +48,13 @@ const UnleashYourTeamDraft2Page = () => {
     const book = params.get("book");
     if (book === "1" || book === "true" || book === "yes") setDrawerOpen(true);
     try {
-      if (sessionStorage.getItem(UNLOCK_STORAGE_KEY) === "1") setUnlocked(true);
+      if (sessionStorage.getItem(WAITLIST_STORAGE_KEY) === "1") setJoined(true);
     } catch {
       /* ignore */
     }
   }, []);
 
-  const handleUnlock = async (e: React.FormEvent) => {
+  const handleJoinWaitlist = async (e: React.FormEvent) => {
     e.preventDefault();
     if (honeypot) return;
     if (!consent) {
@@ -101,13 +71,13 @@ const UnleashYourTeamDraft2Page = () => {
       const submittedAt = new Date().toISOString();
       const { error } = await supabase.from("leads").insert({
         email,
-        source: "unleash-your-team-draft2",
-        message: "Unlocked AI starter pack resources",
+        source: "unleash-your-team-draft2-waitlist",
+        message: "Joined newsletter waitlist",
       });
       if (error) throw error;
-      setUnlocked(true);
+      setJoined(true);
       try {
-        sessionStorage.setItem(UNLOCK_STORAGE_KEY, "1");
+        sessionStorage.setItem(WAITLIST_STORAGE_KEY, "1");
       } catch {
         /* ignore */
       }
@@ -117,7 +87,7 @@ const UnleashYourTeamDraft2Page = () => {
           body: {
             templateName: "unleash-resources-confirmation",
             recipientEmail: email,
-            idempotencyKey: `unleash-confirm-${leadId}`,
+            idempotencyKey: `unleash-waitlist-${leadId}`,
           },
         })
         .catch((err) => console.error("Visitor confirmation email failed", err));
@@ -127,11 +97,11 @@ const UnleashYourTeamDraft2Page = () => {
           body: {
             templateName: "unleash-lead-admin-notification",
             recipientEmail: "br@brendanrodgers.uk",
-            idempotencyKey: `unleash-admin-${leadId}`,
+            idempotencyKey: `unleash-waitlist-admin-${leadId}`,
             templateData: {
               email,
-              source: "unleash-your-team-draft2",
-              message: "Unlocked AI starter pack resources",
+              source: "unleash-your-team-draft2-waitlist",
+              message: "Joined newsletter waitlist",
               submittedAt,
             },
           },
@@ -139,22 +109,21 @@ const UnleashYourTeamDraft2Page = () => {
         .catch((err) => console.error("Admin notification email failed", err));
 
       toast({
-        title: "Resources unlocked",
-        description: "Thanks — links are open below, and on their way to your inbox.",
+        title: "You're on the waitlist",
+        description: "Thanks — I'll be in touch when the newsletter launches.",
       });
     } catch (err) {
-      console.error("Lead capture failed:", err);
-      setUnlocked(true);
-      try {
-        sessionStorage.setItem(UNLOCK_STORAGE_KEY, "1");
-      } catch {
-        /* ignore */
-      }
-      toast({ title: "Resources unlocked", description: "Links are open below." });
+      console.error("Waitlist signup failed:", err);
+      toast({
+        title: "Something went wrong",
+        description: "Please try again in a moment.",
+        variant: "destructive",
+      });
     } finally {
       setIsSubmitting(false);
     }
   };
+
 
   return (
     <div className="notion-canvas min-h-screen overflow-x-hidden" data-theme={theme}>
@@ -262,11 +231,12 @@ const UnleashYourTeamDraft2Page = () => {
                 that bridge the context wall, so your people are freed up to do their most
                 strategic and creative work, not replaced by a machine.
               </p>
-              <p>Below are three free resources to get you started.</p>
               <p>
-                I've also included a discounted Stack Diagnostic for impact-focused teams,
-                should you want hands-on support.
+                I've included a discounted Stack Diagnostic below for impact-focused teams,
+                should you want hands-on support. You can also join the waitlist for the
+                upcoming newsletter for purpose-driven teams putting AI to work.
               </p>
+
               <p className="font-serif-pro italic text-foreground text-lg">
                 Warm wishes,
                 <br />
@@ -365,32 +335,22 @@ const UnleashYourTeamDraft2Page = () => {
           </div>
         </section>
 
-        {/* EMAIL GATE + RESOURCES */}
+        {/* NEWSLETTER WAITLIST */}
         <section className="border-b border-hairline">
-          <div className="mx-auto max-w-4xl px-6 py-20 md:py-28">
-            <SectionLabel>Free starter pack</SectionLabel>
-            <h2 className="font-serif-pro italic text-4xl md:text-5xl tracking-tight mb-10">
-              Three resources to begin with
+          <div className="mx-auto max-w-3xl px-6 py-20 md:py-28">
+            <SectionLabel>Coming soon</SectionLabel>
+            <h2 className="font-serif-pro italic text-4xl md:text-5xl tracking-tight mb-6">
+              Join the newsletter waitlist
             </h2>
+            <p className="mb-8 max-w-2xl text-[16px] leading-relaxed text-ink-soft">
+              A new newsletter for purpose-driven teams putting AI to work, without losing the
+              human thread. Prompts, patterns, and honest notes from the field. Pop your email
+              in to be the first to know when it launches.
+            </p>
 
-            {!unlocked && (
-              <div className="mb-8 rounded-2xl border border-hairline bg-paper/40 p-6 md:p-8 backdrop-blur-sm">
-                <div className="flex items-start gap-3">
-                  <div className="grid h-10 w-10 shrink-0 place-items-center rounded-lg border border-hairline bg-background/70 text-indigo">
-                    <Lock className="h-5 w-5" />
-                  </div>
-                  <div className="space-y-1">
-                    <h3 className="font-serif-pro italic text-xl md:text-2xl">
-                      Join the mailing list to unlock
-                    </h3>
-                    <p className="text-[14.5px] text-ink-soft leading-relaxed">
-                      Pop your email in once and all three resources unlock below. No spam, just
-                      occasional, useful notes for purpose-driven teams.
-                    </p>
-                  </div>
-                </div>
-
-                <form onSubmit={handleUnlock} className="relative mt-5 space-y-3">
+            {!joined ? (
+              <div className="rounded-2xl border border-hairline bg-paper/40 p-6 md:p-8 backdrop-blur-sm">
+                <form onSubmit={handleJoinWaitlist} className="relative space-y-3">
                   <Input
                     type="email"
                     placeholder="your@email.com"
@@ -401,13 +361,13 @@ const UnleashYourTeamDraft2Page = () => {
                   />
                   <div className="flex items-start gap-2">
                     <Checkbox
-                      id="unleash-d2-consent"
+                      id="unleash-d2-waitlist-consent"
                       checked={consent}
                       onCheckedChange={(c) => setConsent(c === true)}
                       className="mt-0.5"
                     />
                     <Label
-                      htmlFor="unleash-d2-consent"
+                      htmlFor="unleash-d2-waitlist-consent"
                       className="cursor-pointer text-xs sm:text-sm leading-tight text-muted-foreground"
                     >
                       I agree to be emailed by Thread &amp; Stack
@@ -421,7 +381,7 @@ const UnleashYourTeamDraft2Page = () => {
                       backgroundImage: "linear-gradient(95deg, var(--gradient-3color))",
                     }}
                   >
-                    {isSubmitting ? "Unlocking…" : "Unlock resources"}
+                    {isSubmitting ? "Adding you…" : "Join the waitlist"}
                     <span className="inline-flex w-0 items-center justify-center overflow-hidden opacity-0 scale-75 transition-all duration-300 group-hover:w-5 group-hover:opacity-100 group-hover:scale-100 group-hover:ml-1.5">
                       <ArrowRight className="h-4 w-4 shrink-0" />
                     </span>
@@ -441,55 +401,21 @@ const UnleashYourTeamDraft2Page = () => {
                   Unsubscribe any time. We never share your data.
                 </p>
               </div>
-            )}
-
-            {unlocked && (
-              <div className="mb-4 inline-flex items-center gap-2 text-xs font-medium text-indigo">
-                <Check className="h-3.5 w-3.5" />
-                Resources unlocked for this session
+            ) : (
+              <div className="rounded-2xl border border-hairline bg-paper/40 p-6 md:p-8 backdrop-blur-sm">
+                <div className="inline-flex items-center gap-2 text-sm font-medium text-indigo">
+                  <Check className="h-4 w-4" />
+                  You're on the waitlist
+                </div>
+                <p className="mt-3 text-[14.5px] text-ink-soft leading-relaxed">
+                  Thanks for signing up. I'll be in touch as soon as the first issue is ready.
+                </p>
               </div>
             )}
-
-            <div className="grid gap-4 md:grid-cols-3">
-              {RESOURCES.map((r) => {
-                const Icon = r.icon;
-                const isLocked = !unlocked;
-                return (
-                  <div
-                    key={r.title}
-                    className="flex flex-col rounded-2xl border border-hairline bg-paper/40 p-6 backdrop-blur-sm transition-colors hover:border-indigo/40"
-                  >
-                    <div className="grid h-10 w-10 place-items-center rounded-lg border border-hairline bg-background/60 text-indigo">
-                      <Icon className="h-5 w-5" />
-                    </div>
-                    <h3 className="mt-4 font-serif-pro italic text-2xl">{r.title}</h3>
-                    <p className="mt-2 flex-1 text-[14px] leading-relaxed text-ink-soft">
-                      {r.description}
-                    </p>
-                    <div className="mt-5">
-                      {isLocked ? (
-                        <div className="inline-flex items-center gap-2 rounded-full border border-dashed border-hairline px-3 py-1.5 text-xs text-muted-foreground">
-                          <Lock className="h-3.5 w-3.5" />
-                          Join the list above to unlock
-                        </div>
-                      ) : (
-                        <a
-                          href={r.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="group inline-flex items-center text-[14px] font-medium text-indigo hover:text-indigo/80"
-                        >
-                          {r.cta}
-                          <ArrowRight className="ml-1.5 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
           </div>
         </section>
+
+
 
         {/* HOW I THINK ABOUT AI */}
         <section className="border-b border-hairline">
