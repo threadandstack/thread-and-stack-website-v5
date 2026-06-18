@@ -319,18 +319,33 @@ async function main() {
   // Static authored pages
   for (const page of pages) {
     const bodyHtml = renderBody(page);
-    const jsonLd = buildJsonLd(page);
+    const jsonLdBlocks: string[] = [];
+    if (!page.redirectTo) {
+      jsonLdBlocks.push(buildJsonLd(page));
+      // Sitewide Organization on home + about; Person on about.
+      if (page.path === "/" || page.path === "/about") {
+        jsonLdBlocks.push(JSON.stringify(ORGANIZATION_LD));
+      }
+      if (page.path === "/about") {
+        jsonLdBlocks.push(JSON.stringify(PERSON_LD));
+      }
+      const crumb = buildBreadcrumb(page);
+      if (crumb) jsonLdBlocks.push(crumb);
+    }
     const html = applyShell(shell, {
       path: page.path,
+      canonicalPath: page.redirectTo || page.path,
       title: page.title,
       description: page.description,
       bodyHtml,
-      jsonLdBlocks: [jsonLd],
+      jsonLdBlocks,
       ogType: page.schemaType === "Event" ? "event" : "website",
+      noindex: Boolean(page.redirectTo),
     });
     writeRoute(distPathForRoute(page.path), html);
     written++;
   }
+
 
   // Blog posts
   const posts = await fetchBlogPosts();
