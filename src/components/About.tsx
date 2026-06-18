@@ -28,7 +28,7 @@ export const About = () => {
     <section 
       id="about" 
       ref={sectionRef}
-      className={`py-24 px-6 bg-card transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-40 translate-y-4'}`}
+      className={`py-24 px-6 bg-card transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-40'}`}
     >
       <div className="max-w-6xl mx-auto">
         <h2 className="text-5xl md:text-6xl mb-16 font-semibold italic">
