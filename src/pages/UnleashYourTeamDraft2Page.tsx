@@ -4,11 +4,7 @@ import {
   Sun,
   Moon,
   Sparkles,
-  Lock,
   Check,
-  GraduationCap,
-  Zap,
-  FileStack,
   Brain,
   Linkedin,
   Mail,
@@ -25,34 +21,8 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
-const UNLOCK_STORAGE_KEY = "unleash-your-team-resources-unlocked";
+const WAITLIST_STORAGE_KEY = "unleash-your-team-waitlist-joined";
 
-const RESOURCES = [
-  {
-    title: "AI Training Resources",
-    description:
-      "A curated Notion hub of AI training links for purpose-driven teams: courses, primers, and trusted starting points to build confidence with the tools.",
-    icon: GraduationCap,
-    cta: "Open the resource hub",
-    url: "https://threadandstack.notion.site/AI-Resources-for-Nonprofits-3518863b87d4802c98f0eed5afc6ecea",
-  },
-  {
-    title: "Quick Wins With AI",
-    description:
-      "Small, immediate AI moves your team can apply this week: drafting, summarising, repurposing, and reclaiming time from admin chaos.",
-    icon: Zap,
-    cta: "Open quick wins",
-    url: "https://threadandstack.notion.site/Quick-Wins-With-AI-3518863b87d480f9aaa8def89f7f1726",
-  },
-  {
-    title: "Prompts & Skills for AI",
-    description:
-      "Prompt and workflow templates designed for mission-led teams across fundraising, comms, and operations, so you can practise the skills without starting from scratch.",
-    icon: FileStack,
-    cta: "Open prompts & skills",
-    url: "https://threadandstack.notion.site/Prompts-Skills-for-AI-3518863b87d480659135cc9c9f508008",
-  },
-];
 
 const SectionLabel = ({ children }: { children: React.ReactNode }) => (
   <div className="mb-3 text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
