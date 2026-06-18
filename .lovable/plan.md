@@ -1,57 +1,41 @@
-# Make threadandstack.com findable by humans and LLMs
+## Plan: make Thread & Stack crawlable at the actual URLs
 
-## Goal
-Every public page that's in the main navigation or the sitemap returns full HTML on first request — with a unique title, description, canonical, OG tags, and structured data — so Google, Bing, GPTBot, ClaudeBot, PerplexityBot, and Google-Extended index real content instead of an empty React shell.
+Claude and ChatGPT are seeing the key problem correctly: the public routes still return a mostly empty React shell to non-JavaScript crawlers. `/llms-full.txt` is useful, but it does not replace crawlable HTML at `/services`, `/blog`, `/notion-hackathon-london`, etc.
 
-## Current state
-- Static SPA (Vite + React Router). Crawlers without JS see only `index.html`.
-- `react-helmet-async` is installed and the provider is wired, but only 6 of ~30 public pages set per-route head tags.
-- `index.html` has a typo: the favicon `<link>` tags sit *after* `</head>` — they belong inside.
-- `public/sitemap.xml` is generated; `public/robots.txt` exists; no `llms.txt`; no pre-rendering.
+### What I’ll change
 
-## Scope — three layers
+1. **Add static HTML snapshots for public routes**
+   - Use a Vite-compatible prerender step that renders the app after build and writes real HTML into `dist/<route>/index.html`.
+   - Keep the live site as a React app for users, but give crawlers full page content in the initial HTML.
 
-### 1. Per-route head tags (`<Helmet>`) on every public page
-For each route in the sitemap (and every nav page), add a `<Helmet>` block with:
-- Unique `<title>` (≤60 chars, keyword first)
-- Unique `<meta name="description">` (≤160 chars, outcome-led, no em dash per copy rules)
-- Self-referencing `<link rel="canonical">` and `<meta property="og:url">`
-- `og:title`, `og:description`, `og:type` (article for blog posts, website otherwise)
-- JSON-LD per page type: `WebSite` + `Organization` on `/`, `Article` + `BreadcrumbList` on blog posts, `Service` on service/retainer pages, `Event` on event pages (Hackathon, Devotion, Charity Meetup), `Person` on About, `FAQPage` where FAQs exist.
+2. **Prerender every indexable route**
+   - Include main navigation and sitemap routes.
+   - Include blog index and published blog post routes.
+   - Exclude private/admin/proposal/onboarding/thank-you/variant routes already blocked in `robots.txt`.
 
-Pages covered (matches sitemap, excludes admin/auth/internal):
-`/`, `/about`, `/how-i-work`, `/services`, `/work-with-me`, `/workshops`, `/blog`, `/blog/:slug`, `/collective`, `/favourite-fiction`, `/momentum-map`, `/retainer/launch`, `/retainer/startup`, `/retainer/scaleup`, `/notion-hackathon-london`, `/notion-devotion-brighton`, `/notion-masterclass`, `/charity-meetup-april26`, `/unleash-your-team`, `/blueprint/become-united`, `/scorecard`, `/portfolio/creative`, `/portfolio/notion`, `/intro-call`, `/privacy`, `/data-guarantee`.
+3. **Keep `/sitemap.xml`, `/llms.txt`, and `/llms-full.txt` aligned**
+   - Ensure the prerender route list matches the sitemap and LLM files.
+   - Add the full LLM document reference where helpful without relying on it as the only crawl path.
 
-To stay DRY, add a small `<PageSeo>` helper component (`src/components/seo/PageSeo.tsx`) that takes `{ title, description, path, ogType?, jsonLd? }` and renders the Helmet block consistently.
+4. **Fix stale positioning risk**
+   - Review the generated summaries in `scripts/generate-llms-full.ts` against the current public positioning, because Perplexity surfaced older language and the file currently contains some service names that may not match the new site direction.
+   - Keep copy factual and current, with the two-pillar positioning from project memory unless the page itself says otherwise.
 
-### 2. Build-time pre-rendering (the LLM fix)
-Add `vite-plugin-prerender` (or `react-snap`) so each public route is crawled with a headless browser at build time and written to `dist/<route>/index.html`. Result: GPTBot/ClaudeBot/PerplexityBot/Google-Extended hit a fully-populated HTML document, not the JS shell. Real users still get the SPA experience after hydration.
+5. **Validate crawler-visible output**
+   - Run the generator/build flow locally.
+   - Check sample generated HTML for `/`, `/services`, `/blog`, and `/notion-hackathon-london` to confirm the body contains readable content without executing JavaScript.
+   - Confirm `robots.txt` and `sitemap.xml` remain accessible and point to `https://threadandstack.com`.
 
-Dynamic routes:
-- Blog: enumerate slugs from `blog_posts_cache` (same source the sitemap script already uses) and pre-render each one.
-- Portfolio: pre-render the index pages only (`/portfolio/creative`, `/portfolio/notion`); individual `:itemId` views are drawer-driven from the index, so crawlers reach the content there.
+### Technical approach
 
-Exclude: `/admin/*`, `/private/*`, `/proposal/*`, `/depreciate/*`, `/home-draft*`, `/onboarding/*`, `/v/*`, `/unsubscribe`, `/power-hour/thank-you`, `/thread-demo`, `/brand-book`.
+- Prefer `vite-plugin-prerender` if it works cleanly with the existing Vite setup.
+- If that proves brittle, add a small custom post-build Playwright prerender script that:
+  - serves the built app locally,
+  - visits each public route,
+  - waits for content to render,
+  - writes the rendered DOM to route-specific `index.html` files.
+- Keep this as a build-time step only. No backend migration and no move to Next.js/Remix in this pass.
 
-### 3. `/llms.txt`
-Add `public/llms.txt` listing the same public routes (grouped: Pages, Services, Events, Portfolio, Journal, Optional) with one-line descriptions. Complements pre-rendering for LLM tools that respect the convention.
+### Outcome
 
-### 4. Small cleanup
-- Move the favicon `<link>` tags inside `<head>` in `index.html`.
-- Verify `robots.txt` doesn't block GPTBot/ClaudeBot/PerplexityBot/Google-Extended (we want them allowed — this is a marketing site).
-
-## Technical notes
-- Pre-rendering runs at `npm run build`. Notion-sourced content updates flow on the next publish (already true for sitemap — consistent behaviour).
-- Pages that read query params or auth state still hydrate normally; pre-render captures the unauthenticated default view.
-- `index.html`'s sitewide `og:*` stays as the fallback for social crawlers (LinkedIn/Slack), which don't run JS — per-route Helmet tags override for everything else.
-- No business logic changes. No design changes. No backend/DB changes.
-
-## Out of scope
-- Migrating to Next.js / Remix (we discussed; not the right trade-off now).
-- Editing copy on individual pages beyond title/description metadata. If you want me to also polish on-page H1/intro copy for SEO on specific pages, point me at them in a follow-up.
-
-## Order of execution
-1. Fix `index.html` head, create `PageSeo` helper.
-2. Add `<Helmet>`/`PageSeo` to every public page missing it.
-3. Add `public/llms.txt`.
-4. Add pre-rendering plugin + config, verify a sample built route contains real HTML.
+Fresh crawls of real URLs should return meaningful HTML body content, page-level metadata, structured data, sitemap coverage, and LLM-friendly plain text rather than only the JavaScript shell.
