@@ -335,32 +335,22 @@ const UnleashYourTeamDraft2Page = () => {
           </div>
         </section>
 
-        {/* EMAIL GATE + RESOURCES */}
+        {/* NEWSLETTER WAITLIST */}
         <section className="border-b border-hairline">
-          <div className="mx-auto max-w-4xl px-6 py-20 md:py-28">
-            <SectionLabel>Free starter pack</SectionLabel>
-            <h2 className="font-serif-pro italic text-4xl md:text-5xl tracking-tight mb-10">
-              Three resources to begin with
+          <div className="mx-auto max-w-3xl px-6 py-20 md:py-28">
+            <SectionLabel>Coming soon</SectionLabel>
+            <h2 className="font-serif-pro italic text-4xl md:text-5xl tracking-tight mb-6">
+              Join the newsletter waitlist
             </h2>
+            <p className="mb-8 max-w-2xl text-[16px] leading-relaxed text-ink-soft">
+              A new newsletter for purpose-driven teams putting AI to work, without losing the
+              human thread. Prompts, patterns, and honest notes from the field. Pop your email
+              in to be the first to know when it launches.
+            </p>
 
-            {!unlocked && (
-              <div className="mb-8 rounded-2xl border border-hairline bg-paper/40 p-6 md:p-8 backdrop-blur-sm">
-                <div className="flex items-start gap-3">
-                  <div className="grid h-10 w-10 shrink-0 place-items-center rounded-lg border border-hairline bg-background/70 text-indigo">
-                    <Lock className="h-5 w-5" />
-                  </div>
-                  <div className="space-y-1">
-                    <h3 className="font-serif-pro italic text-xl md:text-2xl">
-                      Join the mailing list to unlock
-                    </h3>
-                    <p className="text-[14.5px] text-ink-soft leading-relaxed">
-                      Pop your email in once and all three resources unlock below. No spam, just
-                      occasional, useful notes for purpose-driven teams.
-                    </p>
-                  </div>
-                </div>
-
-                <form onSubmit={handleUnlock} className="relative mt-5 space-y-3">
+            {!joined ? (
+              <div className="rounded-2xl border border-hairline bg-paper/40 p-6 md:p-8 backdrop-blur-sm">
+                <form onSubmit={handleJoinWaitlist} className="relative space-y-3">
                   <Input
                     type="email"
                     placeholder="your@email.com"
@@ -371,13 +361,13 @@ const UnleashYourTeamDraft2Page = () => {
                   />
                   <div className="flex items-start gap-2">
                     <Checkbox
-                      id="unleash-d2-consent"
+                      id="unleash-d2-waitlist-consent"
                       checked={consent}
                       onCheckedChange={(c) => setConsent(c === true)}
                       className="mt-0.5"
                     />
                     <Label
-                      htmlFor="unleash-d2-consent"
+                      htmlFor="unleash-d2-waitlist-consent"
                       className="cursor-pointer text-xs sm:text-sm leading-tight text-muted-foreground"
                     >
                       I agree to be emailed by Thread &amp; Stack
@@ -391,7 +381,7 @@ const UnleashYourTeamDraft2Page = () => {
                       backgroundImage: "linear-gradient(95deg, var(--gradient-3color))",
                     }}
                   >
-                    {isSubmitting ? "Unlocking…" : "Unlock resources"}
+                    {isSubmitting ? "Adding you…" : "Join the waitlist"}
                     <span className="inline-flex w-0 items-center justify-center overflow-hidden opacity-0 scale-75 transition-all duration-300 group-hover:w-5 group-hover:opacity-100 group-hover:scale-100 group-hover:ml-1.5">
                       <ArrowRight className="h-4 w-4 shrink-0" />
                     </span>
@@ -411,55 +401,21 @@ const UnleashYourTeamDraft2Page = () => {
                   Unsubscribe any time. We never share your data.
                 </p>
               </div>
-            )}
-
-            {unlocked && (
-              <div className="mb-4 inline-flex items-center gap-2 text-xs font-medium text-indigo">
-                <Check className="h-3.5 w-3.5" />
-                Resources unlocked for this session
+            ) : (
+              <div className="rounded-2xl border border-hairline bg-paper/40 p-6 md:p-8 backdrop-blur-sm">
+                <div className="inline-flex items-center gap-2 text-sm font-medium text-indigo">
+                  <Check className="h-4 w-4" />
+                  You're on the waitlist
+                </div>
+                <p className="mt-3 text-[14.5px] text-ink-soft leading-relaxed">
+                  Thanks for signing up. I'll be in touch as soon as the first issue is ready.
+                </p>
               </div>
             )}
-
-            <div className="grid gap-4 md:grid-cols-3">
-              {RESOURCES.map((r) => {
-                const Icon = r.icon;
-                const isLocked = !unlocked;
-                return (
-                  <div
-                    key={r.title}
-                    className="flex flex-col rounded-2xl border border-hairline bg-paper/40 p-6 backdrop-blur-sm transition-colors hover:border-indigo/40"
-                  >
-                    <div className="grid h-10 w-10 place-items-center rounded-lg border border-hairline bg-background/60 text-indigo">
-                      <Icon className="h-5 w-5" />
-                    </div>
-                    <h3 className="mt-4 font-serif-pro italic text-2xl">{r.title}</h3>
-                    <p className="mt-2 flex-1 text-[14px] leading-relaxed text-ink-soft">
-                      {r.description}
-                    </p>
-                    <div className="mt-5">
-                      {isLocked ? (
-                        <div className="inline-flex items-center gap-2 rounded-full border border-dashed border-hairline px-3 py-1.5 text-xs text-muted-foreground">
-                          <Lock className="h-3.5 w-3.5" />
-                          Join the list above to unlock
-                        </div>
-                      ) : (
-                        <a
-                          href={r.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="group inline-flex items-center text-[14px] font-medium text-indigo hover:text-indigo/80"
-                        >
-                          {r.cta}
-                          <ArrowRight className="ml-1.5 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
           </div>
         </section>
+
+
 
         {/* HOW I THINK ABOUT AI */}
         <section className="border-b border-hairline">
