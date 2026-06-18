@@ -1,3 +1,4 @@
+import { PageSeo } from "@/components/seo/PageSeo";
 import { useState, useEffect } from "react";
 import { Compass, Linkedin, ArrowRight, GraduationCap, Zap, FileStack, Sparkles, Brain, Mail, Lock, Check } from "lucide-react";
 import { PillButton } from "@/components/ui/pill-button";

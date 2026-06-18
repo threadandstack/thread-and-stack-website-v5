@@ -1,3 +1,4 @@
+import { PageSeo } from "@/components/seo/PageSeo";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { ArrowRight, Sun, Moon, AlertTriangle, ChevronLeft, ChevronRight, Brain, Bot, Workflow, Monitor } from "lucide-react";
 import { LogoTilt } from "@/components/home-draft2/LogoTilt";

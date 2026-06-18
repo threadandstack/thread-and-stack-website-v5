@@ -1,3 +1,4 @@
+import { PageSeo } from "@/components/seo/PageSeo";
 import { useEffect, useRef, useState } from "react";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";

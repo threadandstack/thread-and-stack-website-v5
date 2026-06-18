@@ -1,3 +1,4 @@
+import { PageSeo } from "@/components/seo/PageSeo";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { PortfolioGallery } from "@/components/PortfolioGallery";

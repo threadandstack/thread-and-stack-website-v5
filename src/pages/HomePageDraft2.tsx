@@ -1,3 +1,4 @@
+import { PageSeo } from "@/components/seo/PageSeo";
 import { useState, useEffect } from "react";
 import { Sun, Moon } from "lucide-react";
 import { Navigation } from "@/components/Navigation";

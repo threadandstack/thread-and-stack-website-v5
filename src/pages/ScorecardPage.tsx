@@ -1,3 +1,4 @@
+import { PageSeo } from "@/components/seo/PageSeo";
 import { useState } from "react";
 import { Sun, Moon, ArrowLeft, Gauge } from "lucide-react";
 import { Link } from "react-router-dom";

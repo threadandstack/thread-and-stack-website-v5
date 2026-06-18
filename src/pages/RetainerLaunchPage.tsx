@@ -1,3 +1,4 @@
+import { PageSeo } from "@/components/seo/PageSeo";
 import { Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import WhiteStacked from "@/assets/logos/White_TS_Stacked.svg";
