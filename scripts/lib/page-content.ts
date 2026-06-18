@@ -16,6 +16,12 @@ export interface PageContent {
   // Optional pricing or event details for JSON-LD enrichment.
   eventLocation?: string;
   eventStartDate?: string;
+  // If set, this URL is a legacy/redirect alias. Prerender will set canonical
+  // + og:url to redirectTo, emit noindex,follow, and skip JSON-LD. Body still
+  // renders so LLMs that land here get real text instead of homepage boilerplate.
+  redirectTo?: string;
+  // Optional breadcrumb section. Used to emit BreadcrumbList JSON-LD.
+  breadcrumb?: { name: string; path: string };
 }
 
 export const SITE = "https://threadandstack.com";
