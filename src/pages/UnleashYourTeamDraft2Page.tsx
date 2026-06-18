@@ -35,7 +35,7 @@ const UnleashYourTeamDraft2Page = () => {
   const toggleTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
 
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [unlocked, setUnlocked] = useState(false);
+  const [joined, setJoined] = useState(false);
   const [email, setEmail] = useState("");
   const [consent, setConsent] = useState(false);
   const [honeypot, setHoneypot] = useState("");
@@ -48,13 +48,13 @@ const UnleashYourTeamDraft2Page = () => {
     const book = params.get("book");
     if (book === "1" || book === "true" || book === "yes") setDrawerOpen(true);
     try {
-      if (sessionStorage.getItem(UNLOCK_STORAGE_KEY) === "1") setUnlocked(true);
+      if (sessionStorage.getItem(WAITLIST_STORAGE_KEY) === "1") setJoined(true);
     } catch {
       /* ignore */
     }
   }, []);
 
-  const handleUnlock = async (e: React.FormEvent) => {
+  const handleJoinWaitlist = async (e: React.FormEvent) => {
     e.preventDefault();
     if (honeypot) return;
     if (!consent) {
@@ -71,13 +71,13 @@ const UnleashYourTeamDraft2Page = () => {
       const submittedAt = new Date().toISOString();
       const { error } = await supabase.from("leads").insert({
         email,
-        source: "unleash-your-team-draft2",
-        message: "Unlocked AI starter pack resources",
+        source: "unleash-your-team-draft2-waitlist",
+        message: "Joined newsletter waitlist",
       });
       if (error) throw error;
-      setUnlocked(true);
+      setJoined(true);
       try {
-        sessionStorage.setItem(UNLOCK_STORAGE_KEY, "1");
+        sessionStorage.setItem(WAITLIST_STORAGE_KEY, "1");
       } catch {
         /* ignore */
       }
@@ -87,7 +87,7 @@ const UnleashYourTeamDraft2Page = () => {
           body: {
             templateName: "unleash-resources-confirmation",
             recipientEmail: email,
-            idempotencyKey: `unleash-confirm-${leadId}`,
+            idempotencyKey: `unleash-waitlist-${leadId}`,
           },
         })
         .catch((err) => console.error("Visitor confirmation email failed", err));
@@ -97,11 +97,11 @@ const UnleashYourTeamDraft2Page = () => {
           body: {
             templateName: "unleash-lead-admin-notification",
             recipientEmail: "br@brendanrodgers.uk",
-            idempotencyKey: `unleash-admin-${leadId}`,
+            idempotencyKey: `unleash-waitlist-admin-${leadId}`,
             templateData: {
               email,
-              source: "unleash-your-team-draft2",
-              message: "Unlocked AI starter pack resources",
+              source: "unleash-your-team-draft2-waitlist",
+              message: "Joined newsletter waitlist",
               submittedAt,
             },
           },
@@ -109,22 +109,21 @@ const UnleashYourTeamDraft2Page = () => {
         .catch((err) => console.error("Admin notification email failed", err));
 
       toast({
-        title: "Resources unlocked",
-        description: "Thanks — links are open below, and on their way to your inbox.",
+        title: "You're on the waitlist",
+        description: "Thanks — I'll be in touch when the newsletter launches.",
       });
     } catch (err) {
-      console.error("Lead capture failed:", err);
-      setUnlocked(true);
-      try {
-        sessionStorage.setItem(UNLOCK_STORAGE_KEY, "1");
-      } catch {
-        /* ignore */
-      }
-      toast({ title: "Resources unlocked", description: "Links are open below." });
+      console.error("Waitlist signup failed:", err);
+      toast({
+        title: "Something went wrong",
+        description: "Please try again in a moment.",
+        variant: "destructive",
+      });
     } finally {
       setIsSubmitting(false);
     }
   };
+
 
   return (
     <div className="notion-canvas min-h-screen overflow-x-hidden" data-theme={theme}>
