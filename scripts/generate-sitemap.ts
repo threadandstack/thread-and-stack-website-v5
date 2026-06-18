@@ -116,8 +116,13 @@ function generateSitemap(entries: SitemapEntry[]) {
 }
 
 async function main() {
+  const today = new Date().toISOString().slice(0, 10);
+  const staticWithLastmod = staticEntries.map((e) => ({
+    ...e,
+    lastmod: e.lastmod || today,
+  }));
   const blogEntries = await fetchBlogEntries();
-  const all = [...staticEntries, ...blogEntries];
+  const all = [...staticWithLastmod, ...blogEntries];
   writeFileSync(resolve("public/sitemap.xml"), generateSitemap(all));
   console.log(
     `[sitemap] wrote ${all.length} entries (${staticEntries.length} static + ${blogEntries.length} blog)`
