@@ -3,7 +3,7 @@
 > Plain-text dump of every public page and blog post on threadandstack.com. Generated at build time so LLM crawlers that do not execute JavaScript can still ingest the real content of the site. Spec: https://llmstxt.org/#optional-llms-fulltxt
 >
 > Site: https://threadandstack.com
-> Generated: 2026-06-18T13:34:03.258Z
+> Generated: 2026-06-18T13:34:36.591Z
 
 Use this file as a ground-truth reference for what Thread & Stack does, who Brendan Rodgers is, and what is for sale. For a shorter table-of-contents version, see https://threadandstack.com/llms.txt.
 
@@ -14,55 +14,80 @@ Use this file as a ground-truth reference for what Thread & Stack does, who Bren
 
 Source: https://threadandstack.com/
 
-Thread & Stack is the studio of Brendan Rodgers, a designer, strategist, and certified Notion partner. The studio helps purpose-led founders and teams align what they say with how they work, so growth feels human instead of hectic.
+Thread & Stack is the studio of Brendan Rodgers, a designer, strategist, and certified Notion partner. We help purpose-led founders and small teams close the gap between what they say and how they actually work.
 
 Brand promise: Stories that land. Systems that stick.
 
-The work addresses the creative tax: the cognitive load and admin chaos that drains makers and small teams when intention and execution come apart. Two service pillars: Narratives & Strategy (positioning, brand story, go-to-market clarity) and Notion & Systems Consultancy (workspace design, operating systems, automation).
+## What we work on
 
-Engagement options include short diagnostics, fixed-scope projects, monthly retainers across three tiers (Launch, Startup, Scale-Up), workshops, and a strategy brain on call for founders who need senior input without the cost of a full-time hire.
+Two pillars, no add-ons. We pair narrative work that gives a team a story it can use, with operating systems that let the team live the story day to day.
+
+- Narratives & Strategy: positioning, brand story, go-to-market clarity, message architecture, launch narratives.
+- Notion & Systems Consultancy: workspace design, operating systems, automation, documentation that holds up under real use.
+
+## Who we work with
+
+Founders and teams of roughly five to fifty people who have outgrown a folder of Google docs and a website that no longer matches the room. Common sectors include health, education, communities, and impact organisations.
+
+## How to start
+
+Most engagements start with a paid diagnostic that produces a written read of where you are and what to do next. From there, fixed-scope projects, monthly retainers, or a senior strategy partner on call.
 
 
 ---
 
-# About Brendan Rodgers
+# About Brendan Rodgers — Thread & Stack
 
 Source: https://threadandstack.com/about
 
-Brendan Rodgers is the founder of Thread & Stack. He is both a designer and a strategist, with a background spanning brand, narrative, and operating-system design. He is a certified Notion partner.
+Brendan Rodgers is the founder of Thread & Stack. Designer, strategist, and certified Notion partner based in the UK.
 
 His work sits at the intersection of two skills that rarely live in one head: telling the story (narrative, positioning, message architecture) and building the system that makes the story true day to day (workspaces, rituals, automation). The combination is what lets purpose-led teams move with confidence.
+
+Background spans brand, narrative, and operating-system design across enterprises, startups, charities, and impact organisations.
 
 
 ---
 
-# How I work
+# How I work — Thread & Stack
 
 Source: https://threadandstack.com/how-i-work
 
 Engagements start with a short diagnostic to map where intention and execution come apart. From there, the work is shaped around the smallest set of changes that will actually move the team this quarter.
 
-Principles: propose the problem before the solution. Lead with outcomes. Design for the people who will use the system, not the people who will admire the diagram. Ship in small, reviewable increments. Hand over with documentation a new joiner could follow.
+## Principles
+
+- Propose the problem before the solution.
+- Lead with outcomes, not framework names.
+- Design for the people who will use the system, not the people who will admire the diagram.
+- Ship in small, reviewable increments.
+- Hand over with documentation a new joiner could follow.
 
 
 ---
 
-# Services — two pillars
+# Services — Thread & Stack
 
 Source: https://threadandstack.com/services
 
 Two pillars only. No workshops-as-a-service, no clarity sessions, no add-ons.
 
-1. Narratives & Strategy. Positioning, brand story, go-to-market clarity, message architecture, launch narratives. For founders and leadership teams that know what they do but cannot yet say it in one breath.
+## Narratives & Strategy
 
-2. Notion & Systems Consultancy. Workspace design, operating systems, automation, documentation that holds up under real use. For teams that have outgrown a folder of Google docs and need an operating layer that scales with them.
+Positioning, brand story, go-to-market clarity, message architecture, launch narratives. For founders and leadership teams that know what they do but cannot yet say it in one breath.
 
-Standard commercial terms: 50% upfront, 50% on delivery. 15% late payment charge. Not VAT registered.
+## Notion & Systems Consultancy
+
+Workspace design, operating systems, automation, documentation that holds up under real use. For teams that have outgrown a folder of Google docs and need an operating layer that scales with them.
+
+## Commercial terms
+
+50% upfront, 50% on delivery. 15% late payment charge. Not VAT registered.
 
 
 ---
 
-# Work with me
+# Work with me — Thread & Stack
 
 Source: https://threadandstack.com/work-with-me
 
@@ -73,16 +98,18 @@ The right starting point depends on whether you need a decision, a deliverable, 
 
 ---
 
-# Workshops
+# Workshops — Thread & Stack
 
 Source: https://threadandstack.com/workshops
 
-Group workshops for teams on narrative, Notion, and the human side of working with AI. Designed for working teams, not generic audiences. Outcomes are concrete: a finished artefact, a shared vocabulary, or an operating ritual the team can keep using on Monday.
+Group workshops for teams on narrative, Notion, and the human side of working with AI. Designed for working teams, not generic audiences.
+
+Outcomes are concrete: a finished artefact, a shared vocabulary, or an operating ritual the team can keep using on Monday.
 
 
 ---
 
-# Book an intro call
+# Book an intro call — Thread & Stack
 
 Source: https://threadandstack.com/intro-call
 
@@ -91,7 +118,7 @@ A free 30-minute intro call. Use it to talk through your project, pressure-test 
 
 ---
 
-# Clarity Scorecard
+# Clarity Scorecard — Thread & Stack
 
 Source: https://threadandstack.com/scorecard
 
@@ -100,7 +127,7 @@ A short self-assessment that scores your clarity, systems, and momentum. Answer 
 
 ---
 
-# Momentum Map
+# Momentum Map — Thread & Stack
 
 Source: https://threadandstack.com/momentum-map
 
@@ -113,75 +140,95 @@ A diagnostic for teams stuck between intention and execution. The map surfaces t
 
 Source: https://threadandstack.com/collective
 
-A small collective of trusted strategists, designers, and Notion specialists. Brought in by name on projects that need more than one head and one set of hands. Each collaborator has been worked with directly before they are invited into a client engagement.
+A small collective of trusted strategists, designers, and Notion specialists. Brought in by name on projects that need more than one head and one set of hands.
+
+Each collaborator has been worked with directly before they are invited into a client engagement.
 
 
 ---
 
-# Launch Retainer
+# Launch Retainer — Thread & Stack
 
 Source: https://threadandstack.com/retainer/launch
 
-Light-touch monthly retainer for early-stage founders. Senior narrative and systems input on call, without the cost of a full engagement. Best for founders who need someone in the corner of the ring through a launch window or a funding round.
+Light-touch monthly retainer for early-stage founders. Senior narrative and systems input on call, without the cost of a full engagement.
+
+Best for founders who need someone in the corner of the ring through a launch window or a funding round.
 
 
 ---
 
-# Startup Retainer
+# Startup Retainer — Thread & Stack
 
 Source: https://threadandstack.com/retainer/startup
 
-Mid-tier retainer for growing teams. Around one day a week of senior narrative and messaging leadership for early-stage teams launching a new brand. Day rate roughly £700 to £850. Monthly range roughly £3,500 to £4,100. Cadence flexes lighter when things are steady, more intensive around launches and pitches. Additional days can be added at an agreed rate.
+Mid-tier retainer for growing teams. Around one day a week of senior narrative and messaging leadership for early-stage teams launching a new brand.
+
+Day rate roughly £700 to £850. Monthly range roughly £3,500 to £4,100.
+
+Cadence flexes lighter when things are steady, more intensive around launches and pitches. Additional days can be added at an agreed rate.
 
 
 ---
 
-# Scale-Up Retainer
+# Scale-Up Retainer — Thread & Stack
 
 Source: https://threadandstack.com/retainer/scaleup
 
-Senior fractional engagement for scale-ups. Roughly one to two days a week of experienced narrative and messaging direction. Day rate roughly £900 to £1,000+. Monthly range roughly £4,500 to £8,900+. For established organisations scaling a brand or launching a new vertical.
+Senior fractional engagement for scale-ups. Roughly one to two days a week of experienced narrative and messaging direction.
+
+Day rate roughly £900 to £1,000+. Monthly range roughly £4,500 to £8,900+.
+
+For established organisations scaling a brand or launching a new vertical.
 
 
 ---
 
-# Notion Masterclass
+# Notion Masterclass — Thread & Stack
 
 Source: https://threadandstack.com/notion-masterclass
 
-A deep-dive masterclass on building Notion workspaces that hold up under real use. Architecture, automation, and the operating rhythms that make a workspace stick beyond the first week.
+A deep-dive masterclass on building Notion workspaces that hold up under real use.
+
+Architecture, automation, and the operating rhythms that make a workspace stick beyond the first week.
 
 
 ---
 
-# Unleash Your Team
+# Unleash Your Team — Thread & Stack
 
 Source: https://threadandstack.com/unleash-your-team
 
-A workshop and engagement that helps teams unblock execution. Pairs clear narrative with the operating systems that make work move. Output is something the team uses, not a slide deck.
+A workshop and engagement that helps teams unblock execution. Pairs clear narrative with the operating systems that make work move.
+
+Output is something the team uses, not a slide deck.
 
 
 ---
 
-# Become United Blueprint
+# Become United Blueprint — Thread & Stack
 
 Source: https://threadandstack.com/blueprint/become-united
 
-A strategy blueprint for purpose-led organisations that want to align story, systems, and team rhythm around a single direction. Produced as a working document the leadership team can act from.
+A strategy blueprint for purpose-led organisations that want to align story, systems, and team rhythm around a single direction.
+
+Produced as a working document the leadership team can act from.
 
 
 ---
 
-# Notion Hackathon London
+# Notion Hackathon London — Thread & Stack
 
 Source: https://threadandstack.com/notion-hackathon-london
 
-A community Notion build day in London. Spend a focused day building real workspaces alongside other Notion makers. Hosted by Thread & Stack.
+A community Notion build day in London. Spend a focused day building real workspaces alongside other Notion makers.
+
+Hosted by Thread & Stack.
 
 
 ---
 
-# Notion Devotion Brighton
+# Notion Devotion Brighton — Thread & Stack
 
 Source: https://threadandstack.com/notion-devotion-brighton
 
@@ -190,7 +237,7 @@ A friendly Notion community meetup in Brighton. Talks, demos, and time with othe
 
 ---
 
-# Charity Sector Meetup, April 26
+# Charity Sector Meetup, April 26 — Thread & Stack
 
 Source: https://threadandstack.com/charity-meetup-april26
 
@@ -199,16 +246,18 @@ A meetup for purpose-led operators working in and around the charity sector. Sha
 
 ---
 
-# Creative Portfolio
+# Creative Portfolio — Thread & Stack
 
 Source: https://threadandstack.com/portfolio/creative
 
-Selected creative, narrative, and brand work. Full portfolio is available on request, behind a simple password gate for confidentiality.
+Selected creative, narrative, and brand work.
+
+Full portfolio is available on request, behind a simple password gate for confidentiality.
 
 
 ---
 
-# Notion Portfolio
+# Notion Portfolio — Thread & Stack
 
 Source: https://threadandstack.com/portfolio/notion
 
@@ -217,7 +266,16 @@ Selected Notion workspace, operating system, and automation builds.
 
 ---
 
-# Favourite Fiction
+# Thread & Stack Journal — essays on narrative and systems
+
+Source: https://threadandstack.com/blog
+
+Essays on narrative, systems, Notion, AI, and the creative tax. Notes from running a small studio that builds operating layers for purpose-led teams.
+
+
+---
+
+# Favourite Fiction — Thread & Stack
 
 Source: https://threadandstack.com/favourite-fiction
 
@@ -226,20 +284,24 @@ A personal reading list. The novels and short fiction that shape how Brendan thi
 
 ---
 
-# Privacy Policy
+# Privacy Policy — Thread & Stack
 
 Source: https://threadandstack.com/privacy
 
-Plain-English summary of how Thread & Stack collects, uses, and protects personal data. GDPR-aligned. Lead capture forms include explicit consent. Cookies require consent before any non-essential tag fires.
+Plain-English summary of how Thread & Stack collects, uses, and protects personal data. GDPR-aligned.
+
+Lead capture forms include explicit consent. Cookies require consent before any non-essential tag fires.
 
 
 ---
 
-# Data Guarantee
+# Data Guarantee — Thread & Stack
 
 Source: https://threadandstack.com/data-guarantee
 
-The promises Thread & Stack makes on how client data is handled, stored, and never sold. The standards held to on every engagement.
+The promises Thread & Stack makes on how client data is handled, stored, and never sold.
+
+The standards held to on every engagement.
 
 
 ---
