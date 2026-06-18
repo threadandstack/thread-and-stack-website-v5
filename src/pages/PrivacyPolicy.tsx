@@ -1,3 +1,4 @@
+import { PageSeo } from "@/components/seo/PageSeo";
 import { useEffect, useState, useMemo } from "react";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
@@ -47,6 +48,11 @@ const PrivacyPolicy = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <PageSeo
+        title="Privacy Policy — Thread & Stack"
+        description="How Thread & Stack collects, uses, and protects your personal data. GDPR-aligned, plain English."
+        path="/privacy"
+      />
       <Navigation />
       
       <main className="pt-32 pb-20 px-6">

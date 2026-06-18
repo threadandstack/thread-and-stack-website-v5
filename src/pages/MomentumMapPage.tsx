@@ -1,3 +1,4 @@
+import { PageSeo } from "@/components/seo/PageSeo";
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
@@ -353,6 +354,11 @@ const MomentumMapPage = () => {
 
   return (
     <>
+      <PageSeo
+        title="Momentum Map — diagnostic for stuck teams"
+        description="A short diagnostic that maps where intention and execution come apart. Use it to pinpoint the one shift that will move your team this quarter."
+        path="/momentum-map"
+      />
       <div className="bg-background min-h-screen text-foreground relative overflow-hidden">
         {/* Subtle grid texture */}
         <div className="fixed inset-0 z-0 pointer-events-none opacity-[0.04]"

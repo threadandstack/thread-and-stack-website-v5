@@ -1,3 +1,4 @@
+import { PageSeo } from "@/components/seo/PageSeo";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { ArrowRight, Sun, Moon, AlertTriangle, ChevronLeft, ChevronRight, Brain, Bot, Workflow, Monitor } from "lucide-react";
 import { LogoTilt } from "@/components/home-draft2/LogoTilt";
@@ -332,6 +333,11 @@ const BecomeUnitedBlueprintPage = () => {
 
   return (
     <div className="notion-canvas min-h-screen overflow-x-hidden" data-theme={theme}>
+      <PageSeo
+        title="Become United — strategy blueprint"
+        description="A strategy blueprint for purpose-led organisations that want to align story, systems, and team rhythm around a single direction."
+        path="/blueprint/become-united"
+      />
       <Navigation variant={theme === "dark" ? "image-hero" : "default"} hideLogo />
 
       <main>

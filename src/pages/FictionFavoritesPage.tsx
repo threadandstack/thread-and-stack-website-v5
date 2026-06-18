@@ -1,3 +1,4 @@
+import { PageSeo } from "@/components/seo/PageSeo";
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -441,6 +442,11 @@ export default function FictionFavoritesPage() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col overflow-x-hidden">
+      <PageSeo
+        title="Favourite Fiction — a reading list from Thread & Stack"
+        description="A personal reading list. The novels and short fiction that shape how I think about narrative, character, and the systems people build to live inside."
+        path="/favourite-fiction"
+      />
       <Navigation variant="dark" />
       
       {/* DESKTOP LAYOUT - scrollable double-height experience */}

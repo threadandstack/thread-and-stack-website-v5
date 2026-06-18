@@ -1,3 +1,4 @@
+import { PageSeo } from "@/components/seo/PageSeo";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { PortfolioGallery } from "@/components/PortfolioGallery";
@@ -11,6 +12,11 @@ const CreativePortfolioPage = () => {
 
   return (
     <PasswordGate storageKey="portfolio-creative-unlocked" portfolio="creative">
+      <PageSeo
+        title="Creative Portfolio — Thread & Stack"
+        description="Selected creative, narrative, and brand work from Thread & Stack. Request access for the full portfolio."
+        path="/portfolio/creative"
+      />
       <div className="min-h-screen bg-background">
         <Navigation />
 

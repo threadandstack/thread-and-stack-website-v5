@@ -1,3 +1,4 @@
+import { PageSeo } from "@/components/seo/PageSeo";
 import { useState, useEffect } from "react";
 import { Linkedin, ArrowRight, GraduationCap, Zap, FileStack, Sparkles, Brain, Mail, Lock, Check, Percent, Scissors } from "lucide-react";
 import { PillButton } from "@/components/ui/pill-button";
@@ -126,6 +127,11 @@ const UnleashYourTeamPage = () => {
 
   return (
     <div className="dark min-h-screen bg-background text-foreground">
+      <PageSeo
+        title="Unleash Your Team — strategy + systems workshop"
+        description="A focused workshop and engagement that helps teams unblock execution. Pair clear narrative with the operating systems that make work move."
+        path="/unleash-your-team"
+      />
       <PaymentTestModeBanner />
       <main className="max-w-2xl mx-auto px-4 sm:px-6 pt-12 pb-16 sm:py-20 space-y-8 sm:space-y-10">
         {/* Avatar + Logo */}

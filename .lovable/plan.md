@@ -1,62 +1,57 @@
-## What I'm changing and why
+# Make threadandstack.com findable by humans and LLMs
 
-### 1. Move the toggle affordance onto the main title (not the eyebrow)
-The pre-title triangle reads as decoration. Putting the disclosure on the H2 makes the whole title feel like the thing you click, which is the Notion behaviour we want.
+## Goal
+Every public page that's in the main navigation or the sitemap returns full HTML on first request — with a unique title, description, canonical, OG tags, and structured data — so Google, Bing, GPTBot, ClaudeBot, PerplexityBot, and Google-Extended index real content instead of an empty React shell.
 
-- The triangle sits to the **left of the title**, vertically centred against the cap-height of the first line.
-- It's sized to feel like part of the heading (around 0.55em of the title), in the clay tone, and rotates 0° → 90° on open with a 300ms ease.
-- The eyebrow goes back to being a quiet label with no icon.
+## Current state
+- Static SPA (Vite + React Router). Crawlers without JS see only `index.html`.
+- `react-helmet-async` is installed and the provider is wired, but only 6 of ~30 public pages set per-route head tags.
+- `index.html` has a typo: the favicon `<link>` tags sit *after* `</head>` — they belong inside.
+- `public/sitemap.xml` is generated; `public/robots.txt` exists; no `llms.txt`; no pre-rendering.
 
-### 2. "Central yet left-aligned" title block
-Each section's header lives in a fixed-width column (around `max-w-2xl`, ~640px) that is `mx-auto` centred on the page. Inside that column, everything is `text-left`:
+## Scope — three layers
 
-```text
-            ┌────────── max-w-2xl (centred) ──────────┐
-            │ EYEBROW                                  │
-            │ ▸ Big italic title runs here, left edge  │
-            │   shared with eyebrow and divider        │
-            │ ───── (clay divider, left-aligned)       │
-            │ One-line preview when closed.            │
-            └──────────────────────────────────────────┘
-```
+### 1. Per-route head tags (`<Helmet>`) on every public page
+For each route in the sitemap (and every nav page), add a `<Helmet>` block with:
+- Unique `<title>` (≤60 chars, keyword first)
+- Unique `<meta name="description">` (≤160 chars, outcome-led, no em dash per copy rules)
+- Self-referencing `<link rel="canonical">` and `<meta property="og:url">`
+- `og:title`, `og:description`, `og:type` (article for blog posts, website otherwise)
+- JSON-LD per page type: `WebSite` + `Organization` on `/`, `Article` + `BreadcrumbList` on blog posts, `Service` on service/retainer pages, `Event` on event pages (Hackathon, Devotion, Charity Meetup), `Person` on About, `FAQPage` where FAQs exist.
 
-This gives every section the same left edge, so as you scroll the page the titles form a visual spine, while still being optically centred on the page.
+Pages covered (matches sitemap, excludes admin/auth/internal):
+`/`, `/about`, `/how-i-work`, `/services`, `/work-with-me`, `/workshops`, `/blog`, `/blog/:slug`, `/collective`, `/favourite-fiction`, `/momentum-map`, `/retainer/launch`, `/retainer/startup`, `/retainer/scaleup`, `/notion-hackathon-london`, `/notion-devotion-brighton`, `/notion-masterclass`, `/charity-meetup-april26`, `/unleash-your-team`, `/blueprint/become-united`, `/scorecard`, `/portfolio/creative`, `/portfolio/notion`, `/intro-call`, `/privacy`, `/data-guarantee`.
 
-### 3. Reveal behaviour — my recommendation
-I considered three options and want to flag the trade-offs before committing:
+To stay DRY, add a small `<PageSeo>` helper component (`src/components/seo/PageSeo.tsx`) that takes `{ title, description, path, ogType?, jsonLd? }` and renders the Helmet block consistently.
 
-- **Hover-to-peek + click-to-lock** (what you suggested): elegant on desktop, but on touch there is no hover, so the first tap has to act as a click. It also gets twitchy when the mouse passes over several titles quickly — they pop open and shut.
-- **Scroll-to-open**: opens sections as they enter the viewport. Removes user agency and re-floods the page with everything you originally wanted to suppress. I would not recommend this — it defeats the purpose of the toggles.
-- **Click-to-toggle, with a hover *telegraph*** (my recommendation): clicking is the only thing that actually opens or closes a section. On hover, the title gets a subtle signal that it's interactive — triangle tints to clay, divider line breathes out from 64px to ~120px, and a "Reveal" micro-label fades in next to the divider. Nothing structural moves, so the page stays calm and the interaction is identical on touch.
+### 2. Build-time pre-rendering (the LLM fix)
+Add `vite-plugin-prerender` (or `react-snap`) so each public route is crawled with a headless browser at build time and written to `dist/<route>/index.html`. Result: GPTBot/ClaudeBot/PerplexityBot/Google-Extended hit a fully-populated HTML document, not the JS shell. Real users still get the SPA experience after hydration.
 
-I'd build option 3. If after seeing it you still want the actual peek-on-hover, it's a small follow-up: add a 250ms hover-intent timer that previews the body at ~30% height, and lock to full open on click. Happy to do that as a v2.
+Dynamic routes:
+- Blog: enumerate slugs from `blog_posts_cache` (same source the sitemap script already uses) and pre-render each one.
+- Portfolio: pre-render the index pages only (`/portfolio/creative`, `/portfolio/notion`); individual `:itemId` views are drawer-driven from the index, so crawlers reach the content there.
 
-### 4. Fix the panel feather clipping content
-The current 56px mask gradient sits on top of the section's first/last elements, so headings and cards inside fade out instead of appearing fully. Two changes:
+Exclude: `/admin/*`, `/private/*`, `/proposal/*`, `/depreciate/*`, `/home-draft*`, `/onboarding/*`, `/v/*`, `/unsubscribe`, `/power-hour/thank-you`, `/thread-demo`, `/brand-book`.
 
-- **Increase the panel's internal top/bottom padding** to ~96px (md) / 64px (sm), so the feather lives in empty space, never over content.
-- **Shrink the mask feather** slightly (32–40px) and apply it only to the background tint layer, not to the content layer. The tint feathers; the content stays at full opacity.
+### 3. `/llms.txt`
+Add `public/llms.txt` listing the same public routes (grouped: Pages, Services, Events, Portfolio, Journal, Optional) with one-line descriptions. Complements pre-rendering for LLM tools that respect the convention.
 
-Mechanically this means splitting the panel into two stacked layers inside the same container:
+### 4. Small cleanup
+- Move the favicon `<link>` tags inside `<head>` in `index.html`.
+- Verify `robots.txt` doesn't block GPTBot/ClaudeBot/PerplexityBot/Google-Extended (we want them allowed — this is a marketing site).
 
-```text
-┌─ panel wrapper (relative) ─────────────────┐
-│  ┌─ tint layer (absolute inset-0) ─────┐   │   ← mask-image feathers this only
-│  │  bg gradient, ~2.8% foreground      │   │
-│  └─────────────────────────────────────┘   │
-│  ┌─ content layer (relative, pt/pb-24)─┐   │
-│  │  children render here, full opacity │   │
-│  └─────────────────────────────────────┘   │
-└────────────────────────────────────────────┘
-```
+## Technical notes
+- Pre-rendering runs at `npm run build`. Notion-sourced content updates flow on the next publish (already true for sitemap — consistent behaviour).
+- Pages that read query params or auth state still hydrate normally; pre-render captures the unauthenticated default view.
+- `index.html`'s sitewide `og:*` stays as the fallback for social crawlers (LinkedIn/Slack), which don't run JS — per-route Helmet tags override for everything else.
+- No business logic changes. No design changes. No backend/DB changes.
 
-The clay hairline at the very top of the panel stays — it's the bit that makes the content feel like it's spilling out of the divider.
+## Out of scope
+- Migrating to Next.js / Remix (we discussed; not the right trade-off now).
+- Editing copy on individual pages beyond title/description metadata. If you want me to also polish on-page H1/intro copy for SEO on specific pages, point me at them in a follow-up.
 
-## Files touched
-
-- `src/components/home-draft2/CollapsibleSection.tsx` — full rework of the header layout (left-aligned centred column, triangle on title), hover telegraph, and the split tint/content panel with corrected padding.
-- No changes needed in `HomePageDraft2.tsx` or the individual section files — the API stays the same (`eyebrow`, `title`, `preview`, `defaultOpen`, `children`).
-
-## Open question for you
-
-Are you happy with **click-to-toggle + hover telegraph** as the v1, or do you want me to go straight to the **hover-peek + click-to-lock** version with the hover-intent timer? My vote is the first — it's calmer and works identically on mobile — but it's your call.
+## Order of execution
+1. Fix `index.html` head, create `PageSeo` helper.
+2. Add `<Helmet>`/`PageSeo` to every public page missing it.
+3. Add `public/llms.txt`.
+4. Add pre-rendering plugin + config, verify a sample built route contains real HTML.

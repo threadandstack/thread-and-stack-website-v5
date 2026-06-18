@@ -1,3 +1,4 @@
+import { PageSeo } from "@/components/seo/PageSeo";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { IntroCallForm } from "@/components/home-draft2/IntroCallForm";
@@ -6,6 +7,11 @@ import { Clock, CheckCircle2, Sparkles } from "lucide-react";
 const IntroCallPage = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <PageSeo
+        title="Book an intro call with Thread & Stack"
+        description="A free 30-minute intro call to talk through your project, pressure-test the brief, and see if Thread & Stack is the right fit."
+        path="/intro-call"
+      />
       <Navigation />
 
       <main className="relative">

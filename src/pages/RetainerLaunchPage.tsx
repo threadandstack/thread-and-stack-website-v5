@@ -1,3 +1,4 @@
+import { PageSeo } from "@/components/seo/PageSeo";
 import { Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import WhiteStacked from "@/assets/logos/White_TS_Stacked.svg";
@@ -54,6 +55,19 @@ const RetainerLaunchPage = () => {
 
   return (
     <div className="min-h-screen bg-muted/50 flex justify-center items-start py-10 px-5 print:bg-white print:p-0">
+      <PageSeo
+        title="Launch Retainer — light-touch strategy for early-stage founders"
+        description="A light-touch monthly retainer for early-stage founders who need senior narrative and systems input on call, without the cost of a full engagement."
+        path="/retainer/launch"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "Service",
+          name: "Launch Retainer",
+          provider: { "@type": "Organization", name: "Thread & Stack" },
+          areaServed: "Worldwide",
+          serviceType: "Fractional strategy retainer",
+        }}
+      />
       {/* Download button */}
       <div className="fixed top-5 right-5 z-50 print:hidden">
         <Button onClick={handleDownload} size="sm" className="gap-2 rounded-lg shadow-lg">

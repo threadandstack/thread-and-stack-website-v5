@@ -1,3 +1,4 @@
+import { PageSeo } from "@/components/seo/PageSeo";
 import { useState } from "react";
 import { Sun, Moon, ArrowLeft, Gauge } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -11,6 +12,11 @@ const ScorecardPage = () => {
 
   return (
     <div className="notion-canvas min-h-screen overflow-x-hidden" data-theme={theme}>
+      <PageSeo
+        title="Clarity Scorecard — score your narrative and systems"
+        description="A short self-assessment that scores your clarity, systems, and momentum. Get a personal read on where to focus next quarter."
+        path="/scorecard"
+      />
       <Navigation
         variant={theme === "dark" ? "image-hero" : "default"}
         hideLogo
