@@ -231,11 +231,12 @@ const UnleashYourTeamDraft2Page = () => {
                 that bridge the context wall, so your people are freed up to do their most
                 strategic and creative work, not replaced by a machine.
               </p>
-              <p>Below are three free resources to get you started.</p>
               <p>
-                I've also included a discounted Stack Diagnostic for impact-focused teams,
-                should you want hands-on support.
+                I've included a discounted Stack Diagnostic below for impact-focused teams,
+                should you want hands-on support. You can also join the waitlist for the
+                upcoming newsletter for purpose-driven teams putting AI to work.
               </p>
+
               <p className="font-serif-pro italic text-foreground text-lg">
                 Warm wishes,
                 <br />
