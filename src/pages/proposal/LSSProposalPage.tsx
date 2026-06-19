@@ -816,7 +816,7 @@ const LSSProposalPage = () => {
                 num="05"
                 eyebrow="Practical realities"
                 rotate={-0.3}
-                title={<>The new stack: <Hl>~£82/month.</Hl></>}
+                title={<>The new stack: <Hl>~£97/month.</Hl></>}
               />
               <P>
                 This is not a chatbot subscription. It is base infrastructure for a business that thinks, learns
@@ -829,9 +829,9 @@ const LSSProposalPage = () => {
                   ["Knowledge base", "Notion Business — 3 users, AI included", "~£35"],
                   ["Notion AI", "Included in Business plan", "£0 extra"],
                   ["Co-founder assistant", "Claude Pro — Cowork, Projects, Claude Code", "~£16"],
-                  ["Custom agents", "Notion AI agents — included", "£0 extra"],
+                  ["Custom agents", "Notion AI agents — credits for advanced usage", "~£15"],
                   ["Automations", "Make or Zapier starter", "~£18"],
-                  [<strong>Base total</strong>, "", <strong>~£82/month</strong>],
+                  [<strong>Base total</strong>, "", <strong>~£97/month</strong>],
                 ]}
               />
               <P>
