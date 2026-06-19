@@ -831,7 +831,7 @@ const LSSProposalPage = () => {
                   ["Co-founder assistant", "Claude Pro — Cowork, Projects, Claude Code", "~£16"],
                   ["Custom agents", "Notion AI agents — credits for advanced usage", "~£15"],
                   ["Automations", "Make or Zapier starter", "~£18"],
-                  [<strong>Base total</strong>, "", <strong>~£82/month</strong>],
+                  [<strong>Base total</strong>, "", <strong>~£97/month</strong>],
                 ]}
               />
               <P>
