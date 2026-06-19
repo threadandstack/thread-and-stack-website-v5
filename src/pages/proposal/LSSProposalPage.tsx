@@ -829,7 +829,7 @@ const LSSProposalPage = () => {
                   ["Knowledge base", "Notion Business — 3 users, AI included", "~£35"],
                   ["Notion AI", "Included in Business plan", "£0 extra"],
                   ["Co-founder assistant", "Claude Pro — Cowork, Projects, Claude Code", "~£16"],
-                  ["Custom agents", "Notion AI agents — included", "£0 extra"],
+                  ["Custom agents", "Notion AI agents — credits for advanced usage", "~£15"],
                   ["Automations", "Make or Zapier starter", "~£18"],
                   [<strong>Base total</strong>, "", <strong>~£82/month</strong>],
                 ]}
