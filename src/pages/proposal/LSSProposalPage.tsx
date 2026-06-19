@@ -816,7 +816,7 @@ const LSSProposalPage = () => {
                 num="05"
                 eyebrow="Practical realities"
                 rotate={-0.3}
-                title={<>The new stack: <Hl>~£82/month.</Hl></>}
+                title={<>The new stack: <Hl>~£97/month.</Hl></>}
               />
               <P>
                 This is not a chatbot subscription. It is base infrastructure for a business that thinks, learns
