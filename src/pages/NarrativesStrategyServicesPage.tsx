@@ -241,8 +241,8 @@ const NarrativesStrategyServicesPage = () => {
 
         {/* Service shapes */}
         <section className="py-16 md:py-24">
-          <div className="mx-auto max-w-5xl px-6">
-            <div className="mb-12 max-w-2xl">
+          <div className="mx-auto max-w-6xl px-6">
+            <div className="mb-14 max-w-2xl">
               <span className="mb-3 block text-[11px] uppercase tracking-[0.22em] text-ink-soft">
                 The shapes
               </span>
@@ -250,24 +250,55 @@ const NarrativesStrategyServicesPage = () => {
                 Three ways to <span className="text-clay">work together.</span>
               </h2>
             </div>
-            <div className="grid gap-6 md:grid-cols-3">
-              {pillars.map((p) => (
-                <article
-                  key={p.eyebrow}
-                  className="rounded-2xl border border-hairline bg-background/60 p-6 transition-shadow hover:shadow-md"
-                >
-                  <span className="block text-[11px] uppercase tracking-[0.18em] text-clay">
-                    {p.eyebrow}
-                  </span>
-                  <h3 className="mt-3 font-serif-pro italic font-normal text-2xl leading-tight tracking-[-0.01em]">
-                    {p.title}
-                  </h3>
-                  <p className="mt-3 text-[14.5px] leading-relaxed text-ink-soft">{p.body}</p>
-                </article>
-              ))}
+            <div className="grid gap-8 md:grid-cols-3 [perspective:1200px]">
+              {pillars.map((p) => {
+                const Icon = p.icon;
+                return (
+                  <article
+                    key={p.eyebrow}
+                    className="group relative flex h-full flex-col rounded-2xl border border-hairline bg-card p-8 md:p-9 shadow-[0_2px_8px_rgba(0,0,0,0.04)] transition-all duration-500 ease-out will-change-transform hover:-translate-y-2 hover:shadow-[0_28px_60px_-20px_rgba(0,0,0,0.25)] hover:[transform:translateY(-8px)_rotateX(4deg)_rotateY(-3deg)] [transform-style:preserve-3d]"
+                  >
+                    <div className="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-accent/10 text-accent">
+                      <Icon className="h-6 w-6" />
+                    </div>
+
+                    <span className="block text-[11px] uppercase tracking-[0.18em] text-clay">
+                      {p.eyebrow}
+                    </span>
+                    <h3 className="mt-3 font-serif-pro italic font-normal text-[26px] leading-tight tracking-[-0.01em] md:text-[30px]">
+                      {p.title}
+                    </h3>
+                    <p className="mt-4 text-[15px] leading-relaxed text-ink-soft">
+                      {p.body}
+                    </p>
+
+                    {p.highlights && (
+                      <div className="mt-7 rounded-xl border border-hairline bg-background/60 p-5">
+                        {p.highlightsLabel && (
+                          <span className="mb-3 block text-[10px] uppercase tracking-[0.2em] text-clay">
+                            {p.highlightsLabel}
+                          </span>
+                        )}
+                        <ul className="space-y-2.5">
+                          {p.highlights.map((h) => (
+                            <li
+                              key={h}
+                              className="flex items-start gap-2.5 text-[14px] leading-snug text-foreground/80"
+                            >
+                              <Check className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
+                              <span>{h}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </article>
+                );
+              })}
             </div>
           </div>
         </section>
+
 
         {/* Selected work — masonry grid in the /blog style */}
         <section id="selected-work" className="py-16 md:py-24">
