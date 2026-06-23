@@ -131,16 +131,17 @@ const NarrativesStrategyServicesPage = () => {
               <span className="mb-5 block text-[11px] uppercase tracking-[0.22em] text-ink-soft">
                 Narratives &amp; Strategy
               </span>
-              <h1 className="relative font-serif-pro italic font-normal max-w-4xl text-balance text-5xl leading-[1.02] tracking-[-0.02em] md:text-[76px]">
+              <h1 className="font-serif-pro italic font-normal max-w-4xl text-balance text-5xl leading-[1.02] tracking-[-0.02em] md:text-[76px]">
                 12+ years of Creative, Marketing &amp; Brand.
-                <img
-                  src={creativeBadge.url}
-                  alt="Creative"
-                  className="pointer-events-none absolute -right-2 -top-4 h-14 w-auto rotate-[-8deg] md:-right-8 md:-top-8 md:h-20"
-                />
               </h1>
 
-              <p className="mt-8 max-w-2xl text-[16.5px] leading-relaxed text-ink-soft">
+              <img
+                src={creativeBadge.url}
+                alt="Creative"
+                className="pointer-events-none mx-auto mt-6 h-12 w-auto rotate-[-4deg] md:h-16"
+              />
+
+              <p className="mt-6 max-w-2xl text-[16.5px] leading-relaxed text-ink-soft">
                 Thread &amp; Stack wasn't always an ops and systems focused business.
                 For a long time — it was a solo branding consultancy. I still offer
                 that service quietly — to satisfy my own need for creative
