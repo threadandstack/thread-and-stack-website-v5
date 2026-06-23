@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Sun, Moon, ArrowRight, ArrowDown, Lock } from "lucide-react";
+import { Sun, Moon, ArrowRight, ArrowDown, Lock, MessageCircle, Sparkles, Compass, Check } from "lucide-react";
 import { PageSeo } from "@/components/seo/PageSeo";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
