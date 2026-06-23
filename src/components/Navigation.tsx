@@ -92,7 +92,7 @@ export const Navigation = ({ variant = "default", hideLogo = false, floatingBadg
                 className="absolute inset-0 h-12 md:h-14 transition-opacity duration-500 pointer-events-none"
                 style={{
                   opacity: isLogoHovered ? 1 : 0,
-                  background: "linear-gradient(135deg, hsl(var(--orange)), hsl(var(--violet)))",
+                  ...logoGradientStyle,
                   WebkitMaskImage: `url(${isDark ? WhiteStacked : GreyStacked})`,
                   maskImage: `url(${isDark ? WhiteStacked : GreyStacked})`,
                   WebkitMaskRepeat: "no-repeat",
@@ -166,7 +166,7 @@ export const Navigation = ({ variant = "default", hideLogo = false, floatingBadg
                   className="absolute inset-0 h-8 md:h-10 transition-opacity duration-500 pointer-events-none"
                   style={{
                     opacity: isLogoHovered ? 1 : 0,
-                    background: "linear-gradient(135deg, hsl(var(--orange)), hsl(var(--violet)))",
+                    ...logoGradientStyle,
                     WebkitMaskImage: `url(${isDark ? WhiteStacked : BlackStacked})`,
                     maskImage: `url(${isDark ? WhiteStacked : BlackStacked})`,
                     WebkitMaskRepeat: "no-repeat",
