@@ -143,8 +143,8 @@ const NarrativesStrategyServicesPage = () => {
 
               <p className="mt-6 max-w-2xl text-[16.5px] leading-relaxed text-ink-soft">
                 Thread &amp; Stack wasn't always an ops and systems focused business.
-                For a long time — it was a solo branding consultancy. I still offer
-                that service quietly — to satisfy my own need for creative
+                For a long time - it was a solo branding consultancy. I still offer
+                that service quietly - to satisfy my own need for creative
                 exploration, and to allow me to pick value-aligned clients for creative
                 work.
               </p>
