@@ -364,69 +364,71 @@ const NarrativesStrategyServicesPage = () => {
             ) : displayed.length === 0 ? (
               <p className="py-16 text-center text-muted-foreground">No projects to show yet.</p>
             ) : (
-              <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 [perspective:1200px]">
+              <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                 {displayed.map((item) => (
-                  <button
-                    key={item.id}
-                    type="button"
-                    onClick={() => setDetailItem(item)}
-                    className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-hairline bg-card text-left shadow-[0_2px_8px_rgba(0,0,0,0.04)] transition-all duration-500 ease-out will-change-transform hover:-translate-y-2 hover:shadow-[0_28px_60px_-20px_rgba(0,0,0,0.25)] hover:[transform:translateY(-8px)_rotateX(4deg)_rotateY(-3deg)] [transform-style:preserve-3d]"
-                  >
-                    {item.coverImage && !item.hasNda ? (
-                      <div className="aspect-[16/9] w-full overflow-hidden bg-muted">
-                        <img
-                          src={item.coverImage}
-                          alt={item.name}
-                          loading="lazy"
-                          className="block h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.04]"
-                        />
-                      </div>
-                    ) : (
-                      <div className="flex aspect-[16/9] items-center justify-center bg-muted">
-                        {item.hasNda ? (
-                          <div className="text-center text-muted-foreground">
-                            <Lock className="mx-auto mb-2 h-6 w-6" />
-                            <span className="text-xs">Under NDA</span>
-                          </div>
-                        ) : (
-                          <div className="h-12 w-12 rounded-full bg-accent/10" />
-                        )}
-                      </div>
-                    )}
-                    <div className="space-y-3 p-6">
-                      <div className="flex flex-wrap items-center gap-2">
-                        {item.tags
-                          .filter((t) => !EXCLUDED_TAGS.includes(t))
-                          .slice(0, 3)
-                          .map((tag) => (
-                            <Badge
-                              key={tag}
-                              variant="outline"
-                              className={`text-[11px] ${
-                                TAG_COLORS[tag] || "bg-muted text-muted-foreground border-border"
-                              }`}
-                            >
-                              {tag}
-                            </Badge>
-                          ))}
-                        {item.monthYear && (
-                          <span className="ml-auto text-xs text-muted-foreground">
-                            {item.monthYear}
-                          </span>
-                        )}
-                      </div>
-                      <h3 className="font-serif-pro italic font-normal text-2xl leading-tight tracking-[-0.01em] transition-colors group-hover:text-clay">
-                        {item.name}
-                      </h3>
-                      {item.text && (
-                        <p className="line-clamp-3 text-[14.5px] leading-relaxed text-ink-soft">
-                          {item.text}
-                        </p>
+                  <Tilt3D key={item.id} maxX={5} maxY={4} className="h-full">
+                    <button
+                      type="button"
+                      onClick={() => setDetailItem(item)}
+                      className="group relative flex h-full w-full flex-col overflow-hidden rounded-2xl border border-hairline bg-card text-left shadow-[0_2px_8px_rgba(0,0,0,0.04)] transition-shadow duration-500 hover:shadow-[0_28px_60px_-20px_rgba(0,0,0,0.25)]"
+                    >
+                      {item.coverImage && !item.hasNda ? (
+                        <div className="aspect-[16/9] w-full overflow-hidden bg-muted">
+                          <img
+                            src={item.coverImage}
+                            alt={item.name}
+                            loading="lazy"
+                            className="block h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.04]"
+                          />
+                        </div>
+                      ) : (
+                        <div className="flex aspect-[16/9] items-center justify-center bg-muted">
+                          {item.hasNda ? (
+                            <div className="text-center text-muted-foreground">
+                              <Lock className="mx-auto mb-2 h-6 w-6" />
+                              <span className="text-xs">Under NDA</span>
+                            </div>
+                          ) : (
+                            <div className="h-12 w-12 rounded-full bg-accent/10" />
+                          )}
+                        </div>
                       )}
-                    </div>
-                  </button>
+                      <div className="space-y-3 p-6">
+                        <div className="flex flex-wrap items-center gap-2">
+                          {item.tags
+                            .filter((t) => !EXCLUDED_TAGS.includes(t))
+                            .slice(0, 3)
+                            .map((tag) => (
+                              <Badge
+                                key={tag}
+                                variant="outline"
+                                className={`text-[11px] ${
+                                  TAG_COLORS[tag] || "bg-muted text-muted-foreground border-border"
+                                }`}
+                              >
+                                {tag}
+                              </Badge>
+                            ))}
+                          {item.monthYear && (
+                            <span className="ml-auto text-xs text-muted-foreground">
+                              {item.monthYear}
+                            </span>
+                          )}
+                        </div>
+                        <h3 className="font-serif-pro italic font-normal text-2xl leading-tight tracking-[-0.01em] transition-colors group-hover:text-clay">
+                          {item.name}
+                        </h3>
+                        {item.text && (
+                          <p className="line-clamp-3 text-[14.5px] leading-relaxed text-ink-soft">
+                            {item.text}
+                          </p>
+                        )}
+                      </div>
+                    </button>
+                  </Tilt3D>
                 ))}
               </div>
+
             )}
           </div>
         </section>
