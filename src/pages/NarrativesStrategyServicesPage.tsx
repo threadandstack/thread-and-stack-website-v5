@@ -10,7 +10,8 @@ import { ContactDrawer } from "@/components/ContactDrawer";
 import { PortfolioDetailModal } from "@/components/PortfolioDetailModal";
 import { supabase } from "@/integrations/supabase/client";
 import { LogoTilt } from "@/components/home-draft2/LogoTilt";
-import creativeBadge from "@/assets/creative-badge.png.asset.json";
+import creativeLogoLight from "@/assets/thread-stack-creative-light.png.asset.json";
+import creativeLogoDark from "@/assets/thread-stack-creative-dark.png.asset.json";
 
 const CREATIVE_DB_ID = "2808863b-87d4-8027-8f0e-fb1f70d684e0";
 
@@ -161,7 +162,14 @@ const NarrativesStrategyServicesPage = () => {
                   }}
                 >
                   <div className="mb-10 flex justify-center">
-                    <LogoTilt className="h-28 sm:h-36 md:h-44" theme={theme} groupTilt />
+                    <LogoTilt
+                      className="h-56 sm:h-72 md:h-[22rem] lg:h-[26rem]"
+                      theme={theme}
+                      lightSrc={creativeLogoLight.url}
+                      darkSrc={creativeLogoDark.url}
+                      alt="Thread & Stack Creative — my secret secondary service stash"
+                      groupTilt
+                    />
                   </div>
 
                   <span className="mb-5 block text-[11px] uppercase tracking-[0.22em] text-ink-soft">
@@ -171,12 +179,6 @@ const NarrativesStrategyServicesPage = () => {
                   <h1 className="font-serif-pro italic font-normal max-w-4xl mx-auto text-balance text-5xl leading-[1.02] tracking-[-0.02em] md:text-[76px]">
                     12+ years of Creative, Marketing &amp; Brand.
                   </h1>
-
-                  <img
-                    src={creativeBadge.url}
-                    alt="Creative"
-                    className="pointer-events-none mx-auto mt-6 h-12 w-auto rotate-[-4deg] md:h-16"
-                  />
                 </div>
               </div>
 
