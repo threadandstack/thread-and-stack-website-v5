@@ -217,7 +217,10 @@ const NarrativesStrategyServicesPage = () => {
                   onClick={() => setContactOpen(true)}
                   className="group inline-flex h-12 items-center rounded-md px-6 text-[14.5px] font-medium text-accent-foreground shadow-[0_8px_20px_-8px_rgba(0,0,0,0.35)] transition-all hover:-translate-y-px"
                   style={{
-                    backgroundImage: "linear-gradient(95deg, var(--gradient-3color))",
+                    backgroundImage:
+                      theme === "dark"
+                        ? "linear-gradient(90deg, #5DE0E6, #004AAD)"
+                        : "linear-gradient(95deg, var(--gradient-3color))",
                   }}
                 >
                   Book a free intro call
@@ -448,7 +451,12 @@ const NarrativesStrategyServicesPage = () => {
                 type="button"
                 onClick={() => setContactOpen(true)}
                 className="group inline-flex h-12 items-center rounded-md px-6 text-[14.5px] font-medium text-accent-foreground shadow-[0_8px_20px_-8px_rgba(0,0,0,0.35)] transition-all hover:-translate-y-px"
-                style={{ backgroundImage: "linear-gradient(95deg, var(--gradient-3color))" }}
+                style={{
+                  backgroundImage:
+                    theme === "dark"
+                      ? "linear-gradient(90deg, #5DE0E6, #004AAD)"
+                      : "linear-gradient(95deg, var(--gradient-3color))",
+                }}
               >
                 Start a conversation
                 <span className="inline-flex w-0 items-center justify-center overflow-hidden opacity-0 scale-75 transition-all duration-300 group-hover:w-5 group-hover:opacity-100 group-hover:scale-100 group-hover:ml-1.5">
