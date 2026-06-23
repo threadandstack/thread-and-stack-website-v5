@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Sun, Moon, ArrowRight, ArrowDown, Lock } from "lucide-react";
+import { Sun, Moon, ArrowRight, ArrowDown, Lock, MessageCircle, Sparkles, Compass, Check } from "lucide-react";
 import { PageSeo } from "@/components/seo/PageSeo";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
@@ -42,21 +42,41 @@ const EXCLUDED_TAGS = ["NDA", "Not Ready", "Featured", "Featured-Hero", "Masonry
 const pillars = [
   {
     eyebrow: "Strategy Session",
+    icon: MessageCircle,
     title: "A focused 60–90 minute working call.",
     body:
       "Bring a stuck positioning question, a launch you're second-guessing, or messaging that isn't landing. You leave with a clearer through-line and a short action list.",
+    highlights: [
+      "One sharp focus per session",
+      "Live working call, not a deck",
+      "Action list you can ship this week",
+    ],
   },
   {
     eyebrow: "Project Engagement",
-    title: "A defined narrative or brand sprint.",
+    icon: Sparkles,
+    title: "A developed brand or narrative sprint.",
     body:
       "Repositioning, a new offer story, a launch narrative, or a full brand voice and messaging system. Scoped, priced, and shipped against a fixed timeline.",
+    highlights: [
+      "Positioning, story, and voice",
+      "Messaging architecture you can reuse",
+      "Fixed scope, fixed price, fixed end date",
+    ],
+    highlightsLabel: "Developed brand",
   },
   {
     eyebrow: "Fractional Strategy Director",
+    icon: Compass,
     title: "Embedded strategic partnership.",
     body:
       "Monthly retainer support for teams that want senior brand and narrative thinking inside the room. Strategy sessions, creative direction, and unblocking on the things that matter.",
+    highlights: [
+      "Senior strategist in your room",
+      "Creative direction and unblocking",
+      "Monthly retainer, capped capacity",
+    ],
+    highlightsLabel: "Embedded strategy",
   },
 ];
 
@@ -221,8 +241,8 @@ const NarrativesStrategyServicesPage = () => {
 
         {/* Service shapes */}
         <section className="py-16 md:py-24">
-          <div className="mx-auto max-w-5xl px-6">
-            <div className="mb-12 max-w-2xl">
+          <div className="mx-auto max-w-6xl px-6">
+            <div className="mb-14 max-w-2xl">
               <span className="mb-3 block text-[11px] uppercase tracking-[0.22em] text-ink-soft">
                 The shapes
               </span>
@@ -230,24 +250,55 @@ const NarrativesStrategyServicesPage = () => {
                 Three ways to <span className="text-clay">work together.</span>
               </h2>
             </div>
-            <div className="grid gap-6 md:grid-cols-3">
-              {pillars.map((p) => (
-                <article
-                  key={p.eyebrow}
-                  className="rounded-2xl border border-hairline bg-background/60 p-6 transition-shadow hover:shadow-md"
-                >
-                  <span className="block text-[11px] uppercase tracking-[0.18em] text-clay">
-                    {p.eyebrow}
-                  </span>
-                  <h3 className="mt-3 font-serif-pro italic font-normal text-2xl leading-tight tracking-[-0.01em]">
-                    {p.title}
-                  </h3>
-                  <p className="mt-3 text-[14.5px] leading-relaxed text-ink-soft">{p.body}</p>
-                </article>
-              ))}
+            <div className="grid gap-8 md:grid-cols-3 [perspective:1200px]">
+              {pillars.map((p) => {
+                const Icon = p.icon;
+                return (
+                  <article
+                    key={p.eyebrow}
+                    className="group relative flex h-full flex-col rounded-2xl border border-hairline bg-card p-8 md:p-9 shadow-[0_2px_8px_rgba(0,0,0,0.04)] transition-all duration-500 ease-out will-change-transform hover:-translate-y-2 hover:shadow-[0_28px_60px_-20px_rgba(0,0,0,0.25)] hover:[transform:translateY(-8px)_rotateX(4deg)_rotateY(-3deg)] [transform-style:preserve-3d]"
+                  >
+                    <div className="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-accent/10 text-accent">
+                      <Icon className="h-6 w-6" />
+                    </div>
+
+                    <span className="block text-[11px] uppercase tracking-[0.18em] text-clay">
+                      {p.eyebrow}
+                    </span>
+                    <h3 className="mt-3 font-serif-pro italic font-normal text-[26px] leading-tight tracking-[-0.01em] md:text-[30px]">
+                      {p.title}
+                    </h3>
+                    <p className="mt-4 text-[15px] leading-relaxed text-ink-soft">
+                      {p.body}
+                    </p>
+
+                    {p.highlights && (
+                      <div className="mt-7 rounded-xl border border-hairline bg-background/60 p-5">
+                        {p.highlightsLabel && (
+                          <span className="mb-3 block text-[10px] uppercase tracking-[0.2em] text-clay">
+                            {p.highlightsLabel}
+                          </span>
+                        )}
+                        <ul className="space-y-2.5">
+                          {p.highlights.map((h) => (
+                            <li
+                              key={h}
+                              className="flex items-start gap-2.5 text-[14px] leading-snug text-foreground/80"
+                            >
+                              <Check className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
+                              <span>{h}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </article>
+                );
+              })}
             </div>
           </div>
         </section>
+
 
         {/* Selected work — masonry grid in the /blog style */}
         <section id="selected-work" className="py-16 md:py-24">
@@ -295,10 +346,10 @@ const NarrativesStrategyServicesPage = () => {
             )}
 
             {isLoading ? (
-              <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+              <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 [perspective:1200px]">
                 {Array.from({ length: 6 }).map((_, i) => (
                   <div key={i} className="overflow-hidden rounded-2xl border border-hairline">
-                    <Skeleton className="aspect-[16/10] w-full" />
+                    <Skeleton className="aspect-[16/9] w-full" />
                     <div className="space-y-3 p-6">
                       <Skeleton className="h-5 w-3/4" />
                       <Skeleton className="h-4 w-full" />
@@ -310,25 +361,25 @@ const NarrativesStrategyServicesPage = () => {
             ) : displayed.length === 0 ? (
               <p className="py-16 text-center text-muted-foreground">No projects to show yet.</p>
             ) : (
-              <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+              <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 [perspective:1200px]">
                 {displayed.map((item) => (
                   <button
                     key={item.id}
                     type="button"
                     onClick={() => setDetailItem(item)}
-                    className="group block h-full overflow-hidden rounded-2xl border border-hairline bg-card text-left transition-all hover:shadow-lg"
+                    className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-hairline bg-card text-left shadow-[0_2px_8px_rgba(0,0,0,0.04)] transition-all duration-500 ease-out will-change-transform hover:-translate-y-2 hover:shadow-[0_28px_60px_-20px_rgba(0,0,0,0.25)] hover:[transform:translateY(-8px)_rotateX(4deg)_rotateY(-3deg)] [transform-style:preserve-3d]"
                   >
                     {item.coverImage && !item.hasNda ? (
-                      <div className="aspect-[16/10] overflow-hidden">
+                      <div className="aspect-[16/9] w-full overflow-hidden bg-muted">
                         <img
                           src={item.coverImage}
                           alt={item.name}
                           loading="lazy"
-                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                          className="block h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.04]"
                         />
                       </div>
                     ) : (
-                      <div className="flex aspect-[16/10] items-center justify-center bg-muted">
+                      <div className="flex aspect-[16/9] items-center justify-center bg-muted">
                         {item.hasNda ? (
                           <div className="text-center text-muted-foreground">
                             <Lock className="mx-auto mb-2 h-6 w-6" />
