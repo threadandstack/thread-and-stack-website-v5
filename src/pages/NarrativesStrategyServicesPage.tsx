@@ -125,8 +125,29 @@ const NarrativesStrategyServicesPage = () => {
     // ensure single render at top
   }, []);
 
+  const darkModeBlueTokens = theme === "dark" ? ({
+    "--clay": "183 73% 63%",
+    "--clay-soft": "183 73% 63%",
+    "--orange": "183 73% 63%",
+    "--violet": "214 100% 34%",
+    "--accent": "183 73% 63%",
+    "--ring": "183 73% 63%",
+  } as React.CSSProperties) : undefined;
+  const darkModeCtaGradient =
+    theme === "dark"
+      ? "linear-gradient(90deg, #5DE0E6, #004AAD)"
+      : undefined;
+  const darkModeLogoGradient =
+    theme === "dark"
+      ? "linear-gradient(135deg, #5DE0E6, #004AAD)"
+      : undefined;
+
   return (
-    <div className="notion-canvas min-h-screen overflow-x-hidden" data-theme={theme}>
+    <div
+      className="notion-canvas min-h-screen overflow-x-hidden"
+      data-theme={theme}
+      style={darkModeBlueTokens}
+    >
       <PageSeo
         title="Narratives & Strategy Services | Thread & Stack"
         description="Brand strategy, narrative, and messaging for purpose-led founders and teams. Strategy sessions, project engagements, and fractional strategy director retainers."
@@ -135,6 +156,8 @@ const NarrativesStrategyServicesPage = () => {
       />
       <Navigation
         variant={theme === "dark" ? "image-hero" : "default"}
+        ctaGradient={darkModeCtaGradient}
+        logoHoverGradient={darkModeLogoGradient}
         themeToggle={
           <button
             onClick={toggleTheme}
