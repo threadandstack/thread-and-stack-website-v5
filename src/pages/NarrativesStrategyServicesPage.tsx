@@ -67,9 +67,9 @@ const pillars = [
     highlightsLabel: "Developed brand",
   },
   {
-    eyebrow: "Fractional Strategy Director",
+    eyebrow: "Embedded Creative Partnership",
     icon: Compass,
-    title: "Embedded strategic partnership.",
+    title: "Embedded creative partnership.",
     body:
       "Monthly retainer support for teams that want senior brand and narrative thinking inside the room. Strategy sessions, creative direction, and unblocking on the things that matter.",
     highlights: [
@@ -77,7 +77,7 @@ const pillars = [
       "Creative direction and unblocking",
       "Monthly retainer, capped capacity",
     ],
-    highlightsLabel: "Embedded strategy",
+    highlightsLabel: "Embedded creative",
   },
 ];
 
