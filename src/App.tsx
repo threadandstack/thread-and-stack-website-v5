@@ -102,6 +102,7 @@ const App = () => (
             {/* Depreciated service pages — redirect to the new unified /services */}
             <Route path="/sessions-and-sprints" element={<Navigate to="/services" replace />} />
             <Route path="/narratives-strategy" element={<Navigate to="/services" replace />} />
+            <Route path="/narratives-and-strategy-services" element={<NarrativesStrategyServicesPage />} />
             <Route path="/fractional-deep-engagement" element={<Navigate to="/services" replace />} />
             <Route path="/workshops" element={<Workshops />} />
             <Route path="/notion-systems" element={<Navigate to="/services" replace />} />
