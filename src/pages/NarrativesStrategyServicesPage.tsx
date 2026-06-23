@@ -367,15 +367,15 @@ const NarrativesStrategyServicesPage = () => {
                     key={item.id}
                     type="button"
                     onClick={() => setDetailItem(item)}
-                    className="group block h-full overflow-hidden rounded-2xl border border-hairline bg-card text-left transition-all hover:shadow-lg"
+                    className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-hairline bg-card text-left shadow-[0_2px_8px_rgba(0,0,0,0.04)] transition-all duration-500 ease-out will-change-transform hover:-translate-y-2 hover:shadow-[0_28px_60px_-20px_rgba(0,0,0,0.25)] hover:[transform:translateY(-8px)_rotateX(4deg)_rotateY(-3deg)] [transform-style:preserve-3d]"
                   >
                     {item.coverImage && !item.hasNda ? (
-                      <div className="aspect-[16/9] overflow-hidden">
+                      <div className="aspect-[16/9] w-full overflow-hidden bg-muted">
                         <img
                           src={item.coverImage}
                           alt={item.name}
                           loading="lazy"
-                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                          className="block h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.04]"
                         />
                       </div>
                     ) : (
