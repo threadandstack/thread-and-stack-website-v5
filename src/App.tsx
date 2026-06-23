@@ -43,7 +43,7 @@ const AdminResetPassword = lazy(() => import("./pages/AdminResetPassword"));
 const ImageLibraryPage = lazy(() => import("./pages/ImageLibraryPage"));
 const GeoAdminPage = lazy(() => import("./pages/GeoAdminPage"));
 const AdminAnalyticsPage = lazy(() => import("./pages/AdminAnalyticsPage"));
-const FictionFavoritesPage = lazy(() => import("./pages/FictionFavoritesPage"));
+
 const CVPage = lazy(() => import("./pages/CVPage"));
 const NotionSystemsPage = lazy(() => import("./pages/NotionSystemsPage"));
 const RetainerLaunchPage = lazy(() => import("./pages/RetainerLaunchPage"));
@@ -144,12 +144,12 @@ const App = () => (
             <Route path="/admin/geo" element={<GeoAdminPage />} />
             <Route path="/admin/analytics" element={<AdminAnalyticsPage />} />
             <Route path="/admin/portfolio-access" element={<PortfolioAccessAdminPage />} />
-            <Route path="/favourite-fiction" element={<FictionFavoritesPage />} />
+            <Route path="/favourite-fiction" element={<Navigate to="/" replace />} />
             <Route path="/private/brendan-rodgers-cv" element={<CVPage />} />
             <Route path="/retainer/launch" element={<RetainerLaunchPage />} />
             <Route path="/retainer/startup" element={<RetainerStartupPage />} />
             <Route path="/retainer/scaleup" element={<RetainerScaleUpPage />} />
-            <Route path="/fiction-favorites" element={<Navigate to="/favourite-fiction" replace />} />
+            <Route path="/fiction-favorites" element={<Navigate to="/" replace />} />
             <Route path="/work-with-me" element={<WorkWithMePage />} />
             <Route path="/comet-effect" element={<CometEffectPage />} />
             <Route path="/momentum-map" element={<MomentumMapPage />} />
