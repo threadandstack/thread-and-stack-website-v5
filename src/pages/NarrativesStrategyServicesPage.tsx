@@ -9,6 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { ContactDrawer } from "@/components/ContactDrawer";
 import { PortfolioDetailModal } from "@/components/PortfolioDetailModal";
 import { supabase } from "@/integrations/supabase/client";
+import { LogoTilt } from "@/components/home-draft2/LogoTilt";
 import creativeBadge from "@/assets/creative-badge.png.asset.json";
 
 const CREATIVE_DB_ID = "2808863b-87d4-8027-8f0e-fb1f70d684e0";
@@ -124,24 +125,62 @@ const NarrativesStrategyServicesPage = () => {
       />
 
       <main>
-        {/* Hero — mirrors the new homepage hero treatment */}
+        {/* Hero — mirrors the new homepage hero treatment: 3D tilt logo + headline */}
         <section className="relative">
-          <div className="relative mx-auto max-w-5xl px-6 pb-20 pt-28 md:pb-28 md:pt-36">
+          <div className="relative mx-auto max-w-5xl px-6 pb-20 pt-20 md:pb-28 md:pt-28">
             <div className="flex flex-col items-center text-center">
-              <span className="mb-5 block text-[11px] uppercase tracking-[0.22em] text-ink-soft">
-                Narratives &amp; Strategy
-              </span>
-              <h1 className="font-serif-pro italic font-normal max-w-4xl text-balance text-5xl leading-[1.02] tracking-[-0.02em] md:text-[76px]">
-                12+ years of Creative, Marketing &amp; Brand.
-              </h1>
+              <div
+                className="w-full"
+                style={{
+                  perspective: "1400px",
+                  ["--g-tx" as never]: "0deg",
+                  ["--g-ty" as never]: "0deg",
+                }}
+                onMouseMove={(e) => {
+                  const el = e.currentTarget as HTMLDivElement;
+                  const r = el.getBoundingClientRect();
+                  const px = (e.clientX - r.left) / r.width;
+                  const py = (e.clientY - r.top) / r.height;
+                  const tx = (px - 0.5) * 8;
+                  const ty = (0.5 - py) * 6;
+                  el.style.setProperty("--g-tx", `${tx}deg`);
+                  el.style.setProperty("--g-ty", `${ty}deg`);
+                }}
+                onMouseLeave={(e) => {
+                  const el = e.currentTarget as HTMLDivElement;
+                  el.style.setProperty("--g-tx", `0deg`);
+                  el.style.setProperty("--g-ty", `0deg`);
+                }}
+              >
+                <div
+                  className="transition-transform duration-300 ease-out [transform-style:preserve-3d]"
+                  style={{
+                    transformOrigin: "50% 70%",
+                    transform:
+                      "rotateX(var(--g-ty, 0deg)) rotateY(var(--g-tx, 0deg))",
+                  }}
+                >
+                  <div className="mb-10 flex justify-center">
+                    <LogoTilt className="h-28 sm:h-36 md:h-44" theme={theme} groupTilt />
+                  </div>
 
-              <img
-                src={creativeBadge.url}
-                alt="Creative"
-                className="pointer-events-none mx-auto mt-6 h-12 w-auto rotate-[-4deg] md:h-16"
-              />
+                  <span className="mb-5 block text-[11px] uppercase tracking-[0.22em] text-ink-soft">
+                    Narratives &amp; Strategy
+                  </span>
 
-              <p className="mt-6 max-w-2xl text-[16.5px] leading-relaxed text-ink-soft">
+                  <h1 className="font-serif-pro italic font-normal max-w-4xl mx-auto text-balance text-5xl leading-[1.02] tracking-[-0.02em] md:text-[76px]">
+                    12+ years of Creative, Marketing &amp; Brand.
+                  </h1>
+
+                  <img
+                    src={creativeBadge.url}
+                    alt="Creative"
+                    className="pointer-events-none mx-auto mt-6 h-12 w-auto rotate-[-4deg] md:h-16"
+                  />
+                </div>
+              </div>
+
+              <p className="mt-8 max-w-2xl text-[16.5px] leading-relaxed text-ink-soft">
                 Thread &amp; Stack wasn't always an ops and systems focused business.
                 For a long time - it was a solo branding consultancy. I still offer
                 that service quietly - to satisfy my own need for creative
@@ -176,6 +215,7 @@ const NarrativesStrategyServicesPage = () => {
             </div>
           </div>
         </section>
+
 
         {/* Service shapes */}
         <section className="py-16 md:py-24">
