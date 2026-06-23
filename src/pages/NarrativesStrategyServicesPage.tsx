@@ -346,10 +346,10 @@ const NarrativesStrategyServicesPage = () => {
             )}
 
             {isLoading ? (
-              <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+              <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 [perspective:1200px]">
                 {Array.from({ length: 6 }).map((_, i) => (
                   <div key={i} className="overflow-hidden rounded-2xl border border-hairline">
-                    <Skeleton className="aspect-[16/10] w-full" />
+                    <Skeleton className="aspect-[16/9] w-full" />
                     <div className="space-y-3 p-6">
                       <Skeleton className="h-5 w-3/4" />
                       <Skeleton className="h-4 w-full" />
@@ -361,7 +361,7 @@ const NarrativesStrategyServicesPage = () => {
             ) : displayed.length === 0 ? (
               <p className="py-16 text-center text-muted-foreground">No projects to show yet.</p>
             ) : (
-              <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+              <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 [perspective:1200px]">
                 {displayed.map((item) => (
                   <button
                     key={item.id}
@@ -370,7 +370,7 @@ const NarrativesStrategyServicesPage = () => {
                     className="group block h-full overflow-hidden rounded-2xl border border-hairline bg-card text-left transition-all hover:shadow-lg"
                   >
                     {item.coverImage && !item.hasNda ? (
-                      <div className="aspect-[16/10] overflow-hidden">
+                      <div className="aspect-[16/9] overflow-hidden">
                         <img
                           src={item.coverImage}
                           alt={item.name}
@@ -379,7 +379,7 @@ const NarrativesStrategyServicesPage = () => {
                         />
                       </div>
                     ) : (
-                      <div className="flex aspect-[16/10] items-center justify-center bg-muted">
+                      <div className="flex aspect-[16/9] items-center justify-center bg-muted">
                         {item.hasNda ? (
                           <div className="text-center text-muted-foreground">
                             <Lock className="mx-auto mb-2 h-6 w-6" />
