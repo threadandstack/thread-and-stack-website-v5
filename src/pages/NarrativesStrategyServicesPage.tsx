@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ContactDrawer } from "@/components/ContactDrawer";
 import { PortfolioDetailModal } from "@/components/PortfolioDetailModal";
+import { Tilt3D } from "@/components/Tilt3D";
 import { supabase } from "@/integrations/supabase/client";
 import { LogoTilt } from "@/components/home-draft2/LogoTilt";
 import creativeLogoLight from "@/assets/thread-stack-creative-light.png.asset.json";
