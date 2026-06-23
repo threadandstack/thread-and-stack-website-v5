@@ -42,21 +42,41 @@ const EXCLUDED_TAGS = ["NDA", "Not Ready", "Featured", "Featured-Hero", "Masonry
 const pillars = [
   {
     eyebrow: "Strategy Session",
+    icon: MessageCircle,
     title: "A focused 60–90 minute working call.",
     body:
       "Bring a stuck positioning question, a launch you're second-guessing, or messaging that isn't landing. You leave with a clearer through-line and a short action list.",
+    highlights: [
+      "One sharp focus per session",
+      "Live working call, not a deck",
+      "Action list you can ship this week",
+    ],
   },
   {
     eyebrow: "Project Engagement",
-    title: "A defined narrative or brand sprint.",
+    icon: Sparkles,
+    title: "A developed brand or narrative sprint.",
     body:
       "Repositioning, a new offer story, a launch narrative, or a full brand voice and messaging system. Scoped, priced, and shipped against a fixed timeline.",
+    highlights: [
+      "Positioning, story, and voice",
+      "Messaging architecture you can reuse",
+      "Fixed scope, fixed price, fixed end date",
+    ],
+    highlightsLabel: "Developed brand",
   },
   {
     eyebrow: "Fractional Strategy Director",
+    icon: Compass,
     title: "Embedded strategic partnership.",
     body:
       "Monthly retainer support for teams that want senior brand and narrative thinking inside the room. Strategy sessions, creative direction, and unblocking on the things that matter.",
+    highlights: [
+      "Senior strategist in your room",
+      "Creative direction and unblocking",
+      "Monthly retainer, capped capacity",
+    ],
+    highlightsLabel: "Embedded strategy",
   },
 ];
 
