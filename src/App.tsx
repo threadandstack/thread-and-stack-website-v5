@@ -16,6 +16,7 @@ const StackedSessions = lazy(() => import("./pages/StackedSessions"));
 const MentorshipSprint = lazy(() => import("./pages/MentorshipSprint"));
 const Workshops = lazy(() => import("./pages/Workshops"));
 const FractionalStrategy = lazy(() => import("./pages/FractionalStrategy"));
+const NarrativesStrategyServicesPage = lazy(() => import("./pages/NarrativesStrategyServicesPage"));
 const DeepEngagement = lazy(() => import("./pages/DeepEngagement"));
 const SessionsAndSprints = lazy(() => import("./pages/SessionsAndSprints"));
 const FractionalDeepEngagement = lazy(() => import("./pages/FractionalDeepEngagement"));
@@ -101,6 +102,7 @@ const App = () => (
             {/* Depreciated service pages — redirect to the new unified /services */}
             <Route path="/sessions-and-sprints" element={<Navigate to="/services" replace />} />
             <Route path="/narratives-strategy" element={<Navigate to="/services" replace />} />
+            <Route path="/narratives-and-strategy-services" element={<NarrativesStrategyServicesPage />} />
             <Route path="/fractional-deep-engagement" element={<Navigate to="/services" replace />} />
             <Route path="/workshops" element={<Workshops />} />
             <Route path="/notion-systems" element={<Navigate to="/services" replace />} />

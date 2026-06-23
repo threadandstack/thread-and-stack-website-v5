@@ -49,6 +49,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://threadandstack.com/favourite-fiction</loc>
+    <lastmod>2026-06-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
     <loc>https://threadandstack.com/momentum-map</loc>
     <lastmod>2026-06-23</lastmod>
     <changefreq>monthly</changefreq>
