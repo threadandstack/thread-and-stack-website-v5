@@ -83,7 +83,7 @@ const SITE_PAGES = [
   { path: "/notion-devotion-brighton", label: "Notion Devotion Brighton", type: "site" },
   { path: "/portfolio/creative", label: "Portfolio — Creative", type: "site" },
   { path: "/portfolio/notion", label: "Portfolio — Notion", type: "site" },
-  { path: "/favourite-fiction", label: "Favourite Fiction", type: "site" },
+  
   { path: "/blog", label: "Blog", type: "site" },
   { path: "/collective", label: "Collective", type: "site" },
   { path: "/onboarding/notionutopia", label: "Onboarding — Notion Utopia", type: "site" },

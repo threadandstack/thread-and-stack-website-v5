@@ -47,6 +47,6 @@ Brand essentials: "Stories that land. Systems that stick." Addresses the creativ
 
 ## Optional
 
-- [Favourite Fiction](https://threadandstack.com/favourite-fiction): Personal reading list and fiction recommendations.
+
 - [Privacy Policy](https://threadandstack.com/privacy): Privacy and data handling policy.
 - [Data Guarantee](https://threadandstack.com/data-guarantee): How client data is handled and protected.
