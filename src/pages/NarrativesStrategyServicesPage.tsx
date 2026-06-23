@@ -30,7 +30,7 @@ interface PortfolioItem {
 const TAG_COLORS: Record<string, string> = {
   "Brand Strategy": "bg-yellow-100 text-yellow-800 border-yellow-200",
   "Content Strategy": "bg-pink-100 text-pink-800 border-pink-200",
-  "Copywriting & Storytelling": "bg-orange-100 text-orange-800 border-orange-200",
+  "Copywriting & Storytelling": "bg-accent/10 text-accent border-accent/20",
   "Customer Journey Mapping": "bg-blue-100 text-blue-800 border-blue-200",
   "Design": "bg-purple-100 text-purple-800 border-purple-200",
   "CRM": "bg-green-100 text-green-800 border-green-200",
@@ -125,8 +125,29 @@ const NarrativesStrategyServicesPage = () => {
     // ensure single render at top
   }, []);
 
+  const darkModeBlueTokens = theme === "dark" ? ({
+    "--clay": "183 73% 63%",
+    "--clay-soft": "183 73% 63%",
+    "--orange": "183 73% 63%",
+    "--violet": "214 100% 34%",
+    "--accent": "183 73% 63%",
+    "--ring": "183 73% 63%",
+  } as React.CSSProperties) : undefined;
+  const darkModeCtaGradient =
+    theme === "dark"
+      ? "linear-gradient(90deg, #5DE0E6, #004AAD)"
+      : undefined;
+  const darkModeLogoGradient =
+    theme === "dark"
+      ? "linear-gradient(135deg, #5DE0E6, #004AAD)"
+      : undefined;
+
   return (
-    <div className="notion-canvas min-h-screen overflow-x-hidden" data-theme={theme}>
+    <div
+      className="notion-canvas min-h-screen overflow-x-hidden"
+      data-theme={theme}
+      style={darkModeBlueTokens}
+    >
       <PageSeo
         title="Narratives & Strategy Services | Thread & Stack"
         description="Brand strategy, narrative, and messaging for purpose-led founders and teams. Strategy sessions, project engagements, and fractional strategy director retainers."
@@ -135,6 +156,8 @@ const NarrativesStrategyServicesPage = () => {
       />
       <Navigation
         variant={theme === "dark" ? "image-hero" : "default"}
+        ctaGradient={darkModeCtaGradient}
+        logoHoverGradient={darkModeLogoGradient}
         themeToggle={
           <button
             onClick={toggleTheme}

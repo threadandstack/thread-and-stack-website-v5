@@ -21,9 +21,11 @@ interface NavigationProps {
   hideLogo?: boolean;
   floatingBadge?: React.ReactNode;
   themeToggle?: React.ReactNode;
+  ctaGradient?: string;
+  logoHoverGradient?: string;
 }
 
-export const Navigation = ({ variant = "default", hideLogo = false, floatingBadge, themeToggle }: NavigationProps) => {
+export const Navigation = ({ variant = "default", hideLogo = false, floatingBadge, themeToggle, ctaGradient, logoHoverGradient }: NavigationProps) => {
   const isDark = variant === "dark" || variant === "image-hero";
   const isImageHero = variant === "image-hero";
   const [isScrolled, setIsScrolled] = useState(false);
@@ -32,7 +34,10 @@ export const Navigation = ({ variant = "default", hideLogo = false, floatingBadg
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [isDiagnosticOpen, setIsDiagnosticOpen] = useState(false);
   const gradientBtnStyle = {
-    backgroundImage: "linear-gradient(95deg, hsl(28 88% 62%), hsl(280 70% 65%))",
+    backgroundImage: ctaGradient ?? "linear-gradient(95deg, hsl(28 88% 62%), hsl(280 70% 65%))",
+  } as const;
+  const logoGradientStyle = {
+    background: logoHoverGradient ?? "linear-gradient(135deg, hsl(var(--orange)), hsl(var(--violet)))",
   } as const;
 
 
@@ -87,7 +92,7 @@ export const Navigation = ({ variant = "default", hideLogo = false, floatingBadg
                 className="absolute inset-0 h-12 md:h-14 transition-opacity duration-500 pointer-events-none"
                 style={{
                   opacity: isLogoHovered ? 1 : 0,
-                  background: "linear-gradient(135deg, hsl(var(--orange)), hsl(var(--violet)))",
+                  ...logoGradientStyle,
                   WebkitMaskImage: `url(${isDark ? WhiteStacked : GreyStacked})`,
                   maskImage: `url(${isDark ? WhiteStacked : GreyStacked})`,
                   WebkitMaskRepeat: "no-repeat",
@@ -161,7 +166,7 @@ export const Navigation = ({ variant = "default", hideLogo = false, floatingBadg
                   className="absolute inset-0 h-8 md:h-10 transition-opacity duration-500 pointer-events-none"
                   style={{
                     opacity: isLogoHovered ? 1 : 0,
-                    background: "linear-gradient(135deg, hsl(var(--orange)), hsl(var(--violet)))",
+                    ...logoGradientStyle,
                     WebkitMaskImage: `url(${isDark ? WhiteStacked : BlackStacked})`,
                     maskImage: `url(${isDark ? WhiteStacked : BlackStacked})`,
                     WebkitMaskRepeat: "no-repeat",
