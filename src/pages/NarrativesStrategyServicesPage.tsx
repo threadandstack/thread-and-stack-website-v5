@@ -9,6 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { ContactDrawer } from "@/components/ContactDrawer";
 import { PortfolioDetailModal } from "@/components/PortfolioDetailModal";
 import { supabase } from "@/integrations/supabase/client";
+import creativeBadge from "@/assets/creative-badge.png.asset.json";
 
 const CREATIVE_DB_ID = "2808863b-87d4-8027-8f0e-fb1f70d684e0";
 
@@ -131,15 +132,21 @@ const NarrativesStrategyServicesPage = () => {
                 Narratives &amp; Strategy
               </span>
               <h1 className="font-serif-pro italic font-normal max-w-4xl text-balance text-5xl leading-[1.02] tracking-[-0.02em] md:text-[76px]">
-                Stories that land.
-                <br />
-                <span className="text-clay">Strategy that sticks.</span>
+                12+ years of Creative, Marketing &amp; Brand.
               </h1>
 
-              <p className="mt-8 max-w-2xl text-[16.5px] leading-relaxed text-ink-soft">
-                Brand strategy, narrative, and messaging for purpose-led founders and teams.
-                We shape how organisations talk about what they do so the right people lean in
-                and the right work gets bought.
+              <img
+                src={creativeBadge.url}
+                alt="Creative"
+                className="pointer-events-none mx-auto mt-6 h-12 w-auto rotate-[-4deg] md:h-16"
+              />
+
+              <p className="mt-6 max-w-2xl text-[16.5px] leading-relaxed text-ink-soft">
+                Thread &amp; Stack wasn't always an ops and systems focused business.
+                For a long time - it was a solo branding consultancy. I still offer
+                that service quietly - to satisfy my own need for creative
+                exploration, and to allow me to pick value-aligned clients for creative
+                work.
               </p>
 
               <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
