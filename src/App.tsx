@@ -16,6 +16,7 @@ const StackedSessions = lazy(() => import("./pages/StackedSessions"));
 const MentorshipSprint = lazy(() => import("./pages/MentorshipSprint"));
 const Workshops = lazy(() => import("./pages/Workshops"));
 const FractionalStrategy = lazy(() => import("./pages/FractionalStrategy"));
+const NarrativesStrategyServicesPage = lazy(() => import("./pages/NarrativesStrategyServicesPage"));
 const DeepEngagement = lazy(() => import("./pages/DeepEngagement"));
 const SessionsAndSprints = lazy(() => import("./pages/SessionsAndSprints"));
 const FractionalDeepEngagement = lazy(() => import("./pages/FractionalDeepEngagement"));
