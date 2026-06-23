@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ContactDrawer } from "@/components/ContactDrawer";
 import { PortfolioDetailModal } from "@/components/PortfolioDetailModal";
+import { Tilt3D } from "@/components/Tilt3D";
 import { supabase } from "@/integrations/supabase/client";
 import { LogoTilt } from "@/components/home-draft2/LogoTilt";
 import creativeLogoLight from "@/assets/thread-stack-creative-light.png.asset.json";
@@ -250,52 +251,54 @@ const NarrativesStrategyServicesPage = () => {
                 Three ways to <span className="text-clay">work together.</span>
               </h2>
             </div>
-            <div className="grid gap-8 md:grid-cols-3 [perspective:1200px]">
+            <div className="grid gap-8 md:grid-cols-3">
               {pillars.map((p) => {
                 const Icon = p.icon;
                 return (
-                  <article
-                    key={p.eyebrow}
-                    className="group relative flex h-full flex-col rounded-2xl border border-hairline bg-card p-8 md:p-9 shadow-[0_2px_8px_rgba(0,0,0,0.04)] transition-all duration-500 ease-out will-change-transform hover:-translate-y-2 hover:shadow-[0_28px_60px_-20px_rgba(0,0,0,0.25)] hover:[transform:translateY(-8px)_rotateX(4deg)_rotateY(-3deg)] [transform-style:preserve-3d]"
-                  >
-                    <div className="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-accent/10 text-accent">
-                      <Icon className="h-6 w-6" />
-                    </div>
-
-                    <span className="block text-[11px] uppercase tracking-[0.18em] text-clay">
-                      {p.eyebrow}
-                    </span>
-                    <h3 className="mt-3 font-serif-pro italic font-normal text-[26px] leading-tight tracking-[-0.01em] md:text-[30px]">
-                      {p.title}
-                    </h3>
-                    <p className="mt-4 text-[15px] leading-relaxed text-ink-soft">
-                      {p.body}
-                    </p>
-
-                    {p.highlights && (
-                      <div className="mt-7 rounded-xl border border-hairline bg-background/60 p-5">
-                        {p.highlightsLabel && (
-                          <span className="mb-3 block text-[10px] uppercase tracking-[0.2em] text-clay">
-                            {p.highlightsLabel}
-                          </span>
-                        )}
-                        <ul className="space-y-2.5">
-                          {p.highlights.map((h) => (
-                            <li
-                              key={h}
-                              className="flex items-start gap-2.5 text-[14px] leading-snug text-foreground/80"
-                            >
-                              <Check className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
-                              <span>{h}</span>
-                            </li>
-                          ))}
-                        </ul>
+                  <Tilt3D key={p.eyebrow} maxX={5} maxY={4} className="h-full">
+                    <article
+                      className="group relative flex h-full flex-col rounded-2xl border border-hairline bg-card p-8 md:p-9 shadow-[0_2px_8px_rgba(0,0,0,0.04)] transition-shadow duration-500 hover:shadow-[0_28px_60px_-20px_rgba(0,0,0,0.25)]"
+                    >
+                      <div className="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-accent/10 text-accent">
+                        <Icon className="h-6 w-6" />
                       </div>
-                    )}
-                  </article>
+
+                      <span className="block text-[11px] uppercase tracking-[0.18em] text-clay">
+                        {p.eyebrow}
+                      </span>
+                      <h3 className="mt-3 font-serif-pro italic font-normal text-[26px] leading-tight tracking-[-0.01em] md:text-[30px]">
+                        {p.title}
+                      </h3>
+                      <p className="mt-4 text-[15px] leading-relaxed text-ink-soft">
+                        {p.body}
+                      </p>
+
+                      {p.highlights && (
+                        <div className="mt-7 rounded-xl border border-hairline bg-background/60 p-5">
+                          {p.highlightsLabel && (
+                            <span className="mb-3 block text-[10px] uppercase tracking-[0.2em] text-clay">
+                              {p.highlightsLabel}
+                            </span>
+                          )}
+                          <ul className="space-y-2.5">
+                            {p.highlights.map((h) => (
+                              <li
+                                key={h}
+                                className="flex items-start gap-2.5 text-[14px] leading-snug text-foreground/80"
+                              >
+                                <Check className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
+                                <span>{h}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </article>
+                  </Tilt3D>
                 );
               })}
             </div>
+
           </div>
         </section>
 
@@ -361,69 +364,71 @@ const NarrativesStrategyServicesPage = () => {
             ) : displayed.length === 0 ? (
               <p className="py-16 text-center text-muted-foreground">No projects to show yet.</p>
             ) : (
-              <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 [perspective:1200px]">
+              <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                 {displayed.map((item) => (
-                  <button
-                    key={item.id}
-                    type="button"
-                    onClick={() => setDetailItem(item)}
-                    className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-hairline bg-card text-left shadow-[0_2px_8px_rgba(0,0,0,0.04)] transition-all duration-500 ease-out will-change-transform hover:-translate-y-2 hover:shadow-[0_28px_60px_-20px_rgba(0,0,0,0.25)] hover:[transform:translateY(-8px)_rotateX(4deg)_rotateY(-3deg)] [transform-style:preserve-3d]"
-                  >
-                    {item.coverImage && !item.hasNda ? (
-                      <div className="aspect-[16/9] w-full overflow-hidden bg-muted">
-                        <img
-                          src={item.coverImage}
-                          alt={item.name}
-                          loading="lazy"
-                          className="block h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.04]"
-                        />
-                      </div>
-                    ) : (
-                      <div className="flex aspect-[16/9] items-center justify-center bg-muted">
-                        {item.hasNda ? (
-                          <div className="text-center text-muted-foreground">
-                            <Lock className="mx-auto mb-2 h-6 w-6" />
-                            <span className="text-xs">Under NDA</span>
-                          </div>
-                        ) : (
-                          <div className="h-12 w-12 rounded-full bg-accent/10" />
-                        )}
-                      </div>
-                    )}
-                    <div className="space-y-3 p-6">
-                      <div className="flex flex-wrap items-center gap-2">
-                        {item.tags
-                          .filter((t) => !EXCLUDED_TAGS.includes(t))
-                          .slice(0, 3)
-                          .map((tag) => (
-                            <Badge
-                              key={tag}
-                              variant="outline"
-                              className={`text-[11px] ${
-                                TAG_COLORS[tag] || "bg-muted text-muted-foreground border-border"
-                              }`}
-                            >
-                              {tag}
-                            </Badge>
-                          ))}
-                        {item.monthYear && (
-                          <span className="ml-auto text-xs text-muted-foreground">
-                            {item.monthYear}
-                          </span>
-                        )}
-                      </div>
-                      <h3 className="font-serif-pro italic font-normal text-2xl leading-tight tracking-[-0.01em] transition-colors group-hover:text-clay">
-                        {item.name}
-                      </h3>
-                      {item.text && (
-                        <p className="line-clamp-3 text-[14.5px] leading-relaxed text-ink-soft">
-                          {item.text}
-                        </p>
+                  <Tilt3D key={item.id} maxX={5} maxY={4} className="h-full">
+                    <button
+                      type="button"
+                      onClick={() => setDetailItem(item)}
+                      className="group relative flex h-full w-full flex-col overflow-hidden rounded-2xl border border-hairline bg-card text-left shadow-[0_2px_8px_rgba(0,0,0,0.04)] transition-shadow duration-500 hover:shadow-[0_28px_60px_-20px_rgba(0,0,0,0.25)]"
+                    >
+                      {item.coverImage && !item.hasNda ? (
+                        <div className="aspect-[16/9] w-full overflow-hidden bg-muted">
+                          <img
+                            src={item.coverImage}
+                            alt={item.name}
+                            loading="lazy"
+                            className="block h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.04]"
+                          />
+                        </div>
+                      ) : (
+                        <div className="flex aspect-[16/9] items-center justify-center bg-muted">
+                          {item.hasNda ? (
+                            <div className="text-center text-muted-foreground">
+                              <Lock className="mx-auto mb-2 h-6 w-6" />
+                              <span className="text-xs">Under NDA</span>
+                            </div>
+                          ) : (
+                            <div className="h-12 w-12 rounded-full bg-accent/10" />
+                          )}
+                        </div>
                       )}
-                    </div>
-                  </button>
+                      <div className="space-y-3 p-6">
+                        <div className="flex flex-wrap items-center gap-2">
+                          {item.tags
+                            .filter((t) => !EXCLUDED_TAGS.includes(t))
+                            .slice(0, 3)
+                            .map((tag) => (
+                              <Badge
+                                key={tag}
+                                variant="outline"
+                                className={`text-[11px] ${
+                                  TAG_COLORS[tag] || "bg-muted text-muted-foreground border-border"
+                                }`}
+                              >
+                                {tag}
+                              </Badge>
+                            ))}
+                          {item.monthYear && (
+                            <span className="ml-auto text-xs text-muted-foreground">
+                              {item.monthYear}
+                            </span>
+                          )}
+                        </div>
+                        <h3 className="font-serif-pro italic font-normal text-2xl leading-tight tracking-[-0.01em] transition-colors group-hover:text-clay">
+                          {item.name}
+                        </h3>
+                        {item.text && (
+                          <p className="line-clamp-3 text-[14.5px] leading-relaxed text-ink-soft">
+                            {item.text}
+                          </p>
+                        )}
+                      </div>
+                    </button>
+                  </Tilt3D>
                 ))}
               </div>
+
             )}
           </div>
         </section>
