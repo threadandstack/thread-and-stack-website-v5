@@ -9,6 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { ContactDrawer } from "@/components/ContactDrawer";
 import { PortfolioDetailModal } from "@/components/PortfolioDetailModal";
 import { supabase } from "@/integrations/supabase/client";
+import { LogoTilt } from "@/components/home-draft2/LogoTilt";
 import creativeBadge from "@/assets/creative-badge.png.asset.json";
 
 const CREATIVE_DB_ID = "2808863b-87d4-8027-8f0e-fb1f70d684e0";
