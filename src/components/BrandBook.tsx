@@ -140,6 +140,7 @@ export const BrandBook = () => {
   return (
     <>
       <PageSeo
+        path="/brand-book"
         title="Brand Book — Thread & Stack"
         description="Internal reference for the Thread & Stack visual system, voice, and component patterns."
         noindex
