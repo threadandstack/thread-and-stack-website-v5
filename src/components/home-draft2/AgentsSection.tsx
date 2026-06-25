@@ -37,7 +37,7 @@ export function AgentsSection() {
             </span>
             <h2 className="font-serif-pro italic font-normal text-balance text-3xl leading-[1.1] tracking-[-0.02em] md:text-[44px]">
               Custom Agents that solve
-              <span className="text-clay"> the hassle.</span>
+              <span className="text-gradient-warm"> the hassle.</span>
             </h2>
           </div>
 

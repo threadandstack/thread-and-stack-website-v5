@@ -25,15 +25,16 @@ interface BlogPostDetail {
 const getThemeColor = (theme: string | null | undefined) => {
   switch (theme?.toLowerCase()) {
     case 'growth':
-      return 'bg-emerald-100 text-emerald-800';
+      return 'pill-growth';
     case 'strategy':
-      return 'bg-orange-100 text-orange-800';
+      return 'pill-strategy';
     case 'creative':
-      return 'bg-pink-100 text-pink-800';
+      return 'pill-creative';
     case 'systems':
-      return 'bg-blue-100 text-blue-800';
+      return 'pill-systems';
     case 'case studies':
-      return 'bg-accent/20 text-accent';
+    case 'case study':
+      return 'pill-casestudy';
     default:
       return 'bg-muted text-muted-foreground';
   }

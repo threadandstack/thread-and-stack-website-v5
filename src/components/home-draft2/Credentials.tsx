@@ -7,7 +7,7 @@ export function Credentials() {
     <section>
       <div className="mx-auto max-w-5xl px-6 py-20 md:px-10 md:py-24">
         <SectionHeader eyebrow="Credentials">
-          Built on a stack of <span className="text-clay">credentials.</span>
+          Built on a stack of <span className="text-gradient-warm">credentials.</span>
         </SectionHeader>
         <div className="grid gap-6 md:grid-cols-2">
           <div className="rounded-2xl border border-hairline bg-background p-8 md:p-10 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
@@ -16,7 +16,7 @@ export function Credentials() {
                 <Shield className="h-5 w-5" strokeWidth={2} />
               </div>
               <h3 className="text-2xl font-medium tracking-tight">
-                Notion <span className="font-serif-pro italic text-clay">Certified</span>
+                Notion <span className="font-serif-pro italic text-gradient-warm">Certified</span>
               </h3>
             </div>
 
@@ -41,7 +41,7 @@ export function Credentials() {
                 <Bot className="h-5 w-5" strokeWidth={2} />
               </div>
               <h3 className="text-2xl font-medium tracking-tight">
-                Fluent in <span className="font-serif-pro italic text-clay">AI frameworks</span>
+                Fluent in <span className="font-serif-pro italic text-gradient-warm">AI frameworks</span>
               </h3>
             </div>
 
