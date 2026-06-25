@@ -1,23 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { 
-  ArrowRight, 
-  Check, 
-  ChevronDown, 
-  Menu, 
-  X, 
-  Mail, 
-  Linkedin,
-  Clock,
-  Zap,
-  Users,
-  Target,
-  Repeat,
-  Loader2,
-  Download
-} from "lucide-react";
+import { ArrowRight, Check, Download, Sparkles, Copy } from "lucide-react";
+import { Tilt3D } from "@/components/Tilt3D";
+import { FAQ } from "@/components/FAQ";
+import { CTA } from "@/components/home-draft2/CTA";
+import { ContactDrawer } from "@/components/ContactDrawer";
+import PageSeo from "@/components/seo/PageSeo";
 
-// Logo imports
+// Active logos (current set — gradient blue logo retired, not imported)
 import GreyStacked from "@/assets/logos/Grey_TS_Stacked.svg";
 import IndigoStacked from "@/assets/logos/Indigo_TS_Stacked.svg";
 import BlackStacked from "@/assets/logos/Black_TS_Stacked.svg";
@@ -31,1070 +21,725 @@ import IndigoSocialSq from "@/assets/logos/Indigo_TS_SocialSq.svg";
 import BlackSocialSq from "@/assets/logos/Black_TS_SocialSq.svg";
 import WhiteSocialSq from "@/assets/logos/White_TS_SocialSq.svg";
 
-// Photography imports
-import workshop1 from "@/assets/photos/workshop/brendan-1.webp";
+// Photography — current set
 import workshop2 from "@/assets/photos/workshop/brendan-2.webp";
-import workshop3 from "@/assets/photos/workshop/brendan-3.webp";
-import workshop18 from "@/assets/photos/workshop/brendan-18.webp";
 import workshop19 from "@/assets/photos/workshop/brendan-19.webp";
-import workshop20 from "@/assets/photos/workshop/brendan-20.webp";
-import workshop21 from "@/assets/photos/workshop/brendan-21.webp";
 import workshop22 from "@/assets/photos/workshop/brendan-22.webp";
-import workshop23 from "@/assets/photos/workshop/brendan-23.webp";
-import workshop24 from "@/assets/photos/workshop/brendan-24.webp";
 import workshop25 from "@/assets/photos/workshop/brendan-25.webp";
-
-// Shoreditch photos
 import shoreditch26 from "@/assets/photos/shoreditch/brendan-26.webp";
-
-// Portrait photos
-import portrait4 from "@/assets/photos/portraits/brendan-4.webp";
-import portrait5 from "@/assets/photos/portraits/brendan-5.webp";
-import portrait6 from "@/assets/photos/portraits/brendan-6.webp";
-import portrait7 from "@/assets/photos/portraits/brendan-7.webp";
-import portrait8 from "@/assets/photos/portraits/brendan-8.webp";
-import portrait9 from "@/assets/photos/portraits/brendan-9.webp";
-import portrait10 from "@/assets/photos/portraits/brendan-10.webp";
-import portrait11 from "@/assets/photos/portraits/brendan-11.webp";
-import portrait12 from "@/assets/photos/portraits/brendan-12.webp";
-import portrait13 from "@/assets/photos/portraits/brendan-13.webp";
-import portrait14 from "@/assets/photos/portraits/brendan-14.webp";
-import portrait15 from "@/assets/photos/portraits/brendan-15.webp";
-import portrait16 from "@/assets/photos/portraits/brendan-16.webp";
-import portrait17 from "@/assets/photos/portraits/brendan-17.webp";
-import shoreditch27 from "@/assets/photos/shoreditch/brendan-27.webp";
-import shoreditch28 from "@/assets/photos/shoreditch/brendan-28.webp";
 import shoreditch29 from "@/assets/photos/shoreditch/brendan-29.webp";
-import shoreditch30 from "@/assets/photos/shoreditch/brendan-30.webp";
-import shoreditch31 from "@/assets/photos/shoreditch/brendan-31.webp";
-import shoreditch33 from "@/assets/photos/shoreditch/brendan-33.webp";
 import shoreditch34 from "@/assets/photos/shoreditch/brendan-34.webp";
-import shoreditch35 from "@/assets/photos/shoreditch/brendan-35.webp";
 import shoreditch37 from "@/assets/photos/shoreditch/brendan-37.webp";
+import portrait7 from "@/assets/photos/portraits/brendan-7.webp";
+import portrait12 from "@/assets/photos/portraits/brendan-12.webp";
+import portrait16 from "@/assets/photos/portraits/brendan-16.webp";
 
-// Custom social icons used in Footer
-const BlueskyIcon = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 24 24" className={className} fill="currentColor">
-    <path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.815 2.736 3.713 3.66 6.383 3.364.136-.02.275-.039.415-.056-.138.022-.276.04-.415.056-3.912.58-7.387 2.005-2.83 7.078 5.013 5.19 6.87-1.113 7.823-4.308.953 3.195 2.05 9.271 7.733 4.308 4.267-4.882 1.082-6.498-2.83-7.078a6.036 6.036 0 0 1-.415-.056c.14.017.279.036.415.056 2.67.296 5.568-.628 6.383-3.364.246-.828.624-5.79.624-6.479 0-.689-.139-1.861-.902-2.203-.659-.3-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8Z"/>
-  </svg>
-);
+// ── Helpers ───────────────────────────────────────────────────────────────
 
-const SubstackIcon = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 24 24" className={className} fill="currentColor">
-    <path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/>
-  </svg>
-);
+const SECTIONS = [
+  ["01", "Brand essence"],
+  ["02", "Logo system"],
+  ["03", "Colour"],
+  ["04", "Gradients"],
+  ["05", "Typography"],
+  ["06", "Cards & 3D float"],
+  ["07", "Pill buttons"],
+  ["08", "FAQ pattern"],
+  ["09", "Drawers & lightbox"],
+  ["10", "Bottom CTA block"],
+  ["11", "Animation rules"],
+  ["12", "Photography"],
+  ["13", "Notion translations"],
+  ["14", "Voice & copy"],
+  ["15", "Downloads"],
+] as const;
 
-// Color swatch with click-to-copy hex
-const ColorSwatch = ({ name, hex, dark }: { name: string; hex: string; dark?: boolean }) => {
+const Swatch = ({ name, hex, hsl }: { name: string; hex: string; hsl?: string }) => {
   const [copied, setCopied] = useState(false);
-  
-  const handleCopy = () => {
+  const copy = () => {
     navigator.clipboard.writeText(hex);
     setCopied(true);
-    setTimeout(() => setCopied(false), 1500);
+    setTimeout(() => setCopied(false), 1400);
   };
-
   return (
     <button
-      onClick={handleCopy}
-      className="text-left group transition-all hover:scale-[1.02] active:scale-[0.98]"
+      onClick={copy}
+      className="text-left group transition-opacity hover:opacity-90"
     >
       <div
-        className="w-full aspect-[3/2] rounded-xl border border-border/50 shadow-sm mb-2"
+        className="w-full aspect-[3/2] rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.06)] mb-3"
         style={{ backgroundColor: hex }}
       />
-      <p className="text-sm font-medium truncate">{name}</p>
+      <p className="text-sm font-medium">{name}</p>
       <p className="text-xs font-mono text-muted-foreground group-hover:text-accent transition-colors">
-        {copied ? "Copied!" : hex}
+        {copied ? "Copied" : hex}
+      </p>
+      {hsl && (
+        <p className="text-[10px] font-mono text-muted-foreground/60">{hsl}</p>
+      )}
+    </button>
+  );
+};
+
+const Gradient = ({
+  name,
+  css,
+}: {
+  name: string;
+  css: string;
+}) => {
+  const [copied, setCopied] = useState(false);
+  const copy = () => {
+    navigator.clipboard.writeText(css);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1400);
+  };
+  return (
+    <button onClick={copy} className="text-left group block w-full">
+      <div
+        className="w-full aspect-[4/1] rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.08)] mb-3"
+        style={{ background: css }}
+      />
+      <div className="flex items-baseline justify-between gap-3">
+        <p className="text-sm font-medium">{name}</p>
+        <p className="text-xs font-mono text-muted-foreground group-hover:text-accent transition-colors inline-flex items-center gap-1">
+          <Copy className="w-3 h-3" /> {copied ? "Copied" : "Copy CSS"}
+        </p>
+      </div>
+      <p className="text-[11px] font-mono text-muted-foreground/70 mt-1 break-all">
+        {css}
       </p>
     </button>
   );
 };
 
-// Brand Book - Living reference for Thread & Stack
-export const BrandBook = () => {
-  return (
-    <div className="min-h-screen bg-background p-8 md:p-16 space-y-24 print:p-4 print:space-y-12">
-      {/* Download button */}
-      <div className="fixed top-5 right-5 z-50 print:hidden">
-        <Button onClick={() => window.print()} size="sm" className="gap-2 rounded-lg shadow-lg">
-          <Download className="w-3.5 h-3.5" />
-          Download PDF
-        </Button>
-      </div>
+const SectionHead = ({ num, title, kicker }: { num: string; title: string; kicker?: string }) => (
+  <div className="space-y-2">
+    <div className="flex items-baseline gap-4">
+      <span className="text-xs text-muted-foreground uppercase tracking-widest font-mono">{num}</span>
+      <h2 className="font-serif-pro text-3xl md:text-4xl font-medium">{title}</h2>
+    </div>
+    {kicker && (
+      <p className="text-base text-muted-foreground max-w-2xl pl-12">{kicker}</p>
+    )}
+  </div>
+);
 
-      <div className="max-w-5xl mx-auto">
-        <header className="mb-16 print:mb-8">
-          <p className="text-sm text-muted-foreground uppercase tracking-widest mb-4">Internal Reference</p>
-          <h1 className="font-serif-pro text-4xl md:text-5xl font-bold mb-4">
-            Brand Book
-          </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl">
-            Logos, typography, iconography, and approved styles for Thread & Stack.
+const Rule = ({ children }: { children: React.ReactNode }) => (
+  <div className="flex items-start gap-2 text-sm text-foreground/80">
+    <Check className="w-4 h-4 mt-[3px] text-accent shrink-0" />
+    <span>{children}</span>
+  </div>
+);
+
+// ── Page ──────────────────────────────────────────────────────────────────
+
+export const BrandBook = () => {
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  return (
+    <>
+      <PageSeo
+        title="Brand Book — Thread & Stack"
+        description="Internal reference for the Thread & Stack visual system, voice, and component patterns."
+        noindex
+      />
+
+      <div className="min-h-screen bg-background text-foreground">
+        {/* Floating download */}
+        <div className="fixed top-5 right-5 z-50 print:hidden">
+          <Button
+            onClick={() => window.print()}
+            size="sm"
+            className="gap-2 rounded-full shadow-lg"
+          >
+            <Download className="w-3.5 h-3.5" />
+            Print
+          </Button>
+        </div>
+
+        {/* Header */}
+        <header className="max-w-6xl mx-auto px-6 md:px-12 pt-20 pb-12">
+          <p className="text-xs text-muted-foreground uppercase tracking-widest mb-4 font-mono">
+            Internal reference · v3
           </p>
+          <h1 className="font-serif-pro text-5xl md:text-7xl font-medium leading-[1.05] mb-6">
+            Brand book
+          </h1>
+          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed">
+            The living source of truth for Thread & Stack. Every pattern on this
+            page is rendered with the production component it documents. If
+            something here disagrees with the live site, the live site wins and
+            this page is updated.
+          </p>
+
+          {/* TOC */}
+          <nav className="mt-12 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-6 gap-y-2 print:hidden">
+            {SECTIONS.map(([num, title]) => (
+              <a
+                key={num}
+                href={`#s${num}`}
+                className="text-sm text-muted-foreground hover:text-accent transition-colors flex items-baseline gap-2"
+              >
+                <span className="font-mono text-xs text-muted-foreground/60">{num}</span>
+                <span>{title}</span>
+              </a>
+            ))}
+          </nav>
         </header>
 
-        {/* LOGO REFERENCE SECTION */}
-        <section className="space-y-8 pb-16 border-b border-border">
-          <div className="flex items-baseline gap-4">
-            <span className="text-xs text-muted-foreground uppercase tracking-widest">00</span>
-            <h2 className="font-serif-pro text-xl font-semibold">Logo Reference</h2>
-          </div>
-          
-          {/* Stacked Logos */}
-          <div className="space-y-4">
-            <p className="text-sm text-muted-foreground">Stacked versions</p>
-            <div className="flex flex-wrap gap-8 items-end">
-              <div className="bg-background p-6 rounded-xl border border-border">
-                <img src={GreyStacked} alt="Grey Stacked" className="h-20 w-auto" />
-                <p className="text-xs text-muted-foreground mt-2">Grey (Default)</p>
-              </div>
-              <div className="bg-background p-6 rounded-xl border border-border">
-                <img src={IndigoStacked} alt="Indigo Stacked" className="h-20 w-auto" />
-                <p className="text-xs text-muted-foreground mt-2">Indigo (Hover)</p>
-              </div>
-              <div className="bg-background p-6 rounded-xl border border-border">
-                <img src={BlackStacked} alt="Black Stacked" className="h-20 w-auto" />
-                <p className="text-xs text-muted-foreground mt-2">Black</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Wordmark Logos */}
-          <div className="space-y-4">
-            <p className="text-sm text-muted-foreground">Wordmark versions</p>
-            <div className="flex flex-wrap gap-8 items-end">
-              <div className="bg-background p-6 rounded-xl border border-border">
-                <img src={GreyWordmark} alt="Grey Wordmark" className="h-8 w-auto" />
-                <p className="text-xs text-muted-foreground mt-2">Grey</p>
-              </div>
-              <div className="bg-background p-6 rounded-xl border border-border">
-                <img src={IndigoWordmark} alt="Indigo Wordmark" className="h-8 w-auto" />
-                <p className="text-xs text-muted-foreground mt-2">Indigo</p>
-              </div>
-              <div className="bg-background p-6 rounded-xl border border-border">
-                <img src={BlackWordmark} alt="Black Wordmark" className="h-8 w-auto" />
-                <p className="text-xs text-muted-foreground mt-2">Black</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Dark background preview */}
-          <div className="space-y-4">
-            <p className="text-sm text-muted-foreground">On dark background</p>
-            <div className="bg-foreground p-8 rounded-xl flex flex-wrap gap-8 items-center">
-              <img src={WhiteStacked} alt="White on dark" className="h-16 w-auto" />
-              <img src={WhiteWordmark} alt="White Wordmark on dark" className="h-6 w-auto" />
-              <img src={IndigoStacked} alt="Indigo on dark" className="h-16 w-auto" />
-            </div>
-          </div>
-
-          {/* Social Square / Favicon */}
-          <div className="space-y-4">
-            <p className="text-sm text-muted-foreground">Social Square (Favicon style)</p>
-            <div className="flex flex-wrap gap-6 items-end">
-              <div className="bg-background p-4 rounded-xl border border-border">
-                <img src={GreySocialSq} alt="Grey SocialSq" className="h-12 w-12" />
-                <p className="text-xs text-muted-foreground mt-2">Grey</p>
-              </div>
-              <div className="bg-background p-4 rounded-xl border border-border">
-                <img src={IndigoSocialSq} alt="Indigo SocialSq" className="h-12 w-12" />
-                <p className="text-xs text-muted-foreground mt-2">Indigo</p>
-              </div>
-              <div className="bg-background p-4 rounded-xl border border-border">
-                <img src={BlackSocialSq} alt="Black SocialSq" className="h-12 w-12" />
-                <p className="text-xs text-muted-foreground mt-2">Black</p>
-              </div>
-              <div className="bg-foreground p-4 rounded-xl">
-                <img src={WhiteSocialSq} alt="White SocialSq" className="h-12 w-12" />
-                <p className="text-xs text-background/70 mt-2">White</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* COLOR PALETTE */}
-        <section className="space-y-8 py-16 border-b border-border">
-          <div className="flex items-baseline gap-4">
-            <span className="text-xs text-muted-foreground uppercase tracking-widest">01</span>
-            <h2 className="font-serif-pro text-xl font-semibold">Colour Palette</h2>
-          </div>
-          <p className="text-sm text-muted-foreground max-w-xl">
-            Core brand colours with hex codes. Click any swatch to copy the hex value.
-          </p>
-
-          {/* Light Mode */}
-          <div className="space-y-4">
-            <p className="text-xs text-muted-foreground uppercase tracking-widest">Light Mode</p>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-              <ColorSwatch name="Background" hex="#FFFFFF" />
-              <ColorSwatch name="Foreground" hex="#0D0D0D" />
-              <ColorSwatch name="Card" hex="#FCFCFC" />
-              <ColorSwatch name="Primary" hex="#1A1A1A" />
-              <ColorSwatch name="Accent (Indigo)" hex="#1026D6" />
-              <ColorSwatch name="Muted" hex="#F5F5F5" />
-              <ColorSwatch name="Muted Foreground" hex="#666666" />
-              <ColorSwatch name="Secondary" hex="#666666" />
-              <ColorSwatch name="Border" hex="#EBEBEB" />
-              <ColorSwatch name="Destructive" hex="#CC2929" />
-            </div>
-          </div>
-
-          {/* Dark Mode */}
-          <div className="space-y-4 pt-4">
-            <p className="text-xs text-muted-foreground uppercase tracking-widest">Dark Mode</p>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-              <ColorSwatch name="Background" hex="#181B24" dark />
-              <ColorSwatch name="Foreground" hex="#EAEBED" dark />
-              <ColorSwatch name="Card" hex="#1F2330" dark />
-              <ColorSwatch name="Primary" hex="#EAEBED" dark />
-              <ColorSwatch name="Accent (Orange)" hex="#FF6200" dark />
-              <ColorSwatch name="Muted" hex="#262A38" dark />
-              <ColorSwatch name="Muted Foreground" hex="#828795" dark />
-              <ColorSwatch name="Secondary" hex="#6B7CC4" dark />
-              <ColorSwatch name="Border" hex="#2B2F3D" dark />
-              <ColorSwatch name="Destructive" hex="#CC3333" dark />
-            </div>
-          </div>
-        </section>
-
-        {/* APPROVED HERO STYLE */}
-        <section className="space-y-8 py-16 border-b-2 border-accent/30">
-          <div className="flex items-baseline gap-4">
-            <span className="text-xs text-accent uppercase tracking-widest font-semibold">★ HERO</span>
-            <h2 className="font-serif-pro text-xl font-semibold">Subtle Application + Underline</h2>
-          </div>
-          <p className="text-sm text-muted-foreground max-w-xl">
-            07 Default style with accent color and animated underline on "human". Currently live on homepage.
-          </p>
-          
-          <div className="space-y-6 bg-accent/5 p-8 md:p-12 rounded-2xl border border-accent/20">
-            <h3 className="font-serif-pro text-4xl md:text-6xl font-semibold leading-tight max-w-4xl">
-              Marketing that feels{" "}
-              <span className="inline-block" style={{ transform: "translateY(-1px)" }}>more</span>{" "}
-              <span className="inline-block text-accent" style={{ transform: "translateY(1px)" }}>
-                human
-              </span>
-            </h3>
-            
-            <p className="font-serif-pro text-xl md:text-2xl text-muted-foreground">
-              The brands that feel <span className="text-accent font-medium">alive</span>, are remembered.
-            </p>
-            
-            <p className="font-serif-pro text-lg text-muted-foreground/70 max-w-xl">
-              Through strategy, creative direction, and systems that{" "}
-              <span className="inline-block font-medium" style={{ transform: "translateY(-0.5px)" }}>actually</span>{" "}
-              work.
-            </p>
-          </div>
-        </section>
-
-        {/* SECTION HEADERS */}
-        <section className="space-y-8 py-16 border-b border-border">
-          <div className="flex items-baseline gap-4">
-            <span className="text-xs text-accent uppercase tracking-widest font-semibold">★ HEADERS</span>
-            <h2 className="font-serif-pro text-xl font-semibold">Section Headers</h2>
-          </div>
-          <p className="text-sm text-muted-foreground max-w-xl">
-            Numbered sections with accent color and subtle baseline shifts.
-          </p>
-          
-          <div className="space-y-10 bg-muted/20 p-8 md:p-12 rounded-2xl">
-            <div className="flex items-baseline gap-4 border-b border-border/30 pb-4">
-              <span className="font-serif-pro text-3xl md:text-4xl font-light text-accent">01</span>
-              <h3 className="font-serif-pro text-2xl md:text-4xl font-bold" style={{ transform: "translateY(2px) rotate(-0.3deg)" }}>
-                What We Do
-              </h3>
-            </div>
-            
-            <div className="flex items-baseline gap-4 border-b border-border/30 pb-4">
-              <span className="font-serif-pro text-3xl md:text-4xl font-light text-accent">02</span>
-              <h3 className="font-serif-pro text-2xl md:text-4xl font-bold" style={{ transform: "translateY(-1px) rotate(0.4deg)" }}>
-                How It Works
-              </h3>
-            </div>
-            
-            <div className="flex items-baseline gap-4 border-b border-border/30 pb-4">
-              <span className="font-serif-pro text-3xl md:text-4xl font-light text-accent">03</span>
-              <h3 className="font-serif-pro text-2xl md:text-4xl font-bold" style={{ transform: "translateY(1px) rotate(-0.5deg)" }}>
-                Featured Work
-              </h3>
-            </div>
-          </div>
-        </section>
-
-        {/* PRODUCT CARDS */}
-        <section className="space-y-8 py-16 border-b border-border">
-          <div className="flex items-baseline gap-4">
-            <span className="text-xs text-accent uppercase tracking-widest font-semibold">★ CARDS</span>
-            <h2 className="font-serif-pro text-xl font-semibold">Product Cards</h2>
-          </div>
-          <p className="text-sm text-muted-foreground max-w-xl">
-            Subtle Application style for service cards. Accent on key word.
-          </p>
-          
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="bg-muted/20 p-6 rounded-2xl space-y-3 hover:bg-muted/30 transition-colors cursor-pointer">
-              <h3 className="font-serif-pro text-2xl md:text-3xl font-semibold leading-tight">
-                Clarity{" "}
-                <span className="inline-block text-accent" style={{ transform: "translateY(1px)" }}>
-                  Sessions
-                </span>
-              </h3>
-              <p className="text-sm text-muted-foreground">60-minute strategic power hours</p>
-            </div>
-
-            <div className="bg-muted/20 p-6 rounded-2xl space-y-3 hover:bg-muted/30 transition-colors cursor-pointer">
-              <h3 className="font-serif-pro text-2xl md:text-3xl font-semibold leading-tight">
-                Mentorship{" "}
-                <span className="inline-block text-accent" style={{ transform: "translateY(1px)" }}>
-                  Sprints
-                </span>
-              </h3>
-              <p className="text-sm text-muted-foreground">6-week AI workflow builds</p>
-            </div>
-
-            <div className="bg-muted/20 p-6 rounded-2xl space-y-3 hover:bg-muted/30 transition-colors cursor-pointer">
-              <h3 className="font-serif-pro text-2xl md:text-3xl font-semibold leading-tight">
-                Brand{" "}
-                <span className="inline-block text-accent" style={{ transform: "translateY(1px)" }}>
-                  Workshops
-                </span>
-              </h3>
-              <p className="text-sm text-muted-foreground">Modular team strategy sessions</p>
-            </div>
-          </div>
-        </section>
-
-        {/* QUOTES */}
-        <section className="space-y-8 py-16 border-b border-border">
-          <div className="flex items-baseline gap-4">
-            <span className="text-xs text-accent uppercase tracking-widest font-semibold">★ QUOTES</span>
-            <h2 className="font-serif-pro text-xl font-semibold">Pull Quotes</h2>
-          </div>
-          <p className="text-sm text-muted-foreground max-w-xl">
-            Hero quote (large) and standard blog quote styles.
-          </p>
-          
-          <div className="space-y-8 bg-muted/20 p-8 md:p-12 rounded-2xl">
-            {/* Hero Quote */}
-            <div>
-              <span className="text-xs text-muted-foreground uppercase tracking-widest mb-4 block">Hero Quote</span>
-              <blockquote className="relative" style={{ transform: "rotate(-0.3deg)" }}>
-                <p className="font-serif-pro text-2xl md:text-4xl font-semibold leading-snug max-w-3xl">
-                  "Brendan helped us find the{" "}
-                  <span className="inline-block text-accent" style={{ transform: "translateY(-2px) rotate(0.5deg)" }}>
-                    words
-                  </span>{" "}
-                  we'd been searching for."
+        <main className="max-w-6xl mx-auto px-6 md:px-12 pb-24 space-y-24">
+          {/* 01 — Brand essence */}
+          <section id="s01" className="scroll-mt-24 space-y-8">
+            <SectionHead num="01" title="Brand essence" />
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="rounded-3xl bg-card p-8 md:p-10 shadow-[0_8px_30px_rgba(0,0,0,0.06)]">
+                <p className="text-xs uppercase tracking-widest text-muted-foreground mb-4 font-mono">
+                  Brand line
                 </p>
-                <footer className="mt-4 font-serif-pro text-base text-muted-foreground">
-                  <span className="inline-block" style={{ transform: "rotate(0.5deg)" }}>— Karen Cockburn</span>, CEO, Nerve Tumours UK
-                </footer>
-              </blockquote>
-            </div>
-            
-            {/* Blog Quote */}
-            <div className="pt-8 border-t border-border/50">
-              <span className="text-xs text-muted-foreground uppercase tracking-widest mb-4 block">Blog Quote</span>
-              <blockquote className="border-l-4 border-accent pl-4 py-2" style={{ transform: "rotate(0.2deg)" }}>
-                <p className="font-serif-pro text-xl md:text-2xl font-medium italic leading-relaxed max-w-2xl text-foreground/80">
-                  "Finally, a strategist who{" "}
-                  <span className="inline-block not-italic font-bold" style={{ transform: "translateY(1px)" }}>understands</span>{" "}
-                  design."
+                <p className="font-serif-pro text-3xl md:text-4xl leading-tight italic">
+                  Stories that land.
+                  <br />
+                  Systems that stick.
                 </p>
-                <footer className="mt-3 font-serif-pro text-sm text-muted-foreground">
-                  — A founder who gets it
-                </footer>
-              </blockquote>
+              </div>
+              <div className="rounded-3xl bg-accent/5 p-8 md:p-10">
+                <p className="text-xs uppercase tracking-widest text-accent mb-4 font-mono">
+                  The problem we name
+                </p>
+                <h3 className="font-serif-pro text-2xl mb-3">The creative tax</h3>
+                <p className="text-sm text-foreground/80 leading-relaxed">
+                  The cognitive load and admin chaos that taxes creative teams
+                  between intention and execution. Every page proposes the
+                  problem before the solution.
+                </p>
+              </div>
             </div>
-          </div>
-        </section>
+            <div className="rounded-3xl bg-card p-8 md:p-10 shadow-[0_8px_30px_rgba(0,0,0,0.06)]">
+              <p className="text-xs uppercase tracking-widest text-muted-foreground mb-4 font-mono">
+                Two pillars
+              </p>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <h4 className="font-serif-pro text-xl mb-1">Narratives & Strategy</h4>
+                  <p className="text-sm text-muted-foreground">Positioning, story, messaging. Founder works as designer and strategist.</p>
+                </div>
+                <div>
+                  <h4 className="font-serif-pro text-xl mb-1">Notion & Systems Consultancy</h4>
+                  <p className="text-sm text-muted-foreground">Operating systems for creative teams. Notion-native, automation-aware.</p>
+                </div>
+              </div>
+            </div>
+          </section>
 
-        {/* CARD VARIATIONS */}
-        <section className="space-y-8 py-16 border-b border-border">
-          <div className="flex items-baseline gap-4">
-            <span className="text-xs text-accent uppercase tracking-widest font-semibold">★ CARDS</span>
-            <h2 className="font-serif-pro text-xl font-semibold">Card Variations</h2>
-          </div>
-          <p className="text-sm text-muted-foreground max-w-xl">
-            Card styles used across the site: Product/Service cards, Portfolio entries, and Blog cards.
-          </p>
-          
-          <div className="space-y-12">
-            {/* Product/Service Card */}
-            <div>
-              <span className="text-xs text-muted-foreground uppercase tracking-widest mb-4 block">Product/Service Card</span>
-              <div className="max-w-sm">
-                <div className="bg-card rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] p-8 transition-all duration-300 flex flex-col">
-                  <div className="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center mb-6 text-accent">
-                    <Zap className="w-6 h-6" />
+          {/* 02 — Logo system */}
+          <section id="s02" className="scroll-mt-24 space-y-8">
+            <SectionHead
+              num="02"
+              title="Logo system"
+              kicker="One mark, four colourways, three forms. The 2024 gradient blue mark is retired and must not be reintroduced."
+            />
+
+            <div className="space-y-3">
+              <p className="text-xs uppercase tracking-widest text-muted-foreground font-mono">Stacked</p>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {[
+                  { src: GreyStacked, label: "Grey · default" },
+                  { src: IndigoStacked, label: "Indigo · hover / accent" },
+                  { src: BlackStacked, label: "Black" },
+                  { src: WhiteStacked, label: "White · on dark", dark: true },
+                ].map((l) => (
+                  <div
+                    key={l.label}
+                    className={`p-6 rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.06)] flex flex-col items-center justify-center gap-4 aspect-square ${
+                      l.dark ? "bg-foreground" : "bg-card"
+                    }`}
+                  >
+                    <img src={l.src} alt={l.label} className="h-16 w-auto" />
+                    <p className={`text-xs ${l.dark ? "text-background/70" : "text-muted-foreground"}`}>{l.label}</p>
                   </div>
-                  
-                  <h3 className="text-2xl mb-2 font-light">
-                    Sessions & Sprints
-                  </h3>
-                  
-                  <p className="text-sm text-accent mb-4">
-                    Focused Strategic Support
+                ))}
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <p className="text-xs uppercase tracking-widest text-muted-foreground font-mono">Wordmark</p>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {[
+                  { src: GreyWordmark, label: "Grey" },
+                  { src: IndigoWordmark, label: "Indigo" },
+                  { src: BlackWordmark, label: "Black" },
+                  { src: WhiteWordmark, label: "White", dark: true },
+                ].map((l) => (
+                  <div
+                    key={l.label}
+                    className={`p-6 rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.06)] flex flex-col items-center justify-center gap-4 aspect-[2/1] ${
+                      l.dark ? "bg-foreground" : "bg-card"
+                    }`}
+                  >
+                    <img src={l.src} alt={l.label} className="h-6 w-auto" />
+                    <p className={`text-xs ${l.dark ? "text-background/70" : "text-muted-foreground"}`}>{l.label}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <p className="text-xs uppercase tracking-widest text-muted-foreground font-mono">Social square (favicon)</p>
+              <div className="flex flex-wrap gap-4">
+                {[
+                  { src: GreySocialSq, label: "Grey" },
+                  { src: IndigoSocialSq, label: "Indigo" },
+                  { src: BlackSocialSq, label: "Black" },
+                  { src: WhiteSocialSq, label: "White", dark: true },
+                ].map((l) => (
+                  <div
+                    key={l.label}
+                    className={`p-4 rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.06)] flex flex-col items-center gap-3 ${
+                      l.dark ? "bg-foreground" : "bg-card"
+                    }`}
+                  >
+                    <img src={l.src} alt={l.label} className="h-14 w-14" />
+                    <p className={`text-xs ${l.dark ? "text-background/70" : "text-muted-foreground"}`}>{l.label}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-2xl bg-destructive/5 border border-destructive/20 p-6 space-y-2">
+              <p className="text-xs uppercase tracking-widest text-destructive font-mono font-medium">Retired — do not reintroduce</p>
+              <p className="text-sm text-foreground/80">
+                The 2024 gradient blue swoosh mark and any pre-rebrand T&S
+                wordmark from before Crimson Pro adoption.
+              </p>
+            </div>
+          </section>
+
+          {/* 03 — Colour */}
+          <section id="s03" className="scroll-mt-24 space-y-8">
+            <SectionHead
+              num="03"
+              title="Colour"
+              kicker="Light is the default. Night is a peer, not an afterthought. Click any swatch to copy the hex."
+            />
+
+            <div className="space-y-4">
+              <p className="text-xs uppercase tracking-widest text-muted-foreground font-mono">Light theme</p>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-5">
+                <Swatch name="Background" hex="#FFFFFF" hsl="0 0% 100%" />
+                <Swatch name="Foreground" hex="#0D0D0D" hsl="0 0% 5%" />
+                <Swatch name="Card" hex="#FCFCFC" hsl="0 0% 99%" />
+                <Swatch name="Accent · Indigo" hex="#1340E8" hsl="234 89% 50%" />
+                <Swatch name="Ring" hex="#5B14F5" hsl="256 89% 50%" />
+                <Swatch name="Muted" hex="#F5F5F5" />
+                <Swatch name="Muted Fg" hex="#666666" />
+                <Swatch name="Border" hex="#EBEBEB" />
+                <Swatch name="Destructive" hex="#CC2929" />
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <p className="text-xs uppercase tracking-widest text-muted-foreground font-mono">Night theme</p>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-5">
+                <Swatch name="Background" hex="#181B24" hsl="230 15% 11%" />
+                <Swatch name="Foreground" hex="#EAEBED" hsl="220 10% 93%" />
+                <Swatch name="Card" hex="#1F2330" hsl="230 14% 14%" />
+                <Swatch name="Accent · Orange" hex="#FF6200" hsl="24 100% 50%" />
+                <Swatch name="Ring" hex="#FF6200" hsl="24 100% 50%" />
+                <Swatch name="Muted" hex="#262A38" />
+                <Swatch name="Muted Fg" hex="#828795" />
+                <Swatch name="Border" hex="#2B2F3D" />
+                <Swatch name="Secondary" hex="#6B7CC4" />
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <p className="text-xs uppercase tracking-widest text-muted-foreground font-mono">
+                Per-page Night variant · Narratives & Strategy
+              </p>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-5">
+                <Swatch name="Light blue" hex="#5DE0E6" />
+                <Swatch name="Deep navy" hex="#004AAD" />
+              </div>
+              <p className="text-xs text-muted-foreground max-w-xl">
+                Per-page overrides are scoped via CSS variables on a wrapper.
+                Never mutate the global tokens.
+              </p>
+            </div>
+          </section>
+
+          {/* 04 — Gradients */}
+          <section id="s04" className="scroll-mt-24 space-y-8">
+            <SectionHead
+              num="04"
+              title="Gradients"
+              kicker="Three approved gradient families. Pass them as props (ctaGradient, logoHoverGradient) rather than hardcoding."
+            />
+            <div className="space-y-6">
+              <Gradient
+                name="Default · Indigo"
+                css="linear-gradient(90deg, #1340E8, #4E6CFF)"
+              />
+              <Gradient
+                name="Night · Orange"
+                css="linear-gradient(90deg, #FF6200, #FF9248)"
+              />
+              <Gradient
+                name="Narratives · Light blue → Deep navy"
+                css="linear-gradient(90deg, #5DE0E6, #004AAD)"
+              />
+            </div>
+          </section>
+
+          {/* 05 — Typography */}
+          <section id="s05" className="scroll-mt-24 space-y-8">
+            <SectionHead
+              num="05"
+              title="Typography"
+              kicker="Crimson Pro for editorial moments, Inter for everything else. Use less bold than instinct asks for."
+            />
+            <div className="rounded-3xl bg-card p-8 md:p-12 shadow-[0_8px_30px_rgba(0,0,0,0.06)] space-y-10">
+              <div>
+                <p className="text-xs uppercase tracking-widest text-muted-foreground mb-3 font-mono">
+                  Display · Crimson Pro · 500
+                </p>
+                <p className="font-serif-pro text-5xl md:text-6xl leading-[1.05]">
+                  Marketing that feels{" "}
+                  <span className="italic text-accent">more human</span>.
+                </p>
+              </div>
+              <div>
+                <p className="text-xs uppercase tracking-widest text-muted-foreground mb-3 font-mono">
+                  Editorial accent · Crimson Pro italic
+                </p>
+                <p className="font-serif-pro italic text-2xl md:text-3xl text-foreground/80">
+                  A single serif word inside a sans line outperforms a fully
+                  serif heading.
+                </p>
+              </div>
+              <div className="space-y-3">
+                <p className="text-xs uppercase tracking-widest text-muted-foreground font-mono">
+                  Body · Inter · 400 / 500
+                </p>
+                <p className="text-base leading-relaxed text-foreground/85 max-w-2xl">
+                  Inter handles every functional surface: body copy, UI labels,
+                  captions, buttons. Body weight 400, emphasis 500, never 700.
+                  Targeted serif phrases earn their place by appearing rarely.
+                </p>
+              </div>
+              <div className="grid sm:grid-cols-3 gap-4 pt-2">
+                {[
+                  ["Display", "font-serif-pro text-3xl", "500"],
+                  ["Body", "text-base", "400"],
+                  ["Caption", "text-xs uppercase tracking-widest font-mono", "—"],
+                ].map(([label, cls, w]) => (
+                  <div key={label as string} className="rounded-2xl bg-background p-5">
+                    <p className={cls as string}>{label}</p>
+                    <p className="text-xs text-muted-foreground mt-2 font-mono">weight {w}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div className="rounded-2xl bg-destructive/5 border border-destructive/20 p-5 space-y-2">
+                <p className="text-xs uppercase tracking-widest text-destructive font-mono">Don't</p>
+                <p className="text-sm text-foreground/80">Bold every heading. Stack three serif lines in a row. Use weight 700+ on Crimson Pro.</p>
+              </div>
+              <div className="rounded-2xl bg-accent/5 border border-accent/20 p-5 space-y-2">
+                <p className="text-xs uppercase tracking-widest text-accent font-mono">Do</p>
+                <p className="text-sm text-foreground/80">Weight 500–600 on display. One italic serif word per hero. Sentence case headings.</p>
+              </div>
+            </div>
+          </section>
+
+          {/* 06 — Cards & 3D float */}
+          <section id="s06" className="scroll-mt-24 space-y-8">
+            <SectionHead
+              num="06"
+              title="Cards & 3D float"
+              kicker="Move your mouse across these. Tilt3D wraps any card in a perspective container that gently follows the cursor."
+            />
+            <div className="grid md:grid-cols-3 gap-6">
+              {[
+                { title: "Service pillar", body: "Landscape image, soft shadow, gentle float." },
+                { title: "Portfolio tile", body: "Used inside masonry grids on /portfolio and /narratives-and-strategy-services." },
+                { title: "Journal card", body: "Drives the floating feel of the Thread & Stack Journal." },
+              ].map((c) => (
+                <Tilt3D key={c.title} className="h-full">
+                  <div className="rounded-2xl bg-card p-6 shadow-[0_8px_30px_rgba(0,0,0,0.08)] h-full">
+                    <Sparkles className="w-5 h-5 text-accent mb-4" />
+                    <h4 className="font-serif-pro text-xl mb-2">{c.title}</h4>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{c.body}</p>
+                  </div>
+                </Tilt3D>
+              ))}
+            </div>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="rounded-2xl bg-accent/5 border border-accent/20 p-5 space-y-2">
+                <p className="text-xs uppercase tracking-widest text-accent font-mono">Rules</p>
+                <Rule>Max tilt 8° horizontal, 6° vertical.</Rule>
+                <Rule>Pair with rounded-2xl and the soft shadow tokens above.</Rule>
+                <Rule>Opacity transitions on photos inside Tilt3D, never translate-y.</Rule>
+              </div>
+              <div className="rounded-2xl bg-destructive/5 border border-destructive/20 p-5 space-y-2">
+                <p className="text-xs uppercase tracking-widest text-destructive font-mono">Forbidden</p>
+                <Rule>Skew transforms.</Rule>
+                <Rule>Parallax layers inside the card.</Rule>
+                <Rule>Aggressive rotate or scale on hover.</Rule>
+              </div>
+            </div>
+          </section>
+
+          {/* 07 — Pill buttons */}
+          <section id="s07" className="scroll-mt-24 space-y-8">
+            <SectionHead
+              num="07"
+              title="Pill buttons"
+              kicker="Fully rounded, gradient fill on hover, icon slides in from the right."
+            />
+            <div className="flex flex-wrap gap-4 items-center">
+              <button className="group inline-flex items-center gap-2 rounded-full bg-accent text-accent-foreground px-6 py-3 text-sm font-medium hover:opacity-90 transition-opacity overflow-hidden">
+                Primary CTA
+                <ArrowRight className="w-4 h-4 -ml-1 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+              </button>
+              <button className="group inline-flex items-center gap-2 rounded-full border border-accent/30 text-foreground px-6 py-3 text-sm font-medium hover:border-accent transition-colors">
+                Secondary
+                <ArrowRight className="w-4 h-4 -ml-1 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+              </button>
+              <button
+                className="group inline-flex items-center gap-2 rounded-full text-white px-6 py-3 text-sm font-medium transition-opacity hover:opacity-90"
+                style={{ background: "linear-gradient(90deg, #5DE0E6, #004AAD)" }}
+              >
+                Narratives gradient
+                <ArrowRight className="w-4 h-4 -ml-1 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+              </button>
+              <button
+                className="group inline-flex items-center gap-2 rounded-full text-white px-6 py-3 text-sm font-medium transition-opacity hover:opacity-90"
+                style={{ background: "linear-gradient(90deg, #FF6200, #FF9248)" }}
+              >
+                Night gradient
+                <ArrowRight className="w-4 h-4 -ml-1 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+              </button>
+            </div>
+          </section>
+
+          {/* 08 — FAQ */}
+          <section id="s08" className="scroll-mt-24 space-y-8">
+            <SectionHead
+              num="08"
+              title="FAQ pattern"
+              kicker="Always import { FAQ } from @/components/FAQ. Never re-implement an accordion."
+            />
+            <div className="rounded-3xl bg-card p-6 md:p-10 shadow-[0_8px_30px_rgba(0,0,0,0.06)]">
+              <FAQ
+                title="Pattern preview"
+                items={[
+                  {
+                    question: "Why a single FAQ component?",
+                    answer:
+                      "Consistency. Chevron easing, spacing, and card treatment are locked in so every page reads the same.",
+                  },
+                  {
+                    question: "Can I add a category label per item?",
+                    answer:
+                      "Yes, extend the items shape. Keep the visual treatment identical.",
+                  },
+                  {
+                    question: "Where does it work?",
+                    answer:
+                      "Services, journal posts, anywhere with three or more recurring questions.",
+                  },
+                ]}
+              />
+            </div>
+          </section>
+
+          {/* 09 — Drawers & lightbox */}
+          <section id="s09" className="scroll-mt-24 space-y-8">
+            <SectionHead
+              num="09"
+              title="Drawers & lightbox"
+              kicker="The 'swish' reveal. Lead capture defaults to ContactDrawer. Portfolio and service exploration use the same easing."
+            />
+            <div className="rounded-3xl bg-card p-8 md:p-10 shadow-[0_8px_30px_rgba(0,0,0,0.06)] flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+              <div className="space-y-2 max-w-xl">
+                <h4 className="font-serif-pro text-2xl">Try the drawer</h4>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  ContactDrawer ships with GDPR consent, honeypot, role and
+                  organisation fields, and the triple-fire (Notion + visitor
+                  email + admin email).
+                </p>
+              </div>
+              <Button
+                onClick={() => setDrawerOpen(true)}
+                className="group rounded-full gap-2"
+              >
+                Open ContactDrawer
+                <ArrowRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+              </Button>
+            </div>
+          </section>
+
+          {/* 10 — Bottom CTA */}
+          <section id="s10" className="scroll-mt-24 space-y-8">
+            <SectionHead
+              num="10"
+              title="Bottom CTA block"
+              kicker="Every marketing page ends with this. Don't author a new bottom CTA — import { CTA } from @/components/home-draft2/CTA."
+            />
+            <div className="rounded-3xl overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
+              <CTA />
+            </div>
+          </section>
+
+          {/* 11 — Animation */}
+          <section id="s11" className="scroll-mt-24 space-y-8">
+            <SectionHead
+              num="11"
+              title="Animation rules"
+              kicker="Scroll-triggered fade-in from 40% opacity, max 10px travel. One motion per section."
+            />
+            <div className="grid sm:grid-cols-3 gap-4">
+              {[1, 2, 3].map((i) => (
+                <div
+                  key={i}
+                  className="rounded-2xl bg-card p-6 shadow-[0_8px_30px_rgba(0,0,0,0.06)] animate-fade-in"
+                  style={{ animationDelay: `${i * 120}ms` }}
+                >
+                  <p className="text-xs uppercase tracking-widest text-muted-foreground font-mono mb-2">
+                    Stage {i}
                   </p>
-                  
-                  <p className="text-muted-foreground leading-relaxed mb-6 flex-grow">
-                    One-hour Clarity Sessions for rapid intervention, or six-week Thread AI Sprints to transform how you work with AI.
-                  </p>
-                  
-                  <div className="space-y-4 pt-4 border-t border-border/30">
-                    <p className="text-sm font-medium text-foreground/70">
-                      From £300
-                    </p>
-                    
-                    <button className="w-full bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl py-2 px-4 text-sm font-medium transition-colors">
-                      Learn More
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <p className="text-xs text-muted-foreground mt-4">
-                <code className="bg-muted px-1 py-0.5 rounded">rounded-2xl</code> • 
-                <code className="bg-muted px-1 py-0.5 rounded ml-1">shadow-soft → shadow-medium on hover</code> • 
-                <code className="bg-muted px-1 py-0.5 rounded ml-1">icon in accent/10 container</code>
-              </p>
-            </div>
-
-            {/* Portfolio/Featured Card */}
-            <div className="pt-8 border-t border-border/50">
-              <span className="text-xs text-muted-foreground uppercase tracking-widest mb-4 block">Portfolio/Featured Card</span>
-              <div className="max-w-4xl">
-                <div className="group bg-card rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.06)] hover:shadow-[0_12px_32px_rgba(0,0,0,0.12)] transition-all duration-300 overflow-hidden flex flex-col md:flex-row cursor-pointer">
-                  <div className="w-full md:w-1/2 flex-shrink-0 bg-muted aspect-square md:aspect-auto flex items-center justify-center">
-                    <span className="text-muted-foreground text-sm">Image Carousel Area</span>
-                  </div>
-                  
-                  <div className="p-8 md:p-12 flex flex-col justify-center space-y-5 md:w-1/2">
-                    <h3 className="text-3xl md:text-4xl font-light">
-                      Nerve Tumours UK
-                    </h3>
-                    
-                    <p className="text-base text-accent font-light">
-                      Brand Strategy & Digital Transformation
-                    </p>
-                    
-                    <p className="text-muted-foreground leading-relaxed text-lg">
-                      I was delighted to be part of the Nerve Tumours UK rebrand and worked with their chosen agency partner as their in-house brand lead.
-                    </p>
-                    
-                    <p className="text-sm text-accent font-light">
-                      Click to learn more →
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <p className="text-xs text-muted-foreground mt-4">
-                <code className="bg-muted px-1 py-0.5 rounded">horizontal layout on desktop</code> • 
-                <code className="bg-muted px-1 py-0.5 rounded ml-1">50/50 split image + content</code> • 
-                <code className="bg-muted px-1 py-0.5 rounded ml-1">elevated shadow on hover</code>
-              </p>
-            </div>
-
-            {/* Blog Card */}
-            <div className="pt-8 border-t border-border/50">
-              <span className="text-xs text-muted-foreground uppercase tracking-widest mb-4 block">Blog Card</span>
-              <div className="max-w-sm">
-                <div className="group cursor-pointer">
-                  <div className="h-full transition-all hover:shadow-lg overflow-hidden rounded-xl border bg-card text-card-foreground shadow">
-                    <div className="aspect-[16/9] overflow-hidden bg-muted flex items-center justify-center">
-                      <span className="text-muted-foreground text-sm">Featured Image</span>
-                    </div>
-                    <div className="p-6">
-                      <div className="flex items-center gap-3 mb-4">
-                        <span className="px-3 py-1 text-sm rounded-full bg-emerald-100 text-emerald-700">
-                          Growth
-                        </span>
-                        <span className="text-sm text-muted-foreground">
-                          5 min read
-                        </span>
-                      </div>
-
-                      <h2 className="text-2xl mb-3 group-hover:text-accent transition-colors font-light">
-                        Article Title Goes Here
-                      </h2>
-
-                      <p className="text-muted-foreground mb-4 line-clamp-2">
-                        A brief intro or hook that entices readers to click through and read the full article.
-                      </p>
-
-                      <div className="flex items-center justify-between text-sm text-muted-foreground">
-                        <span className="italic">
-                          Brendan @ Thread and Stack
-                        </span>
-                        <span>
-                          12 Dec 2024
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <p className="text-xs text-muted-foreground mt-4">
-                <code className="bg-muted px-1 py-0.5 rounded">16:9 featured image</code> • 
-                <code className="bg-muted px-1 py-0.5 rounded ml-1">theme color-coded tag</code> • 
-                <code className="bg-muted px-1 py-0.5 rounded ml-1">title accent on hover</code> • 
-                <code className="bg-muted px-1 py-0.5 rounded ml-1">author + date footer</code>
-              </p>
-            </div>
-
-            {/* Theme Tag Colors */}
-            <div className="pt-8 border-t border-border/50">
-              <span className="text-xs text-muted-foreground uppercase tracking-widest mb-4 block">Blog Theme Tags</span>
-              <div className="flex flex-wrap gap-3">
-                <span className="px-3 py-1 text-sm rounded-full bg-emerald-100 text-emerald-700">Growth</span>
-                <span className="px-3 py-1 text-sm rounded-full bg-orange-100 text-orange-700">Strategy</span>
-                <span className="px-3 py-1 text-sm rounded-full bg-pink-100 text-pink-700">Creative</span>
-                <span className="px-3 py-1 text-sm rounded-full bg-blue-100 text-blue-700">Systems</span>
-                <span className="px-3 py-1 text-sm rounded-full bg-accent/10 text-accent">Case Studies</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ICONOGRAPHY */}
-        <section className="space-y-8 py-16 border-b border-border">
-          <div className="flex items-baseline gap-4">
-            <span className="text-xs text-accent uppercase tracking-widest font-semibold">★ ICONS</span>
-            <h2 className="font-serif-pro text-xl font-semibold">Iconography</h2>
-          </div>
-          <p className="text-sm text-muted-foreground max-w-xl">
-            Icons used across the site. All from Lucide React unless noted. Simple, line-based style.
-          </p>
-          
-          <div className="space-y-8 bg-muted/20 p-8 md:p-12 rounded-2xl">
-            {/* Navigation & UI */}
-            <div>
-              <span className="text-xs text-muted-foreground uppercase tracking-widest mb-4 block">Navigation & UI</span>
-              <div className="flex flex-wrap gap-6">
-                <div className="flex flex-col items-center gap-2">
-                  <div className="p-4 bg-background rounded-xl border border-border">
-                    <Menu className="h-6 w-6" />
-                  </div>
-                  <span className="text-xs text-muted-foreground">Menu</span>
-                </div>
-                <div className="flex flex-col items-center gap-2">
-                  <div className="p-4 bg-background rounded-xl border border-border">
-                    <X className="h-6 w-6" />
-                  </div>
-                  <span className="text-xs text-muted-foreground">Close</span>
-                </div>
-                <div className="flex flex-col items-center gap-2">
-                  <div className="p-4 bg-background rounded-xl border border-border">
-                    <ChevronDown className="h-6 w-6" />
-                  </div>
-                  <span className="text-xs text-muted-foreground">ChevronDown</span>
-                </div>
-                <div className="flex flex-col items-center gap-2">
-                  <div className="p-4 bg-background rounded-xl border border-border">
-                    <ArrowRight className="h-6 w-6" />
-                  </div>
-                  <span className="text-xs text-muted-foreground">ArrowRight</span>
-                </div>
-                <div className="flex flex-col items-center gap-2">
-                  <div className="p-4 bg-background rounded-xl border border-border">
-                    <Loader2 className="h-6 w-6 animate-spin" />
-                  </div>
-                  <span className="text-xs text-muted-foreground">Loader2</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Actions & Status */}
-            <div className="pt-6 border-t border-border/50">
-              <span className="text-xs text-muted-foreground uppercase tracking-widest mb-4 block">Actions & Status</span>
-              <div className="flex flex-wrap gap-6">
-                <div className="flex flex-col items-center gap-2">
-                  <div className="p-4 bg-background rounded-xl border border-border">
-                    <Check className="h-6 w-6 text-accent" />
-                  </div>
-                  <span className="text-xs text-muted-foreground">Check</span>
-                </div>
-                <div className="flex flex-col items-center gap-2">
-                  <div className="p-4 bg-background rounded-xl border border-border">
-                    <Zap className="h-6 w-6" />
-                  </div>
-                  <span className="text-xs text-muted-foreground">Zap</span>
-                </div>
-                <div className="flex flex-col items-center gap-2">
-                  <div className="p-4 bg-background rounded-xl border border-border">
-                    <Clock className="h-6 w-6" />
-                  </div>
-                  <span className="text-xs text-muted-foreground">Clock</span>
-                </div>
-                <div className="flex flex-col items-center gap-2">
-                  <div className="p-4 bg-background rounded-xl border border-border">
-                    <Target className="h-6 w-6" />
-                  </div>
-                  <span className="text-xs text-muted-foreground">Target</span>
-                </div>
-                <div className="flex flex-col items-center gap-2">
-                  <div className="p-4 bg-background rounded-xl border border-border">
-                    <Repeat className="h-6 w-6" />
-                  </div>
-                  <span className="text-xs text-muted-foreground">Repeat</span>
-                </div>
-                <div className="flex flex-col items-center gap-2">
-                  <div className="p-4 bg-background rounded-xl border border-border">
-                    <Users className="h-6 w-6" />
-                  </div>
-                  <span className="text-xs text-muted-foreground">Users</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Social & Contact */}
-            <div className="pt-6 border-t border-border/50">
-              <span className="text-xs text-muted-foreground uppercase tracking-widest mb-4 block">Social & Contact</span>
-              <div className="flex flex-wrap gap-6">
-                <div className="flex flex-col items-center gap-2">
-                  <div className="p-4 bg-background rounded-xl border border-border">
-                    <Mail className="h-6 w-6" />
-                  </div>
-                  <span className="text-xs text-muted-foreground">Mail</span>
-                </div>
-                <div className="flex flex-col items-center gap-2">
-                  <div className="p-4 bg-background rounded-xl border border-border">
-                    <Linkedin className="h-6 w-6" />
-                  </div>
-                  <span className="text-xs text-muted-foreground">LinkedIn</span>
-                </div>
-                <div className="flex flex-col items-center gap-2">
-                  <div className="p-4 bg-background rounded-xl border border-border">
-                    <BlueskyIcon className="h-6 w-6" />
-                  </div>
-                  <span className="text-xs text-muted-foreground">Bluesky*</span>
-                </div>
-                <div className="flex flex-col items-center gap-2">
-                  <div className="p-4 bg-background rounded-xl border border-border">
-                    <SubstackIcon className="h-6 w-6" />
-                  </div>
-                  <span className="text-xs text-muted-foreground">Substack*</span>
-                </div>
-              </div>
-              <p className="text-xs text-muted-foreground mt-4">* Custom SVG icons (not Lucide)</p>
-            </div>
-          </div>
-        </section>
-
-        {/* NOTION BLOCK TRANSLATIONS */}
-        <section className="space-y-8 py-16 border-b border-border">
-          <div className="flex items-baseline gap-4">
-            <span className="text-xs text-accent uppercase tracking-widest font-semibold">★ NOTION</span>
-            <h2 className="font-serif-pro text-xl font-semibold">Block Translations</h2>
-          </div>
-          <p className="text-sm text-muted-foreground max-w-xl">
-            Notion blocks rendered on the website. These are live examples of the CSS styling applied via <code className="text-xs bg-muted px-1 py-0.5 rounded">blog-content</code> class.
-          </p>
-          
-          <div className="blog-content space-y-8 bg-muted/20 p-8 md:p-12 rounded-2xl">
-            {/* Headings */}
-            <div>
-              <span className="text-xs text-muted-foreground uppercase tracking-widest mb-4 block font-sans">Headings</span>
-              <h1>Heading 1</h1>
-              <h2>Heading 2</h2>
-              <h3>Heading 3</h3>
-            </div>
-
-            {/* Paragraph */}
-            <div className="pt-6 border-t border-border/50">
-              <span className="text-xs text-muted-foreground uppercase tracking-widest mb-4 block font-sans">Paragraph</span>
-              <p>This is a standard paragraph with <strong>bold text</strong>, <em>italic text</em>, <u>underlined text</u>, <s>strikethrough</s>, and <code>inline code</code>. Links look like <a href="#" className="text-accent underline">this hyperlink</a>.</p>
-            </div>
-
-            {/* Bulleted List */}
-            <div className="pt-6 border-t border-border/50">
-              <span className="text-xs text-muted-foreground uppercase tracking-widest mb-4 block font-sans">Bulleted List (3 levels)</span>
-              <ul>
-                <li>Primary bullet point with indigo ring
-                  <ul>
-                    <li>Secondary bullet with smaller indigo dot
-                      <ul>
-                        <li>Tertiary bullet with fine indigo dash</li>
-                      </ul>
-                    </li>
-                  </ul>
-                </li>
-                <li>Another primary item</li>
-              </ul>
-            </div>
-
-            {/* Numbered List */}
-            <div className="pt-6 border-t border-border/50">
-              <span className="text-xs text-muted-foreground uppercase tracking-widest mb-4 block font-sans">Numbered List</span>
-              <ol className="list-decimal list-inside">
-                <li>First numbered item</li>
-                <li>Second numbered item</li>
-                <li>Third numbered item</li>
-              </ol>
-            </div>
-
-            {/* Quote */}
-            <div className="pt-6 border-t border-border/50">
-              <span className="text-xs text-muted-foreground uppercase tracking-widest mb-4 block font-sans">Quote Block</span>
-              <blockquote>
-                "Great brands don't just 'happen.' They are the result of asking deep questions, rigorous diagnosis, strategic storytelling and intentional content."<br/>
-                — Brendan Rodgers
-              </blockquote>
-            </div>
-
-            {/* Callouts */}
-            <div className="pt-6 border-t border-border/50">
-              <span className="text-xs text-muted-foreground uppercase tracking-widest mb-4 block font-sans">Callout Blocks (with color variants)</span>
-              <div className="callout callout-default">
-                <span className="callout-icon">💡</span>
-                <div className="callout-content">
-                  <p>Default/Gray callout with emoji icon</p>
-                </div>
-              </div>
-              <div className="callout callout-blue_background">
-                <span className="callout-icon">ℹ️</span>
-                <div className="callout-content">
-                  <p>Blue background callout for informational content</p>
-                </div>
-              </div>
-              <div className="callout callout-yellow_background">
-                <span className="callout-icon">⚠️</span>
-                <div className="callout-content">
-                  <p>Yellow background callout for warnings or notes</p>
-                </div>
-              </div>
-              <div className="callout callout-green_background">
-                <span className="callout-icon">✅</span>
-                <div className="callout-content">
-                  <p>Green background callout for success or tips</p>
-                </div>
-              </div>
-              <div className="callout callout-purple_background">
-                <span className="callout-icon">🔮</span>
-                <div className="callout-content">
-                  <p>Purple background callout for insights</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Code Block */}
-            <div className="pt-6 border-t border-border/50">
-              <span className="text-xs text-muted-foreground uppercase tracking-widest mb-4 block font-sans">Code Block</span>
-              <pre className="bg-foreground text-background p-4 rounded-lg overflow-x-auto"><code className="language-javascript">{`const greeting = "Hello, Thread & Stack";
-console.log(greeting);`}</code></pre>
-            </div>
-
-            {/* Table */}
-            <div className="pt-6 border-t border-border/50">
-              <span className="text-xs text-muted-foreground uppercase tracking-widest mb-4 block font-sans">Table</span>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Service</th>
-                    <th>Duration</th>
-                    <th>From</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Clarity Sessions</td>
-                    <td>60 minutes</td>
-                    <td>£300</td>
-                  </tr>
-                  <tr>
-                    <td>Mentorship Sprint</td>
-                    <td>6 weeks</td>
-                    <td>£1k</td>
-                  </tr>
-                  <tr>
-                    <td>Brand Workshops</td>
-                    <td>Half/Full day</td>
-                    <td>£2k</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            {/* Divider */}
-            <div className="pt-6 border-t border-border/50">
-              <span className="text-xs text-muted-foreground uppercase tracking-widest mb-4 block font-sans">Divider</span>
-              <hr />
-            </div>
-
-            {/* Image/Figure */}
-            <div className="pt-6 border-t border-border/50">
-              <span className="text-xs text-muted-foreground uppercase tracking-widest mb-4 block font-sans">Figure with Caption</span>
-              <figure>
-                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&q=80" alt="Abstract gradient" />
-                <figcaption>Image caption appears here in italic, muted text</figcaption>
-              </figure>
-            </div>
-          </div>
-        </section>
-
-        {/* PHOTOGRAPHY */}
-        <section className="space-y-8 py-16 border-b border-border">
-          <div className="flex items-baseline gap-4">
-            <span className="text-xs text-accent uppercase tracking-widest font-semibold">★ PHOTOGRAPHY</span>
-            <h2 className="font-serif-pro text-xl font-semibold">Brand Photography</h2>
-          </div>
-          <p className="text-sm text-muted-foreground max-w-xl">
-            Photography assets organized by category. Use for hero sections, about pages, and marketing materials.
-          </p>
-          
-          {/* Workshop Photos */}
-          <div className="space-y-4">
-            <div className="flex items-baseline gap-2">
-              <span className="text-xs text-muted-foreground uppercase tracking-widest">Workshop</span>
-              <span className="text-xs text-muted-foreground">— Strategy sessions, team collaboration</span>
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {[
-                { src: workshop1, alt: "Brendan working with post-its" },
-                { src: workshop2, alt: "Brendan in workshop - side profile" },
-                { src: workshop3, alt: "Brendan smiling in workshop" },
-                { src: workshop18, alt: "Team workshop session" },
-                { src: workshop19, alt: "Brendan presenting to team" },
-                { src: workshop20, alt: "Brendan seated in workshop" },
-                { src: workshop21, alt: "Team collaboration" },
-                { src: workshop22, alt: "Hands-on work detail" },
-                { src: workshop23, alt: "Team laughing in workshop" },
-                { src: workshop24, alt: "Brendan explaining concept" },
-                { src: workshop25, alt: "Brendan smiling in conversation" },
-              ].map((photo, idx) => (
-                <div key={idx} className="aspect-[4/3] rounded-xl overflow-hidden bg-muted">
-                  <img 
-                    src={photo.src} 
-                    alt={photo.alt}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                  />
+                  <p className="font-serif-pro text-xl">Gentle, not bouncy.</p>
                 </div>
               ))}
             </div>
-          </div>
+          </section>
 
-          {/* Shoreditch Photos */}
-          <div className="space-y-4 pt-8 border-t border-border/50">
-            <div className="flex items-baseline gap-2">
-              <span className="text-xs text-muted-foreground uppercase tracking-widest">Shoreditch</span>
-              <span className="text-xs text-muted-foreground">— Street, urban, location</span>
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-              {[
-                { src: shoreditch26, alt: "Walking past street art" },
-                { src: shoreditch27, alt: "Mr Cenz mural walk" },
-                { src: shoreditch28, alt: "Standing by geometric mural" },
-                { src: shoreditch29, alt: "Profile by mural" },
-                { src: shoreditch30, alt: "Portrait by mural" },
-                { src: shoreditch31, alt: "Looking up portrait" },
-                { src: shoreditch33, alt: "Thoughtful portrait" },
-                { src: shoreditch34, alt: "Smiling portrait" },
-                { src: shoreditch35, alt: "Phone on colourful street" },
-                { src: shoreditch37, alt: "Cafe thoughtful" },
-              ].map((photo, idx) => (
-                <div key={idx} className="aspect-[4/3] rounded-xl overflow-hidden bg-muted">
-                  <img 
-                    src={photo.src} 
-                    alt={photo.alt}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                  />
+          {/* 12 — Photography */}
+          <section id="s12" className="scroll-mt-24 space-y-8">
+            <SectionHead
+              num="12"
+              title="Photography"
+              kicker="Three buckets: workshop, shoreditch, portraits. WebP for hero imagery, JPG for headshots above 600px square."
+            />
+            <div className="space-y-6">
+              <div>
+                <p className="text-xs uppercase tracking-widest text-muted-foreground mb-3 font-mono">Workshop</p>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  {[workshop2, workshop19, workshop22, workshop25].map((src, i) => (
+                    <Tilt3D key={i} className="h-full">
+                      <img src={src} alt="" className="w-full aspect-square object-cover rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.08)]" />
+                    </Tilt3D>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Portraits */}
-          <div className="space-y-4 pt-8 border-t border-border/50">
-            <div className="flex items-baseline gap-2">
-              <span className="text-xs text-muted-foreground uppercase tracking-widest">Portraits</span>
-              <span className="text-xs text-muted-foreground">— Headshots, profile photos</span>
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {[
-                { src: portrait4, alt: "Full length portrait white wall" },
-                { src: portrait5, alt: "Smiling portrait hands clasped" },
-                { src: portrait6, alt: "Thoughtful portrait hands clasped" },
-                { src: portrait7, alt: "Smiling portrait studio" },
-                { src: portrait8, alt: "Laughing portrait" },
-                { src: portrait9, alt: "Arms crossed portrait" },
-                { src: portrait10, alt: "Hands in pockets portrait" },
-                { src: portrait11, alt: "Seated portrait smiling" },
-                { src: portrait12, alt: "Seated portrait thoughtful" },
-                { src: portrait13, alt: "Seated with coffee" },
-                { src: portrait14, alt: "Standing in jacket" },
-                { src: portrait15, alt: "Standing portrait jacket" },
-                { src: portrait16, alt: "Smiling portrait jacket" },
-                { src: portrait17, alt: "Relaxed portrait jacket" },
-              ].map((photo, idx) => (
-                <div key={idx} className="aspect-[3/4] rounded-xl overflow-hidden bg-muted">
-                  <img 
-                    src={photo.src} 
-                    alt={photo.alt}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                  />
+              </div>
+              <div>
+                <p className="text-xs uppercase tracking-widest text-muted-foreground mb-3 font-mono">Shoreditch</p>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  {[shoreditch26, shoreditch29, shoreditch34, shoreditch37].map((src, i) => (
+                    <Tilt3D key={i} className="h-full">
+                      <img src={src} alt="" className="w-full aspect-square object-cover rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.08)]" />
+                    </Tilt3D>
+                  ))}
                 </div>
-              ))}
+              </div>
+              <div>
+                <p className="text-xs uppercase tracking-widest text-muted-foreground mb-3 font-mono">Portraits</p>
+                <div className="grid grid-cols-3 gap-3 max-w-2xl">
+                  {[portrait7, portrait12, portrait16].map((src, i) => (
+                    <Tilt3D key={i} className="h-full">
+                      <img src={src} alt="" className="w-full aspect-square object-cover rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.08)]" />
+                    </Tilt3D>
+                  ))}
+                </div>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        {/* TYPOGRAPHY PAIRING DEMO */}
-        <section className="space-y-8 py-16 border-b border-border">
-          <div className="flex items-baseline gap-4">
-            <span className="text-xs text-accent uppercase tracking-widest font-semibold">★ TYPE PAIRING</span>
-            <h2 className="font-serif-pro text-xl font-semibold">Serif + Sans-Serif Demo</h2>
-          </div>
-          <p className="text-sm text-muted-foreground max-w-xl">
-            Exploring Crimson Pro (serif) for headlines paired with Inter (sans-serif) for body text. 
-            Kit uses Inter for readability in their app alongside a custom display font.
-          </p>
-          
-          {/* Demo Card: Serif Headlines + Sans Body */}
-          <div className="space-y-8 bg-muted/20 p-8 md:p-12 rounded-2xl">
-            <div className="space-y-6">
-              <span className="text-xs text-muted-foreground uppercase tracking-widest font-sans">Option A: Serif Headlines + Sans Body</span>
-              
-              <div className="space-y-4">
-                <h3 className="font-serif-pro text-4xl md:text-5xl font-bold leading-tight">
-                  Marketing that feels{" "}
-                  <span className="text-accent">human</span>
-                </h3>
-                <p className="font-sans text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl">
-                  The brands that stand out aren't louder — they're clearer. Through strategic clarity and creative direction, we help founders and teams build marketing that actually connects.
-                </p>
-                <p className="font-sans text-base text-muted-foreground/80 leading-relaxed max-w-2xl">
-                  Whether you're a founder struggling to articulate what makes you different, or a team needing alignment on brand direction, our approach brings clarity to the chaos.
-                </p>
-              </div>
-            </div>
-            
-            {/* Service cards with mixed typography */}
-            <div className="grid md:grid-cols-3 gap-6 pt-6 border-t border-border/30">
-              <div className="space-y-2">
-                <h4 className="font-serif-pro text-xl font-semibold">Clarity Sessions</h4>
-                <p className="font-sans text-sm text-muted-foreground">60-minute strategic power hours to untangle complex challenges and find your next move.</p>
-              </div>
-              <div className="space-y-2">
-                <h4 className="font-serif-pro text-xl font-semibold">Mentorship Sprints</h4>
-                <p className="font-sans text-sm text-muted-foreground">6-week intensive programs building AI workflows and systems that actually stick.</p>
-              </div>
-              <div className="space-y-2">
-                <h4 className="font-serif-pro text-xl font-semibold">Brand Workshops</h4>
-                <p className="font-sans text-sm text-muted-foreground">Half-day to multi-day sessions bringing teams together for strategic alignment.</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Demo Card: Italic Serif Headlines + Sans Body */}
-          <div className="space-y-8 bg-foreground text-background p-8 md:p-12 rounded-2xl">
-            <div className="space-y-6">
-              <span className="text-xs text-background/60 uppercase tracking-widest font-sans">Option B: Italic Serif Headlines + Sans Body</span>
-              
-              <div className="space-y-4">
-                <h3 className="font-serif-pro text-4xl md:text-5xl font-semibold leading-tight italic">
-                  Marketing that feels{" "}
-                  <span className="text-accent">human</span>
-                </h3>
-                <p className="font-sans text-base md:text-lg text-background/70 leading-relaxed max-w-2xl">
-                  The brands that stand out aren't louder — they're clearer. Through strategic clarity and creative direction, we help founders and teams build marketing that actually connects.
-                </p>
-                <p className="font-sans text-base text-background/50 leading-relaxed max-w-2xl">
-                  Whether you're a founder struggling to articulate what makes you different, or a team needing alignment on brand direction, our approach brings clarity to the chaos.
-                </p>
-              </div>
-            </div>
-            
-            {/* Service cards with italic serif headlines + sans body */}
-            <div className="grid md:grid-cols-3 gap-6 pt-6 border-t border-background/20">
-              <div className="space-y-2">
-                <h4 className="font-serif-pro text-xl font-semibold italic">Clarity Sessions</h4>
-                <p className="font-sans text-sm text-background/60">60-minute strategic power hours to untangle complex challenges and find your next move.</p>
-              </div>
-              <div className="space-y-2">
-                <h4 className="font-serif-pro text-xl font-semibold italic">Mentorship Sprints</h4>
-                <p className="font-sans text-sm text-background/60">6-week intensive programs building AI workflows and systems that actually stick.</p>
-              </div>
-              <div className="space-y-2">
-                <h4 className="font-serif-pro text-xl font-semibold italic">Brand Workshops</h4>
-                <p className="font-sans text-sm text-background/60">Half-day to multi-day sessions bringing teams together for strategic alignment.</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Demo Card: Serif body (current approach) */}
-          <div className="space-y-8 bg-accent/5 p-8 md:p-12 rounded-2xl border border-accent/20">
-            <div className="space-y-6">
-              <span className="text-xs text-accent uppercase tracking-widest font-sans">Option C: All Serif (Current)</span>
-              
-              <div className="space-y-4">
-                <h3 className="font-serif-pro text-4xl md:text-5xl font-bold leading-tight">
-                  Marketing that feels{" "}
-                  <span className="text-accent">human</span>
-                </h3>
-                <p className="font-serif-pro text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl">
-                  The brands that stand out aren't louder — they're clearer. Through strategic clarity and creative direction, we help founders and teams build marketing that actually connects.
-                </p>
-                <p className="font-serif-pro text-base text-muted-foreground/80 leading-relaxed max-w-2xl">
-                  Whether you're a founder struggling to articulate what makes you different, or a team needing alignment on brand direction, our approach brings clarity to the chaos.
-                </p>
-              </div>
-            </div>
-            
-            {/* Service cards all serif */}
-            <div className="grid md:grid-cols-3 gap-6 pt-6 border-t border-accent/20">
-              <div className="space-y-2">
-                <h4 className="font-serif-pro text-xl font-semibold">Clarity Sessions</h4>
-                <p className="font-serif-pro text-sm text-muted-foreground">60-minute strategic power hours to untangle complex challenges and find your next move.</p>
-              </div>
-              <div className="space-y-2">
-                <h4 className="font-serif-pro text-xl font-semibold">Mentorship Sprints</h4>
-                <p className="font-serif-pro text-sm text-muted-foreground">6-week intensive programs building AI workflows and systems that actually stick.</p>
-              </div>
-              <div className="space-y-2">
-                <h4 className="font-serif-pro text-xl font-semibold">Brand Workshops</h4>
-                <p className="font-serif-pro text-sm text-muted-foreground">Half-day to multi-day sessions bringing teams together for strategic alignment.</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Font Stack Reference */}
-          <div className="bg-muted/10 p-6 rounded-xl border border-border/50 space-y-4">
-            <span className="text-xs text-muted-foreground uppercase tracking-widest font-sans">Font Stack Reference</span>
+          {/* 13 — Notion translations */}
+          <section id="s13" className="scroll-mt-24 space-y-8">
+            <SectionHead
+              num="13"
+              title="Notion translations"
+              kicker="The journal, portfolio, CV, and governance pages all render from a cache-first Notion sync. See the ts-notion-content skill."
+            />
             <div className="grid md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <p className="font-sans text-sm font-semibold">Sans-Serif (Inter)</p>
-                <p className="font-sans text-2xl">The quick brown fox jumps over the lazy dog</p>
-                <p className="font-sans text-xs text-muted-foreground">Kit uses Inter for body text. Clean, readable, professional.</p>
+              <div className="rounded-2xl bg-card p-6 shadow-[0_8px_30px_rgba(0,0,0,0.06)] space-y-2">
+                <h4 className="font-serif-pro text-xl">Cache-first</h4>
+                <p className="text-sm text-muted-foreground">Pages never hit Notion at request time. A 5-minute cron mirrors content into Supabase, including S3-hosted media.</p>
               </div>
-              <div className="space-y-2">
-                <p className="font-sans text-sm font-semibold">Serif (Crimson Pro)</p>
-                <p className="font-serif-pro text-2xl">The quick brown fox jumps over the lazy dog</p>
-                <p className="font-sans text-xs text-muted-foreground">Our current headline font. Warm, editorial, distinctive.</p>
+              <div className="rounded-2xl bg-card p-6 shadow-[0_8px_30px_rgba(0,0,0,0.06)] space-y-2">
+                <h4 className="font-serif-pro text-xl">Block fidelity</h4>
+                <p className="text-sm text-muted-foreground">Callouts keep their emoji and palette. Toggles become FAQ-style accordions. Embeds become link preview cards unless the domain is on the CSP allowlist.</p>
+              </div>
+              <div className="rounded-2xl bg-card p-6 shadow-[0_8px_30px_rgba(0,0,0,0.06)] space-y-2">
+                <h4 className="font-serif-pro text-xl">Theme colours</h4>
+                <p className="text-sm text-muted-foreground">Journal categories map to a fixed palette. New categories extend the map — never invent palettes per post.</p>
+              </div>
+              <div className="rounded-2xl bg-card p-6 shadow-[0_8px_30px_rgba(0,0,0,0.06)] space-y-2">
+                <h4 className="font-serif-pro text-xl">Media proxy</h4>
+                <p className="text-sm text-muted-foreground">Every Notion image is rehosted on Supabase Storage so links never expire.</p>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        {/* WEIGHT REFERENCE */}
-        <section className="space-y-8 pt-16">
-          <h2 className="font-serif-pro text-xl font-semibold">Weight Reference</h2>
-          <div className="grid gap-4">
-            <p className="font-serif-pro text-2xl font-normal">Serif Regular (400) — Body text</p>
-            <p className="font-serif-pro text-2xl font-medium">Serif Medium (500) — Emphasis</p>
-            <p className="font-serif-pro text-2xl font-semibold">Serif Semibold (600) — Section headers</p>
-            <p className="font-serif-pro text-2xl font-bold">Serif Bold (700) — Headlines</p>
-          </div>
-          <div className="grid gap-4 pt-6 border-t border-border/50">
-            <p className="font-sans text-2xl font-normal">Sans Regular (400) — Body text</p>
-            <p className="font-sans text-2xl font-medium">Sans Medium (500) — Emphasis</p>
-            <p className="font-sans text-2xl font-semibold">Sans Semibold (600) — Section headers</p>
-            <p className="font-sans text-2xl font-bold">Sans Bold (700) — Headlines</p>
-          </div>
-        </section>
+          {/* 14 — Voice */}
+          <section id="s14" className="scroll-mt-24 space-y-8">
+            <SectionHead
+              num="14"
+              title="Voice & copy"
+              kicker="The hard ban is non-negotiable. The live source is the Notion checklist — re-fetch before substantive passes."
+            />
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="rounded-2xl bg-destructive/5 border border-destructive/20 p-6 space-y-3">
+                <p className="text-xs uppercase tracking-widest text-destructive font-mono font-medium">Hard ban</p>
+                <ul className="text-sm text-foreground/80 space-y-2">
+                  <li>No em dashes.</li>
+                  <li>No "X isn't Y, it's Z" constructions.</li>
+                  <li>No rule-of-three cadence.</li>
+                  <li>No restating the reader's situation back to them.</li>
+                  <li>No "unlock", "elevate", "supercharge", "seamless", "delight".</li>
+                </ul>
+              </div>
+              <div className="rounded-2xl bg-accent/5 border border-accent/20 p-6 space-y-3">
+                <p className="text-xs uppercase tracking-widest text-accent font-mono font-medium">Do</p>
+                <ul className="text-sm text-foreground/80 space-y-2">
+                  <li>Lead with the outcome the reader gets.</li>
+                  <li>British English (organisation, optimise, colour).</li>
+                  <li>Short clauses. One idea per sentence.</li>
+                  <li>Name the tool, the metric, the deliverable.</li>
+                  <li>Sentence case headings; title case only on page titles.</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          {/* 15 — Downloads */}
+          <section id="s15" className="scroll-mt-24 space-y-6">
+            <SectionHead
+              num="15"
+              title="Downloads"
+              kicker="Logos and core assets. Right-click and save any SVG above, or print this page for a flat reference."
+            />
+            <div className="rounded-3xl bg-card p-8 shadow-[0_8px_30px_rgba(0,0,0,0.06)] flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+              <div>
+                <h4 className="font-serif-pro text-xl">PDF snapshot</h4>
+                <p className="text-sm text-muted-foreground">Print the current view for offline reference.</p>
+              </div>
+              <Button onClick={() => window.print()} className="gap-2 rounded-full">
+                <Download className="w-4 h-4" /> Print brand book
+              </Button>
+            </div>
+          </section>
+        </main>
+
+        <ContactDrawer
+          open={drawerOpen}
+          onOpenChange={setDrawerOpen}
+          source="brand-book-demo"
+        />
       </div>
-    </div>
+    </>
   );
 };
 
