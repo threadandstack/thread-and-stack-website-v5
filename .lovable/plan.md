@@ -1,69 +1,105 @@
-## What the LLM tests actually told us
+# Thread & Stack Skills + Brand Book Overhaul
 
-Reading the three crawls side by side:
+Two parallel workstreams: (1) author a small library of reusable skills so every future Lovable session applies Thread & Stack patterns correctly, and (2) rewrite `/brand-book` so it actually matches what's shipped on the live site today.
 
-- **Claude** successfully extracted the *current* positioning ("Stories that land. Systems that stick.", two-pillar services, full Notion tier pricing, payment terms). The prerender we shipped is working on the routes it covers.
-- **ChatGPT** said "almost every discovered page is exposing the same description". When I curl the live site now, that is true for `/notion-systems` and the other legacy URLs — they fall back to `dist/index.html` (the homepage prerender) because they're React `<Navigate>` redirects, not pages, so the prerender script never wrote a `/notion-systems/index.html`. Any LLM that hits a legacy URL gets the homepage's title and description.
-- **Perplexity** keeps quoting *very* old copy ("Threadwork / True Voice / Brand Therapy / Conscious AI"). That's stale third-party caches (LinkedIn, ProspEo, old Google snapshot) plus its tools timing out on subpages. Nothing we do on-site removes it instantly, but fresh, distinct, dated HTML on every URL is what eventually replaces it.
-- **Google's indexed snippet** is still the *pre-prerender* description. It only changes after Googlebot recrawls.
+---
 
-So the gap isn't the prerender approach — it's coverage and freshness.
+## Part 1 — Skills to author
 
-## Plan
+Each lives under `.agents/skills/{name}/SKILL.md`, then is activated with `skills--apply_draft`. Names are scoped with a `ts-` prefix so they're unmistakably project skills.
 
-### 1. Prerender every legacy / redirect URL
+1. **`ts-design-system`** — the visual core
+   - Indigo (#1340E8) light mode + Night theme (#FF6200 on #181B24); the per-page Night variant override pattern (e.g. light-blue #5DE0E6 + #004AAD gradient on Narratives page)
+   - Pill button system + reveal-on-hover icon logic, and the gradient catalogue (default indigo, night orange, light-blue cyan→navy)
+   - Card-based soft aesthetic: rounded corners, soft shadows, no hard borders, soft flowing dividers (no thread dividers)
+   - Typography: Crimson Pro for editorial/Marginalia accents, Inter for body & UI, with the "less bold, more targeted serif" rule
+   - **3D floating-card hover** (Tilt3D) — gentle float, mouse-follow, not skewed; the journal-grade version (vs. the static/skewed version we corrected)
+   - Animation philosophy: scroll-triggered, start at 40% opacity, gentle
+   - FAQ styling lock-in
+   - Drawer/lightbox technique for service/portfolio/lead capture
+   - Bottom-of-page CTA block pattern
+   - References file points at `src/components/Tilt3D.tsx`, `src/components/ContactDrawer.tsx`, `src/components/FAQ.tsx`, `src/components/home-draft2/CTA.tsx`, `src/index.css` tokens
 
-The redirect routes in `src/App.tsx` (`/notion-systems`, `/fractional-deep-engagement`, `/sessions-and-sprints`, `/narratives-strategy`, `/clarity-sessions`, `/mentorship-sprint`, `/fractional-strategy`, `/deep-engagement`, plus the casing variants `/Charity-Meetup-April26` and `/Unleash-Your-Team`) all currently serve the homepage shell to crawlers. For each:
+2. **`ts-copy-voice`** — copy & voice rules
+   - Hard ban (no em dashes, no "X isn't Y, it's Z", no rule-of-three cadence, no restating the reader's situation)
+   - Outcome-first phrasing; creative tax messaging; creative & strategist positioning
+   - "Stories that land. Systems that stick." brand line
+   - Two-pillar service language (Narratives & Strategy / Notion & Systems) and the retired offers list
+   - Pre-publish checklist: re-fetch the live Notion-sourced hard-ban list before substantive copy passes
+   - References `mem://standards/hard-ban-prepublish-checklist` and `mem://messaging/*`
 
-- Add a "redirect page" entry to `scripts/lib/page-content.ts` with a route-correct title, description, short body explaining where the content moved, and a canonical pointing at the *new* canonical URL (e.g. `/services`).
-- Extend `scripts/generate-prerendered.ts` to support a `redirectTo` field that:
-  - sets `<link rel="canonical">` to the destination,
-  - emits `<meta name="robots" content="noindex,follow">` so Google consolidates signals without indexing the duplicate,
-  - still injects readable body text + JSON-LD so an LLM that lands there gets real information instead of homepage boilerplate.
-- Result: every URL an LLM might discover (old links, sitemap, social cards) returns route-specific HTML.
+3. **`ts-lead-capture`** — default lead treatment
+   - Mandatory triple-fire on every lead form: Notion sync + visitor confirmation email + admin notification to br@brendanrodgers.uk (fire-and-forget)
+   - GDPR explicit consent checkbox, honeypot field, role/organisation field standard (British English)
+   - UTM attribution mapping standard
+   - Use `ContactDrawer` over inline forms where possible
+   - References `supabase/functions/sync-lead-to-notion`, `supabase/functions/send-transactional-email`, `src/components/ContactDrawer.tsx`
 
-### 2. Add the routes the SEO crawl is missing
+4. **`ts-notion-content`** — Notion CMS & content integration
+   - Unified content cache architecture, 5-min sync polling, cache-first reads
+   - Notion media persistence proxy (S3 expiry → Supabase Storage)
+   - Content fidelity rules for rendering Notion blocks/iframes; allowed CSP domains
+   - Blog theme color system (Notion tag → palette)
+   - Governance pages (Privacy, Data Guarantee) sync
+   - References `supabase/functions/sync-blog-cache`, `persist-notion-media`, `fetch-notion-page`
 
-`/notion-hackathon-london/v2`, `/notion-hackathon-london`, `/notion-devotion-brighton`, `/charity-meetup-april26`, `/unleash-your-team` are already in `page-content.ts`. Audit against `src/App.tsx` and add anything public that's missing (e.g. `/work-with-me`, `/intro-call`, `/momentum-map`, `/collective`, `/portfolio/*` already present — double-check). Anything `noindex` (admin, proposals, onboarding, thank-you, drafts, `/v/*`, `/depreciate/*`) stays out and is already covered by `robots.txt`.
+5. **`ts-asset-library`** — image & logo conventions
+   - Logo set in use today: ungradiented logo + B/W/Grey/Indigo Stacked/Wordmark/SocialSq SVGs; the gradient blue logo is retired
+   - Photography buckets: `src/assets/photos/{workshop|shoreditch|portraits}/`
+   - Notion mock screenshots: `src/assets/notion-mock/`
+   - Hero focal-point picker workflow + landscape requirement for service pillar cards
+   - Asset-pointer (`.asset.json`) workflow reminder
+   - Provides a one-line lookup table so future sessions don't import retired assets
 
-### 3. Strengthen freshness signals so Google/Perplexity recrawl sooner
+(Proposals skill — e.g. the SF Fire letter-opening pattern — is noted as a future skill but **not** authored in this pass to keep scope tight. Will flag it in the closing message.)
 
-- `scripts/generate-sitemap.ts`: set `lastmod` to today's ISO date on every entry at generation time, and keep `changefreq` realistic (`weekly` for marketing pages, `daily` for `/blog`).
-- `scripts/generate-prerendered.ts`: add `<meta name="last-modified" content="…">` and an Article `dateModified` (already present for posts) plus `WebPage` `dateModified` for static pages.
-- Add a one-line note in the plan output telling you to hit "Request indexing" in Google Search Console for `/`, `/services`, `/about`, `/notion-systems` after deploy — fastest way to force Google to drop the stale snippet.
+---
 
-### 4. Tighten the JSON-LD
+## Part 2 — Rewrite `/brand-book`
 
-Currently each page emits a single `WebPage` / `Service` / `Event` block. Add:
+Current `src/components/BrandBook.tsx` is 1,100 lines and out of date: wrong colors, missing gradients, inconsistent typography (over-bold), no 3D effects documented, retired blue logo shown, missing recent imagery, no drawer/CTA/FAQ patterns.
 
-- `Organization` block on `/` and `/about` (name, url, logo, sameAs LinkedIn/Notion ambassador, founder Person).
-- `Person` block on `/about` (Brendan Rodgers, jobTitle, sameAs).
-- `BreadcrumbList` on every non-home page (Home → section → page).
-- `FAQPage` on `/services` and `/work-with-me` if their body content already lists FAQs (check first).
+New structure (single file, but reorganised into clear numbered sections, each rendered with the patterns it documents — i.e. the brand book *demonstrates* the system):
 
-LLMs lean heavily on these blocks to disambiguate "what does this business do".
-
-### 5. Verify
-
-After build:
-
+```text
+01  Brand essence       — "Stories that land. Systems that stick." + creative tax
+02  Logo system         — current ungradiented + B/W/Grey/Indigo SVG sets; remove retired gradient blue
+03  Colour              — Indigo light, Night orange, per-page variant (light blue), with hex + HSL + gradient swatches
+04  Gradients           — default, night, narratives (90deg #5DE0E6 → #004AAD), with copy-to-clipboard hex
+05  Typography          — Crimson Pro display/Marginalia, Inter body; "less bold, targeted serif" rule with examples
+06  Cards & 3D float    — live Tilt3D demo tiles; documents the gentle mouse-follow vs the rejected skew
+07  Pill buttons        — hover-reveal icon demos in each gradient
+08  FAQ pattern         — live accordion example with lock-in note
+09  Drawers & lightbox  — trigger button that opens ContactDrawer as live demo
+10  Bottom CTA block    — embedded live example
+11  Animation rules     — 40%-opacity scroll-in demo strip
+12  Photography         — current workshop/shoreditch/portrait grids (pull in the new imagery)
+13  Notion translations — keep the strong existing section
+14  Voice & copy        — hard-ban list + outcome-first examples (mirrors ts-copy-voice skill)
+15  Downloads           — logo zip / asset references
 ```
-curl -s https://threadandstack.com/notion-systems        | grep -E '<title>|description|canonical'
-curl -s https://threadandstack.com/sessions-and-sprints  | grep -E '<title>|description|canonical'
-curl -s https://threadandstack.com/services              | grep -E 'application/ld\+json' -c
-```
 
-Expected: unique title + description + correct canonical for each legacy URL; ≥2 JSON-LD blocks on `/services`.
+Implementation notes:
+- Replace `BrandBook.tsx` in-place rather than creating a new route
+- Use the live components (`Tilt3D`, `ContactDrawer`, `FAQ`, `CTA`) inside the page so the brand book is self-demonstrating
+- Drop the retired gradient blue logo imports
+- Wire in workshop/shoreditch/portrait photos already imported but underused
+- Use semantic tokens (`bg-card`, `text-accent`, `bg-gradient-primary`) — no hardcoded colors except in the swatch values themselves
+- Keep section anchors so the existing TOC nav still works
 
-### Out of scope (call out, don't do)
+---
 
-- True SSR / a different framework — explicit "no" from earlier in this thread.
-- Server-side bot-detection redirects — adds infra, brittle, and the prerender already covers it.
-- Forcing third-party caches (LinkedIn, ProspEo) to refresh — those are external; only time fixes them.
+## Technical details
 
-## Files touched
+- Skills directory: `.agents/skills/ts-design-system/SKILL.md` etc., each ~80–150 lines with a clear `description` for retrieval matching. After all five are written, call `skills--apply_draft` once per skill (5 calls).
+- `src/components/BrandBook.tsx`: full rewrite, target ~900 lines (down from 1,100), structured by the 15 sections above. Memo-import Tilt3D and ContactDrawer locally rather than spinning up new ones.
+- No backend changes, no migrations, no new routes.
+- Verification: tsgo typecheck + a Playwright screenshot of `/brand-book` in both light and night themes to confirm gradients, 3D tiles, and updated typography render.
 
-- `scripts/lib/page-content.ts` — add redirect-page entries + any missing public routes.
-- `scripts/generate-prerendered.ts` — `redirectTo` support, extra JSON-LD (Organization/Person/Breadcrumb), `dateModified`.
-- `scripts/generate-sitemap.ts` — fresh `lastmod` per build, include redirect URLs as `noindex` excluded.
-- No runtime React changes; SPA behaviour unchanged for real users.
+---
+
+## Out of scope (intentionally)
+
+- Proposals skill (SF Fire letter-opening pattern) — separate follow-up.
+- Touching any page other than `/brand-book` and `src/components/BrandBook.tsx`.
+- Changing the active design tokens in `index.css` — the brand book reflects what's already there.
