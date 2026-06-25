@@ -1011,9 +1011,67 @@ All colors MUST be HSL.
    primary warm gradient (magenta → orange). Replaces solid `text-clay`
    on serif italic display text. See /brand-book §04a. */
 .text-gradient-warm {
-  background-image: linear-gradient(95deg, hsl(320 85% 55%), hsl(var(--orange)));
+  background-image: linear-gradient(95deg, hsl(var(--magenta)), hsl(var(--orange)));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   -webkit-text-fill-color: transparent;
+  /* Keeps the gradient continuous when the span wraps across lines */
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* Background fill version of the primary warm gradient.
+   Use on solid pill CTAs, badges, and any surface that needs the gradient
+   as a fill rather than as text. */
+.bg-gradient-warm {
+  background-image: linear-gradient(95deg, hsl(var(--magenta)), hsl(var(--orange)));
+}
+
+/* Journal category pills — colour pairs that work in both light + dark.
+   Used by getThemeColors() in BlogPage / BlogPostPage / RelatedBlogs. */
+.pill-casestudy {
+  background: hsl(var(--orange) / 0.15);
+  color: hsl(18 80% 38%);
+}
+.notion-canvas[data-theme="dark"] .pill-casestudy,
+.dark .pill-casestudy {
+  color: hsl(28 95% 72%);
+}
+.pill-strategy {
+  background: hsl(var(--indigo) / 0.12);
+  color: hsl(var(--indigo));
+}
+.notion-canvas[data-theme="dark"] .pill-strategy,
+.dark .pill-strategy {
+  background: hsl(220 80% 65% / 0.18);
+  color: hsl(220 80% 80%);
+}
+.pill-growth {
+  background: hsl(150 55% 40% / 0.14);
+  color: hsl(150 55% 28%);
+}
+.notion-canvas[data-theme="dark"] .pill-growth,
+.dark .pill-growth {
+  color: hsl(150 60% 72%);
+}
+.pill-creative {
+  background: hsl(var(--magenta) / 0.14);
+  color: hsl(var(--magenta));
+}
+.notion-canvas[data-theme="dark"] .pill-creative,
+.dark .pill-creative {
+  color: hsl(320 85% 80%);
+}
+.pill-systems {
+  background: hsl(var(--sky) / 0.14);
+  color: hsl(210 80% 38%);
+}
+.notion-canvas[data-theme="dark"] .pill-systems,
+.dark .pill-systems {
+  color: hsl(210 80% 80%);
+}
+.pill-featured {
+  background-image: linear-gradient(95deg, hsl(var(--magenta)), hsl(var(--orange)));
+  color: #fff;
 }
