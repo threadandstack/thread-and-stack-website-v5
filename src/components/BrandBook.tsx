@@ -50,7 +50,7 @@ const WORKSHOP = sortedUrls(workshopFiles);
 const SHOREDITCH = sortedUrls(shoreditchFiles);
 const PORTRAITS = sortedUrls(portraitFiles);
 
-const LOGO_INVENTORY = [
+const LOGO_INVENTORY: ReadonlyArray<{ src: string; name: string; use: string; dark?: boolean }> = [
   { src: GreyStacked, name: "Grey_TS_Stacked.svg", use: "Default — nav, light backgrounds" },
   { src: IndigoStacked, name: "Indigo_TS_Stacked.svg", use: "Accent / hover state" },
   { src: BlackStacked, name: "Black_TS_Stacked.svg", use: "Print, single-colour" },
@@ -63,7 +63,7 @@ const LOGO_INVENTORY = [
   { src: IndigoSocialSq, name: "Indigo_TS_SocialSq.svg", use: "Avatar / favicon, accent" },
   { src: BlackSocialSq, name: "Black_TS_SocialSq.svg", use: "Print, single-colour" },
   { src: WhiteSocialSq, name: "White_TS_SocialSq.svg", use: "On dark backgrounds", dark: true },
-] as const;
+];
 
 // ── Helpers ───────────────────────────────────────────────────────────────
 
