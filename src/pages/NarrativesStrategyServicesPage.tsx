@@ -230,10 +230,7 @@ const NarrativesStrategyServicesPage = () => {
                   onClick={() => setContactOpen(true)}
                   className="group inline-flex h-12 items-center rounded-md px-6 text-[14.5px] font-medium text-accent-foreground shadow-[0_8px_20px_-8px_rgba(0,0,0,0.35)] transition-all hover:-translate-y-px"
                   style={{
-                    backgroundImage:
-                      theme === "dark"
-                        ? "linear-gradient(90deg, #5DE0E6, #004AAD)"
-                        : "linear-gradient(95deg, var(--gradient-3color))",
+                    backgroundImage: "linear-gradient(95deg, var(--gradient-3color))",
                   }}
                 >
                   Book a free intro call
