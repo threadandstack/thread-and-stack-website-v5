@@ -846,10 +846,12 @@ All colors MUST be HSL.
   --step-3: hsl(var(--indigo));
   --step-4: hsl(var(--violet));
 
-  /* Gradient stop lists for inline backgroundImage */
-  --gradient-3color: hsl(var(--orange)), hsl(var(--violet));
-  --gradient-3color-even: hsl(var(--orange)), hsl(var(--violet));
-  --gradient-4color: hsl(var(--orange)) 0%, hsl(var(--violet)) 100%;
+  /* Gradient stop lists for inline backgroundImage.
+     Primary warm gradient: magenta → orange. Single source of truth — every
+     CTA/pill across the site reads from this variable. */
+  --gradient-3color: hsl(320 85% 55%), hsl(var(--orange));
+  --gradient-3color-even: hsl(320 85% 55%), hsl(var(--orange));
+  --gradient-4color: hsl(320 85% 55%) 0%, hsl(var(--orange)) 100%;
 
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
