@@ -23,7 +23,7 @@ export function CTA({ theme = "light" }: CTAProps = {}) {
                 </span>
                 <h2 className="font-serif-pro italic font-normal text-balance text-4xl leading-[1.05] tracking-[-0.02em] md:text-[52px]">
                   Start with a call.<br />
-                  <span className="text-clay">Leave with a plan.</span>
+                  <span className="text-gradient-warm">Leave with a plan.</span>
                 </h2>
                 <p className="mt-5 max-w-md text-[15px] leading-relaxed text-ink-soft">
                   Book a free 30-minute intro call. If a paid Stack Diagnostic is

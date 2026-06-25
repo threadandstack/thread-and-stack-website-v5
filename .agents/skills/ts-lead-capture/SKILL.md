@@ -40,16 +40,22 @@ If any one fails, the others still send and the client still sees success. Log f
 
 ## Preferred UI
 
-Default to the existing **`ContactDrawer`** component (`src/components/ContactDrawer.tsx`) over inline forms. It already implements consent, honeypot, role/organisation, and the triple-fire.
+Default to the **`DiagnosticDrawer`** with `initialMode="intro"` (`src/components/home-draft2/DiagnosticDrawer.tsx`). It implements the full qualification form (first/last name, email, role, company, website, annual revenue, employees), GDPR consent, honeypot, and the triple-fire. The primary CTA uses the primary warm gradient. A secondary "I'm ready to book my Diagnostic session now" link sits below.
 
 Open it from any CTA with:
 ```tsx
 const [open, setOpen] = useState(false);
-<Button onClick={() => setOpen(true)}>Talk to us</Button>
-<ContactDrawer open={open} onOpenChange={setOpen} source="my-page-cta" />
+<Button onClick={() => setOpen(true)}>Book a free intro call</Button>
+<DiagnosticDrawer
+  open={open}
+  onOpenChange={setOpen}
+  source="my-page-cta"
+  initialMode="intro"
+  theme="light"
+/>
 ```
 
-Use a custom inline form only when the surrounding UX genuinely requires it (e.g. a waitlist where the form *is* the page).
+The legacy `ContactDrawer` ("Let's Work Together") is being phased out — do not wire new CTAs to it. Use a custom inline form only when the surrounding UX genuinely requires it (e.g. a waitlist where the form *is* the page).
 
 ## Confirmation UX
 

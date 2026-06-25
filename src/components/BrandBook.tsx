@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Check, Download, Sparkles, Copy } from "lucide-react";
+import { ArrowRight, Check, Download, Sparkles, Copy, ChevronDown } from "lucide-react";
 import { Tilt3D } from "@/components/Tilt3D";
 import { FAQ } from "@/components/FAQ";
 import { CTA } from "@/components/home-draft2/CTA";
-import { ContactDrawer } from "@/components/ContactDrawer";
+import { DiagnosticDrawer } from "@/components/home-draft2/DiagnosticDrawer";
 import PageSeo from "@/components/seo/PageSeo";
 
-// Active logos (current set — gradient blue logo retired, not imported)
+// Active logos — 12 variants. The 2024 gradient blue mark is retired
+// and intentionally not imported here.
 import GreyStacked from "@/assets/logos/Grey_TS_Stacked.svg";
 import IndigoStacked from "@/assets/logos/Indigo_TS_Stacked.svg";
 import BlackStacked from "@/assets/logos/Black_TS_Stacked.svg";
@@ -21,18 +22,48 @@ import IndigoSocialSq from "@/assets/logos/Indigo_TS_SocialSq.svg";
 import BlackSocialSq from "@/assets/logos/Black_TS_SocialSq.svg";
 import WhiteSocialSq from "@/assets/logos/White_TS_SocialSq.svg";
 
-// Photography — current set
-import workshop2 from "@/assets/photos/workshop/brendan-2.webp";
-import workshop19 from "@/assets/photos/workshop/brendan-19.webp";
-import workshop22 from "@/assets/photos/workshop/brendan-22.webp";
-import workshop25 from "@/assets/photos/workshop/brendan-25.webp";
-import shoreditch26 from "@/assets/photos/shoreditch/brendan-26.webp";
-import shoreditch29 from "@/assets/photos/shoreditch/brendan-29.webp";
-import shoreditch34 from "@/assets/photos/shoreditch/brendan-34.webp";
-import shoreditch37 from "@/assets/photos/shoreditch/brendan-37.webp";
-import portrait7 from "@/assets/photos/portraits/brendan-7.webp";
-import portrait12 from "@/assets/photos/portraits/brendan-12.webp";
-import portrait16 from "@/assets/photos/portraits/brendan-16.webp";
+// Photography — full inventory via Vite glob so the section stays in sync
+// with whatever ships in `src/assets/photos/`.
+const workshopFiles = import.meta.glob(
+  "@/assets/photos/workshop/*.webp",
+  { eager: true, query: "?url", import: "default" }
+) as Record<string, string>;
+const shoreditchFiles = import.meta.glob(
+  "@/assets/photos/shoreditch/*.webp",
+  { eager: true, query: "?url", import: "default" }
+) as Record<string, string>;
+const portraitFiles = import.meta.glob(
+  "@/assets/photos/portraits/*.webp",
+  { eager: true, query: "?url", import: "default" }
+) as Record<string, string>;
+
+const sortedUrls = (rec: Record<string, string>) =>
+  Object.entries(rec)
+    .sort(([a], [b]) => {
+      const na = parseInt(a.match(/brendan-(\d+)/)?.[1] ?? "0", 10);
+      const nb = parseInt(b.match(/brendan-(\d+)/)?.[1] ?? "0", 10);
+      return na - nb;
+    })
+    .map(([path, url]) => ({ url, name: path.split("/").pop() ?? path }));
+
+const WORKSHOP = sortedUrls(workshopFiles);
+const SHOREDITCH = sortedUrls(shoreditchFiles);
+const PORTRAITS = sortedUrls(portraitFiles);
+
+const LOGO_INVENTORY: ReadonlyArray<{ src: string; name: string; use: string; dark?: boolean }> = [
+  { src: GreyStacked, name: "Grey_TS_Stacked.svg", use: "Default — nav, light backgrounds" },
+  { src: IndigoStacked, name: "Indigo_TS_Stacked.svg", use: "Accent / hover state" },
+  { src: BlackStacked, name: "Black_TS_Stacked.svg", use: "Print, single-colour" },
+  { src: WhiteStacked, name: "White_TS_Stacked.svg", use: "On dark backgrounds", dark: true },
+  { src: GreyWordmark, name: "Grey_TS_Wordmark.svg", use: "Horizontal lockup, default" },
+  { src: IndigoWordmark, name: "Indigo_TS_Wordmark.svg", use: "Horizontal lockup, accent" },
+  { src: BlackWordmark, name: "Black_TS_Wordmark.svg", use: "Print, single-colour" },
+  { src: WhiteWordmark, name: "White_TS_Wordmark.svg", use: "On dark backgrounds", dark: true },
+  { src: GreySocialSq, name: "Grey_TS_SocialSq.svg", use: "Avatar / favicon, default" },
+  { src: IndigoSocialSq, name: "Indigo_TS_SocialSq.svg", use: "Avatar / favicon, accent" },
+  { src: BlackSocialSq, name: "Black_TS_SocialSq.svg", use: "Print, single-colour" },
+  { src: WhiteSocialSq, name: "White_TS_SocialSq.svg", use: "On dark backgrounds", dark: true },
+];
 
 // ── Helpers ───────────────────────────────────────────────────────────────
 
@@ -41,6 +72,7 @@ const SECTIONS = [
   ["02", "Logo system"],
   ["03", "Colour"],
   ["04", "Gradients"],
+  ["04a", "Gradient text"],
   ["05", "Typography"],
   ["06", "Cards & 3D float"],
   ["07", "Pill buttons"],
@@ -62,10 +94,7 @@ const Swatch = ({ name, hex, hsl }: { name: string; hex: string; hsl?: string })
     setTimeout(() => setCopied(false), 1400);
   };
   return (
-    <button
-      onClick={copy}
-      className="text-left group transition-opacity hover:opacity-90"
-    >
+    <button onClick={copy} className="text-left group transition-opacity hover:opacity-90">
       <div
         className="w-full aspect-[3/2] rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.06)] mb-3"
         style={{ backgroundColor: hex }}
@@ -74,20 +103,12 @@ const Swatch = ({ name, hex, hsl }: { name: string; hex: string; hsl?: string })
       <p className="text-xs font-mono text-muted-foreground group-hover:text-accent transition-colors">
         {copied ? "Copied" : hex}
       </p>
-      {hsl && (
-        <p className="text-[10px] font-mono text-muted-foreground/60">{hsl}</p>
-      )}
+      {hsl && <p className="text-[10px] font-mono text-muted-foreground/60">{hsl}</p>}
     </button>
   );
 };
 
-const Gradient = ({
-  name,
-  css,
-}: {
-  name: string;
-  css: string;
-}) => {
+const Gradient = ({ name, css }: { name: string; css: string }) => {
   const [copied, setCopied] = useState(false);
   const copy = () => {
     navigator.clipboard.writeText(css);
@@ -106,9 +127,7 @@ const Gradient = ({
           <Copy className="w-3 h-3" /> {copied ? "Copied" : "Copy CSS"}
         </p>
       </div>
-      <p className="text-[11px] font-mono text-muted-foreground/70 mt-1 break-all">
-        {css}
-      </p>
+      <p className="text-[11px] font-mono text-muted-foreground/70 mt-1 break-all">{css}</p>
     </button>
   );
 };
@@ -119,9 +138,7 @@ const SectionHead = ({ num, title, kicker }: { num: string; title: string; kicke
       <span className="text-xs text-muted-foreground uppercase tracking-widest font-mono">{num}</span>
       <h2 className="font-serif-pro text-3xl md:text-4xl font-medium">{title}</h2>
     </div>
-    {kicker && (
-      <p className="text-base text-muted-foreground max-w-2xl pl-12">{kicker}</p>
-    )}
+    {kicker && <p className="text-base text-muted-foreground max-w-2xl pl-12">{kicker}</p>}
   </div>
 );
 
@@ -131,6 +148,26 @@ const Rule = ({ children }: { children: React.ReactNode }) => (
     <span>{children}</span>
   </div>
 );
+
+const SkillEmbed = ({ name, body }: { name: string; body: string }) => {
+  const [open, setOpen] = useState(false);
+  return (
+    <details
+      className="rounded-2xl bg-muted/40 border border-border/40 overflow-hidden"
+      onToggle={(e) => setOpen((e.currentTarget as HTMLDetailsElement).open)}
+    >
+      <summary className="cursor-pointer list-none px-5 py-4 flex items-center justify-between gap-4">
+        <span className="text-sm font-medium font-mono">{name}</span>
+        <ChevronDown
+          className={`w-4 h-4 text-muted-foreground transition-transform ${open ? "rotate-180" : ""}`}
+        />
+      </summary>
+      <pre className="px-5 pb-5 text-[12px] leading-relaxed font-mono whitespace-pre-wrap text-foreground/80">
+        {body}
+      </pre>
+    </details>
+  );
+};
 
 // ── Page ──────────────────────────────────────────────────────────────────
 
@@ -147,13 +184,9 @@ export const BrandBook = () => {
       />
 
       <div className="min-h-screen bg-background text-foreground">
-        {/* Floating download */}
+        {/* Floating print */}
         <div className="fixed top-5 right-5 z-50 print:hidden">
-          <Button
-            onClick={() => window.print()}
-            size="sm"
-            className="gap-2 rounded-full shadow-lg"
-          >
+          <Button onClick={() => window.print()} size="sm" className="gap-2 rounded-full shadow-lg">
             <Download className="w-3.5 h-3.5" />
             Print
           </Button>
@@ -162,20 +195,20 @@ export const BrandBook = () => {
         {/* Header */}
         <header className="max-w-6xl mx-auto px-6 md:px-12 pt-20 pb-12">
           <p className="text-xs text-muted-foreground uppercase tracking-widest mb-4 font-mono">
-            Internal reference · v3
+            Internal reference · v4
           </p>
           <h1 className="font-serif-pro text-5xl md:text-7xl font-medium leading-[1.05] mb-6">
             Brand book
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed">
-            The living source of truth for Thread & Stack. Every pattern on this
-            page is rendered with the production component it documents. If
-            something here disagrees with the live site, the live site wins and
-            this page is updated.
+            The living source of truth for Thread &amp; Stack. Every pattern on
+            this page is rendered with the production component it documents.
+            If something here disagrees with the live site, the live site wins
+            and this page is updated.
           </p>
 
           {/* TOC */}
-          <nav className="mt-12 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-6 gap-y-2 print:hidden">
+          <nav className="mt-12 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-2 print:hidden">
             {SECTIONS.map(([num, title]) => (
               <a
                 key={num}
@@ -193,43 +226,77 @@ export const BrandBook = () => {
           {/* 01 — Brand essence */}
           <section id="s01" className="scroll-mt-24 space-y-8">
             <SectionHead num="01" title="Brand essence" />
-            <div className="grid md:grid-cols-2 gap-8">
-              <div className="rounded-3xl bg-card p-8 md:p-10 shadow-[0_8px_30px_rgba(0,0,0,0.06)]">
-                <p className="text-xs uppercase tracking-widest text-muted-foreground mb-4 font-mono">
-                  Brand line
-                </p>
-                <p className="font-serif-pro text-3xl md:text-4xl leading-tight italic">
-                  Stories that land.
-                  <br />
-                  Systems that stick.
-                </p>
-              </div>
+            <div className="rounded-3xl bg-card p-8 md:p-10 shadow-[0_8px_30px_rgba(0,0,0,0.06)] space-y-5">
+              <p className="text-xs uppercase tracking-widest text-muted-foreground font-mono">
+                The problem we name
+              </p>
+              <h3 className="font-serif-pro text-3xl md:text-4xl leading-tight">
+                Operational <span className="text-gradient-warm italic">fragmentation</span>.
+              </h3>
+              <p className="text-[15.5px] text-foreground/85 leading-relaxed max-w-3xl">
+                The founder has hired the right specialists. Marketing, design,
+                ops, sales, finance. Each runs their own corner well. Nobody is
+                accountable to the whole picture. Running the business is harder
+                than it should be, and the cost of that is absorbed silently in
+                missed handoffs, repeated work, and energy lost between teams.
+              </p>
+              <p className="text-[15.5px] text-foreground/85 leading-relaxed max-w-3xl">
+                The creative tax is one expression of fragmentation. So are the
+                stalled launch, the duplicate CRM, the founder still owning the
+                Notion they swore they'd hand over. Same root.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6">
               <div className="rounded-3xl bg-accent/5 p-8 md:p-10">
                 <p className="text-xs uppercase tracking-widest text-accent mb-4 font-mono">
-                  The problem we name
+                  Primary service
                 </p>
-                <h3 className="font-serif-pro text-2xl mb-3">The creative tax</h3>
+                <h4 className="font-serif-pro text-2xl mb-3">
+                  Operations, systems &amp; strategy consultancy
+                </h4>
                 <p className="text-sm text-foreground/80 leading-relaxed">
-                  The cognitive load and admin chaos that taxes creative teams
-                  between intention and execution. Every page proposes the
-                  problem before the solution.
+                  For teams of five to fifty experiencing fragmentation, ready
+                  to unlock growth and do their best work. Notion-native,
+                  AI-aware, behaviourally informed.
+                </p>
+              </div>
+              <div className="rounded-3xl bg-card p-8 md:p-10 shadow-[0_8px_30px_rgba(0,0,0,0.06)]">
+                <p className="text-xs uppercase tracking-widest text-muted-foreground mb-4 font-mono">
+                  Retained secondary
+                </p>
+                <h4 className="font-serif-pro text-2xl mb-3">Narratives &amp; Strategy</h4>
+                <p className="text-sm text-foreground/80 leading-relaxed">
+                  Positioning, story, messaging. Retained quietly for
+                  value-aligned creative work. Not a peer of the primary
+                  service.
                 </p>
               </div>
             </div>
+
             <div className="rounded-3xl bg-card p-8 md:p-10 shadow-[0_8px_30px_rgba(0,0,0,0.06)]">
               <p className="text-xs uppercase tracking-widest text-muted-foreground mb-4 font-mono">
-                Two pillars
+                Founder positioning
               </p>
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <h4 className="font-serif-pro text-xl mb-1">Narratives & Strategy</h4>
-                  <p className="text-sm text-muted-foreground">Positioning, story, messaging. Founder works as designer and strategist.</p>
-                </div>
-                <div>
-                  <h4 className="font-serif-pro text-xl mb-1">Notion & Systems Consultancy</h4>
-                  <p className="text-sm text-muted-foreground">Operating systems for creative teams. Notion-native, automation-aware.</p>
-                </div>
-              </div>
+              <p className="font-serif-pro text-xl md:text-2xl leading-snug">
+                Brendan is a <span className="italic">strategist, systems thinker, AI ops
+                consultant,</span> and <span className="italic">behavioural-science-informed
+                integrator</span>. Not another specialist. The person willing to
+                hold the whole picture.
+              </p>
+            </div>
+
+            <div className="rounded-2xl bg-muted/40 p-6 max-w-2xl">
+              <p className="text-xs uppercase tracking-widest text-muted-foreground mb-2 font-mono">
+                Recurring brand thread
+              </p>
+              <p className="font-serif-pro italic text-lg">
+                Transformation doesn't work until it works.
+              </p>
+              <p className="text-xs text-muted-foreground mt-2">
+                Use as a closing line where one is needed. Not a headline
+                device. There is no current brand line above the fold.
+              </p>
             </div>
           </section>
 
@@ -238,11 +305,13 @@ export const BrandBook = () => {
             <SectionHead
               num="02"
               title="Logo system"
-              kicker="One mark, four colourways, three forms. The 2024 gradient blue mark is retired and must not be reintroduced."
+              kicker="One mark, four colourways, three forms. Twelve files in src/assets/logos/."
             />
 
             <div className="space-y-3">
-              <p className="text-xs uppercase tracking-widest text-muted-foreground font-mono">Stacked</p>
+              <p className="text-xs uppercase tracking-widest text-muted-foreground font-mono">
+                Stacked
+              </p>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {[
                   { src: GreyStacked, label: "Grey · default" },
@@ -257,14 +326,18 @@ export const BrandBook = () => {
                     }`}
                   >
                     <img src={l.src} alt={l.label} className="h-16 w-auto" />
-                    <p className={`text-xs ${l.dark ? "text-background/70" : "text-muted-foreground"}`}>{l.label}</p>
+                    <p className={`text-xs ${l.dark ? "text-background/70" : "text-muted-foreground"}`}>
+                      {l.label}
+                    </p>
                   </div>
                 ))}
               </div>
             </div>
 
             <div className="space-y-3">
-              <p className="text-xs uppercase tracking-widest text-muted-foreground font-mono">Wordmark</p>
+              <p className="text-xs uppercase tracking-widest text-muted-foreground font-mono">
+                Wordmark
+              </p>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {[
                   { src: GreyWordmark, label: "Grey" },
@@ -279,14 +352,18 @@ export const BrandBook = () => {
                     }`}
                   >
                     <img src={l.src} alt={l.label} className="h-6 w-auto" />
-                    <p className={`text-xs ${l.dark ? "text-background/70" : "text-muted-foreground"}`}>{l.label}</p>
+                    <p className={`text-xs ${l.dark ? "text-background/70" : "text-muted-foreground"}`}>
+                      {l.label}
+                    </p>
                   </div>
                 ))}
               </div>
             </div>
 
             <div className="space-y-3">
-              <p className="text-xs uppercase tracking-widest text-muted-foreground font-mono">Social square (favicon)</p>
+              <p className="text-xs uppercase tracking-widest text-muted-foreground font-mono">
+                Social square (favicon)
+              </p>
               <div className="flex flex-wrap gap-4">
                 {[
                   { src: GreySocialSq, label: "Grey" },
@@ -301,18 +378,12 @@ export const BrandBook = () => {
                     }`}
                   >
                     <img src={l.src} alt={l.label} className="h-14 w-14" />
-                    <p className={`text-xs ${l.dark ? "text-background/70" : "text-muted-foreground"}`}>{l.label}</p>
+                    <p className={`text-xs ${l.dark ? "text-background/70" : "text-muted-foreground"}`}>
+                      {l.label}
+                    </p>
                   </div>
                 ))}
               </div>
-            </div>
-
-            <div className="rounded-2xl bg-destructive/5 border border-destructive/20 p-6 space-y-2">
-              <p className="text-xs uppercase tracking-widest text-destructive font-mono font-medium">Retired — do not reintroduce</p>
-              <p className="text-sm text-foreground/80">
-                The 2024 gradient blue swoosh mark and any pre-rebrand T&S
-                wordmark from before Crimson Pro adoption.
-              </p>
             </div>
           </section>
 
@@ -321,50 +392,54 @@ export const BrandBook = () => {
             <SectionHead
               num="03"
               title="Colour"
-              kicker="Light is the default. Night is a peer, not an afterthought. Click any swatch to copy the hex."
+              kicker="Light mode is the default. Dark mode is a peer, not an afterthought. Click any swatch to copy the hex."
             />
 
             <div className="space-y-4">
-              <p className="text-xs uppercase tracking-widest text-muted-foreground font-mono">Light theme</p>
+              <p className="text-xs uppercase tracking-widest text-muted-foreground font-mono">
+                Light mode
+              </p>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-5">
                 <Swatch name="Background" hex="#FFFFFF" hsl="0 0% 100%" />
                 <Swatch name="Foreground" hex="#0D0D0D" hsl="0 0% 5%" />
                 <Swatch name="Card" hex="#FCFCFC" hsl="0 0% 99%" />
                 <Swatch name="Accent · Indigo" hex="#1340E8" hsl="234 89% 50%" />
-                <Swatch name="Ring" hex="#5B14F5" hsl="256 89% 50%" />
                 <Swatch name="Muted" hex="#F5F5F5" />
                 <Swatch name="Muted Fg" hex="#666666" />
                 <Swatch name="Border" hex="#EBEBEB" />
-                <Swatch name="Destructive" hex="#CC2929" />
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <p className="text-xs uppercase tracking-widest text-muted-foreground font-mono">Night theme</p>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-5">
-                <Swatch name="Background" hex="#181B24" hsl="230 15% 11%" />
-                <Swatch name="Foreground" hex="#EAEBED" hsl="220 10% 93%" />
-                <Swatch name="Card" hex="#1F2330" hsl="230 14% 14%" />
-                <Swatch name="Accent · Orange" hex="#FF6200" hsl="24 100% 50%" />
-                <Swatch name="Ring" hex="#FF6200" hsl="24 100% 50%" />
-                <Swatch name="Muted" hex="#262A38" />
-                <Swatch name="Muted Fg" hex="#828795" />
-                <Swatch name="Border" hex="#2B2F3D" />
-                <Swatch name="Secondary" hex="#6B7CC4" />
               </div>
             </div>
 
             <div className="space-y-4">
               <p className="text-xs uppercase tracking-widest text-muted-foreground font-mono">
-                Per-page Night variant · Narratives & Strategy
+                Dark mode
               </p>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-5">
-                <Swatch name="Light blue" hex="#5DE0E6" />
-                <Swatch name="Deep navy" hex="#004AAD" />
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-5">
+                <Swatch name="Background" hex="#181B24" hsl="230 15% 11%" />
+                <Swatch name="Foreground" hex="#EAEBED" hsl="220 10% 93%" />
+                <Swatch name="Card" hex="#1F2330" hsl="230 14% 14%" />
+                <Swatch name="Accent · Orange" hex="#FF6200" hsl="24 100% 50%" />
+                <Swatch name="Muted" hex="#262A38" />
+                <Swatch name="Muted Fg" hex="#828795" />
+                <Swatch name="Border" hex="#2B2F3D" />
               </div>
-              <p className="text-xs text-muted-foreground max-w-xl">
-                Per-page overrides are scoped via CSS variables on a wrapper.
-                Never mutate the global tokens.
+            </div>
+
+            <div className="rounded-2xl bg-muted/30 p-6 space-y-4">
+              <p className="text-xs uppercase tracking-widest text-muted-foreground font-mono">
+                Utility tokens — not in active use
+              </p>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-5">
+                <Swatch name="Destructive" hex="#CC2929" />
+                <Swatch name="Secondary lavender" hex="#6B7CC4" />
+              </div>
+              <p className="text-xs text-muted-foreground max-w-2xl leading-relaxed">
+                Destructive was originally paired with an emerald success green
+                for form-state communication. Neither is currently in use as a
+                UI colour. Tokens remain defined in <code className="font-mono">src/index.css</code>{" "}
+                so future work can adopt them without a migration. Re-add the
+                emerald success token alongside destructive when form-state
+                communication is next revisited.
               </p>
             </div>
           </section>
@@ -374,21 +449,60 @@ export const BrandBook = () => {
             <SectionHead
               num="04"
               title="Gradients"
-              kicker="Three approved gradient families. Pass them as props (ctaGradient, logoHoverGradient) rather than hardcoding."
+              kicker="Three approved families. The primary warm gradient is the single source of truth for CTAs — defined globally as the --gradient-3color CSS variable."
             />
             <div className="space-y-6">
               <Gradient
-                name="Default · Indigo"
+                name="Primary warm · all CTAs & pill buttons"
+                css="linear-gradient(95deg, hsl(320 85% 55%), hsl(var(--orange)))"
+              />
+              <Gradient
+                name="Default indigo · brand mark hover only"
                 css="linear-gradient(90deg, #1340E8, #4E6CFF)"
               />
               <Gradient
-                name="Night · Orange"
+                name="Dark mode orange · accent gradient"
                 css="linear-gradient(90deg, #FF6200, #FF9248)"
               />
-              <Gradient
-                name="Narratives · Light blue → Deep navy"
-                css="linear-gradient(90deg, #5DE0E6, #004AAD)"
-              />
+            </div>
+            <div className="rounded-2xl bg-muted/40 p-5 text-sm text-foreground/80 leading-relaxed max-w-3xl">
+              The Narratives light-blue → navy gradient was created in error
+              and has been retired. Every page now uses the primary warm
+              gradient for CTAs.
+            </div>
+          </section>
+
+          {/* 04a — Gradient text treatment */}
+          <section id="s04a" className="scroll-mt-24 space-y-8">
+            <SectionHead
+              num="04a"
+              title="Gradient text treatment"
+              kicker="Where colour is introduced to a heading or display word for emphasis, apply the primary warm gradient as a text gradient. Replaces solid orange on italic or accent display text."
+            />
+            <div className="rounded-3xl bg-card p-8 md:p-12 shadow-[0_8px_30px_rgba(0,0,0,0.06)] space-y-8">
+              <p className="font-serif-pro italic text-4xl md:text-6xl leading-[1.05]">
+                Start with a call.{" "}
+                <span className="text-gradient-warm">Leave with a plan.</span>
+              </p>
+              <p className="font-serif-pro italic text-3xl md:text-5xl leading-tight text-foreground/85">
+                Built by an <span className="text-gradient-warm">AI Ops Consultant</span>.
+              </p>
+            </div>
+            <div className="rounded-2xl bg-muted/40 p-6 space-y-2">
+              <p className="text-xs uppercase tracking-widest text-muted-foreground font-mono">
+                Utility class
+              </p>
+              <pre className="text-[12.5px] font-mono whitespace-pre-wrap leading-relaxed">{`.text-gradient-warm {
+  background-image: linear-gradient(95deg, hsl(320 85% 55%), hsl(var(--orange)));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}`}</pre>
+              <p className="text-xs text-muted-foreground">
+                Apply subtly. One or two display words per heading. Where the
+                effect reads as tacky on a specific instance, leave a code
+                comment for review rather than silently reverting.
+              </p>
             </div>
           </section>
 
@@ -402,20 +516,24 @@ export const BrandBook = () => {
             <div className="rounded-3xl bg-card p-8 md:p-12 shadow-[0_8px_30px_rgba(0,0,0,0.06)] space-y-10">
               <div>
                 <p className="text-xs uppercase tracking-widest text-muted-foreground mb-3 font-mono">
-                  Display · Crimson Pro · 500
+                  Display · Crimson Pro italic · 500–600
                 </p>
-                <p className="font-serif-pro text-5xl md:text-6xl leading-[1.05]">
-                  Marketing that feels{" "}
-                  <span className="italic text-accent">more human</span>.
+                <p className="font-serif-pro italic font-normal text-5xl md:text-6xl leading-[1.05]">
+                  Ops that finally <span className="text-gradient-warm">felt joined up</span>.
+                </p>
+                <p className="text-xs text-muted-foreground mt-3">
+                  Italic at weight 500. One or two emphasis words carry the
+                  gradient. The rest stays foreground.
                 </p>
               </div>
               <div>
                 <p className="text-xs uppercase tracking-widest text-muted-foreground mb-3 font-mono">
-                  Editorial accent · Crimson Pro italic
+                  Editorial accent · single serif word in an Inter line
                 </p>
-                <p className="font-serif-pro italic text-2xl md:text-3xl text-foreground/80">
-                  A single serif word inside a sans line outperforms a fully
-                  serif heading.
+                <p className="text-xl md:text-2xl text-foreground/85">
+                  A single serif{" "}
+                  <span className="font-serif-pro italic">phrase</span> inside a
+                  sans line outperforms a fully serif heading.
                 </p>
               </div>
               <div className="space-y-3">
@@ -424,14 +542,14 @@ export const BrandBook = () => {
                 </p>
                 <p className="text-base leading-relaxed text-foreground/85 max-w-2xl">
                   Inter handles every functional surface: body copy, UI labels,
-                  captions, buttons. Body weight 400, emphasis 500, never 700.
-                  Targeted serif phrases earn their place by appearing rarely.
+                  captions, buttons. Body weight 400, emphasis 500. Never 700
+                  on Crimson Pro.
                 </p>
               </div>
               <div className="grid sm:grid-cols-3 gap-4 pt-2">
                 {[
-                  ["Display", "font-serif-pro text-3xl", "500"],
-                  ["Body", "text-base", "400"],
+                  ["Display", "font-serif-pro italic text-3xl", "500–600"],
+                  ["Body", "text-base", "400–500"],
                   ["Caption", "text-xs uppercase tracking-widest font-mono", "—"],
                 ].map(([label, cls, w]) => (
                   <div key={label as string} className="rounded-2xl bg-background p-5">
@@ -444,11 +562,17 @@ export const BrandBook = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="rounded-2xl bg-destructive/5 border border-destructive/20 p-5 space-y-2">
                 <p className="text-xs uppercase tracking-widest text-destructive font-mono">Don't</p>
-                <p className="text-sm text-foreground/80">Bold every heading. Stack three serif lines in a row. Use weight 700+ on Crimson Pro.</p>
+                <p className="text-sm text-foreground/80">
+                  Use Crimson Pro at weight 700+. Stack three serif lines in a
+                  row. Ship a fully serif heading where one italic word would do.
+                </p>
               </div>
               <div className="rounded-2xl bg-accent/5 border border-accent/20 p-5 space-y-2">
                 <p className="text-xs uppercase tracking-widest text-accent font-mono">Do</p>
-                <p className="text-sm text-foreground/80">Weight 500–600 on display. One italic serif word per hero. Sentence case headings.</p>
+                <p className="text-sm text-foreground/80">
+                  Weight 500–600 on display, 400–500 on body. One italic serif
+                  phrase per hero. Sentence case headings.
+                </p>
               </div>
             </div>
           </section>
@@ -468,8 +592,10 @@ export const BrandBook = () => {
               ].map((c) => (
                 <Tilt3D key={c.title} className="h-full">
                   <div className="rounded-2xl bg-card p-6 shadow-[0_8px_30px_rgba(0,0,0,0.08)] h-full">
-                    <Sparkles className="w-5 h-5 text-accent mb-4" />
-                    <h4 className="font-serif-pro text-xl mb-2">{c.title}</h4>
+                    <Sparkles className="w-5 h-5 text-clay mb-4" />
+                    <h4 className="font-serif-pro italic font-normal text-xl mb-2">
+                      {c.title}
+                    </h4>
                     <p className="text-sm text-muted-foreground leading-relaxed">{c.body}</p>
                   </div>
                 </Tilt3D>
@@ -480,6 +606,7 @@ export const BrandBook = () => {
                 <p className="text-xs uppercase tracking-widest text-accent font-mono">Rules</p>
                 <Rule>Max tilt 8° horizontal, 6° vertical.</Rule>
                 <Rule>Pair with rounded-2xl and the soft shadow tokens above.</Rule>
+                <Rule>Icons inside cards default to <code className="font-mono">text-clay</code> (orange in both modes).</Rule>
                 <Rule>Opacity transitions on photos inside Tilt3D, never translate-y.</Rule>
               </div>
               <div className="rounded-2xl bg-destructive/5 border border-destructive/20 p-5 space-y-2">
@@ -496,31 +623,59 @@ export const BrandBook = () => {
             <SectionHead
               num="07"
               title="Pill buttons"
-              kicker="Fully rounded, gradient fill on hover, icon slides in from the right."
+              kicker="Three live variants. Primary warm gradient is mode-agnostic — same fill on light and dark."
             />
-            <div className="flex flex-wrap gap-4 items-center">
-              <button className="group inline-flex items-center gap-2 rounded-full bg-accent text-accent-foreground px-6 py-3 text-sm font-medium hover:opacity-90 transition-opacity overflow-hidden">
-                Primary CTA
-                <ArrowRight className="w-4 h-4 -ml-1 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
-              </button>
-              <button className="group inline-flex items-center gap-2 rounded-full border border-accent/30 text-foreground px-6 py-3 text-sm font-medium hover:border-accent transition-colors">
-                Secondary
-                <ArrowRight className="w-4 h-4 -ml-1 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
-              </button>
-              <button
-                className="group inline-flex items-center gap-2 rounded-full text-white px-6 py-3 text-sm font-medium transition-opacity hover:opacity-90"
-                style={{ background: "linear-gradient(90deg, #5DE0E6, #004AAD)" }}
-              >
-                Narratives gradient
-                <ArrowRight className="w-4 h-4 -ml-1 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
-              </button>
-              <button
-                className="group inline-flex items-center gap-2 rounded-full text-white px-6 py-3 text-sm font-medium transition-opacity hover:opacity-90"
-                style={{ background: "linear-gradient(90deg, #FF6200, #FF9248)" }}
-              >
-                Night gradient
-                <ArrowRight className="w-4 h-4 -ml-1 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
-              </button>
+            <div className="space-y-6">
+              <div className="rounded-3xl bg-card p-8 shadow-[0_8px_30px_rgba(0,0,0,0.06)] space-y-5">
+                <p className="text-xs uppercase tracking-widest text-muted-foreground font-mono">
+                  1 · Primary CTA · light mode
+                </p>
+                <button
+                  className="group inline-flex items-center gap-2 rounded-full text-white px-6 py-3 text-sm font-medium transition-all hover:-translate-y-px"
+                  style={{ backgroundImage: "linear-gradient(95deg, var(--gradient-3color))" }}
+                >
+                  Book a free intro call
+                  <span className="inline-flex w-0 items-center justify-center overflow-hidden opacity-0 scale-75 transition-all duration-300 group-hover:w-5 group-hover:opacity-100 group-hover:scale-100">
+                    <ArrowRight className="w-4 h-4 shrink-0" />
+                  </span>
+                </button>
+              </div>
+
+              <div className="rounded-3xl bg-card p-8 shadow-[0_8px_30px_rgba(0,0,0,0.06)] space-y-5">
+                <p className="text-xs uppercase tracking-widest text-muted-foreground font-mono">
+                  2 · Secondary · outline, context-aware
+                </p>
+                <div className="flex flex-wrap gap-4">
+                  <button className="group inline-flex items-center gap-2 rounded-full border border-accent/40 text-foreground px-6 py-3 text-sm font-medium hover:border-accent transition-colors">
+                    Indigo outline · next to indigo
+                    <ArrowRight className="w-4 h-4 -ml-1 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                  </button>
+                  <button className="group inline-flex items-center gap-2 rounded-full border border-clay/50 text-foreground px-6 py-3 text-sm font-medium hover:border-clay transition-colors">
+                    Orange outline · next to orange/gradient
+                    <ArrowRight className="w-4 h-4 -ml-1 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                  </button>
+                </div>
+              </div>
+
+              <div className="rounded-3xl bg-foreground p-8 shadow-[0_8px_30px_rgba(0,0,0,0.2)] space-y-5">
+                <p className="text-xs uppercase tracking-widest text-background/60 font-mono">
+                  3 · Primary CTA · dark mode (same gradient)
+                </p>
+                <button
+                  className="group inline-flex items-center gap-2 rounded-full text-white px-6 py-3 text-sm font-medium transition-all hover:-translate-y-px"
+                  style={{ backgroundImage: "linear-gradient(95deg, var(--gradient-3color))" }}
+                >
+                  Book a free intro call
+                  <span className="inline-flex w-0 items-center justify-center overflow-hidden opacity-0 scale-75 transition-all duration-300 group-hover:w-5 group-hover:opacity-100 group-hover:scale-100">
+                    <ArrowRight className="w-4 h-4 shrink-0" />
+                  </span>
+                </button>
+              </div>
+            </div>
+            <div className="rounded-2xl bg-muted/40 p-5 text-sm text-foreground/80 leading-relaxed max-w-3xl">
+              Secondary outline colour always matches the accent colour of its
+              surrounding context. Next to an indigo element use indigo. Next
+              to an orange or gradient element use orange.
             </div>
           </section>
 
@@ -560,24 +715,39 @@ export const BrandBook = () => {
             <SectionHead
               num="09"
               title="Drawers & lightbox"
-              kicker="The 'swish' reveal. Lead capture defaults to ContactDrawer. Portfolio and service exploration use the same easing."
+              kicker="The 'swish' reveal. Lead capture uses the intro-call DiagnosticDrawer (intro mode) with the full qualification form."
             />
             <div className="rounded-3xl bg-card p-8 md:p-10 shadow-[0_8px_30px_rgba(0,0,0,0.06)] flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
               <div className="space-y-2 max-w-xl">
-                <h4 className="font-serif-pro text-2xl">Try the drawer</h4>
+                <h4 className="font-serif-pro italic font-normal text-2xl">
+                  Try the drawer
+                </h4>
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  ContactDrawer ships with GDPR consent, honeypot, role and
-                  organisation fields, and the triple-fire (Notion + visitor
-                  email + admin email).
+                  First / last name, email, role, company, website, annual
+                  revenue, employee count, GDPR consent, honeypot, and the
+                  triple-fire (Notion + visitor email + admin email). Secondary
+                  "I'm ready to book my Diagnostic session now" link below the
+                  primary CTA.
                 </p>
               </div>
-              <Button
+              <button
+                type="button"
                 onClick={() => setDrawerOpen(true)}
-                className="group rounded-full gap-2"
+                className="group inline-flex items-center gap-2 rounded-full text-white px-6 py-3 text-sm font-medium transition-all hover:-translate-y-px"
+                style={{ backgroundImage: "linear-gradient(95deg, var(--gradient-3color))" }}
               >
-                Open ContactDrawer
-                <ArrowRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
-              </Button>
+                Open intro-call drawer
+                <span className="inline-flex w-0 items-center justify-center overflow-hidden opacity-0 scale-75 transition-all duration-300 group-hover:w-5 group-hover:opacity-100 group-hover:scale-100">
+                  <ArrowRight className="w-4 h-4 shrink-0" />
+                </span>
+              </button>
+            </div>
+            <div className="rounded-2xl bg-muted/40 p-5 text-sm text-foreground/80 leading-relaxed max-w-3xl">
+              The older "Let's Work Together" <code className="font-mono">ContactDrawer</code>{" "}
+              still exists in the codebase for legacy callsites but is being
+              phased out. New work uses{" "}
+              <code className="font-mono">DiagnosticDrawer</code> with{" "}
+              <code className="font-mono">initialMode="intro"</code>.
             </div>
           </section>
 
@@ -588,9 +758,7 @@ export const BrandBook = () => {
               title="Bottom CTA block"
               kicker="Every marketing page ends with this. Don't author a new bottom CTA — import { CTA } from @/components/home-draft2/CTA."
             />
-            <div className="rounded-3xl overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
-              <CTA />
-            </div>
+            <CTA />
           </section>
 
           {/* 11 — Animation */}
@@ -610,7 +778,7 @@ export const BrandBook = () => {
                   <p className="text-xs uppercase tracking-widest text-muted-foreground font-mono mb-2">
                     Stage {i}
                   </p>
-                  <p className="font-serif-pro text-xl">Gentle, not bouncy.</p>
+                  <p className="font-serif-pro italic text-xl">Gentle, not bouncy.</p>
                 </div>
               ))}
             </div>
@@ -621,40 +789,41 @@ export const BrandBook = () => {
             <SectionHead
               num="12"
               title="Photography"
-              kicker="Three buckets: workshop, shoreditch, portraits. WebP for hero imagery, JPG for headshots above 600px square."
+              kicker={`Full inventory of src/assets/photos/. ${
+                WORKSHOP.length + SHOREDITCH.length + PORTRAITS.length
+              } images across three buckets. WebP for hero imagery, JPG companions exist for headshots above 600px square.`}
             />
-            <div className="space-y-6">
-              <div>
-                <p className="text-xs uppercase tracking-widest text-muted-foreground mb-3 font-mono">Workshop</p>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                  {[workshop2, workshop19, workshop22, workshop25].map((src, i) => (
-                    <Tilt3D key={i} className="h-full">
-                      <img src={src} alt="" className="w-full aspect-square object-cover rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.08)]" />
-                    </Tilt3D>
+            {[
+              { label: "Workshop", items: WORKSHOP },
+              { label: "Shoreditch", items: SHOREDITCH },
+              { label: "Portraits", items: PORTRAITS },
+            ].map(({ label, items }) => (
+              <div key={label} className="space-y-3">
+                <div className="flex items-baseline justify-between">
+                  <p className="text-xs uppercase tracking-widest text-muted-foreground font-mono">
+                    {label}
+                  </p>
+                  <p className="text-xs text-muted-foreground/70 font-mono">
+                    {items.length} files
+                  </p>
+                </div>
+                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
+                  {items.map((img) => (
+                    <figure key={img.name} className="space-y-1.5">
+                      <img
+                        src={img.url}
+                        alt={img.name}
+                        loading="lazy"
+                        className="w-full aspect-square object-cover rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.08)]"
+                      />
+                      <figcaption className="text-[10.5px] font-mono text-muted-foreground/80 truncate">
+                        {img.name}
+                      </figcaption>
+                    </figure>
                   ))}
                 </div>
               </div>
-              <div>
-                <p className="text-xs uppercase tracking-widest text-muted-foreground mb-3 font-mono">Shoreditch</p>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                  {[shoreditch26, shoreditch29, shoreditch34, shoreditch37].map((src, i) => (
-                    <Tilt3D key={i} className="h-full">
-                      <img src={src} alt="" className="w-full aspect-square object-cover rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.08)]" />
-                    </Tilt3D>
-                  ))}
-                </div>
-              </div>
-              <div>
-                <p className="text-xs uppercase tracking-widest text-muted-foreground mb-3 font-mono">Portraits</p>
-                <div className="grid grid-cols-3 gap-3 max-w-2xl">
-                  {[portrait7, portrait12, portrait16].map((src, i) => (
-                    <Tilt3D key={i} className="h-full">
-                      <img src={src} alt="" className="w-full aspect-square object-cover rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.08)]" />
-                    </Tilt3D>
-                  ))}
-                </div>
-              </div>
-            </div>
+            ))}
           </section>
 
           {/* 13 — Notion translations */}
@@ -662,26 +831,185 @@ export const BrandBook = () => {
             <SectionHead
               num="13"
               title="Notion translations"
-              kicker="The journal, portfolio, CV, and governance pages all render from a cache-first Notion sync. See the ts-notion-content skill."
+              kicker="The journal, portfolio, CV, and governance pages all render from a cache-first Notion sync. This is the block-by-block visual translation reference."
             />
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="rounded-2xl bg-card p-6 shadow-[0_8px_30px_rgba(0,0,0,0.06)] space-y-2">
-                <h4 className="font-serif-pro text-xl">Cache-first</h4>
-                <p className="text-sm text-muted-foreground">Pages never hit Notion at request time. A 5-minute cron mirrors content into Supabase, including S3-hosted media.</p>
-              </div>
-              <div className="rounded-2xl bg-card p-6 shadow-[0_8px_30px_rgba(0,0,0,0.06)] space-y-2">
-                <h4 className="font-serif-pro text-xl">Block fidelity</h4>
-                <p className="text-sm text-muted-foreground">Callouts keep their emoji and palette. Toggles become FAQ-style accordions. Embeds become link preview cards unless the domain is on the CSP allowlist.</p>
-              </div>
-              <div className="rounded-2xl bg-card p-6 shadow-[0_8px_30px_rgba(0,0,0,0.06)] space-y-2">
-                <h4 className="font-serif-pro text-xl">Theme colours</h4>
-                <p className="text-sm text-muted-foreground">Journal categories map to a fixed palette. New categories extend the map — never invent palettes per post.</p>
-              </div>
-              <div className="rounded-2xl bg-card p-6 shadow-[0_8px_30px_rgba(0,0,0,0.06)] space-y-2">
-                <h4 className="font-serif-pro text-xl">Media proxy</h4>
-                <p className="text-sm text-muted-foreground">Every Notion image is rehosted on Supabase Storage so links never expire.</p>
-              </div>
+
+            <div className="rounded-3xl bg-card p-8 shadow-[0_8px_30px_rgba(0,0,0,0.06)] space-y-6">
+              <p className="text-xs uppercase tracking-widest text-muted-foreground font-mono">
+                Architecture
+              </p>
+              <p className="text-sm text-foreground/85 leading-relaxed">
+                Pages never call the Notion API at request time. A 5-minute
+                cron mirrors content into Supabase and rehosts every S3 image
+                into Supabase Storage so links never expire.
+              </p>
             </div>
+
+            <div className="rounded-3xl bg-card p-0 shadow-[0_8px_30px_rgba(0,0,0,0.06)] overflow-hidden">
+              <table className="w-full text-sm">
+                <thead className="bg-muted/40 text-left">
+                  <tr>
+                    <th className="px-5 py-3 font-medium">Block</th>
+                    <th className="px-5 py-3 font-medium">Rendered as</th>
+                    <th className="px-5 py-3 font-medium">CSS / notes</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border/40">
+                  {[
+                    {
+                      block: "Paragraph",
+                      render: (
+                        <p className="text-base leading-[1.8]">
+                          Body paragraph at 1.125rem, line-height 1.8.
+                        </p>
+                      ),
+                      notes: ".blog-content p · font-style normal, 1.5rem bottom margin.",
+                    },
+                    {
+                      block: "Heading 1",
+                      render: (
+                        <h3 className="font-serif-pro text-[2.4rem] leading-[1.2] font-light tracking-[-0.02em]">
+                          Section opener
+                        </h3>
+                      ),
+                      notes: "3rem on full pages. Weight 300, letter-spacing -0.02em.",
+                    },
+                    {
+                      block: "Heading 2",
+                      render: (
+                        <h4 className="font-serif-pro text-[1.75rem] leading-[1.3] font-normal tracking-[-0.01em]">
+                          Within-article section
+                        </h4>
+                      ),
+                      notes: "2rem · top margin 4rem · weight 400.",
+                    },
+                    {
+                      block: "Heading 3",
+                      render: (
+                        <h5 className="font-serif-pro text-[1.4rem] leading-[1.4] font-normal">
+                          Sub-section
+                        </h5>
+                      ),
+                      notes: "1.5rem · top margin 3rem · weight 400.",
+                    },
+                    {
+                      block: "Callout (default)",
+                      render: (
+                        <div className="callout callout-default flex items-start gap-3 p-4 rounded-lg bg-muted/40">
+                          <span className="text-xl">💡</span>
+                          <span>Notion callouts keep their emoji and palette as a soft card.</span>
+                        </div>
+                      ),
+                      notes: "Variants per Notion colour: gray/brown/orange/yellow/green/blue/purple/pink/red. Background at 15% opacity.",
+                    },
+                    {
+                      block: "Quote",
+                      render: (
+                        <blockquote className="blog-content">
+                          <blockquote>
+                            Block quotes render with a 4px accent left border and muted background.
+                          </blockquote>
+                        </blockquote>
+                      ),
+                      notes: "Left border 4px accent · padding 1.5rem · rounded right corners only.",
+                    },
+                    {
+                      block: "Toggle",
+                      render: (
+                        <details className="rounded-lg border border-border/40 p-4">
+                          <summary className="cursor-pointer font-medium text-sm">
+                            Click to expand
+                          </summary>
+                          <p className="mt-2 text-sm text-muted-foreground">
+                            Renders with the same chevron and easing as the FAQ component.
+                          </p>
+                        </details>
+                      ),
+                      notes: "Toggle blocks reuse the FAQ accordion pattern (§08).",
+                    },
+                    {
+                      block: "Bookmark / link preview",
+                      render: (
+                        <a
+                          href="#"
+                          className="block rounded-lg border border-border p-4 hover:bg-muted/40 transition-colors"
+                        >
+                          <p className="font-medium text-sm">External resource title</p>
+                          <p className="text-xs text-muted-foreground mt-1">
+                            example.com · short description.
+                          </p>
+                        </a>
+                      ),
+                      notes: "Bookmarks and embeds become preview cards, never raw iframes.",
+                    },
+                    {
+                      block: "Image (content, with caption)",
+                      render: (
+                        <figure className="max-w-[65%] mx-auto text-center">
+                          <div className="aspect-[4/3] rounded-md bg-muted" />
+                          <figcaption className="text-xs text-muted-foreground mt-2">
+                            Captioned content images sit at 65% width, centered.
+                          </figcaption>
+                        </figure>
+                      ),
+                      notes: "figure.image-content · max-w 65% · centered. Decorative images (no caption) use figure.image-decorative · max-w 180px · left-aligned.",
+                    },
+                    {
+                      block: "Divider",
+                      render: <hr className="border-border" />,
+                      notes: "Single 1px border line. Used sparingly — the blog prefers whitespace.",
+                    },
+                    {
+                      block: "Bullet list",
+                      render: (
+                        <ul className="blog-content">
+                          <li>Custom 7px indigo ring as bullet (primary)</li>
+                          <li>
+                            Nested bullets use a 4px filled dot, then a 6px dash
+                          </li>
+                        </ul>
+                      ),
+                      notes: "Bullets are custom-drawn via ::before pseudo-elements in index.css.",
+                    },
+                    {
+                      block: "Iframe / video embed",
+                      render: (
+                        <div className="rounded-lg bg-muted/40 p-4 text-sm text-muted-foreground">
+                          Only domains on the CSP allowlist render as iframes. Everything else
+                          falls back to a link preview card.
+                        </div>
+                      ),
+                      notes: "See ts-notion-content for the CSP allowlist policy.",
+                    },
+                  ].map((row, i) => (
+                    <tr key={i} className="align-top">
+                      <td className="px-5 py-4 font-mono text-xs text-muted-foreground w-[18%]">
+                        {row.block}
+                      </td>
+                      <td className="px-5 py-4 w-[52%]">{row.render}</td>
+                      <td className="px-5 py-4 text-xs text-muted-foreground leading-relaxed">
+                        {row.notes}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <SkillEmbed
+              name="Skill: ts-notion-content"
+              body={`Triggers when working with blog posts, journal content, CV, portfolio, or any Notion-backed surface.
+
+Core rules:
+- Cache-first. Pages never call the Notion API at request time.
+- Every S3 image is rehosted into Supabase Storage on sync.
+- Callouts preserve emoji + colour. Toggles become FAQ-style accordions.
+- Bookmarks render as link preview cards. iframes only for CSP-allowlisted domains.
+- Each post's category tag maps to a fixed palette — never invent per-post.
+- Edge functions: sync-blog-cache, sync-portfolio, sync-cv, persist-notion-media, fetch-notion-page.
+
+See .agents/skills/ts-notion-content/SKILL.md for full text.`}
+            />
           </section>
 
           {/* 14 — Voice */}
@@ -691,41 +1019,262 @@ export const BrandBook = () => {
               title="Voice & copy"
               kicker="The hard ban is non-negotiable. The live source is the Notion checklist — re-fetch before substantive passes."
             />
+
+            <div className="rounded-3xl bg-card p-8 shadow-[0_8px_30px_rgba(0,0,0,0.06)] space-y-3">
+              <p className="text-xs uppercase tracking-widest text-muted-foreground font-mono">
+                Identity
+              </p>
+              <p className="font-serif-pro italic text-xl leading-snug max-w-3xl">
+                Brendan is a strategist, systems thinker, AI ops consultant,
+                and behavioural-science-informed integrator. Not primarily a
+                designer.
+              </p>
+              <p className="text-sm text-foreground/80 max-w-3xl">
+                The brand communicates through the fragmentation problem it
+                names. Most founders don't have a marketing problem, they have
+                an architecture problem. Nobody is accountable to the whole
+                picture. The cost is absorbed silently. Thread &amp; Stack is
+                the integrating intelligence that holds the whole picture.
+              </p>
+            </div>
+
             <div className="grid md:grid-cols-2 gap-6">
-              <div className="rounded-2xl bg-destructive/5 border border-destructive/20 p-6 space-y-3">
-                <p className="text-xs uppercase tracking-widest text-destructive font-mono font-medium">Hard ban</p>
-                <ul className="text-sm text-foreground/80 space-y-2">
-                  <li>No em dashes.</li>
-                  <li>No "X isn't Y, it's Z" constructions.</li>
-                  <li>No rule-of-three cadence.</li>
-                  <li>No restating the reader's situation back to them.</li>
-                  <li>No "unlock", "elevate", "supercharge", "seamless", "delight".</li>
-                </ul>
+              <div className="rounded-3xl bg-destructive/5 border border-destructive/20 p-6 space-y-5">
+                <p className="text-xs uppercase tracking-widest text-destructive font-mono font-medium">
+                  Hard ban
+                </p>
+
+                <div className="space-y-2">
+                  <p className="text-[11px] uppercase tracking-wider text-destructive/80 font-mono">
+                    Punctuation &amp; constructions
+                  </p>
+                  <ul className="text-sm text-foreground/80 space-y-1.5 list-disc pl-5">
+                    <li>No em dashes (—). Use full stops, commas, or line breaks.</li>
+                    <li>No "X isn't Y, it's Z" contrastive constructions.</li>
+                    <li>No rule-of-three cadence ("clear, calm, confident").</li>
+                    <li>No interrobang, no all-caps headings.</li>
+                  </ul>
+                </div>
+
+                <div className="space-y-2">
+                  <p className="text-[11px] uppercase tracking-wider text-destructive/80 font-mono">
+                    Meta-commentary
+                  </p>
+                  <ul className="text-sm text-foreground/80 space-y-1.5 list-disc pl-5">
+                    <li>Do not restate the reader's situation ("As a founder, you know…").</li>
+                    <li>No "let's dive in", "let's unpack", "the truth is".</li>
+                    <li>No "we hear you", "we get it", performative empathy.</li>
+                  </ul>
+                </div>
+
+                <div className="space-y-2">
+                  <p className="text-[11px] uppercase tracking-wider text-destructive/80 font-mono">
+                    Generic openings / closings
+                  </p>
+                  <ul className="text-sm text-foreground/80 space-y-1.5 list-disc pl-5">
+                    <li>No "in today's fast-paced world".</li>
+                    <li>No "at the end of the day".</li>
+                    <li>No "hope this helps" or "thanks for reading".</li>
+                  </ul>
+                </div>
+
+                <div className="space-y-2">
+                  <p className="text-[11px] uppercase tracking-wider text-destructive/80 font-mono">
+                    Overused transitions (usage caps)
+                  </p>
+                  <ul className="text-sm text-foreground/80 space-y-1.5 list-disc pl-5">
+                    <li>"Moreover", "furthermore", "additionally" — max once per 800 words on long-form; never on LinkedIn.</li>
+                    <li>"That said", "with that in mind" — max once per piece.</li>
+                  </ul>
+                </div>
+
+                <div className="space-y-2">
+                  <p className="text-[11px] uppercase tracking-wider text-destructive/80 font-mono">
+                    Buzzword clichés
+                  </p>
+                  <ul className="text-sm text-foreground/80 space-y-1.5 list-disc pl-5">
+                    <li>unlock, elevate, supercharge, seamless, delight, leverage, holistic, synergy, robust, cutting-edge, game-changing.</li>
+                  </ul>
+                </div>
               </div>
-              <div className="rounded-2xl bg-accent/5 border border-accent/20 p-6 space-y-3">
-                <p className="text-xs uppercase tracking-widest text-accent font-mono font-medium">Do</p>
-                <ul className="text-sm text-foreground/80 space-y-2">
-                  <li>Lead with the outcome the reader gets.</li>
-                  <li>British English (organisation, optimise, colour).</li>
-                  <li>Short clauses. One idea per sentence.</li>
-                  <li>Name the tool, the metric, the deliverable.</li>
-                  <li>Sentence case headings; title case only on page titles.</li>
-                </ul>
+
+              <div className="space-y-6">
+                <div className="rounded-3xl bg-accent/5 border border-accent/20 p-6 space-y-3">
+                  <p className="text-xs uppercase tracking-widest text-accent font-mono font-medium">
+                    Channel minimums
+                  </p>
+                  <ul className="text-sm text-foreground/80 space-y-2">
+                    <li>
+                      <strong>LinkedIn:</strong> 3+ proper nouns, zero
+                      restricted transition words.
+                    </li>
+                    <li>
+                      <strong>Newsletter &amp; Journal:</strong> 5+ proper
+                      nouns, maximum one restricted transition word.
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="rounded-3xl bg-card border border-border p-6 space-y-3 shadow-[0_8px_30px_rgba(0,0,0,0.06)]">
+                  <p className="text-xs uppercase tracking-widest text-muted-foreground font-mono font-medium">
+                    The "only Brendan could write this" test
+                  </p>
+                  <p className="text-sm text-foreground/80 leading-relaxed">
+                    Before publishing, ask: could a competent ghostwriter for
+                    any other AI ops consultant have written this? If yes,
+                    rewrite. Specificity, particular receipts, and the
+                    Strategist/Coach tension are what make it ours.
+                  </p>
+                </div>
+
+                <div className="rounded-3xl bg-card border border-border p-6 space-y-4 shadow-[0_8px_30px_rgba(0,0,0,0.06)]">
+                  <p className="text-xs uppercase tracking-widest text-muted-foreground font-mono font-medium">
+                    Core voice principles
+                  </p>
+                  <ul className="text-sm text-foreground/80 space-y-2.5">
+                    <li>
+                      <strong>Strategist &amp; Coach in tension.</strong> The
+                      strategist asserts. The coach asks. Most pieces hold
+                      both.
+                    </li>
+                    <li>
+                      <strong>The wandering sentence.</strong> Long, considered
+                      lines next to clipped ones. The cadence is uneven on
+                      purpose.
+                    </li>
+                    <li>
+                      <strong>Bold as surgical hammer.</strong> One bold
+                      assertion per section. Not a decorator.
+                    </li>
+                    <li>
+                      <strong>Truth over polish.</strong> Ship the awkward
+                      sentence that's right over the smooth one that's vague.
+                    </li>
+                    <li>
+                      <strong>Specificity as trust.</strong> Name the tool, the
+                      metric, the client, the deliverable.
+                    </li>
+                    <li>
+                      <strong>Value in every sentence.</strong> Cut anything
+                      that doesn't earn its place.
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
+
+            <SkillEmbed
+              name="Skill: ts-copy-voice"
+              body={`Triggers when writing or editing any copy that ships on threadandstack.com.
+
+Identity: strategist, systems thinker, AI ops consultant, behavioural-science-informed integrator.
+
+Hard ban (summary): no em dashes, no "X isn't Y, it's Z", no rule-of-three cadence, no restating the reader's situation, no meta-commentary, no generic openings/closings, capped transitions, no buzzword clichés.
+
+Channel minimums: LinkedIn 3+ proper nouns / zero restricted transitions; Newsletter & Journal 5+ proper nouns / max one.
+
+Test: "Only Brendan could write this." If a ghostwriter for any other consultant could have written it, rewrite.
+
+Voice: Strategist/Coach tension. The wandering sentence. Bold as surgical hammer. Truth over polish. Specificity as trust. Value in every sentence.
+
+Pre-publish: re-fetch the live Notion hard-ban checklist before substantive copy passes.
+
+See .agents/skills/ts-copy-voice/SKILL.md for full text.`}
+            />
           </section>
 
           {/* 15 — Downloads */}
-          <section id="s15" className="scroll-mt-24 space-y-6">
+          <section id="s15" className="scroll-mt-24 space-y-8">
             <SectionHead
               num="15"
               title="Downloads"
-              kicker="Logos and core assets. Right-click and save any SVG above, or print this page for a flat reference."
+              kicker="Complete asset inventory. Right-click any logo to save. Photography lives in section 12."
             />
+
+            <div className="space-y-4">
+              <p className="text-xs uppercase tracking-widest text-muted-foreground font-mono">
+                Logo files · src/assets/logos/
+              </p>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {LOGO_INVENTORY.map((l) => (
+                  <div
+                    key={l.name}
+                    className={`rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.06)] p-5 flex flex-col gap-3 ${
+                      l.dark ? "bg-foreground" : "bg-card"
+                    }`}
+                  >
+                    <div className="aspect-square flex items-center justify-center">
+                      <img src={l.src} alt={l.name} className="max-h-20 w-auto" />
+                    </div>
+                    <div className={l.dark ? "text-background" : ""}>
+                      <p className="text-[11px] font-mono leading-tight break-all">{l.name}</p>
+                      <p
+                        className={`text-[11px] mt-1 ${
+                          l.dark ? "text-background/60" : "text-muted-foreground"
+                        }`}
+                      >
+                        {l.use}
+                      </p>
+                    </div>
+                    <p
+                      className={`text-[10px] font-mono ${
+                        l.dark ? "text-background/40" : "text-muted-foreground/60"
+                      }`}
+                    >
+                      Right-click → Save image as…
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-3xl bg-card p-8 shadow-[0_8px_30px_rgba(0,0,0,0.06)] space-y-4">
+              <p className="text-xs uppercase tracking-widest text-muted-foreground font-mono">
+                Asset paths
+              </p>
+              <div className="overflow-hidden rounded-xl border border-border/40">
+                <table className="w-full text-sm">
+                  <tbody className="divide-y divide-border/40">
+                    {[
+                      ["Logos · SVG", "src/assets/logos/"],
+                      ["Photography · workshop", "src/assets/photos/workshop/"],
+                      ["Photography · shoreditch", "src/assets/photos/shoreditch/"],
+                      ["Photography · portraits", "src/assets/photos/portraits/"],
+                      ["Notion mock screenshots", "src/assets/notion-mock/"],
+                      ["Tool / brand logos (svg)", "src/assets/tool-logos/"],
+                      ["Creative pillar marks", "src/assets/thread-stack-creative-*.png"],
+                      ["Journal logo", "src/assets/journal-logo-*.png"],
+                      ["Preferred founder portrait", "src/assets/photos/brendan-34-square.jpg"],
+                      ["Default OG image", "src/assets/OpenGraph_TS2026.png"],
+                    ].map(([label, path]) => (
+                      <tr key={label} className="align-top">
+                        <td className="px-4 py-3 text-foreground/80 w-1/2">{label}</td>
+                        <td className="px-4 py-3 font-mono text-xs text-muted-foreground break-all">
+                          {path}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div className="rounded-2xl bg-destructive/5 border border-destructive/20 p-6 space-y-2">
+              <p className="text-xs uppercase tracking-widest text-destructive font-mono font-medium">
+                Retired — do not reintroduce under any circumstances
+              </p>
+              <ul className="text-sm text-foreground/80 list-disc pl-5 space-y-1">
+                <li>The 2024 gradient blue swoosh logo mark.</li>
+                <li>Any pre-rebrand T&amp;S wordmark from before Crimson Pro adoption.</li>
+              </ul>
+            </div>
+
             <div className="rounded-3xl bg-card p-8 shadow-[0_8px_30px_rgba(0,0,0,0.06)] flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
               <div>
-                <h4 className="font-serif-pro text-xl">PDF snapshot</h4>
-                <p className="text-sm text-muted-foreground">Print the current view for offline reference.</p>
+                <h4 className="font-serif-pro italic font-normal text-xl">PDF snapshot</h4>
+                <p className="text-sm text-muted-foreground">
+                  Print the current view for offline reference.
+                </p>
               </div>
               <Button onClick={() => window.print()} className="gap-2 rounded-full">
                 <Download className="w-4 h-4" /> Print brand book
@@ -734,10 +1283,12 @@ export const BrandBook = () => {
           </section>
         </main>
 
-        <ContactDrawer
+        <DiagnosticDrawer
           open={drawerOpen}
           onOpenChange={setDrawerOpen}
           source="brand-book-demo"
+          initialMode="intro"
+          theme="light"
         />
       </div>
     </>

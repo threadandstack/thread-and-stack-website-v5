@@ -105,7 +105,7 @@ export function Hero({ theme, onBookDiagnostic }: HeroProps) {
           <h1 className="font-serif-pro italic font-normal max-w-4xl text-balance text-5xl leading-[1.02] tracking-[-0.02em] md:text-[76px]">
             One central knowledge hub.
             <br />
-            <span className="text-clay">Your centre of truth.</span>
+            <span className="text-gradient-warm">Your centre of truth.</span>
           </h1>
 
           <p className="mt-8 max-w-2xl text-[16.5px] leading-relaxed text-ink-soft">

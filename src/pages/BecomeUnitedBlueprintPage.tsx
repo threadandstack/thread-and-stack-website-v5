@@ -368,7 +368,7 @@ const BecomeUnitedBlueprintPage = () => {
                   className={`absolute top-1 grid h-6 w-6 place-items-center rounded-full text-accent-foreground shadow-[0_2px_8px_-2px_rgba(0,0,0,0.35)] transition-all duration-300 ease-out ${
                     theme === "dark" ? "left-1" : "left-[calc(100%-1.75rem)]"
                   }`}
-                  style={{ backgroundImage: "linear-gradient(135deg, hsl(var(--orange)), hsl(var(--violet)))" }}
+                  style={{ backgroundImage: "linear-gradient(95deg, var(--gradient-3color))" }}
                 >
                   {theme === "dark" ? <Moon className="h-3 w-3" /> : <Sun className="h-3 w-3" />}
                 </span>
