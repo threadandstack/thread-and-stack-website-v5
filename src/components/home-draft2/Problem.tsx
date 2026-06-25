@@ -70,7 +70,7 @@ export function Problem() {
     <section id="how">
       <div className="mx-auto max-w-5xl px-6 py-24 md:px-10 md:py-32">
         <SectionHeader eyebrow="The journey">
-          The Thread & Stack <span className="text-clay">Way.</span>
+          The Thread & Stack <span className="text-gradient-warm">Way.</span>
         </SectionHeader>
 
         <div className="relative">

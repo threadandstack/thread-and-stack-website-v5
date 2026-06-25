@@ -155,7 +155,7 @@ export function Scorecard() {
                 </div>
                 <h2 className="mt-5 max-w-xl text-3xl font-medium leading-[1.05] tracking-[-0.025em] md:text-[42px]">
                   How mature is your{" "}
-                  <span className="font-serif-pro italic text-clay">knowledge stack?</span>
+                  <span className="font-serif-pro italic text-gradient-warm">knowledge stack?</span>
                 </h2>
                 <p className="mt-4 max-w-md text-[14.5px] text-ink-soft">
                   Eight honest questions. You'll see where you sit on the ladder,

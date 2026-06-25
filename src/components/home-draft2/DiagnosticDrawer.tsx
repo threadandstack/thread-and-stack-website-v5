@@ -193,7 +193,7 @@ export function DiagnosticDrawer({
                   <>
                     <SheetTitle className="font-sans not-italic text-3xl font-semibold leading-[1.05] tracking-[-0.02em] sm:text-[34px]">
                       Start with a{" "}
-                      <span className="font-serif-pro italic font-normal text-clay">
+                      <span className="font-serif-pro italic font-normal text-gradient-warm">
                         free 30-minute introductory call.
                       </span>
                     </SheetTitle>
@@ -215,7 +215,7 @@ export function DiagnosticDrawer({
                   <>
                     <SheetTitle className="font-sans not-italic text-3xl font-semibold leading-[1.05] tracking-[-0.02em] sm:text-[34px]">
                       Book your{" "}
-                      <span className="font-serif-pro italic font-normal text-clay">
+                      <span className="font-serif-pro italic font-normal text-gradient-warm">
                         90-minute session to create meaningful change.
                       </span>
                     </SheetTitle>
