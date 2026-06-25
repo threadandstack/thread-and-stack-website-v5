@@ -143,9 +143,19 @@ All colors MUST be HSL.
     --destructive: 0 65% 50%;
     --destructive-foreground: 220 10% 93%;
 
+    --tertiary: 145 50% 50%;
+    --tertiary-foreground: 240 6% 7%;
+
     --border: 230 12% 20%;
     --input: 230 12% 20%;
     --ring: 24 100% 50%;
+
+    /* Dark-mode tones for the warm palette — slightly brighter for legibility */
+    --clay: 18 75% 60%;
+    --clay-soft: 28 70% 80%;
+    --orange: 28 88% 62%;
+    --violet: 280 70% 65%;
+    --sky: 210 70% 65%;
   }
 }
 
