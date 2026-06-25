@@ -32,7 +32,7 @@ export function AboutIntro() {
             </span>
             <h1 className="font-serif-pro italic font-normal text-balance text-3xl leading-[1.1] tracking-[-0.02em] md:text-[44px]">
               I'm Brendan, your{" "}
-              <span className="text-clay">AI Ops Consultant.</span>
+              <span className="text-gradient-warm">AI Ops Consultant.</span>
             </h1>
 
             <div className="mt-6 space-y-4 text-[15.5px] leading-relaxed text-ink-soft">
