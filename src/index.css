@@ -72,11 +72,34 @@ All colors MUST be HSL.
     --destructive: 0 70% 50%;
     --destructive-foreground: 0 0% 98%;
 
+    /* Tertiary — positive/success palette. Pairs with destructive (red)
+       for communication messages (form success, sync ok, etc). */
+    --tertiary: 145 55% 38%;
+    --tertiary-foreground: 0 0% 100%;
+
     --border: 0 0% 92%;
     --input: 0 0% 95%;
     --ring: 256 89% 50%;
 
     --radius: 1rem;
+
+    /* ── Brand accent palette (global) ───────────────────────────────────
+       Previously only defined inside .notion-canvas, which made every CTA
+       gradient and .text-gradient-warm render invisible outside that scope
+       (brand book, generic pages). Promoted to :root. */
+    --magenta: 320 85% 55%;
+    --clay: 18 75% 48%;
+    --clay-soft: 18 70% 38%;
+    --orange: 24 100% 50%;
+    --sky: 210 70% 55%;
+    --violet: 280 70% 55%;
+    --crimson: 8 80% 55%;
+
+    /* Primary warm gradient stop list (magenta → orange).
+       Use as: linear-gradient(95deg, var(--gradient-3color)) */
+    --gradient-3color: hsl(var(--magenta)), hsl(var(--orange));
+    --gradient-3color-even: hsl(var(--magenta)), hsl(var(--orange));
+    --gradient-4color: hsl(var(--magenta)) 0%, hsl(var(--orange)) 100%;
     
     /* Shadows */
     --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.1);
