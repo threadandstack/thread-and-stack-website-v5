@@ -1,13 +1,30 @@
 ---
 name: ts-asset-library
-description: Thread & Stack image, logo, and asset conventions — current logo set (ungradiented + Indigo/Grey/Black/White SVGs), retired gradient blue logo, photography directories, Notion mock screenshots, focal-point picker, asset-pointer (.asset.json) workflow. Load when adding, swapping, or referencing any image or logo asset.
+description: Thread & Stack image, logo, and asset conventions. Canonical inventory lives at /brand-book §15; this skill embeds the lookup table so an agent can find the right asset without navigating there. Retired gradient blue logo is permanently out. Load when adding, swapping, or referencing any image or logo asset.
 ---
 
 # Thread & Stack Asset Library
 
-## Logos — current set
+The canonical asset reference is `/brand-book` §15. This skill is the agent-side lookup so cold sessions don't need to navigate there for routine work.
 
-Active logos live in `src/assets/logos/` as SVG. Each name follows `{Colour}_TS_{Form}.svg`:
+## Quick lookup
+
+| Need | Path |
+|---|---|
+| Logos (SVG, all variants) | `src/assets/logos/` |
+| Workshop photography | `src/assets/photos/workshop/` |
+| Shoreditch studio photography | `src/assets/photos/shoreditch/` |
+| Portrait photography | `src/assets/photos/portraits/` |
+| Preferred founder portrait | `src/assets/photos/brendan-34-square.jpg` (1000×1000 JPG) |
+| Notion workspace mocks | `src/assets/notion-mock/` |
+| Tool / brand logos | `src/assets/tool-logos/` |
+| Journal mark | `src/assets/journal-logo-*.png` |
+| Creative pillar marks | `src/assets/thread-stack-creative-*.png` |
+| Default OG image | `src/assets/OpenGraph_TS2026.png` |
+
+## Logos — current 12-file set
+
+Active logos in `src/assets/logos/`. Naming: `{Colour}_TS_{Form}.svg`.
 
 | Colour | Stacked | Wordmark | SocialSq |
 |---|---|---|---|
@@ -16,26 +33,20 @@ Active logos live in `src/assets/logos/` as SVG. Each name follows `{Colour}_TS_
 | Black | ✅ | ✅ | ✅ |
 | White | ✅ (dark bg) | ✅ | ✅ |
 
-Default usage: **Grey Stacked** in nav (collapses to wordmark on scroll), hover transitions to **Indigo**. On dark/Night backgrounds use **White**.
+Default usage: **Grey Stacked** in nav (collapses to wordmark on scroll); hover transitions to **Indigo**. On dark backgrounds use **White**.
 
-## Retired logos — do not re-import
+## Retired — do not reintroduce under any circumstances
 
-- **Gradient blue logo** (legacy 2024 mark, blue gradient swoosh): removed from active use. Do not import even if you find it in `public/` archives.
-- Any pre-rebrand "T&S" wordmark from before Crimson Pro adoption.
-
-When in doubt, the `/brand-book` route is the authoritative list of in-use logos.
+- **Gradient blue logo** (legacy 2024 mark, blue gradient swoosh). Not imported anywhere in the active codebase. Do not re-import even if you find it in `public/` archives.
+- Any pre-rebrand T&S wordmark from before Crimson Pro adoption.
 
 ## Photography
 
-| Path | Subject | Use |
-|---|---|---|
-| `src/assets/photos/workshop/` | Workshop / facilitation shots (brendan-1 → brendan-25) | Service pages, About, journal |
-| `src/assets/photos/shoreditch/` | Shoreditch studio environmental (brendan-26 → brendan-37) | Hero panels, narrative break-outs |
-| `src/assets/photos/portraits/` | Founder portraits (brendan-4 → brendan-17) | About, CV, social, journal author |
+Format guidance:
+- **WebP** for hero / banner / lightweight surfaces.
+- **JPG** for headshots above 600px square (WebP compression artifacts show on faces — see `mem://technical/hero-focal-point-management`).
 
-Format: WebP for hero/banner, JPG for headshots above 600px square (WebP compression artifacts show on faces — see `mem://technical/hero-focal-point-management`).
-
-Preferred founder portrait: `brendan-34-square.jpg` (1000×1000, JPG).
+The complete photography inventory is rendered live in `/brand-book` §12 via a Vite glob on `src/assets/photos/`. If you add an image to one of the three buckets, the brand book picks it up on next build.
 
 ## Notion mocks
 
@@ -51,7 +62,7 @@ Use the focal-point picker pattern (`mem://technical/hero-focal-point-management
 
 ## Asset-pointer workflow (.asset.json)
 
-Binary files above ~100KB should live on the Lovable CDN via `.asset.json` pointers, not in the git repo. Use the `migrate-to-assets` skill for the full workflow. Quick version:
+Binary files above ~100KB should live on the Lovable CDN via `.asset.json` pointers, not in the git repo. Quick version:
 
 ```bash
 lovable-assets create --file src/assets/foo.png > src/assets/foo.png.asset.json
@@ -66,13 +77,9 @@ import fooAsset from "@/assets/foo.png.asset.json";
 
 Do not hand-write the pointer JSON.
 
-## Global named assets
-
-See `mem://assets/global-and-fiction-assets` for the OG image path, favicon set, and any other globally-referenced asset paths.
-
 ## References
 
-- `src/components/BrandBook.tsx` (live logo + photography catalogue)
-- `mem://assets/global-and-fiction-assets`
+- `/brand-book` §15 — canonical asset inventory
+- `/brand-book` §12 — full photography catalogue
 - `mem://design/offers-grid-styling`
 - `mem://technical/hero-focal-point-management`
