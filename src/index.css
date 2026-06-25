@@ -972,3 +972,15 @@ All colors MUST be HSL.
   to   { transform: translateX(-50%); }
 }
 .notion-canvas .marquee-track { animation: nc-marquee 80s linear infinite; }
+
+/* ── Primary warm gradient text treatment ────────────────────────────────
+   Apply to display/heading accent words to introduce colour with the
+   primary warm gradient (magenta → orange). Replaces solid `text-clay`
+   on serif italic display text. See /brand-book §04a. */
+.text-gradient-warm {
+  background-image: linear-gradient(95deg, hsl(320 85% 55%), hsl(var(--orange)));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
