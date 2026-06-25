@@ -1,105 +1,86 @@
-# Thread & Stack Skills + Brand Book Overhaul
+# Brand Book + Skills Overhaul
 
-Two parallel workstreams: (1) author a small library of reusable skills so every future Lovable session applies Thread & Stack patterns correctly, and (2) rewrite `/brand-book` so it actually matches what's shipped on the live site today.
+A two-part pass: (1) section-by-section corrections to `/brand-book` so it self-demonstrates every pattern using live components, and (2) updates to the five `ts-` skills so they're usable in cold sessions without memory.
 
----
+## Order of work
 
-## Part 1 — Skills to author
+1. **Audit pass (read-only)** before any edits:
+  - `src/components/BrandBook.tsx` — current state of every section.
+  - `src/components/ContactDrawer.tsx` — confirm which version is live (old "Let's Work Together" vs new "Start with a free 30-minute introductory call").
+  - `src/components/home-draft2/CTA.tsx` — confirm it's the warm-card / gradient-text version we want to embed in section 10.
+  - `src/components/Navigation.tsx` — locate orange→violet gradient (`#F39848` → `#BA67E4`) to replace.
+  - `src/components/Tilt3D.tsx` + demo tiles — icon colour audit.
+  - `src/pages/NarrativesStrategyServicesPage.tsx` — light-blue gradient to swap for primary warm.
+  - `src/assets/logos/` — confirm no gradient blue variant remains; grep for any imports.
+  - `src/assets/photos/{workshop,shoreditch,portraits}/` — full file list for section 12 inventory.
+  - `src/index.css` — confirm `--orange`, destructive, secondary lavender tokens.
+  - Blog/journal renderer (`src/components/RelatedBlogs.tsx`, `src/pages/BlogPostPage.tsx`, `supabase/functions/fetch-blog-post/`) — extract block-type rendering rules for section 13.
+  - Site-wide grep for solid orange italic display text ("AI Ops Consultant", "Leave with a plan.") to retrofit gradient text treatment.
 
-Each lives under `.agents/skills/{name}/SKILL.md`, then is activated with `skills--apply_draft`. Names are scoped with a `ts-` prefix so they're unmistakably project skills.
+## PART 1 — Brand Book (`src/components/BrandBook.tsx`)
 
-1. **`ts-design-system`** — the visual core
-   - Indigo (#1340E8) light mode + Night theme (#FF6200 on #181B24); the per-page Night variant override pattern (e.g. light-blue #5DE0E6 + #004AAD gradient on Narratives page)
-   - Pill button system + reveal-on-hover icon logic, and the gradient catalogue (default indigo, night orange, light-blue cyan→navy)
-   - Card-based soft aesthetic: rounded corners, soft shadows, no hard borders, soft flowing dividers (no thread dividers)
-   - Typography: Crimson Pro for editorial/Marginalia accents, Inter for body & UI, with the "less bold, more targeted serif" rule
-   - **3D floating-card hover** (Tilt3D) — gentle float, mouse-follow, not skewed; the journal-grade version (vs. the static/skewed version we corrected)
-   - Animation philosophy: scroll-triggered, start at 40% opacity, gentle
-   - FAQ styling lock-in
-   - Drawer/lightbox technique for service/portfolio/lead capture
-   - Bottom-of-page CTA block pattern
-   - References file points at `src/components/Tilt3D.tsx`, `src/components/ContactDrawer.tsx`, `src/components/FAQ.tsx`, `src/components/home-draft2/CTA.tsx`, `src/index.css` tokens
+**Section 01 — Brand essence.** Remove "Stories that land. Systems that stick." Replace with the fragmentation framing: the problem is operational fragmentation, the founder who has hired specialists but has nobody accountable to the whole picture. Creative tax = one expression of fragmentation. Use "Transformation doesn't work until it works." only as a closing line, not a headline. Reframe services: primary = operations, systems & strategy consultancy for 5–50 teams; Narratives & Strategy = retained secondary offer (not equal). Update Brendan's positioning to: strategist, systems thinker, AI ops consultant, behavioural-science-informed integrator.
 
-2. **`ts-copy-voice`** — copy & voice rules
-   - Hard ban (no em dashes, no "X isn't Y, it's Z", no rule-of-three cadence, no restating the reader's situation)
-   - Outcome-first phrasing; creative tax messaging; creative & strategist positioning
-   - "Stories that land. Systems that stick." brand line
-   - Two-pillar service language (Narratives & Strategy / Notion & Systems) and the retired offers list
-   - Pre-publish checklist: re-fetch the live Notion-sourced hard-ban list before substantive copy passes
-   - References `mem://standards/hard-ban-prepublish-checklist` and `mem://messaging/*`
+**Section 02 — Logos.** Remove the gradient blue logo entirely (no swatch, no "retired" callout). Grep + delete any remaining imports. Display only the 12 current variants (Grey/Indigo/Black/White × Stacked/Wordmark/SocialSq).
 
-3. **`ts-lead-capture`** — default lead treatment
-   - Mandatory triple-fire on every lead form: Notion sync + visitor confirmation email + admin notification to br@brendanrodgers.uk (fire-and-forget)
-   - GDPR explicit consent checkbox, honeypot field, role/organisation field standard (British English)
-   - UTM attribution mapping standard
-   - Use `ContactDrawer` over inline forms where possible
-   - References `supabase/functions/sync-lead-to-notion`, `supabase/functions/send-transactional-email`, `src/components/ContactDrawer.tsx`
+**Section 03 — Colour.** Rename Light theme → **Light mode**, Night theme → **Dark mode**. Remove destructive red + secondary lavender from primary palette swatches; move to a small "Utility tokens — not in active use" subsection noting destructive = form error states, with a note that a success-green companion should be re-added when form state communication is revisited. Keep tokens in CSS; only the visual palette display changes.
 
-4. **`ts-notion-content`** — Notion CMS & content integration
-   - Unified content cache architecture, 5-min sync polling, cache-first reads
-   - Notion media persistence proxy (S3 expiry → Supabase Storage)
-   - Content fidelity rules for rendering Notion blocks/iframes; allowed CSP domains
-   - Blog theme color system (Notion tag → palette)
-   - Governance pages (Privacy, Data Guarantee) sync
-   - References `supabase/functions/sync-blog-cache`, `persist-notion-media`, `fetch-notion-page`
+**Section 04 — Gradients.** Consolidated catalogue:
 
-5. **`ts-asset-library`** — image & logo conventions
-   - Logo set in use today: ungradiented logo + B/W/Grey/Indigo Stacked/Wordmark/SocialSq SVGs; the gradient blue logo is retired
-   - Photography buckets: `src/assets/photos/{workshop|shoreditch|portraits}/`
-   - Notion mock screenshots: `src/assets/notion-mock/`
-   - Hero focal-point picker workflow + landscape requirement for service pillar cards
-   - Asset-pointer (`.asset.json`) workflow reminder
-   - Provides a one-line lookup table so future sessions don't import retired assets
+1. **Primary warm** — `linear-gradient(95deg, hsl(320 85% 55%), hsl(var(--orange)))` (`#ED2AAC` → `#F39848`). All CTAs, pill buttons, gradient text.
+2. **Default indigo** — `linear-gradient(90deg, #1340E8, #4E6CFF)`. Brand mark hover only.
+3. **Dark mode orange** — `linear-gradient(90deg, #FF6200, #FF9248)`.
 
-(Proposals skill — e.g. the SF Fire letter-opening pattern — is noted as a future skill but **not** authored in this pass to keep scope tight. Will flag it in the closing message.)
+Remove Narratives light-blue. Globally replace orange→violet (`#F39848` → `#BA67E4`) with primary warm — in `Navigation.tsx` and any page-level CTAs using it. Swap Narratives page light-blue → primary warm.
 
----
+**Section 04a (new) — Gradient text treatment.** Document the rule and CSS (`background-clip: text; -webkit-background-clip: text; color: transparent`). Retrofit existing solid-orange italic display words ("AI Ops Consultant", "Leave with a plan.", any others surfaced by grep). Live demo: Crimson Pro italic display sentence with 1–2 gradient words. Flag tacky instances via code comment rather than silent revert.
 
-## Part 2 — Rewrite `/brand-book`
+**Section 05 — Typography.** Remove the non-italic Crimson Pro 500 display example (not in use). Replace with an italic 500–600 emphasis-word example matching live usage. Document weight rule: display 500–600, body 400–500, never 700+ on Crimson Pro.
 
-Current `src/components/BrandBook.tsx` is 1,100 lines and out of date: wrong colors, missing gradients, inconsistent typography (over-bold), no 3D effects documented, retired blue logo shown, missing recent imagery, no drawer/CTA/FAQ patterns.
+**Section 06 — Cards & Tilt3D.** Switch demo tile icon colour from indigo → orange (both modes). Align card title weight to section 05.
 
-New structure (single file, but reorganised into clear numbered sections, each rendered with the patterns it documents — i.e. the brand book *demonstrates* the system):
+**Section 07 — Pill buttons.** Replace current demos with: (1) Primary CTA — primary warm gradient, white text, hover icon slide; (2) Secondary — outline-only, border colour context-aware (indigo on light, orange on dark); (3) Dark-mode primary — same primary warm gradient (mode-agnostic). Remove "Narratives gradient" and standalone "Night gradient" buttons. Add note about context-matching secondary outline.
 
-```text
-01  Brand essence       — "Stories that land. Systems that stick." + creative tax
-02  Logo system         — current ungradiented + B/W/Grey/Indigo SVG sets; remove retired gradient blue
-03  Colour              — Indigo light, Night orange, per-page variant (light blue), with hex + HSL + gradient swatches
-04  Gradients           — default, night, narratives (90deg #5DE0E6 → #004AAD), with copy-to-clipboard hex
-05  Typography          — Crimson Pro display/Marginalia, Inter body; "less bold, targeted serif" rule with examples
-06  Cards & 3D float    — live Tilt3D demo tiles; documents the gentle mouse-follow vs the rejected skew
-07  Pill buttons        — hover-reveal icon demos in each gradient
-08  FAQ pattern         — live accordion example with lock-in note
-09  Drawers & lightbox  — trigger button that opens ContactDrawer as live demo
-10  Bottom CTA block    — embedded live example
-11  Animation rules     — 40%-opacity scroll-in demo strip
-12  Photography         — current workshop/shoreditch/portrait grids (pull in the new imagery)
-13  Notion translations — keep the strong existing section
-14  Voice & copy        — hard-ban list + outcome-first examples (mirrors ts-copy-voice skill)
-15  Downloads           — logo zip / asset references
-```
+**Section 08 — FAQ.** Confirmed correct, no changes.
 
-Implementation notes:
-- Replace `BrandBook.tsx` in-place rather than creating a new route
-- Use the live components (`Tilt3D`, `ContactDrawer`, `FAQ`, `CTA`) inside the page so the brand book is self-demonstrating
-- Drop the retired gradient blue logo imports
-- Wire in workshop/shoreditch/portrait photos already imported but underused
-- Use semantic tokens (`bg-card`, `text-accent`, `bg-gradient-primary`) — no hardcoded colors except in the swatch values themselves
-- Keep section anchors so the existing TOC nav still works
+**Section 09 — Drawers & lightbox.** Wire the demo to the correct production `ContactDrawer` (the full intro-call form with First/Last name, email, role, company, website, revenue, employees, GDPR, primary-warm CTA, secondary Diagnostic link). If two versions exist, identify the live one and archive the old.
 
----
+**Section 10 — Bottom CTA.** Replace mocked block with live `import { CTA } from "@/components/home-draft2/CTA"`.
 
-## Technical details
+**Section 11 — Animation.** Confirmed correct.
 
-- Skills directory: `.agents/skills/ts-design-system/SKILL.md` etc., each ~80–150 lines with a clear `description` for retrieval matching. After all five are written, call `skills--apply_draft` once per skill (5 calls).
-- `src/components/BrandBook.tsx`: full rewrite, target ~900 lines (down from 1,100), structured by the 15 sections above. Memo-import Tilt3D and ContactDrawer locally rather than spinning up new ones.
-- No backend changes, no migrations, no new routes.
-- Verification: tsgo typecheck + a Playwright screenshot of `/brand-book` in both light and night themes to confirm gradients, 3D tiles, and updated typography render.
+**Section 12 — Photography.** Render the full inventory of `workshop/`, `shoreditch/`, `portraits/` — every image, not curated.
 
----
+**Section 13 — Notion translations.** Build a block-by-block visual reference table covering minimum: paragraph, H1/H2/H3, callout (with emoji), quote, toggle (accordion), bookmark/link preview, image (full-width), divider. Each row: block type · live rendered example · CSS notes · exceptions. Extract real rules from blog renderer. Add expandable embed/link to the `ts-notion-content` skill.
 
-## Out of scope (intentionally)
+**Section 14 — Voice & copy.** Expand significantly: full hard-ban list with sub-categories (meta-commentary, generic openings/closings, overused transitions with usage limits — once per 800 words, never on LinkedIn — buzzword clichés). Channel minimums: LinkedIn 3+ proper nouns / zero restricted transitions; Newsletter & Journal 5+ proper nouns / max one. Add "only Brendan could write this" test as a named principle. Add Core Voice principles (Strategist/Coach tension, wandering sentence, bold as hammer, truth over polish, specificity as trust). Update identity framing. Add expandable embed/link to `ts-copy-voice` skill.
 
-- Proposals skill (SF Fire letter-opening pattern) — separate follow-up.
-- Touching any page other than `/brand-book` and `src/components/BrandBook.tsx`.
-- Changing the active design tokens in `index.css` — the brand book reflects what's already there.
+**Section 15 — Downloads.** Populate: logo grid (12 variants, filename + use context + right-click-to-save), asset path reference table (photos by bucket, Notion mocks, icon sets), retired-asset notice (gradient blue logo — do not reintroduce).
+
+## PART 2 — Skills (`.agents/skills/{name}/SKILL.md`)
+
+`**ts-design-system**` — New gradient catalogue (primary warm replaces indigo default for CTAs). Remove Narratives light-blue. Add gradient text treatment with CSS. Rename Light/Night → Light/Dark mode. Remove destructive red + secondary lavender as active UI. Icons in cards default to orange, not indigo. Remove retired gradient blue logo references. Remove OG/favicon path refs (brand book is now canonical). Inline critical rules previously only behind `mem://`.
+
+`**ts-copy-voice**` — Embed full hard-ban list (all categories). Add channel minimums. Add "only Brendan could write this" test. Add Core Voice principles section. Update identity to strategist / systems thinker / AI ops consultant / behavioural-science-informed integrator (drop "designer" primary). Replace brand-line framing with the fragmentation problem narrative. Keep the pre-publish re-fetch instruction but inline the hard-ban so cold sessions work.
+
+`**ts-notion-content**` — Add "Block translation reference" mirroring brand book section 13. Inline media-persistence, cache-first, no-direct-Notion-API rules so the skill is cold-session usable. Cross-reference brand book section 13.
+
+`**ts-asset-library**` — Point to `/brand-book` section 15 as canonical, but embed a one-line lookup table inline. Remove global/fiction project asset path refs. Explicit retired list: gradient blue logo — do not use, do not reintroduce.
+
+**Cross-cutting** — For every `mem://` reference across `ts-design-system` and `ts-copy-voice`, assess if losing it would fail silently. If yes, inline the essential rule and keep `mem://` as supplementary.
+
+## Verification
+
+1. `skills--apply_draft` once per skill (5 calls).
+2. Typecheck — flag any errors from gradient consolidation or component swap.
+3. Playwright `/brand-book` in light + dark mode. Confirm: primary warm gradient on CTAs · gradient text on headline accent words · correct ContactDrawer opens from §09 · live CTA renders in §10 · photography grid complete · Notion block translation table populated.
+
+## Out of scope (flag, don't fix here unless trivial)
+
+- Re-adding a success-green token (deferred to next form-state pass).
+- Building the `ts-proposals` skill (separate request).
+- Editing the live Narratives page beyond the gradient swap.
+
+## Open question
+
+Should I also retrofit gradient text treatment site-wide in this pass (homepage, service pages, proposals), or limit retrofit to the named instances ("AI Ops Consultant", "Leave with a plan.") and flag others for a follow-up? Site-wide is safer for brand consistency but expands the diff considerably. **Answer: Yes, Sitewide.**
