@@ -34,10 +34,10 @@ export const Navigation = ({ variant = "default", hideLogo = false, floatingBadg
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [isDiagnosticOpen, setIsDiagnosticOpen] = useState(false);
   const gradientBtnStyle = {
-    backgroundImage: ctaGradient ?? "linear-gradient(95deg, hsl(28 88% 62%), hsl(280 70% 65%))",
+    backgroundImage: ctaGradient ?? "linear-gradient(95deg, var(--gradient-3color))",
   } as const;
   const logoGradientStyle = {
-    background: logoHoverGradient ?? "linear-gradient(135deg, hsl(var(--orange)), hsl(var(--violet)))",
+    background: logoHoverGradient ?? "linear-gradient(90deg, #1340E8, #4E6CFF)",
   } as const;
 
 
