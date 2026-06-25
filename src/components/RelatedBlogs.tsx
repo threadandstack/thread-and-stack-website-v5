@@ -30,13 +30,14 @@ interface RelatedBlogsProps {
 
 const getThemeColors = (theme: string): string => {
   const themeMap: Record<string, string> = {
-    'Growth': 'bg-emerald-100 text-emerald-700',
-    'Strategy': 'bg-orange-100 text-orange-700',
-    'Creative': 'bg-pink-100 text-pink-700',
-    'Systems': 'bg-blue-100 text-blue-700',
-    'Case Studies': 'bg-accent/10 text-accent',
+    'Growth': 'pill-growth',
+    'Strategy': 'pill-strategy',
+    'Creative': 'pill-creative',
+    'Systems': 'pill-systems',
+    'Case Studies': 'pill-casestudy',
+    'Case Study': 'pill-casestudy',
   };
-  return themeMap[theme] || 'bg-accent/10 text-accent';
+  return themeMap[theme] || 'pill-casestudy';
 };
 
 const formatPublishedDate = (dateString: string): string => {

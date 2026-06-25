@@ -72,11 +72,34 @@ All colors MUST be HSL.
     --destructive: 0 70% 50%;
     --destructive-foreground: 0 0% 98%;
 
+    /* Tertiary — positive/success palette. Pairs with destructive (red)
+       for communication messages (form success, sync ok, etc). */
+    --tertiary: 145 55% 38%;
+    --tertiary-foreground: 0 0% 100%;
+
     --border: 0 0% 92%;
     --input: 0 0% 95%;
     --ring: 256 89% 50%;
 
     --radius: 1rem;
+
+    /* ── Brand accent palette (global) ───────────────────────────────────
+       Previously only defined inside .notion-canvas, which made every CTA
+       gradient and .text-gradient-warm render invisible outside that scope
+       (brand book, generic pages). Promoted to :root. */
+    --magenta: 320 85% 55%;
+    --clay: 18 75% 48%;
+    --clay-soft: 18 70% 38%;
+    --orange: 24 100% 50%;
+    --sky: 210 70% 55%;
+    --violet: 280 70% 55%;
+    --crimson: 8 80% 55%;
+
+    /* Primary warm gradient stop list (magenta → orange).
+       Use as: linear-gradient(95deg, var(--gradient-3color)) */
+    --gradient-3color: hsl(var(--magenta)), hsl(var(--orange));
+    --gradient-3color-even: hsl(var(--magenta)), hsl(var(--orange));
+    --gradient-4color: hsl(var(--magenta)) 0%, hsl(var(--orange)) 100%;
     
     /* Shadows */
     --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.1);
@@ -120,9 +143,19 @@ All colors MUST be HSL.
     --destructive: 0 65% 50%;
     --destructive-foreground: 220 10% 93%;
 
+    --tertiary: 145 50% 50%;
+    --tertiary-foreground: 240 6% 7%;
+
     --border: 230 12% 20%;
     --input: 230 12% 20%;
     --ring: 24 100% 50%;
+
+    /* Dark-mode tones for the warm palette — slightly brighter for legibility */
+    --clay: 18 75% 60%;
+    --clay-soft: 28 70% 80%;
+    --orange: 28 88% 62%;
+    --violet: 280 70% 65%;
+    --sky: 210 70% 65%;
   }
 }
 
@@ -978,9 +1011,67 @@ All colors MUST be HSL.
    primary warm gradient (magenta → orange). Replaces solid `text-clay`
    on serif italic display text. See /brand-book §04a. */
 .text-gradient-warm {
-  background-image: linear-gradient(95deg, hsl(320 85% 55%), hsl(var(--orange)));
+  background-image: linear-gradient(95deg, hsl(var(--magenta)), hsl(var(--orange)));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   -webkit-text-fill-color: transparent;
+  /* Keeps the gradient continuous when the span wraps across lines */
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* Background fill version of the primary warm gradient.
+   Use on solid pill CTAs, badges, and any surface that needs the gradient
+   as a fill rather than as text. */
+.bg-gradient-warm {
+  background-image: linear-gradient(95deg, hsl(var(--magenta)), hsl(var(--orange)));
+}
+
+/* Journal category pills — colour pairs that work in both light + dark.
+   Used by getThemeColors() in BlogPage / BlogPostPage / RelatedBlogs. */
+.pill-casestudy {
+  background: hsl(var(--orange) / 0.15);
+  color: hsl(18 80% 38%);
+}
+.notion-canvas[data-theme="dark"] .pill-casestudy,
+.dark .pill-casestudy {
+  color: hsl(28 95% 72%);
+}
+.pill-strategy {
+  background: hsl(var(--indigo) / 0.12);
+  color: hsl(var(--indigo));
+}
+.notion-canvas[data-theme="dark"] .pill-strategy,
+.dark .pill-strategy {
+  background: hsl(220 80% 65% / 0.18);
+  color: hsl(220 80% 80%);
+}
+.pill-growth {
+  background: hsl(150 55% 40% / 0.14);
+  color: hsl(150 55% 28%);
+}
+.notion-canvas[data-theme="dark"] .pill-growth,
+.dark .pill-growth {
+  color: hsl(150 60% 72%);
+}
+.pill-creative {
+  background: hsl(var(--magenta) / 0.14);
+  color: hsl(var(--magenta));
+}
+.notion-canvas[data-theme="dark"] .pill-creative,
+.dark .pill-creative {
+  color: hsl(320 85% 80%);
+}
+.pill-systems {
+  background: hsl(var(--sky) / 0.14);
+  color: hsl(210 80% 38%);
+}
+.notion-canvas[data-theme="dark"] .pill-systems,
+.dark .pill-systems {
+  color: hsl(210 80% 80%);
+}
+.pill-featured {
+  background-image: linear-gradient(95deg, hsl(var(--magenta)), hsl(var(--orange)));
+  color: #fff;
 }

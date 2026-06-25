@@ -44,7 +44,7 @@ export function FAQ() {
     <section id="faq">
       <div className="mx-auto max-w-4xl px-6 py-24 md:px-10 md:py-32">
         <SectionHeader eyebrow="FAQ">
-          Hard <span className="text-clay">questions.</span>
+          Hard <span className="text-gradient-warm">questions.</span>
         </SectionHeader>
 
         <div className="overflow-hidden rounded-2xl border border-hairline bg-background shadow-[0_2px_8px_rgba(0,0,0,0.04)]">

@@ -52,15 +52,15 @@ const PORTRAITS = sortedUrls(portraitFiles);
 
 const LOGO_INVENTORY: ReadonlyArray<{ src: string; name: string; use: string; dark?: boolean }> = [
   { src: GreyStacked, name: "Grey_TS_Stacked.svg", use: "Default — nav, light backgrounds" },
-  { src: IndigoStacked, name: "Indigo_TS_Stacked.svg", use: "Accent / hover state" },
+  { src: IndigoStacked, name: "Indigo_TS_Stacked.svg", use: "Warm gradient — hover / accent" },
   { src: BlackStacked, name: "Black_TS_Stacked.svg", use: "Print, single-colour" },
   { src: WhiteStacked, name: "White_TS_Stacked.svg", use: "On dark backgrounds", dark: true },
   { src: GreyWordmark, name: "Grey_TS_Wordmark.svg", use: "Horizontal lockup, default" },
-  { src: IndigoWordmark, name: "Indigo_TS_Wordmark.svg", use: "Horizontal lockup, accent" },
+  { src: IndigoWordmark, name: "Indigo_TS_Wordmark.svg", use: "Horizontal lockup, warm gradient" },
   { src: BlackWordmark, name: "Black_TS_Wordmark.svg", use: "Print, single-colour" },
   { src: WhiteWordmark, name: "White_TS_Wordmark.svg", use: "On dark backgrounds", dark: true },
   { src: GreySocialSq, name: "Grey_TS_SocialSq.svg", use: "Avatar / favicon, default" },
-  { src: IndigoSocialSq, name: "Indigo_TS_SocialSq.svg", use: "Avatar / favicon, accent" },
+  { src: IndigoSocialSq, name: "Indigo_TS_SocialSq.svg", use: "Avatar / favicon, warm gradient" },
   { src: BlackSocialSq, name: "Black_TS_SocialSq.svg", use: "Print, single-colour" },
   { src: WhiteSocialSq, name: "White_TS_SocialSq.svg", use: "On dark backgrounds", dark: true },
 ];
@@ -315,7 +315,7 @@ export const BrandBook = () => {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {[
                   { src: GreyStacked, label: "Grey · default" },
-                  { src: IndigoStacked, label: "Indigo · hover / accent" },
+                  { src: IndigoStacked, label: "Warm gradient · hover / accent" },
                   { src: BlackStacked, label: "Black" },
                   { src: WhiteStacked, label: "White · on dark", dark: true },
                 ].map((l) => (
@@ -341,7 +341,7 @@ export const BrandBook = () => {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {[
                   { src: GreyWordmark, label: "Grey" },
-                  { src: IndigoWordmark, label: "Indigo" },
+                  { src: IndigoWordmark, label: "Warm gradient" },
                   { src: BlackWordmark, label: "Black" },
                   { src: WhiteWordmark, label: "White", dark: true },
                 ].map((l) => (
@@ -367,7 +367,7 @@ export const BrandBook = () => {
               <div className="flex flex-wrap gap-4">
                 {[
                   { src: GreySocialSq, label: "Grey" },
-                  { src: IndigoSocialSq, label: "Indigo" },
+                  { src: IndigoSocialSq, label: "Warm gradient" },
                   { src: BlackSocialSq, label: "Black" },
                   { src: WhiteSocialSq, label: "White", dark: true },
                 ].map((l) => (
@@ -427,19 +427,19 @@ export const BrandBook = () => {
 
             <div className="rounded-2xl bg-muted/30 p-6 space-y-4">
               <p className="text-xs uppercase tracking-widest text-muted-foreground font-mono">
-                Utility tokens — not in active use
+                Tertiary palette — communication messages
               </p>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-5">
-                <Swatch name="Destructive" hex="#CC2929" />
-                <Swatch name="Secondary lavender" hex="#6B7CC4" />
+                <Swatch name="Destructive · red" hex="#CC2929" hsl="0 70% 50%" />
+                <Swatch name="Tertiary · positive green" hex="#27A861" hsl="145 55% 38%" />
               </div>
               <p className="text-xs text-muted-foreground max-w-2xl leading-relaxed">
-                Destructive was originally paired with an emerald success green
-                for form-state communication. Neither is currently in use as a
-                UI colour. Tokens remain defined in <code className="font-mono">src/index.css</code>{" "}
-                so future work can adopt them without a migration. Re-add the
-                emerald success token alongside destructive when form-state
-                communication is next revisited.
+                Reserved for communication state — form success / failure, sync
+                ok / error, lead capture acknowledgements. Destructive (red)
+                signals failure or destructive action. Tertiary (positive
+                green) signals success. Both are paired and never used as
+                decorative brand colour. The retired lavender secondary token
+                has been removed.
               </p>
             </div>
           </section>

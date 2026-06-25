@@ -14,7 +14,7 @@ export function CTA({ theme = "light" }: CTAProps = {}) {
     <section id="contact" className="relative">
       <div className="mx-auto max-w-5xl px-6 py-24 md:py-32">
         <Tilt3D maxX={7} maxY={5} className="w-full">
-          <div className="relative rounded-2xl border border-hairline bg-background/70 p-8 backdrop-blur-sm shadow-[0_2px_8px_rgba(0,0,0,0.04)] md:p-12">
+          <div className="relative rounded-2xl bg-background/70 p-8 backdrop-blur-sm shadow-[0_8px_30px_rgba(0,0,0,0.06)] md:p-12">
             <div className="grid items-center gap-10 md:grid-cols-[1.1fr_1fr] md:gap-14">
               {/* Copy */}
               <div>
