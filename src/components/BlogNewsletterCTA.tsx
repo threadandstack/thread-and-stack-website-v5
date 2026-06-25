@@ -64,7 +64,7 @@ export const BlogNewsletterCTA = () => {
     return (
       <Button
         onClick={() => setIsExpanded(true)}
-        className="bg-accent hover:bg-accent/90 text-accent-foreground"
+        className="bg-gradient-warm text-white hover:opacity-90 transition-opacity"
       >
         Subscribe
         <ChevronDown className="ml-2 h-4 w-4" />
