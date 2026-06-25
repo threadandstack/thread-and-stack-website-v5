@@ -427,19 +427,19 @@ export const BrandBook = () => {
 
             <div className="rounded-2xl bg-muted/30 p-6 space-y-4">
               <p className="text-xs uppercase tracking-widest text-muted-foreground font-mono">
-                Utility tokens — not in active use
+                Tertiary palette — communication messages
               </p>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-5">
-                <Swatch name="Destructive" hex="#CC2929" />
-                <Swatch name="Secondary lavender" hex="#6B7CC4" />
+                <Swatch name="Destructive · red" hex="#CC2929" hsl="0 70% 50%" />
+                <Swatch name="Tertiary · positive green" hex="#27A861" hsl="145 55% 38%" />
               </div>
               <p className="text-xs text-muted-foreground max-w-2xl leading-relaxed">
-                Destructive was originally paired with an emerald success green
-                for form-state communication. Neither is currently in use as a
-                UI colour. Tokens remain defined in <code className="font-mono">src/index.css</code>{" "}
-                so future work can adopt them without a migration. Re-add the
-                emerald success token alongside destructive when form-state
-                communication is next revisited.
+                Reserved for communication state — form success / failure, sync
+                ok / error, lead capture acknowledgements. Destructive (red)
+                signals failure or destructive action. Tertiary (positive
+                green) signals success. Both are paired and never used as
+                decorative brand colour. The retired lavender secondary token
+                has been removed.
               </p>
             </div>
           </section>
