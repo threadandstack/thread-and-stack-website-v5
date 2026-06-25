@@ -125,22 +125,12 @@ const NarrativesStrategyServicesPage = () => {
     // ensure single render at top
   }, []);
 
-  const darkModeBlueTokens = theme === "dark" ? ({
-    "--clay": "183 73% 63%",
-    "--clay-soft": "183 73% 63%",
-    "--orange": "183 73% 63%",
-    "--violet": "214 100% 34%",
-    "--accent": "183 73% 63%",
-    "--ring": "183 73% 63%",
-  } as React.CSSProperties) : undefined;
-  const darkModeCtaGradient =
-    theme === "dark"
-      ? "linear-gradient(90deg, #5DE0E6, #004AAD)"
-      : undefined;
-  const darkModeLogoGradient =
-    theme === "dark"
-      ? "linear-gradient(135deg, #5DE0E6, #004AAD)"
-      : undefined;
+  // Narratives page used to ship a light-blue → navy gradient in dark mode.
+  // Retired in favour of the primary warm gradient (magenta → orange) so this
+  // page reads as part of the brand system rather than a sibling palette.
+  const darkModeBlueTokens = undefined;
+  const darkModeCtaGradient = undefined;
+  const darkModeLogoGradient = undefined;
 
   return (
     <div
