@@ -53,7 +53,7 @@ const AboutPage = () => {
                 About
               </span>
               <h1 className="font-serif-pro italic font-normal text-balance text-4xl leading-[1.05] tracking-[-0.02em] text-white">
-                About <span className="text-clay">Brendan</span>
+                About <span className="text-gradient-warm">Brendan</span>
               </h1>
             </div>
           </div>
@@ -110,7 +110,7 @@ const AboutPage = () => {
                 About
               </span>
               <div className="font-serif-pro italic font-normal text-balance text-5xl leading-[1.03] tracking-[-0.02em] text-white md:text-[72px]">
-                About <span className="text-clay">Brendan</span>
+                About <span className="text-gradient-warm">Brendan</span>
               </div>
 
               <p className="mt-6 max-w-2xl text-[16px] leading-relaxed text-white/85">
@@ -153,7 +153,7 @@ const AboutPage = () => {
         <section>
           <div className="mx-auto max-w-3xl px-6 py-20 md:px-10 md:py-24">
             <SectionHeader>
-              The instinct was <span className="text-clay">scepticism.</span>
+              The instinct was <span className="text-gradient-warm">scepticism.</span>
             </SectionHeader>
             <div className="space-y-4 text-[15.5px] leading-relaxed text-ink-soft">
               <p>
@@ -167,7 +167,7 @@ const AboutPage = () => {
         <section>
           <div className="mx-auto max-w-5xl px-6 pb-12 md:px-10 md:pb-16">
             <SectionHeader eyebrow="Principles">
-              What stays human, <span className="text-clay">how to operate.</span>
+              What stays human, <span className="text-gradient-warm">how to operate.</span>
             </SectionHeader>
 
             <p className="mx-auto max-w-2xl text-center text-[15.5px] leading-relaxed text-ink-soft">
@@ -186,7 +186,7 @@ const AboutPage = () => {
                   </p>
                 </div>
                 <h3 className="text-2xl font-medium tracking-tight">
-                  What <span className="font-serif-pro italic text-clay">stays human</span>
+                  What <span className="font-serif-pro italic text-gradient-warm">stays human</span>
                 </h3>
                 <ul className="mt-5 space-y-2.5 text-[14.5px] leading-relaxed text-ink-soft">
                   <li><span className="font-medium text-foreground">Connection</span> — belonging, trust, and rapport</li>
@@ -207,7 +207,7 @@ const AboutPage = () => {
                   </p>
                 </div>
                 <h3 className="text-2xl font-medium tracking-tight">
-                  How to <span className="font-serif-pro italic text-clay">operate with AI</span>
+                  How to <span className="font-serif-pro italic text-gradient-warm">operate with AI</span>
                 </h3>
                 <ul className="mt-5 space-y-2.5 text-[14.5px] leading-relaxed text-ink-soft">
                   <li><span className="font-medium text-foreground">Delegation</span> — whether, when, and how to engage AI</li>
@@ -225,7 +225,7 @@ const AboutPage = () => {
         <section>
           <div className="mx-auto max-w-3xl px-6 py-20 md:px-10 md:py-24">
             <SectionHeader>
-              The methodology behind <span className="text-clay">every build.</span>
+              The methodology behind <span className="text-gradient-warm">every build.</span>
             </SectionHeader>
             <div className="space-y-4 text-[15.5px] leading-relaxed text-ink-soft">
               <p>
@@ -245,7 +245,7 @@ const AboutPage = () => {
                     <Layers className="h-5 w-5" strokeWidth={2} />
                   </div>
                   <h3 className="text-2xl font-medium tracking-tight">
-                    Intentional <span className="font-serif-pro italic text-clay">Tool Stack</span>
+                    Intentional <span className="font-serif-pro italic text-gradient-warm">Tool Stack</span>
                   </h3>
                 </div>
                 <p className="text-[14.5px] leading-relaxed text-ink-soft">
@@ -259,7 +259,7 @@ const AboutPage = () => {
                     <Cpu className="h-5 w-5" strokeWidth={2} />
                   </div>
                   <h3 className="text-2xl font-medium tracking-tight">
-                    THREAD <span className="font-serif-pro italic text-clay">Agent Framework</span>
+                    THREAD <span className="font-serif-pro italic text-gradient-warm">Agent Framework</span>
                   </h3>
                 </div>
                 <p className="text-[14.5px] leading-relaxed text-ink-soft">
@@ -274,7 +274,7 @@ const AboutPage = () => {
         <section>
           <div className="mx-auto max-w-3xl px-6 py-20 md:px-10 md:py-24">
             <SectionHeader>
-              The instinct was <span className="text-clay">right.</span>
+              The instinct was <span className="text-gradient-warm">right.</span>
             </SectionHeader>
             <div className="space-y-4 text-[15.5px] leading-relaxed text-ink-soft">
               <p>

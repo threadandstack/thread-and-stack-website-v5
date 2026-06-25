@@ -72,7 +72,7 @@ export function KindWords() {
     <section>
       <div className="mx-auto max-w-5xl px-6 pt-20 md:px-10 md:pt-24">
         <SectionHeader eyebrow="Testimonials">
-          A stack of <span className="text-clay">kind words.</span>
+          A stack of <span className="text-gradient-warm">kind words.</span>
         </SectionHeader>
       </div>
       <TestimonialVariants testimonials={testimonials} />

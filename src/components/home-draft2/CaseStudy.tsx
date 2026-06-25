@@ -23,7 +23,7 @@ export function CaseStudy({ onBookDiagnostic }: CaseStudyProps) {
 
         {/* Header */}
         <SectionHeader eyebrow="Case study">
-          Ops that finally <span className="text-clay">felt joined up.</span>
+          Ops that finally <span className="text-gradient-warm">felt joined up.</span>
         </SectionHeader>
         <p className="mx-auto max-w-2xl text-center text-[15.5px] leading-relaxed text-foreground/70">
           A case study from The IMMA Collective. Lilli came in with a marketing
@@ -92,7 +92,7 @@ export function CaseStudy({ onBookDiagnostic }: CaseStudyProps) {
               </div>
               <h3 className="mt-4 max-w-xl font-sans text-[28px] font-medium leading-tight tracking-tight not-italic md:text-[36px]">
                 A paid 90-minute session.
-                <span className="block font-serif-pro italic text-clay text-4xl md:text-5xl">A written blueprint.</span>
+                <span className="block font-serif-pro italic text-gradient-warm text-4xl md:text-5xl">A written blueprint.</span>
               </h3>
               <p className="mt-3 max-w-lg text-[14.5px] leading-relaxed text-ink-soft">
                 Bring your stack, your sprawl, and the questions your team keeps asking.

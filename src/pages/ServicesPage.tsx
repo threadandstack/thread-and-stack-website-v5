@@ -65,7 +65,7 @@ const ServicesPage = () => {
             </span>
             <h1 className="font-serif-pro italic font-normal text-balance text-4xl leading-[1.05] tracking-[-0.02em] md:text-[64px]">
               The right engagement for where you{" "}
-              <span className="text-clay">are.</span>
+              <span className="text-gradient-warm">are.</span>
             </h1>
             <p className="mx-auto mt-6 max-w-xl text-[15.5px] leading-relaxed text-ink-soft">
               From a co-design sprint to a bespoke multi-team build. Scope and

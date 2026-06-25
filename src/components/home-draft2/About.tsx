@@ -11,7 +11,7 @@ export function About({ onBookDiagnostic }: AboutProps) {
     <section>
       <div className="mx-auto max-w-5xl px-6 py-24 md:px-10 md:py-32">
         <SectionHeader eyebrow="About">
-          About <span className="text-clay">Thread & Stack.</span>
+          About <span className="text-gradient-warm">Thread & Stack.</span>
         </SectionHeader>
 
         <div className="grid items-start gap-10 md:grid-cols-5 md:gap-14">
