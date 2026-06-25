@@ -164,7 +164,7 @@ const UnleashYourTeamDraft2Page = () => {
                   }`}
                   style={{
                     backgroundImage:
-                      "linear-gradient(135deg, hsl(var(--orange)), hsl(var(--violet)))",
+                      "linear-gradient(95deg, var(--gradient-3color))",
                   }}
                 >
                   {theme === "dark" ? <Moon className="h-3 w-3" /> : <Sun className="h-3 w-3" />}
@@ -287,7 +287,7 @@ const UnleashYourTeamDraft2Page = () => {
                       className="font-serif-pro italic text-7xl md:text-8xl font-semibold leading-none bg-clip-text text-transparent"
                       style={{
                         backgroundImage:
-                          "linear-gradient(135deg, hsl(var(--orange)), hsl(var(--violet)))",
+                          "linear-gradient(95deg, var(--gradient-3color))",
                       }}
                     >
                       15%
