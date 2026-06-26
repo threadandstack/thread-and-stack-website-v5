@@ -112,16 +112,10 @@ serve(async (req) => {
 
     console.log(`Blog sync: found ${allResults.length} posts (full=${fullSync}, incremental=${useIncremental})`)
 
-    if (allResults.length === 0) {
-      await supabase.from('sync_metadata').upsert(
-        { sync_type: 'blog', last_synced_at: syncStartTime },
-        { onConflict: 'sync_type' }
-      )
-      return new Response(
-        JSON.stringify({ success: true, synced: 0, content_synced: 0, media_persisted: 0 }),
-        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      )
-    }
+    // Note: even if allResults is empty (incremental, nothing changed),
+    // we still run the prune step below to remove unpublished posts.
+
+
 
     let totalMediaPersisted = 0
 
@@ -186,17 +180,55 @@ serve(async (req) => {
       }
     }
 
+    // Prune cache: remove any posts no longer marked Live in Notion
+    let prunedCount = 0
+    try {
+      const liveIds = new Set<string>()
+      let pruneCursor: string | undefined = undefined
+      do {
+        const body: any = { filter: baseFilter, page_size: 100 }
+        if (pruneCursor) body.start_cursor = pruneCursor
+        const res = await fetch(`https://api.notion.com/v1/databases/${DATABASE_ID}/query`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${NOTION_API_KEY}`,
+            'Notion-Version': '2022-06-28',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(body),
+        })
+        if (!res.ok) throw new Error(`Prune query failed: ${res.status}`)
+        const data = await res.json()
+        for (const p of (data.results || [])) liveIds.add(p.id)
+        pruneCursor = data.has_more ? data.next_cursor : undefined
+      } while (pruneCursor)
+
+      const liveIdArr = Array.from(liveIds)
+      const { data: existing } = await supabase.from('blog_posts_cache').select('notion_id')
+      const stale = (existing || []).map(r => r.notion_id).filter(id => !liveIds.has(id))
+      if (stale.length > 0) {
+        await supabase.from('blog_posts_cache').delete().in('notion_id', stale)
+        await supabase.from('blog_content_cache').delete().in('notion_id', stale)
+        prunedCount = stale.length
+        console.log(`Pruned ${prunedCount} stale blog posts: ${stale.join(', ')}`)
+      }
+    } catch (e) {
+      console.error('Prune step failed:', e)
+    }
+
     await supabase.from('sync_metadata').upsert(
       { sync_type: 'blog', last_synced_at: syncStartTime },
       { onConflict: 'sync_type' }
     )
 
+
     console.log(`Blog sync complete: ${allResults.length} posts, ${totalMediaPersisted} media files persisted`)
 
     return new Response(
-      JSON.stringify({ success: true, synced: allResults.length, content_synced: allResults.length, media_persisted: totalMediaPersisted }),
+      JSON.stringify({ success: true, synced: allResults.length, content_synced: allResults.length, media_persisted: totalMediaPersisted, pruned: prunedCount }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     )
+
   } catch (error) {
     console.error('Sync error:', error)
     return new Response(
