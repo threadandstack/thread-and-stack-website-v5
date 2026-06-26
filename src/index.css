@@ -243,7 +243,7 @@ All colors MUST be HSL.
   .blog-content blockquote {
     font-style: normal !important;
     background: hsl(var(--muted) / 0.3);
-    border-left: 4px solid hsl(var(--accent));
+    border-left: 4px solid hsl(var(--foreground));
     padding: 1.5rem;
     margin: 2rem 0;
     border-radius: 0 0.5rem 0.5rem 0;
