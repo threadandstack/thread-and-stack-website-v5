@@ -702,12 +702,10 @@ All colors MUST be HSL.
   .blog-content .notion-color-pink_background { background: hsl(330 70% 60% / 0.2); padding: 0.05em 0.3em; border-radius: 0.25em; }
   .blog-content .notion-color-red_background { background: hsl(0 75% 60% / 0.2); padding: 0.05em 0.3em; border-radius: 0.25em; }
 
-  /* Inline <code> in colored span should inherit the color, keep its mono treatment */
+  /* Inline <code> inside a colored span keeps its chip background but inherits the color */
   .blog-content [class^="notion-color-"] code,
   .blog-content [class*=" notion-color-"] code {
     color: inherit;
-    background: transparent;
-    padding: 0;
   }
 }
 
