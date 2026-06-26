@@ -274,6 +274,54 @@ All colors MUST be HSL.
     margin-bottom: 1rem;
     font-weight: 400;
   }
+
+  .blog-content h4 {
+    font-size: 1.2rem;
+    line-height: 1.4;
+    margin-top: 2.25rem;
+    margin-bottom: 0.75rem;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.005em;
+  }
+
+  .blog-content .notion-toggle-heading {
+    margin-top: 2.5rem;
+    margin-bottom: 1.25rem;
+  }
+  .blog-content .notion-toggle-heading > summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    position: relative;
+    padding-left: 1.5rem;
+  }
+  .blog-content .notion-toggle-heading > summary::-webkit-details-marker { display: none; }
+  .blog-content .notion-toggle-heading > summary::before {
+    content: '▶';
+    position: absolute;
+    left: 0;
+    top: 0.35em;
+    font-size: 0.75em;
+    color: hsl(var(--muted-foreground));
+    transition: transform 0.15s ease;
+  }
+  .blog-content .notion-toggle-heading[open] > summary::before {
+    transform: rotate(90deg);
+  }
+  .blog-content .notion-toggle-heading > summary > h1,
+  .blog-content .notion-toggle-heading > summary > h2,
+  .blog-content .notion-toggle-heading > summary > h3,
+  .blog-content .notion-toggle-heading > summary > h4 {
+    margin: 0;
+    display: inline;
+  }
+  .blog-content .notion-toggle-content {
+    margin-top: 0.75rem;
+    padding-left: 1.5rem;
+  }
   
   .blog-content p {
     font-style: normal !important;
