@@ -231,9 +231,10 @@ serve(async (req) => {
     console.log(`Blog sync complete: ${allResults.length} posts, ${totalMediaPersisted} media files persisted`)
 
     return new Response(
-      JSON.stringify({ success: true, synced: allResults.length, content_synced: allResults.length, media_persisted: totalMediaPersisted }),
+      JSON.stringify({ success: true, synced: allResults.length, content_synced: allResults.length, media_persisted: totalMediaPersisted, pruned: prunedCount }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     )
+
   } catch (error) {
     console.error('Sync error:', error)
     return new Response(
