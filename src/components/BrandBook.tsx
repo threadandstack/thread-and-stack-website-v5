@@ -907,11 +907,11 @@ export const BrandBook = () => {
                       render: (
                         <blockquote className="blog-content">
                           <blockquote>
-                            Block quotes render with a 4px accent left border and muted background.
+                            Block quotes render with a 4px foreground left border and muted background.
                           </blockquote>
                         </blockquote>
                       ),
-                      notes: "Left border 4px accent · padding 1.5rem · rounded right corners only.",
+                      notes: "Left border 4px foreground (black in light mode, light in dark mode) · padding 1.5rem · rounded right corners only.",
                     },
                     {
                       block: "Toggle",

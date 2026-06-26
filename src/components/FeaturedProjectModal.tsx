@@ -104,7 +104,7 @@ export const FeaturedProjectModal = ({
           </div>
           
           {project.quote && (
-            <blockquote className="border-l-4 border-accent pl-6 py-4 my-6 bg-muted/30 rounded-r-lg">
+            <blockquote className="border-l-4 border-foreground pl-6 py-4 my-6 bg-muted/30 rounded-r-lg">
               <p className="text-foreground/90 italic leading-relaxed text-lg">
                 "{project.quote}"
               </p>

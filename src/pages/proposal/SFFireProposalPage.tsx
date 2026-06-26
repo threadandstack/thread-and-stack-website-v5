@@ -352,7 +352,7 @@ const Rule = () => (
 const PullQuote = ({ children, rotate = 0.2 }: { children: React.ReactNode; rotate?: number }) => (
   <motion.blockquote
     {...fadeUp}
-    className="my-12 md:my-16 not-italic font-sans text-[18px] md:text-[20px] leading-[1.7] text-muted-foreground bg-muted/30 border-l-4 border-accent pl-6 pr-6 py-6 rounded-r-lg text-balance"
+    className="my-12 md:my-16 not-italic font-sans text-[18px] md:text-[20px] leading-[1.7] text-muted-foreground bg-muted/30 border-l-4 border-foreground pl-6 pr-6 py-6 rounded-r-lg text-balance"
     style={{ transform: `rotate(${rotate}deg)` }}
   >
     {children}
