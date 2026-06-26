@@ -6,7 +6,7 @@ import { BlogNewsletterCTA } from "@/components/BlogNewsletterCTA";
 import { BlogCTACallout } from "@/components/BlogCTACallout";
 import { RelatedBlogs } from "@/components/RelatedBlogs";
 import { FAQ } from "@/components/FAQ";
-import { Loader2 } from "lucide-react";
+import { Loader2, Sun, Moon } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import brendanAvatar from "@/assets/brendan-avatar.webp";
 import { trackBlogRead } from "@/hooks/useAnalytics";
