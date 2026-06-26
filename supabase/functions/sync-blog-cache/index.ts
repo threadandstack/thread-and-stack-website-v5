@@ -283,15 +283,27 @@ async function renderBlogContent(pageId: string, notionApiKey: string): Promise<
     startCursor = data.has_more ? data.next_cursor : undefined
   } while (startCursor)
 
+  const escapeHtml = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+
   const richTextToHtml = (richTextArray: any[]) => {
     if (!richTextArray || richTextArray.length === 0) return ''
     return richTextArray.map((text: any) => {
-      let content = text.plain_text.replace(/\n/g, '<br>')
-      if (text.annotations.bold) content = `<strong>${content}</strong>`
-      if (text.annotations.italic) content = `<em>${content}</em>`
-      if (text.annotations.strikethrough) content = `<s>${content}</s>`
-      if (text.annotations.underline) content = `<u>${content}</u>`
-      if (text.annotations.code) content = `<code>${content}</code>`
+      // Custom emoji mention -> inline image
+      if (text.type === 'mention' && text.mention?.type === 'custom_emoji') {
+        const url = text.mention.custom_emoji?.url
+        const name = text.mention.custom_emoji?.name || ''
+        if (url) return `<img class="notion-inline-emoji" src="${url}" alt="${escapeHtml(name)}" />`
+      }
+      let content = (text.plain_text || '').replace(/\n/g, '<br>')
+      const ann = text.annotations || {}
+      if (ann.code) content = `<code>${content}</code>`
+      if (ann.bold) content = `<strong>${content}</strong>`
+      if (ann.italic) content = `<em>${content}</em>`
+      if (ann.strikethrough) content = `<s>${content}</s>`
+      if (ann.underline) content = `<u>${content}</u>`
+      if (ann.color && ann.color !== 'default') {
+        content = `<span class="notion-color-${ann.color}">${content}</span>`
+      }
       if (text.href) content = `<a href="${text.href}" target="_blank" rel="noopener noreferrer">${content}</a>`
       return content
     }).join('')
