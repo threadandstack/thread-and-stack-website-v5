@@ -1,7 +1,6 @@
-import { useState } from "react";
+import { Link } from "react-router-dom";
 import { PillButton } from "@/components/ui/pill-button";
 import { MessageCircle } from "lucide-react";
-import { ContactDrawer } from "@/components/ContactDrawer";
 
 interface BlogCTACalloutProps {
   theme?: string | null;
@@ -13,75 +12,73 @@ const getThemeCTA = (theme: string | null | undefined) => {
     case 'growth':
       return {
         headline: "Ready to grow with intention?",
-        subtext: "Let's talk about scaling your impact without losing your soul.",
-        buttonText: "Start a Conversation"
+        subtext: "Explore Narratives & Strategy Services built for scaling impact without losing your edge.",
+        buttonText: "See Strategy Services",
+        link: "/narratives-and-strategy-services"
       };
     case 'strategy':
       return {
         headline: "Need strategic clarity?",
-        subtext: "Book a session to cut through the noise and find your path forward.",
-        buttonText: "Book a Strategy Session"
+        subtext: "See how focused strategy engagements can cut through the noise.",
+        buttonText: "See Strategy Services",
+        link: "/narratives-and-strategy-services"
       };
     case 'creative':
       return {
-        headline: "Want to unlock your creative edge?",
-        subtext: "Let's explore how to make your brand feel more alive.",
-        buttonText: "Let's Talk Creative"
+        headline: "Did you know?",
+        subtext: "I still consult as a Marketing and Creative Strategist. If your brand needs more signal and less noise, let's explore what's possible.",
+        buttonText: "See Creative Services",
+        link: "/narratives-and-strategy-services"
       };
     case 'systems':
       return {
         headline: "Ready to build better systems?",
-        subtext: "Let's design workflows that honour systems thinking, creative integrity, and human intentionality.",
-        buttonText: "Explore AI Systems"
+        subtext: "Explore Notion & Systems Consultancy designed around creative integrity and human intentionality.",
+        buttonText: "See Systems Services",
+        link: "/services"
       };
     case 'case studies':
       return {
         headline: "Want results like these?",
-        subtext: "Let's discuss how we can achieve similar outcomes for your organization.",
-        buttonText: "Start a Conversation"
+        subtext: "See how Narratives & Strategy Services can create similar outcomes for your organisation.",
+        buttonText: "See Strategy Services",
+        link: "/narratives-and-strategy-services"
       };
     default:
       return {
         headline: "Let's work together",
-        subtext: "Whether you need a focused hour or a longer engagement, I'd love to hear about your challenge.",
-        buttonText: "Get in Touch"
+        subtext: "Whether you need a focused hour or a longer engagement, explore the services that fit your challenge.",
+        buttonText: "See Services",
+        link: "/services"
       };
   }
 };
 
 export const BlogCTACallout = ({ theme, title }: BlogCTACalloutProps) => {
-  const [contactOpen, setContactOpen] = useState(false);
   const cta = getThemeCTA(theme);
 
   return (
-    <>
-      <ContactDrawer 
-        open={contactOpen} 
-        onOpenChange={setContactOpen} 
-        source={`blog-${title?.toLowerCase().replace(/\s+/g, '-') || 'post'}`} 
-      />
-      
-      <div className="my-16 p-6 md:p-8 rounded-xl bg-muted/40 border border-border/50">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-          <div className="flex items-start gap-4">
-            <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0">
-              <MessageCircle className="w-5 h-5 text-accent" />
-            </div>
-            <div>
-              <h3 className="text-xl font-semibold mb-1">{cta.headline}</h3>
-              <p className="text-muted-foreground">{cta.subtext}</p>
-            </div>
+    <div className="my-16 p-6 md:p-8 rounded-xl bg-muted/40 border border-border/50">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+        <div className="flex items-start gap-4">
+          <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0">
+            <MessageCircle className="w-5 h-5 text-accent" />
           </div>
-          
+          <div>
+            <h3 className="text-xl font-semibold mb-1">{cta.headline}</h3>
+            <p className="text-muted-foreground">{cta.subtext}</p>
+          </div>
+        </div>
+        
+        <Link to={cta.link}>
           <PillButton 
-            onClick={() => setContactOpen(true)}
             icon={MessageCircle}
             className="whitespace-nowrap"
           >
             {cta.buttonText}
           </PillButton>
-        </div>
+        </Link>
       </div>
-    </>
+    </div>
   );
 };
