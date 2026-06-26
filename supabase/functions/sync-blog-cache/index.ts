@@ -352,9 +352,33 @@ async function renderBlogContent(pageId: string, notionApiKey: string): Promise<
         const t = richTextToHtml(block.paragraph.rich_text)
         return t ? `<p>${t}</p>` : ''
       }
-      case 'heading_1': return `<h1>${richTextToHtml(block.heading_1.rich_text)}</h1>`
-      case 'heading_2': return `<h2>${richTextToHtml(block.heading_2.rich_text)}</h2>`
-      case 'heading_3': return `<h3>${richTextToHtml(block.heading_3.rich_text)}</h3>`
+      case 'heading_1':
+      case 'heading_2':
+      case 'heading_3':
+      case 'heading_4': {
+        const level = block.type === 'heading_4' ? 4 : block.type === 'heading_3' ? 3 : block.type === 'heading_2' ? 2 : 1
+        const data = block[block.type]
+        const text = richTextToHtml(data.rich_text)
+        // Toggle headings: render children inside a <details>
+        if (data.is_toggleable && block.has_children) {
+          const children = await fetchBlockChildren(block.id)
+          const groupedParts: string[] = []
+          let inBul = false, inNum = false
+          for (const c of children) {
+            if (c.type !== 'bulleted_list_item' && inBul) { groupedParts.push('</ul>'); inBul = false }
+            if (c.type !== 'numbered_list_item' && inNum) { groupedParts.push('</ol>'); inNum = false }
+            if (c.type === 'bulleted_list_item' && !inBul) { groupedParts.push('<ul>'); inBul = true }
+            if (c.type === 'numbered_list_item' && !inNum) { groupedParts.push('<ol>'); inNum = true }
+            const html = await blockToHtml(c)
+            if (html) groupedParts.push(html)
+          }
+          if (inBul) groupedParts.push('</ul>')
+          if (inNum) groupedParts.push('</ol>')
+          const childHtml = groupedParts.join('\n')
+          return `<details class="notion-toggle-heading notion-toggle-h${level}"><summary><h${level}>${text}</h${level}></summary><div class="notion-toggle-content">${childHtml}</div></details>`
+        }
+        return `<h${level}>${text}</h${level}>`
+      }
       case 'bulleted_list_item': {
         const t = richTextToHtml(block.bulleted_list_item.rich_text)
         let nested = ''
