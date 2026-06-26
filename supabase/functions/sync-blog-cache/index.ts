@@ -112,16 +112,10 @@ serve(async (req) => {
 
     console.log(`Blog sync: found ${allResults.length} posts (full=${fullSync}, incremental=${useIncremental})`)
 
-    if (allResults.length === 0) {
-      await supabase.from('sync_metadata').upsert(
-        { sync_type: 'blog', last_synced_at: syncStartTime },
-        { onConflict: 'sync_type' }
-      )
-      return new Response(
-        JSON.stringify({ success: true, synced: 0, content_synced: 0, media_persisted: 0 }),
-        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      )
-    }
+    // Note: even if allResults is empty (incremental, nothing changed),
+    // we still run the prune step below to remove unpublished posts.
+
+
 
     let totalMediaPersisted = 0
 
