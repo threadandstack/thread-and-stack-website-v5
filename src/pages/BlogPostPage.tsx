@@ -54,6 +54,8 @@ const BlogPostPage = () => {
   const [post, setPost] = useState<BlogPostDetail | null>(null);
   const [featuredRelatedSlug, setFeaturedRelatedSlug] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [theme, setTheme] = useState<"dark" | "light">("light");
+  const toggleTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
 
   useEffect(() => {
     const fetchPost = async () => {
