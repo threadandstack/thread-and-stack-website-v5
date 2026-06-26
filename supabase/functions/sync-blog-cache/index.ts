@@ -395,7 +395,18 @@ async function renderBlogContent(pageId: string, notionApiKey: string): Promise<
       case 'image': {
         const url = block.image.file?.url || block.image.external?.url
         const cap = block.image.caption ? richTextToHtml(block.image.caption) : ''
-        return url ? `<figure><img src="${url}" alt="${cap}" />${cap ? `<figcaption>${cap}</figcaption>` : ''}</figure>` : ''
+        const cls = cap ? 'image-content' : 'image-centered'
+        return url ? `<figure class="${cls}"><img src="${url}" alt="${cap}" loading="lazy" />${cap ? `<figcaption>${cap}</figcaption>` : ''}</figure>` : ''
+      }
+      case 'bookmark':
+      case 'link_preview': {
+        const url = block.bookmark?.url || block.link_preview?.url
+        if (!url) return ''
+        const cap = block.bookmark?.caption ? richTextToHtml(block.bookmark.caption) : ''
+        let host = ''
+        try { host = new URL(url).hostname.replace(/^www\./, '') } catch { /* noop */ }
+        const favicon = host ? `https://www.google.com/s2/favicons?domain=${host}&sz=64` : ''
+        return `<a class="notion-bookmark" href="${url}" target="_blank" rel="noopener noreferrer">${favicon ? `<img class="notion-bookmark-favicon" src="${favicon}" alt="" />` : ''}<span class="notion-bookmark-body"><span class="notion-bookmark-title">${cap || host || url}</span><span class="notion-bookmark-url">${host || url}</span></span></a>`
       }
       case 'video': {
         const url = block.video.file?.url || block.video.external?.url
