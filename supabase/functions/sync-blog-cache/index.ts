@@ -11,6 +11,36 @@ const DATABASE_ID = '2bc8863b87d4802fa65dd15c42ffa13b'
 const NOTION_S3_PATTERN = /https:\/\/(?:prod-files-secure|s3\.us-west-2\.amazonaws\.com\/secure\.notion-static\.com)[^\s"'<>)]+/g
 const MAX_FILE_SIZE = 200 * 1024 * 1024
 
+// Simple in-process cache for URL titles during a single sync run
+const titleCache = new Map<string, string>()
+async function fetchPageTitle(url: string): Promise<string> {
+  if (titleCache.has(url)) return titleCache.get(url)!
+  try {
+    const controller = new AbortController()
+    const timeout = setTimeout(() => controller.abort(), 5000)
+    const res = await fetch(url, {
+      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; ThreadAndStackBot/1.0)' },
+      signal: controller.signal,
+      redirect: 'follow',
+    })
+    clearTimeout(timeout)
+    if (!res.ok) { titleCache.set(url, ''); return '' }
+    const ct = res.headers.get('content-type') || ''
+    if (!ct.includes('text/html')) { titleCache.set(url, ''); return '' }
+    const text = (await res.text()).slice(0, 200_000)
+    const og = text.match(/<meta[^>]+property=["']og:title["'][^>]+content=["']([^"']+)["']/i)
+    const tw = text.match(/<meta[^>]+name=["']twitter:title["'][^>]+content=["']([^"']+)["']/i)
+    const tt = text.match(/<title[^>]*>([^<]+)<\/title>/i)
+    const raw = (og?.[1] || tw?.[1] || tt?.[1] || '').trim()
+    const title = raw.replace(/\s+/g, ' ').slice(0, 200)
+    titleCache.set(url, title)
+    return title
+  } catch {
+    titleCache.set(url, '')
+    return ''
+  }
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders })
@@ -406,7 +436,8 @@ async function renderBlogContent(pageId: string, notionApiKey: string): Promise<
         let host = ''
         try { host = new URL(url).hostname.replace(/^www\./, '') } catch { /* noop */ }
         const favicon = host ? `https://www.google.com/s2/favicons?domain=${host}&sz=64` : ''
-        return `<a class="notion-bookmark" href="${url}" target="_blank" rel="noopener noreferrer">${favicon ? `<img class="notion-bookmark-favicon" src="${favicon}" alt="" />` : ''}<span class="notion-bookmark-body"><span class="notion-bookmark-title">${cap || host || url}</span><span class="notion-bookmark-url">${host || url}</span></span></a>`
+        const title = cap || (await fetchPageTitle(url)) || host || url
+        return `<a class="notion-url-mention" href="${url}" target="_blank" rel="noopener noreferrer">${favicon ? `<img class="notion-url-mention-favicon" src="${favicon}" alt="" />` : ''}<span class="notion-url-mention-title">${title}</span></a>`
       }
       case 'video': {
         const url = block.video.file?.url || block.video.external?.url
