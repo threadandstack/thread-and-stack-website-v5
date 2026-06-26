@@ -406,7 +406,8 @@ async function renderBlogContent(pageId: string, notionApiKey: string): Promise<
         let host = ''
         try { host = new URL(url).hostname.replace(/^www\./, '') } catch { /* noop */ }
         const favicon = host ? `https://www.google.com/s2/favicons?domain=${host}&sz=64` : ''
-        return `<a class="notion-bookmark" href="${url}" target="_blank" rel="noopener noreferrer">${favicon ? `<img class="notion-bookmark-favicon" src="${favicon}" alt="" />` : ''}<span class="notion-bookmark-body"><span class="notion-bookmark-title">${cap || host || url}</span><span class="notion-bookmark-url">${host || url}</span></span></a>`
+        const title = cap || (await fetchPageTitle(url)) || host || url
+        return `<a class="notion-url-mention" href="${url}" target="_blank" rel="noopener noreferrer">${favicon ? `<img class="notion-url-mention-favicon" src="${favicon}" alt="" />` : ''}<span class="notion-url-mention-title">${title}</span></a>`
       }
       case 'video': {
         const url = block.video.file?.url || block.video.external?.url
