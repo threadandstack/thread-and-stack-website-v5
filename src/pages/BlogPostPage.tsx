@@ -6,7 +6,7 @@ import { BlogNewsletterCTA } from "@/components/BlogNewsletterCTA";
 import { BlogCTACallout } from "@/components/BlogCTACallout";
 import { RelatedBlogs } from "@/components/RelatedBlogs";
 import { FAQ } from "@/components/FAQ";
-import { Loader2 } from "lucide-react";
+import { Loader2, Sun, Moon } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import brendanAvatar from "@/assets/brendan-avatar.webp";
 import { trackBlogRead } from "@/hooks/useAnalytics";
@@ -54,6 +54,8 @@ const BlogPostPage = () => {
   const [post, setPost] = useState<BlogPostDetail | null>(null);
   const [featuredRelatedSlug, setFeaturedRelatedSlug] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [theme, setTheme] = useState<"dark" | "light">("light");
+  const toggleTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -184,133 +186,172 @@ const BlogPostPage = () => {
 
   if (isLoading) {
     return (
-      <main className="min-h-screen relative pt-24">
-        <Navigation />
-        <div className="flex justify-center py-20">
-          <Loader2 className="h-8 w-8 animate-spin text-accent" />
-        </div>
-      </main>
+      <div className="notion-canvas min-h-screen overflow-x-hidden" data-theme={theme}>
+        <main className="min-h-screen relative pt-24">
+          <Navigation
+            variant={theme === "dark" ? "image-hero" : "default"}
+            themeToggle={
+              <button
+                onClick={toggleTheme}
+                className="flex h-8 w-8 items-center justify-center rounded-full border border-border/40 bg-muted/60 text-foreground/70 backdrop-blur-sm transition-all hover:bg-muted hover:text-foreground"
+                aria-label="Toggle theme"
+              >
+                {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+              </button>
+            }
+          />
+          <div className="flex justify-center py-20">
+            <Loader2 className="h-8 w-8 animate-spin text-accent" />
+          </div>
+        </main>
+      </div>
     );
   }
 
   if (!post) {
     return (
-      <main className="min-h-screen relative pt-24">
-        <Navigation />
-        <div className="max-w-4xl mx-auto px-6 py-20 text-center">
-          <h1 className="text-4xl mb-4">Post not found</h1>
-          <p className="text-muted-foreground">This post may have been removed or doesn't exist.</p>
-        </div>
-      </main>
+      <div className="notion-canvas min-h-screen overflow-x-hidden" data-theme={theme}>
+        <main className="min-h-screen relative pt-24">
+          <Navigation
+            variant={theme === "dark" ? "image-hero" : "default"}
+            themeToggle={
+              <button
+                onClick={toggleTheme}
+                className="flex h-8 w-8 items-center justify-center rounded-full border border-border/40 bg-muted/60 text-foreground/70 backdrop-blur-sm transition-all hover:bg-muted hover:text-foreground"
+                aria-label="Toggle theme"
+              >
+                {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+              </button>
+            }
+          />
+          <div className="max-w-4xl mx-auto px-6 py-20 text-center">
+            <h1 className="text-4xl mb-4">Post not found</h1>
+            <p className="text-muted-foreground">This post may have been removed or doesn't exist.</p>
+          </div>
+        </main>
+      </div>
     );
   }
 
   return (
-    <main className="min-h-screen relative pt-24">
-      <Navigation />
-      
-      <article className="py-24 px-6">
-        <div className="max-w-4xl mx-auto">
-          {/* Header Image - Now above title */}
-          {post.headerImage && (
-            <div className="aspect-[21/9] overflow-hidden rounded-2xl mb-12">
-              <img 
-                src={post.headerImage} 
-                alt={post.title}
-                className="w-full h-full object-cover"
-              />
-            </div>
-          )}
-
-          <div className="max-w-3xl mx-auto">
-            {/* Title */}
-            <h1 className="text-5xl md:text-6xl mb-6 font-light leading-tight">
-              {post.title}
-            </h1>
-
-            {/* Meta info: Author, Category, Read time, Last edited */}
-            <div className="flex flex-wrap items-center gap-4 mb-8 text-sm">
-              <div className="flex items-center gap-3">
+    <div className="notion-canvas min-h-screen overflow-x-hidden" data-theme={theme}>
+      <main className="min-h-screen relative pt-24">
+        <Navigation
+          variant={theme === "dark" ? "image-hero" : "default"}
+          themeToggle={
+            <button
+              onClick={toggleTheme}
+              className="flex h-8 w-8 items-center justify-center rounded-full border border-border/40 bg-muted/60 text-foreground/70 backdrop-blur-sm transition-all hover:bg-muted hover:text-foreground"
+              aria-label="Toggle theme"
+            >
+              {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            </button>
+          }
+        />
+        
+        <article className="py-24 px-6">
+          <div className="max-w-4xl mx-auto">
+            {/* Header Image - Now above title */}
+            {post.headerImage && (
+              <div className="aspect-[21/9] overflow-hidden rounded-2xl mb-12">
                 <img 
-                  src={brendanAvatar} 
-                  alt="Brendan" 
-                  className="w-10 h-10 rounded-full object-cover"
+                  src={post.headerImage} 
+                  alt={post.title}
+                  className="w-full h-full object-cover"
                 />
-                <span className="text-muted-foreground">
-                  Brendan @ Thread and Stack
-                </span>
               </div>
-              {post.theme && (
-                <span className={`px-3 py-1 rounded-full text-xs font-medium ${getThemeColor(post.theme)}`}>
-                  {post.theme}
-                </span>
-              )}
-              {post.readingTime && (
-                <span className="text-muted-foreground">
-                  {post.readingTime} min read
-                </span>
-              )}
-              {post.lastEditedTime && (
-                <>
-                  <span className="text-muted-foreground/50">|</span>
-                  <span className="text-muted-foreground">
-                    Updated {formatLastEdited(post.lastEditedTime)}
-                  </span>
-                </>
-              )}
-            </div>
-
-            {/* Description */}
-            {post.description && (
-              <p className="text-xl text-muted-foreground mb-8 leading-relaxed italic">
-                {post.description}
-              </p>
             )}
 
-            {/* Subscribe button (collapsible) */}
-            <div className="mb-12">
-              <BlogNewsletterCTA />
+            <div className="max-w-3xl mx-auto">
+              {/* Title */}
+              <h1 className="text-5xl md:text-6xl mb-6 font-light leading-tight">
+                {post.title}
+              </h1>
+
+              {/* Meta info: Author, Category, Read time, Last edited */}
+              <div className="flex flex-wrap items-center gap-4 mb-8 text-sm">
+                <div className="flex items-center gap-3">
+                  <img 
+                    src={brendanAvatar} 
+                    alt="Brendan" 
+                    className="w-10 h-10 rounded-full object-cover"
+                  />
+                  <span className="text-muted-foreground">
+                    Brendan @ Thread and Stack
+                  </span>
+                </div>
+                {post.theme && (
+                  <span className={`px-3 py-1 rounded-full text-xs font-medium ${getThemeColor(post.theme)}`}>
+                    {post.theme}
+                  </span>
+                )}
+                {post.readingTime && (
+                  <span className="text-muted-foreground">
+                    {post.readingTime} min read
+                  </span>
+                )}
+                {post.lastEditedTime && (
+                  <>
+                    <span className="text-muted-foreground/50">|</span>
+                    <span className="text-muted-foreground">
+                      Updated {formatLastEdited(post.lastEditedTime)}
+                    </span>
+                  </>
+                )}
+              </div>
+
+              {/* Description */}
+              {post.description && (
+                <p className="text-xl text-muted-foreground mb-8 leading-relaxed italic">
+                  {post.description}
+                </p>
+              )}
+
+              {/* Subscribe button (collapsible) */}
+              <div className="mb-12">
+                <BlogNewsletterCTA />
+              </div>
+
+              {/* Content */}
+              <div 
+                className="blog-content prose prose-lg max-w-none"
+                dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.content) }}
+              />
+
+              {/* Subtle CTA Callout */}
+              <BlogCTACallout theme={post.theme} title={post.title} />
             </div>
-
-            {/* Content */}
-            <div 
-              className="blog-content prose prose-lg max-w-none"
-              dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.content) }}
-            />
-
-            {/* Subtle CTA Callout */}
-            <BlogCTACallout theme={post.theme} title={post.title} />
           </div>
-        </div>
-      </article>
+        </article>
 
-      {/* Related Blogs Carousel */}
-      <RelatedBlogs currentSlug={slug || ''} featuredRelatedSlug={featuredRelatedSlug} />
+        {/* Related Blogs Carousel */}
+        <RelatedBlogs currentSlug={slug || ''} featuredRelatedSlug={featuredRelatedSlug} />
 
-      <FAQ items={[
-        {
-          question: "What is the Thread & Stack Journal?",
-          answer: "Thread & Stack Journal is our blog exploring the intersection of brand, creativity, and systems that build our businesses. I share thoughts on behavioural strategy, AI in marketing, and honest takes on running a purpose-driven practice. Subscribe and I'll send you monthly signals on building brands that stay true while scaling."
-        },
-        {
-          question: "What topics do you cover?",
-          answer: "The blog focuses on three core areas: brand strategy and positioning for purpose-led organisations, AI integration in marketing workflows (with a human-centred approach), and practical systems thinking for reducing cognitive load and creative tax. Topics range from behavioural psychology in marketing to Notion workspace design to the ethics of AI in creative work."
-        },
-        {
-          question: "How does this relate to Thread & Stack's services?",
-          answer: "The blog extends the thinking behind Thread & Stack's two core pillars: Narratives & Strategy Services (Strategy Sessions, Fractional Strategy Director, Project Engagements) and Notion & Systems Consultancy (Notion Sessions, Fractional Automations Director, System-Build Engagements). It's where I share the philosophy, frameworks, and learnings that inform the work."
-        },
-        {
-          question: "Who is Thread & Stack for?",
-          answer: "We work with purpose-led organisations across two main profiles: values-driven founders and small organisations (like B Corps, social enterprises, and nonprofits) who prioritise impact and integrity as they grow, and scaling teams (typically 2–50 people) led by founder-operators who need to cut through unclear positioning and messy operational systems to focus on what matters."
-        },
-        {
-          question: "How do I work with Thread & Stack?",
-          answer: "We work across two pillars. Narratives & Strategy Services covers Strategy Sessions, Fractional Strategy Director retainers, and Project Engagements. Notion & Systems Consultancy covers Notion Sessions, Fractional Automations Director retainers, and System-Build Engagements. Book an intro call to find the right fit."
-        }
-      ]} title="About Thread & Stack Journal" />
-      <Footer />
-    </main>
+        <FAQ items={[
+          {
+            question: "What is the Thread & Stack Journal?",
+            answer: "Thread & Stack Journal is our blog exploring the intersection of brand, creativity, and systems that build our businesses. I share thoughts on behavioural strategy, AI in marketing, and honest takes on running a purpose-driven practice. Subscribe and I'll send you monthly signals on building brands that stay true while scaling."
+          },
+          {
+            question: "What topics do you cover?",
+            answer: "The blog focuses on three core areas: brand strategy and positioning for purpose-led organisations, AI integration in marketing workflows (with a human-centred approach), and practical systems thinking for reducing cognitive load and creative tax. Topics range from behavioural psychology in marketing to Notion workspace design to the ethics of AI in creative work."
+          },
+          {
+            question: "How does this relate to Thread & Stack's services?",
+            answer: "The blog extends the thinking behind Thread & Stack's two core pillars: Narratives & Strategy Services (Strategy Sessions, Fractional Strategy Director, Project Engagements) and Notion & Systems Consultancy (Notion Sessions, Fractional Automations Director, System-Build Engagements). It's where I share the philosophy, frameworks, and learnings that inform the work."
+          },
+          {
+            question: "Who is Thread & Stack for?",
+            answer: "We work with purpose-led organisations across two main profiles: values-driven founders and small organisations (like B Corps, social enterprises, and nonprofits) who prioritise impact and integrity as they grow, and scaling teams (typically 2–50 people) led by founder-operators who need to cut through unclear positioning and messy operational systems to focus on what matters."
+          },
+          {
+            question: "How do I work with Thread & Stack?",
+            answer: "We work across two pillars. Narratives & Strategy Services covers Strategy Sessions, Fractional Strategy Director retainers, and Project Engagements. Notion & Systems Consultancy covers Notion Sessions, Fractional Automations Director retainers, and System-Build Engagements. Book an intro call to find the right fit."
+          }
+        ]} title="About Thread & Stack Journal" />
+        <Footer />
+      </main>
+    </div>
   );
 };
 
