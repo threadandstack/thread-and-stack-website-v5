@@ -378,10 +378,35 @@ async function renderBlogContent(pageId: string, notionApiKey: string): Promise<
     return d.results || []
   }
 
+  const renderUrlMention = async (url: string): Promise<string> => {
+    let host = ''
+    try { host = new URL(url).hostname.replace(/^www\./, '') } catch { /* noop */ }
+    const favicon = host ? `https://www.google.com/s2/favicons?domain=${host}&sz=64` : ''
+    const title = (await fetchPageTitle(url)) || host || url
+    return `<a class="notion-url-mention" href="${url}" target="_blank" rel="noopener noreferrer">${favicon ? `<img class="notion-url-mention-favicon" src="${favicon}" alt="" />` : ''}<span class="notion-url-mention-title">${escapeHtml(title)}</span></a>`
+  }
+
+  // Render rich text, but upgrade bare-URL links (where text === href) to URL mention cards.
+  const richTextToHtmlAsync = async (rt: any[]): Promise<string> => {
+    if (!rt || rt.length === 0) return ''
+    const parts: string[] = []
+    for (const item of rt) {
+      const href = item?.href
+      const plain = (item?.plain_text || '').trim()
+      const isBareUrl = href && plain && (plain === href || plain === decodeURI(href)) && /^https?:\/\//i.test(href)
+      if (isBareUrl) {
+        parts.push(await renderUrlMention(href))
+      } else {
+        parts.push(richTextToHtml([item]))
+      }
+    }
+    return parts.join('')
+  }
+
   const blockToHtml = async (block: any): Promise<string> => {
     switch (block.type) {
       case 'paragraph': {
-        const t = richTextToHtml(block.paragraph.rich_text)
+        const t = await richTextToHtmlAsync(block.paragraph.rich_text)
         return t ? `<p>${t}</p>` : ''
       }
       case 'heading_1':
