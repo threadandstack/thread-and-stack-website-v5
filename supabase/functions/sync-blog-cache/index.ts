@@ -283,15 +283,27 @@ async function renderBlogContent(pageId: string, notionApiKey: string): Promise<
     startCursor = data.has_more ? data.next_cursor : undefined
   } while (startCursor)
 
+  const escapeHtml = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+
   const richTextToHtml = (richTextArray: any[]) => {
     if (!richTextArray || richTextArray.length === 0) return ''
     return richTextArray.map((text: any) => {
-      let content = text.plain_text.replace(/\n/g, '<br>')
-      if (text.annotations.bold) content = `<strong>${content}</strong>`
-      if (text.annotations.italic) content = `<em>${content}</em>`
-      if (text.annotations.strikethrough) content = `<s>${content}</s>`
-      if (text.annotations.underline) content = `<u>${content}</u>`
-      if (text.annotations.code) content = `<code>${content}</code>`
+      // Custom emoji mention -> inline image
+      if (text.type === 'mention' && text.mention?.type === 'custom_emoji') {
+        const url = text.mention.custom_emoji?.url
+        const name = text.mention.custom_emoji?.name || ''
+        if (url) return `<img class="notion-inline-emoji" src="${url}" alt="${escapeHtml(name)}" />`
+      }
+      let content = (text.plain_text || '').replace(/\n/g, '<br>')
+      const ann = text.annotations || {}
+      if (ann.code) content = `<code>${content}</code>`
+      if (ann.bold) content = `<strong>${content}</strong>`
+      if (ann.italic) content = `<em>${content}</em>`
+      if (ann.strikethrough) content = `<s>${content}</s>`
+      if (ann.underline) content = `<u>${content}</u>`
+      if (ann.color && ann.color !== 'default') {
+        content = `<span class="notion-color-${ann.color}">${content}</span>`
+      }
       if (text.href) content = `<a href="${text.href}" target="_blank" rel="noopener noreferrer">${content}</a>`
       return content
     }).join('')
@@ -383,7 +395,18 @@ async function renderBlogContent(pageId: string, notionApiKey: string): Promise<
       case 'image': {
         const url = block.image.file?.url || block.image.external?.url
         const cap = block.image.caption ? richTextToHtml(block.image.caption) : ''
-        return url ? `<figure><img src="${url}" alt="${cap}" />${cap ? `<figcaption>${cap}</figcaption>` : ''}</figure>` : ''
+        const cls = cap ? 'image-content' : 'image-centered'
+        return url ? `<figure class="${cls}"><img src="${url}" alt="${cap}" loading="lazy" />${cap ? `<figcaption>${cap}</figcaption>` : ''}</figure>` : ''
+      }
+      case 'bookmark':
+      case 'link_preview': {
+        const url = block.bookmark?.url || block.link_preview?.url
+        if (!url) return ''
+        const cap = block.bookmark?.caption ? richTextToHtml(block.bookmark.caption) : ''
+        let host = ''
+        try { host = new URL(url).hostname.replace(/^www\./, '') } catch { /* noop */ }
+        const favicon = host ? `https://www.google.com/s2/favicons?domain=${host}&sz=64` : ''
+        return `<a class="notion-bookmark" href="${url}" target="_blank" rel="noopener noreferrer">${favicon ? `<img class="notion-bookmark-favicon" src="${favicon}" alt="" />` : ''}<span class="notion-bookmark-body"><span class="notion-bookmark-title">${cap || host || url}</span><span class="notion-bookmark-url">${host || url}</span></span></a>`
       }
       case 'video': {
         const url = block.video.file?.url || block.video.external?.url

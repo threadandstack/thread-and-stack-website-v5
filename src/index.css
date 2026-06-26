@@ -614,6 +614,99 @@ All colors MUST be HSL.
     height: auto;
     border-radius: 0.5rem;
   }
+
+  /* Centered standalone image (no caption) — used for GIFs/screenshots */
+  .blog-content figure.image-centered {
+    max-width: 60%;
+    margin: 2rem auto;
+    text-align: center;
+  }
+  @media (max-width: 768px) {
+    .blog-content figure.image-centered { max-width: 90%; }
+  }
+  .blog-content figure.image-centered img {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Inline custom emoji from Notion */
+  .blog-content .notion-inline-emoji {
+    display: inline-block;
+    width: 1.15em;
+    height: 1.15em;
+    vertical-align: -0.2em;
+    margin: 0 0.1em;
+    border-radius: 0.2em;
+  }
+
+  /* Notion-style URL mention / bookmark card */
+  .blog-content .notion-bookmark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.5rem 0.85rem;
+    margin: 0.35rem 0;
+    border: 1px solid hsl(var(--border));
+    border-radius: 0.5rem;
+    background: hsl(var(--muted) / 0.35);
+    text-decoration: none;
+    color: hsl(var(--foreground));
+    transition: background 0.2s, border-color 0.2s;
+    max-width: 100%;
+  }
+  .blog-content .notion-bookmark:hover {
+    background: hsl(var(--muted) / 0.6);
+    border-color: hsl(var(--foreground) / 0.25);
+  }
+  .blog-content .notion-bookmark-favicon {
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+  .blog-content .notion-bookmark-body {
+    display: inline-flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .blog-content .notion-bookmark-title {
+    font-weight: 500;
+    text-decoration: underline;
+    text-decoration-color: hsl(var(--foreground) / 0.3);
+    text-underline-offset: 3px;
+    line-height: 1.3;
+  }
+  .blog-content .notion-bookmark-url {
+    font-size: 0.75rem;
+    color: hsl(var(--muted-foreground));
+    line-height: 1.3;
+  }
+
+  /* Notion rich-text colors (text + background variants) */
+  .blog-content .notion-color-gray { color: hsl(0 0% 45%); }
+  .blog-content .notion-color-brown { color: hsl(25 35% 40%); }
+  .blog-content .notion-color-orange { color: hsl(25 95% 50%); }
+  .blog-content .notion-color-yellow { color: hsl(40 90% 45%); }
+  .blog-content .notion-color-green { color: hsl(150 55% 38%); }
+  .blog-content .notion-color-blue { color: hsl(210 75% 50%); }
+  .blog-content .notion-color-purple { color: hsl(270 55% 55%); }
+  .blog-content .notion-color-pink { color: hsl(330 70% 55%); }
+  .blog-content .notion-color-red { color: hsl(0 75% 55%); }
+  .blog-content .notion-color-gray_background { background: hsl(0 0% 50% / 0.18); padding: 0.05em 0.3em; border-radius: 0.25em; }
+  .blog-content .notion-color-brown_background { background: hsl(25 35% 50% / 0.2); padding: 0.05em 0.3em; border-radius: 0.25em; }
+  .blog-content .notion-color-orange_background { background: hsl(25 95% 55% / 0.2); padding: 0.05em 0.3em; border-radius: 0.25em; }
+  .blog-content .notion-color-yellow_background { background: hsl(45 95% 55% / 0.25); padding: 0.05em 0.3em; border-radius: 0.25em; }
+  .blog-content .notion-color-green_background { background: hsl(150 55% 50% / 0.2); padding: 0.05em 0.3em; border-radius: 0.25em; }
+  .blog-content .notion-color-blue_background { background: hsl(210 75% 55% / 0.18); padding: 0.05em 0.3em; border-radius: 0.25em; }
+  .blog-content .notion-color-purple_background { background: hsl(270 55% 60% / 0.2); padding: 0.05em 0.3em; border-radius: 0.25em; }
+  .blog-content .notion-color-pink_background { background: hsl(330 70% 60% / 0.2); padding: 0.05em 0.3em; border-radius: 0.25em; }
+  .blog-content .notion-color-red_background { background: hsl(0 75% 60% / 0.2); padding: 0.05em 0.3em; border-radius: 0.25em; }
+
+  /* Inline <code> inside a colored span keeps its chip background but inherits the color */
+  .blog-content [class^="notion-color-"] code,
+  .blog-content [class*=" notion-color-"] code {
+    color: inherit;
+  }
 }
 
 /* CV page styles */
