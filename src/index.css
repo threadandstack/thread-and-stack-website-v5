@@ -747,12 +747,13 @@ All colors MUST be HSL.
     background: hsl(var(--muted) / 0.5);
   }
   .blog-content .notion-url-mention-favicon {
-    width: 14px;
-    height: 14px;
-    border-radius: 3px;
+    width: 1em;
+    height: 1em;
+    border-radius: 2px;
     flex-shrink: 0;
     margin: 0;
     display: inline-block;
+    object-fit: contain;
   }
   .blog-content .notion-url-mention-title {
     text-decoration: underline;
