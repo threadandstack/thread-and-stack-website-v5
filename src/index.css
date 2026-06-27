@@ -746,7 +746,7 @@ All colors MUST be HSL.
   .blog-content .notion-url-mention:hover {
     background: hsl(var(--muted) / 0.5);
   }
-  .blog-content .notion-url-mention-favicon {
+  .blog-content .notion-url-mention .notion-url-mention-favicon {
     width: 1em;
     height: 1em;
     border-radius: 2px;
