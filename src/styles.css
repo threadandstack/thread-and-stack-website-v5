@@ -1,0 +1,176 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Brain — Notion Canvas warm premium dark palette */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--card);
+  --color-popover-foreground: var(--card-foreground);
+  --color-primary: var(--clay);
+  --color-primary-foreground: var(--accent-foreground);
+  --color-secondary: var(--paper);
+  --color-secondary-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--crimson);
+  --color-destructive-foreground: var(--foreground);
+  --color-border: var(--hairline);
+  --color-input: var(--hairline);
+  --color-ring: var(--clay);
+
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-hairline: var(--hairline);
+  --color-clay: var(--clay);
+  --color-clay-soft: var(--clay-soft);
+  --color-orange: var(--orange);
+  --color-violet: var(--violet);
+  --color-crimson: var(--crimson);
+  --color-sky: var(--sky);
+  --color-indigo: var(--indigo);
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Instrument Serif", ui-serif, Georgia, serif;
+}
+
+:root,
+.dark {
+  --radius: 0.625rem;
+
+  /* warm dark */
+  --background: oklch(0.18 0.012 60);
+  --foreground: oklch(0.96 0.012 80);
+  --card: oklch(0.22 0.012 60);
+  --card-foreground: oklch(0.96 0.012 80);
+  --paper: oklch(0.22 0.012 60);
+  --ink: oklch(0.12 0.012 60);
+  --ink-soft: oklch(0.72 0.012 70);
+  --hairline: oklch(0.30 0.010 60);
+  --muted: oklch(0.26 0.010 60);
+  --muted-foreground: oklch(0.66 0.012 70);
+  --accent: oklch(0.68 0.16 50);
+  --accent-foreground: oklch(0.16 0.012 60);
+
+  /* accents */
+  --clay: oklch(0.70 0.16 45);
+  --clay-soft: oklch(0.80 0.10 55);
+  --orange: oklch(0.74 0.18 55);
+  --violet: oklch(0.68 0.18 305);
+  --crimson: oklch(0.58 0.22 25);
+  --sky: oklch(0.72 0.13 240);
+  --indigo: oklch(0.60 0.22 270);
+
+  --gradient-warm: linear-gradient(95deg, oklch(0.74 0.18 55), oklch(0.68 0.18 305));
+  --gradient-cool: linear-gradient(135deg, oklch(0.68 0.18 305), oklch(0.60 0.22 270));
+}
+
+.light {
+  --background: oklch(0.97 0.012 80);
+  --foreground: oklch(0.18 0.012 60);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.18 0.012 60);
+  --paper: oklch(0.94 0.012 80);
+  --ink: oklch(0.18 0.012 60);
+  --ink-soft: oklch(0.38 0.012 60);
+  --hairline: oklch(0.88 0.010 70);
+  --muted: oklch(0.93 0.010 70);
+  --muted-foreground: oklch(0.45 0.012 60);
+  --accent: oklch(0.60 0.18 45);
+  --accent-foreground: oklch(0.98 0 0);
+  --clay: oklch(0.58 0.18 40);
+  --clay-soft: oklch(0.50 0.16 45);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  html, body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* Utilities */
+.font-serif-pro { font-family: var(--font-serif); }
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+.bg-grid {
+  background-image:
+    linear-gradient(to right, var(--hairline) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--hairline) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+.aurora { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.aurora::before,
+.aurora::after,
+.aurora > span {
+  content: "";
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(80px);
+  opacity: 0.55;
+}
+.aurora::before {
+  width: 620px; height: 620px; top: -180px; left: 8%;
+  background: radial-gradient(closest-side, var(--orange), transparent);
+}
+.aurora::after {
+  width: 540px; height: 540px; top: -120px; right: 6%;
+  background: radial-gradient(closest-side, var(--crimson), transparent);
+  opacity: 0.45;
+}
+.aurora > span {
+  width: 720px; height: 480px; top: 60px; left: 50%;
+  transform: translateX(-50%);
+  background: radial-gradient(closest-side, var(--violet), transparent);
+  opacity: 0.4;
+}
+
+.text-gradient-warm {
+  background-image: var(--gradient-warm);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.bg-gradient-warm { background-image: var(--gradient-warm); }
+.bg-gradient-cool { background-image: var(--gradient-cool); }
+
+@keyframes brain-fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: brain-fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.fade-up-1 { animation-delay: 0.05s; }
+.fade-up-2 { animation-delay: 0.15s; }
+.fade-up-3 { animation-delay: 0.25s; }
+.fade-up-4 { animation-delay: 0.35s; }
+.fade-up-5 { animation-delay: 0.45s; }
+
+@keyframes brain-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.08); opacity: 0.9; }
+}
+.animate-record-pulse { animation: brain-pulse 1.6s ease-in-out infinite; }
