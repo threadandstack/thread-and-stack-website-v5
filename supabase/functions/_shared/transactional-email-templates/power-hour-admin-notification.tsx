@@ -55,12 +55,12 @@ const PowerHourAdminNotification = ({
     <Html lang="en" dir="ltr">
       <Head />
       <Preview>
-        New Power-Hour booking — {name || 'unknown'} ({amountStr})
+        New Diagnostic booking — {name || 'unknown'} ({amountStr})
       </Preview>
       <Body style={main}>
         <Container style={container}>
           <Section style={accentBar} />
-          <Text style={eyebrow}>New booking · Power-Hour</Text>
+          <Text style={eyebrow}>New booking · Stack Diagnostic</Text>
           <Heading style={h1}>
             {name || 'New customer'} just booked.
           </Heading>
@@ -119,9 +119,9 @@ const PowerHourAdminNotification = ({
 export const template = {
   component: PowerHourAdminNotification,
   subject: (data: Record<string, any>) =>
-    `New Power-Hour booking — ${data.name || 'unknown'}${data.couponCode ? ` (${data.couponCode})` : ''}`,
+    `New Diagnostic booking — ${data.name || 'unknown'}${data.couponCode ? ` (${data.couponCode})` : ''}`,
   to: 'br@brendanrodgers.uk',
-  displayName: 'Power-Hour admin notification',
+  displayName: 'Diagnostic admin notification',
   previewData: {
     name: 'Jane Doe',
     email: 'jane@example.com',
