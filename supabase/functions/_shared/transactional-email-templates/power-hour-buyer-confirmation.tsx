@@ -28,7 +28,7 @@ const PowerHourBuyerConfirmation = ({ name, amountPaid, couponCode }: Props) => 
   return (
     <Html lang="en" dir="ltr">
       <Head />
-      <Preview>Your AI Power-Hour is booked — next steps inside</Preview>
+      <Preview>Your Stack Diagnostic is booked — next steps inside</Preview>
       <Body style={main}>
         <Container style={container}>
           <Section style={accentBar} />
@@ -37,7 +37,7 @@ const PowerHourBuyerConfirmation = ({ name, amountPaid, couponCode }: Props) => 
             {firstName ? `Thank you, ${firstName}.` : 'Thank you.'}
           </Heading>
           <Text style={text}>
-            Your AI Power-Hour is booked
+            Your Stack Diagnostic is booked
             {amountStr ? ` — ${amountStr} confirmed` : ''}
             {couponCode ? ` (voucher ${couponCode} applied)` : ''}.
           </Text>
