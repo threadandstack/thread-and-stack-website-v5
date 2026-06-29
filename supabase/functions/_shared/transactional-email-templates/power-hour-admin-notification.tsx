@@ -119,9 +119,9 @@ const PowerHourAdminNotification = ({
 export const template = {
   component: PowerHourAdminNotification,
   subject: (data: Record<string, any>) =>
-    `New Power-Hour booking — ${data.name || 'unknown'}${data.couponCode ? ` (${data.couponCode})` : ''}`,
+    `New Diagnostic booking — ${data.name || 'unknown'}${data.couponCode ? ` (${data.couponCode})` : ''}`,
   to: 'br@brendanrodgers.uk',
-  displayName: 'Power-Hour admin notification',
+  displayName: 'Diagnostic admin notification',
   previewData: {
     name: 'Jane Doe',
     email: 'jane@example.com',
