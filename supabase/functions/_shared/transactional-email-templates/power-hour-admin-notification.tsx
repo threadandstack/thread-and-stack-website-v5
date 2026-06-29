@@ -55,12 +55,12 @@ const PowerHourAdminNotification = ({
     <Html lang="en" dir="ltr">
       <Head />
       <Preview>
-        New Power-Hour booking — {name || 'unknown'} ({amountStr})
+        New Diagnostic booking — {name || 'unknown'} ({amountStr})
       </Preview>
       <Body style={main}>
         <Container style={container}>
           <Section style={accentBar} />
-          <Text style={eyebrow}>New booking · Power-Hour</Text>
+          <Text style={eyebrow}>New booking · Stack Diagnostic</Text>
           <Heading style={h1}>
             {name || 'New customer'} just booked.
           </Heading>
