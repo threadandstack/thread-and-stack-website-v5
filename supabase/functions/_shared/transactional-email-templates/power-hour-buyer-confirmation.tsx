@@ -78,9 +78,9 @@ const PowerHourBuyerConfirmation = ({ name, amountPaid, couponCode }: Props) => 
 
 export const template = {
   component: PowerHourBuyerConfirmation,
-  subject: 'Your AI Power-Hour is booked',
-  displayName: 'Power-Hour buyer confirmation',
-  previewData: { name: 'Jane Doe', amountPaid: 29500, couponCode: 'CHARITYMEETUP100' },
+  subject: 'Your Stack Diagnostic is booked',
+  displayName: 'Diagnostic buyer confirmation',
+  previewData: { name: 'Jane Doe', amountPaid: 39500 },
 } satisfies TemplateEntry
 
 const main = {
