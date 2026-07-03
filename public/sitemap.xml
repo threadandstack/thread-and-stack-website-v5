@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://threadandstack.com/</loc>
     <lastmod>2026-07-03</lastmod>
@@ -155,29 +155,49 @@
     <lastmod>2026-06-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+    <image:image>
+      <image:loc>https://uohhfesyumigbpqjpacl.supabase.co/storage/v1/object/public/notion-media/blog-storytelling-with-a-soul/header.png</image:loc>
+      <image:title>Storytelling with a Soul</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://threadandstack.com/blog/welcome-to-thread-stack-s-journal</loc>
     <lastmod>2026-06-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+    <image:image>
+      <image:loc>https://uohhfesyumigbpqjpacl.supabase.co/storage/v1/object/public/notion-media/blog-welcome-to-thread-stack-s-journal/header.png</image:loc>
+      <image:title>Welcome to Thread &amp; Stack’s Journal</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://threadandstack.com/blog/what-is-marketing-chaos</loc>
     <lastmod>2026-06-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+    <image:image>
+      <image:loc>https://uohhfesyumigbpqjpacl.supabase.co/storage/v1/object/public/notion-media/blog-what-is-marketing-chaos/header.png</image:loc>
+      <image:title>What is Marketing Chaos?</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://threadandstack.com/blog/cognitive-overload-you</loc>
     <lastmod>2026-06-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+    <image:image>
+      <image:loc>https://uohhfesyumigbpqjpacl.supabase.co/storage/v1/object/public/notion-media/blog-cognitive-overload-you/header.png</image:loc>
+      <image:title>Cognitive Overload &amp; You</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://threadandstack.com/blog/the-death-of-notion-mail</loc>
     <lastmod>2026-06-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+    <image:image>
+      <image:loc>https://uohhfesyumigbpqjpacl.supabase.co/storage/v1/object/public/notion-media/blog-the-death-of-notion-mail/header.png</image:loc>
+      <image:title>The Death of Notion Mail</image:title>
+    </image:image>
   </url>
 </urlset>
