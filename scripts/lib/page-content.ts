@@ -99,21 +99,21 @@ export const pages: PageContent[] = [
     path: "/services",
     title: "Services — Thread & Stack",
     description:
-      "Two pillars: Narratives & Strategy and Notion & Systems Consultancy. Standard terms: 50% upfront, 50% on delivery.",
+      "Two pillars: Ops, Strategy & Systems Consultancy (lead) and Narratives & Strategy (secondary). Standard terms: 50% upfront, 50% on delivery.",
     h1: "Services",
     schemaType: "Service",
     body: [
-      "Two pillars only. No workshops-as-a-service, no clarity sessions, no add-ons.",
+      "Two pillars only. Systems consultancy leads; narrative work is retained as the second pillar. No workshops-as-a-service, no clarity sessions, no add-ons.",
       {
-        heading: "Narratives & Strategy",
+        heading: "Ops, Strategy & Systems Consultancy",
         paragraphs: [
-          "Positioning, brand story, go-to-market clarity, message architecture, launch narratives. For founders and leadership teams that know what they do but cannot yet say it in one breath.",
+          "The lead pillar. Operating systems, workspace design, workflow and automation, documentation that holds up under real use. For teams that have outgrown a folder of Google docs and need an operating layer that scales with them and gives real people back the room to do their best work.",
         ],
       },
       {
-        heading: "Notion & Systems Consultancy",
+        heading: "Narratives & Strategy",
         paragraphs: [
-          "Workspace design, operating systems, automation, documentation that holds up under real use. For teams that have outgrown a folder of Google docs and need an operating layer that scales with them.",
+          "The second pillar, retained rather than led with. Positioning, brand story, go-to-market clarity, message architecture, launch narratives. Called in when the story on the outside needs to match the way the team runs on the inside.",
         ],
       },
       {
