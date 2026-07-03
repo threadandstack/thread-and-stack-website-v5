@@ -193,25 +193,52 @@ interface BlogRow {
   reading_time: number | null;
   published_date: string | null;
   synced_at: string | null;
+  header_image_url: string | null;
 }
 
 async function fetchBlogPosts(): Promise<BlogRow[]> {
   try {
-    const res = await fetch(
-      `${SUPABASE_URL}/rest/v1/blog_content_cache?select=slug,title,description,html_content,reading_time,synced_at`,
-      {
-        headers: {
-          apikey: SUPABASE_ANON_KEY,
-          Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-        },
-      }
-    );
-    if (!res.ok) {
-      console.warn(`[prerender] blog fetch failed: ${res.status}`);
+    // Join content cache (html_content) with posts cache (header_image_url + published_date)
+    const [contentRes, postsRes] = await Promise.all([
+      fetch(
+        `${SUPABASE_URL}/rest/v1/blog_content_cache?select=slug,title,description,html_content,reading_time,synced_at`,
+        {
+          headers: {
+            apikey: SUPABASE_ANON_KEY,
+            Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+          },
+        }
+      ),
+      fetch(
+        `${SUPABASE_URL}/rest/v1/blog_posts_cache?select=slug,header_image_url,published_date`,
+        {
+          headers: {
+            apikey: SUPABASE_ANON_KEY,
+            Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+          },
+        }
+      ),
+    ]);
+    if (!contentRes.ok) {
+      console.warn(`[prerender] blog fetch failed: ${contentRes.status}`);
       return [];
     }
-    const rows = (await res.json()) as BlogRow[];
-    return rows.filter((r) => r.slug);
+    const rows = (await contentRes.json()) as BlogRow[];
+    const meta = postsRes.ok
+      ? ((await postsRes.json()) as Array<{
+          slug: string;
+          header_image_url: string | null;
+          published_date: string | null;
+        }>)
+      : [];
+    const metaBySlug = new Map(meta.map((m) => [m.slug, m]));
+    return rows
+      .filter((r) => r.slug)
+      .map((r) => ({
+        ...r,
+        header_image_url: metaBySlug.get(r.slug)?.header_image_url ?? null,
+        published_date: metaBySlug.get(r.slug)?.published_date ?? r.published_date ?? null,
+      }));
   } catch (e) {
     console.warn(`[prerender] blog fetch error: ${(e as Error).message}`);
     return [];
@@ -370,26 +397,44 @@ async function main() {
       .join("\n");
 
     const url = `${SITE}/blog/${post.slug}`;
-    const jsonLd = JSON.stringify({
+    const articleLd: Record<string, unknown> = {
       "@context": "https://schema.org",
       "@type": "Article",
       headline: title,
       description,
       url,
-      author: { "@type": "Person", name: "Brendan Rodgers" },
+      mainEntityOfPage: url,
+      author: { "@type": "Person", name: "Brendan Rodgers", url: `${SITE}/about` },
       publisher: {
         "@type": "Organization",
         name: "Thread & Stack",
         url: SITE,
+        logo: {
+          "@type": "ImageObject",
+          url: `${SITE}/favicon-light.svg`,
+        },
       },
-      ...(post.synced_at ? { dateModified: post.synced_at } : {}),
+    };
+    if (post.header_image_url) articleLd.image = post.header_image_url;
+    if (post.published_date) articleLd.datePublished = post.published_date;
+    if (post.synced_at) articleLd.dateModified = post.synced_at;
+
+    const breadcrumbLd = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: SITE },
+        { "@type": "ListItem", position: 2, name: "Journal", item: `${SITE}/blog` },
+        { "@type": "ListItem", position: 3, name: title, item: url },
+      ],
     });
+
     const html = applyShell(shell, {
       path: `/blog/${post.slug}`,
       title: `${title} — Thread & Stack Journal`,
       description,
       bodyHtml,
-      jsonLdBlocks: [jsonLd],
+      jsonLdBlocks: [JSON.stringify(articleLd), breadcrumbLd],
       ogType: "article",
       dateModified: post.synced_at || undefined,
     });

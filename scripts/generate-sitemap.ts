@@ -55,10 +55,15 @@ const staticEntries: SitemapEntry[] = [
   { path: "/data-guarantee", changefreq: "yearly", priority: "0.3" },
 ];
 
-async function fetchBlogEntries(): Promise<SitemapEntry[]> {
+interface BlogSitemapEntry extends SitemapEntry {
+  imageUrl?: string;
+  imageTitle?: string;
+}
+
+async function fetchBlogEntries(): Promise<BlogSitemapEntry[]> {
   try {
     const res = await fetch(
-      `${SUPABASE_URL}/rest/v1/blog_posts_cache?select=slug,published_date,synced_at`,
+      `${SUPABASE_URL}/rest/v1/blog_posts_cache?select=slug,title,published_date,synced_at,header_image_url`,
       {
         headers: {
           apikey: SUPABASE_ANON_KEY,
@@ -72,8 +77,10 @@ async function fetchBlogEntries(): Promise<SitemapEntry[]> {
     }
     const rows = (await res.json()) as Array<{
       slug: string;
+      title: string | null;
       published_date: string | null;
       synced_at: string | null;
+      header_image_url: string | null;
     }>;
     return rows
       .filter((r) => r.slug)
@@ -84,6 +91,8 @@ async function fetchBlogEntries(): Promise<SitemapEntry[]> {
           lastmod: stamp ? new Date(stamp).toISOString().slice(0, 10) : undefined,
           changefreq: "monthly" as const,
           priority: "0.6",
+          imageUrl: r.header_image_url || undefined,
+          imageTitle: r.title || undefined,
         };
       });
   } catch (err) {
@@ -92,7 +101,16 @@ async function fetchBlogEntries(): Promise<SitemapEntry[]> {
   }
 }
 
-function generateSitemap(entries: SitemapEntry[]) {
+function xmlEscape(s: string): string {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;");
+}
+
+function generateSitemap(entries: BlogSitemapEntry[]) {
   const urls = entries.map((e) =>
     [
       `  <url>`,
@@ -100,6 +118,9 @@ function generateSitemap(entries: SitemapEntry[]) {
       e.lastmod ? `    <lastmod>${e.lastmod}</lastmod>` : null,
       e.changefreq ? `    <changefreq>${e.changefreq}</changefreq>` : null,
       e.priority ? `    <priority>${e.priority}</priority>` : null,
+      e.imageUrl
+        ? `    <image:image>\n      <image:loc>${xmlEscape(e.imageUrl)}</image:loc>${e.imageTitle ? `\n      <image:title>${xmlEscape(e.imageTitle)}</image:title>` : ""}\n    </image:image>`
+        : null,
       `  </url>`,
     ]
       .filter(Boolean)
@@ -108,7 +129,7 @@ function generateSitemap(entries: SitemapEntry[]) {
 
   return [
     `<?xml version="1.0" encoding="UTF-8"?>`,
-    `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`,
+    `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">`,
     ...urls,
     `</urlset>`,
     ``,

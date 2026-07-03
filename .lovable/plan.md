@@ -1,79 +1,69 @@
-# Brand consolidation, round 2
 
-A mix of bug fixes (gradients that didn't apply, invisible pill buttons, dark-mode pill colours on the journal) and two new design decisions (refreshed logo colourway + a tertiary palette token).
+## Goal
+Make Thread & Stack maximally discoverable and quotable by search crawlers *and* LLM fetchers (Claude, ChatGPT, Perplexity, Google AI, etc.) — without touching the visible UI.
 
-## 1. Tokens & utilities (`src/index.css`, `tailwind.config.ts`)
+## Current state (verified)
+- `robots.txt` already allow-lists every major AI crawler ✓
+- `sitemap.xml` is generated pre-build ✓
+- `llms.txt` + `llms-full.txt` exist ✓
+- `scripts/generate-prerendered.ts` runs post-build and injects real `<h1>/<h2>/<p>` copy into `<div id="root">` for static routes ✓
+- `/about` served today = 7.7 KB with prerendered body, 13 content-keyword hits — bots that fetch, see real content
+- `og:image` + JSON-LD (Organization + WebSite) present in `index.html` ✓
 
-- Add a **tertiary** semantic token pair for communication/system messages:
-  - `--tertiary: 145 60% 38%` (positive green), `--tertiary-foreground`
-  - Mirror in `.dark` (slightly lighter to read on `#181B24`)
-  - Expose as `tertiary` / `tertiary-foreground` in Tailwind config alongside `destructive`
-- Retire the unused **secondary lavender** override — collapse `--secondary` back to a neutral grey so legacy `bg-secondary` usages stay readable but no longer skew lavender
-- Audit `.text-gradient-warm`: confirm `background-clip: text` + `color: transparent` are both present (the brand-book "fragmentation" word currently renders as plain colour, suggesting the utility class is missing `-webkit-background-clip` or being overridden by `h3` italic colour)
-- Add a `.bg-gradient-warm` utility for fills (pill buttons, CTA backgrounds) so we stop hardcoding the gradient in component classNames
+The site is already in good shape. Remaining gaps are coverage, signal strength, and self-advertisement.
 
-## 2. Pill button / CTA fixes (the "invisible buttons" bug)
+## Gaps to close
 
-Likely cause: the gradient was applied via a Tailwind arbitrary value that doesn't compile, or the button variant lost its `bg-*` class when we swapped tokens. Fix path:
+### 1. Prerender coverage for dynamic routes
+`generate-prerendered.ts` only covers routes listed in `scripts/lib/page-content.ts`. Blog posts and portfolio detail pages are still empty SPA shells on first fetch. Add a build-time fetch of published blog posts (and portfolio entries where public) and emit one prerendered file per slug with title, meta description, canonical, JSON-LD `Article`/`CreativeWork`, and the post's opening paragraphs in the root div.
 
-- Patch `src/components/ui/pill-button.tsx` and `src/components/ui/button.tsx` so the **primary** variant uses `bg-gradient-warm` (new utility) with `text-white` and a visible focus ring in both themes
-- Outline variant: use `border-accent text-accent` — in dark mode `--accent` is orange, so the outline reads correctly. The "orange outline shows as black" symptom suggests the variant currently uses `border-foreground` or a literal hex
-- Verify in the brand book section 07 demo and on the bottom CTA block
+### 2. Per-route JSON-LD upgrades
+Add route-specific structured data during prerender:
+- Service pages → `Service` schema (provider = Organization, areaServed, serviceType)
+- Blog posts → `Article` (headline, datePublished, author, image)
+- About → `Person` (Brendan) linked to Organization via `worksFor`
+- FAQ blocks → `FAQPage`
+- Breadcrumbs → `BreadcrumbList` on every non-home route
 
-## 3. Bottom CTA block (`src/components/home-draft2/CTA.tsx`)
+This is what makes AI answer engines cite you by name.
 
-- Remove the hard 1px border (homepage version has no outline — soft shadow only)
-- Make sure its primary button uses the same fixed pill variant
+### 3. Advertise `llms.txt` from the HTML head
+Add `<link rel="alternate" type="text/plain" title="llms.txt" href="/llms.txt">` and the same for `llms-full.txt` in `index.html`. Also expose them in `robots.txt` as informational comments. Anthropic and Perplexity look for these.
 
-## 4. Journal dark-mode pills (`src/pages/BlogPage.tsx` / `RelatedBlogs.tsx` / category chip component)
+### 4. Split `llms-full.txt` and add freshness
+Current `llms-full.txt` is one monolithic file. Add:
+- `Last-Updated:` line at the top
+- Section anchors so retrievers can chunk cleanly
+- Rebuild trigger when blog cache syncs (not only on prebuild) so new posts appear the same day
 
-- Locate the category-chip render. Currently "Case Study" and "Strategy" categories fall through to a default that's pure orange in dark mode and doesn't pick up the warm gradient
-- Add explicit dark-mode variants per category so:
-  - **Case Study**: orange-tinted background in both themes, but dark mode uses `bg-accent/15 text-accent` instead of solid orange
-  - **Strategy**: indigo in light, soft blue-tint in dark (not orange)
-  - Same readability treatment for any other category currently missing a dark variant
+### 5. Sitemap enrichments
+- Add `<lastmod>` per URL, sourced from blog `updated_at` / portfolio timestamps
+- Add image sitemap entries (`<image:image>`) for portfolio + blog covers so Google Images and multimodal LLMs index them
+- Split into `sitemap-pages.xml` + `sitemap-posts.xml` + `sitemap-index.xml` once posts pass ~50
 
-## 5. Hover-turns-orange regressions
+### 6. Prerender the `<meta name="description">` per route
+Currently the prerender injects body copy but `<title>` and description often stay as the sitewide default for routes not enumerated. Guarantee every prerendered route rewrites both — matches its `<h1>` and first paragraph.
 
-- Journal **Subscribe** button: replace `hover:bg-orange` (or equivalent) with `hover:bg-gradient-warm` / accent
-- **Featured** pill in the player 2 / featured posts area: same fix
-- Grep for `hover:.*orange` and `hover:bg-\[#FF` across the repo to catch siblings
+### 7. Canonical + og:url self-reference audit
+Confirm every prerendered page's `canonical` and `og:url` point to its own URL (not `/`). Silent misattribution here is the #1 reason per-page copy gets ignored by crawlers.
 
-## 6. Homepage titles still missing the gradient
+### 8. Small extras
+- `X-Robots-Tag` isn't controllable on Lovable hosting, so nothing to do there
+- Add a hidden `<address>` block with contact + org name on the homepage prerender for entity extraction
+- Keep `noindex` on `/admin`, `/proposal`, `/onboarding`, `/v/*`, `/home-draft*` — already handled ✓
 
-The previous pass missed these — add `text-gradient-warm` to:
+## What this won't fix
+Claude (and most chat LLMs) still won't fetch URLs unless the user turns on web search or pastes the link. This plan makes sure that **when any bot does fetch**, it gets rich, structured, quotable content — which is the ceiling of what any website can do.
 
-- "Agents" / "Custom agents that solve a hassle" → `AgentsSection.tsx`
-- "Certified embedded" / "Notion certified" / "Fluent in AI frameworks" → `Credentials.tsx`
-- "Hard questions" → `FAQ.tsx` heading on the home-draft2 variant
+## Technical notes
+- All work stays in `scripts/` and `public/`; no React/UI code changes
+- Blog + portfolio data fetched via existing `sync-blog-cache` / `sync-portfolio-cache` edge functions (already Notion-backed)
+- Add a `postsync` step so cache refreshes regenerate `llms-full.txt` and prerendered post files
+- No new runtime dependencies; keep using `bunx tsx`
 
-## 7. Brand book "fragmentation" word
-
-Root-cause the `.text-gradient-warm` class — once fixed in §1, this resolves automatically. If the issue is the parent `h3` colour winning over the span, add `!text-transparent` to the utility.
-
-## 8. Logo refresh — Indigo set → Magenta-Orange
-
-The current `Indigo_TS_*.svg` files use Indigo (`#1340E8`). We'll generate a new **Warm** set in the magenta-orange gradient so they match the rest of the brand:
-
-- New files: `Warm_TS_Stacked.svg`, `Warm_TS_Wordmark.svg`, `Warm_TS_SocialSq.svg` — SVGs with `<linearGradient>` from `#ED2AAC` to `#F39848` applied to the mark
-- Leave the existing Indigo files in place but mark **deprecated** in `BrandBook.tsx` (so any external links keep working)
-- Swap consumer call-sites (Nav hover, brand book inventory) to the new Warm set
-- Update `mem://design/new-logo-direction` and the `ts-asset-library` skill
-
-## 9. Site-wide orange-text sweep
-
-Grep targets to convert to `text-gradient-warm` (or `text-accent` where a gradient would be inappropriate, e.g. inline within a paragraph):
-
-- `text-[#FF6200]`, `text-orange-*`, `bg-orange-*`, `border-orange-*`, `from-orange`, `to-orange`
-- Skip: `text-destructive` (red is correct), tertiary green (new), and Notion callout backgrounds
-
-## Verification
-
-- `tsgo` typecheck after each batch
-- Visit `/brand-book`, `/journal`, `/` in both light and dark via Playwright; screenshot the buttons, pills, and titles called out above
-- Confirm "fragmentation" reads as gradient, primary pill buttons are visible, journal category pills have correct dark-mode styling
-
-## Out of scope
-
-- Redesigning the logo mark itself (only re-colouring to the warm gradient)
-- Reworking any page layouts; this pass is colour/token/component-only
+## Suggested build order
+1. Per-route description + canonical/og:url audit (quick win, unblocks the rest)
+2. JSON-LD upgrades (Article/Service/Person/FAQ/Breadcrumbs)
+3. Blog post prerendering + image sitemap
+4. `llms.txt` head links + freshness stamp
+5. Sitemap split once volume warrants it
