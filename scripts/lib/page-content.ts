@@ -29,28 +29,28 @@ export const SITE = "https://threadandstack.com";
 export const pages: PageContent[] = [
   {
     path: "/",
-    title: "Thread & Stack — Ops & Strategy that shifts culture",
+    title: "Thread & Stack — Ops, Strategy & Systems that shift culture",
     description:
-      "Thread & Stack helps purpose-led founders and teams align what they say with how they work, so growth feels human instead of hectic.",
-    h1: "Ops & Strategy that shifts culture.",
+      "Ops, Strategy & Systems that shift culture. Thread & Stack helps purpose-led teams, with a leaning toward creatives, that build the operating layer that lets real people do their best work.",
+    h1: "Ops, Strategy & Systems that shift culture.",
     schemaType: "WebPage",
     body: [
-      "Thread & Stack is the studio of Brendan Rodgers, a designer, strategist, and certified Notion partner. We help purpose-led founders and small teams close the gap between what they say and how they actually work.",
+      "Thread & Stack is the studio of Brendan Rodgers, a designer, strategist, and systems partner. We help purpose-led teams, with a leaning toward creatives, that build the operating layer that lets real people do their best work.",
       "Brand promise: Stories that land. Systems that stick.",
       {
         heading: "What we work on",
         paragraphs: [
-          "Two pillars, no add-ons. We pair narrative work that gives a team a story it can use, with operating systems that let the team live the story day to day.",
+          "Two pillars, no add-ons. Systems consultancy leads: we design the operating layer of workflows, documentation, and automation that shifts how a team actually works day to day. Narrative work is retained as the second pillar, called in when the story on the outside needs to match the way the team runs on the inside.",
         ],
         bullets: [
-          "Narratives & Strategy: positioning, brand story, go-to-market clarity, message architecture, launch narratives.",
-          "Notion & Systems Consultancy: workspace design, operating systems, automation, documentation that holds up under real use.",
+          "Ops, Strategy & Systems Consultancy (lead pillar): operating systems, workspace design, workflow and automation, documentation that holds up under real use.",
+          "Narratives & Strategy (secondary): positioning, brand story, go-to-market clarity, message architecture, launch narratives.",
         ],
       },
       {
         heading: "Who we work with",
         paragraphs: [
-          "Founders and teams of roughly five to fifty people who have outgrown a folder of Google docs and a website that no longer matches the room. Common sectors include health, education, communities, and impact organisations.",
+          "Founders and teams of roughly five to fifty people who have outgrown a folder of Google docs and a website that no longer matches the room. A leaning toward creative-led organisations like studios, agencies, and purpose-driven brands, plus health, education, communities, and impact organisations.",
         ],
       },
       {
@@ -99,21 +99,21 @@ export const pages: PageContent[] = [
     path: "/services",
     title: "Services — Thread & Stack",
     description:
-      "Two pillars: Narratives & Strategy and Notion & Systems Consultancy. Standard terms: 50% upfront, 50% on delivery.",
+      "Two pillars: Ops, Strategy & Systems Consultancy (lead) and Narratives & Strategy (secondary). Standard terms: 50% upfront, 50% on delivery.",
     h1: "Services",
     schemaType: "Service",
     body: [
-      "Two pillars only. No workshops-as-a-service, no clarity sessions, no add-ons.",
+      "Two pillars only. Systems consultancy leads; narrative work is retained as the second pillar. No workshops-as-a-service, no clarity sessions, no add-ons.",
       {
-        heading: "Narratives & Strategy",
+        heading: "Ops, Strategy & Systems Consultancy",
         paragraphs: [
-          "Positioning, brand story, go-to-market clarity, message architecture, launch narratives. For founders and leadership teams that know what they do but cannot yet say it in one breath.",
+          "The lead pillar. Operating systems, workspace design, workflow and automation, documentation that holds up under real use. For teams that have outgrown a folder of Google docs and need an operating layer that scales with them and gives real people back the room to do their best work.",
         ],
       },
       {
-        heading: "Notion & Systems Consultancy",
+        heading: "Narratives & Strategy",
         paragraphs: [
-          "Workspace design, operating systems, automation, documentation that holds up under real use. For teams that have outgrown a folder of Google docs and need an operating layer that scales with them.",
+          "The second pillar, retained rather than led with. Positioning, brand story, go-to-market clarity, message architecture, launch narratives. Called in when the story on the outside needs to match the way the team runs on the inside.",
         ],
       },
       {
