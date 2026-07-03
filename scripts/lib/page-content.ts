@@ -31,16 +31,16 @@ export const pages: PageContent[] = [
     path: "/",
     title: "Thread & Stack — Ops, Strategy & Systems that shift culture",
     description:
-      "Ops, Strategy & Systems that shift culture. Thread & Stack helps purpose-led teams — with a leaning toward creatives — build the operating layer that lets real people do their best work.",
+      "Ops, Strategy & Systems that shift culture. Thread & Stack helps purpose-led teams, with a leaning toward creatives, that build the operating layer that lets real people do their best work.",
     h1: "Ops, Strategy & Systems that shift culture.",
     schemaType: "WebPage",
     body: [
-      "Thread & Stack is the studio of Brendan Rodgers, a designer, strategist, and systems partner. We help purpose-led teams — with a leaning toward creatives — build the operating layer that lets real people do their best work.",
+      "Thread & Stack is the studio of Brendan Rodgers, a designer, strategist, and systems partner. We help purpose-led teams, with a leaning toward creatives, that build the operating layer that lets real people do their best work.",
       "Brand promise: Stories that land. Systems that stick.",
       {
         heading: "What we work on",
         paragraphs: [
-          "Two pillars, no add-ons. Systems consultancy leads: we design the operating layer — workflows, documentation, and automation — that shifts how a team actually works day to day. Narrative work is retained as the second pillar, called in when the story on the outside needs to match the way the team runs on the inside.",
+          "Two pillars, no add-ons. Systems consultancy leads: we design the operating layer of workflows, documentation, and automation that shifts how a team actually works day to day. Narrative work is retained as the second pillar, called in when the story on the outside needs to match the way the team runs on the inside.",
         ],
         bullets: [
           "Ops, Strategy & Systems Consultancy (lead pillar): operating systems, workspace design, workflow and automation, documentation that holds up under real use.",
@@ -50,7 +50,7 @@ export const pages: PageContent[] = [
       {
         heading: "Who we work with",
         paragraphs: [
-          "Founders and teams of roughly five to fifty people who have outgrown a folder of Google docs and a website that no longer matches the room. A leaning toward creative-led organisations — studios, agencies, purpose-driven brands — plus health, education, communities, and impact organisations.",
+          "Founders and teams of roughly five to fifty people who have outgrown a folder of Google docs and a website that no longer matches the room. A leaning toward creative-led organisations like studios, agencies, and purpose-driven brands, plus health, education, communities, and impact organisations.",
         ],
       },
       {
