@@ -397,26 +397,44 @@ async function main() {
       .join("\n");
 
     const url = `${SITE}/blog/${post.slug}`;
-    const jsonLd = JSON.stringify({
+    const articleLd: Record<string, unknown> = {
       "@context": "https://schema.org",
       "@type": "Article",
       headline: title,
       description,
       url,
-      author: { "@type": "Person", name: "Brendan Rodgers" },
+      mainEntityOfPage: url,
+      author: { "@type": "Person", name: "Brendan Rodgers", url: `${SITE}/about` },
       publisher: {
         "@type": "Organization",
         name: "Thread & Stack",
         url: SITE,
+        logo: {
+          "@type": "ImageObject",
+          url: `${SITE}/favicon-light.svg`,
+        },
       },
-      ...(post.synced_at ? { dateModified: post.synced_at } : {}),
+    };
+    if (post.header_image_url) articleLd.image = post.header_image_url;
+    if (post.published_date) articleLd.datePublished = post.published_date;
+    if (post.synced_at) articleLd.dateModified = post.synced_at;
+
+    const breadcrumbLd = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: SITE },
+        { "@type": "ListItem", position: 2, name: "Journal", item: `${SITE}/blog` },
+        { "@type": "ListItem", position: 3, name: title, item: url },
+      ],
     });
+
     const html = applyShell(shell, {
       path: `/blog/${post.slug}`,
       title: `${title} — Thread & Stack Journal`,
       description,
       bodyHtml,
-      jsonLdBlocks: [jsonLd],
+      jsonLdBlocks: [JSON.stringify(articleLd), breadcrumbLd],
       ogType: "article",
       dateModified: post.synced_at || undefined,
     });
