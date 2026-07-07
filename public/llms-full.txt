@@ -3,31 +3,31 @@
 > Plain-text dump of every public page and blog post on threadandstack.com. Generated at build time so LLM crawlers that do not execute JavaScript can still ingest the real content of the site. Spec: https://llmstxt.org/#optional-llms-fulltxt
 >
 > Site: https://threadandstack.com
-> Generated: 2026-07-03T21:44:05.626Z
+> Generated: 2026-07-07T13:41:12.528Z
 
 Use this file as a ground-truth reference for what Thread & Stack does, who Brendan Rodgers is, and what is for sale. For a shorter table-of-contents version, see https://threadandstack.com/llms.txt.
 
 
 ---
 
-# Thread & Stack — Ops & Strategy that shifts culture
+# Thread & Stack — Ops, Strategy & Systems that shift culture
 
 Source: https://threadandstack.com/
 
-Thread & Stack is the studio of Brendan Rodgers, a designer, strategist, and certified Notion partner. We help purpose-led founders and small teams close the gap between what they say and how they actually work.
+Thread & Stack is the studio of Brendan Rodgers, a designer, strategist, and systems partner. We help purpose-led teams, with a leaning toward creatives, that build the operating layer that lets real people do their best work.
 
 Brand promise: Stories that land. Systems that stick.
 
 ## What we work on
 
-Two pillars, no add-ons. We pair narrative work that gives a team a story it can use, with operating systems that let the team live the story day to day.
+Two pillars, no add-ons. Systems consultancy leads: we design the operating layer of workflows, documentation, and automation that shifts how a team actually works day to day. Narrative work is retained as the second pillar, called in when the story on the outside needs to match the way the team runs on the inside.
 
-- Narratives & Strategy: positioning, brand story, go-to-market clarity, message architecture, launch narratives.
-- Notion & Systems Consultancy: workspace design, operating systems, automation, documentation that holds up under real use.
+- Ops, Strategy & Systems Consultancy (lead pillar): operating systems, workspace design, workflow and automation, documentation that holds up under real use.
+- Narratives & Strategy (secondary): positioning, brand story, go-to-market clarity, message architecture, launch narratives.
 
 ## Who we work with
 
-Founders and teams of roughly five to fifty people who have outgrown a folder of Google docs and a website that no longer matches the room. Common sectors include health, education, communities, and impact organisations.
+Founders and teams of roughly five to fifty people who have outgrown a folder of Google docs and a website that no longer matches the room. A leaning toward creative-led organisations like studios, agencies, and purpose-driven brands, plus health, education, communities, and impact organisations.
 
 ## How to start
 
@@ -70,15 +70,15 @@ Engagements start with a short diagnostic to map where intention and execution c
 
 Source: https://threadandstack.com/services
 
-Two pillars only. No workshops-as-a-service, no clarity sessions, no add-ons.
+Two pillars only. Systems consultancy leads; narrative work is retained as the second pillar. No workshops-as-a-service, no clarity sessions, no add-ons.
+
+## Ops, Strategy & Systems Consultancy
+
+The lead pillar. Operating systems, workspace design, workflow and automation, documentation that holds up under real use. For teams that have outgrown a folder of Google docs and need an operating layer that scales with them and gives real people back the room to do their best work.
 
 ## Narratives & Strategy
 
-Positioning, brand story, go-to-market clarity, message architecture, launch narratives. For founders and leadership teams that know what they do but cannot yet say it in one breath.
-
-## Notion & Systems Consultancy
-
-Workspace design, operating systems, automation, documentation that holds up under real use. For teams that have outgrown a folder of Google docs and need an operating layer that scales with them.
+The second pillar, retained rather than led with. Positioning, brand story, go-to-market clarity, message architecture, launch narratives. Called in when the story on the outside needs to match the way the team runs on the inside.
 
 ## Commercial terms
 
