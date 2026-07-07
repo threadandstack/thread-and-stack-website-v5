@@ -162,23 +162,82 @@ Deno.serve(async (req) => {
       .single();
     if (insertErr) throw insertErr;
 
+    // Resolve or create a Stripe Customer with full name + metadata so the
+    // payment isn't orphaned in Stripe / Xero. Passing customer_email alone
+    // creates an anonymous Customer with no name and no searchable metadata.
+    const customerMetadata: Record<string, string> = {
+      booking_id: booking.id,
+      source: data.source,
+    };
+    if (data.roleOrg) customerMetadata.role_org = data.roleOrg;
+    if (data.utmSource) customerMetadata.utm_source = data.utmSource;
+    if (data.utmMedium) customerMetadata.utm_medium = data.utmMedium;
+    if (data.utmCampaign) customerMetadata.utm_campaign = data.utmCampaign;
+    if (couponConfig) customerMetadata.coupon_code = couponNormalized;
+
+    let customerId: string;
+    const existingCustomers = await stripe.customers.list({ email: data.email, limit: 1 });
+    if (existingCustomers.data.length) {
+      const existing = existingCustomers.data[0];
+      customerId = existing.id;
+      await stripe.customers.update(customerId, {
+        name: data.name,
+        metadata: { ...(existing.metadata ?? {}), ...customerMetadata },
+      });
+    } else {
+      const created = await stripe.customers.create({
+        email: data.email,
+        name: data.name,
+        metadata: customerMetadata,
+      });
+      customerId = created.id;
+    }
+
+    // Resolve product name so the Stripe dashboard / receipts show something
+    // meaningful instead of the raw price lookup key.
+    const productId = typeof stripePrice.product === "string"
+      ? stripePrice.product
+      : stripePrice.product.id;
+    const product = await stripe.products.retrieve(productId);
+    const productDescription = product.name;
+
     const session = await stripe.checkout.sessions.create({
       line_items: [{ price: stripePrice.id, quantity: 1 }],
       mode: "payment",
       ui_mode: "embedded_page",
       return_url: data.returnUrl,
-      customer_email: data.email,
+      customer: customerId,
+      customer_update: { name: "auto", address: "auto" },
+      invoice_creation: {
+        enabled: true,
+        invoice_data: {
+          description: productDescription,
+          metadata: {
+            booking_id: booking.id,
+            coupon_code: couponConfig ? couponNormalized : "",
+            source: data.source,
+          },
+        },
+      },
       ...(discounts ? { discounts } : { allow_promotion_codes: false }),
       metadata: {
         booking_id: booking.id,
         coupon_code: couponConfig ? couponNormalized : "",
         source: data.source,
         name: data.name,
+        role_org: data.roleOrg || "",
+        utm_source: data.utmSource || "",
+        utm_medium: data.utmMedium || "",
+        utm_campaign: data.utmCampaign || "",
       },
       payment_intent_data: {
+        description: productDescription,
         metadata: {
           booking_id: booking.id,
           coupon_code: couponConfig ? couponNormalized : "",
+          source: data.source,
+          name: data.name,
+          role_org: data.roleOrg || "",
         },
       },
     });
