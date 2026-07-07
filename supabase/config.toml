@@ -78,6 +78,4 @@ verify_jwt = false
 [functions.payments-webhook]
 verify_jwt = false
 
-[functions.inspect-stripe-session]
-verify_jwt = false
 
