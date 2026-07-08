@@ -668,6 +668,40 @@ export function Scorecard() {
           )}
         </div>
       </div>
+
+      <ScorecardResultsDrawer
+        open={exploreOpen}
+        onOpenChange={setExploreOpen}
+        theme="light"
+        report={
+          done
+            ? {
+                total,
+                levelName: level.name,
+                levelColor: level.color,
+                levelSummary: level.summary,
+                levelNarrative: level.narrative,
+                recommend: level.recommend,
+                recommendWhy: level.why,
+                moves: level.moves,
+                answers: questions.map((qq, i) => {
+                  const score = answers[i] ?? 0;
+                  const opt = qq.options.find((o) => o.score === score);
+                  return {
+                    dimension: qq.dimension,
+                    question: qq.q,
+                    answerLabel: opt?.label ?? "—",
+                    score,
+                    insight: qq.insights[score],
+                  };
+                }),
+                strengths: strengths.map((s) => ({ ...s })),
+                drags: drags.map((d) => ({ ...d })),
+              }
+            : null
+        }
+      />
     </section>
   );
+
 }
