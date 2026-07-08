@@ -111,9 +111,15 @@ Deno.serve(async (req) => {
         }),
       );
 
+      emailJobs.push(
+        supabase.functions.invoke("sync-booking-to-xero", {
+          body: { bookingId: existing.id },
+        }),
+      );
+
       const results = await Promise.allSettled(emailJobs);
       results.forEach((r, i) => {
-        if (r.status === "rejected") console.error(`Email job ${i} failed`, r.reason);
+        if (r.status === "rejected") console.error(`Email/Xero job ${i} failed`, r.reason);
       });
     }
 
