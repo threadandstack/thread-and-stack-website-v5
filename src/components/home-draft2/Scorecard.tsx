@@ -10,6 +10,11 @@ import {
   AlertTriangle,
   Sparkles,
 } from "lucide-react";
+import {
+  ScorecardResultsDrawer,
+  type ScorecardReport,
+} from "./ScorecardResultsDrawer";
+
 
 type Option = { label: string; score: number };
 type Question = {
