@@ -54,13 +54,23 @@ interface IntroCallFormProps {
   source?: string;
   onSuccess?: () => void;
   compact?: boolean;
+  /** Extra text appended to the lead message (e.g. scorecard report). */
+  extraMessage?: string;
+  /** Extra structured data added to the Notion sync payload's `extra` object. */
+  extraContext?: Record<string, unknown>;
+  /** Overrides the default submit button label. */
+  submitLabel?: string;
 }
 
 export function IntroCallForm({
   source = "intro-call",
   onSuccess,
   compact = false,
+  extraMessage,
+  extraContext,
+  submitLabel,
 }: IntroCallFormProps) {
+
   const { toast } = useToast();
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
