@@ -185,7 +185,16 @@ export function IntroCallForm({
               source,
               message: fullMessage,
               submittedAt: new Date().toISOString(),
+              firstName: form.firstName.trim(),
+              lastName: form.lastName.trim(),
+              jobRole: form.jobRole.trim(),
+              companyName: form.companyName.trim(),
+              companyWebsite: form.companyWebsite.trim(),
+              annualRevenue: form.annualRevenue,
+              employees: form.employees,
+              ...(extraContext ?? {}),
             },
+
           },
         })
         .catch((err) => console.error("Admin email error:", err));
