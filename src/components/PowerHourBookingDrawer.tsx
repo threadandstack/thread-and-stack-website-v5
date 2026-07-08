@@ -254,13 +254,16 @@ export function PowerHourBookingDrawer({
                 />
               </div>
 
-              <div className="space-y-1.5">
+              <div className="space-y-1.5 rounded-lg border border-hairline bg-paper/50 p-3">
                 <Label htmlFor="ph-coupon" className="inline-flex items-center gap-1.5">
-                  <BadgePercent className="w-3.5 h-3.5" /> Coupon code (optional)
+                  <BadgePercent className="w-3.5 h-3.5" /> Are you a non-profit or charity?
                 </Label>
+                <p className="text-xs text-muted-foreground">
+                  If you've been given a non-profit discount code, add it here. Otherwise leave this blank.
+                </p>
                 <Input
                   id="ph-coupon"
-                  placeholder="Got a code? Add it here"
+                  placeholder="Non-profit discount code"
                   maxLength={40}
                   value={form.couponCode}
                   onChange={(e) =>
