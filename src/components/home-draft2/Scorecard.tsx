@@ -632,8 +632,9 @@ export function Scorecard() {
                     </p>
                   </div>
                   <div className="flex flex-wrap items-center gap-3 md:justify-end">
-                    <a
-                      href="#contact"
+                    <button
+                      type="button"
+                      onClick={() => setExploreOpen(true)}
                       className="group inline-flex h-10 items-center rounded-md px-4 text-[13px] font-medium text-accent-foreground"
                       style={{
                         backgroundImage:
@@ -644,7 +645,8 @@ export function Scorecard() {
                       <span className="inline-flex w-0 items-center justify-center overflow-hidden opacity-0 scale-75 transition-all duration-300 group-hover:w-4 group-hover:opacity-100 group-hover:scale-100 group-hover:ml-1.5">
                         <ArrowRight className="h-3.5 w-3.5 shrink-0" />
                       </span>
-                    </a>
+                    </button>
+
                     <button
                       type="button"
                       onClick={() => window.print()}
