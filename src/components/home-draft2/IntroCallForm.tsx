@@ -156,6 +156,8 @@ export function IntroCallForm({
               annualRevenue: form.annualRevenue,
               employees: form.employees,
               type: "intro-call",
+              ...(extraContext ?? {}),
+
             },
           },
         })
