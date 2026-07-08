@@ -54,13 +54,23 @@ interface IntroCallFormProps {
   source?: string;
   onSuccess?: () => void;
   compact?: boolean;
+  /** Extra text appended to the lead message (e.g. scorecard report). */
+  extraMessage?: string;
+  /** Extra structured data added to the Notion sync payload's `extra` object. */
+  extraContext?: Record<string, unknown>;
+  /** Overrides the default submit button label. */
+  submitLabel?: string;
 }
 
 export function IntroCallForm({
   source = "intro-call",
   onSuccess,
   compact = false,
+  extraMessage,
+  extraContext,
+  submitLabel,
 }: IntroCallFormProps) {
+
   const { toast } = useToast();
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
@@ -110,7 +120,10 @@ export function IntroCallForm({
         "",
         "Requested a free introductory call.",
       ];
-      const fullMessage = messageLines.join("\n");
+      const fullMessage = extraMessage
+        ? `${messageLines.join("\n")}\n\n---\n${extraMessage}`
+        : messageLines.join("\n");
+
 
       const { error } = await supabase.from("leads").insert({
         id: leadId,
@@ -143,6 +156,8 @@ export function IntroCallForm({
               annualRevenue: form.annualRevenue,
               employees: form.employees,
               type: "intro-call",
+              ...(extraContext ?? {}),
+
             },
           },
         })
@@ -366,7 +381,7 @@ export function IntroCallForm({
           </>
         ) : (
           <>
-            Request an intro call
+            {submitLabel ?? "Request an intro call"}
             <span className="inline-flex w-0 items-center justify-center overflow-hidden opacity-0 scale-75 transition-all duration-300 group-hover:w-5 group-hover:opacity-100 group-hover:scale-100 group-hover:ml-1.5">
               <ArrowRight className="h-4 w-4 shrink-0" />
             </span>
