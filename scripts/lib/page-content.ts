@@ -161,13 +161,13 @@ export const pages: PageContent[] = [
   },
   {
     path: "/scorecard",
-    title: "Clarity Scorecard — Thread & Stack",
+    title: "Knowledge Stack Scorecard — Thread & Stack",
     description:
-      "Short self-assessment that scores your clarity, systems, and momentum, and points to where to focus next quarter.",
-    h1: "Clarity Scorecard",
+      "Short self-assessment that scores how your team finds answers, hands things off, and uses AI, and points to where to focus next quarter.",
+    h1: "Knowledge Stack Scorecard",
     schemaType: "WebPage",
     body: [
-      "A short self-assessment that scores your clarity, systems, and momentum. Answer a handful of questions and receive a personal read on where to focus next quarter.",
+      "A short self-assessment that scores how your team finds answers, hands things off, and uses AI. Answer a handful of questions and receive a personal read on where to focus next quarter.",
     ],
   },
   {
