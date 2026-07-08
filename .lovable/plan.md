@@ -1,69 +1,73 @@
 
-## Goal
-Make Thread & Stack maximally discoverable and quotable by search crawlers *and* LLM fetchers (Claude, ChatGPT, Perplexity, Google AI, etc.) — without touching the visible UI.
+# Xero handoff for diagnostic bookings
 
-## Current state (verified)
-- `robots.txt` already allow-lists every major AI crawler ✓
-- `sitemap.xml` is generated pre-build ✓
-- `llms.txt` + `llms-full.txt` exist ✓
-- `scripts/generate-prerendered.ts` runs post-build and injects real `<h1>/<h2>/<p>` copy into `<div id="root">` for static routes ✓
-- `/about` served today = 7.7 KB with prerendered body, 13 content-keyword hits — bots that fetch, see real content
-- `og:image` + JSON-LD (Organization + WebSite) present in `index.html` ✓
+Keep the embedded Stripe checkout exactly as it is. When a booking flips to `paid` (in both `confirm-power-hour-checkout` and `payments-webhook`), also push it to Xero: find-or-create the contact, create an AUTHORISED invoice with a discount line if a coupon was used, and mark it paid against a Stripe clearing bank account so it reconciles cleanly.
 
-The site is already in good shape. Remaining gaps are coverage, signal strength, and self-advertisement.
+## A note on naming
 
-## Gaps to close
+Everything the buyer, Xero, or Stripe sees will say **Diagnostic** — invoice line items, invoice references, PaymentIntent descriptions, admin UI labels, transactional emails. The existing internal names (`power_hour_bookings` table, `create-power-hour-checkout` / `confirm-power-hour-checkout` edge functions, `PowerHourBookingDrawer` component, `/power-hour/thank-you` route) stay as they are — renaming those is a much bigger refactor with real risk (existing bookings, Stripe metadata already referencing `power_hour_*`, deep links, the return URL in production Stripe sessions). Happy to do that rename as a separate, dedicated pass if you want; it should not be tangled with the Xero work.
 
-### 1. Prerender coverage for dynamic routes
-`generate-prerendered.ts` only covers routes listed in `scripts/lib/page-content.ts`. Blog posts and portfolio detail pages are still empty SPA shells on first fetch. Add a build-time fetch of published blog posts (and portfolio entries where public) and emit one prerendered file per slug with title, meta description, canonical, JSON-LD `Article`/`CreativeWork`, and the post's opening paragraphs in the root div.
+Concretely, in this plan:
+- Invoice line 1 description: `AI Diagnostic — 1:1 with Brendan`.
+- Invoice `Reference`: `Diagnostic — {source}{coupon?}`.
+- PaymentIntent + Stripe invoice `description`: `AI Diagnostic`.
+- Admin Xero card label: "Diagnostic bookings".
 
-### 2. Per-route JSON-LD upgrades
-Add route-specific structured data during prerender:
-- Service pages → `Service` schema (provider = Organization, areaServed, serviceType)
-- Blog posts → `Article` (headline, datePublished, author, image)
-- About → `Person` (Brendan) linked to Organization via `worksFor`
-- FAQ blocks → `FAQPage`
-- Breadcrumbs → `BreadcrumbList` on every non-home route
+I will also update the two existing places in `create-power-hour-checkout` that currently pass `productDescription` (which resolves to the Stripe product name) to instead use the fixed string `"AI Diagnostic"` if the product name still reads "Thread & Stack Diagnostic" or similar — I'll verify the current product name and only override if it isn't already right.
 
-This is what makes AI answer engines cite you by name.
+## One-time setup (you'll do this)
 
-### 3. Advertise `llms.txt` from the HTML head
-Add `<link rel="alternate" type="text/plain" title="llms.txt" href="/llms.txt">` and the same for `llms-full.txt` in `index.html`. Also expose them in `robots.txt` as informational comments. Anthropic and Perplexity look for these.
+1. Xero app is created and `XERO_CLIENT_ID` / `XERO_CLIENT_SECRET` are saved.
+2. Confirm the redirect URI on the Xero app is exactly:
+   `https://uohhfesyumigbpqjpacl.supabase.co/functions/v1/xero-oauth-callback`
+3. In Xero → **Accounting → Advanced → Chart of Accounts**, note two account codes:
+   - A **revenue** account for consulting income (e.g. `200 Sales`).
+   - A **bank/clearing** account representing Stripe payouts (e.g. `Stripe Clearing`). Payments get applied here; Xero's bank rules then match real Stripe payouts to it.
+4. Once the code is built, click a one-time "Connect Xero" button in the admin area to authorise the org. That stores the refresh token; nothing else is manual after that.
 
-### 4. Split `llms-full.txt` and add freshness
-Current `llms-full.txt` is one monolithic file. Add:
-- `Last-Updated:` line at the top
-- Section anchors so retrievers can chunk cleanly
-- Rebuild trigger when blog cache syncs (not only on prebuild) so new posts appear the same day
+## What gets built
 
-### 5. Sitemap enrichments
-- Add `<lastmod>` per URL, sourced from blog `updated_at` / portfolio timestamps
-- Add image sitemap entries (`<image:image>`) for portfolio + blog covers so Google Images and multimodal LLMs index them
-- Split into `sitemap-pages.xml` + `sitemap-posts.xml` + `sitemap-index.xml` once posts pass ~50
+### Secrets
+- `XERO_CLIENT_ID`, `XERO_CLIENT_SECRET` — done.
+- `XERO_REVENUE_ACCOUNT_CODE` (default `200`) and `XERO_STRIPE_CLEARING_ACCOUNT_CODE` — settable as secrets so you can change without a redeploy.
 
-### 6. Prerender the `<meta name="description">` per route
-Currently the prerender injects body copy but `<title>` and description often stay as the sitewide default for routes not enumerated. Guarantee every prerendered route rewrites both — matches its `<h1>` and first paragraph.
+### DB (one migration)
+- `xero_connection` table (single row): `tenant_id`, `tenant_name`, `refresh_token`, `access_token`, `access_token_expires_at`, `updated_at`. Service-role only.
+- `power_hour_bookings` (existing table — kept for compatibility): add nullable `xero_contact_id`, `xero_invoice_id`, `xero_invoice_number`, `xero_synced_at`, `xero_sync_error`, `discount_amount` (integer pence, so the sync doesn't have to re-derive coupon math).
 
-### 7. Canonical + og:url self-reference audit
-Confirm every prerendered page's `canonical` and `og:url` point to its own URL (not `/`). Silent misattribution here is the #1 reason per-page copy gets ignored by crawlers.
+### Edge functions (new)
+- `xero-oauth-start` — admin-only: returns the Xero authorise URL with `offline_access accounting.contacts accounting.transactions` scopes and a state nonce.
+- `xero-oauth-callback` (`verify_jwt = false`) — exchanges the code, fetches `/connections` to pick the tenant, writes to `xero_connection`. Redirects back to `/admin` with a success flag.
+- `_shared/xero.ts` — helper: `getXeroAccessToken()` auto-refreshes when <60s to expiry using the stored refresh token, rotates the stored refresh token on every refresh, plus `xeroFetch(path, init)` that injects `Authorization` and `Xero-Tenant-Id`.
+- `sync-booking-to-xero` — internal, invoked with service-role:
+  - Input: `bookingId`. Idempotent: if `xero_invoice_id` already set, exits.
+  - **Contact match:** `GET /Contacts?where=EmailAddress=="…"`. If none, fallback on exact `Name`. If none, `POST /Contacts` with name + email + optional company from `role_org`.
+  - **Invoice:** `POST /Invoices` with `Type: ACCREC`, `Status: AUTHORISED`, contact, `Reference: "Diagnostic — {source}{coupon?}"`, dated today.
+    - Line 1: `AI Diagnostic — 1:1 with Brendan`, qty 1, £395.00, `AccountCode: XERO_REVENUE_ACCOUNT_CODE`, `TaxType: NONE` (not VAT registered).
+    - Line 2 (only if coupon): `Discount ({couponCode})`, qty 1, `-<discountGBP>`, same account, `TaxType: NONE`.
+  - **Payment:** `POST /Payments` against the invoice, `Account: { Code: XERO_STRIPE_CLEARING_ACCOUNT_CODE }`, `Amount: amount_paid/100`, `Reference: stripe_session_id`.
+  - Stores contact/invoice ids + number + `xero_synced_at`. On failure, writes `xero_sync_error` and returns 500 (booking + Stripe payment untouched).
 
-### 8. Small extras
-- `X-Robots-Tag` isn't controllable on Lovable hosting, so nothing to do there
-- Add a hidden `<address>` block with contact + org name on the homepage prerender for entity extraction
-- Keep `noindex` on `/admin`, `/proposal`, `/onboarding`, `/v/*`, `/home-draft*` — already handled ✓
+### Wiring into paid handlers
+In `confirm-power-hour-checkout` and `payments-webhook`, inside the existing `justPaid` branch, fire `supabase.functions.invoke("sync-booking-to-xero", { body: { bookingId } })` alongside the email jobs in the same `Promise.allSettled`. Xero failure never blocks the buyer or admin email.
 
-## What this won't fix
-Claude (and most chat LLMs) still won't fetch URLs unless the user turns on web search or pastes the link. This plan makes sure that **when any bot does fetch**, it gets rich, structured, quotable content — which is the ceiling of what any website can do.
+### Admin UI (small)
+- On `/admin`, add a "Xero" card:
+  - Status pill: "Not connected" / "Connected to {org name}".
+  - "Connect Xero" / "Reconnect" button → hits `xero-oauth-start`, opens the returned URL.
+- Diagnostic bookings list shows `xero_invoice_number` linking to `https://go.xero.com/AccountsReceivable/View.aspx?InvoiceID={id}`, plus any `xero_sync_error` and a per-row "Retry Xero sync" button.
 
-## Technical notes
-- All work stays in `scripts/` and `public/`; no React/UI code changes
-- Blog + portfolio data fetched via existing `sync-blog-cache` / `sync-portfolio-cache` edge functions (already Notion-backed)
-- Add a `postsync` step so cache refreshes regenerate `llms-full.txt` and prerendered post files
-- No new runtime dependencies; keep using `bunx tsx`
+## Deliberately out of scope
+- **Renaming the internal `power_hour_*` tables/functions/component/route to `diagnostic_*`.** Real risk (breaks existing bookings, Stripe metadata references, production return URLs); do it as its own pass.
+- **Recording the Stripe fee** as a bank fee line — Xero's Stripe bank feed handles this. Clearing-account approach keeps invoices gross.
+- **Backfilling the two orphan payments** (Jocelyn, Cali) — separate manual pass; easy to add an admin action later.
+- **VAT.** Every line `TaxType: NONE`. One variable to flip if you register later.
+- **Auto-emailing invoices from Xero.** Off — your own transactional emails carry the invoice number.
 
-## Suggested build order
-1. Per-route description + canonical/og:url audit (quick win, unblocks the rest)
-2. JSON-LD upgrades (Article/Service/Person/FAQ/Breadcrumbs)
-3. Blog post prerendering + image sitemap
-4. `llms.txt` head links + freshness stamp
-5. Sitemap split once volume warrants it
+## Order of implementation
+1. Migration (columns + `xero_connection` with grants).
+2. `_shared/xero.ts` + OAuth start/callback functions.
+3. Add `XERO_REVENUE_ACCOUNT_CODE` + `XERO_STRIPE_CLEARING_ACCOUNT_CODE` secrets; you complete the one-time Xero connect.
+4. `sync-booking-to-xero` + wire into `confirm-power-hour-checkout` and `payments-webhook`.
+5. Admin UI card + retry button.
+6. End-to-end sandbox test: Stripe checkout with the £100-off coupon → verify contact + invoice + payment appear in your Xero demo org, then a full-price run.

@@ -544,6 +544,7 @@ export type Database = {
           consent_given: boolean
           coupon_code: string | null
           created_at: string
+          discount_amount: number | null
           email: string
           focus: string | null
           id: string
@@ -555,12 +556,18 @@ export type Database = {
           utm_campaign: string | null
           utm_medium: string | null
           utm_source: string | null
+          xero_contact_id: string | null
+          xero_invoice_id: string | null
+          xero_invoice_number: string | null
+          xero_sync_error: string | null
+          xero_synced_at: string | null
         }
         Insert: {
           amount_paid?: number | null
           consent_given?: boolean
           coupon_code?: string | null
           created_at?: string
+          discount_amount?: number | null
           email: string
           focus?: string | null
           id?: string
@@ -572,12 +579,18 @@ export type Database = {
           utm_campaign?: string | null
           utm_medium?: string | null
           utm_source?: string | null
+          xero_contact_id?: string | null
+          xero_invoice_id?: string | null
+          xero_invoice_number?: string | null
+          xero_sync_error?: string | null
+          xero_synced_at?: string | null
         }
         Update: {
           amount_paid?: number | null
           consent_given?: boolean
           coupon_code?: string | null
           created_at?: string
+          discount_amount?: number | null
           email?: string
           focus?: string | null
           id?: string
@@ -589,6 +602,11 @@ export type Database = {
           utm_campaign?: string | null
           utm_medium?: string | null
           utm_source?: string | null
+          xero_contact_id?: string | null
+          xero_invoice_id?: string | null
+          xero_invoice_number?: string | null
+          xero_sync_error?: string | null
+          xero_synced_at?: string | null
         }
         Relationships: []
       }
@@ -661,6 +679,39 @@ export type Database = {
           phase_one?: string | null
           phase_three?: string | null
           phase_two?: string | null
+        }
+        Relationships: []
+      }
+      xero_connection: {
+        Row: {
+          access_token: string | null
+          access_token_expires_at: string | null
+          created_at: string
+          id: string
+          refresh_token: string
+          tenant_id: string
+          tenant_name: string | null
+          updated_at: string
+        }
+        Insert: {
+          access_token?: string | null
+          access_token_expires_at?: string | null
+          created_at?: string
+          id?: string
+          refresh_token: string
+          tenant_id: string
+          tenant_name?: string | null
+          updated_at?: string
+        }
+        Update: {
+          access_token?: string | null
+          access_token_expires_at?: string | null
+          created_at?: string
+          id?: string
+          refresh_token?: string
+          tenant_id?: string
+          tenant_name?: string | null
+          updated_at?: string
         }
         Relationships: []
       }

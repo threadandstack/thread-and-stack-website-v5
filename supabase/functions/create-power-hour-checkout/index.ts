@@ -142,6 +142,14 @@ Deno.serve(async (req) => {
       discounts = [{ coupon: couponId }];
     }
 
+    // Compute discount in pence for later Xero syncing
+    let discountPence: number | null = null;
+    if (couponConfig) {
+      discountPence = couponConfig.kind === "amount"
+        ? couponConfig.amountOff
+        : Math.round(39500 * couponConfig.percentOff / 100);
+    }
+
     // Insert pending booking first so we have an ID to attach as metadata
     const { data: booking, error: insertErr } = await supabase
       .from("power_hour_bookings")
@@ -155,12 +163,14 @@ Deno.serve(async (req) => {
         utm_medium: data.utmMedium || null,
         utm_campaign: data.utmCampaign || null,
         coupon_code: couponConfig ? couponNormalized : null,
+        discount_amount: discountPence,
         consent_given: data.consent,
         status: "pending",
       })
       .select("id")
       .single();
     if (insertErr) throw insertErr;
+
 
     // Resolve or create a Stripe Customer with full name + metadata so the
     // payment isn't orphaned in Stripe / Xero. Passing customer_email alone
