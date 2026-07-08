@@ -107,9 +107,15 @@ async function handleCheckoutCompleted(session: any, env: StripeEnv) {
       }),
     );
 
+    jobs.push(
+      supabase.functions.invoke("sync-booking-to-xero", {
+        body: { bookingId: (existing as any).id },
+      }),
+    );
+
     const results = await Promise.allSettled(jobs);
     results.forEach((r, i) => {
-      if (r.status === "rejected") console.error(`Webhook email job ${i} failed`, r.reason);
+      if (r.status === "rejected") console.error(`Webhook job ${i} failed`, r.reason);
     });
   }
 }
