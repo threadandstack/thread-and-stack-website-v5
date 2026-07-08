@@ -79,3 +79,12 @@ verify_jwt = false
 verify_jwt = false
 
 
+
+[functions.xero-oauth-start]
+verify_jwt = false
+
+[functions.xero-oauth-callback]
+verify_jwt = false
+
+[functions.sync-booking-to-xero]
+verify_jwt = false
