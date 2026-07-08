@@ -120,7 +120,10 @@ export function IntroCallForm({
         "",
         "Requested a free introductory call.",
       ];
-      const fullMessage = messageLines.join("\n");
+      const fullMessage = extraMessage
+        ? `${messageLines.join("\n")}\n\n---\n${extraMessage}`
+        : messageLines.join("\n");
+
 
       const { error } = await supabase.from("leads").insert({
         id: leadId,
