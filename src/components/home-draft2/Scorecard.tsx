@@ -251,6 +251,8 @@ export function Scorecard() {
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [current, setCurrent] = useState(0);
   const [done, setDone] = useState(false);
+  const [exploreOpen, setExploreOpen] = useState(false);
+
 
   const total = useMemo(
     () => Object.values(answers).reduce((a, b) => a + b, 0),
