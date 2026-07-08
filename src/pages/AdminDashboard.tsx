@@ -6,6 +6,7 @@ import { ArrowLeft, LogOut, Loader2, Search, BookOpen, Image, BarChart3, Refresh
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { XeroAdminCard } from "@/components/admin/XeroAdminCard";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -168,6 +169,8 @@ const AdminDashboard = () => {
             </div>
           </CardHeader>
         </Card>
+
+        <XeroAdminCard />
 
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {adminSections.map((section) => (
