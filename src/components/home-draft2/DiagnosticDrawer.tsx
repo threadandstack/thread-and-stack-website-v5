@@ -350,26 +350,11 @@ export function DiagnosticDrawer({
                       />
                     </div>
 
-                    <div className="space-y-1.5">
-                      <Label htmlFor="diag-coupon" className="inline-flex items-center gap-1.5">
-                        <BadgePercent className="h-3.5 w-3.5" /> Coupon code (optional)
-                      </Label>
-                      <Input
-                        id="diag-coupon"
-                        placeholder="Got a code? Add it here"
-                        maxLength={40}
-                        value={form.couponCode}
-                        onChange={(e) =>
-                          setForm({ ...form, couponCode: e.target.value.toUpperCase() })
-                        }
-                        className="uppercase tracking-wider"
-                      />
-                      {form.couponCode && !couponLooksValid && (
-                        <p className="text-[11.5px] text-muted-foreground">
-                          We'll check this when you continue.
-                        </p>
-                      )}
-                    </div>
+                    {defaultCoupon && matchedCoupon && (
+                      <p className="text-[11.5px] text-muted-foreground">
+                        Discount <span className="font-medium text-foreground">{couponNormalized}</span> ({matchedCoupon.label}) will be applied at checkout.
+                      </p>
+                    )}
 
                     <div className="flex items-start gap-3 pt-1">
                       <Checkbox
