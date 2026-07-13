@@ -23,7 +23,7 @@ const tiers = [
   {
     n: "02",
     name: "Knowledge Base Starter",
-    price: "from £5,400",
+    price: "from £5,800",
     sub: "Includes 30 days adoption support",
     blurb:
       "For small teams ready to consolidate properly. The essential workspace. A company HQ everyone lands in, a knowledge base the team can actually find things in, a CRM that replaces whatever fragmented system you're currently routing through one person. Clean, connected, and built to be used.",
