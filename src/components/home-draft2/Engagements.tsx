@@ -298,6 +298,12 @@ export function Engagements() {
         </div>
 
       </div>
+      <CoDesignDrawer
+        open={coDesignOpen}
+        onOpenChange={setCoDesignOpen}
+        initialVariant={coDesignVariant}
+      />
     </section>
   );
 }
+
