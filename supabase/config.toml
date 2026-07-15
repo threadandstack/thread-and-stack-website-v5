@@ -60,6 +60,12 @@ verify_jwt = false
 [functions.confirm-power-hour-checkout]
 verify_jwt = false
 
+[functions.create-co-design-checkout]
+verify_jwt = false
+
+[functions.confirm-co-design-checkout]
+verify_jwt = false
+
 [functions.process-email-queue]
 verify_jwt = true
 
