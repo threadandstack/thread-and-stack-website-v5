@@ -267,8 +267,14 @@ export function Engagements() {
                       </a>
                     )
                   ) : (
-
+                    <span className={`mt-auto inline-flex h-11 items-center justify-center rounded-md border px-5 text-[13.5px] font-medium ${
+                      isFeatured ? "border-white/15 text-foreground/80" : "border-hairline text-foreground/70"
+                    }`}>
+                      Tap to focus
+                    </span>
+                  )}
                 </button>
+
               );
             })}
           </div>
