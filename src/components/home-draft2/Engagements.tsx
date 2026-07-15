@@ -302,7 +302,9 @@ export function Engagements() {
         open={coDesignOpen}
         onOpenChange={setCoDesignOpen}
         initialVariant={coDesignVariant}
+        theme="light"
       />
+
     </section>
   );
 }
