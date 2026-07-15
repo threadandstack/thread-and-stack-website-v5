@@ -88,7 +88,7 @@ Deno.serve(async (req) => {
 
     const { data: booking, error: fetchErr } = await supabase
       .from("power_hour_bookings")
-      .select("id, name, email, role_org, source, coupon_code, amount_paid, discount_amount, stripe_session_id, status, xero_invoice_id")
+      .select("id, name, email, role_org, source, variant, coupon_code, amount_paid, discount_amount, stripe_session_id, status, xero_invoice_id")
       .eq("id", bookingId)
       .maybeSingle();
     if (fetchErr) throw fetchErr;
@@ -109,11 +109,16 @@ Deno.serve(async (req) => {
       company: booking.role_org,
     });
 
+    const { description, unitAmount } = describeBooking({
+      variant: (booking.variant as string | null) ?? null,
+      amount_paid: (booking.amount_paid as number | null) ?? null,
+    });
+
     // Invoice lines
     const lines: any[] = [{
-      Description: LINE_DESCRIPTION,
+      Description: description,
       Quantity: 1,
-      UnitAmount: UNIT_AMOUNT_GBP,
+      UnitAmount: unitAmount,
       AccountCode: REVENUE_ACCOUNT,
       TaxType: "NONE",
     }];
@@ -128,7 +133,9 @@ Deno.serve(async (req) => {
       });
     }
 
-    const reference = `Diagnostic — ${booking.source ?? "web"}${booking.coupon_code ? ` (${booking.coupon_code})` : ""}`;
+    const isCoDesign = ((booking.variant as string | null) ?? "").startsWith("co-design");
+    const refLabel = isCoDesign ? "Co-Design" : "Diagnostic";
+    const reference = `${refLabel} — ${booking.source ?? "web"}${booking.coupon_code ? ` (${booking.coupon_code})` : ""}`;
     const invoicePayload = {
       Invoices: [{
         Type: "ACCREC",
