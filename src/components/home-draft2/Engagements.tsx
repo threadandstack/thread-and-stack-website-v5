@@ -19,7 +19,7 @@ const tiers = [
       "60 days async Slack access",
     ],
     cta: "Start a sprint",
-    accent: "violet",
+    accent: "tertiary",
     featured: false,
   },
   {
