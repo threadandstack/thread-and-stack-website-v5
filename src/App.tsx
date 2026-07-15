@@ -177,6 +177,7 @@ const App = () => (
             <Route path="/Unleash-Your-Team" element={<UnleashYourTeamPage />} />
             <Route path="/unleash-your-team" element={<UnleashYourTeamPage />} />
             <Route path="/power-hour/thank-you" element={<PowerHourThankYouPage />} />
+            <Route path="/co-design/thank-you" element={<CoDesignThankYouPage />} />
             <Route path="/blueprint/become-united" element={<BecomeUnitedBlueprintPage />} />
             <Route path="/Unleash-Your-Team/draft2" element={<UnleashYourTeamDraft2Page />} />
             <Route path="/unleash-your-team/draft2" element={<UnleashYourTeamDraft2Page />} />
