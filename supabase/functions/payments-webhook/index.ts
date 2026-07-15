@@ -31,7 +31,7 @@ async function handleCheckoutCompleted(session: any, env: StripeEnv) {
   const { data: existing } = await supabase
     .from("power_hour_bookings")
     .select(
-      "id, status, name, email, role_org, focus, source, utm_source, utm_medium, utm_campaign, coupon_code",
+      "id, status, name, email, role_org, focus, source, variant, utm_source, utm_medium, utm_campaign, coupon_code",
     )
     .eq("stripe_session_id", sessionId)
     .maybeSingle();
