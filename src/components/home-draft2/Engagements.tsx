@@ -232,24 +232,42 @@ export function Engagements() {
                   </ul>
 
                   {isActive ? (
-                    <a
-                      href="#contact"
-                      onClick={(e) => e.stopPropagation()}
-                      className="group mt-auto inline-flex h-11 items-center justify-center rounded-md px-5 text-[13.5px] font-medium text-accent-foreground transition-transform hover:-translate-y-px"
-                      style={{ backgroundImage: "linear-gradient(95deg, var(--gradient-3color))" }}
-                    >
-                      {t.cta}
-                      <span className="inline-flex w-0 items-center justify-center overflow-hidden opacity-0 scale-75 transition-all duration-300 group-hover:w-4 group-hover:opacity-100 group-hover:scale-100 group-hover:ml-1.5">
-                        <ArrowRight className="h-4 w-4 shrink-0" />
-                      </span>
-                    </a>
+                    t.n === "01" ? (
+                      <div className="mt-auto flex flex-col gap-2" onClick={(e) => e.stopPropagation()}>
+                        <button
+                          type="button"
+                          onClick={() => openCoDesign("six")}
+                          className="group inline-flex h-11 items-center justify-center rounded-md px-5 text-[13.5px] font-medium text-accent-foreground transition-transform hover:-translate-y-px"
+                          style={{ backgroundImage: "linear-gradient(95deg, var(--gradient-3color))" }}
+                        >
+                          Start a six-session sprint · £2,500
+                          <span className="inline-flex w-0 items-center justify-center overflow-hidden opacity-0 scale-75 transition-all duration-300 group-hover:w-4 group-hover:opacity-100 group-hover:scale-100 group-hover:ml-1.5">
+                            <ArrowRight className="h-4 w-4 shrink-0" />
+                          </span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => openCoDesign("single")}
+                          className="inline-flex h-10 items-center justify-center rounded-md border border-hairline px-5 text-[12.5px] font-medium text-foreground/80 hover:bg-paper"
+                        >
+                          Or book a single session · £395
+                        </button>
+                      </div>
+                    ) : (
+                      <a
+                        href="#contact"
+                        onClick={(e) => e.stopPropagation()}
+                        className="group mt-auto inline-flex h-11 items-center justify-center rounded-md px-5 text-[13.5px] font-medium text-accent-foreground transition-transform hover:-translate-y-px"
+                        style={{ backgroundImage: "linear-gradient(95deg, var(--gradient-3color))" }}
+                      >
+                        {t.cta}
+                        <span className="inline-flex w-0 items-center justify-center overflow-hidden opacity-0 scale-75 transition-all duration-300 group-hover:w-4 group-hover:opacity-100 group-hover:scale-100 group-hover:ml-1.5">
+                          <ArrowRight className="h-4 w-4 shrink-0" />
+                        </span>
+                      </a>
+                    )
                   ) : (
-                    <span className={`mt-auto inline-flex h-11 items-center justify-center rounded-md border px-5 text-[13.5px] font-medium ${
-                      isFeatured ? "border-white/15 text-foreground/80" : "border-hairline text-foreground/70"
-                    }`}>
-                      Tap to focus
-                    </span>
-                  )}
+
                 </button>
               );
             })}
