@@ -90,7 +90,15 @@ const tiers = [
 
 export function Engagements() {
   const [selected, setSelected] = useState(1);
+  const [coDesignOpen, setCoDesignOpen] = useState(false);
+  const [coDesignVariant, setCoDesignVariant] = useState<"single" | "six">("six");
   const stageRef = useRef<HTMLDivElement>(null);
+
+  const openCoDesign = (variant: "single" | "six") => {
+    setCoDesignVariant(variant);
+    setCoDesignOpen(true);
+  };
+
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
