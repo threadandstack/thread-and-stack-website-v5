@@ -66,17 +66,25 @@ async function handleCheckoutCompleted(session: any, env: StripeEnv) {
 
     const jobs: Promise<unknown>[] = [];
 
+    const variant = ((existing as any).variant as string | null) ?? null;
+    const isCoDesign = variant?.startsWith("co-design") ?? false;
+    const buyerTemplate = isCoDesign ? "co-design-buyer-confirmation" : "power-hour-buyer-confirmation";
+    const adminTemplate = isCoDesign ? "co-design-admin-notification" : "power-hour-admin-notification";
+    const buyerKey = isCoDesign ? `cd-buyer-${sessionId}` : `ph-buyer-${sessionId}`;
+    const adminKey = isCoDesign ? `cd-admin-${sessionId}` : `ph-admin-${sessionId}`;
+
     if (buyerEmail) {
       jobs.push(
         supabase.functions.invoke("send-transactional-email", {
           body: {
-            templateName: "power-hour-buyer-confirmation",
+            templateName: buyerTemplate,
             recipientEmail: buyerEmail,
-            idempotencyKey: `ph-buyer-${sessionId}`,
+            idempotencyKey: buyerKey,
             templateData: {
               name: buyerName,
               amountPaid: amountPaid ?? undefined,
               couponCode: (existing as any).coupon_code || couponCode || undefined,
+              variant: variant ?? undefined,
             },
           },
         }),
@@ -86,9 +94,9 @@ async function handleCheckoutCompleted(session: any, env: StripeEnv) {
     jobs.push(
       supabase.functions.invoke("send-transactional-email", {
         body: {
-          templateName: "power-hour-admin-notification",
+          templateName: adminTemplate,
           recipientEmail: "br@brendanrodgers.uk",
-          idempotencyKey: `ph-admin-${sessionId}`,
+          idempotencyKey: adminKey,
           templateData: {
             name: (existing as any).name,
             email: buyerEmail,
@@ -96,6 +104,7 @@ async function handleCheckoutCompleted(session: any, env: StripeEnv) {
             focus: (existing as any).focus,
             amountPaid: amountPaid ?? undefined,
             couponCode: (existing as any).coupon_code || couponCode || undefined,
+            variant: variant ?? undefined,
             source: (existing as any).source,
             utmSource: (existing as any).utm_source,
             utmMedium: (existing as any).utm_medium,
