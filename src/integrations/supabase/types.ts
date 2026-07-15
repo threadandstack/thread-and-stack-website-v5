@@ -556,6 +556,7 @@ export type Database = {
           utm_campaign: string | null
           utm_medium: string | null
           utm_source: string | null
+          variant: string | null
           xero_contact_id: string | null
           xero_invoice_id: string | null
           xero_invoice_number: string | null
@@ -579,6 +580,7 @@ export type Database = {
           utm_campaign?: string | null
           utm_medium?: string | null
           utm_source?: string | null
+          variant?: string | null
           xero_contact_id?: string | null
           xero_invoice_id?: string | null
           xero_invoice_number?: string | null
@@ -602,6 +604,7 @@ export type Database = {
           utm_campaign?: string | null
           utm_medium?: string | null
           utm_source?: string | null
+          variant?: string | null
           xero_contact_id?: string | null
           xero_invoice_id?: string | null
           xero_invoice_number?: string | null

@@ -11,6 +11,8 @@ export interface TemplateEntry {
 
 import { template as powerHourBuyerConfirmation } from './power-hour-buyer-confirmation.tsx'
 import { template as powerHourAdminNotification } from './power-hour-admin-notification.tsx'
+import { template as coDesignBuyerConfirmation } from './co-design-buyer-confirmation.tsx'
+import { template as coDesignAdminNotification } from './co-design-admin-notification.tsx'
 import { template as unleashResourcesConfirmation } from './unleash-resources-confirmation.tsx'
 import { template as unleashLeadAdminNotification } from './unleash-lead-admin-notification.tsx'
 import { template as leadVisitorConfirmation } from './lead-visitor-confirmation.tsx'
@@ -19,6 +21,8 @@ import { template as leadAdminNotification } from './lead-admin-notification.tsx
 export const TEMPLATES: Record<string, TemplateEntry> = {
   'power-hour-buyer-confirmation': powerHourBuyerConfirmation,
   'power-hour-admin-notification': powerHourAdminNotification,
+  'co-design-buyer-confirmation': coDesignBuyerConfirmation,
+  'co-design-admin-notification': coDesignAdminNotification,
   'unleash-resources-confirmation': unleashResourcesConfirmation,
   'unleash-lead-admin-notification': unleashLeadAdminNotification,
   'lead-visitor-confirmation': leadVisitorConfirmation,

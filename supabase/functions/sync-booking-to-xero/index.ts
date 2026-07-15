@@ -10,8 +10,29 @@ const BodySchema = z.object({ bookingId: z.string().uuid() });
 const REVENUE_ACCOUNT = Deno.env.get("XERO_REVENUE_ACCOUNT_CODE") || "200";
 const CLEARING_ACCOUNT = Deno.env.get("XERO_STRIPE_CLEARING_ACCOUNT_CODE") || "";
 
-const LINE_DESCRIPTION = "AI Diagnostic — 1:1 with Brendan";
-const UNIT_AMOUNT_GBP = 395.00;
+const DIAGNOSTIC_DESCRIPTION = "AI Diagnostic — 1:1 with Brendan";
+const DIAGNOSTIC_UNIT_AMOUNT_GBP = 395.00;
+
+function describeBooking(booking: { variant: string | null; amount_paid: number | null }): {
+  description: string;
+  unitAmount: number;
+} {
+  const v = booking.variant ?? "";
+  if (v === "co-design-six") {
+    return {
+      description: "Co-Design Session — 6-session series with Brendan",
+      unitAmount: (booking.amount_paid ?? 250000) / 100,
+    };
+  }
+  if (v === "co-design-single") {
+    return {
+      description: "Co-Design Session — 1 session with Brendan",
+      unitAmount: (booking.amount_paid ?? 39500) / 100,
+    };
+  }
+  // Default: diagnostic (legacy bookings with null variant)
+  return { description: DIAGNOSTIC_DESCRIPTION, unitAmount: DIAGNOSTIC_UNIT_AMOUNT_GBP };
+}
 
 function q(v: string) {
   return v.replace(/"/g, '\\"');
@@ -67,7 +88,7 @@ Deno.serve(async (req) => {
 
     const { data: booking, error: fetchErr } = await supabase
       .from("power_hour_bookings")
-      .select("id, name, email, role_org, source, coupon_code, amount_paid, discount_amount, stripe_session_id, status, xero_invoice_id")
+      .select("id, name, email, role_org, source, variant, coupon_code, amount_paid, discount_amount, stripe_session_id, status, xero_invoice_id")
       .eq("id", bookingId)
       .maybeSingle();
     if (fetchErr) throw fetchErr;
@@ -88,11 +109,16 @@ Deno.serve(async (req) => {
       company: booking.role_org,
     });
 
+    const { description, unitAmount } = describeBooking({
+      variant: (booking.variant as string | null) ?? null,
+      amount_paid: (booking.amount_paid as number | null) ?? null,
+    });
+
     // Invoice lines
     const lines: any[] = [{
-      Description: LINE_DESCRIPTION,
+      Description: description,
       Quantity: 1,
-      UnitAmount: UNIT_AMOUNT_GBP,
+      UnitAmount: unitAmount,
       AccountCode: REVENUE_ACCOUNT,
       TaxType: "NONE",
     }];
@@ -107,7 +133,9 @@ Deno.serve(async (req) => {
       });
     }
 
-    const reference = `Diagnostic — ${booking.source ?? "web"}${booking.coupon_code ? ` (${booking.coupon_code})` : ""}`;
+    const isCoDesign = ((booking.variant as string | null) ?? "").startsWith("co-design");
+    const refLabel = isCoDesign ? "Co-Design" : "Diagnostic";
+    const reference = `${refLabel} — ${booking.source ?? "web"}${booking.coupon_code ? ` (${booking.coupon_code})` : ""}`;
     const invoicePayload = {
       Invoices: [{
         Type: "ACCREC",
