@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { Check, ArrowRight, Sparkles, ChevronLeft, ChevronRight } from "lucide-react";
 import { SectionHeader } from "./SectionHeader";
+import { CoDesignDrawer } from "./CoDesignDrawer";
+
 
 const tiers = [
   {
