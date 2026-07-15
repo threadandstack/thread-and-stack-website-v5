@@ -1,0 +1,1 @@
+ALTER TABLE public.power_hour_bookings ADD COLUMN IF NOT EXISTS variant TEXT;
