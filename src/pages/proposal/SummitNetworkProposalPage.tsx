@@ -119,7 +119,7 @@ const ReplyDrawer = ({ open, onOpenChange }: { open: boolean; onOpenChange: (o: 
 
       toast({
         title: "Reply sent",
-        description: "Thanks — I'll be in touch shortly.",
+        description: "Thanks, I'll be in touch shortly.",
       });
       setEmail("");
       setMessage("");
@@ -144,7 +144,7 @@ const ReplyDrawer = ({ open, onOpenChange }: { open: boolean; onOpenChange: (o: 
           <SheetTitle className="font-serif-pro text-2xl italic font-semibold">Reply to begin</SheetTitle>
         </SheetHeader>
         <p className="font-sans text-sm text-muted-foreground leading-relaxed mb-6">
-          A short note straight to Brendan. Pick what fits — adjust anything you need to.
+          A short note straight to Brendan. Pick what fits. Adjust anything you need to.
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-5">
@@ -464,7 +464,7 @@ const SummitNetworkProposalPage = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    const socialTitle = "Thread & Stack × Summit Network — Notion Operations Build (SN1)";
+    const socialTitle = "Thread & Stack × Summit Network · Notion Operations Build (SN1)";
     document.title = socialTitle;
 
     const tags: HTMLMetaElement[] = [];
@@ -637,16 +637,14 @@ const SummitNetworkProposalPage = () => {
               <P>
                 A shared login means notifications now fire to everyone or no one. Onboarding depends on
                 Cali or Dallin being in the room. Clients still have no way to see what's being done on
-                their behalf. The acquisition pause isn't a symptom of a struggling business, it's a
-                sensible response from a business that tripled without pausing to rebuild the plumbing
-                underneath it.
+                their behalf. The acquisition pause is a sensible response from a business that tripled
+                without pausing to rebuild the plumbing underneath it.
               </P>
               <P>
-                What's missing isn't more effort from Andrew or Cali, it's a structure that holds the
-                effort in place. <strong>This build gives every team member a clear view of their own work,
-                runs client onboarding without Cali or Dallin as the single point of failure, and gives
-                clients a clean window into what Summit is doing for them</strong>, without adding another
-                tool to the stack.
+                What's needed is a structure that holds the effort in place. <strong>This build gives every
+                team member a clear view of their own work, runs client onboarding without Cali or Dallin
+                as the single point of failure, and gives clients a clean window into what Summit is doing
+                for them</strong>, without adding another tool to the stack.
               </P>
               <P>
                 This is a build-and-refine engagement. You'll see the system as it develops and shape it
@@ -668,7 +666,7 @@ const SummitNetworkProposalPage = () => {
               <ul className="mt-4 space-y-5">
                 {[
                   { title: "Diagnostic", body: "Complete (ran 13 July). Confirmed the current setup, pain points, and scope." },
-                  { title: "Foundations build", body: "Individual team logins, client database rebuilt from the Typeform export, personalised homepages, prospect and delivery pipelines, and an SOP library — built in hidden team spaces inside the existing workspace so nothing currently running is disrupted." },
+                  { title: "Foundations build", body: "Individual team logins, client database rebuilt from the Typeform export, personalised homepages, prospect and delivery pipelines, and an SOP library. Built in hidden team spaces inside the existing workspace so nothing currently running is disrupted." },
                   { title: "Client-facing build", body: "Client portal, branded landing page with custom tiles, locked credential storage, and light-touch QuickBooks/Monarch links." },
                   { title: "Onboarding automation and adoption day", body: "Typeform and website registration wired into Notion, tier-based DocuSign routing, automated task cascades, then a planned adoption day to go live." },
                   { title: "Launch support and ongoing", body: "Three months of hands-on support (10 hours/month), then rolling support at £1,000/month, flexible up or down." },
@@ -711,11 +709,11 @@ const SummitNetworkProposalPage = () => {
               </P>
               <ul className="mt-8 space-y-5">
                 {[
-                  { icon: IconNotion, title: "Notion Workspace — the single source of truth.", body: "Clients, agreements, agencies, SOPs, and team knowledge in one place. Every person has their own login, their own homepage, and only sees what they need. New team members onboard from the system itself." },
-                  { icon: IconLassie, title: "Notion AI — the knowledge layer.", body: "Anyone on the Summit team asks a question in plain English and gets an answer drawn from the workspace. Meeting notes and call transcripts land against the right client automatically. No training required." },
-                  { icon: IconClaude, title: "Claude — your strategic co-pilot.", body: "Connected to Summit's Notion context. Reads and edits the workspace directly. Useful for drafting client comms, reasoning over pipeline data, and pressure-testing decisions with the full history of the business already in scope." },
-                  { icon: IconNotionAI, title: "Custom agents — purpose-built for Summit.", body: "Focused agents that reason over Summit's own data — triaging inbound requests, watching the delivery pipeline for stalled onboardings, and surfacing agency collaboration opportunities. They act on context, not just rules." },
-                  { icon: IconZapier, title: "Automations — the pipes.", body: "Typeform and website registrations land as structured client accounts. Signed DocuSigns cascade tasks and reminders until onboarding is complete. QuickBooks and Monarch stay linked, not tangled. Dumb, reliable, running quietly in the background." },
+                  { icon: IconNotion, title: "Notion Workspace. The single source of truth.", body: "Clients, agreements, agencies, SOPs, and team knowledge in one place. Every person has their own login, their own homepage, and only sees what they need. New team members onboard from the system itself." },
+                  { icon: IconLassie, title: "Notion AI. The knowledge layer.", body: "Anyone on the Summit team asks a question in plain English and gets an answer drawn from the workspace. Meeting notes and call transcripts land against the right client automatically. No training required." },
+                  { icon: IconClaude, title: "Claude. Your strategic co-pilot.", body: "Connected to Summit's Notion context. Reads and edits the workspace directly. Useful for drafting client comms, reasoning over pipeline data, and pressure-testing decisions with the full history of the business already in scope." },
+                  { icon: IconNotionAI, title: "Custom agents. Purpose-built for Summit.", body: "Focused agents that reason over Summit's own data. They triage inbound requests, watch the delivery pipeline for stalled onboardings, and surface agency collaboration opportunities. They act on context, not just rules." },
+                  { icon: IconZapier, title: "Automations. The pipes.", body: "Typeform and website registrations land as structured client accounts. Signed DocuSigns cascade tasks and reminders until onboarding is complete. QuickBooks and Monarch stay linked, not tangled. Dumb, reliable, running quietly in the background." },
                 ].map((layer, i) => (
                   <motion.li
                     key={i}
@@ -753,19 +751,19 @@ const SummitNetworkProposalPage = () => {
                 items={[
                   <>Individual member logins for every team member, replacing the shared login.</>,
                   <>Client database rebuilt from the 40+ column Typeform export into structured account pages.</>,
-                  <><strong>Personalised homepage</strong> — each person sees only their own tasks, meetings, and week ahead.</>,
+                  <><strong>Personalised homepage.</strong> Each person sees only their own tasks, meetings, and week ahead.</>,
                   <>Prospect pipeline (New Leads → Discovery → Decision → Proposal → Signed) and client delivery pipeline (Setup → Onboarding → Active → Maintenance).</>,
                   <>An SOP library that's actually easy to find.</>,
                   <>Notion's native AI meeting notes and call transcription, linked to each client record.</>,
-                  <><strong>Client portal</strong> — each client (free guest access) sees only their own page, tasks, and progress.</>,
+                  <><strong>Client portal.</strong> Each client (free guest access) sees only their own page, tasks, and progress.</>,
                   <>Dedicated client task request area, replacing scattered iMessage requests.</>,
-                  <>Light-touch links and how-to guides for QuickBooks and Monarch — not deep integrations.</>,
+                  <>Light-touch links and how-to guides for QuickBooks and Monarch, not deep integrations.</>,
                   <>Branded landing page with custom tiles, designed from Summit's logo and brand materials.</>,
                   <>Locked, team-only credential storage for platforms Summit manages on clients' behalf (page-level sharing and filtered views).</>,
                   <>Typeform intake plus website registration forms wired into Notion, feeding the same account model.</>,
                   <>Tier-based DocuSign routing, including tax/no-tax variations on Tier 2.</>,
                   <>Automated task cascade on signature, with persistent reminders until onboarding is complete.</>,
-                  <><strong>Agency CRM</strong> — agency accounts, agreements, and collaboration tracking, referral percentages, and call notes.</>,
+                  <><strong>Agency CRM.</strong> Agency accounts, agreements, and collaboration tracking, referral percentages, and call notes.</>,
                 ]}
               />
 
@@ -946,7 +944,7 @@ const SummitNetworkProposalPage = () => {
                   </div>
                   <img
                     src={NotionBadges}
-                    alt="Notion certification badges — Academy Essentials, Workflows, Advanced, AI, Certified Admin, Service Specialist, and Consulting Partner"
+                    alt="Notion certification badges: Academy Essentials, Workflows, Advanced, AI, Certified Admin, Service Specialist, and Consulting Partner"
                     className="w-full max-w-2xl mx-auto h-auto"
                   />
                 </div>
