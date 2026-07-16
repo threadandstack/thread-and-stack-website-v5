@@ -19,6 +19,7 @@ import IconNotion from "@/assets/proposal/icons/notion.png";
 import IconNotionAI from "@/assets/proposal/icons/notion-ai.png";
 import IconLassie from "@/assets/proposal/icons/lassie.png";
 import IconZapier from "@/assets/proposal/icons/zapier.svg";
+import { Tilt3D } from "@/components/Tilt3D";
 
 /* ---------------------------- Reply Drawer ---------------------------- */
 
@@ -141,7 +142,7 @@ const ReplyDrawer = ({ open, onOpenChange }: { open: boolean; onOpenChange: (o: 
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent className="w-full sm:max-w-md overflow-y-auto">
         <SheetHeader className="mb-2">
-          <SheetTitle className="font-serif-pro text-2xl italic font-semibold">Reply to begin</SheetTitle>
+          <SheetTitle className="font-serif-pro text-2xl italic font-medium">Reply to begin</SheetTitle>
         </SheetHeader>
         <p className="font-sans text-sm text-muted-foreground leading-relaxed mb-6">
           A short note straight to Brendan. Pick what fits. Adjust anything you need to.
@@ -285,12 +286,12 @@ const SectionHead = ({
     )}
     <div className="flex items-baseline gap-4 md:gap-5">
       {num && (
-        <span className="font-serif-pro text-3xl md:text-5xl font-light italic text-accent leading-none flex-shrink-0">
+        <span className="font-serif-pro text-3xl md:text-5xl font-light italic text-gradient-warm leading-none flex-shrink-0">
           {num}
         </span>
       )}
       <h2
-        className="font-serif-pro text-[30px] sm:text-4xl md:text-[42px] italic font-bold leading-[1.1] tracking-tight text-foreground text-balance"
+        className="font-serif-pro text-[30px] sm:text-4xl md:text-[42px] italic font-medium leading-[1.1] tracking-tight text-foreground text-balance"
         style={{ transform: `rotate(${rotate}deg)` }}
       >
         {title}
@@ -308,7 +309,7 @@ const P = ({ children }: { children: React.ReactNode }) => (
 const H3 = ({ children }: { children: React.ReactNode }) => (
   <motion.h3
     {...fadeUp}
-    className="font-serif-pro text-[22px] md:text-[26px] italic font-semibold text-foreground mt-12 mb-5 leading-snug"
+    className="font-serif-pro text-[22px] md:text-[26px] italic font-medium text-foreground mt-12 mb-5 leading-snug"
   >
     {children}
   </motion.h3>
@@ -406,7 +407,7 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => (
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.55 }}
-          className="font-serif-pro text-3xl sm:text-5xl md:text-6xl italic font-semibold leading-[1.05] tracking-tight mb-8 text-balance"
+          className="font-serif-pro text-3xl sm:text-5xl md:text-6xl italic font-medium leading-[1.05] tracking-tight mb-8 text-balance"
         >
           The{" "}
           <span className="inline-block text-gradient-warm" style={{ transform: "translateY(1px)" }}>
@@ -575,7 +576,7 @@ const SummitNetworkProposalPage = () => {
             >
               <img src={BlackStacked} alt="Thread & Stack" className="h-20 sm:h-20 md:h-24 w-auto" />
               <X aria-hidden="true" className="w-5 h-5 sm:w-6 sm:h-6 text-foreground/25" strokeWidth={1} />
-              <div className="font-serif-pro italic text-2xl sm:text-3xl md:text-4xl font-semibold text-foreground text-center">
+              <div className="font-serif-pro italic text-2xl sm:text-3xl md:text-4xl font-medium text-foreground text-center">
                 Summit<br />Network
               </div>
             </motion.div>
@@ -584,7 +585,7 @@ const SummitNetworkProposalPage = () => {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.25 }}
-              className="font-serif-pro text-[36px] sm:text-5xl md:text-6xl italic font-semibold leading-[1.05] tracking-tight text-foreground text-balance mb-8 order-3"
+              className="font-serif-pro text-[36px] sm:text-5xl md:text-6xl italic font-medium leading-[1.05] tracking-tight text-foreground text-balance mb-8 order-3"
             >
               The{" "}
               <span className="inline-block text-gradient-warm" style={{ transform: "translateY(1px)" }}>
@@ -677,17 +678,20 @@ const SummitNetworkProposalPage = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.3 }}
                     transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                    className="flex gap-5 items-start bg-card/60 rounded-2xl p-5 shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
                   >
-                    <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-background flex items-center justify-center shadow-[0_1px_4px_rgba(0,0,0,0.06)]">
-                      <span className="font-serif-pro italic text-xl text-accent font-semibold">
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-                    </div>
-                    <div className="flex-1 pt-1">
-                      <strong className="font-serif-pro italic text-lg text-primary block mb-1">{step.title}</strong>
-                      <span className="text-foreground/75 leading-relaxed">{step.body}</span>
-                    </div>
+                    <Tilt3D maxX={5} maxY={4}>
+                      <div className="flex gap-5 items-start bg-card rounded-2xl p-5 shadow-[0_8px_30px_rgba(0,0,0,0.06)] h-full">
+                        <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-background flex items-center justify-center shadow-[0_1px_4px_rgba(0,0,0,0.06)]">
+                          <span className="font-serif-pro italic text-xl text-gradient-warm font-medium">
+                            {String(i + 1).padStart(2, "0")}
+                          </span>
+                        </div>
+                        <div className="flex-1 pt-1">
+                          <strong className="font-serif-pro italic font-medium text-lg text-foreground block mb-1">{step.title}</strong>
+                          <span className="text-foreground/75 leading-relaxed">{step.body}</span>
+                        </div>
+                      </div>
+                    </Tilt3D>
                   </motion.li>
                 ))}
               </ul>
@@ -721,15 +725,18 @@ const SummitNetworkProposalPage = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.3 }}
                     transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                    className="flex gap-5 items-start bg-card/60 rounded-2xl p-5 shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
                   >
-                    <div className="flex-shrink-0 w-14 h-14 rounded-xl bg-background flex items-center justify-center shadow-[0_1px_4px_rgba(0,0,0,0.06)]">
-                      <img src={layer.icon} alt="" className="w-9 h-9 object-contain" />
-                    </div>
-                    <div className="flex-1 pt-1">
-                      <strong className="font-serif-pro italic text-lg text-primary block mb-1">{layer.title}</strong>
-                      <span className="text-foreground/75 leading-relaxed">{layer.body}</span>
-                    </div>
+                    <Tilt3D maxX={5} maxY={4}>
+                      <div className="flex gap-5 items-start bg-card rounded-2xl p-5 shadow-[0_8px_30px_rgba(0,0,0,0.06)] h-full">
+                        <div className="flex-shrink-0 w-14 h-14 rounded-xl bg-background flex items-center justify-center shadow-[0_1px_4px_rgba(0,0,0,0.06)]">
+                          <img src={layer.icon} alt="" className="w-9 h-9 object-contain" />
+                        </div>
+                        <div className="flex-1 pt-1">
+                          <strong className="font-serif-pro italic font-medium text-lg text-foreground block mb-1">{layer.title}</strong>
+                          <span className="text-foreground/75 leading-relaxed">{layer.body}</span>
+                        </div>
+                      </div>
+                    </Tilt3D>
                   </motion.li>
                 ))}
               </ul>
@@ -806,13 +813,18 @@ const SummitNetworkProposalPage = () => {
                       className={`inline-flex items-center gap-1.5 rounded-full px-4 py-1 text-xs font-bold tracking-[0.18em] uppercase ${
                         step.isLaunch
                           ? "bg-primary text-primary-foreground"
-                          : "bg-accent text-accent-foreground"
+                          : "text-white"
                       }`}
+                      style={
+                        step.isLaunch
+                          ? undefined
+                          : { backgroundImage: "linear-gradient(95deg, var(--gradient-3color))" }
+                      }
                     >
                       {step.isLaunch && <Rocket className="w-3.5 h-3.5" />}
                       {step.label}
                     </span>
-                    <h3 className="mt-3 font-serif-pro italic text-xl sm:text-2xl leading-tight text-foreground">
+                    <h3 className="mt-3 font-serif-pro italic font-medium text-xl sm:text-2xl leading-tight text-foreground">
                       {step.when}
                     </h3>
                     <div className="mt-1 font-sans text-[12px] tracking-[0.16em] uppercase text-muted-foreground">
@@ -841,7 +853,7 @@ const SummitNetworkProposalPage = () => {
                 head={["Item", "Amount"]}
                 rows={[
                   ["Notion operations build (2-month build + 3-month launch support)", "£12,500"],
-                  ["Diagnostic fee, already paid", <span className="text-accent font-semibold">–£395 (credited)</span>],
+                  ["Diagnostic fee, already paid", <span className="text-gradient-warm font-semibold">–£395 (credited)</span>],
                   [<strong>Net investment</strong>, <strong>£12,105</strong>],
                   ["Ongoing support after launch", "£1,000/month, rolling, no fixed term"],
                 ]}
@@ -869,11 +881,11 @@ const SummitNetworkProposalPage = () => {
             {/* Sign-off + business card */}
             <section>
               <motion.div {...fadeUp} className="mx-auto max-w-xl">
-                <div className="mb-6 text-center font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-accent">
+                <div className="mb-6 text-center font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-gradient-warm">
                   Next
                 </div>
                 <h2
-                  className="font-serif-pro text-[28px] sm:text-[34px] md:text-[40px] italic font-bold leading-[1.1] tracking-tight text-foreground text-balance mb-6 text-center"
+                  className="font-serif-pro text-[28px] sm:text-[34px] md:text-[40px] italic font-medium leading-[1.1] tracking-tight text-foreground text-balance mb-6 text-center"
                   style={{ transform: "rotate(-0.3deg)" }}
                 >
                   Let's build the{" "}
@@ -892,51 +904,54 @@ const SummitNetworkProposalPage = () => {
                   </PillButton>
                 </div>
 
-                <div className="rounded-2xl border border-border bg-card/40 shadow-[0_2px_24px_-12px_rgba(0,0,0,0.12)] p-6 sm:p-8 flex flex-col sm:flex-row items-center sm:items-start gap-6">
-                  <img
-                    src={BrendanAvatar}
-                    alt="Brendan Rodgers"
-                    className="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover flex-shrink-0"
-                  />
-                  <div className="flex-1 text-center sm:text-left">
-                    <div className="font-serif-pro italic text-2xl font-semibold text-foreground leading-tight">
-                      Brendan Rodgers
-                    </div>
-                    <div className="font-sans text-[13px] tracking-[0.18em] uppercase text-muted-foreground mt-1">
-                      Thread &amp; Stack
-                    </div>
-                    <div className="mt-4 space-y-1.5 font-sans text-[15px] text-foreground/85">
-                      <div>
-                        <a href="mailto:br@brendanrodgers.uk" className="text-accent hover:underline">
-                          br@brendanrodgers.uk
+                <Tilt3D maxX={5} maxY={4}>
+                  <div className="rounded-2xl bg-card shadow-[0_8px_30px_rgba(0,0,0,0.08)] p-6 sm:p-8 flex flex-col sm:flex-row items-center sm:items-start gap-6">
+                    <img
+                      src={BrendanAvatar}
+                      alt="Brendan Rodgers"
+                      className="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover flex-shrink-0"
+                    />
+                    <div className="flex-1 text-center sm:text-left">
+                      <div className="font-serif-pro italic text-2xl font-medium text-foreground leading-tight">
+                        Brendan Rodgers
+                      </div>
+                      <div className="font-sans text-[13px] tracking-[0.18em] uppercase text-muted-foreground mt-1">
+                        Thread &amp; Stack
+                      </div>
+                      <div className="mt-4 space-y-1.5 font-sans text-[15px] text-foreground/85">
+                        <div>
+                          <a href="mailto:br@brendanrodgers.uk" className="text-accent hover:underline">
+                            br@brendanrodgers.uk
+                          </a>
+                        </div>
+                        <div>
+                          <a href="tel:+447913566551" className="hover:text-accent transition-colors">
+                            07913 566551
+                          </a>
+                        </div>
+                      </div>
+                      <div className="mt-6 flex flex-wrap items-center justify-center sm:justify-start gap-3">
+                        <a
+                          href="mailto:br@brendanrodgers.uk?subject=Summit%20Network%20Proposal%20(SN1)%20Reply&body=Hi%20Brendan%2C%0A%0A"
+                          className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-white font-sans text-sm font-medium transition-all hover:-translate-y-px"
+                          style={{ backgroundImage: "linear-gradient(95deg, var(--gradient-3color))" }}
+                        >
+                          <Send className="w-4 h-4" />
+                          Email Brendan
+                        </a>
+                        <a
+                          href="https://www.linkedin.com/in/rodgersbrendan/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-clay/50 text-foreground font-sans text-sm hover:border-clay transition-colors"
+                        >
+                          <Linkedin className="w-4 h-4" />
+                          Connect on LinkedIn
                         </a>
                       </div>
-                      <div>
-                        <a href="tel:+447913566551" className="hover:text-accent transition-colors">
-                          07913 566551
-                        </a>
-                      </div>
-                    </div>
-                    <div className="mt-6 flex flex-wrap items-center justify-center sm:justify-start gap-3">
-                      <a
-                        href="mailto:br@brendanrodgers.uk?subject=Summit%20Network%20Proposal%20(SN1)%20%E2%80%94%20Reply&body=Hi%20Brendan%2C%0A%0A"
-                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-accent text-accent-foreground font-sans text-sm hover:bg-accent/90 transition-colors"
-                      >
-                        <Send className="w-4 h-4" />
-                        Email Brendan
-                      </a>
-                      <a
-                        href="https://www.linkedin.com/in/rodgersbrendan/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-border bg-card/40 text-foreground font-sans text-sm hover:bg-card/70 transition-colors"
-                      >
-                        <Linkedin className="w-4 h-4" />
-                        Connect on LinkedIn
-                      </a>
                     </div>
                   </div>
-                </div>
+                </Tilt3D>
 
                 <div className="mt-12 sm:mt-16">
                   <div className="text-center font-sans text-[12px] tracking-[0.22em] uppercase text-muted-foreground/70 mb-5">
