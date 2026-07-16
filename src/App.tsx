@@ -167,6 +167,7 @@ const App = () => (
             <Route path="/proposal/lss" element={<LSSProposalPage />} />
             <Route path="/proposal/sf-fire" element={<SFFireProposalPage />} />
             <Route path="/proposal/bfb-labs" element={<BfBLabsProposalPage />} />
+            <Route path="/proposal/summit-network" element={<SummitNetworkProposalPage />} />
             <Route path="/notion-masterclass" element={<NotionMasterclassPage />} />
             <Route path="/portfolio/creative" element={<CreativePortfolioPage />} />
             <Route path="/portfolio/creative/:itemId" element={<CreativePortfolioPage />} />
