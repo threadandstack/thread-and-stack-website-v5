@@ -19,6 +19,7 @@ import IconNotion from "@/assets/proposal/icons/notion.png";
 import IconNotionAI from "@/assets/proposal/icons/notion-ai.png";
 import IconLassie from "@/assets/proposal/icons/lassie.png";
 import IconZapier from "@/assets/proposal/icons/zapier.svg";
+import { Tilt3D } from "@/components/Tilt3D";
 
 /* ---------------------------- Reply Drawer ---------------------------- */
 
@@ -141,7 +142,7 @@ const ReplyDrawer = ({ open, onOpenChange }: { open: boolean; onOpenChange: (o: 
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent className="w-full sm:max-w-md overflow-y-auto">
         <SheetHeader className="mb-2">
-          <SheetTitle className="font-serif-pro text-2xl italic font-semibold">Reply to begin</SheetTitle>
+          <SheetTitle className="font-serif-pro text-2xl italic font-medium">Reply to begin</SheetTitle>
         </SheetHeader>
         <p className="font-sans text-sm text-muted-foreground leading-relaxed mb-6">
           A short note straight to Brendan. Pick what fits. Adjust anything you need to.
@@ -285,12 +286,12 @@ const SectionHead = ({
     )}
     <div className="flex items-baseline gap-4 md:gap-5">
       {num && (
-        <span className="font-serif-pro text-3xl md:text-5xl font-light italic text-accent leading-none flex-shrink-0">
+        <span className="font-serif-pro text-3xl md:text-5xl font-light italic text-gradient-warm leading-none flex-shrink-0">
           {num}
         </span>
       )}
       <h2
-        className="font-serif-pro text-[30px] sm:text-4xl md:text-[42px] italic font-bold leading-[1.1] tracking-tight text-foreground text-balance"
+        className="font-serif-pro text-[30px] sm:text-4xl md:text-[42px] italic font-medium leading-[1.1] tracking-tight text-foreground text-balance"
         style={{ transform: `rotate(${rotate}deg)` }}
       >
         {title}
@@ -308,7 +309,7 @@ const P = ({ children }: { children: React.ReactNode }) => (
 const H3 = ({ children }: { children: React.ReactNode }) => (
   <motion.h3
     {...fadeUp}
-    className="font-serif-pro text-[22px] md:text-[26px] italic font-semibold text-foreground mt-12 mb-5 leading-snug"
+    className="font-serif-pro text-[22px] md:text-[26px] italic font-medium text-foreground mt-12 mb-5 leading-snug"
   >
     {children}
   </motion.h3>
