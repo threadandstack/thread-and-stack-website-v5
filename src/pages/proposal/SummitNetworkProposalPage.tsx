@@ -407,7 +407,7 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => (
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.55 }}
-          className="font-serif-pro text-3xl sm:text-5xl md:text-6xl italic font-semibold leading-[1.05] tracking-tight mb-8 text-balance"
+          className="font-serif-pro text-3xl sm:text-5xl md:text-6xl italic font-medium leading-[1.05] tracking-tight mb-8 text-balance"
         >
           The{" "}
           <span className="inline-block text-gradient-warm" style={{ transform: "translateY(1px)" }}>
@@ -576,7 +576,7 @@ const SummitNetworkProposalPage = () => {
             >
               <img src={BlackStacked} alt="Thread & Stack" className="h-20 sm:h-20 md:h-24 w-auto" />
               <X aria-hidden="true" className="w-5 h-5 sm:w-6 sm:h-6 text-foreground/25" strokeWidth={1} />
-              <div className="font-serif-pro italic text-2xl sm:text-3xl md:text-4xl font-semibold text-foreground text-center">
+              <div className="font-serif-pro italic text-2xl sm:text-3xl md:text-4xl font-medium text-foreground text-center">
                 Summit<br />Network
               </div>
             </motion.div>
@@ -585,7 +585,7 @@ const SummitNetworkProposalPage = () => {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.25 }}
-              className="font-serif-pro text-[36px] sm:text-5xl md:text-6xl italic font-semibold leading-[1.05] tracking-tight text-foreground text-balance mb-8 order-3"
+              className="font-serif-pro text-[36px] sm:text-5xl md:text-6xl italic font-medium leading-[1.05] tracking-tight text-foreground text-balance mb-8 order-3"
             >
               The{" "}
               <span className="inline-block text-gradient-warm" style={{ transform: "translateY(1px)" }}>
