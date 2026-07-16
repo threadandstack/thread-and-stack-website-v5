@@ -254,7 +254,7 @@ const ReplyDrawer = ({ open, onOpenChange }: { open: boolean; onOpenChange: (o: 
 /* ---------------------------- Helpers ---------------------------- */
 
 const Hl = ({ children, shift = 1 }: { children: React.ReactNode; shift?: number }) => (
-  <span className="inline-block text-accent" style={{ transform: `translateY(${shift}px)` }}>
+  <span className="inline-block text-gradient-warm" style={{ transform: `translateY(${shift}px)` }}>
     {children}
   </span>
 );
@@ -409,7 +409,7 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => (
           className="font-serif-pro text-3xl sm:text-5xl md:text-6xl italic font-semibold leading-[1.05] tracking-tight mb-8 text-balance"
         >
           The{" "}
-          <span className="inline-block text-accent" style={{ transform: "translateY(1px)" }}>
+          <span className="inline-block text-gradient-warm" style={{ transform: "translateY(1px)" }}>
             Structure
           </span>{" "}
           Your Growth Has Been Waiting For.
@@ -587,7 +587,7 @@ const SummitNetworkProposalPage = () => {
               className="font-serif-pro text-[36px] sm:text-5xl md:text-6xl italic font-semibold leading-[1.05] tracking-tight text-foreground text-balance mb-8 order-3"
             >
               The{" "}
-              <span className="inline-block text-accent" style={{ transform: "translateY(1px)" }}>
+              <span className="inline-block text-gradient-warm" style={{ transform: "translateY(1px)" }}>
                 Structure
               </span>{" "}
               Your Growth Has Been Waiting For.
@@ -879,7 +879,7 @@ const SummitNetworkProposalPage = () => {
                   style={{ transform: "rotate(-0.3deg)" }}
                 >
                   Let's build the{" "}
-                  <span className="inline-block text-accent" style={{ transform: "translateY(1px)" }}>
+                  <span className="inline-block text-gradient-warm" style={{ transform: "translateY(1px)" }}>
                     structure
                   </span>{" "}
                   your growth has been waiting for.
