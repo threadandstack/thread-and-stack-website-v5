@@ -904,51 +904,54 @@ const SummitNetworkProposalPage = () => {
                   </PillButton>
                 </div>
 
-                <div className="rounded-2xl border border-border bg-card/40 shadow-[0_2px_24px_-12px_rgba(0,0,0,0.12)] p-6 sm:p-8 flex flex-col sm:flex-row items-center sm:items-start gap-6">
-                  <img
-                    src={BrendanAvatar}
-                    alt="Brendan Rodgers"
-                    className="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover flex-shrink-0"
-                  />
-                  <div className="flex-1 text-center sm:text-left">
-                    <div className="font-serif-pro italic text-2xl font-semibold text-foreground leading-tight">
-                      Brendan Rodgers
-                    </div>
-                    <div className="font-sans text-[13px] tracking-[0.18em] uppercase text-muted-foreground mt-1">
-                      Thread &amp; Stack
-                    </div>
-                    <div className="mt-4 space-y-1.5 font-sans text-[15px] text-foreground/85">
-                      <div>
-                        <a href="mailto:br@brendanrodgers.uk" className="text-accent hover:underline">
-                          br@brendanrodgers.uk
+                <Tilt3D maxX={5} maxY={4}>
+                  <div className="rounded-2xl bg-card shadow-[0_8px_30px_rgba(0,0,0,0.08)] p-6 sm:p-8 flex flex-col sm:flex-row items-center sm:items-start gap-6">
+                    <img
+                      src={BrendanAvatar}
+                      alt="Brendan Rodgers"
+                      className="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover flex-shrink-0"
+                    />
+                    <div className="flex-1 text-center sm:text-left">
+                      <div className="font-serif-pro italic text-2xl font-medium text-foreground leading-tight">
+                        Brendan Rodgers
+                      </div>
+                      <div className="font-sans text-[13px] tracking-[0.18em] uppercase text-muted-foreground mt-1">
+                        Thread &amp; Stack
+                      </div>
+                      <div className="mt-4 space-y-1.5 font-sans text-[15px] text-foreground/85">
+                        <div>
+                          <a href="mailto:br@brendanrodgers.uk" className="text-accent hover:underline">
+                            br@brendanrodgers.uk
+                          </a>
+                        </div>
+                        <div>
+                          <a href="tel:+447913566551" className="hover:text-accent transition-colors">
+                            07913 566551
+                          </a>
+                        </div>
+                      </div>
+                      <div className="mt-6 flex flex-wrap items-center justify-center sm:justify-start gap-3">
+                        <a
+                          href="mailto:br@brendanrodgers.uk?subject=Summit%20Network%20Proposal%20(SN1)%20Reply&body=Hi%20Brendan%2C%0A%0A"
+                          className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-white font-sans text-sm font-medium transition-all hover:-translate-y-px"
+                          style={{ backgroundImage: "linear-gradient(95deg, var(--gradient-3color))" }}
+                        >
+                          <Send className="w-4 h-4" />
+                          Email Brendan
+                        </a>
+                        <a
+                          href="https://www.linkedin.com/in/rodgersbrendan/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-clay/50 text-foreground font-sans text-sm hover:border-clay transition-colors"
+                        >
+                          <Linkedin className="w-4 h-4" />
+                          Connect on LinkedIn
                         </a>
                       </div>
-                      <div>
-                        <a href="tel:+447913566551" className="hover:text-accent transition-colors">
-                          07913 566551
-                        </a>
-                      </div>
-                    </div>
-                    <div className="mt-6 flex flex-wrap items-center justify-center sm:justify-start gap-3">
-                      <a
-                        href="mailto:br@brendanrodgers.uk?subject=Summit%20Network%20Proposal%20(SN1)%20%E2%80%94%20Reply&body=Hi%20Brendan%2C%0A%0A"
-                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-accent text-accent-foreground font-sans text-sm hover:bg-accent/90 transition-colors"
-                      >
-                        <Send className="w-4 h-4" />
-                        Email Brendan
-                      </a>
-                      <a
-                        href="https://www.linkedin.com/in/rodgersbrendan/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-border bg-card/40 text-foreground font-sans text-sm hover:bg-card/70 transition-colors"
-                      >
-                        <Linkedin className="w-4 h-4" />
-                        Connect on LinkedIn
-                      </a>
                     </div>
                   </div>
-                </div>
+                </Tilt3D>
 
                 <div className="mt-12 sm:mt-16">
                   <div className="text-center font-sans text-[12px] tracking-[0.22em] uppercase text-muted-foreground/70 mb-5">
