@@ -813,13 +813,18 @@ const SummitNetworkProposalPage = () => {
                       className={`inline-flex items-center gap-1.5 rounded-full px-4 py-1 text-xs font-bold tracking-[0.18em] uppercase ${
                         step.isLaunch
                           ? "bg-primary text-primary-foreground"
-                          : "bg-accent text-accent-foreground"
+                          : "text-white"
                       }`}
+                      style={
+                        step.isLaunch
+                          ? undefined
+                          : { backgroundImage: "linear-gradient(95deg, var(--gradient-3color))" }
+                      }
                     >
                       {step.isLaunch && <Rocket className="w-3.5 h-3.5" />}
                       {step.label}
                     </span>
-                    <h3 className="mt-3 font-serif-pro italic text-xl sm:text-2xl leading-tight text-foreground">
+                    <h3 className="mt-3 font-serif-pro italic font-medium text-xl sm:text-2xl leading-tight text-foreground">
                       {step.when}
                     </h3>
                     <div className="mt-1 font-sans text-[12px] tracking-[0.16em] uppercase text-muted-foreground">
@@ -848,7 +853,7 @@ const SummitNetworkProposalPage = () => {
                 head={["Item", "Amount"]}
                 rows={[
                   ["Notion operations build (2-month build + 3-month launch support)", "£12,500"],
-                  ["Diagnostic fee, already paid", <span className="text-accent font-semibold">–£395 (credited)</span>],
+                  ["Diagnostic fee, already paid", <span className="text-gradient-warm font-semibold">–£395 (credited)</span>],
                   [<strong>Net investment</strong>, <strong>£12,105</strong>],
                   ["Ongoing support after launch", "£1,000/month, rolling, no fixed term"],
                 ]}
@@ -876,11 +881,11 @@ const SummitNetworkProposalPage = () => {
             {/* Sign-off + business card */}
             <section>
               <motion.div {...fadeUp} className="mx-auto max-w-xl">
-                <div className="mb-6 text-center font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-accent">
+                <div className="mb-6 text-center font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-gradient-warm">
                   Next
                 </div>
                 <h2
-                  className="font-serif-pro text-[28px] sm:text-[34px] md:text-[40px] italic font-bold leading-[1.1] tracking-tight text-foreground text-balance mb-6 text-center"
+                  className="font-serif-pro text-[28px] sm:text-[34px] md:text-[40px] italic font-medium leading-[1.1] tracking-tight text-foreground text-balance mb-6 text-center"
                   style={{ transform: "rotate(-0.3deg)" }}
                 >
                   Let's build the{" "}
