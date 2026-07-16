@@ -678,17 +678,20 @@ const SummitNetworkProposalPage = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.3 }}
                     transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                    className="flex gap-5 items-start bg-card/60 rounded-2xl p-5 shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
                   >
-                    <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-background flex items-center justify-center shadow-[0_1px_4px_rgba(0,0,0,0.06)]">
-                      <span className="font-serif-pro italic text-xl text-accent font-semibold">
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-                    </div>
-                    <div className="flex-1 pt-1">
-                      <strong className="font-serif-pro italic text-lg text-primary block mb-1">{step.title}</strong>
-                      <span className="text-foreground/75 leading-relaxed">{step.body}</span>
-                    </div>
+                    <Tilt3D maxX={5} maxY={4}>
+                      <div className="flex gap-5 items-start bg-card rounded-2xl p-5 shadow-[0_8px_30px_rgba(0,0,0,0.06)] h-full">
+                        <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-background flex items-center justify-center shadow-[0_1px_4px_rgba(0,0,0,0.06)]">
+                          <span className="font-serif-pro italic text-xl text-gradient-warm font-medium">
+                            {String(i + 1).padStart(2, "0")}
+                          </span>
+                        </div>
+                        <div className="flex-1 pt-1">
+                          <strong className="font-serif-pro italic font-medium text-lg text-foreground block mb-1">{step.title}</strong>
+                          <span className="text-foreground/75 leading-relaxed">{step.body}</span>
+                        </div>
+                      </div>
+                    </Tilt3D>
                   </motion.li>
                 ))}
               </ul>
@@ -722,15 +725,18 @@ const SummitNetworkProposalPage = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.3 }}
                     transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                    className="flex gap-5 items-start bg-card/60 rounded-2xl p-5 shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
                   >
-                    <div className="flex-shrink-0 w-14 h-14 rounded-xl bg-background flex items-center justify-center shadow-[0_1px_4px_rgba(0,0,0,0.06)]">
-                      <img src={layer.icon} alt="" className="w-9 h-9 object-contain" />
-                    </div>
-                    <div className="flex-1 pt-1">
-                      <strong className="font-serif-pro italic text-lg text-primary block mb-1">{layer.title}</strong>
-                      <span className="text-foreground/75 leading-relaxed">{layer.body}</span>
-                    </div>
+                    <Tilt3D maxX={5} maxY={4}>
+                      <div className="flex gap-5 items-start bg-card rounded-2xl p-5 shadow-[0_8px_30px_rgba(0,0,0,0.06)] h-full">
+                        <div className="flex-shrink-0 w-14 h-14 rounded-xl bg-background flex items-center justify-center shadow-[0_1px_4px_rgba(0,0,0,0.06)]">
+                          <img src={layer.icon} alt="" className="w-9 h-9 object-contain" />
+                        </div>
+                        <div className="flex-1 pt-1">
+                          <strong className="font-serif-pro italic font-medium text-lg text-foreground block mb-1">{layer.title}</strong>
+                          <span className="text-foreground/75 leading-relaxed">{layer.body}</span>
+                        </div>
+                      </div>
+                    </Tilt3D>
                   </motion.li>
                 ))}
               </ul>
