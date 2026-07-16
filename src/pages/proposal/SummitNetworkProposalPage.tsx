@@ -14,6 +14,11 @@ import { trackContactFormSubmit } from "@/hooks/useAnalytics";
 import BlackStacked from "@/assets/logos/Black_TS_Stacked.svg";
 import GreyStacked from "@/assets/logos/Grey_TS_Stacked.svg";
 import BrendanAvatar from "@/assets/brendan-avatar.webp";
+import IconClaude from "@/assets/proposal/icons/claude.png";
+import IconNotion from "@/assets/proposal/icons/notion.png";
+import IconNotionAI from "@/assets/proposal/icons/notion-ai.png";
+import IconLassie from "@/assets/proposal/icons/lassie.png";
+import IconZapier from "@/assets/proposal/icons/zapier.svg";
 
 /* ---------------------------- Reply Drawer ---------------------------- */
 
@@ -692,10 +697,52 @@ const SummitNetworkProposalPage = () => {
 
             <Rule />
 
-            {/* 03 — What's in scope */}
+            {/* 03 — The workspace */}
             <section>
               <SectionHead
                 num="03"
+                eyebrow="The workspace"
+                rotate={0.3}
+                title={<>The <Hl>stack</Hl> Summit will run on.</>}
+              />
+              <P>
+                One connected operation, built around Notion as the single source of truth. Each layer plays
+                a specific role. Each one is replaceable if something better comes along.
+              </P>
+              <ul className="mt-8 space-y-5">
+                {[
+                  { icon: IconNotion, title: "Notion Workspace — the single source of truth.", body: "Clients, agreements, agencies, SOPs, and team knowledge in one place. Every person has their own login, their own homepage, and only sees what they need. New team members onboard from the system itself." },
+                  { icon: IconLassie, title: "Notion AI — the knowledge layer.", body: "Anyone on the Summit team asks a question in plain English and gets an answer drawn from the workspace. Meeting notes and call transcripts land against the right client automatically. No training required." },
+                  { icon: IconClaude, title: "Claude — your strategic co-pilot.", body: "Connected to Summit's Notion context. Reads and edits the workspace directly. Useful for drafting client comms, reasoning over pipeline data, and pressure-testing decisions with the full history of the business already in scope." },
+                  { icon: IconNotionAI, title: "Custom agents — purpose-built for Summit.", body: "Focused agents that reason over Summit's own data — triaging inbound requests, watching the delivery pipeline for stalled onboardings, and surfacing agency collaboration opportunities. They act on context, not just rules." },
+                  { icon: IconZapier, title: "Automations — the pipes.", body: "Typeform and website registrations land as structured client accounts. Signed DocuSigns cascade tasks and reminders until onboarding is complete. QuickBooks and Monarch stay linked, not tangled. Dumb, reliable, running quietly in the background." },
+                ].map((layer, i) => (
+                  <motion.li
+                    key={i}
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                    className="flex gap-5 items-start bg-card/60 rounded-2xl p-5 shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
+                  >
+                    <div className="flex-shrink-0 w-14 h-14 rounded-xl bg-background flex items-center justify-center shadow-[0_1px_4px_rgba(0,0,0,0.06)]">
+                      <img src={layer.icon} alt="" className="w-9 h-9 object-contain" />
+                    </div>
+                    <div className="flex-1 pt-1">
+                      <strong className="font-serif-pro italic text-lg text-primary block mb-1">{layer.title}</strong>
+                      <span className="text-foreground/75 leading-relaxed">{layer.body}</span>
+                    </div>
+                  </motion.li>
+                ))}
+              </ul>
+            </section>
+
+            <Rule />
+
+            {/* 04 — What's in scope */}
+            <section>
+              <SectionHead
+                num="04"
                 eyebrow="What's in scope"
                 rotate={-0.3}
                 title={<>The full <Hl>scope of work.</Hl></>}
@@ -733,10 +780,10 @@ const SummitNetworkProposalPage = () => {
 
             <Rule />
 
-            {/* 04 — Timeline */}
+            {/* 05 — Timeline */}
             <section>
               <SectionHead
-                num="04"
+                num="05"
                 eyebrow="Timeline"
                 rotate={0.4}
                 title={<>From today to <Hl shift={-1}>go-live.</Hl></>}
@@ -783,10 +830,10 @@ const SummitNetworkProposalPage = () => {
 
             <Rule />
 
-            {/* 05 — Investment */}
+            {/* 06 — Investment */}
             <section>
               <SectionHead
-                num="05"
+                num="06"
                 eyebrow="Investment"
                 rotate={-0.3}
                 title={<>The <Hl>numbers.</Hl></>}
