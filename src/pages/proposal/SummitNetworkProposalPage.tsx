@@ -1092,25 +1092,6 @@ const SummitNetworkProposalPage = () => {
                 ]}
               />
 
-              <H3>Before build starts</H3>
-              <motion.div {...fadeUp} className="rounded-2xl border border-border bg-card/40 p-5 sm:p-6">
-                <ul className="space-y-2.5 list-none pl-0">
-                  {[
-                    "NDA finalised.",
-                    "Dallin's written technical questions on Notion security answered before client data is shared.",
-                    "Dallin's role confirmed so permissions and personal views can be designed correctly.",
-                    "Consultant access to Summit's existing Notion workspace.",
-                    "Website platform behind summitnetwork.net confirmed, including access to the relevant registration forms or integration method.",
-                    "Summit's email and calendar provider confirmed.",
-                    "Summit supplies logos and available brand materials for the portal visuals.",
-                  ].map((it, i) => (
-                    <li key={i} className="flex gap-3 items-start text-[15px] leading-[1.7] text-foreground/80">
-                      <span className="mt-[0.35em] w-4 h-4 rounded border-[1.5px] border-accent/60 flex-shrink-0" />
-                      <span>{it}</span>
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
             </section>
 
             <Rule />
