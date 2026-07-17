@@ -626,36 +626,119 @@ const SummitNetworkProposalPage = () => {
         <article className="px-5 sm:px-8 pb-24">
           <div className="max-w-2xl mx-auto">
 
-            {/* 01 — What you're getting */}
+            {/* 01 — Built around the way Summit works (letter) */}
             <section>
               <SectionHead
                 num="01"
-                eyebrow="What you're getting"
+                eyebrow="A note before we begin"
                 rotate={-0.4}
-                title={<>A structure that holds the <Hl>effort</Hl> in place.</>}
+                title={<>Built around the way <Hl>Summit</Hl> works.</>}
               />
-              <P>
-                The current Notion setup was built for a smaller team running on trust: one shared login,
-                a contact list, and a task button. That was a reasonable fit when Summit was five people
-                managing twenty clients directly. It stopped being a fit once the team grew and the client
-                base did too.
-              </P>
-              <P>
-                A shared login means notifications now fire to everyone or no one. Onboarding depends on
-                Cali or Dallin being in the room. Clients still have no way to see what's being done on
-                their behalf. The acquisition pause is a sensible response from a business that tripled
-                without pausing to rebuild the plumbing underneath it.
-              </P>
-              <P>
-                What's needed is a structure that holds the effort in place. <strong>This build gives every
-                team member a clear view of their own work, runs client onboarding without Cali or Dallin
-                as the single point of failure, and gives clients a clean window into what Summit is doing
-                for them</strong>, without adding another tool to the stack.
-              </P>
-              <P>
-                This is a build-and-refine engagement. You'll see the system as it develops and shape it
-                along the way, not wait for a single reveal at the end.
-              </P>
+
+              <motion.div {...fadeUp} className="mx-auto max-w-[560px]">
+                <div className="rounded-2xl bg-card shadow-[0_8px_30px_rgba(0,0,0,0.06)] p-6 sm:p-8 font-sans text-[16px] leading-[1.8] text-foreground/85 space-y-5">
+                  <p>Dear Andrew and Cali,</p>
+                  <p>
+                    Thank you for the time and detail you've both put into this process, from our first
+                    conversations through to the diagnostic and the build specification you shared afterwards.
+                    It has given me a clear picture of how Summit works today, where the pressure is building,
+                    and what the business needs next.
+                  </p>
+                  <p>
+                    Summit works with young creators who place a high value on strong relationships. They want
+                    to feel known by the people looking after them, have an easy way to ask for help, and trust
+                    that their personal and financial information is being handled carefully. The system behind
+                    the service needs to strengthen those relationships, not make them feel more transactional.
+                  </p>
+                  <p>
+                    The first priority is getting your Notion workspace working properly as a shared operating
+                    environment. Everyone should know what they are responsible for, where client information
+                    lives, and what needs to happen next, with security and permissions built into the
+                    architecture from the beginning.
+                  </p>
+                  <p>
+                    Once that foundation is in place, Notion AI becomes significantly more useful. With Summit's
+                    knowledge, meetings, client records and processes held in one connected context, your team
+                    can ask better questions, find information faster and use AI in a way that is grounded in
+                    how Summit actually operates.
+                  </p>
+                  <p>
+                    From there, we can introduce a knowledge-enabled intelligence layer: Claude, focused agents
+                    and repeatable workflows that work from Summit's approved context. We can then connect
+                    selected work that begins outside Notion, including website registrations and other agreed
+                    systems. The important thing is to build these layers in the right order rather than
+                    automate processes before the underlying system has been adopted.
+                  </p>
+                  <p>
+                    This proposal sets out how we'll build that foundation, introduce the intelligence layer
+                    and support your team through adoption.
+                  </p>
+                  <p className="font-serif-pro italic text-lg text-foreground pt-2">Brendan</p>
+                </div>
+              </motion.div>
+
+              {/* Three-layer maturity visual */}
+              <div className="mt-12 space-y-4">
+                {[
+                  { n: "01", title: "Notion Workspace", body: "The context layer. Clients, agencies, tasks, meetings, agreements, SOPs and responsibilities organised in one permissioned operating environment." },
+                  { n: "02", title: "Notion AI", body: "The native intelligence layer. The team can find information, understand context and act on the work held inside the workspace." },
+                  { n: "03", title: "Knowledge-enabled intelligence", body: "The applied layer. Claude, custom agents and controlled workflows use Summit's approved context to support specific, repeatable work." },
+                ].map((layer, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                  >
+                    <Tilt3D maxX={5} maxY={4}>
+                      <div className="flex gap-5 items-start bg-card rounded-2xl p-5 shadow-[0_8px_30px_rgba(0,0,0,0.06)] h-full">
+                        <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-background flex items-center justify-center shadow-[0_1px_4px_rgba(0,0,0,0.06)]">
+                          <span className="font-serif-pro italic text-xl text-gradient-warm font-medium">{layer.n}</span>
+                        </div>
+                        <div className="flex-1 pt-1">
+                          <strong className="font-serif-pro italic font-medium text-lg text-foreground block mb-1">{layer.title}</strong>
+                          <span className="text-foreground/75 leading-relaxed">{layer.body}</span>
+                        </div>
+                      </div>
+                    </Tilt3D>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Connected workflows bridge */}
+              <motion.div {...fadeUp} className="mt-8">
+                <div className="rounded-2xl border border-dashed border-accent/40 bg-background/40 p-5 sm:p-6">
+                  <div className="font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-gradient-warm mb-2">
+                    Connected workflows
+                  </div>
+                  <p className="font-sans text-[15.5px] leading-[1.75] text-foreground/80">
+                    Once the core system is established, selected information can move between Notion and
+                    external systems. Website registrations are included in this build. Broader website,
+                    accounting, payment and campaign integrations are a later phase unless explicitly listed
+                    in scope.
+                  </p>
+                </div>
+              </motion.div>
+
+              {/* Client priorities */}
+              <motion.div {...fadeUp} className="mt-14">
+                <h3 className="font-serif-pro text-[22px] md:text-[26px] italic font-medium text-foreground mb-5 leading-snug">
+                  What Summit's clients need to feel.
+                </h3>
+                <div className="grid sm:grid-cols-3 gap-4">
+                  {[
+                    { word: "Known", body: "Strong relationships with a team that understands who they are and what matters to them." },
+                    { word: "Supported", body: "A clear, easy way to make requests and see what is happening on their behalf." },
+                    { word: "Protected", body: "Security, permissions and responsible access designed into the workspace architecture." },
+                  ].map((item, i) => (
+                    <div key={i} className="rounded-2xl bg-card p-5 shadow-[0_8px_30px_rgba(0,0,0,0.05)]">
+                      <div className="font-serif-pro italic text-xl font-medium text-gradient-warm mb-2">{item.word}</div>
+                      <p className="font-sans text-[14.5px] leading-[1.7] text-foreground/80">{item.body}</p>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
             </section>
 
             <Rule />
@@ -666,16 +749,37 @@ const SummitNetworkProposalPage = () => {
                 num="02"
                 eyebrow="How we get there"
                 rotate={0.3}
-                title={<>Five moves, <Hl shift={-1}>in order.</Hl></>}
+                title={<>Diagnostic complete. <Hl shift={-1}>Five moves to go.</Hl></>}
               />
+
+              {/* Completed diagnostic card */}
+              <motion.div {...fadeUp} className="mb-8">
+                <Tilt3D maxX={5} maxY={4}>
+                  <div className="flex gap-5 items-start rounded-2xl p-5 bg-tertiary/10 border border-tertiary/30 shadow-[0_8px_30px_rgba(0,0,0,0.05)] h-full">
+                    <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-tertiary flex items-center justify-center shadow-[0_1px_4px_rgba(0,0,0,0.1)]">
+                      <Check className="w-6 h-6 text-tertiary-foreground" strokeWidth={2.5} />
+                    </div>
+                    <div className="flex-1 pt-1">
+                      <div className="font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-tertiary mb-1">
+                        Completed — Diagnostic · 13 July 2026
+                      </div>
+                      <p className="text-foreground/80 leading-relaxed">
+                        Thank you for the time and level of detail you provided during and after the
+                        diagnostic. It means this recommendation can respond to the way Summit actually
+                        works rather than impose a generic CRM structure.
+                      </p>
+                    </div>
+                  </div>
+                </Tilt3D>
+              </motion.div>
 
               <ul className="mt-4 space-y-5">
                 {[
-                  { title: "Diagnostic", body: "Complete (ran 13 July). Confirmed the current setup, pain points, and scope." },
-                  { title: "Foundations build", body: "Individual team logins, client database rebuilt from the Typeform export, personalised homepages, prospect and delivery pipelines, and an SOP library. Built in hidden team spaces inside the existing workspace so nothing currently running is disrupted." },
-                  { title: "Client-facing build", body: "Client portal, branded landing page with custom tiles, locked credential storage, and light-touch QuickBooks/Monarch links." },
-                  { title: "Onboarding automation and adoption day", body: "Typeform and website registration wired into Notion, tier-based DocuSign routing, automated task cascades, then a planned adoption day to go live." },
-                  { title: "Launch support and ongoing", body: "Three months of hands-on support (10 hours/month), then rolling support at £1,000/month, flexible up or down." },
+                  { title: "Infrastructure", body: "Build the permissioned operating foundation: structured client and contact records, teamspaces, personal dashboards, tasks, meetings, agreements, SOPs, prospect pipeline and client-delivery pipeline. Work is built in hidden teamspaces inside the existing workspace so current operations are not disrupted." },
+                  { title: "Client-facing portals", body: "Create a private home for each client, with relevant progress, resources, tasks and a simple way to make requests of the Summit team. Each guest sees only the information intentionally shared with them." },
+                  { title: "Collaboration", body: "Connect ownership, tasks, meetings, notes and notifications around each client so the team can see what needs to happen next and who is responsible. Introduce Notion Calendar and AI Meeting Notes as part of the working rhythm." },
+                  { title: "Agency collaboration portal", body: "Create a permissioned agency CRM and resource layer for agency accounts, contacts, agreements, referral arrangements, call notes and collaboration resources. Summit can grant agency partners access to the information intended for them and revoke that access when a relationship changes. Infloww credential management and agency payment tracking are not included in this phase." },
+                  { title: "Onboarding, adoption and support", body: "Connect approved intake and onboarding workflows, prepare the team, run a planned adoption day and provide three months of hands-on launch support at 10 hours per month. After that period, Summit can retain Thread & Stack on a rolling £1,000/month agreement (approximately $1,350/month at the proposal-date exchange rate), with no fixed term." },
                 ].map((step, i) => (
                   <motion.li
                     key={i}
@@ -713,16 +817,20 @@ const SummitNetworkProposalPage = () => {
                 title={<>The <Hl>stack</Hl> Summit will run on.</>}
               />
               <P>
-                One connected operation, built around Notion as the single source of truth. Each layer plays
-                a specific role. Each one is replaceable if something better comes along.
+                One connected operation, built around Notion as the source of truth. Each layer has a
+                defined role: the workspace holds the context, AI helps the team work with it, and
+                controlled connections move selected information between systems.
               </P>
               <ul className="mt-8 space-y-5">
                 {[
-                  { icon: IconNotion, title: "Notion Workspace. The single source of truth.", body: "Clients, agreements, agencies, SOPs, and team knowledge in one place. Every person has their own login, their own homepage, and only sees what they need. New team members onboard from the system itself." },
-                  { icon: IconLassie, title: "Notion AI. The knowledge layer.", body: "Anyone on the Summit team asks a question in plain English and gets an answer drawn from the workspace. Meeting notes and call transcripts land against the right client automatically. No training required." },
-                  { icon: IconClaude, title: "Claude. Your strategic co-pilot.", body: "Connected to Summit's Notion context. Reads and edits the workspace directly. Useful for drafting client comms, reasoning over pipeline data, and pressure-testing decisions with the full history of the business already in scope." },
-                  { icon: IconNotionAI, title: "Custom agents. Purpose-built for Summit.", body: "Focused agents that reason over Summit's own data. They triage inbound requests, watch the delivery pipeline for stalled onboardings, and surface agency collaboration opportunities. They act on context, not just rules." },
-                  { icon: IconZapier, title: "Automations. The pipes.", body: "Typeform and website registrations land as structured client accounts. Signed DocuSigns cascade tasks and reminders until onboarding is complete. QuickBooks and Monarch stay linked, not tangled. Dumb, reliable, running quietly in the background." },
+                  { icon: IconNotion, title: "Notion Workspace. The source of truth.", body: "Clients, agencies, agreements, tasks, meetings, SOPs and team knowledge in one place. Each team member has an individual login and a relevant homepage, with access governed through teamspaces, page sharing and permissions." },
+                  { icon: IconLassie, title: "Notion AI. The native intelligence layer.", body: "The team can ask questions in plain English and receive answers grounded in the workspace. AI Meeting Notes and call transcripts are linked to the relevant clients and work, subject to the appropriate ownership and access permissions." },
+                  { icon: IconClaude, title: "Claude. The strategic co-pilot.", body: "Claude can work from Summit's approved Notion context to help draft communications, reason over pipeline information and pressure-test decisions. Access must be intentional and permissioned; this is not a promise of unrestricted workspace access." },
+                  { icon: IconNotionAI, title: "Custom agents. Focused intelligence for Summit.", body: "A small initial layer of purpose-built agents will support agreed repeatable use cases, such as triaging requests, monitoring onboarding progress or surfacing collaboration opportunities. Final agent use cases will be agreed during the build; this does not include an unlimited catalogue of agents." },
+                  { icon: IconNotion, title: "Notion Calendar. Time connected to context.", body: "Connect meetings to clients, work and follow-up. Introduce the team to a shared calendar workflow that supports scheduling, preparation and meeting capture. Calendar setup depends on Summit's confirmed provider and permissions." },
+                  { icon: IconZapier, title: "Notion Workers. The integration layer.", body: "Use Notion Workers where appropriate for agreed deterministic workflows: receiving website or form events, syncing approved data, triggering updates and giving custom agents reliable tools. Workers are for the integrations explicitly included in this proposal; they do not create an open-ended commitment to connect every third-party platform. Availability, usage and any additional Notion charges depend on Summit's Notion plan and Notion's Worker terms." },
+                  { icon: IconZapier, title: "Automations. The repeatable pipes.", body: "Typeform and website registrations create structured records. Signed DocuSign agreements trigger the agreed onboarding tasks and reminders. Additional workflow tools may be used where they are more suitable than native Notion functionality." },
+                  { icon: IconNotion, title: "Email and communications. To be confirmed.", body: "We'll confirm Summit's current email environment during setup and recommend the appropriate connection. Any deeper inbox automation will be scoped against the provider, permissions and workflow required." },
                 ].map((layer, i) => (
                   <motion.li
                     key={i}
@@ -758,34 +866,124 @@ const SummitNetworkProposalPage = () => {
                 title={<>The full <Hl>scope of work.</Hl></>}
               />
 
-              <H3>Included</H3>
-              <BulletList
-                items={[
-                  <>Individual member logins for every team member, replacing the shared login.</>,
-                  <>Client database rebuilt from the 40+ column Typeform export into structured account pages.</>,
-                  <><strong>Personalised homepage.</strong> Each person sees only their own tasks, meetings, and week ahead.</>,
-                  <>Prospect pipeline (New Leads → Discovery → Decision → Proposal → Signed) and client delivery pipeline (Setup → Onboarding → Active → Maintenance).</>,
-                  <>An SOP library that's actually easy to find.</>,
-                  <>Notion's native AI meeting notes and call transcription, linked to each client record.</>,
-                  <><strong>Client portal.</strong> Each client (free guest access) sees only their own page, tasks, and progress.</>,
-                  <>Dedicated client task request area, replacing scattered iMessage requests.</>,
-                  <>Light-touch links and how-to guides for QuickBooks and Monarch, not deep integrations.</>,
-                  <>Branded landing page with custom tiles, designed from Summit's logo and brand materials.</>,
-                  <>Locked, team-only credential storage for platforms Summit manages on clients' behalf (page-level sharing and filtered views).</>,
-                  <>Typeform intake plus website registration forms wired into Notion, feeding the same account model.</>,
-                  <>Tier-based DocuSign routing, including tax/no-tax variations on Tier 2.</>,
-                  <>Automated task cascade on signature, with persistent reminders until onboarding is complete.</>,
-                  <><strong>Agency CRM.</strong> Agency accounts, agreements, and collaboration tracking, referral percentages, and call notes.</>,
-                ]}
-              />
+              {[
+                {
+                  label: "A. Infrastructure and internal operations",
+                  items: [
+                    <>Configure individual member access and migrate the team away from the shared-login working model. Summit purchases the Notion licences directly.</>,
+                    <>Rebuild the current 40+ column Typeform export into structured client and account records.</>,
+                    <>Personalised homepages showing each team member's relevant tasks, meetings and week ahead.</>,
+                    <>Prospect pipeline: New Leads → Discovery → Decision → Proposal → Signed.</>,
+                    <>Client-delivery pipeline: Setup → Onboarding → Active → Maintenance.</>,
+                    <>Clear ownership, progress indicators and reminders across signing and onboarding.</>,
+                    <>Searchable SOP and team-knowledge library.</>,
+                  ],
+                },
+                {
+                  label: "B. Client experience",
+                  items: [
+                    <>A private client portal for each client using guest access and intentional page sharing.</>,
+                    <>Relevant tasks, resources, progress and a dedicated client request area.</>,
+                    <>Branded landing tiles designed from the logo and brand materials Summit supplies. These remain simple and replaceable.</>,
+                    <>Light-touch QuickBooks and Monarch links and guidance, not deep data integrations.</>,
+                  ],
+                },
+                {
+                  label: "C. AI, meetings and intelligence",
+                  items: [
+                    <>Notion AI introduced as the native interface to Summit's workspace context.</>,
+                    <>Notion AI Meeting Notes and call transcription linked to relevant client records with appropriate access.</>,
+                    <>Notion Calendar introduced as part of the meeting and follow-up workflow, subject to provider confirmation.</>,
+                    <>Claude connected to approved context for agreed strategic use cases.</>,
+                    <>A small initial custom agent layer for agreed repeatable workflows.</>,
+                  ],
+                },
+                {
+                  label: "D. Intake, agreements and onboarding",
+                  items: [
+                    <>Restructure the Typeform intake so it feeds the new account model.</>,
+                    <>Connect website registration submissions to Notion so they create structured records alongside Typeform intake.</>,
+                    <>Tier-based DocuSign routing, including the agreed tax/no-tax variation on Tier 2.</>,
+                    <>Agreed tasks and reminders triggered following signature until onboarding is complete.</>,
+                    <>Use Notion Workers or another appropriate integration method for the explicitly agreed flows.</>,
+                  ],
+                },
+                {
+                  label: "E. Agency collaboration",
+                  items: [
+                    <>Agency accounts, contacts, agreements, referral percentages and call notes.</>,
+                    <>A permissioned partner resource layer with access that Summit can grant and revoke.</>,
+                    <>Collaboration tracking kept separate from client delivery work while remaining connected to the relevant relationships.</>,
+                  ],
+                },
+                {
+                  label: "F. Adoption and support",
+                  items: [
+                    <>Planned team adoption day and walkthrough.</>,
+                    <>Three months of hands-on launch support at 10 hours per month.</>,
+                    <>Support can be delivered through weekly calls, co-working or agreed asynchronous communication.</>,
+                    <>Optional rolling support after launch at £1,000/month (approximately $1,350/month), no fixed term.</>,
+                  ],
+                },
+              ].map((group, gi) => (
+                <div key={gi}>
+                  <H3>{group.label}</H3>
+                  <BulletList items={group.items} />
+                </div>
+              ))}
 
-              <H3>Caveats</H3>
-              <BulletList
-                items={[
-                  <>TaxDome stays fully separate, with no Notion integration, in line with the security constraint Summit raised. Deep QuickBooks/Monarch sync, Infloww login management, agency payment tracking, drip campaigns, and the Lovable client-facing web app are <strong>Phase 2</strong>, once this system is live and adopted, and can be priced separately or combined into an Advanced Build on request.</>,
-                  <>Credential storage is a practical safeguard, not enterprise-grade security. Notion Enterprise is recommended primarily for single sign-on (SSO); it does not add row-level permission enforcement and is a separate scope and licensing decision.</>,
-                ]}
-              />
+              {/* Caveats */}
+              <motion.div {...fadeUp} className="mt-10 rounded-2xl border border-clay/30 bg-clay/5 p-5 sm:p-6">
+                <div className="font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-gradient-warm mb-4">
+                  Not included in this phase
+                </div>
+                <ul className="space-y-3 list-none pl-0">
+                  {[
+                    <>TaxDome remains fully separate, with no Notion integration.</>,
+                    <>No deep QuickBooks or Monarch data sync in this phase.</>,
+                    <>Infloww credential management and agency payment tracking are deferred until the agency CRM has been adopted.</>,
+                    <>Drip campaigns and broader client/agency marketing automation are a later workflow phase.</>,
+                    <>The future Lovable + Notion client-facing web application is a separate project.</>,
+                    <>The affiliate resource hub is not included.</>,
+                    <>Website registration integration is included, but the exact implementation depends on confirmation of the platform behind summitnetwork.net and access to its forms, API or webhooks. If the platform requires a paid third-party connector, that licence is not included unless agreed.</>,
+                    <>Summit's email provider and desired email workflow must be confirmed before any inbox integration is scoped.</>,
+                    <>Custom agents and Workers are limited to the agreed use cases in this proposal. Further agents, integrations or custom logic will be separately scoped.</>,
+                  ].map((it, i) => (
+                    <li key={i} className="relative pl-6 text-[15.5px] leading-[1.75] text-foreground/80">
+                      <span className="absolute left-0 top-[0.7em] w-[7px] h-[7px] rounded-full border-[1.5px] border-clay" />
+                      {it}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+
+              {/* Security and permissions */}
+              <H3>Security and permissions</H3>
+              <motion.div {...fadeUp} className="space-y-5">
+                <div className="rounded-2xl bg-card p-5 sm:p-6 shadow-[0_8px_30px_rgba(0,0,0,0.05)]">
+                  <div className="font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-muted-foreground mb-2">
+                    Restricted credential reference area
+                  </div>
+                  <p className="font-sans text-[15.5px] leading-[1.75] text-foreground/80">
+                    A team-only area can be created using intentional page sharing, teamspace permissions
+                    and filtered views for the platform information Summit needs to manage. This is a
+                    practical access arrangement, not a replacement for a dedicated password manager or
+                    enterprise credential-management platform.
+                  </p>
+                </div>
+                <div className="rounded-2xl bg-card p-5 sm:p-6 shadow-[0_8px_30px_rgba(0,0,0,0.05)]">
+                  <div className="font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-muted-foreground mb-2">
+                    Notion Enterprise recommendation
+                  </div>
+                  <p className="font-sans text-[15.5px] leading-[1.75] text-foreground/80">
+                    Recommend Notion Enterprise primarily for single sign-on (SSO), giving Summit stronger
+                    central control over how team members authenticate. Enterprise also supports stronger
+                    governance and audit capabilities, but it does not create native row-level permission
+                    enforcement. Enterprise licensing and any SSO implementation are separate decisions and
+                    are not included in Thread &amp; Stack's project fee.
+                  </p>
+                </div>
+              </motion.div>
             </section>
 
             <Rule />
