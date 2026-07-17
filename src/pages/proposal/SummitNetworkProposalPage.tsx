@@ -1132,7 +1132,7 @@ const SummitNetworkProposalPage = () => {
                   your growth has been waiting for.
                 </h2>
                 <p className="font-sans text-[16px] leading-[1.75] text-foreground/80 text-center mb-10 max-w-lg mx-auto">
-                  Happy to walk through any part of this on a call, Andrew and Cali.
+                  Happy to walk through any part of this with you, Andrew and Cali.
                 </p>
 
                 <div className="mb-8 flex justify-center">
