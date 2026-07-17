@@ -1014,16 +1014,19 @@ const SummitNetworkProposalPage = () => {
                   >
                     <span
                       className={`inline-flex items-center gap-1.5 rounded-full px-4 py-1 text-xs font-bold tracking-[0.18em] uppercase ${
-                        step.isLaunch
+                        step.isComplete
+                          ? "bg-tertiary text-tertiary-foreground"
+                          : step.isLaunch
                           ? "bg-primary text-primary-foreground"
                           : "text-white"
                       }`}
                       style={
-                        step.isLaunch
+                        step.isComplete || step.isLaunch
                           ? undefined
                           : { backgroundImage: "linear-gradient(95deg, var(--gradient-3color))" }
                       }
                     >
+                      {step.isComplete && <Check className="w-3.5 h-3.5" strokeWidth={2.5} />}
                       {step.isLaunch && <Rocket className="w-3.5 h-3.5" />}
                       {step.label}
                     </span>
