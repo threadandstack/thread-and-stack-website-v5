@@ -1056,30 +1056,61 @@ const SummitNetworkProposalPage = () => {
               />
 
               <EditorialTable
-                head={["Item", "Amount"]}
+                head={["Item", "GBP", "USD equivalent"]}
                 rows={[
-                  ["Notion operations build (2-month build + 3-month launch support)", "£12,500"],
-                  ["Diagnostic fee, already paid", <span className="text-gradient-warm font-semibold">–£395 (credited)</span>],
-                  [<strong>Net investment</strong>, <strong>£12,105</strong>],
-                  ["Ongoing support after launch", "£1,000/month, rolling, no fixed term"],
+                  ["Notion operations build (2-month build + 3-month launch support)", "£12,500", "≈ $16,880"],
+                  [
+                    "Diagnostic fee, already paid",
+                    <span className="text-gradient-warm font-semibold">–£395 credited</span>,
+                    <span className="text-gradient-warm font-semibold">≈ –$535 credited</span>,
+                  ],
+                  [<strong>Net investment</strong>, <strong>£12,105</strong>, <strong>≈ $16,345</strong>],
+                  ["Ongoing support after launch", "£1,000/month", "≈ $1,350/month"],
                 ]}
               />
 
-              <H3>Not included</H3>
-              <P>
-                Individual Notion member logins for the team, roughly <strong>$1,500/year</strong>, billed
-                directly by Notion rather than by Thread &amp; Stack. Worth doing immediately regardless of
-                build timing, since it resolves the shared-login notification problem on its own.
-              </P>
+              <motion.p {...fadeUp} className="font-sans text-[13.5px] leading-[1.7] text-muted-foreground mt-4">
+                USD amounts are indicative equivalents based on an exchange rate of approximately
+                £1 = $1.3504 on 16 July 2026. Thread &amp; Stack's fees are set in GBP; the final USD
+                amount will reflect the applicable exchange rate when invoiced.
+              </motion.p>
 
-              <H3>Terms &amp; outstanding items</H3>
+              <H3>Terms</H3>
               <BulletList
                 items={[
                   <>Brendan Rodgers / Thread &amp; Stack is not currently VAT registered. No VAT is applicable.</>,
                   <>Payment is by deposit on signature, then instalments spread across the four-to-five month engagement, so cost tracks alongside delivery rather than landing as one upfront sum. <strong>15% late charge applies after 30 days.</strong></>,
-                  <><strong>Outstanding before build starts:</strong> NDA finalised, Dallin's written technical questions on Notion security answered, confirmation of Dallin's role, consultant access to the existing workspace, and confirmation of the website platform behind summitnetwork.net.</>,
                 ]}
               />
+
+              <H3>Not included in project fee</H3>
+              <BulletList
+                items={[
+                  <>Individual Notion member licences for Summit's team, billed directly by Notion. Current working estimate: roughly <strong>$1,500/year</strong>, to be confirmed against plan and headcount.</>,
+                  <>Notion Enterprise, Worker credits or other Notion plan add-ons.</>,
+                  <>Paid third-party connectors or external software licences unless explicitly agreed.</>,
+                ]}
+              />
+
+              <H3>Before build starts</H3>
+              <motion.div {...fadeUp} className="rounded-2xl border border-border bg-card/40 p-5 sm:p-6">
+                <ul className="space-y-2.5 list-none pl-0">
+                  {[
+                    "NDA finalised.",
+                    "Dallin's written technical questions on Notion security answered before client data is shared.",
+                    "Dallin's role confirmed so permissions and personal views can be designed correctly.",
+                    "Consultant access to Summit's existing Notion workspace.",
+                    "Website platform behind summitnetwork.net confirmed, including access to the relevant registration forms or integration method.",
+                    "Summit's email and calendar provider confirmed.",
+                    "Summit supplies logos and available brand materials for the portal visuals.",
+                  ].map((it, i) => (
+                    <li key={i} className="flex gap-3 items-start text-[15px] leading-[1.7] text-foreground/80">
+                      <span className="mt-[0.35em] w-4 h-4 rounded border-[1.5px] border-accent/60 flex-shrink-0" />
+                      <span>{it}</span>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
             </section>
 
             <Rule />
