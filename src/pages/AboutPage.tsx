@@ -60,18 +60,32 @@ const AboutPage = () => {
 
           <div className="bg-background px-6 pb-12 pt-10">
             <p className="mb-8 text-[15.5px] leading-relaxed text-ink-soft">
-              Fifteen years of figuring out why things don't work. This is what I do with that.
+              Fifteen years of figuring out why things don't work, and what people need.
             </p>
 
             <div className="space-y-4 text-[15.5px] leading-relaxed text-ink-soft">
               <p>
-                I studied Media, Communications and Philosophy at Keele — two disciplines that people told me were a waste of time, in combination they said made even less sense. What I understood, even then, was that the ethics of how information moves and the systems people build to hold it are the same problem looked at from different angles. That turned out to be a reasonable foundation for what came next.
+                I studied Media, Communications and Philosophy at Keele University. Two disciplines that people told me were a waste of time, each for their own reasons. (When are you going to USE this? Who's going to take this SERIOUSLY?) And in combination? They said they made even less sense.
               </p>
               <p>
-                The fifteen years after that took me across a range of organisations most consultants only ever see one type of. Global enterprises like eBay and Dentsu. Agencies. Nonprofits. Purpose-led startups. Marketing directorships at early-stage companies where I was almost always running operations alongside the brand work, because in organisations of that size the two are never actually separate. And across all of it, the same pattern kept surfacing — not as a strategic observation but as something you feel in the room. Great creatives bogged down in spreadsheets they never wanted to be anywhere near, carrying cognitive load that had nothing to do with the work they were hired to do. Founders who were the vision of the company spending their days as its task router, every decision passing through them because nobody else had the context to act. New team members arriving full of energy for genuinely challenging work, and finding themselves stuck in admin within a week. The blockers were never the people. They were always the ops. And ops that get fixed properly don't just make a business run better — they give the culture room to breathe.
+                Even then, I had a strategist's pattern recognition. I understood what the media discourse calling out "mickey mouse degrees" did not: the ethics of how information moves, the systems, algorithms, and channels we use, the style in which we communicate — these questions are defining factors for how we show up in society.
+              </p>
+              <p>
+                For me, the fifteen years that followed took me across a range of organisations most consultants only ever see one type of. Global enterprises like eBay and Dentsu. Programmatic agencies. Creative boutiques. Nonprofits. Purpose-led startups. Growth-led startups. Marketing directorships at early-stage companies where I was almost always running operations alongside the brand work, because in organisations of that size the two are never actually separate.
+              </p>
+              <p>
+                Across all of it, the same pattern kept surfacing:
+              </p>
+              <ul className="list-disc space-y-2 pl-5 text-ink-soft">
+                <li>The creative teams (me included) often were bogged down by spreadsheets and systems they wanted nothing to do with.</li>
+                <li>The founders and leaders were spending their days routing tasks and answering questions, instead of sharing vision and leading.</li>
+                <li>New teammates energised on their first day immediately met with admin hell on arrival.</li>
+              </ul>
+              <p>
+                This is what it sounds like when a fragmented team is stuck in its own operational quicksand. Every time the operations were simplified, the culture started healing too. People smiled more. Projects and campaigns launched faster. Results landed faster as a result.
               </p>
               <p className="text-foreground font-medium">
-                Ops that help culture. That's what this is.
+                That's how I learnt the truth: strategy causes growth, and systems shift culture. Together they transform.
               </p>
             </div>
 
