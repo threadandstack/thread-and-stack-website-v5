@@ -68,7 +68,10 @@ const AboutPage = () => {
                 I studied Media, Communications and Philosophy at Keele University. Two disciplines that people told me were a waste of time, each for their own reasons. (When are you going to USE this? Who's going to take this SERIOUSLY?) And in combination? They said they made even less sense.
               </p>
               <p>
-                Even then, I had a strategist's pattern recognition. I understood what the media discourse calling out "mickey mouse degrees" did not: the ethics of how information moves, the systems, algorithms, and channels we use, the style in which we communicate — these questions are defining factors for how we show up in society.
+                Even then, I had a strategist's pattern recognition. I understood what the media discourse calling out "mickey mouse degrees" did not: the ethics of how information moves, the systems, algorithms, and channels we use, the style in which we communicate:
+              </p>
+              <p>
+                These questions are defining factors for how we show up in society.
               </p>
               <p>
                 For me, the fifteen years that followed took me across a range of organisations most consultants only ever see one type of. Global enterprises like eBay and Dentsu. Programmatic agencies. Creative boutiques. Nonprofits. Purpose-led startups. Growth-led startups. Marketing directorships at early-stage companies where I was almost always running operations alongside the brand work, because in organisations of that size the two are never actually separate.
@@ -136,7 +139,10 @@ const AboutPage = () => {
                   I studied Media, Communications and Philosophy at Keele University. Two disciplines that people told me were a waste of time, each for their own reasons. (When are you going to USE this? Who's going to take this SERIOUSLY?) And in combination? They said they made even less sense.
                 </p>
                 <p>
-                  Even then, I had a strategist's pattern recognition. I understood what the media discourse calling out "mickey mouse degrees" did not: the ethics of how information moves, the systems, algorithms, and channels we use, the style in which we communicate — these questions are defining factors for how we show up in society.
+                  Even then, I had a strategist's pattern recognition. I understood what the media discourse calling out "mickey mouse degrees" did not: the ethics of how information moves, the systems, algorithms, and channels we use, the style in which we communicate:
+                </p>
+                <p>
+                  These questions are defining factors for how we show up in society.
                 </p>
                 <p>
                   For me, the fifteen years that followed took me across a range of organisations most consultants only ever see one type of. Global enterprises like eBay and Dentsu. Programmatic agencies. Creative boutiques. Nonprofits. Purpose-led startups. Growth-led startups. Marketing directorships at early-stage companies where I was almost always running operations alongside the brand work, because in organisations of that size the two are never actually separate.
