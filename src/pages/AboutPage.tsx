@@ -81,6 +81,7 @@ const AboutPage = () => {
               </p>
               <ul className="list-disc space-y-2 pl-5 text-ink-soft">
                 <li>The creative teams (me included) often were bogged down by spreadsheets and systems they wanted nothing to do with.</li>
+                <li>Sales teams maintaining siloed CRMs, spending more time on admin than acquisition.</li>
                 <li>The founders and leaders were spending their days routing tasks and answering questions, instead of sharing vision and leading.</li>
                 <li>New teammates energised on their first day immediately met with admin hell on arrival.</li>
               </ul>
@@ -152,6 +153,7 @@ const AboutPage = () => {
                 </p>
                 <ul className="list-disc space-y-2 pl-5 text-white/85">
                   <li>The creative teams (me included) often were bogged down by spreadsheets and systems they wanted nothing to do with.</li>
+                  <li>Sales teams maintaining siloed CRMs, spending more time on admin than acquisition.</li>
                   <li>The founders and leaders were spending their days routing tasks and answering questions, instead of sharing vision and leading.</li>
                   <li>New teammates energised on their first day immediately met with admin hell on arrival.</li>
                 </ul>
