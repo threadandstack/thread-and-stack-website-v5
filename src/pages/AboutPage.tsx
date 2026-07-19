@@ -82,7 +82,7 @@ const AboutPage = () => {
                 <li>New teammates energised on their first day immediately met with admin hell on arrival.</li>
               </ul>
               <p>
-                This is what it sounds like when a fragmented team is stuck in its own operational quicksand. Every time the operations were simplified, the culture started healing too. People smiled more. Projects and campaigns launched faster. Results landed faster as a result.
+                This is what it sounds like when a fragmented team is stuck in its own operational quicksand. Every time the operations were simplified, the culture started healing too. People smiled more. Projects and campaigns launched faster. Results landed faster too.
               </p>
               <p className="text-foreground font-medium">
                 That's how I learnt the truth: strategy causes growth, and systems shift culture. Together they transform.
@@ -150,7 +150,7 @@ const AboutPage = () => {
                   <li>New teammates energised on their first day immediately met with admin hell on arrival.</li>
                 </ul>
                 <p>
-                  This is what it sounds like when a fragmented team is stuck in its own operational quicksand. Every time the operations were simplified, the culture started healing too. People smiled more. Projects and campaigns launched faster. Results landed faster as a result.
+                  This is what it sounds like when a fragmented team is stuck in its own operational quicksand. Every time the operations were simplified, the culture started healing too. People smiled more. Projects and campaigns launched faster. Results landed faster too.
                 </p>
                 <p className="text-white font-medium">
                   That's how I learnt the truth: strategy causes growth, and systems shift culture. Together they transform.
