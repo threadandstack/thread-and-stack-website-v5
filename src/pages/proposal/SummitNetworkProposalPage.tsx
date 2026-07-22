@@ -450,39 +450,43 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => (
         >
           <p>Dear Andrew and Cali,</p>
           <p>
-            Thank you for the time and detail you've both put into this process, from our first
-            conversations through to the diagnostic and the build specification you shared afterwards.
-            It has given me a clear picture of how Summit works today, where the pressure is building,
-            and what the business needs next.
+            Thank you for the collaboration so far. Between our first call, the diagnostic session with
+            Cali and the build specification that followed it, I've had a clearer look inside Summit
+            than most consultants get before a project starts, and it's given me a precise picture of
+            how you work today. It's also made the central problem visible: the workspace that served
+            a five-person team running on trust has become the thing holding growth back. That's no
+            failure of the setup. Summit outgrew it, which is the better problem to have.
           </p>
           <p>
-            Summit works with young creators who place a high value on strong relationships. They want
-            to feel known by the people looking after them, have an easy way to ask for help, and trust
-            that their personal and financial information is being handled carefully. The system behind
-            the service needs to strengthen those relationships, not make them feel more transactional.
+            Summit works with young creators who place a high value on strong relationships. They're
+            both bold and vulnerable: high-profile people with large followings, trusting you with
+            their financial lives and personal information. They want to feel known by the people
+            looking after them, have an easy way to ask for help, and trust that their data is handled
+            carefully at every layer of the system. The workspace behind the service has to strengthen
+            those relationships, and protection has to be designed into its architecture rather than
+            bolted on afterwards.
           </p>
           <p>
-            The first priority is getting your Notion workspace working properly as a shared operating
-            environment. Everyone should know what they are responsible for, where client information
-            lives, and what needs to happen next, with security and permissions built into the
-            architecture from the beginning.
+            Priority one is getting your Notion workspace working the way Summit works. Everyone
+            knows what they're responsible for, client information lives where the whole team can
+            find it in seconds, and Notion AI and AI Meeting Notes surface answers and call context
+            from inside your own records. This is where my specialism sits: configuring Notion so the
+            platform does the remembering, and your team does the relationships.
           </p>
           <p>
-            Once that foundation is in place, Notion AI becomes significantly more useful. With Summit's
-            knowledge, meetings, client records and processes held in one connected context, your team
-            can ask better questions, find information faster and use AI in a way that is grounded in
-            how Summit actually operates.
+            The number one goal underneath all of this is simple: Summit operating confidently and
+            smoothly, so the pause on new clients can end. You stopped taking people on because the
+            backend couldn't carry more weight. This build is sequenced around reversing that, and
+            nothing in it exists for its own sake. If a feature doesn't help your team run clearly or
+            help a new client land safely, it waits for a later phase.
           </p>
           <p>
-            From there, we can introduce a knowledge-enabled intelligence layer: Claude, focused agents
-            and repeatable workflows that work from Summit's approved context. We can then connect
-            selected work that begins outside Notion, including website registrations and other agreed
-            systems. The important thing is to build these layers in the right order rather than
-            automate processes before the underlying system has been adopted.
-          </p>
-          <p>
-            This proposal sets out how we'll build that foundation, introduce the intelligence layer
-            and support your team through adoption.
+            Cali, your specification deserves a direct word: it's one of the most detailed briefs a
+            client has ever handed me, and everything in it is achievable. The craft is in the
+            sequencing. The strongest builds establish the collaboration and context layer first,
+            then layer automation on top once the team has adopted it, which is the approach Notion
+            itself recommends and the one I'd stake this project on. This proposal sets out that
+            order: the foundation Summit runs on, then the automation that runs on the foundation.
           </p>
           <p className="font-serif-pro italic text-lg text-primary-foreground pt-1">Brendan</p>
         </motion.div>
