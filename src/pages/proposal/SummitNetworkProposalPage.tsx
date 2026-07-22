@@ -589,9 +589,11 @@ const SummitNetworkProposalPage = () => {
             >
               <img src={BlackStacked} alt="Thread & Stack" className="h-20 sm:h-20 md:h-24 w-auto" />
               <X aria-hidden="true" className="w-5 h-5 sm:w-6 sm:h-6 text-foreground/25" strokeWidth={1} />
-              <div className="font-serif-pro italic text-2xl sm:text-3xl md:text-4xl font-medium text-foreground text-center">
-                Summit<br />Network
-              </div>
+              <img
+                src={SummitLogo.url}
+                alt="Summit Advisors Group LLC"
+                className="h-14 sm:h-16 md:h-20 w-auto object-contain"
+              />
             </motion.div>
 
             <motion.h1
