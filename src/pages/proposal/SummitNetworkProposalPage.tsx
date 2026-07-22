@@ -1209,8 +1209,14 @@ const SummitNetworkProposalPage = () => {
               <a href="https://threadandstack.com/" className="text-accent hover:underline">
                 threadandstack.com
               </a>
-              <div className="mt-1 text-[11px] text-muted-foreground/60">
-                Prepared for Summit Network · Ref: SN1 · 16 July 2026
+              <div className="mt-2 flex items-center gap-2 text-[11px] text-muted-foreground/60">
+                <span>Prepared for</span>
+                <img
+                  src={SummitLogo.url}
+                  alt="Summit Advisors Group LLC"
+                  className="h-4 w-auto object-contain"
+                />
+                <span>· Ref: SN1 · 16 July 2026</span>
               </div>
             </div>
             <img src={GreyStacked} alt="Thread & Stack" className="h-8 opacity-50 flex-shrink-0" />
