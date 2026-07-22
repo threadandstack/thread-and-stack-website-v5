@@ -705,7 +705,7 @@ const SummitNetworkProposalPage = () => {
                 {[
                   { n: "01", title: "Notion Workspace", body: "The context layer. Clients, agencies, tasks, meetings, agreements, SOPs and responsibilities organised in one permissioned operating environment." },
                   { n: "02", title: "Notion AI", body: "The native intelligence layer. The team can find information, understand context and act on the work held inside the workspace." },
-                  { n: "03", title: "Knowledge-enabled intelligence", body: "The applied layer. Claude, custom agents and controlled workflows use Summit's approved context to support specific, repeatable work." },
+                  { n: "03", title: "Automation and integration", body: "The applied layer. Custom agents, Notion Workers integrations, and connections to the systems where work begins outside Notion. Deliberately phased to follow adoption, so automation is built on a system the team already lives in." },
                 ].map((layer, i) => (
                   <motion.div
                     key={i}
