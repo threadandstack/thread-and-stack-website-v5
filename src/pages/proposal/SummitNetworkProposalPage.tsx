@@ -688,7 +688,7 @@ const SummitNetworkProposalPage = () => {
         <article className="px-5 sm:px-8 pb-24">
           <div className="max-w-2xl mx-auto">
 
-            {/* 01 — Built around the way Summit works (letter) */}
+            {/* 01 — Built around the way Summit works */}
             <section>
               <SectionHead
                 num="01"
