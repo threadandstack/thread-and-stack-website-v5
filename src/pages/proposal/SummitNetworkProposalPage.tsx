@@ -794,7 +794,7 @@ const SummitNetworkProposalPage = () => {
                 num="02"
                 eyebrow="How we get there"
                 rotate={0.3}
-                title={<>Diagnostic complete. <Hl shift={-1}>Five moves to go.</Hl></>}
+                title={<>Diagnostic complete. <Hl shift={-1}>Here's the path.</Hl></>}
               />
 
               {/* Completed diagnostic card */}
