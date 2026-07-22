@@ -729,17 +729,39 @@ const SummitNetworkProposalPage = () => {
                 ))}
               </div>
 
-              {/* Connected workflows bridge */}
+              {/* Change management callout */}
               <motion.div {...fadeUp} className="mt-8">
                 <div className="rounded-2xl border border-dashed border-accent/40 bg-background/40 p-5 sm:p-6">
                   <div className="font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-gradient-warm mb-2">
-                    Connected workflows
+                    A note on change management
                   </div>
                   <p className="font-sans text-[15.5px] leading-[1.75] text-foreground/80">
-                    Once the core system is established, selected information can move between Notion and
-                    external systems. Website registrations are included in this build. Broader website,
-                    accounting, payment and campaign integrations are a later phase unless explicitly listed
-                    in scope.
+                    Clients usually come to me for a Notion workspace. What they often underestimate
+                    is that they're also on the receiving end of change management. A new system asks
+                    your team to change how they work, and helping them make that change well is part
+                    of the job, as much as the build itself. It's why supported adoption is written
+                    into this project rather than sold as an extra, and why the phases in this
+                    proposal walk before they run. A workspace nobody adopts is an expensive page. A
+                    workspace the whole team lives in is an operating system.
+                  </p>
+                </div>
+              </motion.div>
+
+              {/* Your specification callout */}
+              <motion.div {...fadeUp} className="mt-4">
+                <div className="rounded-2xl border border-dashed border-accent/40 bg-background/40 p-5 sm:p-6">
+                  <div className="font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-gradient-warm mb-2">
+                    Your specification
+                  </div>
+                  <p className="font-sans text-[15.5px] leading-[1.75] text-foreground/80">
+                    Thank you for the CRM specification, Cali. It's one of the most detailed briefs a
+                    client has ever handed me, and it has shaped this proposal directly: the
+                    three-portal structure, the tier-based checklists, the Login Vault and the budget
+                    flag are all built to your document. Where Notion's newest capabilities open up a
+                    better route than the tools available when you wrote it, I'll bring the options
+                    to you with a recommendation and the reasoning, and we'll decide together. The
+                    goals stay yours. The job is making sure the build behind them is the strongest
+                    version Notion can deliver.
                   </p>
                 </div>
               </motion.div>
