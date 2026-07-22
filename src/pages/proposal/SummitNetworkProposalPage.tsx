@@ -697,48 +697,6 @@ const SummitNetworkProposalPage = () => {
                 title={<>Built around the way <Hl>Summit</Hl> works.</>}
               />
 
-              <motion.div {...fadeUp} className="mx-auto max-w-[560px]">
-                <div className="rounded-2xl bg-card shadow-[0_8px_30px_rgba(0,0,0,0.06)] p-6 sm:p-8 font-sans text-[16px] leading-[1.8] text-foreground/85 space-y-5">
-                  <p>Dear Andrew and Cali,</p>
-                  <p>
-                    Thank you for the time and detail you've both put into this process, from our first
-                    conversations through to the diagnostic and the build specification you shared afterwards.
-                    It has given me a clear picture of how Summit works today, where the pressure is building,
-                    and what the business needs next.
-                  </p>
-                  <p>
-                    Summit works with young creators who place a high value on strong relationships. They want
-                    to feel known by the people looking after them, have an easy way to ask for help, and trust
-                    that their personal and financial information is being handled carefully. The system behind
-                    the service needs to strengthen those relationships, not make them feel more transactional.
-                  </p>
-                  <p>
-                    The first priority is getting your Notion workspace working properly as a shared operating
-                    environment. Everyone should know what they are responsible for, where client information
-                    lives, and what needs to happen next, with security and permissions built into the
-                    architecture from the beginning.
-                  </p>
-                  <p>
-                    Once that foundation is in place, Notion AI becomes significantly more useful. With Summit's
-                    knowledge, meetings, client records and processes held in one connected context, your team
-                    can ask better questions, find information faster and use AI in a way that is grounded in
-                    how Summit actually operates.
-                  </p>
-                  <p>
-                    From there, we can introduce a knowledge-enabled intelligence layer: Claude, focused agents
-                    and repeatable workflows that work from Summit's approved context. We can then connect
-                    selected work that begins outside Notion, including website registrations and other agreed
-                    systems. The important thing is to build these layers in the right order rather than
-                    automate processes before the underlying system has been adopted.
-                  </p>
-                  <p>
-                    This proposal sets out how we'll build that foundation, introduce the intelligence layer
-                    and support your team through adoption.
-                  </p>
-                  <p className="font-serif-pro italic text-lg text-foreground pt-2">Brendan</p>
-                </div>
-              </motion.div>
-
               {/* Three-layer maturity visual */}
               <div className="mt-12 space-y-4">
                 {[
