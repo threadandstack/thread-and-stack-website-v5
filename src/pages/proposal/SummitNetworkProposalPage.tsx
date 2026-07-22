@@ -1291,6 +1291,14 @@ const SummitNetworkProposalPage = () => {
                   </p>
 
                 </div>
+                <div className="rounded-2xl bg-card p-5 sm:p-6 shadow-[0_8px_30px_rgba(0,0,0,0.05)]">
+                  <div className="font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-muted-foreground mb-2">
+                    External tool plans
+                  </div>
+                  <p className="font-sans text-[15.5px] leading-[1.75] text-foreground/80">
+                    API and integration access for external products such as Typeform, QuickBooks and DocuSign depends on the plan Summit currently subscribes to. As Notion becomes the central hub, we may find a connection limited by a plan tier, and where that happens I'll flag it with the options and costs so Summit can decide. Any plan upgrades sit with the tool provider, outside this project fee.
+                  </p>
+                </div>
               </motion.div>
             </section>
 
