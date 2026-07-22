@@ -1258,7 +1258,6 @@ const SummitNetworkProposalPage = () => {
                     <span className="text-gradient-warm font-semibold">≈ –$535 credited</span>,
                   ],
                   [<strong>Net investment</strong>, <strong>£12,105</strong>, <strong>≈ $16,345</strong>],
-                  ["Ongoing support after launch", "£1,000/month", "≈ $1,350/month"],
                 ]}
               />
 
@@ -1268,11 +1267,32 @@ const SummitNetworkProposalPage = () => {
                 amount will reflect the applicable exchange rate when invoiced.
               </motion.p>
 
+              <H3>Payment schedule</H3>
+              <EditorialTable
+                head={["When", "GBP", "USD equivalent"]}
+                rows={[
+                  ["On signature (25% deposit, diagnostic credit applied)", "£2,730", "≈ $3,690"],
+                  ["End of month one", "£3,125", "≈ $4,220"],
+                  ["End of month two", "£3,125", "≈ $4,220"],
+                  ["End of month three", "£3,125", "≈ $4,220"],
+                  [<strong>Total</strong>, <strong>£12,105</strong>, <strong>≈ $16,345</strong>],
+                ]}
+              />
+
+              <motion.p {...fadeUp} className="font-sans text-[13.5px] leading-[1.7] text-muted-foreground mt-4">
+                The deposit is 25% of the build fee (£3,125) with the £395 diagnostic credit applied. Payment completes during supported adoption, so cost tracks alongside delivery rather than landing as one upfront sum.
+              </motion.p>
+
+              <H3>After supported adoption</H3>
+              <P>
+                Once the three months of supported adoption end, nothing continues automatically. If Summit wants me to stay involved, rolling support is available at £1,000/month (approximately $1,350/month), no fixed term, cancellable by either side with 30 days' notice. It covers continued adoption, refinement and support of Summit OS 2.0; new capabilities such as drip campaigns or deeper finance integrations are scoped separately as Phase 2.
+              </P>
+
               <H3>Terms</H3>
               <BulletList
                 items={[
                   <>Thread &amp; Stack Ltd is not currently VAT registered. No VAT is applicable.</>,
-                  <>Payment is by deposit on signature, then instalments across the engagement, so cost tracks alongside delivery. <strong>15% late charge applies after 30 days.</strong></>,
+                  <>Payment is a 25% deposit on signature with the diagnostic credit applied, then three equal monthly instalments, completing during supported adoption. <strong>15% late charge applies after 30 days.</strong></>,
                   <>Thread &amp; Stack Ltd is a certified Notion consultancy and operates independently of Notion. Notion retains all rights to its own products, and responsibility for Notion's service delivery, uptime, security and product changes sits with Notion. Thread &amp; Stack accepts no liability for the failure, outage or change of Notion's software, or of any other third-party software Summit uses.</>,
                   <>Summit's licensing, payment and data relationships with Notion and every other software provider are held directly between Summit and those providers. Thread &amp; Stack is not a party to those agreements.</>,
                 ]}
