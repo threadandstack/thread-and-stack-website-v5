@@ -1271,16 +1271,16 @@ const SummitNetworkProposalPage = () => {
               <EditorialTable
                 head={["When", "GBP", "USD equivalent"]}
                 rows={[
-                  ["On signature (25% deposit, diagnostic credit applied)", "£2,730", "≈ $3,690"],
-                  ["End of month one", "£3,125", "≈ $4,220"],
-                  ["End of month two", "£3,125", "≈ $4,220"],
-                  ["End of month three", "£3,125", "≈ $4,220"],
+                  ["On signature (40% deposit, diagnostic credit applied)", "£4,605", "≈ $6,220"],
+                  ["End of month one", "£2,500", "≈ $3,375"],
+                  ["End of month two", "£2,500", "≈ $3,375"],
+                  ["End of month three", "£2,500", "≈ $3,375"],
                   [<strong>Total</strong>, <strong>£12,105</strong>, <strong>≈ $16,345</strong>],
                 ]}
               />
 
               <motion.p {...fadeUp} className="font-sans text-[13.5px] leading-[1.7] text-muted-foreground mt-4">
-                The deposit is 25% of the build fee (£3,125) with the £395 diagnostic credit applied. Payment completes during supported adoption, so cost tracks alongside delivery rather than landing as one upfront sum.
+                The deposit is 40% of the build fee (£5,000) with the £395 diagnostic credit applied. Payment completes during supported adoption, so cost tracks alongside delivery rather than landing as one upfront sum.
               </motion.p>
 
               <H3>After supported adoption</H3>
@@ -1292,7 +1292,7 @@ const SummitNetworkProposalPage = () => {
               <BulletList
                 items={[
                   <>Thread &amp; Stack Ltd is not currently VAT registered. No VAT is applicable.</>,
-                  <>Payment is a 25% deposit on signature with the diagnostic credit applied, then three equal monthly instalments, completing during supported adoption. <strong>15% late charge applies after 30 days.</strong></>,
+                  <>Payment is a 40% deposit on signature with the diagnostic credit applied, then three equal monthly instalments, completing during supported adoption. <strong>15% late charge applies after 30 days.</strong></>,
                   <>Thread &amp; Stack Ltd is a certified Notion consultancy and operates independently of Notion. Notion retains all rights to its own products, and responsibility for Notion's service delivery, uptime, security and product changes sits with Notion. Thread &amp; Stack accepts no liability for the failure, outage or change of Notion's software, or of any other third-party software Summit uses.</>,
                   <>Summit's licensing, payment and data relationships with Notion and every other software provider are held directly between Summit and those providers. Thread &amp; Stack is not a party to those agreements.</>,
                 ]}
