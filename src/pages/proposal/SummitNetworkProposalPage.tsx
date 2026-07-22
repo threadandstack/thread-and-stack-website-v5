@@ -841,11 +841,10 @@ const SummitNetworkProposalPage = () => {
 
               <ul className="mt-4 space-y-5">
                 {[
-                  { title: "Infrastructure", body: "Build the permissioned operating foundation: structured client and contact records, teamspaces, personal dashboards, tasks, meetings, agreements, SOPs, prospect pipeline and client-delivery pipeline. Work is built in hidden teamspaces inside the existing workspace so current operations are not disrupted." },
-                  { title: "Client-facing portals", body: "Create a private home for each client, with relevant progress, resources, tasks and a simple way to make requests of the Summit team. Each guest sees only the information intentionally shared with them." },
-                  { title: "Collaboration", body: "Connect ownership, tasks, meetings, notes and notifications around each client so the team can see what needs to happen next and who is responsible. Introduce Notion Calendar and AI Meeting Notes as part of the working rhythm." },
-                  { title: "Agency collaboration portal", body: "Create a permissioned agency CRM and resource layer for agency accounts, contacts, agreements, referral arrangements, call notes and collaboration resources. Summit can grant agency partners access to the information intended for them and revoke that access when a relationship changes. Infloww credential management and agency payment tracking are not included in this phase." },
-                  { title: "Onboarding, adoption and support", body: "Connect approved intake and onboarding workflows, prepare the team, run a planned adoption day and provide three months of hands-on launch support at 10 hours per month. After that period, Summit can retain Thread & Stack on a rolling £1,000/month agreement (approximately $1,350/month at the proposal-date exchange rate), with no fixed term." },
+                  { title: "This proposal", body: "You are here. Confirm the scope and investment, and we lock a start date and the adoption day target." },
+                  { title: "I join your workspace", body: "Added as a consultant inside your existing Notion. Nothing your team relies on changes under their feet." },
+                  { title: "Summit OS 2.0 is built alongside you", body: "The Client Portal, Internal Workspace and Agency Portal take shape in hidden teamspaces, reviewed with you as they develop. Your team keeps working exactly as they do today." },
+                  { title: "Adoption day, then supported adoption", body: "The team walkthrough, the move into the new workspace, and three months of hands-on support at 10 hours per month while the system beds in. This is also the window where reopening client acquisition makes sense, because your first new clients come through the new onboarding while I'm still alongside you." },
                 ].map((step, i) => (
                   <motion.li
                     key={i}
