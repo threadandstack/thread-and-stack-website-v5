@@ -1133,7 +1133,9 @@ const SummitNetworkProposalPage = () => {
                     "Infloww-fed payment automation and earnings monitoring.",
                     "Drip campaigns and email delivery of any kind, pending confirmation of Summit's email provider and what the workflow really needs.",
                     "Custom agents and Workers beyond the one of each included in this build.",
-                    "The Lovable + Notion client app (Phase 3) and the affiliate resource hub.",
+                    "A client-facing web application beyond the Notion client portal: out of scope for now.",
+                    "The affiliate resource hub is not included.",
+
                     "Website registration integration is included, but implementation depends on the platform behind summitnetwork.net; any paid third-party connector licence is excluded unless agreed.",
                   ].map((it, i) => (
                     <li key={i} className="relative pl-6 text-[15.5px] leading-[1.75] text-foreground/80">
