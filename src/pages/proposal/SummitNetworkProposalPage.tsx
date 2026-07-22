@@ -996,13 +996,94 @@ const SummitNetworkProposalPage = () => {
 
             <Rule />
 
+            {/* 03 — Timeline */}
+            <section>
+              <SectionHead
+                num="03"
+                eyebrow="The year ahead"
+                rotate={0.4}
+                title={<>A plan built around the way <Hl>Summit works.</Hl></>}
+              />
+
+              {/* Change management callout */}
+              <motion.div {...fadeUp} className="mt-4 mb-10">
+                <div className="rounded-2xl border border-dashed border-accent/40 bg-background/40 p-5 sm:p-6">
+                  <div className="font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-gradient-warm mb-2">
+                    A note on change management
+                  </div>
+                  <p className="font-sans text-[15.5px] leading-[1.75] text-foreground/80">
+                    Clients usually come to me for a Notion workspace. What they often underestimate is
+                    that they're also on the receiving end of change management. Helping your team adopt
+                    the new system is part of the job, as much as the build itself. It's why supported
+                    adoption is written into this project rather than sold as an extra, and why these
+                    phases walk before they run.
+                  </p>
+                </div>
+              </motion.div>
+
+              <div className="relative mt-8 pl-6 sm:pl-8">
+                <div
+                  aria-hidden
+                  className="absolute left-0 top-3 bottom-3 w-[2px] rounded-full bg-accent/40"
+                />
+
+                {timeline.map((step, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.6, delay: i * 0.05, ease: [0.22, 1, 0.36, 1] }}
+                    className="relative pb-10 last:pb-0"
+                  >
+                    <span
+                      className={`inline-flex items-center gap-1.5 rounded-full px-4 py-1 text-xs font-bold tracking-[0.18em] uppercase ${
+                        step.isComplete
+                          ? "bg-tertiary text-tertiary-foreground"
+                          : step.isLaunch
+                          ? "bg-primary text-primary-foreground"
+                          : "text-white"
+                      }`}
+                      style={
+                        step.isComplete || step.isLaunch
+                          ? undefined
+                          : { backgroundImage: "linear-gradient(95deg, var(--gradient-3color))" }
+                      }
+                    >
+                      {step.isComplete && <Check className="w-3.5 h-3.5" strokeWidth={2.5} />}
+                      {step.isLaunch && <Rocket className="w-3.5 h-3.5" />}
+                      {step.label}
+                    </span>
+                    <h3 className="mt-3 font-serif-pro italic font-medium text-xl sm:text-2xl leading-tight text-foreground">
+                      {step.when}
+                    </h3>
+                    <div className="mt-1 font-sans text-[12px] tracking-[0.16em] uppercase text-muted-foreground">
+                      Owner: {step.owner}
+                    </div>
+                    <p className="mt-3 font-sans text-[16px] leading-[1.75] text-foreground/80">
+                      {step.note}
+                    </p>
+                  </motion.div>
+                ))}
+              </div>
+
+              <motion.p {...fadeUp} className="mt-10 font-sans text-[16px] leading-[1.75] text-foreground/80">
+                If sign-off lands this month, the shape of the year draws itself: build through
+                August and September, adoption day in early October, supported adoption through to
+                the end of the year, and Summit starts January on a system built for the size it's
+                becoming, with the doors open again.
+              </motion.p>
+            </section>
+
+            <Rule />
+
             {/* 04 — Scope */}
             <section>
               <SectionHead
                 num="04"
                 eyebrow="What's in scope"
                 rotate={-0.3}
-                title={<>Phase 1: the full <Hl>scope of work.</Hl></>}
+                title={<>The full <Hl>scope of work.</Hl></>}
               />
 
               <P>
@@ -1105,71 +1186,6 @@ const SummitNetworkProposalPage = () => {
 
             </section>
 
-            <Rule />
-
-            {/* 05 — Timeline */}
-            <section>
-              <SectionHead
-                num="05"
-                eyebrow="The year ahead"
-                rotate={0.4}
-                title={<>What the next <Hl shift={-1}>twelve months</Hl> look like.</>}
-              />
-
-
-              <div className="relative mt-8 pl-6 sm:pl-8">
-                <div
-                  aria-hidden
-                  className="absolute left-0 top-3 bottom-3 w-[2px] rounded-full bg-accent/40"
-                />
-
-                {timeline.map((step, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.3 }}
-                    transition={{ duration: 0.6, delay: i * 0.05, ease: [0.22, 1, 0.36, 1] }}
-                    className="relative pb-10 last:pb-0"
-                  >
-                    <span
-                      className={`inline-flex items-center gap-1.5 rounded-full px-4 py-1 text-xs font-bold tracking-[0.18em] uppercase ${
-                        step.isComplete
-                          ? "bg-tertiary text-tertiary-foreground"
-                          : step.isLaunch
-                          ? "bg-primary text-primary-foreground"
-                          : "text-white"
-                      }`}
-                      style={
-                        step.isComplete || step.isLaunch
-                          ? undefined
-                          : { backgroundImage: "linear-gradient(95deg, var(--gradient-3color))" }
-                      }
-                    >
-                      {step.isComplete && <Check className="w-3.5 h-3.5" strokeWidth={2.5} />}
-                      {step.isLaunch && <Rocket className="w-3.5 h-3.5" />}
-                      {step.label}
-                    </span>
-                    <h3 className="mt-3 font-serif-pro italic font-medium text-xl sm:text-2xl leading-tight text-foreground">
-                      {step.when}
-                    </h3>
-                    <div className="mt-1 font-sans text-[12px] tracking-[0.16em] uppercase text-muted-foreground">
-                      Owner: {step.owner}
-                    </div>
-                    <p className="mt-3 font-sans text-[16px] leading-[1.75] text-foreground/80">
-                      {step.note}
-                    </p>
-                  </motion.div>
-                ))}
-              </div>
-
-              <motion.p {...fadeUp} className="mt-10 font-sans text-[16px] leading-[1.75] text-foreground/80">
-                If sign-off lands this month, the shape of the year draws itself: build through
-                August and September, adoption day in early October, supported adoption through to
-                the end of the year, and Summit starts January on a system built for the size it's
-                becoming, with the doors open again.
-              </motion.p>
-            </section>
 
 
             <Rule />
