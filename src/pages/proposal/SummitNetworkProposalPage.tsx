@@ -1239,7 +1239,7 @@ const SummitNetworkProposalPage = () => {
               <H3>Terms</H3>
               <BulletList
                 items={[
-                  <>Brendan Rodgers / Thread &amp; Stack Ltd is not currently VAT registered. No VAT is applicable.</>,
+                  <>Thread &amp; Stack Ltd is not currently VAT registered. No VAT is applicable.</>,
                   <>Payment is by deposit on signature, then instalments spread across the four-to-five month engagement, so cost tracks alongside delivery rather than landing as one upfront sum. <strong>15% late charge applies after 30 days.</strong></>,
                 ]}
               />
