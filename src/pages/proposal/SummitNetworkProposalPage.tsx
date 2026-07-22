@@ -344,17 +344,17 @@ const EditorialTable = ({
 }) => (
   <motion.div
     {...fadeUp}
-    className="my-8 overflow-hidden rounded-2xl border border-border bg-card/40 shadow-[0_2px_24px_-12px_rgba(0,0,0,0.08)]"
+    className="my-8 rounded-2xl border border-border bg-card/40 shadow-[0_2px_24px_-12px_rgba(0,0,0,0.08)]"
   >
-    <div className="overflow-x-auto">
-      <table className="w-full font-sans text-[13.5px] sm:text-[15px] min-w-[420px]">
+    <div className="overflow-x-auto rounded-2xl">
+      <table className="w-full table-fixed font-sans text-[12.5px] sm:text-[15px]">
         {head && (
           <thead>
             <tr className="bg-muted/40">
               {head.map((h, i) => (
                 <th
                   key={i}
-                  className="text-left px-3 sm:px-5 py-2.5 sm:py-3 font-semibold text-[10px] sm:text-[11px] tracking-[0.16em] sm:tracking-[0.18em] uppercase text-muted-foreground"
+                  className="text-left px-2.5 sm:px-5 py-2 sm:py-3 font-semibold text-[9.5px] sm:text-[11px] tracking-[0.14em] sm:tracking-[0.18em] uppercase text-muted-foreground break-words"
                 >
                   {h}
                 </th>
@@ -366,7 +366,7 @@ const EditorialTable = ({
           {rows.map((row, r) => (
             <tr key={r} className="border-t border-border/60">
               {row.map((cell, c) => (
-                <td key={c} className="px-3 sm:px-5 py-2.5 sm:py-3 align-top text-foreground/85 leading-[1.55] sm:leading-[1.6]">
+                <td key={c} className="px-2.5 sm:px-5 py-2 sm:py-3 align-top text-foreground/85 leading-[1.5] sm:leading-[1.6] break-words">
                   {cell}
                 </td>
               ))}
@@ -376,6 +376,7 @@ const EditorialTable = ({
       </table>
     </div>
   </motion.div>
+
 );
 
 /* ---------------------------- Welcome ---------------------------- */
