@@ -967,12 +967,33 @@ const SummitNetworkProposalPage = () => {
                     <>Optional rolling support after launch at £1,000/month (approximately $1,350/month), no fixed term.</>,
                   ],
                 },
-              ].map((group, gi) => (
-                <div key={gi}>
-                  <H3>{group.label}</H3>
-                  <BulletList items={group.items} />
-                </div>
-              ))}
+              ].map((group, gi) => {
+                const [letter, ...rest] = group.label.split(". ");
+                const title = rest.join(". ");
+                return (
+                  <motion.div key={gi} {...fadeUp} className="mt-8 first:mt-10">
+                    <Tilt3D maxX={4} maxY={3}>
+                      <div className="relative rounded-3xl bg-card p-8 sm:p-10 lg:p-12 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)] border border-foreground/5 overflow-hidden">
+                        <div className="absolute -top-6 -right-6 w-40 h-40 rounded-full bg-gradient-warm opacity-[0.07] blur-2xl pointer-events-none" />
+                        <div className="flex items-start gap-5 sm:gap-7 mb-6 sm:mb-8">
+                          <div className="shrink-0 font-serif italic text-transparent bg-clip-text bg-gradient-warm text-[64px] sm:text-[88px] leading-[0.85] font-medium tracking-tight">
+                            {letter}
+                          </div>
+                          <div className="pt-2 sm:pt-4">
+                            <div className="font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-muted-foreground mb-2">
+                              Scope group
+                            </div>
+                            <h3 className="font-serif text-[24px] sm:text-[30px] lg:text-[34px] leading-[1.15] font-medium text-foreground">
+                              {title}
+                            </h3>
+                          </div>
+                        </div>
+                        <BulletList items={group.items} />
+                      </div>
+                    </Tilt3D>
+                  </motion.div>
+                );
+              })}
 
               {/* Caveats */}
               <motion.div {...fadeUp} className="mt-10 rounded-2xl border border-clay/30 bg-clay/5 p-5 sm:p-6">
