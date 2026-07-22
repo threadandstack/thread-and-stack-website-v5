@@ -1194,7 +1194,15 @@ const SummitNetworkProposalPage = () => {
                   </motion.div>
                 ))}
               </div>
+
+              <motion.p {...fadeUp} className="mt-10 font-sans text-[16px] leading-[1.75] text-foreground/80">
+                If sign-off lands this month, the shape of the year draws itself: build through
+                August and September, adoption day in early October, supported adoption through to
+                the end of the year, and Summit starts January on a system built for the size it's
+                becoming, with the doors open again.
+              </motion.p>
             </section>
+
 
             <Rule />
 
