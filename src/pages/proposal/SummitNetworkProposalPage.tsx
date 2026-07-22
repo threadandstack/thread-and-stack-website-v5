@@ -656,13 +656,13 @@ const SummitNetworkProposalPage = () => {
       icon: IconNotionAI,
       title: "Custom agents",
       body: "Collaborative agents that live in your workspace with you.",
-      tag: "First agent included",
+      tag: "Client request agent included",
     },
     {
       icon: IconNotionWorkers.url,
       title: "Notion Workers",
       body: "Bespoke Notion integrations built specifically for you and your tools that arm your workspace.",
-      tag: "First Worker included",
+      tag: "Lightweight build included",
     },
     {
       icon: IconNotionMail,
@@ -678,6 +678,7 @@ const SummitNetworkProposalPage = () => {
       label: "A. Foundations and the Internal Workspace",
       items: [
         <><strong>Individual member access</strong> for every team member, retiring the shared-login model. Summit purchases licences directly; worth doing immediately regardless of build timing.</>,
+        <><strong>A visual, tile-like experience</strong> prioritised throughout: card and gallery layouts, kanban boards, buttons and dashboards in place of spreadsheet after spreadsheet, so the workspace feels designed rather than administrated.</>,
         <><strong>Workspace architecture</strong> built as focused teamspaces with role-based access: marketing and sales, operations and finance, client work separate.</>,
         <><strong>Company homepage</strong> carrying Summit's mission, values, company-wide broadcasts and navigation.</>,
         <><strong>Employee handbook and policies</strong>: terms, conditions and internal policies in one findable place, with Employee Responsibilities pages per role.</>,
@@ -741,7 +742,9 @@ const SummitNetworkProposalPage = () => {
         <><strong>The task cascade on signature</strong>, with persistent reminders until onboarding is complete, and Tier 1 assignment notifying the CPA.</>,
         <><strong>Client task notifications</strong>: submissions notify the Owner and VP of Operations; completions notify the client.</>,
         <><strong>Website registration submissions</strong> connected to Notion so sign-ups create structured records alongside Typeform intake, subject to platform confirmation.</>,
-        <><strong>One Notion Worker and one custom agent included</strong>, targeted at the highest-value workflow we agree during the build. Strong candidates: deeper Typeform intake or DocuSign auto-attach.</>,
+        <><strong>Custom agent setup and onboarding</strong>: Notion's AI agents configured for Summit, with the team shown how to brief them and put them to work.</>,
+        <><strong>A client request agent included</strong>: watching the client portal request areas, so when a client raises a request it is triaged, the right owner is notified, and a first response is drafted for the team to review.</>,
+        <><strong>Lightweight Notion Worker builds included</strong> where they clearly add value, such as deeper Typeform intake. Advanced integrations sit in Phase 2.</>,
       ],
     },
     {
@@ -859,7 +862,7 @@ const SummitNetworkProposalPage = () => {
               <div className="mt-12 space-y-4">
                 {[
                   { pill: "Phase 1", tag: "This proposal", title: "Summit OS 2.0", body: "This proposal. The workspace, the CRM, the Client Portal and the Agency Portal, built and adopted. £12,500." },
-                  { pill: "Phase 2", tag: "Scoped after adoption", title: "Automation and Intelligence", body: "The deeper machinery: further custom agents, Notion Workers integrations and external connections. Scoped separately once the system is adopted." },
+                  { pill: "Phase 2", tag: "Scoped after adoption", title: "Automation and Intelligence", body: "The advanced integration layer: Infloww feeds, DocuSign auto-attach, scheduled client communications and deeper external connections beyond the lightweight builds included in Phase 1. Scoped separately once the system is adopted." },
                   { pill: "Phase 3", tag: "Out of scope for now", title: "What comes next", body: "Deliberately out of scope for now. Once Summit OS 2.0 is adopted and the automation layer has landed, we'll shape the next stage together from what the system is asking for." },
                 ].map((layer, i) => (
                   <motion.div
@@ -1133,7 +1136,7 @@ const SummitNetworkProposalPage = () => {
                     "Deep QuickBooks or Monarch data sync. Links and guidance only in this phase.",
                     "Infloww-fed payment automation and earnings monitoring.",
                     "Drip campaigns and email delivery of any kind, pending confirmation of Summit's email provider and what the workflow really needs.",
-                    "Custom agents and Workers beyond the one of each included in this build.",
+                    "Advanced integrations and further agents beyond the lightweight builds included in this phase: Phase 2, scoped separately.",
                     "A client-facing web application beyond the Notion client portal: out of scope for now.",
                     "The affiliate resource hub is not included.",
 
