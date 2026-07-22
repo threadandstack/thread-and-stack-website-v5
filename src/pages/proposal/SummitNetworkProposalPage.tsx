@@ -951,7 +951,7 @@ const SummitNetworkProposalPage = () => {
 
             <Rule />
 
-            {/* 03 — The stack */}
+            {/* 02 — The stack */}
             <section>
               <SectionHead
                 num="02"
