@@ -976,7 +976,7 @@ const SummitNetworkProposalPage = () => {
                       <div className="relative rounded-3xl bg-card p-8 sm:p-10 lg:p-12 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)] border border-foreground/5 overflow-hidden">
                         <div className="absolute -top-6 -right-6 w-40 h-40 rounded-full bg-gradient-warm opacity-[0.07] blur-2xl pointer-events-none" />
                         <div className="flex items-start gap-5 sm:gap-7 mb-6 sm:mb-8">
-                          <div className="shrink-0 font-serif italic text-transparent bg-clip-text bg-gradient-warm text-[64px] sm:text-[88px] leading-[0.85] font-medium tracking-tight">
+                          <div className="shrink-0 font-serif italic text-transparent bg-clip-text bg-gradient-warm text-[64px] sm:text-[88px] leading-[1.1] font-medium tracking-tight pr-2 pb-1">
                             {letter}
                           </div>
                           <div className="pt-2 sm:pt-4">
