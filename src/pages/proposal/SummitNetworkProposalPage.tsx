@@ -1190,10 +1190,10 @@ const SummitNetworkProposalPage = () => {
 
             <Rule />
 
-            {/* 06 — Investment */}
+            {/* 05 — Investment */}
             <section>
               <SectionHead
-                num="06"
+                num="05"
                 eyebrow="Investment"
                 rotate={-0.3}
                 title={<>The <Hl>numbers.</Hl></>}
