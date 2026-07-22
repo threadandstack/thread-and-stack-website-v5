@@ -390,12 +390,12 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => (
     className="fixed inset-0 z-[100] flex flex-col bg-primary text-primary-foreground overflow-hidden"
   >
     <div className="flex-1 flex flex-col items-center justify-center px-6 sm:px-10 md:px-16 overflow-y-auto">
-      <div className="w-full max-w-2xl flex flex-col items-center text-center">
+      <div className="w-full max-w-2xl flex flex-col items-center text-center py-10">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.35 }}
-          className="font-sans text-[10.5px] sm:text-[12px] tracking-[0.28em] uppercase text-primary-foreground/55 mb-8 sm:mb-10"
+          className="font-sans text-[10.5px] sm:text-[12px] tracking-[0.28em] uppercase text-primary-foreground/55 mb-6 sm:mb-8"
         >
           Project Proposal
           <span className="text-primary-foreground/25 mx-2">·</span>
@@ -408,7 +408,7 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => (
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.55 }}
-          className="font-serif-pro text-3xl sm:text-5xl md:text-6xl italic font-medium leading-[1.05] tracking-tight mb-8 text-balance"
+          className="font-serif-pro text-3xl sm:text-5xl md:text-6xl italic font-medium leading-[1.05] tracking-tight mb-6 text-balance"
         >
           The{" "}
           <span className="inline-block text-gradient-warm" style={{ transform: "translateY(1px)" }}>
@@ -421,7 +421,7 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => (
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.8 }}
-          className="font-sans text-[15px] sm:text-[17px] leading-[1.75] text-primary-foreground/80 max-w-xl mb-10"
+          className="font-sans text-[15px] sm:text-[17px] leading-[1.75] text-primary-foreground/80 max-w-xl mb-8"
         >
           A Notion operations build that gives every team member clarity, runs client onboarding without
           a single point of failure, and gives clients a real window into their own progress.
@@ -431,7 +431,7 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => (
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.0 }}
-          className="flex flex-col items-center gap-3"
+          className="flex flex-col items-center gap-3 mb-10"
         >
           <span className="font-sans text-[13px] text-primary-foreground/60">
             Prepared for Cali Pilkington &amp; Andrew Gladstone
@@ -442,13 +442,58 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => (
             className="h-8 sm:h-10 w-auto object-contain"
           />
         </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 1.15 }}
+          className="w-full text-left rounded-2xl border border-primary-foreground/10 bg-primary-foreground/[0.04] backdrop-blur-sm p-6 sm:p-8 font-sans text-[15px] sm:text-[16px] leading-[1.8] text-primary-foreground/85 space-y-4 shadow-[0_8px_30px_rgba(0,0,0,0.2)]"
+        >
+          <p>Dear Andrew and Cali,</p>
+          <p>
+            Thank you for the time and detail you've both put into this process, from our first
+            conversations through to the diagnostic and the build specification you shared afterwards.
+            It has given me a clear picture of how Summit works today, where the pressure is building,
+            and what the business needs next.
+          </p>
+          <p>
+            Summit works with young creators who place a high value on strong relationships. They want
+            to feel known by the people looking after them, have an easy way to ask for help, and trust
+            that their personal and financial information is being handled carefully. The system behind
+            the service needs to strengthen those relationships, not make them feel more transactional.
+          </p>
+          <p>
+            The first priority is getting your Notion workspace working properly as a shared operating
+            environment. Everyone should know what they are responsible for, where client information
+            lives, and what needs to happen next, with security and permissions built into the
+            architecture from the beginning.
+          </p>
+          <p>
+            Once that foundation is in place, Notion AI becomes significantly more useful. With Summit's
+            knowledge, meetings, client records and processes held in one connected context, your team
+            can ask better questions, find information faster and use AI in a way that is grounded in
+            how Summit actually operates.
+          </p>
+          <p>
+            From there, we can introduce a knowledge-enabled intelligence layer: Claude, focused agents
+            and repeatable workflows that work from Summit's approved context. We can then connect
+            selected work that begins outside Notion, including website registrations and other agreed
+            systems. The important thing is to build these layers in the right order rather than
+            automate processes before the underlying system has been adopted.
+          </p>
+          <p>
+            This proposal sets out how we'll build that foundation, introduce the intelligence layer
+            and support your team through adoption.
+          </p>
+          <p className="font-serif-pro italic text-lg text-primary-foreground pt-1">Brendan</p>
+        </motion.div>
       </div>
     </div>
 
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, delay: 1.2 }}
+      transition={{ duration: 0.8, delay: 1.35 }}
       className="flex flex-col items-center pb-8 sm:pb-10 bg-primary"
     >
       <button
@@ -643,7 +688,7 @@ const SummitNetworkProposalPage = () => {
         <article className="px-5 sm:px-8 pb-24">
           <div className="max-w-2xl mx-auto">
 
-            {/* 01 — Built around the way Summit works (letter) */}
+            {/* 01 — Built around the way Summit works */}
             <section>
               <SectionHead
                 num="01"
@@ -651,48 +696,6 @@ const SummitNetworkProposalPage = () => {
                 rotate={-0.4}
                 title={<>Built around the way <Hl>Summit</Hl> works.</>}
               />
-
-              <motion.div {...fadeUp} className="mx-auto max-w-[560px]">
-                <div className="rounded-2xl bg-card shadow-[0_8px_30px_rgba(0,0,0,0.06)] p-6 sm:p-8 font-sans text-[16px] leading-[1.8] text-foreground/85 space-y-5">
-                  <p>Dear Andrew and Cali,</p>
-                  <p>
-                    Thank you for the time and detail you've both put into this process, from our first
-                    conversations through to the diagnostic and the build specification you shared afterwards.
-                    It has given me a clear picture of how Summit works today, where the pressure is building,
-                    and what the business needs next.
-                  </p>
-                  <p>
-                    Summit works with young creators who place a high value on strong relationships. They want
-                    to feel known by the people looking after them, have an easy way to ask for help, and trust
-                    that their personal and financial information is being handled carefully. The system behind
-                    the service needs to strengthen those relationships, not make them feel more transactional.
-                  </p>
-                  <p>
-                    The first priority is getting your Notion workspace working properly as a shared operating
-                    environment. Everyone should know what they are responsible for, where client information
-                    lives, and what needs to happen next, with security and permissions built into the
-                    architecture from the beginning.
-                  </p>
-                  <p>
-                    Once that foundation is in place, Notion AI becomes significantly more useful. With Summit's
-                    knowledge, meetings, client records and processes held in one connected context, your team
-                    can ask better questions, find information faster and use AI in a way that is grounded in
-                    how Summit actually operates.
-                  </p>
-                  <p>
-                    From there, we can introduce a knowledge-enabled intelligence layer: Claude, focused agents
-                    and repeatable workflows that work from Summit's approved context. We can then connect
-                    selected work that begins outside Notion, including website registrations and other agreed
-                    systems. The important thing is to build these layers in the right order rather than
-                    automate processes before the underlying system has been adopted.
-                  </p>
-                  <p>
-                    This proposal sets out how we'll build that foundation, introduce the intelligence layer
-                    and support your team through adoption.
-                  </p>
-                  <p className="font-serif-pro italic text-lg text-foreground pt-2">Brendan</p>
-                </div>
-              </motion.div>
 
               {/* Three-layer maturity visual */}
               <div className="mt-12 space-y-4">
