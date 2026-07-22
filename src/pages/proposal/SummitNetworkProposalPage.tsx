@@ -793,6 +793,27 @@ const SummitNetworkProposalPage = () => {
                 </Tilt3D>
               </motion.div>
 
+              {/* Completed NDA alignment card */}
+              <motion.div {...fadeUp} className="mb-8">
+                <Tilt3D maxX={5} maxY={4}>
+                  <div className="flex gap-5 items-start rounded-2xl p-5 bg-tertiary/10 border border-tertiary/30 shadow-[0_8px_30px_rgba(0,0,0,0.05)] h-full">
+                    <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-tertiary flex items-center justify-center shadow-[0_1px_4px_rgba(0,0,0,0.1)]">
+                      <Check className="w-6 h-6 text-tertiary-foreground" strokeWidth={2.5} />
+                    </div>
+                    <div className="flex-1 pt-1">
+                      <div className="font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-tertiary mb-1">
+                        Completed — Aligned on NDA
+                      </div>
+                      <p className="text-foreground/80 leading-relaxed">
+                        We've collaborated in good faith to reach an NDA that supports both parties,
+                        and enables this project. This proposal will act as Scope of Work supporting
+                        that document.
+                      </p>
+                    </div>
+                  </div>
+                </Tilt3D>
+              </motion.div>
+
               <ul className="mt-4 space-y-5">
                 {[
                   { title: "Infrastructure", body: "Build the permissioned operating foundation: structured client and contact records, teamspaces, personal dashboards, tasks, meetings, agreements, SOPs, prospect pipeline and client-delivery pipeline. Work is built in hidden teamspaces inside the existing workspace so current operations are not disrupted." },
