@@ -858,76 +858,8 @@ const SummitNetworkProposalPage = () => {
                 title={<>Built around <Hl>Summit's clients.</Hl></>}
               />
 
-              {/* Three phase cards */}
-              <div className="mt-12 space-y-4">
-                {[
-                  { pill: "Phase 1", tag: "This proposal", title: "Summit OS 2.0", body: "This proposal. The workspace, the CRM, the Client Portal and the Agency Portal, built and adopted. £12,500." },
-                  { pill: "Phase 2", tag: "Scoped after adoption", title: "Automation and Intelligence", body: "The advanced integration layer: Infloww feeds, DocuSign auto-attach, scheduled client communications and deeper external connections beyond the lightweight builds included in Phase 1. Scoped separately once the system is adopted." },
-                  { pill: "Phase 3", tag: "Out of scope for now", title: "What comes next", body: "Deliberately out of scope for now. Once Summit OS 2.0 is adopted and the automation layer has landed, we'll shape the next stage together from what the system is asking for." },
-                ].map((layer, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.3 }}
-                    transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                  >
-                    <Tilt3D maxX={5} maxY={4}>
-                      <div className="bg-card rounded-2xl p-5 sm:p-6 shadow-[0_8px_30px_rgba(0,0,0,0.06)] h-full">
-                        <div className="flex flex-wrap items-center gap-2 mb-3">
-                          <span
-                            className="inline-flex items-center rounded-full px-3 py-1 text-[10px] font-bold tracking-[0.2em] uppercase text-white"
-                            style={{ backgroundImage: "linear-gradient(95deg, var(--gradient-3color))" }}
-                          >
-                            {layer.pill}
-                          </span>
-                          <span className="inline-flex items-center rounded-full border border-border bg-muted/40 px-2.5 py-1 text-[10px] font-semibold tracking-[0.16em] uppercase text-muted-foreground">
-                            {layer.tag}
-                          </span>
-                        </div>
-                        <div className="font-serif-pro italic font-medium text-xl text-foreground mb-1.5">{layer.title}</div>
-                        <p className="text-foreground/75 leading-relaxed">{layer.body}</p>
-                      </div>
-                    </Tilt3D>
-                  </motion.div>
-                ))}
-
-              </div>
-
-              {/* Change management callout */}
-              <motion.div {...fadeUp} className="mt-8">
-                <div className="rounded-2xl border border-dashed border-accent/40 bg-background/40 p-5 sm:p-6">
-                  <div className="font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-gradient-warm mb-2">
-                    A note on change management
-                  </div>
-                  <p className="font-sans text-[15.5px] leading-[1.75] text-foreground/80">
-                    Clients usually come to me for a Notion workspace. What they often underestimate is
-                    that they're also on the receiving end of change management. Helping your team adopt
-                    the new system is part of the job, as much as the build itself. It's why supported
-                    adoption is written into this project rather than sold as an extra, and why these
-                    phases walk before they run.
-                  </p>
-                </div>
-              </motion.div>
-
-              {/* External tool plans callout */}
-              <motion.div {...fadeUp} className="mt-4">
-                <div className="rounded-2xl border border-dashed border-accent/40 bg-background/40 p-5 sm:p-6">
-                  <div className="font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-gradient-warm mb-2">
-                    A note on external tool plans
-                  </div>
-                  <p className="font-sans text-[15.5px] leading-[1.75] text-foreground/80">
-                    API and integration access for external products such as Typeform, QuickBooks and
-                    DocuSign depends on the plan Summit currently subscribes to. As Notion becomes the
-                    central hub, we may find a connection limited by a plan tier, and where that happens
-                    I'll flag it with the options and costs so Summit can decide. Any plan upgrades sit
-                    with the tool provider, outside this project fee.
-                  </p>
-                </div>
-              </motion.div>
-
               {/* Client priorities */}
-              <motion.div {...fadeUp} className="mt-14">
+              <motion.div {...fadeUp} className="mt-4">
                 <h3 className="font-serif-pro text-[22px] md:text-[26px] italic font-medium text-foreground mb-5 leading-snug">
                   What Summit's clients need to feel.
                 </h3>
@@ -944,18 +876,14 @@ const SummitNetworkProposalPage = () => {
                   ))}
                 </div>
               </motion.div>
-            </section>
 
-            <Rule />
-
-            {/* 02 — Unified journey stepper */}
-            <section>
-              <SectionHead
-                num="02"
-                eyebrow="How we get there"
-                rotate={0.3}
-                title={<>Diagnostic complete. <Hl shift={-1}>Here's the path.</Hl></>}
-              />
+              {/* Journey stepper */}
+              <motion.h3
+                {...fadeUp}
+                className="font-serif-pro text-[22px] md:text-[26px] italic font-medium text-foreground mt-14 mb-5 leading-snug"
+              >
+                Diagnostic complete. <Hl shift={-1}>Here's the path.</Hl>
+              </motion.h3>
 
               <ul className="mt-4 space-y-5">
                 {journeySteps.map((step, i) => {
