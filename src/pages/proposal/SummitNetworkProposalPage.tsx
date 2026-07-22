@@ -344,17 +344,17 @@ const EditorialTable = ({
 }) => (
   <motion.div
     {...fadeUp}
-    className="my-8 overflow-hidden rounded-2xl border border-border bg-card/40 shadow-[0_2px_24px_-12px_rgba(0,0,0,0.08)]"
+    className="my-8 rounded-2xl border border-border bg-card/40 shadow-[0_2px_24px_-12px_rgba(0,0,0,0.08)]"
   >
-    <div className="overflow-x-auto">
-      <table className="w-full font-sans text-[13.5px] sm:text-[15px] min-w-[420px]">
+    <div className="overflow-x-auto rounded-2xl">
+      <table className="w-full table-fixed font-sans text-[12.5px] sm:text-[15px]">
         {head && (
           <thead>
             <tr className="bg-muted/40">
               {head.map((h, i) => (
                 <th
                   key={i}
-                  className="text-left px-3 sm:px-5 py-2.5 sm:py-3 font-semibold text-[10px] sm:text-[11px] tracking-[0.16em] sm:tracking-[0.18em] uppercase text-muted-foreground"
+                  className="text-left px-2.5 sm:px-5 py-2 sm:py-3 font-semibold text-[9.5px] sm:text-[11px] tracking-[0.14em] sm:tracking-[0.18em] uppercase text-muted-foreground break-words"
                 >
                   {h}
                 </th>
@@ -366,7 +366,7 @@ const EditorialTable = ({
           {rows.map((row, r) => (
             <tr key={r} className="border-t border-border/60">
               {row.map((cell, c) => (
-                <td key={c} className="px-3 sm:px-5 py-2.5 sm:py-3 align-top text-foreground/85 leading-[1.55] sm:leading-[1.6]">
+                <td key={c} className="px-2.5 sm:px-5 py-2 sm:py-3 align-top text-foreground/85 leading-[1.5] sm:leading-[1.6] break-words">
                   {cell}
                 </td>
               ))}
@@ -376,6 +376,7 @@ const EditorialTable = ({
       </table>
     </div>
   </motion.div>
+
 );
 
 /* ---------------------------- Welcome ---------------------------- */
@@ -857,9 +858,9 @@ const SummitNetworkProposalPage = () => {
               {/* Three phase cards */}
               <div className="mt-12 space-y-4">
                 {[
-                  { pill: "Phase 1", title: "Summit OS 2.0", body: "This proposal. The workspace, the CRM, the Client Portal and the Agency Portal, built and adopted. £12,500." },
-                  { pill: "Phase 2", title: "Automation and Intelligence", body: "The deeper machinery: further custom agents, Notion Workers integrations and external connections. Scoped separately once the system is adopted." },
-                  { pill: "Phase 3", title: "The client app", body: "A Lovable + Notion client-facing web application, with Summit OS 2.0 as its backend." },
+                  { pill: "Phase 1", tag: "This proposal", title: "Summit OS 2.0", body: "This proposal. The workspace, the CRM, the Client Portal and the Agency Portal, built and adopted. £12,500." },
+                  { pill: "Phase 2", tag: "Scoped after adoption", title: "Automation and Intelligence", body: "The deeper machinery: further custom agents, Notion Workers integrations and external connections. Scoped separately once the system is adopted." },
+                  { pill: "Phase 3", tag: "Out of scope for now", title: "What comes next", body: "Deliberately out of scope for now. Once Summit OS 2.0 is adopted and the automation layer has landed, we'll shape the next stage together from what the system is asking for." },
                 ].map((layer, i) => (
                   <motion.div
                     key={i}
@@ -870,18 +871,24 @@ const SummitNetworkProposalPage = () => {
                   >
                     <Tilt3D maxX={5} maxY={4}>
                       <div className="bg-card rounded-2xl p-5 sm:p-6 shadow-[0_8px_30px_rgba(0,0,0,0.06)] h-full">
-                        <span
-                          className="inline-flex items-center rounded-full px-3 py-1 text-[10px] font-bold tracking-[0.2em] uppercase text-white mb-3"
-                          style={{ backgroundImage: "linear-gradient(95deg, var(--gradient-3color))" }}
-                        >
-                          {layer.pill}
-                        </span>
+                        <div className="flex flex-wrap items-center gap-2 mb-3">
+                          <span
+                            className="inline-flex items-center rounded-full px-3 py-1 text-[10px] font-bold tracking-[0.2em] uppercase text-white"
+                            style={{ backgroundImage: "linear-gradient(95deg, var(--gradient-3color))" }}
+                          >
+                            {layer.pill}
+                          </span>
+                          <span className="inline-flex items-center rounded-full border border-border bg-muted/40 px-2.5 py-1 text-[10px] font-semibold tracking-[0.16em] uppercase text-muted-foreground">
+                            {layer.tag}
+                          </span>
+                        </div>
                         <div className="font-serif-pro italic font-medium text-xl text-foreground mb-1.5">{layer.title}</div>
                         <p className="text-foreground/75 leading-relaxed">{layer.body}</p>
                       </div>
                     </Tilt3D>
                   </motion.div>
                 ))}
+
               </div>
 
               {/* Change management callout */}
@@ -1127,7 +1134,9 @@ const SummitNetworkProposalPage = () => {
                     "Infloww-fed payment automation and earnings monitoring.",
                     "Drip campaigns and email delivery of any kind, pending confirmation of Summit's email provider and what the workflow really needs.",
                     "Custom agents and Workers beyond the one of each included in this build.",
-                    "The Lovable + Notion client app (Phase 3) and the affiliate resource hub.",
+                    "A client-facing web application beyond the Notion client portal: out of scope for now.",
+                    "The affiliate resource hub is not included.",
+
                     "Website registration integration is included, but implementation depends on the platform behind summitnetwork.net; any paid third-party connector licence is excluded unless agreed.",
                   ].map((it, i) => (
                     <li key={i} className="relative pl-6 text-[15.5px] leading-[1.75] text-foreground/80">
@@ -1322,16 +1331,18 @@ const SummitNetworkProposalPage = () => {
                     Restricted credential storage
                   </div>
                   <p className="font-sans text-[15.5px] leading-[1.75] text-foreground/80">
-                    Notion is not a password manager, and I won't pretend otherwise. A dedicated password manager remains the most appropriate way to store and share credentials. What I can build inside Notion is a permission-based database structure for collaborator information sharing: the Login Vault and per-client credential sections, with per-record visibility for named team members and full visibility for the Owner and VP of Operations. Notion doesn't natively support row-level permissions inside a database, so this is a practical access arrangement built to Notion's strongest pattern. Full SSNs, card numbers and full bank account numbers are never stored in Notion; last four digits only where identification is needed.
+                    Notion is not a password manager, and I won't pretend otherwise. Notion itself, however, runs enterprise-grade security, independently audited against standards including SOC 2 Type 2 and ISO 27001. You can read <a href="https://www.notion.com/en-us/security" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">Notion's security practices</a> for yourself. A dedicated password manager remains the most appropriate way to store and share credentials. What I can build inside Notion is a permission-based database structure for collaborator information sharing: the Login Vault and per-client credential sections, with per-record visibility for named team members and full visibility for the Owner and VP of Operations. Notion doesn't natively support row-level permissions inside a database, so this is a practical access arrangement built to Notion's strongest pattern. Full SSNs, card numbers and full bank account numbers are never stored in Notion; last four digits only where identification is needed.
                   </p>
+
                 </div>
                 <div className="rounded-2xl bg-card p-5 sm:p-6 shadow-[0_8px_30px_rgba(0,0,0,0.05)]">
                   <div className="font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-muted-foreground mb-2">
                     Notion Enterprise recommendation
                   </div>
                   <p className="font-sans text-[15.5px] leading-[1.75] text-foreground/80">
-                    I don't normally recommend Notion Enterprise for small teams. Summit is the exception worth considering: you work with a specific clientele and you've experienced specific data security pain points, and Enterprise brings single sign-on and a higher security baseline in return for a higher per-user cost. Worth knowing: SSO implementation adds real complexity, so it sits outside this scope and can be bolted on as a separately priced addition if Summit decides to go that way. Enterprise licensing itself is billed by Notion.
+                    I don't normally recommend Notion Enterprise for small teams. Summit is the exception worth considering: you work with a specific clientele and you've experienced specific data security pain points, and Enterprise brings single sign-on and a higher security baseline in return for a higher per-user cost. Worth knowing: SSO implementation adds real complexity, so it sits outside this scope and can be bolted on as a separately priced addition if Summit decides to go that way. Enterprise licensing itself is billed by Notion. Notion publishes its <a href="https://www.notion.com/en-gb/help/enterprise-search-security-and-privacy-practices" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">enterprise security and privacy practices</a> in detail.
                   </p>
+
                 </div>
               </motion.div>
             </section>
