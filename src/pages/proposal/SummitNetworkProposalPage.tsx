@@ -808,7 +808,7 @@ const SummitNetworkProposalPage = () => {
                     </div>
                     <div className="flex-1 pt-1">
                       <div className="font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-tertiary mb-1">
-                        Completed — Diagnostic · 13 July 2026
+                        Completed · Diagnostic · 13 July 2026
                       </div>
                       <p className="text-foreground/80 leading-relaxed">
                         Thank you for the time and level of detail you provided during and after the
@@ -829,7 +829,7 @@ const SummitNetworkProposalPage = () => {
                     </div>
                     <div className="flex-1 pt-1">
                       <div className="font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-tertiary mb-1">
-                        Completed — Aligned on NDA
+                        Completed · Aligned on NDA
                       </div>
                       <p className="text-foreground/80 leading-relaxed">
                         We've collaborated in good faith to reach an NDA that supports both parties,
