@@ -954,7 +954,7 @@ const SummitNetworkProposalPage = () => {
             {/* 03 — The stack */}
             <section>
               <SectionHead
-                num="03"
+                num="02"
                 eyebrow="The workspace"
                 rotate={0.3}
                 title={<>The <Hl>stack</Hl> Summit will run on.</>}
