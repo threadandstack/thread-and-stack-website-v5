@@ -1249,7 +1249,7 @@ const SummitNetworkProposalPage = () => {
               <BulletList
                 items={[
                   <>Individual Notion member licences for Summit's team, billed directly by Notion. Current working estimate: roughly <strong>$1,500/year</strong>, to be confirmed against plan and headcount.</>,
-                  <>Notion Enterprise, Worker credits or other Notion plan add-ons.</>,
+                  <>Notion Enterprise, Worker credits or other Notion plan add-ons, including any plan upgrade required for Notion AI features.</>,
                   <>Paid third-party connectors or external software licences unless explicitly agreed.</>,
                 ]}
               />
