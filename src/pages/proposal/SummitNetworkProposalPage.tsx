@@ -810,7 +810,7 @@ const SummitNetworkProposalPage = () => {
               className="font-serif-pro text-[36px] sm:text-5xl md:text-6xl italic font-medium leading-[1.05] tracking-tight text-foreground text-balance mb-8 order-3"
             >
               The{" "}
-              <span className="inline-block text-gradient-warm" style={{ transform: "translateY(seri1px)" }}>
+              <span className="inline-block text-gradient-warm" style={{ transform: "translateY(1px)" }}>
                 Structure
               </span>{" "}
               Your Growth Has Been Waiting For.
