@@ -889,12 +889,11 @@ const SummitNetworkProposalPage = () => {
               <ul className="mt-8 space-y-5">
                 {[
                   { icon: IconNotion, title: "Notion Workspace. The source of truth.", body: "Clients, agencies, agreements, tasks, meetings, SOPs and team knowledge in one place. Each team member has an individual login and a relevant homepage, with access governed through teamspaces, page sharing and permissions." },
-                  { icon: IconLassie, title: "Notion AI. The native intelligence layer.", body: "The team can ask questions in plain English and receive answers grounded in the workspace. AI Meeting Notes and call transcripts are linked to the relevant clients and work, subject to the appropriate ownership and access permissions." },
-                  { icon: IconClaude, title: "Claude. The strategic co-pilot.", body: "Claude can work from Summit's approved Notion context to help draft communications, reason over pipeline information and pressure-test decisions. Access must be intentional and permissioned; this is not a promise of unrestricted workspace access." },
-                  { icon: IconNotionAI, title: "Custom agents. Focused intelligence for Summit.", body: "A small initial layer of purpose-built agents will support agreed repeatable use cases, such as triaging requests, monitoring onboarding progress or surfacing collaboration opportunities. Final agent use cases will be agreed during the build; this does not include an unlimited catalogue of agents." },
-                  { icon: IconNotion, title: "Notion Calendar. Time connected to context.", body: "Connect meetings to clients, work and follow-up. Introduce the team to a shared calendar workflow that supports scheduling, preparation and meeting capture. Calendar setup depends on Summit's confirmed provider and permissions." },
-                  { icon: IconNotionWorkers.url, title: "Notion Workers. The integration layer.", body: "Use Notion Workers where appropriate for agreed deterministic workflows: receiving website or form events, syncing approved data, triggering updates and giving custom agents reliable tools. Workers are for the integrations explicitly included in this proposal; they do not create an open-ended commitment to connect every third-party platform. Availability, usage and any additional Notion charges depend on Summit's Notion plan and Notion's Worker terms." },
-                  { icon: IconZapier, title: "Automations. The repeatable pipes.", body: "Typeform and website registrations create structured records. Signed DocuSign agreements trigger the agreed onboarding tasks and reminders. Additional workflow tools may be used where they are more suitable than native Notion functionality." },
+                  { icon: IconLassie, title: "Notion AI. The native intelligence layer.", body: "The team can ask questions in plain English and receive answers grounded in the workspace. Configured as part of this build, and it gets sharper as the workspace fills. Availability depends on the Notion plan Summit purchases." },
+                  { icon: IconNotionAI, title: "AI Meeting Notes. Calls captured where they belong.", body: "Call transcription and summaries linked to the relevant client records, with the visibility split from your specification: clients see the summary, their action items, the call date and who they spoke with, while transcripts and internal notes stay internal. Recording is started by the team member on the call from the Notion desktop app. No bot joins your meetings and no third-party transcription service sits between your client conversations and your workspace." },
+                  { icon: IconNotion, title: "Notion Calendar. Time connected to context.", body: "Connect meetings to clients, work and follow-up. Introduce the team to a shared calendar workflow that supports scheduling, preparation and meeting capture. Calendar setup is subject to confirmation of Summit's calendar and email provider." },
+                  { icon: IconNotion, title: "Native automations. The pipes that run onboarding.", body: "Typeform intake and website registrations create structured records. Tier assignment triggers the right checklist and starter to-do list. Signed DocuSign agreements trigger the agreed onboarding tasks and reminders. All built on Notion's native automation tools with no third-party connectors." },
+                  { icon: IconNotionWorkers.url, title: "Custom agents and Notion Workers.", phase: "Phase 2", body: "Your specification asks for native Notion tools wherever possible, with Zapier or Make filling the gaps. Since that document was written, Notion has released Workers, its own developer platform for exactly this class of automation. As a Notion Certified Partner, Thread & Stack builds on it directly: no Zapier subscription, no Make scenarios to maintain, no third-party connector holding your client data in transit. Scoped separately once Summit OS 2.0 is live and adopted." },
                   { icon: IconNotion, title: "Email and communications. To be confirmed.", body: "We'll confirm Summit's current email environment during setup and recommend the appropriate connection. Any deeper inbox automation will be scoped against the provider, permissions and workflow required." },
                 ].map((layer, i) => (
                   <motion.li
@@ -910,7 +909,17 @@ const SummitNetworkProposalPage = () => {
                           <img src={layer.icon} alt="" className="w-9 h-9 object-contain" />
                         </div>
                         <div className="flex-1 pt-1">
-                          <strong className="font-serif-pro italic font-medium text-lg text-foreground block mb-1">{layer.title}</strong>
+                          <div className="flex items-center gap-2 flex-wrap mb-1">
+                            <strong className="font-serif-pro italic font-medium text-lg text-foreground">{layer.title}</strong>
+                            {layer.phase && (
+                              <span
+                                className="inline-flex items-center rounded-full px-2.5 py-0.5 text-[10px] font-bold tracking-[0.18em] uppercase text-white"
+                                style={{ backgroundImage: "linear-gradient(95deg, var(--gradient-3color))" }}
+                              >
+                                {layer.phase}
+                              </span>
+                            )}
+                          </div>
                           <span className="text-foreground/75 leading-relaxed">{layer.body}</span>
                         </div>
                       </div>
