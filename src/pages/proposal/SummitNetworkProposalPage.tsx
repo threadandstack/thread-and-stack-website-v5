@@ -431,9 +431,16 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => (
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.0 }}
-          className="font-sans text-[13px] text-primary-foreground/60"
+          className="flex flex-col items-center gap-3"
         >
-          Prepared for Cali Pilkington &amp; Andrew Gladstone, Summit Network
+          <span className="font-sans text-[13px] text-primary-foreground/60">
+            Prepared for Cali Pilkington &amp; Andrew Gladstone
+          </span>
+          <img
+            src={SummitLogo.url}
+            alt="Summit Advisors Group LLC"
+            className="h-8 sm:h-10 w-auto object-contain"
+          />
         </motion.div>
       </div>
     </div>
@@ -610,16 +617,23 @@ const SummitNetworkProposalPage = () => {
               without a single point of failure, and gives clients a real window into their own progress.
             </motion.p>
 
-            <motion.p
+            <motion.div
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
-              className="font-sans text-[13px] sm:text-[14px] text-muted-foreground tracking-wide leading-relaxed order-5"
+              className="flex flex-col items-center gap-3 order-5"
             >
-              Prepared for: Cali Pilkington &amp; Andrew Gladstone, Summit Network
-              <span className="hidden sm:inline"> · </span>
-              <span className="block sm:inline">16 July 2026 · Ref: SN1</span>
-            </motion.p>
+              <img
+                src={SummitLogo.url}
+                alt="Summit Advisors Group LLC"
+                className="h-7 sm:h-9 w-auto object-contain"
+              />
+              <p className="font-sans text-[13px] sm:text-[14px] text-muted-foreground tracking-wide leading-relaxed">
+                Prepared for: Cali Pilkington &amp; Andrew Gladstone
+                <span className="hidden sm:inline"> · </span>
+                <span className="block sm:inline">16 July 2026 · Ref: SN1</span>
+              </p>
+            </motion.div>
           </div>
         </header>
 
