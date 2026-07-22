@@ -1340,8 +1340,9 @@ const SummitNetworkProposalPage = () => {
                     Notion Enterprise recommendation
                   </div>
                   <p className="font-sans text-[15.5px] leading-[1.75] text-foreground/80">
-                    I don't normally recommend Notion Enterprise for small teams. Summit is the exception worth considering: you work with a specific clientele and you've experienced specific data security pain points, and Enterprise brings single sign-on and a higher security baseline in return for a higher per-user cost. Worth knowing: SSO implementation adds real complexity, so it sits outside this scope and can be bolted on as a separately priced addition if Summit decides to go that way. Enterprise licensing itself is billed by Notion.
+                    I don't normally recommend Notion Enterprise for small teams. Summit is the exception worth considering: you work with a specific clientele and you've experienced specific data security pain points, and Enterprise brings single sign-on and a higher security baseline in return for a higher per-user cost. Worth knowing: SSO implementation adds real complexity, so it sits outside this scope and can be bolted on as a separately priced addition if Summit decides to go that way. Enterprise licensing itself is billed by Notion. Notion publishes its <a href="https://www.notion.com/en-gb/help/enterprise-search-security-and-privacy-practices" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">enterprise security and privacy practices</a> in detail.
                   </p>
+
                 </div>
               </motion.div>
             </section>
