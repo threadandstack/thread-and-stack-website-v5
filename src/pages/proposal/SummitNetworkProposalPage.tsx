@@ -576,7 +576,7 @@ const SummitNetworkProposalPage = () => {
       owner: "Both",
       isLaunch: false,
       isComplete: false,
-      note: "Summit runs on its own system, and we scope Phase 2 from a position of things working. Rolling support at £1,000/month covers continued adoption and refinement; new capabilities are scoped separately.",
+      note: "Summit runs on its own system, and from a position of things working we scope Phase 2, the advanced integration layer: Infloww feeds, DocuSign auto-attach, scheduled client communications. Rolling support at £1,000/month covers continued adoption and refinement; new capabilities are scoped separately.",
     },
   ];
 
