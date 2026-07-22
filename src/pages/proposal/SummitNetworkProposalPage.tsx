@@ -1273,6 +1273,8 @@ const SummitNetworkProposalPage = () => {
                 items={[
                   <>Thread &amp; Stack Ltd is not currently VAT registered. No VAT is applicable.</>,
                   <>Payment is by deposit on signature, then instalments across the engagement, so cost tracks alongside delivery. <strong>15% late charge applies after 30 days.</strong></>,
+                  <>Thread &amp; Stack Ltd is a certified Notion consultancy and operates independently of Notion. Notion retains all rights to its own products, and responsibility for Notion's service delivery, uptime, security and product changes sits with Notion. Thread &amp; Stack accepts no liability for the failure, outage or change of Notion's software, or of any other third-party software Summit uses.</>,
+                  <>Summit's licensing, payment and data relationships with Notion and every other software provider are held directly between Summit and those providers. Thread &amp; Stack is not a party to those agreements.</>,
                 ]}
               />
 
