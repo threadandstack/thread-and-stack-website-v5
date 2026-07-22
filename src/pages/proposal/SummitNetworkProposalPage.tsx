@@ -1263,10 +1263,10 @@ const SummitNetworkProposalPage = () => {
 
             <Rule />
 
-            {/* 07 — Disclaimers */}
+            {/* 06 — Disclaimers */}
             <section>
               <SectionHead
-                num="07"
+                num="06"
                 eyebrow="Read before signing"
                 rotate={-0.3}
                 title={<>Important disclaimers and <Hl>recommendations.</Hl></>}
