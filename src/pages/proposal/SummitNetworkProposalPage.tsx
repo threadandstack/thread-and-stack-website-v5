@@ -14,6 +14,7 @@ import { trackContactFormSubmit } from "@/hooks/useAnalytics";
 import BlackStacked from "@/assets/logos/Black_TS_Stacked.svg";
 import GreyStacked from "@/assets/logos/Grey_TS_Stacked.svg";
 import BrendanAvatar from "@/assets/brendan-avatar.webp";
+import SummitLogo from "@/assets/proposal/summit-advisors-logo.png.asset.json";
 import IconClaude from "@/assets/proposal/icons/claude.png";
 import IconNotion from "@/assets/proposal/icons/notion.png";
 import IconNotionAI from "@/assets/proposal/icons/notion-ai.png";
