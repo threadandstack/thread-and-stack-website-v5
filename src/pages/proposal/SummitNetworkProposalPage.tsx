@@ -562,20 +562,12 @@ const SummitNetworkProposalPage = () => {
       note: "Confirmed the current setup, priorities, risks and recommended direction.",
     },
     {
-      label: "Proposal signed and start date confirmed",
-      when: "On sign-off",
-      owner: "Both",
-      isLaunch: false,
-      isComplete: false,
-      note: "We lock the start date and the Adoption Day target.",
-    },
-    {
-      label: "Build in hidden teamspaces alongside your live workspace",
-      when: "Roughly two months",
+      label: "Build",
+      when: "Roughly two months from sign-off",
       owner: "Thread & Stack, with Summit input",
       isLaunch: false,
       isComplete: false,
-      note: "Internal Workspace, Client Portal and Agency Portal built and reviewed together as they take shape. Nothing your team relies on changes under their feet during the build.",
+      note: "Summit OS 2.0 takes shape in hidden teamspaces: the CRM, the Client Portal, the Internal Workspace, the Agency Portal. Your team keeps working exactly as they do today, and you'll see the system as it develops and shape it as we go.",
     },
     {
       label: "Adoption Day",
@@ -583,17 +575,26 @@ const SummitNetworkProposalPage = () => {
       owner: "Both",
       isLaunch: true,
       isComplete: false,
-      note: "Team walkthrough, structured move into the new workspace, and the beginning of the supported adoption window. This is also the earliest sensible point to reopen client acquisition, because your first new clients come through the new onboarding while I'm still alongside you.",
+      note: "The team walkthrough, the move into the new workspace, and the moment the old working model is retired. Planned together, run together.",
     },
     {
       label: "Supported adoption",
-      when: "Three months following Adoption Day",
+      when: "The three months that follow",
       owner: "Thread & Stack and Summit",
       isLaunch: false,
       isComplete: false,
-      note: "10 hours per month of hands-on support, refinement and adoption guidance while the system beds in and confidence in operating the new workspace builds.",
+      note: "Ten hours a month of hands-on support while the system beds in, delivered however suits Summit: weekly calls, co-working, or async over iMessage. This is also the window where reopening acquisition makes sense, because your first new clients come through the new onboarding while I'm still alongside you. Every early wrinkle gets caught with a safety net underneath it.",
+    },
+    {
+      label: "From there",
+      when: "Month to month thereafter",
+      owner: "Both",
+      isLaunch: false,
+      isComplete: false,
+      note: "Summit runs on its own system, and we scope Phase 2 when the team is ready for it, from a position of things working rather than things hurting. Optional rolling support at £1,000/month (approximately $1,350/month), no fixed term.",
     },
   ];
+
 
 
   return (
@@ -1143,10 +1144,11 @@ const SummitNetworkProposalPage = () => {
             <section>
               <SectionHead
                 num="05"
-                eyebrow="Timeline"
+                eyebrow="The year ahead"
                 rotate={0.4}
-                title={<>From today to <Hl shift={-1}>go-live.</Hl></>}
+                title={<>What the next <Hl shift={-1}>twelve months</Hl> look like.</>}
               />
+
 
               <div className="relative mt-8 pl-6 sm:pl-8">
                 <div
@@ -1193,7 +1195,15 @@ const SummitNetworkProposalPage = () => {
                   </motion.div>
                 ))}
               </div>
+
+              <motion.p {...fadeUp} className="mt-10 font-sans text-[16px] leading-[1.75] text-foreground/80">
+                If sign-off lands this month, the shape of the year draws itself: build through
+                August and September, adoption day in early October, supported adoption through to
+                the end of the year, and Summit starts January on a system built for the size it's
+                becoming, with the doors open again.
+              </motion.p>
             </section>
+
 
             <Rule />
 
@@ -1229,16 +1239,17 @@ const SummitNetworkProposalPage = () => {
               <H3>Terms</H3>
               <BulletList
                 items={[
-                  <>Brendan Rodgers / Thread &amp; Stack is not currently VAT registered. No VAT is applicable.</>,
+                  <>Thread &amp; Stack Ltd is not currently VAT registered. No VAT is applicable.</>,
                   <>Payment is by deposit on signature, then instalments spread across the four-to-five month engagement, so cost tracks alongside delivery rather than landing as one upfront sum. <strong>15% late charge applies after 30 days.</strong></>,
                 ]}
               />
+
 
               <H3>Not included in project fee</H3>
               <BulletList
                 items={[
                   <>Individual Notion member licences for Summit's team, billed directly by Notion. Current working estimate: roughly <strong>$1,500/year</strong>, to be confirmed against plan and headcount.</>,
-                  <>Notion Enterprise, Worker credits or other Notion plan add-ons.</>,
+                  <>Notion Enterprise, Worker credits or other Notion plan add-ons, including any plan upgrade required for Notion AI features.</>,
                   <>Paid third-party connectors or external software licences unless explicitly agreed.</>,
                 ]}
               />
