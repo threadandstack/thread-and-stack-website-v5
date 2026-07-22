@@ -1168,35 +1168,6 @@ const SummitNetworkProposalPage = () => {
                 </Tilt3D>
               </motion.div>
 
-              {/* Security and permissions */}
-              <H3>Security and permissions</H3>
-              <motion.div {...fadeUp} className="space-y-5">
-                <div className="rounded-2xl bg-card p-5 sm:p-6 shadow-[0_8px_30px_rgba(0,0,0,0.05)]">
-                  <div className="font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-muted-foreground mb-2">
-                    Restricted credential storage
-                  </div>
-                  <p className="font-sans text-[15.5px] leading-[1.75] text-foreground/80">
-                    The Login Vault and per-client credentials section use intentional page sharing,
-                    teamspace permissions and filtered views, with per-record visibility for named team
-                    members and full visibility for the Owner and VP of Operations. Notion doesn't
-                    natively support row-level permissions inside a database, so this is a practical
-                    access arrangement built to Notion's strongest pattern and doesn't replace a
-                    dedicated password manager. Full SSNs, card numbers and full bank account numbers
-                    are never stored in Notion; last four digits only where identification is needed.
-                  </p>
-                </div>
-                <div className="rounded-2xl bg-card p-5 sm:p-6 shadow-[0_8px_30px_rgba(0,0,0,0.05)]">
-                  <div className="font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-muted-foreground mb-2">
-                    Notion Enterprise recommendation
-                  </div>
-                  <p className="font-sans text-[15.5px] leading-[1.75] text-foreground/80">
-                    Recommend Notion Enterprise primarily for single sign-on, giving Summit stronger
-                    central control over authentication, plus governance and audit capabilities.
-                    Enterprise licensing and any SSO implementation sit outside Thread &amp; Stack's
-                    project fee.
-                  </p>
-                </div>
-              </motion.div>
             </section>
 
             <Rule />
@@ -1315,6 +1286,37 @@ const SummitNetworkProposalPage = () => {
                 ]}
               />
 
+            </section>
+
+            <Rule />
+
+            {/* 07 — Disclaimers */}
+            <section>
+              <SectionHead
+                num="07"
+                eyebrow="Read before signing"
+                rotate={-0.3}
+                title={<>Important disclaimers and <Hl>recommendations.</Hl></>}
+              />
+
+              <motion.div {...fadeUp} className="space-y-5">
+                <div className="rounded-2xl bg-card p-5 sm:p-6 shadow-[0_8px_30px_rgba(0,0,0,0.05)]">
+                  <div className="font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-muted-foreground mb-2">
+                    Restricted credential storage
+                  </div>
+                  <p className="font-sans text-[15.5px] leading-[1.75] text-foreground/80">
+                    Notion is not a password manager, and I won't pretend otherwise. A dedicated password manager remains the most appropriate way to store and share credentials. What I can build inside Notion is a permission-based database structure for collaborator information sharing: the Login Vault and per-client credential sections, with per-record visibility for named team members and full visibility for the Owner and VP of Operations. Notion doesn't natively support row-level permissions inside a database, so this is a practical access arrangement built to Notion's strongest pattern. Full SSNs, card numbers and full bank account numbers are never stored in Notion; last four digits only where identification is needed.
+                  </p>
+                </div>
+                <div className="rounded-2xl bg-card p-5 sm:p-6 shadow-[0_8px_30px_rgba(0,0,0,0.05)]">
+                  <div className="font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-muted-foreground mb-2">
+                    Notion Enterprise recommendation
+                  </div>
+                  <p className="font-sans text-[15.5px] leading-[1.75] text-foreground/80">
+                    I don't normally recommend Notion Enterprise for small teams. Summit is the exception worth considering: you work with a specific clientele and you've experienced specific data security pain points, and Enterprise brings single sign-on and a higher security baseline in return for a higher per-user cost. Worth knowing: SSO implementation adds real complexity, so it sits outside this scope and can be bolted on as a separately priced addition if Summit decides to go that way. Enterprise licensing itself is billed by Notion.
+                  </p>
+                </div>
+              </motion.div>
             </section>
 
             <Rule />
