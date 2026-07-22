@@ -562,20 +562,12 @@ const SummitNetworkProposalPage = () => {
       note: "Confirmed the current setup, priorities, risks and recommended direction.",
     },
     {
-      label: "Proposal signed and start date confirmed",
-      when: "On sign-off",
-      owner: "Both",
-      isLaunch: false,
-      isComplete: false,
-      note: "We lock the start date and the Adoption Day target.",
-    },
-    {
-      label: "Build in hidden teamspaces alongside your live workspace",
-      when: "Roughly two months",
+      label: "Build",
+      when: "Roughly two months from sign-off",
       owner: "Thread & Stack, with Summit input",
       isLaunch: false,
       isComplete: false,
-      note: "Internal Workspace, Client Portal and Agency Portal built and reviewed together as they take shape. Nothing your team relies on changes under their feet during the build.",
+      note: "Summit OS 2.0 takes shape in hidden teamspaces: the CRM, the Client Portal, the Internal Workspace, the Agency Portal. Your team keeps working exactly as they do today, and you'll see the system as it develops and shape it as we go.",
     },
     {
       label: "Adoption Day",
@@ -583,17 +575,26 @@ const SummitNetworkProposalPage = () => {
       owner: "Both",
       isLaunch: true,
       isComplete: false,
-      note: "Team walkthrough, structured move into the new workspace, and the beginning of the supported adoption window. This is also the earliest sensible point to reopen client acquisition, because your first new clients come through the new onboarding while I'm still alongside you.",
+      note: "The team walkthrough, the move into the new workspace, and the moment the old working model is retired. Planned together, run together.",
     },
     {
       label: "Supported adoption",
-      when: "Three months following Adoption Day",
+      when: "The three months that follow",
       owner: "Thread & Stack and Summit",
       isLaunch: false,
       isComplete: false,
-      note: "10 hours per month of hands-on support, refinement and adoption guidance while the system beds in and confidence in operating the new workspace builds.",
+      note: "Ten hours a month of hands-on support while the system beds in, delivered however suits Summit: weekly calls, co-working, or async over iMessage. This is also the window where reopening acquisition makes sense, because your first new clients come through the new onboarding while I'm still alongside you. Every early wrinkle gets caught with a safety net underneath it.",
+    },
+    {
+      label: "From there",
+      when: "Month to month thereafter",
+      owner: "Both",
+      isLaunch: false,
+      isComplete: false,
+      note: "Summit runs on its own system, and we scope Phase 2 when the team is ready for it, from a position of things working rather than things hurting. Optional rolling support at £1,000/month (approximately $1,350/month), no fixed term.",
     },
   ];
+
 
 
   return (
