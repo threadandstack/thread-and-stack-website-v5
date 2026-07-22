@@ -855,7 +855,7 @@ const SummitNetworkProposalPage = () => {
                 num="01"
                 eyebrow="A note before we begin"
                 rotate={-0.4}
-                title={<>Built around the way <Hl>Summit</Hl> works.</>}
+                title={<>Built around <Hl>Summit's clients.</Hl></>}
               />
 
               {/* Three phase cards */}
