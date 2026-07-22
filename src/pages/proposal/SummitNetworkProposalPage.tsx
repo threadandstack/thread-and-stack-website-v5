@@ -576,7 +576,7 @@ const SummitNetworkProposalPage = () => {
       owner: "Both",
       isLaunch: false,
       isComplete: false,
-      note: "Summit runs on its own system, and we scope Phase 2 from a position of things working. Rolling support at £1,000/month covers continued adoption and refinement; new capabilities are scoped separately.",
+      note: "Summit runs on its own system, and from a position of things working we scope Phase 2, the advanced integration layer: Infloww feeds, DocuSign auto-attach, scheduled client communications. Rolling support at £1,000/month covers continued adoption and refinement; new capabilities are scoped separately.",
     },
   ];
 
@@ -849,85 +849,17 @@ const SummitNetworkProposalPage = () => {
         <article className="px-5 sm:px-8 pb-24">
           <div className="max-w-2xl mx-auto">
 
-            {/* 01 — Built around the way Summit works */}
+            {/* 01 — Built around Summit's clients */}
             <section>
               <SectionHead
                 num="01"
                 eyebrow="A note before we begin"
                 rotate={-0.4}
-                title={<>Built around the way <Hl>Summit</Hl> works.</>}
+                title={<>Built around <Hl>Summit's clients.</Hl></>}
               />
 
-              {/* Three phase cards */}
-              <div className="mt-12 space-y-4">
-                {[
-                  { pill: "Phase 1", tag: "This proposal", title: "Summit OS 2.0", body: "This proposal. The workspace, the CRM, the Client Portal and the Agency Portal, built and adopted. £12,500." },
-                  { pill: "Phase 2", tag: "Scoped after adoption", title: "Automation and Intelligence", body: "The advanced integration layer: Infloww feeds, DocuSign auto-attach, scheduled client communications and deeper external connections beyond the lightweight builds included in Phase 1. Scoped separately once the system is adopted." },
-                  { pill: "Phase 3", tag: "Out of scope for now", title: "What comes next", body: "Deliberately out of scope for now. Once Summit OS 2.0 is adopted and the automation layer has landed, we'll shape the next stage together from what the system is asking for." },
-                ].map((layer, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.3 }}
-                    transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                  >
-                    <Tilt3D maxX={5} maxY={4}>
-                      <div className="bg-card rounded-2xl p-5 sm:p-6 shadow-[0_8px_30px_rgba(0,0,0,0.06)] h-full">
-                        <div className="flex flex-wrap items-center gap-2 mb-3">
-                          <span
-                            className="inline-flex items-center rounded-full px-3 py-1 text-[10px] font-bold tracking-[0.2em] uppercase text-white"
-                            style={{ backgroundImage: "linear-gradient(95deg, var(--gradient-3color))" }}
-                          >
-                            {layer.pill}
-                          </span>
-                          <span className="inline-flex items-center rounded-full border border-border bg-muted/40 px-2.5 py-1 text-[10px] font-semibold tracking-[0.16em] uppercase text-muted-foreground">
-                            {layer.tag}
-                          </span>
-                        </div>
-                        <div className="font-serif-pro italic font-medium text-xl text-foreground mb-1.5">{layer.title}</div>
-                        <p className="text-foreground/75 leading-relaxed">{layer.body}</p>
-                      </div>
-                    </Tilt3D>
-                  </motion.div>
-                ))}
-
-              </div>
-
-              {/* Change management callout */}
-              <motion.div {...fadeUp} className="mt-8">
-                <div className="rounded-2xl border border-dashed border-accent/40 bg-background/40 p-5 sm:p-6">
-                  <div className="font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-gradient-warm mb-2">
-                    A note on change management
-                  </div>
-                  <p className="font-sans text-[15.5px] leading-[1.75] text-foreground/80">
-                    Clients usually come to me for a Notion workspace. What they often underestimate is
-                    that they're also on the receiving end of change management. Helping your team adopt
-                    the new system is part of the job, as much as the build itself. It's why supported
-                    adoption is written into this project rather than sold as an extra, and why these
-                    phases walk before they run.
-                  </p>
-                </div>
-              </motion.div>
-
-              {/* External tool plans callout */}
-              <motion.div {...fadeUp} className="mt-4">
-                <div className="rounded-2xl border border-dashed border-accent/40 bg-background/40 p-5 sm:p-6">
-                  <div className="font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-gradient-warm mb-2">
-                    A note on external tool plans
-                  </div>
-                  <p className="font-sans text-[15.5px] leading-[1.75] text-foreground/80">
-                    API and integration access for external products such as Typeform, QuickBooks and
-                    DocuSign depends on the plan Summit currently subscribes to. As Notion becomes the
-                    central hub, we may find a connection limited by a plan tier, and where that happens
-                    I'll flag it with the options and costs so Summit can decide. Any plan upgrades sit
-                    with the tool provider, outside this project fee.
-                  </p>
-                </div>
-              </motion.div>
-
               {/* Client priorities */}
-              <motion.div {...fadeUp} className="mt-14">
+              <motion.div {...fadeUp} className="mt-4">
                 <h3 className="font-serif-pro text-[22px] md:text-[26px] italic font-medium text-foreground mb-5 leading-snug">
                   What Summit's clients need to feel.
                 </h3>
@@ -944,18 +876,14 @@ const SummitNetworkProposalPage = () => {
                   ))}
                 </div>
               </motion.div>
-            </section>
 
-            <Rule />
-
-            {/* 02 — Unified journey stepper */}
-            <section>
-              <SectionHead
-                num="02"
-                eyebrow="How we get there"
-                rotate={0.3}
-                title={<>Diagnostic complete. <Hl shift={-1}>Here's the path.</Hl></>}
-              />
+              {/* Journey stepper */}
+              <motion.h3
+                {...fadeUp}
+                className="font-serif-pro text-[22px] md:text-[26px] italic font-medium text-foreground mt-14 mb-5 leading-snug"
+              >
+                Diagnostic complete. <Hl shift={-1}>Here's the path.</Hl>
+              </motion.h3>
 
               <ul className="mt-4 space-y-5">
                 {journeySteps.map((step, i) => {
@@ -1023,10 +951,10 @@ const SummitNetworkProposalPage = () => {
 
             <Rule />
 
-            {/* 03 — The stack */}
+            {/* 02 — The stack */}
             <section>
               <SectionHead
-                num="03"
+                num="02"
                 eyebrow="The workspace"
                 rotate={0.3}
                 title={<>The <Hl>stack</Hl> Summit will run on.</>}
@@ -1068,13 +996,94 @@ const SummitNetworkProposalPage = () => {
 
             <Rule />
 
+            {/* 03 — Timeline */}
+            <section>
+              <SectionHead
+                num="03"
+                eyebrow="The year ahead"
+                rotate={0.4}
+                title={<>A plan built around the way <Hl>Summit works.</Hl></>}
+              />
+
+              {/* Change management callout */}
+              <motion.div {...fadeUp} className="mt-4 mb-10">
+                <div className="rounded-2xl border border-dashed border-accent/40 bg-background/40 p-5 sm:p-6">
+                  <div className="font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-gradient-warm mb-2">
+                    A note on change management
+                  </div>
+                  <p className="font-sans text-[15.5px] leading-[1.75] text-foreground/80">
+                    Clients usually come to me for a Notion workspace. What they often underestimate is
+                    that they're also on the receiving end of change management. Helping your team adopt
+                    the new system is part of the job, as much as the build itself. It's why supported
+                    adoption is written into this project rather than sold as an extra, and why these
+                    phases walk before they run.
+                  </p>
+                </div>
+              </motion.div>
+
+              <div className="relative mt-8 pl-6 sm:pl-8">
+                <div
+                  aria-hidden
+                  className="absolute left-0 top-3 bottom-3 w-[2px] rounded-full bg-accent/40"
+                />
+
+                {timeline.map((step, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.6, delay: i * 0.05, ease: [0.22, 1, 0.36, 1] }}
+                    className="relative pb-10 last:pb-0"
+                  >
+                    <span
+                      className={`inline-flex items-center gap-1.5 rounded-full px-4 py-1 text-xs font-bold tracking-[0.18em] uppercase ${
+                        step.isComplete
+                          ? "bg-tertiary text-tertiary-foreground"
+                          : step.isLaunch
+                          ? "bg-primary text-primary-foreground"
+                          : "text-white"
+                      }`}
+                      style={
+                        step.isComplete || step.isLaunch
+                          ? undefined
+                          : { backgroundImage: "linear-gradient(95deg, var(--gradient-3color))" }
+                      }
+                    >
+                      {step.isComplete && <Check className="w-3.5 h-3.5" strokeWidth={2.5} />}
+                      {step.isLaunch && <Rocket className="w-3.5 h-3.5" />}
+                      {step.label}
+                    </span>
+                    <h3 className="mt-3 font-serif-pro italic font-medium text-xl sm:text-2xl leading-tight text-foreground">
+                      {step.when}
+                    </h3>
+                    <div className="mt-1 font-sans text-[12px] tracking-[0.16em] uppercase text-muted-foreground">
+                      Owner: {step.owner}
+                    </div>
+                    <p className="mt-3 font-sans text-[16px] leading-[1.75] text-foreground/80">
+                      {step.note}
+                    </p>
+                  </motion.div>
+                ))}
+              </div>
+
+              <motion.p {...fadeUp} className="mt-10 font-sans text-[16px] leading-[1.75] text-foreground/80">
+                If sign-off lands this month, the shape of the year draws itself: build through
+                August and September, adoption day in early October, supported adoption through to
+                the end of the year, and Summit starts January on a system built for the size it's
+                becoming, with the doors open again.
+              </motion.p>
+            </section>
+
+            <Rule />
+
             {/* 04 — Scope */}
             <section>
               <SectionHead
                 num="04"
                 eyebrow="What's in scope"
                 rotate={-0.3}
-                title={<>Phase 1: the full <Hl>scope of work.</Hl></>}
+                title={<>The full <Hl>scope of work.</Hl></>}
               />
 
               <P>
@@ -1177,79 +1186,14 @@ const SummitNetworkProposalPage = () => {
 
             </section>
 
+
+
             <Rule />
 
-            {/* 05 — Timeline */}
+            {/* 05 — Investment */}
             <section>
               <SectionHead
                 num="05"
-                eyebrow="The year ahead"
-                rotate={0.4}
-                title={<>What the next <Hl shift={-1}>twelve months</Hl> look like.</>}
-              />
-
-
-              <div className="relative mt-8 pl-6 sm:pl-8">
-                <div
-                  aria-hidden
-                  className="absolute left-0 top-3 bottom-3 w-[2px] rounded-full bg-accent/40"
-                />
-
-                {timeline.map((step, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.3 }}
-                    transition={{ duration: 0.6, delay: i * 0.05, ease: [0.22, 1, 0.36, 1] }}
-                    className="relative pb-10 last:pb-0"
-                  >
-                    <span
-                      className={`inline-flex items-center gap-1.5 rounded-full px-4 py-1 text-xs font-bold tracking-[0.18em] uppercase ${
-                        step.isComplete
-                          ? "bg-tertiary text-tertiary-foreground"
-                          : step.isLaunch
-                          ? "bg-primary text-primary-foreground"
-                          : "text-white"
-                      }`}
-                      style={
-                        step.isComplete || step.isLaunch
-                          ? undefined
-                          : { backgroundImage: "linear-gradient(95deg, var(--gradient-3color))" }
-                      }
-                    >
-                      {step.isComplete && <Check className="w-3.5 h-3.5" strokeWidth={2.5} />}
-                      {step.isLaunch && <Rocket className="w-3.5 h-3.5" />}
-                      {step.label}
-                    </span>
-                    <h3 className="mt-3 font-serif-pro italic font-medium text-xl sm:text-2xl leading-tight text-foreground">
-                      {step.when}
-                    </h3>
-                    <div className="mt-1 font-sans text-[12px] tracking-[0.16em] uppercase text-muted-foreground">
-                      Owner: {step.owner}
-                    </div>
-                    <p className="mt-3 font-sans text-[16px] leading-[1.75] text-foreground/80">
-                      {step.note}
-                    </p>
-                  </motion.div>
-                ))}
-              </div>
-
-              <motion.p {...fadeUp} className="mt-10 font-sans text-[16px] leading-[1.75] text-foreground/80">
-                If sign-off lands this month, the shape of the year draws itself: build through
-                August and September, adoption day in early October, supported adoption through to
-                the end of the year, and Summit starts January on a system built for the size it's
-                becoming, with the doors open again.
-              </motion.p>
-            </section>
-
-
-            <Rule />
-
-            {/* 06 — Investment */}
-            <section>
-              <SectionHead
-                num="06"
                 eyebrow="Investment"
                 rotate={-0.3}
                 title={<>The <Hl>numbers.</Hl></>}
@@ -1319,10 +1263,10 @@ const SummitNetworkProposalPage = () => {
 
             <Rule />
 
-            {/* 07 — Disclaimers */}
+            {/* 06 — Disclaimers */}
             <section>
               <SectionHead
-                num="07"
+                num="06"
                 eyebrow="Read before signing"
                 rotate={-0.3}
                 title={<>Important disclaimers and <Hl>recommendations.</Hl></>}
@@ -1346,6 +1290,14 @@ const SummitNetworkProposalPage = () => {
                     I don't normally recommend Notion Enterprise for small teams. Summit is the exception worth considering: you work with a specific clientele and you've experienced specific data security pain points, and Enterprise brings single sign-on and a higher security baseline in return for a higher per-user cost. Worth knowing: SSO implementation adds real complexity, so it sits outside this scope and can be bolted on as a separately priced addition if Summit decides to go that way. Enterprise licensing itself is billed by Notion. Notion publishes its <a href="https://www.notion.com/en-gb/help/enterprise-search-security-and-privacy-practices" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">enterprise security and privacy practices</a> in detail.
                   </p>
 
+                </div>
+                <div className="rounded-2xl bg-card p-5 sm:p-6 shadow-[0_8px_30px_rgba(0,0,0,0.05)]">
+                  <div className="font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-muted-foreground mb-2">
+                    External tool plans
+                  </div>
+                  <p className="font-sans text-[15.5px] leading-[1.75] text-foreground/80">
+                    API and integration access for external products such as Typeform, QuickBooks and DocuSign depends on the plan Summit currently subscribes to. As Notion becomes the central hub, we may find a connection limited by a plan tier, and where that happens I'll flag it with the options and costs so Summit can decide. Any plan upgrades sit with the tool provider, outside this project fee.
+                  </p>
                 </div>
               </motion.div>
             </section>
