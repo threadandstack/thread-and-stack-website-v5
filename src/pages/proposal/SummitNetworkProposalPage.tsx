@@ -1143,10 +1143,11 @@ const SummitNetworkProposalPage = () => {
             <section>
               <SectionHead
                 num="05"
-                eyebrow="Timeline"
+                eyebrow="The year ahead"
                 rotate={0.4}
-                title={<>From today to <Hl shift={-1}>go-live.</Hl></>}
+                title={<>What the next <Hl shift={-1}>twelve months</Hl> look like.</>}
               />
+
 
               <div className="relative mt-8 pl-6 sm:pl-8">
                 <div
