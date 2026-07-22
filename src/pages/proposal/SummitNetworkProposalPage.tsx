@@ -554,7 +554,7 @@ const SummitNetworkProposalPage = () => {
 
   const timeline = [
     {
-      label: "Diagnostic — Complete",
+      label: "Diagnostic. Complete.",
       when: "13 July 2026",
       owner: "Both",
       isLaunch: false,
@@ -562,12 +562,20 @@ const SummitNetworkProposalPage = () => {
       note: "Confirmed the current setup, priorities, risks and recommended direction.",
     },
     {
-      label: "Build and validation",
-      when: "Roughly two months following sign-off",
+      label: "Proposal signed and start date confirmed",
+      when: "On sign-off",
+      owner: "Both",
+      isLaunch: false,
+      isComplete: false,
+      note: "We lock the start date and the Adoption Day target.",
+    },
+    {
+      label: "Build in hidden teamspaces alongside your live workspace",
+      when: "Roughly two months",
       owner: "Thread & Stack, with Summit input",
       isLaunch: false,
       isComplete: false,
-      note: "Infrastructure, portals, collaboration, agency layer, intelligence and agreed onboarding workflows built and reviewed inside hidden teamspaces.",
+      note: "Internal Workspace, Client Portal and Agency Portal built and reviewed together as they take shape. Nothing your team relies on changes under their feet during the build.",
     },
     {
       label: "Adoption Day",
@@ -575,7 +583,7 @@ const SummitNetworkProposalPage = () => {
       owner: "Both",
       isLaunch: true,
       isComplete: false,
-      note: "Planned go-live, team walkthrough and transition into the new working rhythm.",
+      note: "Team walkthrough, structured move into the new workspace, and the beginning of the supported adoption window. This is also the earliest sensible point to reopen client acquisition, because your first new clients come through the new onboarding while I'm still alongside you.",
     },
     {
       label: "Supported adoption",
@@ -583,17 +591,10 @@ const SummitNetworkProposalPage = () => {
       owner: "Thread & Stack and Summit",
       isLaunch: false,
       isComplete: false,
-      note: "10 hours per month of hands-on support, refinement and adoption guidance.",
-    },
-    {
-      label: "Ongoing support",
-      when: "Month to month thereafter",
-      owner: "Thread & Stack",
-      isLaunch: false,
-      isComplete: false,
-      note: "Optional rolling support at £1,000/month (approximately $1,350/month), flexible up or down, no fixed term.",
+      note: "10 hours per month of hands-on support, refinement and adoption guidance while the system beds in and confidence in operating the new workspace builds.",
     },
   ];
+
 
   return (
     <>
