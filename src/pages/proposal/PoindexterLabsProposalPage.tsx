@@ -1358,22 +1358,24 @@ const PoindexterLabsProposalPage = () => {
                   Everything below sits outside this phase. Some of it is sequencing. Some of it is a
                   different project wearing a similar coat.
                 </p>
-                <ul className="space-y-3 list-none pl-0">
-                  {[
-                    <><strong>Attio contact and company records created before 1 January 2026.</strong> The meeting transcripts come across in full. Older account records are a larger migration and are scoped separately once we've both seen what the export actually contains.</>,
-                    <><strong>WhatsApp capture</strong>, for the reasons set out below.</>,
-                    <><strong>The Google Drive restructure.</strong> Moving from personal Drive folders to Shared Drives, with 300 people's access to untangle, carries its own risks and deserves its own attention. I'll look at the structure so file links point correctly, and I would recommend doing the restructure, but not inside this build.</>,
-                    <><strong>Team rollout.</strong> Shared task management, team meeting notes and multi-person workflows wait until roles settle, as you asked.</>,
-                    <><strong>Slack capture</strong>, which becomes worth scoping once your migration completes.</>,
-                    <><strong>Automated job-change tracking beyond what enrichment provides.</strong> LinkedIn's own signals are unreliable, and I'd rather not promise accuracy I can't hold.</>,
-                    <><strong>Poindexter contractor management.</strong> The 250 Poindexters stay on your platform for now, though the opportunity for integrating the systems is strong.</>,
-                  ].map((it, i) => (
-                    <li key={i} className="relative pl-6 text-[15.5px] leading-[1.75] text-foreground/80">
-                      <span className="absolute left-0 top-[0.7em] w-[7px] h-[7px] rounded-full border-[1.5px] border-clay" />
-                      {it}
-                    </li>
-                  ))}
-                </ul>
+                <Toggle label="See the full list">
+                  <ul className="space-y-3 list-none pl-0">
+                    {[
+                      <><strong>Attio contact and company records created before 1 January 2026.</strong> The meeting transcripts come across in full. Older account records are a larger migration and are scoped separately once we've both seen what the export actually contains.</>,
+                      <><strong>WhatsApp capture</strong>, for the reasons set out below.</>,
+                      <><strong>The Google Drive restructure.</strong> Moving from personal Drive folders to Shared Drives, with 300 people's access to untangle, carries its own risks and deserves its own attention. I'll look at the structure so file links point correctly, and I would recommend doing the restructure, but not inside this build.</>,
+                      <><strong>Team rollout.</strong> Shared task management, team meeting notes and multi-person workflows wait until roles settle, as you asked.</>,
+                      <><strong>Slack capture</strong>, which becomes worth scoping once your migration completes.</>,
+                      <><strong>Automated job-change tracking beyond what enrichment provides.</strong> LinkedIn's own signals are unreliable, and I'd rather not promise accuracy I can't hold.</>,
+                      <><strong>Poindexter contractor management.</strong> The 250 Poindexters stay on your platform for now, though the opportunity for integrating the systems is strong.</>,
+                    ].map((it, i) => (
+                      <li key={i} className="relative pl-6 text-[15.5px] leading-[1.75] text-foreground/80">
+                        <span className="absolute left-0 top-[0.7em] w-[7px] h-[7px] rounded-full border-[1.5px] border-clay" />
+                        {it}
+                      </li>
+                    ))}
+                  </ul>
+                </Toggle>
                 <p className="font-sans text-[15.5px] leading-[1.75] text-foreground/80 mt-5">
                   Two dependencies worth naming, because they affect timing rather than scope. The
                   build needs <strong>decisions from you at a few specific points</strong>, principally
