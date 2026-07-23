@@ -781,9 +781,10 @@ const PoindexterLabsProposalPage = () => {
     },
   ];
 
-  const scopeGroups: Array<{ label: string; intro?: string; items: React.ReactNode[] }> = [
+  const scopeGroups: Array<{ label: string; summary: string; intro?: string; items: React.ReactNode[] }> = [
     {
       label: "A. The workspace foundation",
+      summary: "Private workspace, personal dashboard, a light task database and calendar.",
       items: [
         <><strong>A private workspace structured around how you actually operate</strong>, with the relationship system separate from anything the team will later need. The CRM stays yours.</>,
         <><strong>Personal dashboard:</strong> your week, your meetings, your open threads, filtered to you.</>,
@@ -793,6 +794,7 @@ const PoindexterLabsProposalPage = () => {
     },
     {
       label: "B. Contacts: the relationship spine",
+      summary: "Stable identifiers, three-track tagging, skills, connection strength, referral source and cold storage.",
       items: [
         <><strong>The Contacts database</strong>, built on stable internal identifiers so a person survives changing their name, email or company. Every record carries opportunity type, connection strength, skills, company and referral source.</>,
         <><strong>Three-track tagging</strong>, built as tags rather than exclusive stages, because your categories overlap by design: fundraising, customer acquisition, recruitment, and not interesting. A researcher who becomes a hire who brings a data contract stays one record throughout.</>,
@@ -804,6 +806,7 @@ const PoindexterLabsProposalPage = () => {
     },
     {
       label: "C. The activity database",
+      summary: "Every interaction as a record, in date order, with event attendance flagged.",
       items: [
         <><strong>Every interaction as a record</strong>, related to the contact: LinkedIn messages, emails, meetings, event attendance, and anything you capture manually. Full text stored, not only summaries, so the log is reviewable before you ask for something.</>,
         <><strong>Chronological history per contact</strong>, which is what turns "have I already asked this person for something" into a five second check.</>,
@@ -812,6 +815,7 @@ const PoindexterLabsProposalPage = () => {
     },
     {
       label: "D. Pipelines",
+      summary: "Opportunities, recruitment and fundraising, each on its own lifecycle.",
       items: [
         <><strong>An opportunities pipeline</strong> for customer acquisition and partnerships.</>,
         <><strong>A recruitment pipeline</strong> for exceptional talent, running separately from the standard Poindexter contractor flow.</>,
@@ -820,6 +824,7 @@ const PoindexterLabsProposalPage = () => {
     },
     {
       label: "E. Channel capture",
+      summary: "LinkedIn via Kondo, email on demand, Luma events, the Attio migration and enrichment.",
       items: [
         <><strong>LinkedIn via Kondo.</strong> DM sync into Notion, with new connections landing in a triage state rather than straight into the active CRM. After an event that adds a hundred people at once, that distinction is the difference between a system you trust and a list you ignore.</>,
         <><strong>Email</strong>, reached through Notion's mail connector and your agents rather than mirrored wholesale into the workspace. You ask for what you need, and a scheduled sweep pulls correspondence with people already in the CRM into their activity record. Two reasons for that design: a complete copy of your mailbox sitting inside Notion would be a liability under your ISO work, and agent consumption scales with the volume of mail being read, so a targeted sweep costs a fraction of a full sync. Showing you how to trigger a sweep when you want one is part of handover.</>,
@@ -830,6 +835,7 @@ const PoindexterLabsProposalPage = () => {
     },
     {
       label: "F. The agents",
+      summary: "Relationship, pre-meeting brief and triage, plus the Skills database behind them.",
       intro: "Small, single-purpose, invoked when needed. The system waits to be asked, with one deliberate exception on your calendar.",
       items: [
         <><strong>A relationship agent</strong> you can ask in plain English, from the Notion app on your phone: who you know with a given skill, who you know at a given company, what the history is with a given person.</>,
@@ -840,6 +846,7 @@ const PoindexterLabsProposalPage = () => {
     },
     {
       label: "G. Adoption and support",
+      summary: "Handover, two months of supported adoption, optional rolling support afterwards.",
       items: [
         <>A handover working session at the end of the build.</>,
         <>Two months of supported adoption included, focused on tuning the taxonomy against real use.</>,
@@ -847,6 +854,13 @@ const PoindexterLabsProposalPage = () => {
       ],
     },
   ];
+
+  // Scope accordion open state (one per group)
+  const [scopeOpen, setScopeOpen] = useState<boolean[]>(() => scopeGroups.map(() => false));
+  const allScopeOpen = scopeOpen.every(Boolean);
+  const toggleScope = (i: number) =>
+    setScopeOpen((prev) => prev.map((v, idx) => (idx === i ? !v : v)));
+  const setAllScope = (v: boolean) => setScopeOpen(scopeGroups.map(() => v));
 
   return (
     <>
