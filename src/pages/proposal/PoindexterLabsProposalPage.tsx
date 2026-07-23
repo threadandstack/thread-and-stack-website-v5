@@ -651,260 +651,44 @@ const PoindexterLabsProposalPage = () => {
     }
   }, [opened]);
 
-  const handleDownload = () => window.print();
+  const handleDownload = () =>
+    window.open("/proposal/poindexter-labs/print", "_blank", "noopener,noreferrer");
 
-  const timeline = [
-    {
-      label: "Diagnostic. Complete.",
-      when: "July 2026",
-      owner: "Both",
-      isLaunch: false,
-      isComplete: true,
-      note: "Confirmed the current setup, the specific failure modes, and the shape of the system worth building.",
-    },
-    {
-      label: "Build",
-      when: "Six to eight weeks from sign-off",
-      owner: "Thread & Stack, with Jocelyn's input",
-      isLaunch: false,
-      isComplete: false,
-      note: "The workspace, the CRM, the activity layer, the channel connections and the agents take shape. You'll see it as it develops and shape it as we go. Nothing you currently rely on changes underneath you.",
-    },
-    {
-      label: "Handover",
-      when: "End of build",
-      owner: "Both",
-      isLaunch: true,
-      isComplete: false,
-      note: "A working session where the system becomes yours: how to ask the agents for things, how the tagging works, how to correct it when it's wrong.",
-    },
-    {
-      label: "Supported adoption",
-      when: "The two months that follow",
-      owner: "Thread & Stack and Poindexter",
-      isLaunch: false,
-      isComplete: false,
-      note: "Included in the fee. This is where the tagging taxonomy gets tuned against real use, because the first version of any taxonomy is a guess. Delivered however suits you: short calls, async messages, or working alongside you.",
-    },
-    {
-      label: "From there",
-      when: "Month to month thereafter",
-      owner: "Both",
-      isLaunch: false,
-      isComplete: false,
-      note: "The system runs on its own. We scope the next phase, Slack capture and anything else that's earned its place, once your migration lands and the team structure settles. Optional rolling support at £1,200/month keeps me alongside until you hire an operations owner.",
-    },
-  ];
-
-  const journeySteps: Array<{
-    title: string;
-    body: string;
-    state: "done" | "current" | "upcoming";
-  }> = [
-    {
-      title: "Diagnostic",
-      body: "Complete. Confirmed the current setup, the failure modes you named, and the direction worth taking.",
-      state: "done",
-    },
-    {
-      title: "NDA",
-      body: "Agreed in principle on the call. Signed by both sides before any access is granted.",
-      state: "upcoming",
-    },
-    {
-      title: "This blueprint",
-      body: "Confirm the scope and investment, and we lock a start date.",
-      state: "current",
-    },
-    {
-      title: "Access and inventory",
-      body: "Added to Attio, LinkedIn (via Kondo), Gmail and Luma as needed to assess the sources and confirm export formats. Nothing changes underneath you.",
-      state: "upcoming",
-    },
-    {
-      title: "Build",
-      body: "The workspace, CRM, activity layer, channel connections and agents take shape. You review as it develops.",
-      state: "upcoming",
-    },
-    {
-      title: "Handover, then supported adoption",
-      body: "A working session at the end of the build, then two months of tuning the taxonomy against real use, delivered however suits you.",
-      state: "upcoming",
-    },
-  ];
-
-  const stack: Array<{
-    icon?: string;
-    lucide?: React.ComponentType<{ className?: string }>;
-    title: string;
-    body: string;
-    tag?: string;
-  }> = [
-    {
-      icon: IconNotion,
-      title: "Notion workspace",
-      body: "One permissioned home for contacts, activity, pipelines, tasks and meetings.",
-    },
-    {
-      icon: IconLassie,
-      title: "Notion AI",
-      body: "Plain-English questions answered from inside your own records.",
-    },
-    {
-      icon: IconNotionAI,
-      title: "Custom agents",
-      body: "The relationship agent, the pre-meeting brief, the triage agent. Small, single-purpose, invoked when needed.",
-      tag: "Three agents included",
-    },
-    {
-      icon: IconNotionApp,
-      title: "The Notion app",
-      body: "Where you reach all of it, from your phone, in conversation.",
-    },
-    {
-      icon: IconNotionCalendar,
-      title: "Notion Calendar",
-      body: "Meetings connected to the people in them and the history behind them.",
-    },
-    {
-      icon: IconNotionMail,
-      title: "Notion mail connector",
-      body: "Email reached on request and on a scheduled sweep, rather than mirrored wholesale.",
-    },
-    {
-      icon: IconNotionAutomations,
-      title: "Notion automations",
-      body: "The native triggers that move records between states without anyone remembering to.",
-    },
-    {
-      icon: IconNotionSkills,
-      title: "Notion Skills database",
-      body: "The agents' working instructions in plain language, readable and editable by you.",
-    },
-  ];
-
-  const connectedSources: Array<{
-    icon?: string;
-    lucide?: React.ComponentType<{ className?: string }>;
-    title: string;
-    body: React.ReactNode;
-  }> = [
-    {
-      icon: IconKondo,
-      title: "Kondo + LinkedIn",
-      body: "DM and connection sync, roughly $50/month. The only reliable route into LinkedIn, and one I use daily on my own workspace.",
-    },
-    {
-      icon: IconAttio,
-      title: "Attio",
-      body: "A source rather than a destination. Both platforms expose MCP connectors, so the migration runs agent to agent, and Attio is retired afterwards.",
-    },
-    {
-      icon: IconLuma,
-      title: "Luma",
-      body: "Event registrations and check-ins. See the note below, because the sensible answer here saves you money.",
-    },
-    {
-      icon: IconApollo,
-      title: "Enrichment provider",
-      body: "Company, role, profile detail and job-change tracking. Selected during the build against your real contacts rather than chosen now on reputation.",
-    },
-    {
-      icon: IconGoogleWorkspace,
-      title: "Google Workspace",
-      body: "Calendar, contacts and mail sit behind the mail connector and Notion Calendar, so the workspace reads from Google without pulling every message into Notion.",
-    },
-    {
-      icon: IconSlack,
-      title: "Slack",
-      body: "Not connected in this phase. Notion integrates with it natively, so it becomes straightforward once your migration completes.",
-    },
-  ];
-
-  const scopeGroups: Array<{ label: string; summary: string; intro?: string; items: React.ReactNode[] }> = [
-    {
-      label: "A. The workspace foundation",
-      summary: "Private workspace, personal dashboard, a light task database and calendar.",
-      items: [
-        <><strong>A private workspace structured around how you actually operate</strong>, with the relationship system separate from anything the team will later need. The CRM stays yours.</>,
-        <><strong>Personal dashboard:</strong> your week, your meetings, your open threads, filtered to you.</>,
-        <><strong>A task database</strong> linked to contacts, so a follow-up generated by a relationship lands somewhere other than your head. Deliberately light. Team task infrastructure waits until roles settle, as you asked.</>,
-        <><strong>Notion Calendar connected</strong> for meeting context and follow-up.</>,
-      ],
-    },
-    {
-      label: "B. Contacts: the relationship spine",
-      summary: "Stable identifiers, three-track tagging, skills, connection strength, referral source and cold storage.",
-      items: [
-        <><strong>The Contacts database</strong>, built on stable internal identifiers so a person survives changing their name, email or company. Every record carries opportunity type, connection strength, skills, company and referral source.</>,
-        <><strong>Three-track tagging</strong>, built as tags rather than exclusive stages, because your categories overlap by design: fundraising, customer acquisition, recruitment, and not interesting. A researcher who becomes a hire who brings a data contract stays one record throughout.</>,
-        <><strong>Skills and subject tagging</strong> so you can search by what someone can do rather than by a name you've forgotten. The taxonomy starts from your own vocabulary and gets refined during adoption.</>,
-        <><strong>Connection strength</strong> recorded separately from opportunity type: strong for warm introductions, direct outreach and real conversations, weak for event registrations and unanswered connection requests.</>,
-        <><strong>Referral source as a linked field</strong>, pointing at the introducer's own record, so Tilly's introduction to Jack is visible from both sides.</>,
-        <><strong>Cold storage with a reactivate-on date</strong>, so "not right now, check back in a couple of months" becomes something the system surfaces rather than something you have to remember.</>,
-      ],
-    },
-    {
-      label: "C. The activity database",
-      summary: "Every interaction as a record, in date order, with event attendance flagged.",
-      items: [
-        <><strong>Every interaction as a record</strong>, related to the contact: LinkedIn messages, emails, meetings, event attendance, and anything you capture manually. Full text stored, not only summaries, so the log is reviewable before you ask for something.</>,
-        <><strong>Chronological history per contact</strong>, which is what turns "have I already asked this person for something" into a five second check.</>,
-        <><strong>Event participation flagged distinctly</strong>, so registrations that never became attendance don't pollute your relationship lists. This was your requirement and it's built in from the start.</>,
-      ],
-    },
-    {
-      label: "D. Pipelines",
-      summary: "Opportunities, recruitment and fundraising, each on its own lifecycle.",
-      items: [
-        <><strong>An opportunities pipeline</strong> for customer acquisition and partnerships.</>,
-        <><strong>A recruitment pipeline</strong> for exceptional talent, running separately from the standard Poindexter contractor flow.</>,
-        <><strong>A fundraising view</strong> running on its own lifecycle, with the reactivate-on dates doing the work between raises.</>,
-      ],
-    },
-    {
-      label: "E. Channel capture",
-      summary: "LinkedIn via Kondo, email on demand, Luma events, the Attio migration and enrichment.",
-      items: [
-        <><strong>LinkedIn via Kondo.</strong> DM sync into Notion, with new connections landing in a triage state rather than straight into the active CRM. After an event that adds a hundred people at once, that distinction is the difference between a system you trust and a list you ignore.</>,
-        <><strong>Email</strong>, reached through Notion's mail connector and your agents rather than mirrored wholesale into the workspace. You ask for what you need, and a scheduled sweep pulls correspondence with people already in the CRM into their activity record. Two reasons for that design: a complete copy of your mailbox sitting inside Notion would be a liability under your ISO work, and agent consumption scales with the volume of mail being read, so a targeted sweep costs a fraction of a full sync. Showing you how to trigger a sweep when you want one is part of handover.</>,
-        <><strong>Luma event data</strong>, registrations and check-ins, so attendance is a fact in the record rather than a guess. Delivered by guest CSV per event on Luma's free tier, or through the Luma API if you hold Luma Plus. See the note further down.</>,
-        <><strong>Attio migration.</strong> Both Attio and Notion expose MCP connectors, so the transfer runs through an agent rather than by hand. Your 175 meeting transcripts come across as relationship history, attached to the right contacts. Contact and company records created from 1 January 2026 onwards are included. Anything older is a considerably larger job than the transcripts and sits outside this phase, though I'll give you a volume estimate once I've seen the export so you can decide whether it's worth doing.</>,
-        <><strong>Data enrichment</strong> for company, role and profile detail, plus periodic refresh so job changes surface without depending on people updating their own headlines. Provider recommendation and costs set out below.</>,
-      ],
-    },
-    {
-      label: "F. The agents",
-      summary: "Relationship, pre-meeting brief and triage, plus the Skills database behind them.",
-      intro: "Small, single-purpose, invoked when needed. The system waits to be asked, with one deliberate exception on your calendar.",
-      items: [
-        <><strong>A relationship agent</strong> you can ask in plain English, from the Notion app on your phone: who you know with a given skill, who you know at a given company, what the history is with a given person.</>,
-        <><strong>A pre-meeting brief agent</strong>, triggered by your calendar. Who they are, how you met, who introduced you, what was last said, and a prompt when it has no idea who this person is.</>,
-        <><strong>A triage agent</strong> that takes newly captured contacts and asks the questions needed to classify them properly, so the tagging stays current without you maintaining it.</>,
-        <><strong>A Skills database</strong> holding the agents' working instructions in plain language, so you can read what they do, change how they behave, and add new procedures yourself. Combined with custom instructions carrying your standing context and vocabulary.</>,
-      ],
-    },
-    {
-      label: "G. Adoption and support",
-      summary: "Handover, two months of supported adoption, optional rolling support afterwards.",
-      items: [
-        <>A handover working session at the end of the build.</>,
-        <>Two months of supported adoption included, focused on tuning the taxonomy against real use.</>,
-        <>Optional rolling support afterwards at <strong>£1,200/month</strong>, no fixed term, cancellable by either side with 30 days' notice. This covers refinement and support of the system as built. New capability is scoped separately.</>,
-      ],
-    },
-  ];
-
-  // Scope accordion state: A open by default; hover expands others; click pins/unpins
+  // Scope accordion state: A open by default; hover expands others (fine pointers only); click pins/unpins
   const [scopePinned, setScopePinned] = useState<boolean[]>(() =>
     scopeGroups.map((_, i) => i === 0)
   );
   const [scopeHover, setScopeHover] = useState<number | null>(null);
+  const hoverCloseTimer = useRef<number | null>(null);
+  const [finePointer, setFinePointer] = useState<boolean>(false);
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.matchMedia) return;
+    const mql = window.matchMedia("(pointer: fine)");
+    const update = () => setFinePointer(mql.matches);
+    update();
+    mql.addEventListener?.("change", update);
+    return () => mql.removeEventListener?.("change", update);
+  }, []);
+  const onScopeEnter = (i: number) => {
+    if (!finePointer) return;
+    if (hoverCloseTimer.current) {
+      window.clearTimeout(hoverCloseTimer.current);
+      hoverCloseTimer.current = null;
+    }
+    setScopeHover(i);
+  };
+  const onScopeLeave = () => {
+    if (!finePointer) return;
+    if (hoverCloseTimer.current) window.clearTimeout(hoverCloseTimer.current);
+    hoverCloseTimer.current = window.setTimeout(() => setScopeHover(null), 200);
+  };
   const isScopeOpen = (i: number) => scopePinned[i] || scopeHover === i;
   const allScopeOpen = scopePinned.every(Boolean);
   const toggleScope = (i: number) =>
     setScopePinned((prev) => prev.map((v, idx) => (idx === i ? !v : v)));
   const setAllScope = (v: boolean) => setScopePinned(scopeGroups.map(() => v));
+
+
 
 
   return (
