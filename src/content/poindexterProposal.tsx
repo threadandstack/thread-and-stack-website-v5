@@ -31,7 +31,7 @@ export const proposalMeta = {
   date: "23 July 2026",
   client: "Poindexter Labs",
   contact: "Jocelyn D'Arcy",
-  title: "Delegation you can verify.",
+  title: "Held, so you don't have to.",
   subtitle:
     "One relationship system, held in Notion, that consolidates LinkedIn, email, events and meeting history into searchable contact records. You reach it by asking, not by browsing.",
 };
