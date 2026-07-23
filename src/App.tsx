@@ -65,6 +65,7 @@ const SFFireProposalPage = lazy(() => import("./pages/proposal/SFFireProposalPag
 const BfBLabsProposalPage = lazy(() => import("./pages/proposal/BfBLabsProposalPage"));
 const SummitNetworkProposalPage = lazy(() => import("./pages/proposal/SummitNetworkProposalPage"));
 const PoindexterLabsProposalPage = lazy(() => import("./pages/proposal/PoindexterLabsProposalPage"));
+const PoindexterLabsPrintPage = lazy(() => import("./pages/proposal/PoindexterLabsPrintPage"));
 const NotionMasterclassPage = lazy(() => import("./pages/NotionMasterclassPage"));
 const CreativePortfolioPage = lazy(() => import("./pages/CreativePortfolioPage"));
 const NotionPortfolioPage = lazy(() => import("./pages/NotionPortfolioPage"));
