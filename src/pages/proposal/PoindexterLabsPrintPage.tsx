@@ -282,7 +282,7 @@ const PoindexterLabsPrintPage = () => {
 
         {/* 04 */}
         <section>
-          <SectionTitle num="04" eyebrow="What's in scope" title="Phase 1: the build." />
+          <SectionTitle num="04" eyebrow="What's included" title="The scope of work." />
           <P>Everything below is included in the project fee.</P>
 
           {scopeGroups.map((group) => {
