@@ -172,7 +172,7 @@ const PoindexterLabsPrintPage = () => {
 
         {/* 01 */}
         <section>
-          <SectionTitle num="01" eyebrow="Where things stand" title="Capability, not crisis." />
+          <SectionTitle num="01" eyebrow="Where things stand" title="Ahead of the problem." />
           <P>
             There is no system to replace. Urgent work lives in your head with full context attached,
             everything else lives in Apple Notes, and relationship intelligence lives nowhere at all
