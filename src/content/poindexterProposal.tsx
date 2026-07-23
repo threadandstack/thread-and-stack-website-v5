@@ -13,6 +13,8 @@ import IconAttioAsset from "@/assets/proposal/icons/attio.png.asset.json";
 import IconKondoAsset from "@/assets/proposal/icons/kondo.png.asset.json";
 import IconLumaAsset from "@/assets/proposal/icons/luma.png.asset.json";
 import IconGoogleWorkspaceAsset from "@/assets/proposal/icons/google-workspace.png.asset.json";
+import IconNotionMeetingNotesAsset from "@/assets/proposal/icons/notion-meeting-notes.gif.asset.json";
+
 
 export const IconNotionCalendar = IconNotionCalendarAsset.url;
 export const IconNotionMail = IconNotionMailAsset.url;
