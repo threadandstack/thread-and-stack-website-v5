@@ -1171,6 +1171,12 @@ const PoindexterLabsProposalPage = () => {
               />
 
               <P>Everything below is included in the project fee.</P>
+              <motion.p
+                {...fadeUp}
+                className="font-sans text-[13.5px] leading-[1.7] text-muted-foreground -mt-3 mb-6 print:hidden"
+              >
+                Each group opens as you pass over it. Click to pin one open while you read.
+              </motion.p>
 
               <div data-expand-all className="mt-4 flex justify-end print:hidden">
                 <button
