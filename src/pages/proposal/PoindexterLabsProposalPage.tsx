@@ -740,7 +740,7 @@ const PoindexterLabsProposalPage = () => {
       tag: "Three agents included",
     },
     {
-      lucide: Smartphone,
+      icon: IconNotionApp,
       title: "The Notion app",
       body: "Where you reach all of it, from your phone, in conversation.",
     },
@@ -755,12 +755,12 @@ const PoindexterLabsProposalPage = () => {
       body: "Email reached on request and on a scheduled sweep, rather than mirrored wholesale.",
     },
     {
-      lucide: Zap,
+      icon: IconNotionAutomations,
       title: "Notion automations",
       body: "The native triggers that move records between states without anyone remembering to.",
     },
     {
-      lucide: BookOpen,
+      icon: IconNotionSkills,
       title: "Notion Skills database",
       body: "The agents' working instructions in plain language, readable and editable by you.",
     },
@@ -773,24 +773,29 @@ const PoindexterLabsProposalPage = () => {
     body: React.ReactNode;
   }> = [
     {
-      lucide: MessagesSquare,
+      icon: IconKondo,
       title: "Kondo + LinkedIn",
       body: "DM and connection sync, roughly $50/month. The only reliable route into LinkedIn, and one I use daily on my own workspace.",
     },
     {
-      lucide: Database,
+      icon: IconAttio,
       title: "Attio",
       body: "A source rather than a destination. Both platforms expose MCP connectors, so the migration runs agent to agent, and Attio is retired afterwards.",
     },
     {
-      lucide: Ticket,
+      icon: IconLuma,
       title: "Luma",
       body: "Event registrations and check-ins. See the note below, because the sensible answer here saves you money.",
     },
     {
-      lucide: Sparkles,
+      icon: IconApollo,
       title: "Enrichment provider",
       body: "Company, role, profile detail and job-change tracking. Selected during the build against your real contacts rather than chosen now on reputation.",
+    },
+    {
+      icon: IconGoogleWorkspace,
+      title: "Google Workspace",
+      body: "Calendar, contacts and mail sit behind the mail connector and Notion Calendar, so the workspace reads from Google without pulling every message into Notion.",
     },
     {
       icon: IconSlack,
