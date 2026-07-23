@@ -747,9 +747,9 @@ const PoindexterLabsProposalPage = () => {
               transition={{ duration: 0.9, delay: 0.25 }}
               className="font-serif-pro text-[36px] sm:text-5xl md:text-6xl italic font-medium leading-[1.05] tracking-tight text-foreground text-balance mb-8 order-3"
             >
-              Delegation you can{" "}
+              Held,{" "}
               <span className="inline-block text-gradient-warm" style={{ transform: "translateY(1px)" }}>
-                verify.
+                so you don't have to.
               </span>
             </motion.h1>
 
