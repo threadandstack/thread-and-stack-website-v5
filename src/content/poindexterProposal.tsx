@@ -31,7 +31,7 @@ export const proposalMeta = {
   date: "23 July 2026",
   client: "Poindexter Labs",
   contact: "Jocelyn D'Arcy",
-  title: "Delegation you can verify.",
+  title: "Held, so you don't have to.",
   subtitle:
     "One relationship system, held in Notion, that consolidates LinkedIn, email, events and meeting history into searchable contact records. You reach it by asking, not by browsing.",
 };
@@ -96,7 +96,7 @@ export const stack: StackLayer[] = [
   { icon: IconNotion, title: "Notion workspace", body: "One permissioned home for contacts, activity, pipelines, tasks and meetings." },
   { icon: IconLassie, title: "Notion AI", body: "Plain-English questions answered from inside your own records." },
   { icon: IconNotionAI, title: "Custom agents", body: "The relationship agent, the pre-meeting brief, the triage agent. Small, single-purpose, invoked when needed.", tag: "Three agents included" },
-  { icon: IconNotionApp, title: "The Notion app", body: "Where you reach all of it, from your phone, in conversation." },
+  { icon: IconNotionApp, title: "The Notion apps", body: "Notion and Notion Agents on your phone. Where you reach all of it, in conversation, wherever you happen to be." },
   { icon: IconNotionCalendar, title: "Notion Calendar", body: "Meetings connected to the people in them and the history behind them." },
   { icon: IconNotionMail, title: "Notion mail connector", body: "Email reached on request and on a scheduled sweep, rather than mirrored wholesale." },
   { icon: IconNotionAutomations, title: "Notion automations", body: "The native triggers that move records between states without anyone remembering to." },

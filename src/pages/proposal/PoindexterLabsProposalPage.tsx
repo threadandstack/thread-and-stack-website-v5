@@ -530,9 +530,9 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => {
             transition={{ duration: 1, delay: 0.55 }}
             className="font-serif-pro text-3xl sm:text-5xl md:text-6xl italic font-medium leading-[1.05] tracking-tight mb-5 text-balance"
           >
-            Delegation you can{" "}
+            Held,{" "}
             <span className="inline-block text-gradient-warm" style={{ transform: "translateY(1px)" }}>
-              verify.
+              so you don't have to.
             </span>
           </motion.h1>
 
@@ -747,9 +747,9 @@ const PoindexterLabsProposalPage = () => {
               transition={{ duration: 0.9, delay: 0.25 }}
               className="font-serif-pro text-[36px] sm:text-5xl md:text-6xl italic font-medium leading-[1.05] tracking-tight text-foreground text-balance mb-8 order-3"
             >
-              Delegation you can{" "}
+              Held,{" "}
               <span className="inline-block text-gradient-warm" style={{ transform: "translateY(1px)" }}>
-                verify.
+                so you don't have to.
               </span>
             </motion.h1>
 
@@ -848,7 +848,7 @@ const PoindexterLabsProposalPage = () => {
                 num="01"
                 eyebrow="Where things stand"
                 rotate={-0.4}
-                title={<>Capability, <Hl>not crisis.</Hl></>}
+                title={<>Ahead of <Hl>the problem.</Hl></>}
               />
 
               <P>
@@ -868,8 +868,8 @@ const PoindexterLabsProposalPage = () => {
                 predictable result of five channels with no shared spine.
               </P>
               <P>
-                This is capability, not crisis. You said it yourself: most things are "now" and this
-                one isn't. That's exactly why it's worth building properly.
+                You said it yourself: most things are "now" and this one isn't. Building it while
+                nothing is on fire is exactly why it will be built properly.
               </P>
 
               <motion.div {...fadeUp} className="mt-8">
@@ -1003,7 +1003,7 @@ const PoindexterLabsProposalPage = () => {
                 num="02"
                 eyebrow="The stack"
                 rotate={0.3}
-                title={<>Notion does the <Hl>work.</Hl></>}
+                title={<>Notion <Hl>holds it together.</Hl></>}
               />
 
               <P>
@@ -1165,9 +1165,9 @@ const PoindexterLabsProposalPage = () => {
             <section id="sec-04">
               <SectionHead
                 num="04"
-                eyebrow="What's in scope"
+                eyebrow="What's included"
                 rotate={-0.3}
-                title={<>Phase 1: <Hl>the build.</Hl></>}
+                title={<>The <Hl>scope of work.</Hl></>}
               />
 
               <P>Everything below is included in the project fee.</P>

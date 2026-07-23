@@ -172,7 +172,7 @@ const PoindexterLabsPrintPage = () => {
 
         {/* 01 */}
         <section>
-          <SectionTitle num="01" eyebrow="Where things stand" title="Capability, not crisis." />
+          <SectionTitle num="01" eyebrow="Where things stand" title="Ahead of the problem." />
           <P>
             There is no system to replace. Urgent work lives in your head with full context attached,
             everything else lives in Apple Notes, and relationship intelligence lives nowhere at all
@@ -190,8 +190,8 @@ const PoindexterLabsPrintPage = () => {
             no shared spine.
           </P>
           <P>
-            This is capability, not crisis. You said it yourself: most things are "now" and this one
-            isn't. That's exactly why it's worth building properly.
+            You said it yourself: most things are "now" and this one isn't. Building it while
+            nothing is on fire is exactly why it will be built properly.
           </P>
 
           <H3>The brief.</H3>
@@ -236,7 +236,7 @@ const PoindexterLabsPrintPage = () => {
 
         {/* 02 */}
         <section>
-          <SectionTitle num="02" eyebrow="The stack" title="Notion does the work." />
+          <SectionTitle num="02" eyebrow="The stack" title="Notion holds it together." />
           <P>
             Everything else has to earn its place, because each external connection is a subscription,
             a dependency and a thing that can break without warning.
@@ -282,7 +282,7 @@ const PoindexterLabsPrintPage = () => {
 
         {/* 04 */}
         <section>
-          <SectionTitle num="04" eyebrow="What's in scope" title="Phase 1: the build." />
+          <SectionTitle num="04" eyebrow="What's included" title="The scope of work." />
           <P>Everything below is included in the project fee.</P>
 
           {scopeGroups.map((group) => {
