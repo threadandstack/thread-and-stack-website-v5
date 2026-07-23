@@ -170,12 +170,14 @@ export const scopeGroups: ScopeGroup[] = [
   },
   {
     label: "E. Channel capture",
-    summary: "LinkedIn via Kondo, email on demand, Luma events, the Attio migration and enrichment.",
+    summary: "LinkedIn via Kondo, email on demand, meeting capture, Luma events, the Attio migration and enrichment.",
     items: [
       <><strong>LinkedIn via Kondo.</strong> DM sync into Notion, with new connections landing in a triage state rather than straight into the active CRM. After an event that adds a hundred people at once, that distinction is the difference between a system you trust and a list you ignore.</>,
       <><strong>Email</strong>, reached through Notion's mail connector and your agents rather than mirrored wholesale into the workspace. You ask for what you need, and a scheduled sweep pulls correspondence with people already in the CRM into their activity record. Two reasons for that design: a complete copy of your mailbox sitting inside Notion would be a liability under your ISO work, and agent consumption scales with the volume of mail being read, so a targeted sweep costs a fraction of a full sync. Showing you how to trigger a sweep when you want one is part of handover.</>,
       <><strong>Luma event data</strong>, registrations and check-ins, so attendance is a fact in the record rather than a guess. Delivered by guest CSV per event on Luma's free tier, or through the Luma API if you hold Luma Plus. See the note further down.</>,
+      <><strong>Meeting capture through Notion AI Meeting Notes.</strong> This replaces what Attio currently does for you. Recordings transcribe and summarise onto a Notion page that attaches to the relevant contact, so the activity log keeps filling after Attio is retired and the pre-meeting brief agent always has something recent to work from. No bot joins your calls and no third-party transcription service sits between your conversations and your workspace. Worth knowing how it behaves: the phone app records in the background, so in-person meetings and events are covered from your pocket, but for a remote video call the desktop app is the only mode that captures the other person's audio as well as your own. There is no speaker identification and no automatic joining from your calendar, so starting a recording stays a deliberate act.</>,
       <><strong>Attio migration.</strong> Both Attio and Notion expose MCP connectors, so the transfer runs through an agent rather than by hand. Your 175 meeting transcripts come across as relationship history, attached to the right contacts. Contact and company records created from 1 January 2026 onwards are included. Anything older is a considerably larger job than the transcripts and sits outside this phase, though I'll give you a volume estimate once I've seen the export so you can decide whether it's worth doing.</>,
+
       <><strong>Data enrichment</strong> for company, role and profile detail, plus periodic refresh so job changes surface without depending on people updating their own headlines. Provider recommendation and costs set out below.</>,
     ],
   },
