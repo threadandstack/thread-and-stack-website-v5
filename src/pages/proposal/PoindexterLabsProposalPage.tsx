@@ -890,12 +890,17 @@ const PoindexterLabsProposalPage = () => {
     },
   ];
 
-  // Scope accordion open state (one per group)
-  const [scopeOpen, setScopeOpen] = useState<boolean[]>(() => scopeGroups.map(() => false));
-  const allScopeOpen = scopeOpen.every(Boolean);
+  // Scope accordion state: A open by default; hover expands others; click pins/unpins
+  const [scopePinned, setScopePinned] = useState<boolean[]>(() =>
+    scopeGroups.map((_, i) => i === 0)
+  );
+  const [scopeHover, setScopeHover] = useState<number | null>(null);
+  const isScopeOpen = (i: number) => scopePinned[i] || scopeHover === i;
+  const allScopeOpen = scopePinned.every(Boolean);
   const toggleScope = (i: number) =>
-    setScopeOpen((prev) => prev.map((v, idx) => (idx === i ? !v : v)));
-  const setAllScope = (v: boolean) => setScopeOpen(scopeGroups.map(() => v));
+    setScopePinned((prev) => prev.map((v, idx) => (idx === i ? !v : v)));
+  const setAllScope = (v: boolean) => setScopePinned(scopeGroups.map(() => v));
+
 
   return (
     <>
@@ -1391,9 +1396,15 @@ const PoindexterLabsProposalPage = () => {
               {scopeGroups.map((group, gi) => {
                 const [letter, ...rest] = group.label.split(". ");
                 const title = rest.join(". ");
-                const isOpen = scopeOpen[gi];
+                const isOpen = isScopeOpen(gi);
                 return (
-                  <motion.div key={gi} {...fadeUp} className="mt-6 first:mt-6">
+                  <motion.div
+                    key={gi}
+                    {...fadeUp}
+                    className="mt-6 first:mt-6"
+                    onMouseEnter={() => setScopeHover(gi)}
+                    onMouseLeave={() => setScopeHover(null)}
+                  >
                     <Tilt3D maxX={4} maxY={3}>
                       <div className="relative rounded-3xl bg-card p-6 sm:p-8 lg:p-10 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)] border border-foreground/5 overflow-hidden">
                         <div className="absolute -top-6 -right-6 w-40 h-40 rounded-full bg-gradient-warm opacity-[0.07] blur-2xl pointer-events-none" />
@@ -1446,6 +1457,7 @@ const PoindexterLabsProposalPage = () => {
                   </motion.div>
                 );
               })}
+
 
               {/* What's not included, and why */}
               <motion.div {...fadeUp} className="mt-14 rounded-2xl border border-clay/30 bg-clay/5 p-5 sm:p-6">
