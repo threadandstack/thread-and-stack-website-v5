@@ -22,7 +22,10 @@ import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
 import { trackContactFormSubmit } from "@/hooks/useAnalytics";
 import BlackStacked from "@/assets/logos/Black_TS_Stacked.svg";
+import WhiteStacked from "@/assets/logos/White_TS_Stacked.svg";
 import GreyStacked from "@/assets/logos/Grey_TS_Stacked.svg";
+import PoindexterBlack from "@/assets/proposal/poindexter-black.png.asset.json";
+import PoindexterWhite from "@/assets/proposal/poindexter-white.png.asset.json";
 import BrendanAvatar from "@/assets/brendan-avatar.webp";
 import IconNotion from "@/assets/proposal/icons/notion.png";
 import IconNotionAI from "@/assets/proposal/icons/notion-ai.png";
@@ -490,6 +493,21 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => {
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-10 md:gap-14 mb-10"
+          >
+            <img src={WhiteStacked} alt="Thread & Stack" className="h-16 sm:h-18 md:h-20 w-auto" />
+            <X aria-hidden="true" className="w-5 h-5 text-primary-foreground/30" strokeWidth={1} />
+            <img
+              src={PoindexterWhite.url}
+              alt="Poindexter Labs"
+              className="h-12 sm:h-14 md:h-16 w-auto object-contain"
+            />
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.35 }}
             className="font-sans text-[10.5px] sm:text-[12px] tracking-[0.28em] uppercase text-primary-foreground/55 mb-5"
           >
@@ -499,6 +517,7 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => {
             <span className="text-primary-foreground/25 mx-2">·</span>
             23 July 2026
           </motion.div>
+
 
           <motion.h1
             initial={{ opacity: 0, y: 14 }}
@@ -920,9 +939,12 @@ const PoindexterLabsProposalPage = () => {
             >
               <img src={BlackStacked} alt="Thread & Stack" className="h-20 sm:h-20 md:h-24 w-auto" />
               <X aria-hidden="true" className="w-5 h-5 sm:w-6 sm:h-6 text-foreground/25" strokeWidth={1} />
-              <div className="font-serif-pro italic text-2xl sm:text-3xl md:text-4xl font-medium text-foreground leading-none">
-                Poindexter Labs
-              </div>
+              <img
+                src={PoindexterBlack.url}
+                alt="Poindexter Labs"
+                className="h-16 sm:h-18 md:h-20 w-auto object-contain"
+              />
+
             </motion.div>
 
             <motion.h1
