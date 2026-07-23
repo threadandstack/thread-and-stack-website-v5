@@ -99,8 +99,10 @@ export type StackLayer = {
 export const stack: StackLayer[] = [
   { icon: IconNotion, title: "Notion workspace", body: "One permissioned home for contacts, activity, pipelines, tasks and meetings." },
   { icon: IconLassie, title: "Notion AI", body: "Plain-English questions answered from inside your own records." },
+  { icon: IconNotionMeetingNotes, title: "Notion AI Meeting Notes", body: "Calls transcribed and summarised onto a Notion page and attached to the right contact. No bot joins the call." },
   { icon: IconNotionAI, title: "Custom agents", body: "The relationship agent, the pre-meeting brief, the triage agent. Small, single-purpose, invoked when needed.", tag: "Three agents included" },
   { icon: IconNotionApp, title: "The Notion apps", body: "Notion and Notion Agents on your phone. Where you reach all of it, in conversation, wherever you happen to be." },
+
   { icon: IconNotionCalendar, title: "Notion Calendar", body: "Meetings connected to the people in them and the history behind them." },
   { icon: IconNotionMail, title: "Notion mail connector", body: "Email reached on request and on a scheduled sweep, rather than mirrored wholesale." },
   { icon: IconNotionAutomations, title: "Notion automations", body: "The native triggers that move records between states without anyone remembering to." },
