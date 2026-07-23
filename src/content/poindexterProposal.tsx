@@ -228,7 +228,7 @@ export const beforeWeStartList: string[] = [
   "Access to your Attio account, to assess the 175 transcripts and confirm export format.",
   "Sample LinkedIn threads and Gmail correspondence, to confirm the sync scope and how far back to reach.",
   "Luma export or API access.",
-  "Confirmation of your Notion plan and entitlement.",
+  "Confirmation of your Notion plan and entitlement, since AI Meeting Notes and custom agents both need Business or above.",
   "A view of your Google Drive structure, so we know whether file linking belongs in this phase or the next.",
   "Your best current guess at the Slack migration timing, since it determines when channel capture becomes worth scoping.",
 ];
