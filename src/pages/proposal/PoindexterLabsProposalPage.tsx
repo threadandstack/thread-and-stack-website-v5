@@ -890,12 +890,17 @@ const PoindexterLabsProposalPage = () => {
     },
   ];
 
-  // Scope accordion open state (one per group)
-  const [scopeOpen, setScopeOpen] = useState<boolean[]>(() => scopeGroups.map(() => false));
-  const allScopeOpen = scopeOpen.every(Boolean);
+  // Scope accordion state: A open by default; hover expands others; click pins/unpins
+  const [scopePinned, setScopePinned] = useState<boolean[]>(() =>
+    scopeGroups.map((_, i) => i === 0)
+  );
+  const [scopeHover, setScopeHover] = useState<number | null>(null);
+  const isScopeOpen = (i: number) => scopePinned[i] || scopeHover === i;
+  const allScopeOpen = scopePinned.every(Boolean);
   const toggleScope = (i: number) =>
-    setScopeOpen((prev) => prev.map((v, idx) => (idx === i ? !v : v)));
-  const setAllScope = (v: boolean) => setScopeOpen(scopeGroups.map(() => v));
+    setScopePinned((prev) => prev.map((v, idx) => (idx === i ? !v : v)));
+  const setAllScope = (v: boolean) => setScopePinned(scopeGroups.map(() => v));
+
 
   return (
     <>
