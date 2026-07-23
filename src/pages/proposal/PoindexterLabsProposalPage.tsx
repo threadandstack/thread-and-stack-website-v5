@@ -1280,33 +1280,69 @@ const PoindexterLabsProposalPage = () => {
 
               <P>Everything below is included in the project fee.</P>
 
+              <div data-expand-all className="mt-4 flex justify-end print:hidden">
+                <button
+                  type="button"
+                  onClick={() => setAllScope(!allScopeOpen)}
+                  className="font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  {allScopeOpen ? "Collapse all" : "Expand all"}
+                </button>
+              </div>
+
               {scopeGroups.map((group, gi) => {
                 const [letter, ...rest] = group.label.split(". ");
                 const title = rest.join(". ");
+                const isOpen = scopeOpen[gi];
                 return (
-                  <motion.div key={gi} {...fadeUp} className="mt-8 first:mt-10">
+                  <motion.div key={gi} {...fadeUp} className="mt-6 first:mt-6">
                     <Tilt3D maxX={4} maxY={3}>
-                      <div className="relative rounded-3xl bg-card p-8 sm:p-10 lg:p-12 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)] border border-foreground/5 overflow-hidden">
+                      <div className="relative rounded-3xl bg-card p-6 sm:p-8 lg:p-10 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)] border border-foreground/5 overflow-hidden">
                         <div className="absolute -top-6 -right-6 w-40 h-40 rounded-full bg-gradient-warm opacity-[0.07] blur-2xl pointer-events-none" />
-                        <div className="flex items-start gap-5 sm:gap-7 mb-6 sm:mb-8">
-                          <div className="shrink-0 font-serif italic text-transparent bg-clip-text bg-gradient-warm text-[64px] sm:text-[88px] leading-[1.1] font-medium tracking-tight pr-2 pb-1">
-                            {letter}
-                          </div>
-                          <div className="pt-2 sm:pt-4">
-                            <div className="font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-muted-foreground mb-2">
-                              Scope group
+                        <button
+                          type="button"
+                          onClick={() => toggleScope(gi)}
+                          aria-expanded={isOpen}
+                          className="w-full text-left group"
+                        >
+                          <div className="flex items-start gap-5 sm:gap-7">
+                            <div className="shrink-0 font-serif italic text-transparent bg-clip-text bg-gradient-warm text-[52px] sm:text-[72px] leading-[1.1] font-medium tracking-tight pr-2 pb-1">
+                              {letter}
                             </div>
-                            <h3 className="font-serif text-[24px] sm:text-[30px] lg:text-[34px] leading-[1.15] font-medium text-foreground">
-                              {title}
-                            </h3>
+                            <div className="flex-1 pt-1 sm:pt-2 min-w-0">
+                              <div className="flex items-start justify-between gap-4">
+                                <div className="font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-muted-foreground mb-2">
+                                  Scope group
+                                </div>
+                                <ChevronDown
+                                  data-accordion-chevron
+                                  className={`w-4 h-4 mt-1 text-muted-foreground transition-transform duration-300 flex-shrink-0 ${isOpen ? "rotate-180" : ""}`}
+                                />
+                              </div>
+                              <h3 className="font-serif text-[22px] sm:text-[28px] lg:text-[32px] leading-[1.15] font-medium text-foreground">
+                                {title}
+                              </h3>
+                              <p className="mt-2 font-sans text-[14.5px] leading-[1.6] text-foreground/65">
+                                {group.summary}
+                              </p>
+                            </div>
+                          </div>
+                        </button>
+                        <div
+                          data-accordion-panel
+                          className={`grid transition-[grid-template-rows,opacity] duration-400 ease-out ${
+                            isOpen ? "grid-rows-[1fr] opacity-100 mt-6" : "grid-rows-[0fr] opacity-0"
+                          }`}
+                        >
+                          <div className="overflow-hidden">
+                            {group.intro && (
+                              <p className="font-sans text-[15.5px] leading-[1.75] text-foreground/80 mb-5">
+                                {group.intro}
+                              </p>
+                            )}
+                            <BulletList items={group.items} />
                           </div>
                         </div>
-                        {group.intro && (
-                          <p className="font-sans text-[15.5px] leading-[1.75] text-foreground/80 mb-5">
-                            {group.intro}
-                          </p>
-                        )}
-                        <BulletList items={group.items} />
                       </div>
                     </Tilt3D>
                   </motion.div>
