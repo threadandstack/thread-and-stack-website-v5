@@ -1120,40 +1120,73 @@ const PoindexterLabsProposalPage = () => {
               </P>
 
               <div className="mt-6 grid sm:grid-cols-2 gap-4">
-                {stack.map((layer, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.2 }}
-                    transition={{ duration: 0.55, delay: i * 0.05, ease: [0.22, 1, 0.36, 1] }}
-                  >
-                    <Tilt3D maxX={5} maxY={4}>
-                      <div className="flex gap-4 items-start bg-card rounded-2xl p-5 shadow-[0_8px_30px_rgba(0,0,0,0.06)] h-full">
-                        <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-background flex items-center justify-center shadow-[0_1px_4px_rgba(0,0,0,0.06)]">
-                          <img src={layer.icon} alt="" className="w-8 h-8 object-contain" />
-                        </div>
-                        <div className="flex-1 pt-0.5 min-w-0">
-                          <div className="font-serif-pro italic font-medium text-[19px] text-foreground leading-tight mb-1.5">
-                            {layer.title}
+                {stack.map((layer, i) => {
+                  const Lucide = layer.lucide;
+                  return (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, y: 16 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, amount: 0.2 }}
+                      transition={{ duration: 0.55, delay: i * 0.05, ease: [0.22, 1, 0.36, 1] }}
+                    >
+                      <Tilt3D maxX={5} maxY={4}>
+                        <div className="flex gap-4 items-start bg-card rounded-2xl p-5 shadow-[0_8px_30px_rgba(0,0,0,0.06)] h-full">
+                          <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-background flex items-center justify-center shadow-[0_1px_4px_rgba(0,0,0,0.06)]">
+                            {Lucide ? (
+                              <Lucide className="w-6 h-6 text-foreground/75" />
+                            ) : (
+                              <img src={layer.icon} alt="" className="w-8 h-8 object-contain" />
+                            )}
                           </div>
-                          <p className="font-sans text-[14.5px] leading-[1.6] text-foreground/75">
-                            {layer.body}
-                          </p>
-                          {layer.tag && (
-                            <div className="mt-2 font-sans text-[10.5px] font-semibold tracking-[0.18em] uppercase text-muted-foreground">
-                              {layer.tag}
+                          <div className="flex-1 pt-0.5 min-w-0">
+                            <div className="font-serif-pro italic font-medium text-[19px] text-foreground leading-tight mb-1.5">
+                              {layer.title}
                             </div>
-                          )}
+                            <p className="font-sans text-[14.5px] leading-[1.6] text-foreground/75">
+                              {layer.body}
+                            </p>
+                            {layer.tag && (
+                              <div className="mt-2 font-sans text-[10.5px] font-semibold tracking-[0.18em] uppercase text-muted-foreground">
+                                {layer.tag}
+                              </div>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    </Tilt3D>
-                  </motion.div>
-                ))}
+                      </Tilt3D>
+                    </motion.div>
+                  );
+                })}
               </div>
 
               <H3>Connected sources.</H3>
-              <BulletList items={connectedSources} />
+              <div className="grid sm:grid-cols-2 gap-3">
+                {connectedSources.map((src, i) => {
+                  const Lucide = src.lucide;
+                  return (
+                    <div
+                      key={i}
+                      className="flex gap-3 items-start rounded-xl border border-foreground/10 bg-foreground/[0.015] p-4"
+                    >
+                      <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-background/60 flex items-center justify-center border border-foreground/5">
+                        {Lucide ? (
+                          <Lucide className="w-4.5 h-4.5 text-muted-foreground" />
+                        ) : (
+                          <img src={src.icon} alt="" className="w-5 h-5 object-contain" />
+                        )}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="font-sans text-[13.5px] font-semibold text-foreground mb-0.5">
+                          {src.title}
+                        </div>
+                        <p className="font-sans text-[13.5px] leading-[1.55] text-foreground/65">
+                          {src.body}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
 
               <motion.div {...fadeUp} className="mt-4">
                 <div className="rounded-2xl border border-dashed border-accent/40 bg-background/40 p-5 sm:p-6">
