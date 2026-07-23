@@ -236,7 +236,7 @@ const PoindexterLabsPrintPage = () => {
 
         {/* 02 */}
         <section>
-          <SectionTitle num="02" eyebrow="The stack" title="Notion does the work." />
+          <SectionTitle num="02" eyebrow="The stack" title="Notion holds it together." />
           <P>
             Everything else has to earn its place, because each external connection is a subscription,
             a dependency and a thing that can break without warning.
