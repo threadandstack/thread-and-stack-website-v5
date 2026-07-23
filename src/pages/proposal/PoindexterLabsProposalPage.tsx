@@ -1003,7 +1003,7 @@ const PoindexterLabsProposalPage = () => {
                 num="02"
                 eyebrow="The stack"
                 rotate={0.3}
-                title={<>Notion does the <Hl>work.</Hl></>}
+                title={<>Notion <Hl>holds it together.</Hl></>}
               />
 
               <P>
