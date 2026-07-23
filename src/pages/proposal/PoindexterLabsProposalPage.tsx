@@ -951,7 +951,7 @@ const PoindexterLabsProposalPage = () => {
           <div className="max-w-2xl mx-auto">
 
             {/* 01 — Where things stand */}
-            <section>
+            <section id="sec-01">
               <SectionHead
                 num="01"
                 eyebrow="Where things stand"
@@ -1106,7 +1106,7 @@ const PoindexterLabsProposalPage = () => {
             <Rule />
 
             {/* 02 — The stack */}
-            <section>
+            <section id="sec-02">
               <SectionHead
                 num="02"
                 eyebrow="The stack"
@@ -1212,7 +1212,7 @@ const PoindexterLabsProposalPage = () => {
             <Rule />
 
             {/* 03 — Timeline */}
-            <section>
+            <section id="sec-03">
               <SectionHead
                 num="03"
                 eyebrow="What the next six months look like"
@@ -1270,7 +1270,7 @@ const PoindexterLabsProposalPage = () => {
             <Rule />
 
             {/* 04 — Scope */}
-            <section>
+            <section id="sec-04">
               <SectionHead
                 num="04"
                 eyebrow="What's in scope"
@@ -1418,7 +1418,7 @@ const PoindexterLabsProposalPage = () => {
             <Rule />
 
             {/* 05 — Investment */}
-            <section>
+            <section id="sec-05">
               <SectionHead
                 num="05"
                 eyebrow="Investment"
@@ -1496,7 +1496,7 @@ const PoindexterLabsProposalPage = () => {
             <Rule />
 
             {/* 06 — WhatsApp research */}
-            <section>
+            <section id="sec-06">
               <SectionHead
                 num="06"
                 eyebrow="The WhatsApp research"
@@ -1581,7 +1581,7 @@ const PoindexterLabsProposalPage = () => {
             <Rule />
 
             {/* 07 — Data, privacy and compliance */}
-            <section>
+            <section id="sec-07">
               <SectionHead
                 num="07"
                 eyebrow="ISO 27001"
@@ -1625,7 +1625,7 @@ const PoindexterLabsProposalPage = () => {
             <Rule />
 
             {/* 08 — How we'll know it worked */}
-            <section>
+            <section id="sec-08">
               <SectionHead
                 num="08"
                 eyebrow="Success measures"
