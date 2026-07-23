@@ -699,7 +699,8 @@ const PoindexterLabsProposalPage = () => {
   ];
 
   const stack: Array<{
-    icon: string;
+    icon?: string;
+    lucide?: React.ComponentType<{ className?: string }>;
     title: string;
     body: string;
     tag?: string;
@@ -721,7 +722,7 @@ const PoindexterLabsProposalPage = () => {
       tag: "Three agents included",
     },
     {
-      icon: IconNotion,
+      lucide: Smartphone,
       title: "The Notion app",
       body: "Where you reach all of it, from your phone, in conversation.",
     },
@@ -736,23 +737,48 @@ const PoindexterLabsProposalPage = () => {
       body: "Email reached on request and on a scheduled sweep, rather than mirrored wholesale.",
     },
     {
-      icon: IconNotion,
+      lucide: Zap,
       title: "Notion automations",
       body: "The native triggers that move records between states without anyone remembering to.",
     },
     {
-      icon: IconLassie,
+      lucide: BookOpen,
       title: "Notion Skills database",
       body: "The agents' working instructions in plain language, readable and editable by you.",
     },
   ];
 
-  const connectedSources: React.ReactNode[] = [
-    <><strong>Kondo + LinkedIn.</strong> DM and connection sync, roughly $50/month. The only reliable route into LinkedIn, and one I use daily on my own workspace.</>,
-    <><strong>Attio.</strong> A source rather than a destination. Both platforms expose MCP connectors, so the migration runs agent to agent, and Attio is retired afterwards.</>,
-    <><strong>Luma.</strong> Event registrations and check-ins. See the note below, because the sensible answer here saves you money.</>,
-    <><strong>Enrichment provider.</strong> Company, role, profile detail and job-change tracking. Selected during the build against your real contacts rather than chosen now on reputation.</>,
-    <><strong>Slack.</strong> Not connected in this phase. Notion integrates with it natively, so it becomes straightforward once your migration completes.</>,
+  const connectedSources: Array<{
+    icon?: string;
+    lucide?: React.ComponentType<{ className?: string }>;
+    title: string;
+    body: React.ReactNode;
+  }> = [
+    {
+      lucide: MessagesSquare,
+      title: "Kondo + LinkedIn",
+      body: "DM and connection sync, roughly $50/month. The only reliable route into LinkedIn, and one I use daily on my own workspace.",
+    },
+    {
+      lucide: Database,
+      title: "Attio",
+      body: "A source rather than a destination. Both platforms expose MCP connectors, so the migration runs agent to agent, and Attio is retired afterwards.",
+    },
+    {
+      lucide: Ticket,
+      title: "Luma",
+      body: "Event registrations and check-ins. See the note below, because the sensible answer here saves you money.",
+    },
+    {
+      lucide: Sparkles,
+      title: "Enrichment provider",
+      body: "Company, role, profile detail and job-change tracking. Selected during the build against your real contacts rather than chosen now on reputation.",
+    },
+    {
+      icon: IconSlack,
+      title: "Slack",
+      body: "Not connected in this phase. Notion integrates with it natively, so it becomes straightforward once your migration completes.",
+    },
   ];
 
   const scopeGroups: Array<{ label: string; intro?: string; items: React.ReactNode[] }> = [
