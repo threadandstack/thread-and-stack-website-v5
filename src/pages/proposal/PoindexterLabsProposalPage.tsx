@@ -1646,7 +1646,18 @@ const PoindexterLabsProposalPage = () => {
               />
               <P>If those three hold, the system is working. If they don't, we know precisely what to fix.</P>
 
-              <H3>What this makes possible later.</H3>
+            </section>
+
+            <Rule />
+
+            {/* 09 — Looking ahead */}
+            <section id="sec-09">
+              <SectionHead
+                num="09"
+                eyebrow="Looking ahead"
+                rotate={-0.3}
+                title={<>What this makes <Hl>possible later.</Hl></>}
+              />
               <P>
                 Notion's own positioning is <strong>"Where teams and agents build together"</strong>.
                 By establishing Notion as the core system, agents as the working layer, and the Notion
@@ -1665,6 +1676,7 @@ const PoindexterLabsProposalPage = () => {
             </section>
 
             <Rule />
+
 
             {/* Sign-off + business card */}
             <section>
