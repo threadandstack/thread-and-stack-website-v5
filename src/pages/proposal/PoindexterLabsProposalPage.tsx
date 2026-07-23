@@ -939,9 +939,12 @@ const PoindexterLabsProposalPage = () => {
             >
               <img src={BlackStacked} alt="Thread & Stack" className="h-20 sm:h-20 md:h-24 w-auto" />
               <X aria-hidden="true" className="w-5 h-5 sm:w-6 sm:h-6 text-foreground/25" strokeWidth={1} />
-              <div className="font-serif-pro italic text-2xl sm:text-3xl md:text-4xl font-medium text-foreground leading-none">
-                Poindexter Labs
-              </div>
+              <img
+                src={PoindexterBlack.url}
+                alt="Poindexter Labs"
+                className="h-16 sm:h-18 md:h-20 w-auto object-contain"
+              />
+
             </motion.div>
 
             <motion.h1
