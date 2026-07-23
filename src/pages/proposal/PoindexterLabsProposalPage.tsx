@@ -848,7 +848,7 @@ const PoindexterLabsProposalPage = () => {
                 num="01"
                 eyebrow="Where things stand"
                 rotate={-0.4}
-                title={<>Capability, <Hl>not crisis.</Hl></>}
+                title={<>Ahead of <Hl>the problem.</Hl></>}
               />
 
               <P>
