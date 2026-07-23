@@ -63,17 +63,15 @@ interface RetainerLayoutProps {
 }
 
 const RetainerLayout = ({ headline, subtitle, pricing, pricingNote }: RetainerLayoutProps) => {
-  const handleDownload = () => {
-    window.print();
-  };
-
   return (
     <div className="min-h-screen bg-muted/50 flex justify-center items-start py-10 px-5 print:bg-white print:p-0">
       {/* Download button */}
       <div className="fixed top-5 right-5 z-50 print:hidden">
-        <Button onClick={handleDownload} size="sm" className="gap-2 rounded-lg shadow-lg">
-          <Download className="w-3.5 h-3.5" />
-          Download PDF
+        <Button asChild size="sm" className="gap-2 rounded-lg shadow-lg">
+          <a href={proposalPdf.url} download="Proposal_for_Summit.pdf">
+            <Download className="w-3.5 h-3.5" />
+            Download PDF
+          </a>
         </Button>
       </div>
 
