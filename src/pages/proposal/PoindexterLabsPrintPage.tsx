@@ -226,7 +226,7 @@ const PoindexterLabsPrintPage = () => {
             {journeySteps.map((s) => (
               <li key={s.title}>
                 <strong>
-                  {s.title} — {s.state === "done" ? "complete" : s.state === "current" ? "current" : "upcoming"}.
+                  {s.title}, {s.state === "done" ? "complete" : s.state === "current" ? "current" : "upcoming"}.
                 </strong>{" "}
                 {s.body}
               </li>
@@ -272,7 +272,7 @@ const PoindexterLabsPrintPage = () => {
               <li key={t.label}>
                 <div className="pd-timeline-head">
                   <strong>{t.label}</strong>
-                  <span> — {t.when} · Owner: {t.owner}</span>
+                  <span> · {t.when} · Owner: {t.owner}</span>
                 </div>
                 <div>{t.note}</div>
               </li>
