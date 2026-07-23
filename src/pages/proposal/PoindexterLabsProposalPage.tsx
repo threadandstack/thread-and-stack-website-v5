@@ -1,6 +1,23 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowRight, ArrowUpRight, Download, X, Send, Check, Linkedin, Rocket } from "lucide-react";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  Download,
+  X,
+  Send,
+  Check,
+  Linkedin,
+  Rocket,
+  ChevronDown,
+  Smartphone,
+  Zap,
+  BookOpen,
+  MessagesSquare,
+  Sparkles,
+  Database,
+  Ticket,
+} from "lucide-react";
 import NotionBadges from "@/assets/notion-badges.png";
 import { PillButton } from "@/components/ui/pill-button";
 import { Input } from "@/components/ui/input";
@@ -19,6 +36,7 @@ import IconNotionAI from "@/assets/proposal/icons/notion-ai.png";
 import IconLassie from "@/assets/proposal/icons/lassie.png";
 import IconNotionCalendar from "@/assets/proposal/icons/notion-calendar.svg";
 import IconNotionMail from "@/assets/proposal/icons/notion-mail.svg";
+import IconSlack from "@/assets/proposal/icons/slack.svg";
 import { Tilt3D } from "@/components/Tilt3D";
 
 /* ---------------------------- Reply Drawer ---------------------------- */
