@@ -393,7 +393,66 @@ const EditorialTable = ({
   </motion.div>
 );
 
-/* ---------------------------- Welcome ---------------------------- */
+/* ---------------------------- Print styles + Accordion ---------------------------- */
+
+const PrintStyles = () => (
+  <style>{`
+    @media print {
+      [data-accordion-panel] { grid-template-rows: 1fr !important; opacity: 1 !important; }
+      [data-accordion-panel] > div { overflow: visible !important; }
+      [data-accordion-chevron], [data-expand-all], [data-jump-nav], [data-print-hide] { display: none !important; }
+    }
+  `}</style>
+);
+
+/** Simple collapsible section for inline lists. Controlled or uncontrolled. */
+const Toggle = ({
+  label,
+  defaultOpen = false,
+  open: controlledOpen,
+  onToggle,
+  children,
+}: {
+  label: string;
+  defaultOpen?: boolean;
+  open?: boolean;
+  onToggle?: () => void;
+  children: ReactNode;
+}) => {
+  const [internal, setInternal] = useState(defaultOpen);
+  const open = controlledOpen ?? internal;
+  const handle = onToggle ?? (() => setInternal((o) => !o));
+  return (
+    <div className="mt-4">
+      <button
+        type="button"
+        onClick={handle}
+        aria-expanded={open}
+        className="w-full flex items-center justify-between gap-3 py-2.5 text-left group"
+      >
+        <span className="font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-muted-foreground group-hover:text-foreground transition-colors">
+          {label}
+        </span>
+        <ChevronDown
+          data-accordion-chevron
+          className={`w-4 h-4 text-muted-foreground transition-transform duration-300 ${open ? "rotate-180" : ""}`}
+        />
+      </button>
+      <div
+        data-accordion-panel
+        className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out ${
+          open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+        }`}
+      >
+        <div className="overflow-hidden">
+          <div className="pt-2">{children}</div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+
 
 const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => {
   useEffect(() => {
