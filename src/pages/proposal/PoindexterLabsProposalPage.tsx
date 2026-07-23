@@ -563,30 +563,22 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => {
           >
             <p>Dear Jocelyn,</p>
             <p>
-              You are carrying somewhere between two and three hundred relationships in working
-              memory, and the cost of that isn't only the ones you forget. It's that every new
-              introduction arrives with a condition attached: engage now, properly, or lose the
-              context permanently. That's a tax on every good thing that happens to you, and it gets
-              heavier as Poindexter grows.
+              You've been carrying too many relationships in your head. The pain is specific: every new
+              introduction arrives with a condition attached, engage now and properly, or lose the
+              context for good. This blueprint sets out a system that takes the weight off you, and
+              lays the groundwork for the context layer that means you can build more and more agentic
+              support over time, with or without my involvement.
             </p>
             <p>
-              This blueprint sets out a system built to take that weight off you. Not a database you
-              have to remember to visit, because you told me plainly you won't, and you'd be right
-              not to. What we're building is an interaction layer: a set of small agents that hold
-              your relationship history, answer you in plain English, and prompt you when they're
-              missing something, all reachable from the Notion app on your phone. Notion is the
-              substrate underneath. What you actually get is delegation you can verify, which is the
-              thing that's been missing since Emily.
+              You aren't someone who lives in a CRM day to day, so this is geared towards interacting
+              with the Notion agents on your phone. You can speak, or tap in a quick request, and
+              Notion AI, or one of your custom agents, will do the legwork in the palm of your hand.
             </p>
             <p>
-              One honest word on WhatsApp, because it mattered to you and it shapes this document.
-              I've researched it properly since we spoke, and there is now a supported route. I've
-              set out what it would give you and what it would cost further down, and my
-              recommendation is that we don't build it in this phase. You're moving the company to
-              Slack for ISO reasons anyway, Slack connects to Notion natively, and I'd rather spend
-              your budget on the system you'll keep than on a bridge to a channel you're leaving.
-              Where the agent can't see, it will ask you, which is the behaviour you described
-              wanting in the first place.
+              A heads up on WhatsApp. You raised it early, and I want to be clear: the research
+              reinforced that it's complex, and potentially risky for someone certifying to ISO 27001.
+              Full details are inside, but to be upfront, my suggestion is that it's treated either as
+              a separate scope or as a reason to prioritise other channels.
             </p>
             <p className="font-serif-pro italic text-lg text-primary-foreground pt-1">Brendan</p>
           </motion.div>
