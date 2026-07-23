@@ -672,9 +672,9 @@ const PoindexterLabsProposalPage = () => {
       state: "done",
     },
     {
-      title: "NDA aligned",
-      body: "Reached in good faith. This blueprint acts as the Scope of Work supporting it.",
-      state: "done",
+      title: "NDA",
+      body: "Agreed in principle on the call. Signed by both sides before any access is granted.",
+      state: "upcoming",
     },
     {
       title: "This blueprint",
