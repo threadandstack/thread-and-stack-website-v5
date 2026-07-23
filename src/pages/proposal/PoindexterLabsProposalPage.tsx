@@ -10,13 +10,6 @@ import {
   Linkedin,
   Rocket,
   ChevronDown,
-  Smartphone,
-  Zap,
-  BookOpen,
-  MessagesSquare,
-  Sparkles,
-  Database,
-  Ticket,
 } from "lucide-react";
 import NotionBadges from "@/assets/notion-badges.png";
 import { PillButton } from "@/components/ui/pill-button";
@@ -34,9 +27,27 @@ import BrendanAvatar from "@/assets/brendan-avatar.webp";
 import IconNotion from "@/assets/proposal/icons/notion.png";
 import IconNotionAI from "@/assets/proposal/icons/notion-ai.png";
 import IconLassie from "@/assets/proposal/icons/lassie.png";
-import IconNotionCalendar from "@/assets/proposal/icons/notion-calendar.svg";
-import IconNotionMail from "@/assets/proposal/icons/notion-mail.svg";
 import IconSlack from "@/assets/proposal/icons/slack.svg";
+import IconNotionCalendarAsset from "@/assets/proposal/icons/notion-calendar-v2.png.asset.json";
+import IconNotionMailAsset from "@/assets/proposal/icons/notion-mail-v2.png.asset.json";
+import IconNotionAppAsset from "@/assets/proposal/icons/notion-app.png.asset.json";
+import IconNotionAutomationsAsset from "@/assets/proposal/icons/notion-automations.png.asset.json";
+import IconNotionSkillsAsset from "@/assets/proposal/icons/notion-skills.png.asset.json";
+import IconApolloAsset from "@/assets/proposal/icons/apollo.png.asset.json";
+import IconAttioAsset from "@/assets/proposal/icons/attio.png.asset.json";
+import IconKondoAsset from "@/assets/proposal/icons/kondo.png.asset.json";
+import IconLumaAsset from "@/assets/proposal/icons/luma.png.asset.json";
+import IconGoogleWorkspaceAsset from "@/assets/proposal/icons/google-workspace.png.asset.json";
+const IconNotionCalendar = IconNotionCalendarAsset.url;
+const IconNotionMail = IconNotionMailAsset.url;
+const IconNotionApp = IconNotionAppAsset.url;
+const IconNotionAutomations = IconNotionAutomationsAsset.url;
+const IconNotionSkills = IconNotionSkillsAsset.url;
+const IconApollo = IconApolloAsset.url;
+const IconAttio = IconAttioAsset.url;
+const IconKondo = IconKondoAsset.url;
+const IconLuma = IconLumaAsset.url;
+const IconGoogleWorkspace = IconGoogleWorkspaceAsset.url;
 import { Tilt3D } from "@/components/Tilt3D";
 
 /* ---------------------------- Reply Drawer ---------------------------- */
@@ -722,7 +733,7 @@ const PoindexterLabsProposalPage = () => {
       tag: "Three agents included",
     },
     {
-      lucide: Smartphone,
+      icon: IconNotionApp,
       title: "The Notion app",
       body: "Where you reach all of it, from your phone, in conversation.",
     },
@@ -737,12 +748,12 @@ const PoindexterLabsProposalPage = () => {
       body: "Email reached on request and on a scheduled sweep, rather than mirrored wholesale.",
     },
     {
-      lucide: Zap,
+      icon: IconNotionAutomations,
       title: "Notion automations",
       body: "The native triggers that move records between states without anyone remembering to.",
     },
     {
-      lucide: BookOpen,
+      icon: IconNotionSkills,
       title: "Notion Skills database",
       body: "The agents' working instructions in plain language, readable and editable by you.",
     },
@@ -755,24 +766,29 @@ const PoindexterLabsProposalPage = () => {
     body: React.ReactNode;
   }> = [
     {
-      lucide: MessagesSquare,
+      icon: IconKondo,
       title: "Kondo + LinkedIn",
       body: "DM and connection sync, roughly $50/month. The only reliable route into LinkedIn, and one I use daily on my own workspace.",
     },
     {
-      lucide: Database,
+      icon: IconAttio,
       title: "Attio",
       body: "A source rather than a destination. Both platforms expose MCP connectors, so the migration runs agent to agent, and Attio is retired afterwards.",
     },
     {
-      lucide: Ticket,
+      icon: IconLuma,
       title: "Luma",
       body: "Event registrations and check-ins. See the note below, because the sensible answer here saves you money.",
     },
     {
-      lucide: Sparkles,
+      icon: IconApollo,
       title: "Enrichment provider",
       body: "Company, role, profile detail and job-change tracking. Selected during the build against your real contacts rather than chosen now on reputation.",
+    },
+    {
+      icon: IconGoogleWorkspace,
+      title: "Google Workspace",
+      body: "Calendar, contacts and mail sit behind the mail connector and Notion Calendar, so the workspace reads from Google without pulling every message into Notion.",
     },
     {
       icon: IconSlack,
