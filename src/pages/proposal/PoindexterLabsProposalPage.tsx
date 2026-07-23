@@ -946,9 +946,69 @@ const PoindexterLabsProposalPage = () => {
           </div>
         </header>
 
+        <PrintStyles />
+
+        {/* ============== AT A GLANCE ============== */}
+        <section className="px-5 sm:px-8 pb-6">
+          <div className="max-w-2xl mx-auto">
+            <div className="rounded-2xl border border-foreground/15 bg-card/60 backdrop-blur p-6 sm:p-8 shadow-[0_2px_10px_rgba(0,0,0,0.03)]">
+              <div className="font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-gradient-warm mb-5">
+                At a glance
+              </div>
+              <dl className="grid sm:grid-cols-[max-content_1fr] gap-x-8 gap-y-4">
+                {[
+                  ["What", "A Notion relationship system with agents you reach from your phone. Contacts, activity history, pipelines, and three custom agents."],
+                  ["Timeline", "Six to eight weeks to build, then two months of supported adoption included."],
+                  ["Investment", "£11,605 net of your diagnostic credit. 40% on signature, then three monthly instalments."],
+                  ["From you", "Decisions on tagging and field mapping, access to Attio, LinkedIn, Gmail and Luma, and a signed NDA before anything starts."],
+                  ["Not in this phase", "WhatsApp capture, team rollout, the Google Drive restructure, and Attio records older than January 2026."],
+                ].map(([k, v]) => (
+                  <div key={k as string} className="contents">
+                    <dt className="font-sans text-[11px] font-bold tracking-[0.18em] uppercase text-muted-foreground pt-1 sm:whitespace-nowrap">
+                      {k}
+                    </dt>
+                    <dd className="font-sans text-[15px] leading-[1.65] text-foreground/80 mb-3 sm:mb-0">
+                      {v}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+              <div className="mt-6 pt-5 border-t border-foreground/10 font-sans text-[13px] text-muted-foreground italic">
+                Full read, about twelve minutes. Everything below expands if you want the detail.
+              </div>
+            </div>
+
+            {/* Jump navigation */}
+            <nav data-jump-nav className="mt-6 print:hidden">
+              <div className="flex gap-2 overflow-x-auto pb-2 sm:flex-wrap sm:overflow-visible sm:pb-0 -mx-1 px-1">
+                {[
+                  ["sec-01", "01 Capability"],
+                  ["sec-02", "02 The stack"],
+                  ["sec-03", "03 The plan"],
+                  ["sec-04", "04 Scope"],
+                  ["sec-05", "05 Numbers"],
+                  ["sec-06", "06 WhatsApp"],
+                  ["sec-07", "07 Compliance"],
+                  ["sec-08", "08 Success measures"],
+                  ["sec-09", "09 Looking ahead"],
+                ].map(([id, label]) => (
+                  <a
+                    key={id}
+                    href={`#${id}`}
+                    className="flex-shrink-0 inline-flex items-center rounded-full border border-foreground/15 bg-background/40 px-3 py-1.5 font-sans text-[11.5px] text-muted-foreground hover:text-foreground hover:border-foreground/30 transition-colors whitespace-nowrap"
+                  >
+                    {label}
+                  </a>
+                ))}
+              </div>
+            </nav>
+          </div>
+        </section>
+
         {/* ============== BODY ============== */}
         <article className="px-5 sm:px-8 pb-24">
           <div className="max-w-2xl mx-auto">
+
 
             {/* 01 — Where things stand */}
             <section id="sec-01">
