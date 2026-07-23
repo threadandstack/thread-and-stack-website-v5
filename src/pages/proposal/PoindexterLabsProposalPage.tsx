@@ -1197,8 +1197,8 @@ const PoindexterLabsProposalPage = () => {
                     key={gi}
                     {...fadeUp}
                     className="mt-6 first:mt-6"
-                    onMouseEnter={() => setScopeHover(gi)}
-                    onMouseLeave={() => setScopeHover(null)}
+                    onMouseEnter={() => onScopeEnter(gi)}
+                    onMouseLeave={onScopeLeave}
                   >
                     <Tilt3D maxX={4} maxY={3}>
                       <div className="relative rounded-3xl bg-card p-6 sm:p-8 lg:p-10 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)] border border-foreground/5 overflow-hidden">
