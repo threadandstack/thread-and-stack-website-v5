@@ -26,7 +26,9 @@ export const IconAttio = IconAttioAsset.url;
 export const IconKondo = IconKondoAsset.url;
 export const IconLuma = IconLumaAsset.url;
 export const IconGoogleWorkspace = IconGoogleWorkspaceAsset.url;
+export const IconNotionMeetingNotes = IconNotionMeetingNotesAsset.url;
 export { IconNotion, IconNotionAI, IconLassie, IconSlack };
+
 
 export const proposalMeta = {
   ref: "PDL1",
