@@ -530,9 +530,9 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => {
             transition={{ duration: 1, delay: 0.55 }}
             className="font-serif-pro text-3xl sm:text-5xl md:text-6xl italic font-medium leading-[1.05] tracking-tight mb-5 text-balance"
           >
-            Delegation you can{" "}
+            Held,{" "}
             <span className="inline-block text-gradient-warm" style={{ transform: "translateY(1px)" }}>
-              verify.
+              so you don't have to.
             </span>
           </motion.h1>
 
