@@ -1165,9 +1165,9 @@ const PoindexterLabsProposalPage = () => {
             <section id="sec-04">
               <SectionHead
                 num="04"
-                eyebrow="What's in scope"
+                eyebrow="What's included"
                 rotate={-0.3}
-                title={<>Phase 1: <Hl>the build.</Hl></>}
+                title={<>The <Hl>scope of work.</Hl></>}
               />
 
               <P>Everything below is included in the project fee.</P>
