@@ -13,6 +13,8 @@ import IconAttioAsset from "@/assets/proposal/icons/attio.png.asset.json";
 import IconKondoAsset from "@/assets/proposal/icons/kondo.png.asset.json";
 import IconLumaAsset from "@/assets/proposal/icons/luma.png.asset.json";
 import IconGoogleWorkspaceAsset from "@/assets/proposal/icons/google-workspace.png.asset.json";
+import IconNotionMeetingNotesAsset from "@/assets/proposal/icons/notion-meeting-notes.gif.asset.json";
+
 
 export const IconNotionCalendar = IconNotionCalendarAsset.url;
 export const IconNotionMail = IconNotionMailAsset.url;
@@ -24,7 +26,9 @@ export const IconAttio = IconAttioAsset.url;
 export const IconKondo = IconKondoAsset.url;
 export const IconLuma = IconLumaAsset.url;
 export const IconGoogleWorkspace = IconGoogleWorkspaceAsset.url;
+export const IconNotionMeetingNotes = IconNotionMeetingNotesAsset.url;
 export { IconNotion, IconNotionAI, IconLassie, IconSlack };
+
 
 export const proposalMeta = {
   ref: "PDL1",
@@ -95,8 +99,10 @@ export type StackLayer = {
 export const stack: StackLayer[] = [
   { icon: IconNotion, title: "Notion workspace", body: "One permissioned home for contacts, activity, pipelines, tasks and meetings." },
   { icon: IconLassie, title: "Notion AI", body: "Plain-English questions answered from inside your own records." },
+  { icon: IconNotionMeetingNotes, title: "Notion AI Meeting Notes", body: "Calls transcribed and summarised onto a Notion page and attached to the right contact. No bot joins the call." },
   { icon: IconNotionAI, title: "Custom agents", body: "The relationship agent, the pre-meeting brief, the triage agent. Small, single-purpose, invoked when needed.", tag: "Three agents included" },
   { icon: IconNotionApp, title: "The Notion apps", body: "Notion and Notion Agents on your phone. Where you reach all of it, in conversation, wherever you happen to be." },
+
   { icon: IconNotionCalendar, title: "Notion Calendar", body: "Meetings connected to the people in them and the history behind them." },
   { icon: IconNotionMail, title: "Notion mail connector", body: "Email reached on request and on a scheduled sweep, rather than mirrored wholesale." },
   { icon: IconNotionAutomations, title: "Notion automations", body: "The native triggers that move records between states without anyone remembering to." },
@@ -164,12 +170,14 @@ export const scopeGroups: ScopeGroup[] = [
   },
   {
     label: "E. Channel capture",
-    summary: "LinkedIn via Kondo, email on demand, Luma events, the Attio migration and enrichment.",
+    summary: "LinkedIn via Kondo, email on demand, meeting capture, Luma events, the Attio migration and enrichment.",
     items: [
       <><strong>LinkedIn via Kondo.</strong> DM sync into Notion, with new connections landing in a triage state rather than straight into the active CRM. After an event that adds a hundred people at once, that distinction is the difference between a system you trust and a list you ignore.</>,
       <><strong>Email</strong>, reached through Notion's mail connector and your agents rather than mirrored wholesale into the workspace. You ask for what you need, and a scheduled sweep pulls correspondence with people already in the CRM into their activity record. Two reasons for that design: a complete copy of your mailbox sitting inside Notion would be a liability under your ISO work, and agent consumption scales with the volume of mail being read, so a targeted sweep costs a fraction of a full sync. Showing you how to trigger a sweep when you want one is part of handover.</>,
       <><strong>Luma event data</strong>, registrations and check-ins, so attendance is a fact in the record rather than a guess. Delivered by guest CSV per event on Luma's free tier, or through the Luma API if you hold Luma Plus. See the note further down.</>,
+      <><strong>Meeting capture through Notion AI Meeting Notes.</strong> This replaces what Attio currently does for you. Recordings transcribe and summarise onto a Notion page that attaches to the relevant contact, so the activity log keeps filling after Attio is retired and the pre-meeting brief agent always has something recent to work from. No bot joins your calls and no third-party transcription service sits between your conversations and your workspace. Worth knowing how it behaves: the phone app records in the background, so in-person meetings and events are covered from your pocket, but for a remote video call the desktop app is the only mode that captures the other person's audio as well as your own. There is no speaker identification and no automatic joining from your calendar, so starting a recording stays a deliberate act.</>,
       <><strong>Attio migration.</strong> Both Attio and Notion expose MCP connectors, so the transfer runs through an agent rather than by hand. Your 175 meeting transcripts come across as relationship history, attached to the right contacts. Contact and company records created from 1 January 2026 onwards are included. Anything older is a considerably larger job than the transcripts and sits outside this phase, though I'll give you a volume estimate once I've seen the export so you can decide whether it's worth doing.</>,
+
       <><strong>Data enrichment</strong> for company, role and profile detail, plus periodic refresh so job changes surface without depending on people updating their own headlines. Provider recommendation and costs set out below.</>,
     ],
   },
@@ -220,7 +228,7 @@ export const beforeWeStartList: string[] = [
   "Access to your Attio account, to assess the 175 transcripts and confirm export format.",
   "Sample LinkedIn threads and Gmail correspondence, to confirm the sync scope and how far back to reach.",
   "Luma export or API access.",
-  "Confirmation of your Notion plan and entitlement.",
+  "Confirmation of your Notion plan and entitlement, since AI Meeting Notes and custom agents both need Business or above.",
   "A view of your Google Drive structure, so we know whether file linking belongs in this phase or the next.",
   "Your best current guess at the Slack migration timing, since it determines when channel capture becomes worth scoping.",
 ];
@@ -246,7 +254,7 @@ export const subscriptionsIntro =
   "These are not part of the project fee and are paid to the providers rather than to Thread & Stack. Figures are working estimates as of July 2026 and should be confirmed before commitment.";
 
 export const subscriptionsList: ReactNode[] = [
-  <><strong>Notion.</strong> You mentioned a VC-backed startup entitlement, and I'll send the affiliate signup route as a backup. Plan choice affects which AI features are available, so worth settling early.</>,
+  <><strong>Notion.</strong> You mentioned a VC-backed startup entitlement, and I'll send the affiliate signup route as a backup. Worth settling early, because plan choice is not cosmetic here: as of May 2026 the standalone AI add-on was withdrawn for new users, so AI Meeting Notes and custom agents both require the Business plan at minimum, currently around $20 per seat per month billed annually. Everything in this build assumes that plan or above.</>,
   <><strong>Notion AI and agent consumption.</strong> Charged against your Notion plan. Expect somewhere in the region of £20 to £30 per seat per month once the agents are running, with email volume the largest single driver, since every message an agent reads costs something. This is a figure we can optimise rather than fix. The invoked-not-ambient design keeps it low, targeted sweeps keep it lower, and I'll show you where the levers are during adoption. Worth watching across the first two months rather than treating month one as representative.</>,
   <><strong>Kondo</strong>, for LinkedIn DM sync, roughly $50 per month.</>,
   <><strong>Luma.</strong> No cost on the free tier using CSV export per event. The API route requires Luma Plus at $59 per month billed annually, which I would not recommend at your current event frequency.</>,
@@ -320,6 +328,8 @@ export const complianceParagraphs: ReactNode[] = [
   <>You are certifying to ISO 27001, so this belongs in the document rather than in a footnote.</>,
   <>Building this system means processing personal data belonging to several hundred people who have not been asked. Under UK GDPR that makes Poindexter Labs the controller. The position is defensible and standard for relationship management, since these are people you have met, corresponded with or been introduced to, and the processing keeps existing records accurate rather than acquiring new contacts. It does need to be written down rather than assumed: a lawful basis under legitimate interests, a legitimate interests assessment, a retention position, and an entry in your record of processing activities. I'll provide a draft of the technical description for whoever handles your certification.</>,
   <>Enrichment adds a second consideration, since the provider processes contact data on your behalf. Whoever we select needs a data processing agreement in place before we connect it. I'll confirm certifications as part of the recommendation.</>,
+  <>Meeting transcription carries its own consideration. Notion processes AI Meeting Notes audio in the United States on AWS under standard contractual clauses, with no European hosting option at present, and obtaining consent from the other people on a call remains yours to manage rather than something the tool automates. For most of your conversations that is unremarkable, but it belongs in your record of processing activities, and it is worth agreeing a simple habit of asking before you record.</>,
+
   <>Notion's permission model works in your favour here. Access controls what each person sees, and Notion AI respects those boundaries, so when the team grows, junior members querying the workspace cannot surface what they cannot open.</>,
   <>On the supplier side of your certification, Thread &amp; Stack Ltd carries cyber and data cover to £2,000,000 alongside professional indemnity, and holds a signed mutual NDA with you before any access is granted. Full details sit under Terms above, and certificates are available for your supplier file.</>,
 ];
