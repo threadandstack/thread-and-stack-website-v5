@@ -501,7 +501,7 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => {
             <img
               src={PoindexterWhite.url}
               alt="Poindexter Labs"
-              className="h-12 sm:h-14 md:h-16 w-auto object-contain"
+              className="h-24 sm:h-28 md:h-32 w-auto object-contain"
             />
           </motion.div>
 
@@ -942,7 +942,7 @@ const PoindexterLabsProposalPage = () => {
               <img
                 src={PoindexterBlack.url}
                 alt="Poindexter Labs"
-                className="h-16 sm:h-18 md:h-20 w-auto object-contain"
+                className="h-32 sm:h-36 md:h-40 w-auto object-contain"
               />
 
             </motion.div>
