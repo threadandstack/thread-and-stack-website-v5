@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   ArrowRight,
@@ -27,31 +27,36 @@ import GreyStacked from "@/assets/logos/Grey_TS_Stacked.svg";
 import PoindexterBlack from "@/assets/proposal/poindexter-black.png.asset.json";
 import PoindexterWhite from "@/assets/proposal/poindexter-white.png.asset.json";
 import BrendanAvatar from "@/assets/brendan-avatar.webp";
-import IconNotion from "@/assets/proposal/icons/notion.png";
-import IconNotionAI from "@/assets/proposal/icons/notion-ai.png";
-import IconLassie from "@/assets/proposal/icons/lassie.png";
-import IconSlack from "@/assets/proposal/icons/slack.svg";
-import IconNotionCalendarAsset from "@/assets/proposal/icons/notion-calendar-v2.png.asset.json";
-import IconNotionMailAsset from "@/assets/proposal/icons/notion-mail-v2.png.asset.json";
-import IconNotionAppAsset from "@/assets/proposal/icons/notion-app.png.asset.json";
-import IconNotionAutomationsAsset from "@/assets/proposal/icons/notion-automations.png.asset.json";
-import IconNotionSkillsAsset from "@/assets/proposal/icons/notion-skills.png.asset.json";
-import IconApolloAsset from "@/assets/proposal/icons/apollo.png.asset.json";
-import IconAttioAsset from "@/assets/proposal/icons/attio.png.asset.json";
-import IconKondoAsset from "@/assets/proposal/icons/kondo.png.asset.json";
-import IconLumaAsset from "@/assets/proposal/icons/luma.png.asset.json";
-import IconGoogleWorkspaceAsset from "@/assets/proposal/icons/google-workspace.png.asset.json";
-const IconNotionCalendar = IconNotionCalendarAsset.url;
-const IconNotionMail = IconNotionMailAsset.url;
-const IconNotionApp = IconNotionAppAsset.url;
-const IconNotionAutomations = IconNotionAutomationsAsset.url;
-const IconNotionSkills = IconNotionSkillsAsset.url;
-const IconApollo = IconApolloAsset.url;
-const IconAttio = IconAttioAsset.url;
-const IconKondo = IconKondoAsset.url;
-const IconLuma = IconLumaAsset.url;
-const IconGoogleWorkspace = IconGoogleWorkspaceAsset.url;
 import { Tilt3D } from "@/components/Tilt3D";
+import {
+  journeySteps,
+  timeline,
+  stack,
+  connectedSources,
+  scopeGroups,
+  exclusionsList,
+  exclusionsFootnote,
+  beforeWeStartList,
+  investmentRows,
+  paymentScheduleRows,
+  paymentScheduleNote,
+  subscriptionsIntro,
+  subscriptionsList,
+  termsMain,
+  termsExpandable,
+  whatsappCards,
+  whatsappReasons,
+  whatsappClosing,
+  complianceParagraphs,
+  successMeasuresIntro,
+  successMeasures,
+  successMeasuresClosing,
+  section09Paragraphs,
+  runningAgentsNote,
+  lumaNote,
+  briefCards,
+  atAGlanceRows,
+} from "@/content/poindexterProposal";
 
 /* ---------------------------- Reply Drawer ---------------------------- */
 
