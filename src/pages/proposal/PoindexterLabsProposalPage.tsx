@@ -868,8 +868,8 @@ const PoindexterLabsProposalPage = () => {
                 predictable result of five channels with no shared spine.
               </P>
               <P>
-                This is capability, not crisis. You said it yourself: most things are "now" and this
-                one isn't. That's exactly why it's worth building properly.
+                You said it yourself: most things are "now" and this one isn't. Building it while
+                nothing is on fire is exactly why it will be built properly.
               </P>
 
               <motion.div {...fadeUp} className="mt-8">
