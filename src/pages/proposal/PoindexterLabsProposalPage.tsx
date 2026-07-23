@@ -10,13 +10,6 @@ import {
   Linkedin,
   Rocket,
   ChevronDown,
-  Smartphone,
-  Zap,
-  BookOpen,
-  MessagesSquare,
-  Sparkles,
-  Database,
-  Ticket,
 } from "lucide-react";
 import NotionBadges from "@/assets/notion-badges.png";
 import { PillButton } from "@/components/ui/pill-button";
