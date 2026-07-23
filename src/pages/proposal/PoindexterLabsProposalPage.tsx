@@ -1396,9 +1396,15 @@ const PoindexterLabsProposalPage = () => {
               {scopeGroups.map((group, gi) => {
                 const [letter, ...rest] = group.label.split(". ");
                 const title = rest.join(". ");
-                const isOpen = scopeOpen[gi];
+                const isOpen = isScopeOpen(gi);
                 return (
-                  <motion.div key={gi} {...fadeUp} className="mt-6 first:mt-6">
+                  <motion.div
+                    key={gi}
+                    {...fadeUp}
+                    className="mt-6 first:mt-6"
+                    onMouseEnter={() => setScopeHover(gi)}
+                    onMouseLeave={() => setScopeHover(null)}
+                  >
                     <Tilt3D maxX={4} maxY={3}>
                       <div className="relative rounded-3xl bg-card p-6 sm:p-8 lg:p-10 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)] border border-foreground/5 overflow-hidden">
                         <div className="absolute -top-6 -right-6 w-40 h-40 rounded-full bg-gradient-warm opacity-[0.07] blur-2xl pointer-events-none" />
@@ -1451,6 +1457,7 @@ const PoindexterLabsProposalPage = () => {
                   </motion.div>
                 );
               })}
+
 
               {/* What's not included, and why */}
               <motion.div {...fadeUp} className="mt-14 rounded-2xl border border-clay/30 bg-clay/5 p-5 sm:p-6">
