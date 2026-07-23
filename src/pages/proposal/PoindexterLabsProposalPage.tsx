@@ -1477,14 +1477,19 @@ const PoindexterLabsProposalPage = () => {
                 items={[
                   <>Thread &amp; Stack Ltd is not currently VAT registered. No VAT is applicable.</>,
                   <>Payment is a 40% deposit on signature with the diagnostic credit applied, then three equal monthly instalments. <strong>15% late charge applies after 30 days.</strong></>,
-                  <><strong>Company details.</strong> Thread &amp; Stack Ltd, company number 17344201.</>,
-                  <><strong>Insurance.</strong> Thread &amp; Stack Ltd carries professional indemnity to £2,000,000 per claim, public and products liability to £1,000,000, and cyber and data cover to £2,000,000. Certificates are available on request for your supplier records.</>,
-                  <><strong>Confidentiality.</strong> Thread &amp; Stack can provide a standard mutual non-disclosure agreement at no charge, signed on request and covering both directions. Where Poindexter Labs prefers to use its own agreement, it will be reviewed in good faith. Where a client agreement requires external legal review, for instance where it carries liquidated damages, indemnities or similar provisions, the cost of that review is recharged and agreed in writing before it is incurred. Nothing arrives on an invoice without having been agreed first.</>,
-                  <>Thread &amp; Stack Ltd is a <strong>Certified Notion Consulting Partner</strong>, but operates independently of Notion. Notion retains all rights to its own products, and responsibility for its service delivery, uptime, security and product changes sits with Notion. Thread &amp; Stack accepts no liability for the failure, outage or change of Notion's software, or of any other third-party software Poindexter Labs uses.</>,
-                  <>Poindexter Labs' licensing, payment and data relationships with Notion and every other provider are held directly between Poindexter Labs and those providers. Thread &amp; Stack is not a party to those agreements.</>,
                 ]}
               />
-            </section>
+              <Toggle label="Company details, insurance, confidentiality and liability">
+                <BulletList
+                  items={[
+                    <><strong>Company details.</strong> Thread &amp; Stack Ltd, company number 17344201.</>,
+                    <><strong>Insurance.</strong> Thread &amp; Stack Ltd carries professional indemnity to £2,000,000 per claim, public and products liability to £1,000,000, and cyber and data cover to £2,000,000. Certificates are available on request for your supplier records.</>,
+                    <><strong>Confidentiality.</strong> Thread &amp; Stack can provide a standard mutual non-disclosure agreement at no charge, signed on request and covering both directions. Where Poindexter Labs prefers to use its own agreement, it will be reviewed in good faith. Where a client agreement requires external legal review, for instance where it carries liquidated damages, indemnities or similar provisions, the cost of that review is recharged and agreed in writing before it is incurred. Nothing arrives on an invoice without having been agreed first.</>,
+                    <>Thread &amp; Stack Ltd is a <strong>Certified Notion Consulting Partner</strong>, but operates independently of Notion. Notion retains all rights to its own products, and responsibility for its service delivery, uptime, security and product changes sits with Notion. Thread &amp; Stack accepts no liability for the failure, outage or change of Notion's software, or of any other third-party software Poindexter Labs uses.</>,
+                    <>Poindexter Labs' licensing, payment and data relationships with Notion and every other provider are held directly between Poindexter Labs and those providers. Thread &amp; Stack is not a party to those agreements.</>,
+                  ]}
+                />
+              </Toggle>
 
             <Rule />
 
