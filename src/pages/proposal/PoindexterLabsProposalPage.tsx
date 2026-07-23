@@ -675,12 +675,11 @@ const PoindexterLabsProposalPage = () => {
       window.clearTimeout(hoverCloseTimer.current);
       hoverCloseTimer.current = null;
     }
-    setScopeHover(i);
+    // Hover opens and pins the group; it stays open until the user clicks to close it.
+    setScopePinned((prev) => (prev[i] ? prev : prev.map((v, idx) => (idx === i ? true : v))));
   };
   const onScopeLeave = () => {
-    if (!finePointer) return;
-    if (hoverCloseTimer.current) window.clearTimeout(hoverCloseTimer.current);
-    hoverCloseTimer.current = window.setTimeout(() => setScopeHover(null), 200);
+    // No auto-close on hover-out; groups remain open until explicitly toggled.
   };
   const isScopeOpen = (i: number) => scopePinned[i] || scopeHover === i;
   const allScopeOpen = scopePinned.every(Boolean);
