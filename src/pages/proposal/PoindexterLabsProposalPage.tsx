@@ -1490,6 +1490,8 @@ const PoindexterLabsProposalPage = () => {
                   ]}
                 />
               </Toggle>
+            </section>
+
 
             <Rule />
 
