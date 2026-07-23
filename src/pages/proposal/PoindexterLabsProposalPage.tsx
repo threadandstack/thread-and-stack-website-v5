@@ -1392,22 +1392,24 @@ const PoindexterLabsProposalPage = () => {
                     <div className="font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-gradient-warm mb-3">
                       Before we start
                     </div>
-                    <ul className="space-y-3 list-none pl-0">
-                      {[
-                        "The NDA signed on both sides, ahead of anything else.",
-                        "Access to your Attio account, to assess the 175 transcripts and confirm export format.",
-                        "Sample LinkedIn threads and Gmail correspondence, to confirm the sync scope and how far back to reach.",
-                        "Luma export or API access.",
-                        "Confirmation of your Notion plan and entitlement.",
-                        "A view of your Google Drive structure, so we know whether file linking belongs in this phase or the next.",
-                        "Your best current guess at the Slack migration timing, since it determines when channel capture becomes worth scoping.",
-                      ].map((it, i) => (
-                        <li key={i} className="relative pl-6 text-[15.5px] leading-[1.7] text-foreground/80">
-                          <span className="absolute left-0 top-[0.7em] w-[7px] h-[7px] rounded-full border-[1.5px] border-accent" />
-                          {it}
-                        </li>
-                      ))}
-                    </ul>
+                    <Toggle label="See the list">
+                      <ul className="space-y-3 list-none pl-0">
+                        {[
+                          "The NDA signed on both sides, ahead of anything else.",
+                          "Access to your Attio account, to assess the 175 transcripts and confirm export format.",
+                          "Sample LinkedIn threads and Gmail correspondence, to confirm the sync scope and how far back to reach.",
+                          "Luma export or API access.",
+                          "Confirmation of your Notion plan and entitlement.",
+                          "A view of your Google Drive structure, so we know whether file linking belongs in this phase or the next.",
+                          "Your best current guess at the Slack migration timing, since it determines when channel capture becomes worth scoping.",
+                        ].map((it, i) => (
+                          <li key={i} className="relative pl-6 text-[15.5px] leading-[1.7] text-foreground/80">
+                            <span className="absolute left-0 top-[0.7em] w-[7px] h-[7px] rounded-full border-[1.5px] border-accent" />
+                            {it}
+                          </li>
+                        ))}
+                      </ul>
+                    </Toggle>
                   </div>
                 </Tilt3D>
               </motion.div>
