@@ -133,7 +133,7 @@ const ORGANIZATION_LD = {
   "@type": "Organization",
   name: "Thread & Stack",
   url: SITE,
-  logo: `${SITE}/favicon.svg`,
+  logo: `${SITE}/favicon.png`,
   founder: {
     "@type": "Person",
     name: "Brendan Rodgers",
@@ -411,7 +411,7 @@ async function main() {
         url: SITE,
         logo: {
           "@type": "ImageObject",
-          url: `${SITE}/favicon-light.svg`,
+          url: `${SITE}/favicon.png`,
         },
       },
     };
