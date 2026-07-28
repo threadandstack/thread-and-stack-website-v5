@@ -1211,7 +1211,7 @@ const SummitNetworkProposalPage = () => {
               <EditorialTable
                 head={["Item", "GBP", "USD equivalent"]}
                 rows={[
-                  ["Notion operations build (2-month build + 3-month launch support)", "£12,500", "≈ $16,880"],
+                  ["Original Quote, incl. 3 Months Supported Adoption", "£12,500", "≈ $16,880"],
                   [
                     "Diagnostic fee, already paid",
                     <span className="text-gradient-warm font-semibold">–£395 credited</span>,
@@ -1229,12 +1229,12 @@ const SummitNetworkProposalPage = () => {
 
               <H3>The numbers, updated</H3>
               <motion.p {...fadeUp} className="font-sans text-[13.5px] leading-[1.7] text-muted-foreground -mt-2">
-                Updated quote as of Tuesday 28 July. One month of launch support is credited at the premium support rate rather than the rate this package was priced at.
+                Updated quote as of Tuesday 28 July, with an updated exchange rate. One month of launch support is credited at the premium support rate rather than the rate this package was priced at.
               </motion.p>
               <EditorialTable
                 head={["Item", "GBP", "USD equivalent"]}
                 rows={[
-                  ["Original Quote, incl. 3 Months Supported Adoption", "£12,500", "≈ $16,880"],
+                  ["Original Quote, incl. 3 Months Supported Adoption", "£12,500", "≈$16,620"],
                   [
                     "New Quote, incl. 2 Months Supported Adoption",
                     <span className="text-gradient-warm font-semibold">£11,250</span>,
