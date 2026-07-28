@@ -1211,7 +1211,7 @@ const SummitNetworkProposalPage = () => {
               <EditorialTable
                 head={["Item", "GBP", "USD equivalent"]}
                 rows={[
-                  ["Notion operations build (2-month build + 2-month launch support)", "£12,500", "≈ $16,880"],
+                  ["Notion operations build (2-month build + 3-month launch support)", "£12,500", "≈ $16,880"],
                   [
                     "Diagnostic fee, already paid",
                     <span className="text-gradient-warm font-semibold">–£395 credited</span>,
@@ -1234,14 +1234,14 @@ const SummitNetworkProposalPage = () => {
               <EditorialTable
                 head={["Item", "GBP", "USD equivalent"]}
                 rows={[
-                  ["Proposal quote", "£12,500", "≈ $16,620"],
+                  ["Original Quote, incl. 3 Months Supported Adoption", "£12,500", "≈ $16,880"],
                   [
-                    "Less one month premium support",
+                    "New Quote, incl. 2 Months Supported Adoption",
                     <span className="text-gradient-warm font-semibold">£11,250</span>,
                     <span className="text-gradient-warm font-semibold">≈ $14,958</span>,
                   ],
                   [
-                    "Less diagnostic session credit (£395 / $535)",
+                    <strong>Final Total (incl Diagnostic Credit)</strong>,
                     <strong>£10,855</strong>,
                     <strong>≈ $14,435</strong>,
                   ],
