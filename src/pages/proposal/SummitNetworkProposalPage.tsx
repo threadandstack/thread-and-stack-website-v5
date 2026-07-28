@@ -15,6 +15,7 @@ import BlackStacked from "@/assets/logos/Black_TS_Stacked.svg";
 import GreyStacked from "@/assets/logos/Grey_TS_Stacked.svg";
 import BrendanAvatar from "@/assets/brendan-avatar.webp";
 import SummitLogo from "@/assets/proposal/summit-advisors-logo.png.asset.json";
+import SummitProposalPdf from "@/assets/summit-network-proposal.pdf.asset.json";
 import IconNotion from "@/assets/proposal/icons/notion.png";
 import IconNotionAI from "@/assets/proposal/icons/notion-ai.png";
 import IconLassie from "@/assets/proposal/icons/lassie.png";
@@ -535,7 +536,14 @@ const SummitNetworkProposalPage = () => {
     }
   }, [opened]);
 
-  const handleDownload = () => window.print();
+  const handleDownload = () => {
+    const link = document.createElement("a");
+    link.href = SummitProposalPdf.url;
+    link.download = "Thread_and_Stack_Summit_Network_Proposal.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   const timeline = [
     {
