@@ -1199,6 +1199,7 @@ const SummitNetworkProposalPage = () => {
                 title={<>The <Hl>numbers.</Hl></>}
               />
 
+              <H3>Original quote</H3>
               <EditorialTable
                 head={["Item", "GBP", "USD equivalent"]}
                 rows={[
@@ -1218,20 +1219,48 @@ const SummitNetworkProposalPage = () => {
                 amount will reflect the applicable exchange rate when invoiced.
               </motion.p>
 
-              <H3>Payment schedule</H3>
+              <H3>The numbers, updated</H3>
+              <motion.p {...fadeUp} className="font-sans text-[13.5px] leading-[1.7] text-muted-foreground -mt-2">
+                Updated quote as of Tuesday 28 July. One month of launch support is credited at the premium support rate rather than the rate this package was priced at.
+              </motion.p>
               <EditorialTable
-                head={["When", "GBP", "USD equivalent"]}
+                head={["Item", "GBP", "USD equivalent"]}
                 rows={[
-                  ["On signature (40% deposit, diagnostic credit applied)", "£4,605", "≈ $6,220"],
-                  ["End of month one", "£2,500", "≈ $3,375"],
-                  ["End of month two", "£2,500", "≈ $3,375"],
-                  ["End of month three", "£2,500", "≈ $3,375"],
-                  [<strong>Total</strong>, <strong>£12,105</strong>, <strong>≈ $16,345</strong>],
+                  ["Proposal quote", "£12,500", "≈ $16,620"],
+                  [
+                    "Less one month premium support",
+                    <span className="text-gradient-warm font-semibold">£11,250</span>,
+                    <span className="text-gradient-warm font-semibold">≈ $14,958</span>,
+                  ],
+                  [
+                    "Less diagnostic session credit (£395 / $535)",
+                    <strong>£10,855</strong>,
+                    <strong>≈ $14,435</strong>,
+                  ],
                 ]}
               />
 
               <motion.p {...fadeUp} className="font-sans text-[13.5px] leading-[1.7] text-muted-foreground mt-4">
-                The deposit is 40% of the build fee (£5,000) with the £395 diagnostic credit applied. Payment completes during supported adoption, so cost tracks alongside delivery rather than landing as one upfront sum.
+                USD amounts are indicative equivalents based on the exchange rate on 28 July 2026. Thread &amp; Stack's fees are set in GBP; the final USD amount will reflect the applicable exchange rate when invoiced.
+              </motion.p>
+
+              <H3>Payment schedule</H3>
+              <motion.p {...fadeUp} className="font-sans text-[13.5px] leading-[1.7] text-muted-foreground -mt-2">
+                Updated quote as of Tuesday 28 July.
+              </motion.p>
+              <EditorialTable
+                head={["When", "GBP", "USD equivalent"]}
+                rows={[
+                  ["On signature (40% deposit, less £395 credit)", "£4,105", "≈ $5,458"],
+                  ["End of month one", "£2,250", "≈ $2,992"],
+                  ["End of month two", "£2,250", "≈ $2,992"],
+                  ["End of month three", "£2,250", "≈ $2,992"],
+                  [<strong>Total</strong>, <strong>£10,855</strong>, <strong>≈ $14,435</strong>],
+                ]}
+              />
+
+              <motion.p {...fadeUp} className="font-sans text-[13.5px] leading-[1.7] text-muted-foreground mt-4">
+                The deposit is 40% of the updated fee with the £395 diagnostic credit applied. Payment completes during supported adoption, so cost tracks alongside delivery rather than landing as one upfront sum.
               </motion.p>
 
               <H3>After supported adoption</H3>
