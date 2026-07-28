@@ -564,7 +564,7 @@ const SummitNetworkProposalPage = () => {
     },
     {
       label: "Supported adoption",
-      when: "The three months that follow",
+      when: "The two months that follow",
       owner: "Thread & Stack and Summit",
       isLaunch: false,
       isComplete: false,
@@ -614,7 +614,7 @@ const SummitNetworkProposalPage = () => {
     },
     {
       title: "Adoption day, then supported adoption",
-      body: "The team walkthrough, the move in, and three months of hands-on support at 10 hours per month. This is also the window to reopen client acquisition, with me still alongside you.",
+      body: "The team walkthrough, the move in, and two months of hands-on support at 10 hours per month. This is also the window to reopen client acquisition, with me still alongside you.",
       state: "upcoming",
     },
   ];
@@ -751,7 +751,7 @@ const SummitNetworkProposalPage = () => {
       label: "G. Adoption and support",
       items: [
         <><strong>A planned team adoption day</strong> and walkthrough at the end of the build.</>,
-        <><strong>Three months of hands-on launch support</strong> at 10 hours per month. Hours used within the month, no rollover.</>,
+        <><strong>Two months of hands-on launch support</strong> at 10 hours per month. Hours used within the month, no rollover.</>,
         <><strong>Flexible delivery</strong> through weekly calls, co-working, or agreed async, whichever suits Summit.</>,
         <><strong>Optional rolling support</strong> after launch at £1,000/month (approximately $1,350/month), no fixed term, cancellable by either side with 30 days' notice. This covers continued adoption, refinement and support of Summit OS 2.0; new capabilities such as drip campaigns or deeper finance integrations are scoped separately as Phase 2.</>,
       ],
@@ -1070,7 +1070,7 @@ const SummitNetworkProposalPage = () => {
               <motion.p {...fadeUp} className="mt-10 font-sans text-[16px] leading-[1.75] text-foreground/80">
                 If sign-off lands this month, the shape of the year draws itself: build through
                 August and September, adoption day in early October, supported adoption through to
-                the end of the year, and Summit starts January on a system built for the size it's
+                the end of November, and Summit starts December on a system built for the size it's
                 becoming, with the doors open again.
               </motion.p>
             </section>
@@ -1203,7 +1203,7 @@ const SummitNetworkProposalPage = () => {
               <EditorialTable
                 head={["Item", "GBP", "USD equivalent"]}
                 rows={[
-                  ["Notion operations build (2-month build + 3-month launch support)", "£12,500", "≈ $16,880"],
+                  ["Notion operations build (2-month build + 2-month launch support)", "£12,500", "≈ $16,880"],
                   [
                     "Diagnostic fee, already paid",
                     <span className="text-gradient-warm font-semibold">–£395 credited</span>,
@@ -1265,7 +1265,7 @@ const SummitNetworkProposalPage = () => {
 
               <H3>After supported adoption</H3>
               <P>
-                Once the three months of supported adoption end, nothing continues automatically. If Summit wants me to stay involved, rolling support is available at £1,000/month (approximately $1,350/month), no fixed term, cancellable by either side with 30 days' notice. It covers continued adoption, refinement and support of Summit OS 2.0; new capabilities such as drip campaigns or deeper finance integrations are scoped separately as Phase 2.
+                Once the two months of supported adoption end, nothing continues automatically. If Summit wants me to stay involved, rolling support is available at £1,000/month (approximately $1,350/month), no fixed term, cancellable by either side with 30 days' notice. It covers continued adoption, refinement and support of Summit OS 2.0; new capabilities such as drip campaigns or deeper finance integrations are scoped separately as Phase 2.
               </P>
 
               <H3>Terms</H3>
