@@ -1241,7 +1241,12 @@ const SummitNetworkProposalPage = () => {
                     <span className="text-gradient-warm font-semibold">≈ $14,958</span>,
                   ],
                   [
-                    <strong>Final Total (incl Diagnostic Credit)</strong>,
+                    "Diagnostic fee, already paid",
+                    <span className="text-gradient-warm font-semibold">–£395 credited</span>,
+                    <span className="text-gradient-warm font-semibold">≈ –$535 credited</span>,
+                  ],
+                  [
+                    <strong>Net investment</strong>,
                     <strong>£10,855</strong>,
                     <strong>≈ $14,435</strong>,
                   ],
