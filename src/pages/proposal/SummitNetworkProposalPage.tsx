@@ -416,7 +416,7 @@ const WelcomeScreen = ({ onOpen }: { onOpen: () => void }) => {
             <span className="text-primary-foreground/25 mx-2">·</span>
             Ref: SN1
             <span className="text-primary-foreground/25 mx-2">·</span>
-            16 July 2026
+            Revised 28 July 2026
           </motion.div>
 
           <motion.h1
@@ -797,7 +797,7 @@ const SummitNetworkProposalPage = () => {
               className="font-sans text-[10.5px] sm:text-[11px] tracking-[0.28em] uppercase text-muted-foreground mb-8 sm:mb-10 order-1 sm:order-2"
             >
               Project Proposal <span className="text-muted-foreground/40 mx-2">·</span> Ref: SN1{" "}
-              <span className="text-muted-foreground/40 mx-2">·</span> 16 July 2026
+              <span className="text-muted-foreground/40 mx-2">·</span> Revised 28 July 2026
             </motion.div>
 
             <motion.div
@@ -847,7 +847,7 @@ const SummitNetworkProposalPage = () => {
               <p className="font-sans text-[13px] sm:text-[14px] text-muted-foreground tracking-wide leading-relaxed">
                 Prepared for: Cali Pilkington &amp; Andrew Gladstone
                 <span className="hidden sm:inline"> · </span>
-                <span className="block sm:inline">16 July 2026 · Ref: SN1</span>
+                <span className="block sm:inline">28 July 2026 · Ref: SN1</span>
               </p>
             </motion.div>
           </div>
@@ -1451,7 +1451,7 @@ const SummitNetworkProposalPage = () => {
                   alt="Summit Advisors Group LLC"
                   className="h-4 w-auto object-contain"
                 />
-                <span>· Ref: SN1 · 16 July 2026</span>
+                <span>· Ref: SN1 · Revised 28 July 2026</span>
               </div>
             </div>
             <img src={GreyStacked} alt="Thread & Stack" className="h-8 opacity-50 flex-shrink-0" />
