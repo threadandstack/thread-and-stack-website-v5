@@ -80,7 +80,9 @@ export default function PowerHourThankYouPage() {
               <p className="font-sans text-[15px] sm:text-base text-muted-foreground leading-relaxed max-w-2xl">
                 Your Stack Diagnostic is paid
                 {amount !== null ? ` — £${(amount / 100).toFixed(0)} confirmed` : ""}.
-                Pick a 90-minute slot below and you'll get a calendar invite straight away.
+                Pick a 120-minute slot below and you'll get a calendar invite straight away.
+                We expect the session to last 90 minutes, but we reserve the full two hours
+                just in case we need them.
                 A receipt and short prep prompt are on their way from{" "}
                 <span className="text-foreground font-medium">br@brendanrodgers.uk</span>.
               </p>
