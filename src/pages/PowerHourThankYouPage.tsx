@@ -6,7 +6,7 @@ import { Footer } from "@/components/Footer";
 import WhiteLogo from "@/assets/logos/White_TS_Stacked.svg";
 import { CheckCircle2, Loader2, Mail } from "lucide-react";
 import { PillButton } from "@/components/ui/pill-button";
-import { NotionCalendarEmbed } from "@/components/booking/NotionCalendarEmbed";
+import { CalEmbed } from "@/components/booking/CalEmbed";
 
 export default function PowerHourThankYouPage() {
   const [params] = useSearchParams();
@@ -14,6 +14,7 @@ export default function PowerHourThankYouPage() {
   const [state, setState] = useState<"loading" | "paid" | "pending" | "error">("loading");
   const [name, setName] = useState<string | null>(null);
   const [amount, setAmount] = useState<number | null>(null);
+  const [email, setEmail] = useState<string | null>(null);
 
   useEffect(() => {
     if (!sessionId) {
@@ -31,6 +32,7 @@ export default function PowerHourThankYouPage() {
           setState("paid");
           setName((data.name as string) ?? null);
           setAmount((data.amountPaid as number) ?? null);
+          setEmail((data.customerEmail as string) ?? null);
           // GA4 conversion ping
           if (typeof window !== "undefined" && (window as any).dataLayer) {
             (window as any).dataLayer.push({
@@ -76,11 +78,13 @@ export default function PowerHourThankYouPage() {
               <span className="text-foreground font-medium">br@brendanrodgers.uk</span>.
             </p>
 
-            <NotionCalendarEmbed
-              url="https://calendar.notion.so/meet/threadandstack/diagnostic"
+            <CalEmbed
+              calLink="thread-and-stack/stack-diagnostic-session"
+              namespace="stack-diagnostic-session"
               title="Book your Stack Diagnostic"
               meta="90 minutes • paid in full"
-              cta="Pick a time"
+              name={name}
+              email={email}
             />
 
             <div className="flex flex-col sm:flex-row gap-3">
