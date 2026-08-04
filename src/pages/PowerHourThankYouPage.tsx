@@ -18,7 +18,6 @@ export default function PowerHourThankYouPage() {
 
   useEffect(() => {
     if (!sessionId) {
-      setState("error");
       return;
     }
     (async () => {
