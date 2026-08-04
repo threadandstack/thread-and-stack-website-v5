@@ -113,7 +113,7 @@ export default function PowerHourThankYouPage() {
               calLink="thread-and-stack/stack-diagnostic-session"
               namespace="stack-diagnostic-session"
               title="Book your Stack Diagnostic"
-              meta="90 minutes • paid in full"
+              meta="120 min reserved • ~90 min working session"
               name={name}
               email={email}
               theme="light"
