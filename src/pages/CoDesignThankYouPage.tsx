@@ -92,6 +92,7 @@ export default function CoDesignThankYouPage() {
               meta="90 minutes • paid in full"
               name={name}
               email={email}
+              theme="light"
             />
 
             <div className="flex flex-col sm:flex-row gap-3">
