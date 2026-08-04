@@ -14,6 +14,7 @@ const pillButtonVariants = cva(
         ghost: "hover:bg-muted hover:text-foreground",
         indigo: "bg-indigo text-white hover:bg-indigo/90",
         white: "bg-white text-indigo hover:bg-white/90",
+        gradient: "text-white hover:-translate-y-px shadow-[0_2px_8px_rgba(0,0,0,0.08)]",
       },
       size: {
         default: "h-10 px-5 py-2 text-sm",
