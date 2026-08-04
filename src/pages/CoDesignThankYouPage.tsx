@@ -3,7 +3,7 @@ import { useSearchParams, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { getStripeEnvironment } from "@/lib/stripe";
 import { Footer } from "@/components/Footer";
-import WhiteLogo from "@/assets/logos/White_TS_Stacked.svg";
+import Logo from "@/assets/logos/Black_TS_Stacked.svg";
 import { CheckCircle2, Loader2, Mail } from "lucide-react";
 import { PillButton } from "@/components/ui/pill-button";
 import { CalEmbed } from "@/components/booking/CalEmbed";
