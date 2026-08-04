@@ -92,9 +92,9 @@ export default function PowerHourThankYouPage() {
               <Tilt3D className="h-full">
                 <div className="rounded-2xl bg-card p-5 shadow-[0_8px_30px_rgba(0,0,0,0.06)] h-full">
                   <CalendarCheck className="w-5 h-5 text-clay mb-3" />
-                  <h3 className="font-serif-pro italic font-normal text-lg mb-1">90 minutes live</h3>
+                  <h3 className="font-serif-pro italic font-normal text-lg mb-1">120 minutes reserved</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">
-                    One focused working session. We'll map your stack, name the fragmentation, and leave with a clear next step.
+                    We expect the working session to last 90 minutes, but we always block out two hours so there's no pressure if we need a little longer.
                   </p>
                 </div>
               </Tilt3D>
