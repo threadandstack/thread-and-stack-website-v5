@@ -11,13 +11,14 @@ import { CalEmbed } from "@/components/booking/CalEmbed";
 export default function PowerHourThankYouPage() {
   const [params] = useSearchParams();
   const sessionId = params.get("session_id");
-  const [state, setState] = useState<"loading" | "paid" | "pending" | "error">("paid");
+  const [state, setState] = useState<"loading" | "paid" | "pending" | "error">("loading");
   const [name, setName] = useState<string | null>(null);
   const [amount, setAmount] = useState<number | null>(null);
   const [email, setEmail] = useState<string | null>(null);
 
   useEffect(() => {
     if (!sessionId) {
+      setState("error");
       return;
     }
     (async () => {

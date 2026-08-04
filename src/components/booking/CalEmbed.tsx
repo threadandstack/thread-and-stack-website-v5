@@ -99,6 +99,7 @@ export function CalEmbed({
         light: { "cal-brand": "#ff007e" },
         dark: { "cal-brand": "#ff8900" },
       },
+      theme: "dark",
       hideEventTypeDetails: false,
       layout: "month_view",
     });
