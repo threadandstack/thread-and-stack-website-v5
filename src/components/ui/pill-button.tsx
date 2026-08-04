@@ -39,9 +39,11 @@ export interface PillButtonProps
 const PillButton = React.forwardRef<HTMLButtonElement, PillButtonProps>(
   ({ className, variant, size, asChild = false, icon: Icon, children, ...props }, ref) => {
     const Comp = asChild ? Slot : "button";
+    const gradientStyle = variant === "gradient" ? { backgroundImage: "linear-gradient(95deg, var(--gradient-3color))" } : undefined;
     return (
       <Comp
         className={cn(pillButtonVariants({ variant, size, className }))}
+        style={gradientStyle}
         ref={ref}
         {...props}
       >
