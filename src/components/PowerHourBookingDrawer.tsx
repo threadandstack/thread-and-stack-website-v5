@@ -141,7 +141,7 @@ export function PowerHourBookingDrawer({
           utmCampaign: params.get("utm_campaign") ?? "",
           honeypot: form.honeypot,
           environment: getStripeEnvironment(),
-          returnUrl: `${window.location.origin}/power-hour/thank-you?session_id={CHECKOUT_SESSION_ID}`,
+          returnUrl: `${window.location.origin}/stack-diagnostic/book-your-slot?session_id={CHECKOUT_SESSION_ID}`,
         },
       });
       if (error) throw error;
