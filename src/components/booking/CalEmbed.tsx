@@ -70,11 +70,12 @@ export function CalEmbed({
   email,
 }: CalEmbedProps) {
   const containerId = `cal-inline-${namespace}`;
+  const containerRef = useRef<HTMLDivElement>(null);
   const initialised = useRef(false);
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    if (initialised.current) return;
+    if (initialised.current || !containerRef.current) return;
     initialised.current = true;
 
     const Cal = loadCal();
@@ -83,7 +84,7 @@ export function CalEmbed({
     Cal.config.forwardQueryParams = true;
 
     Cal.ns[namespace]("inline", {
-      elementOrSelector: `#${containerId}`,
+      elementOrSelector: containerRef.current,
       config: {
         layout: "month_view",
         useSlotsViewOnSmallScreen: "true",
@@ -127,7 +128,7 @@ export function CalEmbed({
             Loading the calendar…
           </div>
         )}
-        <div id={containerId} style={{ width: "100%", height: "100%", overflow: "scroll" }} />
+        <div ref={containerRef} id={containerId} style={{ width: "100%", height: "100%", overflow: "scroll" }} />
       </div>
       <div className="border-t border-hairline px-5 py-3 text-[11.5px] text-muted-foreground sm:px-6">
         Trouble loading?{" "}
