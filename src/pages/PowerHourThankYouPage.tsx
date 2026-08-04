@@ -3,7 +3,7 @@ import { useSearchParams, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { getStripeEnvironment } from "@/lib/stripe";
 import { Footer } from "@/components/Footer";
-import WhiteLogo from "@/assets/logos/White_TS_Stacked.svg";
+import Logo from "@/assets/logos/Black_TS_Stacked.svg";
 import { CheckCircle2, Loader2, Mail } from "lucide-react";
 import { PillButton } from "@/components/ui/pill-button";
 import { CalEmbed } from "@/components/booking/CalEmbed";
@@ -52,9 +52,9 @@ export default function PowerHourThankYouPage() {
   }, [sessionId]);
 
   return (
-    <div className="dark min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground">
       <main className="max-w-2xl mx-auto px-4 sm:px-6 pt-12 pb-16 sm:py-20 space-y-8">
-        <img src={WhiteLogo} alt="Thread & Stack" className="h-12 sm:h-14 opacity-80" />
+        <img src={Logo} alt="Thread & Stack" className="h-12 sm:h-14 opacity-80" />
 
         {state === "loading" && (
           <div className="rounded-xl border bg-card p-6 flex items-center gap-3 text-muted-foreground">
@@ -85,6 +85,7 @@ export default function PowerHourThankYouPage() {
               meta="90 minutes • paid in full"
               name={name}
               email={email}
+              theme="light"
             />
 
             <div className="flex flex-col sm:flex-row gap-3">

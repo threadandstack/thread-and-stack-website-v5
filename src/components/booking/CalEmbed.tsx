@@ -11,6 +11,8 @@ interface CalEmbedProps {
   /** Prefill values from the checkout session. */
   name?: string | null;
   email?: string | null;
+  /** Cal.com UI theme. Defaults to light to match the site. */
+  theme?: "light" | "dark";
 }
 
 declare global {
@@ -68,6 +70,7 @@ export function CalEmbed({
   meta,
   name,
   email,
+  theme = "light",
 }: CalEmbedProps) {
   const containerId = `cal-inline-${namespace}`;
   const containerRef = useRef<HTMLDivElement>(null);
@@ -96,10 +99,10 @@ export function CalEmbed({
 
     Cal.ns[namespace]("ui", {
       cssVarsPerTheme: {
-        light: { "cal-brand": "#ff007e" },
-        dark: { "cal-brand": "#ff8900" },
+        light: { "cal-brand": "#1340E8" },
+        dark: { "cal-brand": "#FF6200" },
       },
-      theme: "dark",
+      theme,
       hideEventTypeDetails: false,
       layout: "month_view",
     });
