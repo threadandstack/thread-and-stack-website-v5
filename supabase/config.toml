@@ -94,3 +94,6 @@ verify_jwt = false
 
 [functions.sync-booking-to-xero]
 verify_jwt = false
+
+[functions.sync-builds-cache]
+verify_jwt = false

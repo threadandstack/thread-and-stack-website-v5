@@ -80,6 +80,8 @@ const BecomeUnitedBlueprintPage = lazy(() => import("./pages/BecomeUnitedBluepri
 const UnleashYourTeamDraft2Page = lazy(() => import("./pages/UnleashYourTeamDraft2Page"));
 const IntroCallPage = lazy(() => import("./pages/IntroCallPage"));
 const ServicesPage = lazy(() => import("./pages/ServicesPage"));
+const BuildsPage = lazy(() => import("./pages/BuildsPage"));
+const BuildDetailPage = lazy(() => import("./pages/BuildDetailPage"));
 
 
 const queryClient = new QueryClient();
@@ -121,6 +123,8 @@ const App = () => (
             <Route path="/deep-engagement" element={<Navigate to="/services" replace />} />
 
             <Route path="/blog" element={<BlogPage />} />
+            <Route path="/builds" element={<BuildsPage />} />
+            <Route path="/builds/:slug" element={<BuildDetailPage />} />
             <Route path="/home-draft" element={<HomePageDraft />} />
             {/* Backward-compat redirects for old draft2 paths */}
             <Route path="/home-draft2" element={<Navigate to="/" replace />} />
