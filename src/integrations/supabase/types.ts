@@ -108,6 +108,8 @@ export type Database = {
         Row: {
           build_name: string | null
           build_slug: string | null
+          change_types: string[]
+          changelog: string | null
           created_at: string
           description: string | null
           featured: boolean
@@ -119,6 +121,7 @@ export type Database = {
           notion_id: string
           published_date: string | null
           reading_time: string | null
+          release_type: string | null
           slug: string
           synced_at: string
           theme: string | null
@@ -128,6 +131,8 @@ export type Database = {
         Insert: {
           build_name?: string | null
           build_slug?: string | null
+          change_types?: string[]
+          changelog?: string | null
           created_at?: string
           description?: string | null
           featured?: boolean
@@ -139,6 +144,7 @@ export type Database = {
           notion_id: string
           published_date?: string | null
           reading_time?: string | null
+          release_type?: string | null
           slug: string
           synced_at?: string
           theme?: string | null
@@ -148,6 +154,8 @@ export type Database = {
         Update: {
           build_name?: string | null
           build_slug?: string | null
+          change_types?: string[]
+          changelog?: string | null
           created_at?: string
           description?: string | null
           featured?: boolean
@@ -159,6 +167,7 @@ export type Database = {
           notion_id?: string
           published_date?: string | null
           reading_time?: string | null
+          release_type?: string | null
           slug?: string
           synced_at?: string
           theme?: string | null

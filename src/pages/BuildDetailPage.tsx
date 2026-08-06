@@ -7,6 +7,7 @@ import { Footer } from "@/components/Footer";
 import { CTA } from "@/components/home-draft2/CTA";
 import { supabase } from "@/integrations/supabase/client";
 import { sanitizeHtml } from "@/lib/sanitize";
+import { ChangeChips, VersionChip } from "@/components/builds/ChangeChips";
 import { formatUpdateDate } from "./BuildsPage";
 
 interface BuildUpdateFull {
@@ -16,6 +17,9 @@ interface BuildUpdateFull {
   build_name: string | null;
   build_slug: string | null;
   version: string | null;
+  release_type: string | null;
+  change_types: string[] | null;
+  changelog: string | null;
   description: string | null;
   html_content: string;
   header_image_url: string | null;
@@ -126,20 +130,30 @@ const BuildDetailPage = () => {
                       key={update.id}
                       className="rounded-2xl bg-card p-7 shadow-[0_8px_30px_rgba(0,0,0,0.06)] md:p-10"
                     >
-                      <div className="flex flex-wrap items-center gap-3 text-[11px] uppercase tracking-[0.18em] text-ink-soft">
-                        {update.version && (
-                          <span className="rounded-full bg-muted px-2.5 py-1 tracking-normal text-foreground/80">
-                            {update.version}
-                          </span>
-                        )}
-                        <span>
+                      <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-ink-soft">
+                        <time className="tabular-nums">
                           {formatUpdateDate(update.published_date || update.last_edited_time)}
-                        </span>
+                        </time>
+                        <span className="text-ink-soft/50">·</span>
+                        <VersionChip version={update.version} releaseType={update.release_type} />
                       </div>
 
                       <h2 className="mt-4 font-serif-pro text-2xl font-normal leading-snug md:text-[30px]">
                         {update.title}
                       </h2>
+
+                      {update.change_types && update.change_types.length > 0 && (
+                        <div className="mt-3">
+                          <ChangeChips types={update.change_types} />
+                        </div>
+                      )}
+
+                      {(update.changelog || update.description) && (
+                        <p className="mt-3 text-[15px] leading-relaxed text-ink-soft">
+                          {update.changelog || update.description}
+                        </p>
+                      )}
+
 
                       {update.html_content && (
                         <div
