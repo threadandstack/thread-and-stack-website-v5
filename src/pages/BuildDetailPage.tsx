@@ -7,6 +7,7 @@ import { Footer } from "@/components/Footer";
 import { CTA } from "@/components/home-draft2/CTA";
 import { supabase } from "@/integrations/supabase/client";
 import { sanitizeHtml } from "@/lib/sanitize";
+import { ChangeChips, VersionChip } from "@/components/builds/ChangeChips";
 import { formatUpdateDate } from "./BuildsPage";
 
 interface BuildUpdateFull {
