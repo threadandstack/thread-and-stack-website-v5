@@ -1,12 +1,12 @@
 import bufferIcon from "@/assets/build-icons/buffer.png";
 import notionIcon from "@/assets/build-icons/notion.png";
 import notionDevIcon from "@/assets/build-icons/notion-dev.jpg";
-import notionWorkersIcon from "@/assets/proposal/icons/notion-workers.png.asset.json";
+import ntnWorkerIcon from "@/assets/build-icons/ntn-worker.png.asset.json";
 
 const MAP: Record<string, { src: string; alt: string; pad?: boolean }> = {
   "thread-stack-website": { src: "/favicon.png", alt: "Thread & Stack" },
   "content-ops-worker": { src: bufferIcon, alt: "Content Ops Worker" },
-  "xero-worker": { src: notionWorkersIcon.url, alt: "Notion Worker" },
+  "xero-worker": { src: ntnWorkerIcon.url, alt: "Notion Worker" },
   "notion-workspace-installation": { src: notionIcon, alt: "Notion", pad: true },
   "thread-stack-skills": { src: notionDevIcon, alt: "Thread & Stack Skills" },
 };
