@@ -16,6 +16,9 @@ interface BuildUpdateFull {
   build_name: string | null;
   build_slug: string | null;
   version: string | null;
+  release_type: string | null;
+  change_types: string[] | null;
+  changelog: string | null;
   description: string | null;
   html_content: string;
   header_image_url: string | null;
