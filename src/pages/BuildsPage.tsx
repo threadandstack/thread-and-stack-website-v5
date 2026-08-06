@@ -39,7 +39,13 @@ export const formatUpdateDate = (value?: string | null) => {
 export const buildHref = (update: BuildUpdate) =>
   `/builds/${update.build_slug || update.slug}`;
 
-const TimelineEntry = ({ update }: { update: BuildUpdate }) => {
+const TimelineEntry = ({
+  update,
+  showBuild = true,
+}: {
+  update: BuildUpdate;
+  showBuild?: boolean;
+}) => {
   const [open, setOpen] = useState(false);
   const hasBody = Boolean(update.html_content && update.html_content.trim());
 
@@ -49,7 +55,7 @@ const TimelineEntry = ({ update }: { update: BuildUpdate }) => {
       <Tilt3D>
         <div className="rounded-2xl bg-card p-4 shadow-[0_8px_30px_rgba(0,0,0,0.06)] md:p-5">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[13px] text-ink-soft">
-            {update.build_name && (
+            {showBuild && update.build_name && (
               <>
                 <Link
                   to={`/builds/${update.build_slug || update.slug}`}
@@ -135,7 +141,25 @@ const BuildsPage = () => {
     load();
   }, []);
 
-  const buildCount = new Set(updates.map((u) => u.build_name || "Other updates")).size;
+  const sortKey = (u: BuildUpdate) => u.published_date || u.last_edited_time || "";
+
+  const groups = (() => {
+    const map = new Map<string, { name: string; slug: string | null; items: BuildUpdate[] }>();
+    for (const u of updates) {
+      const name = u.build_name || "Other updates";
+      const existing = map.get(name);
+      if (existing) existing.items.push(u);
+      else map.set(name, { name, slug: u.build_slug || null, items: [u] });
+    }
+    return Array.from(map.values())
+      .map((g) => ({
+        ...g,
+        items: [...g.items].sort((a, b) => sortKey(b).localeCompare(sortKey(a))),
+      }))
+      .sort((a, b) => sortKey(b.items[0]).localeCompare(sortKey(a.items[0])));
+  })();
+
+  const buildCount = groups.length;
 
   return (
     <>
@@ -205,11 +229,36 @@ const BuildsPage = () => {
                       </>
                     )}
                   </p>
-                  <ol className="relative mt-5 space-y-5 before:absolute before:bottom-4 before:left-[11px] before:top-4 before:w-px before:bg-border/60">
-                    {updates.map((update) => (
-                      <TimelineEntry key={update.id} update={update} />
+                  <div className="mt-8 space-y-14">
+                    {groups.map((group) => (
+                      <div key={group.name}>
+                        <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                          <h2 className="font-serif-pro text-2xl font-normal leading-snug md:text-[28px]">
+                            {group.slug ? (
+                              <Link
+                                to={`/builds/${group.slug}`}
+                                className="transition-opacity hover:opacity-70"
+                              >
+                                {group.name}
+                              </Link>
+                            ) : (
+                              group.name
+                            )}
+                          </h2>
+                          <span className="text-[11px] uppercase tracking-[0.18em] text-ink-soft">
+                            {group.items.length} release
+                            {group.items.length === 1 ? "" : "s"}
+                            {group.items[0]?.version ? ` • latest ${group.items[0].version}` : ""}
+                          </span>
+                        </div>
+                        <ol className="relative mt-5 space-y-5 before:absolute before:bottom-4 before:left-[11px] before:top-4 before:w-px before:bg-border/60">
+                          {group.items.map((update) => (
+                            <TimelineEntry key={update.id} update={update} showBuild={false} />
+                          ))}
+                        </ol>
+                      </div>
                     ))}
-                  </ol>
+                  </div>
                 </>
               )}
             </div>
