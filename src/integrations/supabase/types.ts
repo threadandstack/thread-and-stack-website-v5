@@ -104,6 +104,69 @@ export type Database = {
         }
         Relationships: []
       }
+      build_updates_cache: {
+        Row: {
+          build_name: string | null
+          build_slug: string | null
+          created_at: string
+          description: string | null
+          featured: boolean
+          header_image_url: string | null
+          html_content: string
+          id: string
+          intro: string | null
+          last_edited_time: string | null
+          notion_id: string
+          published_date: string | null
+          reading_time: string | null
+          slug: string
+          synced_at: string
+          theme: string | null
+          title: string
+          version: string | null
+        }
+        Insert: {
+          build_name?: string | null
+          build_slug?: string | null
+          created_at?: string
+          description?: string | null
+          featured?: boolean
+          header_image_url?: string | null
+          html_content?: string
+          id?: string
+          intro?: string | null
+          last_edited_time?: string | null
+          notion_id: string
+          published_date?: string | null
+          reading_time?: string | null
+          slug: string
+          synced_at?: string
+          theme?: string | null
+          title: string
+          version?: string | null
+        }
+        Update: {
+          build_name?: string | null
+          build_slug?: string | null
+          created_at?: string
+          description?: string | null
+          featured?: boolean
+          header_image_url?: string | null
+          html_content?: string
+          id?: string
+          intro?: string | null
+          last_edited_time?: string | null
+          notion_id?: string
+          published_date?: string | null
+          reading_time?: string | null
+          slug?: string
+          synced_at?: string
+          theme?: string | null
+          title?: string
+          version?: string | null
+        }
+        Relationships: []
+      }
       coupon_redemptions: {
         Row: {
           code: string

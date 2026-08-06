@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Menu, X, ChevronDown, User, Home, Compass, Layers, BookOpen, Rocket, Sun, Moon } from "lucide-react";
+import { Menu, X, ChevronDown, User, Home, Compass, Layers, BookOpen, Hammer, Rocket, Sun, Moon } from "lucide-react";
 import { ContactDrawer } from "@/components/ContactDrawer";
 import { DiagnosticDrawer } from "@/components/home-draft2/DiagnosticDrawer";
 
@@ -121,6 +121,8 @@ export const Navigation = ({ variant = "default", hideLogo = false, floatingBadg
             <NavItem href="/services" label="Services" icon={Layers} onClick={() => trackNavClick('Services', 'header')} />
 
 
+            <NavItem href="/builds" label="Builds" icon={Hammer} onClick={() => trackNavClick('Builds', 'header')} />
+
             <NavItem href="/blog" label="Journal" icon={BookOpen} onClick={() => trackNavClick('Journal', 'header')} />
 
             <Button size="sm" style={gradientBtnStyle} className="group text-white hover:opacity-90 rounded-full px-5 ml-1 not-italic font-sans text-sm border-0" onClick={() => { trackCtaClick('Get Started', 'header'); setIsDiagnosticOpen(true); }}>
@@ -188,6 +190,8 @@ export const Navigation = ({ variant = "default", hideLogo = false, floatingBadg
                 <NavItem href="/services" label="Services" icon={Layers} onClick={() => trackNavClick('Services', 'floating')} />
 
 
+                <NavItem href="/builds" label="Builds" icon={Hammer} onClick={() => trackNavClick('Builds', 'floating')} />
+
                 <NavItem href="/blog" label="Journal" icon={BookOpen} onClick={() => trackNavClick('Journal', 'floating')} />
 
                 <Button size="sm" style={gradientBtnStyle} className="group text-white hover:opacity-90 rounded-full px-5 ml-1 not-italic font-sans text-sm border-0" onClick={() => { trackCtaClick('Get Started', 'floating-nav'); setIsDiagnosticOpen(true); }}>
@@ -236,6 +240,12 @@ export const Navigation = ({ variant = "default", hideLogo = false, floatingBadg
               </a>
             </div>
 
+
+            <div className="border-t border-border/50 pt-4">
+              <a href="/builds" className="block py-3 text-lg font-sans text-foreground/80 hover:text-foreground transition-colors not-italic" onClick={() => setIsMobileMenuOpen(false)}>
+                Builds
+              </a>
+            </div>
 
             <div className="border-t border-border/50 pt-4">
               <a href="/blog" className="block py-3 text-lg font-sans text-foreground/80 hover:text-foreground transition-colors not-italic" onClick={() => setIsMobileMenuOpen(false)}>
