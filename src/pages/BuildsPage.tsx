@@ -39,7 +39,13 @@ export const formatUpdateDate = (value?: string | null) => {
 export const buildHref = (update: BuildUpdate) =>
   `/builds/${update.build_slug || update.slug}`;
 
-const TimelineEntry = ({ update }: { update: BuildUpdate }) => {
+const TimelineEntry = ({
+  update,
+  showBuild = true,
+}: {
+  update: BuildUpdate;
+  showBuild?: boolean;
+}) => {
   const [open, setOpen] = useState(false);
   const hasBody = Boolean(update.html_content && update.html_content.trim());
 
