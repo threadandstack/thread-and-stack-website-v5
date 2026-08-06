@@ -124,13 +124,13 @@ const BuildDetailPage = () => {
                 )}
 
                 {/* Version timeline */}
-                <div className="mt-16 space-y-14">
+                <div className="mt-10 space-y-6">
                   {updates.map((update) => (
                     <article
                       key={update.id}
-                      className="rounded-2xl bg-card p-7 shadow-[0_8px_30px_rgba(0,0,0,0.06)] md:p-10"
+                      className="rounded-2xl bg-card p-5 shadow-[0_8px_30px_rgba(0,0,0,0.06)] md:p-6"
                     >
-                      <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-ink-soft">
+                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[13px] text-ink-soft">
                         <time className="tabular-nums">
                           {formatUpdateDate(update.published_date || update.last_edited_time)}
                         </time>
@@ -138,26 +138,25 @@ const BuildDetailPage = () => {
                         <VersionChip version={update.version} releaseType={update.release_type} />
                       </div>
 
-                      <h2 className="mt-4 font-serif-pro text-2xl font-normal leading-snug md:text-[30px]">
+                      <h2 className="mt-3 font-serif-pro text-xl font-normal leading-snug md:text-2xl">
                         {update.title}
                       </h2>
 
                       {update.change_types && update.change_types.length > 0 && (
-                        <div className="mt-3">
+                        <div className="mt-2">
                           <ChangeChips types={update.change_types} />
                         </div>
                       )}
 
                       {(update.changelog || update.description) && (
-                        <p className="mt-3 text-[15px] leading-relaxed text-ink-soft">
+                        <p className="mt-2 text-sm leading-relaxed text-ink-soft">
                           {update.changelog || update.description}
                         </p>
                       )}
 
-
                       {update.html_content && (
                         <div
-                          className="blog-content prose prose-lg mt-6 max-w-none"
+                          className="blog-content prose prose-lg mt-5 max-w-none"
                           dangerouslySetInnerHTML={{
                             __html: sanitizeHtml(update.html_content),
                           }}

@@ -45,10 +45,10 @@ const TimelineEntry = ({ update }: { update: BuildUpdate }) => {
 
   return (
     <li className="relative pl-10">
-      <span className="absolute left-[11px] top-7 h-2.5 w-2.5 -translate-x-1/2 rounded-full bg-accent ring-4 ring-background" />
+      <span className="absolute left-[11px] top-5 h-2.5 w-2.5 -translate-x-1/2 rounded-full bg-accent ring-4 ring-background" />
       <Tilt3D>
-        <div className="rounded-2xl bg-card p-6 shadow-[0_8px_30px_rgba(0,0,0,0.06)] md:p-8">
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-ink-soft">
+        <div className="rounded-2xl bg-card p-4 shadow-[0_8px_30px_rgba(0,0,0,0.06)] md:p-5">
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[13px] text-ink-soft">
             <time className="tabular-nums">
               {formatUpdateDate(update.published_date || update.last_edited_time)}
             </time>
@@ -56,20 +56,20 @@ const TimelineEntry = ({ update }: { update: BuildUpdate }) => {
             <VersionChip version={update.version} releaseType={update.release_type} />
           </div>
 
-          <h3 className="mt-3 font-serif-pro text-2xl font-normal leading-snug md:text-[26px]">
+          <h3 className="mt-2 font-serif-pro text-lg font-normal leading-snug md:text-xl">
             <Link to={buildHref(update)} className="transition-opacity hover:opacity-70">
               {update.title}
             </Link>
           </h3>
 
           {update.change_types && update.change_types.length > 0 && (
-            <div className="mt-3">
+            <div className="mt-2">
               <ChangeChips types={update.change_types} />
             </div>
           )}
 
           {(update.changelog || update.description) && (
-            <p className="mt-3 text-[15px] leading-relaxed text-ink-soft">
+            <p className="mt-2 text-sm leading-relaxed text-ink-soft">
               {update.changelog || update.description}
             </p>
           )}
@@ -79,17 +79,17 @@ const TimelineEntry = ({ update }: { update: BuildUpdate }) => {
               <button
                 type="button"
                 onClick={() => setOpen((v) => !v)}
-                className="mt-5 inline-flex items-center gap-1.5 text-[13px] font-medium text-foreground/80 transition-colors hover:text-foreground"
+                className="mt-3 inline-flex items-center gap-1.5 text-xs font-medium text-foreground/80 transition-colors hover:text-foreground"
                 aria-expanded={open}
               >
                 {open ? "Hide details" : "Read the full note"}
                 <ChevronDown
-                  className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`}
+                  className={`h-3.5 w-3.5 transition-transform ${open ? "rotate-180" : ""}`}
                 />
               </button>
               {open && (
                 <div
-                  className="blog-content prose prose-lg mt-5 max-w-none"
+                  className="blog-content prose prose-lg mt-4 max-w-none"
                   dangerouslySetInnerHTML={{ __html: sanitizeHtml(update.html_content || "") }}
                 />
               )}
@@ -194,7 +194,7 @@ const BuildsPage = () => {
                   Nothing shipped here yet. Check back shortly.
                 </p>
               ) : (
-                <div className="space-y-20">
+                <div className="space-y-12">
                   {groups.map((group) => (
                     <div key={group.name}>
                       <div className="flex flex-wrap items-baseline justify-between gap-3">
@@ -216,7 +216,7 @@ const BuildsPage = () => {
                         </span>
                       </div>
 
-                      <ol className="relative mt-8 space-y-8 before:absolute before:bottom-4 before:left-[11px] before:top-4 before:w-px before:bg-border/60">
+                      <ol className="relative mt-6 space-y-5 before:absolute before:bottom-4 before:left-[11px] before:top-4 before:w-px before:bg-border/60">
                         {group.items.map((update) => (
                           <TimelineEntry key={update.id} update={update} />
                         ))}
