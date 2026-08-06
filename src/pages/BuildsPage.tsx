@@ -50,8 +50,9 @@ const TimelineEntry = ({
   const hasBody = Boolean(update.html_content && update.html_content.trim());
 
   return (
-    <li className="relative pl-10">
-      <span className="absolute left-[11px] top-5 h-2.5 w-2.5 -translate-x-1/2 rounded-full bg-accent ring-4 ring-background" />
+    <li className="relative">
+      <span className="absolute -left-4 top-5 h-2.5 w-2.5 -translate-x-1/2 rounded-full bg-accent ring-4 ring-background md:-left-6" />
+
       <Tilt3D>
         <div className="rounded-2xl bg-card p-4 shadow-[0_8px_30px_rgba(0,0,0,0.06)] md:p-5">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[13px] text-ink-soft">
