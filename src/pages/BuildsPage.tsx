@@ -229,11 +229,36 @@ const BuildsPage = () => {
                       </>
                     )}
                   </p>
-                  <ol className="relative mt-5 space-y-5 before:absolute before:bottom-4 before:left-[11px] before:top-4 before:w-px before:bg-border/60">
-                    {updates.map((update) => (
-                      <TimelineEntry key={update.id} update={update} />
+                  <div className="mt-8 space-y-14">
+                    {groups.map((group) => (
+                      <div key={group.name}>
+                        <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                          <h2 className="font-serif-pro text-2xl font-normal leading-snug md:text-[28px]">
+                            {group.slug ? (
+                              <Link
+                                to={`/builds/${group.slug}`}
+                                className="transition-opacity hover:opacity-70"
+                              >
+                                {group.name}
+                              </Link>
+                            ) : (
+                              group.name
+                            )}
+                          </h2>
+                          <span className="text-[11px] uppercase tracking-[0.18em] text-ink-soft">
+                            {group.items.length} release
+                            {group.items.length === 1 ? "" : "s"}
+                            {group.items[0]?.version ? ` • latest ${group.items[0].version}` : ""}
+                          </span>
+                        </div>
+                        <ol className="relative mt-5 space-y-5 before:absolute before:bottom-4 before:left-[11px] before:top-4 before:w-px before:bg-border/60">
+                          {group.items.map((update) => (
+                            <TimelineEntry key={update.id} update={update} showBuild={false} />
+                          ))}
+                        </ol>
+                      </div>
                     ))}
-                  </ol>
+                  </div>
                 </>
               )}
             </div>
