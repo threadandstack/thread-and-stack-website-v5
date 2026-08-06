@@ -141,7 +141,25 @@ const BuildsPage = () => {
     load();
   }, []);
 
-  const buildCount = new Set(updates.map((u) => u.build_name || "Other updates")).size;
+  const sortKey = (u: BuildUpdate) => u.published_date || u.last_edited_time || "";
+
+  const groups = (() => {
+    const map = new Map<string, { name: string; slug: string | null; items: BuildUpdate[] }>();
+    for (const u of updates) {
+      const name = u.build_name || "Other updates";
+      const existing = map.get(name);
+      if (existing) existing.items.push(u);
+      else map.set(name, { name, slug: u.build_slug || null, items: [u] });
+    }
+    return Array.from(map.values())
+      .map((g) => ({
+        ...g,
+        items: [...g.items].sort((a, b) => sortKey(b).localeCompare(sortKey(a))),
+      }))
+      .sort((a, b) => sortKey(b.items[0]).localeCompare(sortKey(a.items[0])));
+  })();
+
+  const buildCount = groups.length;
 
   return (
     <>
