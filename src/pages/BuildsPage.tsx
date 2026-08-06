@@ -55,7 +55,7 @@ const TimelineEntry = ({
       <Tilt3D>
         <div className="rounded-2xl bg-card p-4 shadow-[0_8px_30px_rgba(0,0,0,0.06)] md:p-5">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[13px] text-ink-soft">
-            {update.build_name && (
+            {showBuild && update.build_name && (
               <>
                 <Link
                   to={`/builds/${update.build_slug || update.slug}`}
