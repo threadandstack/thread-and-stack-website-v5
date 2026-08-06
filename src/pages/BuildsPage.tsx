@@ -49,6 +49,17 @@ const TimelineEntry = ({ update }: { update: BuildUpdate }) => {
       <Tilt3D>
         <div className="rounded-2xl bg-card p-4 shadow-[0_8px_30px_rgba(0,0,0,0.06)] md:p-5">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[13px] text-ink-soft">
+            {update.build_name && (
+              <>
+                <Link
+                  to={`/builds/${update.build_slug || update.slug}`}
+                  className="text-[11px] font-medium uppercase tracking-[0.18em] text-accent transition-opacity hover:opacity-70"
+                >
+                  {update.build_name}
+                </Link>
+                <span className="text-ink-soft/40">·</span>
+              </>
+            )}
             <time className="tabular-nums">
               {formatUpdateDate(update.published_date || update.last_edited_time)}
             </time>
@@ -124,16 +135,7 @@ const BuildsPage = () => {
     load();
   }, []);
 
-  const groups = updates.reduce<{ name: string; slug: string | null; items: BuildUpdate[] }[]>(
-    (acc, update) => {
-      const name = update.build_name || "Other updates";
-      const existing = acc.find((g) => g.name === name);
-      if (existing) existing.items.push(update);
-      else acc.push({ name, slug: update.build_slug, items: [update] });
-      return acc;
-    },
-    [],
-  );
+  const buildCount = new Set(updates.map((u) => u.build_name || "Other updates")).size;
 
   return (
     <>
@@ -189,41 +191,26 @@ const BuildsPage = () => {
                 <div className="flex justify-center py-20">
                   <Loader2 className="h-8 w-8 animate-spin text-accent" />
                 </div>
-              ) : groups.length === 0 ? (
+              ) : updates.length === 0 ? (
                 <p className="text-center text-ink-soft">
                   Nothing shipped here yet. Check back shortly.
                 </p>
               ) : (
-                <div className="space-y-12">
-                  {groups.map((group) => (
-                    <div key={group.name}>
-                      <div className="flex flex-wrap items-baseline justify-between gap-3">
-                        <h2 className="font-serif-pro text-3xl font-normal leading-tight">
-                          {group.slug ? (
-                            <Link
-                              to={`/builds/${group.slug}`}
-                              className="transition-opacity hover:opacity-70"
-                            >
-                              {group.name}
-                            </Link>
-                          ) : (
-                            group.name
-                          )}
-                        </h2>
-                        <span className="text-[11px] uppercase tracking-[0.18em] text-ink-soft">
-                          {group.items.length} release
-                          {group.items.length === 1 ? "" : "s"}
-                        </span>
-                      </div>
-
-                      <ol className="relative mt-6 space-y-5 before:absolute before:bottom-4 before:left-[11px] before:top-4 before:w-px before:bg-border/60">
-                        {group.items.map((update) => (
-                          <TimelineEntry key={update.id} update={update} />
-                        ))}
-                      </ol>
-                    </div>
-                  ))}
-                </div>
+                <>
+                  <p className="text-[11px] uppercase tracking-[0.18em] text-ink-soft">
+                    {updates.length} release{updates.length === 1 ? "" : "s"}
+                    {buildCount > 1 && (
+                      <>
+                        {" "}across {buildCount} build{buildCount === 1 ? "" : "s"}
+                      </>
+                    )}
+                  </p>
+                  <ol className="relative mt-5 space-y-5 before:absolute before:bottom-4 before:left-[11px] before:top-4 before:w-px before:bg-border/60">
+                    {updates.map((update) => (
+                      <TimelineEntry key={update.id} update={update} />
+                    ))}
+                  </ol>
+                </>
               )}
             </div>
           </section>
