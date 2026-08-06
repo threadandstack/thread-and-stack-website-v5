@@ -118,6 +118,57 @@ const TimelineEntry = ({
   );
 };
 
+const BuildGroup = ({
+  group,
+}: {
+  group: { name: string; slug: string | null; items: BuildUpdate[] };
+}) => {
+  const [open, setOpen] = useState(true);
+
+  return (
+    <div className="rounded-2xl">
+      <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
+        <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          aria-expanded={open}
+          className="group flex items-center gap-3 text-left"
+        >
+          <ChevronDown
+            className={`h-4 w-4 shrink-0 text-ink-soft transition-transform ${open ? "" : "-rotate-90"}`}
+          />
+          <BuildIcon slug={group.slug} name={group.name} />
+          <h2 className="font-serif-pro text-2xl font-normal leading-snug transition-opacity group-hover:opacity-70 md:text-[28px]">
+            {group.name}
+          </h2>
+        </button>
+        <div className="flex items-center gap-3 pl-11 md:pl-0">
+          <span className="text-[11px] uppercase tracking-[0.18em] text-ink-soft">
+            {group.items.length} release{group.items.length === 1 ? "" : "s"}
+            {group.items[0]?.version ? ` • latest ${group.items[0].version}` : ""}
+          </span>
+          {group.slug && (
+            <Link
+              to={`/builds/${group.slug}`}
+              className="text-[11px] uppercase tracking-[0.18em] text-accent transition-opacity hover:opacity-70"
+            >
+              View
+            </Link>
+          )}
+        </div>
+      </div>
+
+      {open && (
+        <ol className="relative ml-[26px] mt-5 space-y-5 border-l border-border/60 pl-4 md:ml-[30px] md:pl-6">
+          {group.items.map((update) => (
+            <TimelineEntry key={update.id} update={update} showBuild={false} />
+          ))}
+        </ol>
+      )}
+    </div>
+  );
+};
+
 const BuildsPage = () => {
   const [updates, setUpdates] = useState<BuildUpdate[]>([]);
   const [isLoading, setIsLoading] = useState(true);
