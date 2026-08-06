@@ -7,6 +7,7 @@ import { Footer } from "@/components/Footer";
 import { CTA } from "@/components/home-draft2/CTA";
 import { Tilt3D } from "@/components/Tilt3D";
 import { ChangeChips, VersionChip } from "@/components/builds/ChangeChips";
+import { BuildIcon } from "@/components/builds/BuildIcon";
 import { supabase } from "@/integrations/supabase/client";
 import { sanitizeHtml } from "@/lib/sanitize";
 
@@ -50,8 +51,9 @@ const TimelineEntry = ({
   const hasBody = Boolean(update.html_content && update.html_content.trim());
 
   return (
-    <li className="relative pl-10">
-      <span className="absolute left-[11px] top-5 h-2.5 w-2.5 -translate-x-1/2 rounded-full bg-accent ring-4 ring-background" />
+    <li className="relative">
+      <span className="absolute -left-4 top-5 h-2.5 w-2.5 -translate-x-1/2 rounded-full bg-accent ring-4 ring-background md:-left-6" />
+
       <Tilt3D>
         <div className="rounded-2xl bg-card p-4 shadow-[0_8px_30px_rgba(0,0,0,0.06)] md:p-5">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[13px] text-ink-soft">
@@ -115,6 +117,57 @@ const TimelineEntry = ({
         </div>
       </Tilt3D>
     </li>
+  );
+};
+
+const BuildGroup = ({
+  group,
+}: {
+  group: { name: string; slug: string | null; items: BuildUpdate[] };
+}) => {
+  const [open, setOpen] = useState(true);
+
+  return (
+    <div className="rounded-2xl">
+      <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
+        <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          aria-expanded={open}
+          className="group flex items-center gap-3 text-left"
+        >
+          <ChevronDown
+            className={`h-4 w-4 shrink-0 text-ink-soft transition-transform ${open ? "" : "-rotate-90"}`}
+          />
+          <BuildIcon slug={group.slug} name={group.name} />
+          <h2 className="font-serif-pro text-2xl font-normal leading-snug transition-opacity group-hover:opacity-70 md:text-[28px]">
+            {group.name}
+          </h2>
+        </button>
+        <div className="flex items-center gap-3 pl-11 md:pl-0">
+          <span className="text-[11px] uppercase tracking-[0.18em] text-ink-soft">
+            {group.items.length} release{group.items.length === 1 ? "" : "s"}
+            {group.items[0]?.version ? ` • latest ${group.items[0].version}` : ""}
+          </span>
+          {group.slug && (
+            <Link
+              to={`/builds/${group.slug}`}
+              className="text-[11px] uppercase tracking-[0.18em] text-accent transition-opacity hover:opacity-70"
+            >
+              View
+            </Link>
+          )}
+        </div>
+      </div>
+
+      {open && (
+        <ol className="relative ml-[26px] mt-5 space-y-5 border-l border-border/60 pl-4 md:ml-[30px] md:pl-6">
+          {group.items.map((update) => (
+            <TimelineEntry key={update.id} update={update} showBuild={false} />
+          ))}
+        </ol>
+      )}
+    </div>
   );
 };
 
@@ -229,34 +282,9 @@ const BuildsPage = () => {
                       </>
                     )}
                   </p>
-                  <div className="mt-8 space-y-14">
+                  <div className="mt-8 space-y-8">
                     {groups.map((group) => (
-                      <div key={group.name}>
-                        <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-                          <h2 className="font-serif-pro text-2xl font-normal leading-snug md:text-[28px]">
-                            {group.slug ? (
-                              <Link
-                                to={`/builds/${group.slug}`}
-                                className="transition-opacity hover:opacity-70"
-                              >
-                                {group.name}
-                              </Link>
-                            ) : (
-                              group.name
-                            )}
-                          </h2>
-                          <span className="text-[11px] uppercase tracking-[0.18em] text-ink-soft">
-                            {group.items.length} release
-                            {group.items.length === 1 ? "" : "s"}
-                            {group.items[0]?.version ? ` • latest ${group.items[0].version}` : ""}
-                          </span>
-                        </div>
-                        <ol className="relative mt-5 space-y-5 before:absolute before:bottom-4 before:left-[11px] before:top-4 before:w-px before:bg-border/60">
-                          {group.items.map((update) => (
-                            <TimelineEntry key={update.id} update={update} showBuild={false} />
-                          ))}
-                        </ol>
-                      </div>
+                      <BuildGroup key={group.name} group={group} />
                     ))}
                   </div>
                 </>
