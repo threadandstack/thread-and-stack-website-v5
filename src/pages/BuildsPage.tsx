@@ -7,6 +7,7 @@ import { Footer } from "@/components/Footer";
 import { CTA } from "@/components/home-draft2/CTA";
 import { Tilt3D } from "@/components/Tilt3D";
 import { ChangeChips, VersionChip } from "@/components/builds/ChangeChips";
+import { BuildIcon } from "@/components/builds/BuildIcon";
 import { supabase } from "@/integrations/supabase/client";
 import { sanitizeHtml } from "@/lib/sanitize";
 
