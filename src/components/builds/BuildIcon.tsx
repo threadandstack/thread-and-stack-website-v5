@@ -8,6 +8,7 @@ const MAP: Record<string, { src: string; alt: string; pad?: boolean }> = {
   "content-ops-worker": { src: bufferIcon, alt: "Content Ops Worker" },
   "xero-worker": { src: ntnWorkerIcon.url, alt: "Notion Worker" },
   "notion-workspace-installation": { src: notionIcon, alt: "Notion", pad: true },
+  "t-s-notion-install-base-development": { src: notionIcon, alt: "Notion", pad: true },
   "thread-stack-skills": { src: notionDevIcon, alt: "Thread & Stack Skills" },
 };
 
