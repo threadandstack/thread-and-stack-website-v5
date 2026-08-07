@@ -11,6 +11,7 @@ const MAP: Record<string, { src: string; alt: string; pad?: boolean }> = {
   "notion-workspace-installation": { src: notionIcon, alt: "Notion", pad: true },
   "t-s-notion-install-base-development": { src: notionIcon, alt: "Notion", pad: true },
   "thread-stack-skills": { src: notionDevIcon, alt: "Thread & Stack Skills" },
+  "thread-stack-brand": { src: brandIcon, alt: "Thread & Stack Brand", pad: true },
 };
 
 export const BuildIcon = ({
