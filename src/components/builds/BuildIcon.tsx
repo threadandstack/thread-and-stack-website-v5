@@ -2,6 +2,7 @@ import bufferIcon from "@/assets/build-icons/buffer.png";
 import notionIcon from "@/assets/build-icons/notion.png";
 import notionDevIcon from "@/assets/build-icons/notion-dev.jpg";
 import ntnWorkerIcon from "@/assets/build-icons/ntn-worker.png.asset.json";
+import brandIcon from "@/assets/logos/Indigo_TS_SocialSq.svg";
 
 const MAP: Record<string, { src: string; alt: string; pad?: boolean }> = {
   "thread-stack-website": { src: "/favicon.png", alt: "Thread & Stack" },
