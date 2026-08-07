@@ -61,13 +61,19 @@ const TimelineEntry = ({
               <>
                 <Link
                   to={`/builds/${update.build_slug || update.slug}`}
-                  className="text-[11px] font-medium uppercase tracking-[0.18em] text-accent transition-opacity hover:opacity-70"
+                  className="inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.18em] text-accent transition-opacity hover:opacity-70"
                 >
+                  <BuildIcon
+                    slug={update.build_slug}
+                    name={update.build_name}
+                    className="h-5 w-5 rounded-[6px]"
+                  />
                   {update.build_name}
                 </Link>
                 <span className="text-ink-soft/40">·</span>
               </>
             )}
+
             <time className="tabular-nums">
               {formatUpdateDate(update.published_date || update.last_edited_time)}
             </time>
