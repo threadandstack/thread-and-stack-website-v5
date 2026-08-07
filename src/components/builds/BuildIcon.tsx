@@ -2,6 +2,7 @@ import bufferIcon from "@/assets/build-icons/buffer.png";
 import notionIcon from "@/assets/build-icons/notion.png";
 import notionDevIcon from "@/assets/build-icons/notion-dev.jpg";
 import ntnWorkerIcon from "@/assets/build-icons/ntn-worker.png.asset.json";
+import brandIcon from "@/assets/logos/Indigo_TS_SocialSq.svg";
 
 const MAP: Record<string, { src: string; alt: string; pad?: boolean }> = {
   "thread-stack-website": { src: "/favicon.png", alt: "Thread & Stack" },
@@ -10,6 +11,7 @@ const MAP: Record<string, { src: string; alt: string; pad?: boolean }> = {
   "notion-workspace-installation": { src: notionIcon, alt: "Notion", pad: true },
   "t-s-notion-install-base-development": { src: notionIcon, alt: "Notion", pad: true },
   "thread-stack-skills": { src: notionDevIcon, alt: "Thread & Stack Skills" },
+  "thread-stack-brand": { src: brandIcon, alt: "Thread & Stack Brand", pad: true },
 };
 
 export const BuildIcon = ({
