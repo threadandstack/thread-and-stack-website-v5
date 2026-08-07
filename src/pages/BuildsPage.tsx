@@ -174,8 +174,10 @@ const BuildGroup = ({
 const BuildsPage = () => {
   const [updates, setUpdates] = useState<BuildUpdate[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [view, setView] = useState<"build" | "combined">("build");
   const [theme, setTheme] = useState<"dark" | "light">("light");
   const toggleTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
+
 
   useEffect(() => {
     const load = async () => {
@@ -274,20 +276,60 @@ const BuildsPage = () => {
                 </p>
               ) : (
                 <>
-                  <p className="text-[11px] uppercase tracking-[0.18em] text-ink-soft">
-                    {updates.length} release{updates.length === 1 ? "" : "s"}
-                    {buildCount > 1 && (
-                      <>
-                        {" "}across {buildCount} build{buildCount === 1 ? "" : "s"}
-                      </>
-                    )}
-                  </p>
-                  <div className="mt-8 space-y-8">
-                    {groups.map((group) => (
-                      <BuildGroup key={group.name} group={group} />
-                    ))}
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <p className="text-[11px] uppercase tracking-[0.18em] text-ink-soft">
+                      {updates.length} release{updates.length === 1 ? "" : "s"}
+                      {buildCount > 1 && (
+                        <>
+                          {" "}across {buildCount} build{buildCount === 1 ? "" : "s"}
+                        </>
+                      )}
+                    </p>
+                    <div
+                      role="tablist"
+                      aria-label="Timeline view"
+                      className="inline-flex items-center gap-1 rounded-full bg-muted/70 p-1"
+                    >
+                      {(
+                        [
+                          ["build", "Timeline by Build"],
+                          ["combined", "Combined Timeline"],
+                        ] as const
+                      ).map(([key, label]) => (
+                        <button
+                          key={key}
+                          role="tab"
+                          type="button"
+                          aria-selected={view === key}
+                          onClick={() => setView(key)}
+                          className={`rounded-full px-3 py-1.5 text-[11px] uppercase tracking-[0.14em] transition-colors ${
+                            view === key
+                              ? "bg-card text-foreground shadow-[0_2px_10px_rgba(0,0,0,0.06)]"
+                              : "text-ink-soft hover:text-foreground"
+                          }`}
+                        >
+                          {label}
+                        </button>
+                      ))}
+                    </div>
                   </div>
+                  {view === "build" ? (
+                    <div className="mt-8 space-y-8">
+                      {groups.map((group) => (
+                        <BuildGroup key={group.name} group={group} />
+                      ))}
+                    </div>
+                  ) : (
+                    <ol className="relative mt-8 space-y-5 border-l border-border/60 pl-4 md:pl-6">
+                      {[...updates]
+                        .sort((a, b) => sortKey(b).localeCompare(sortKey(a)))
+                        .map((update) => (
+                          <TimelineEntry key={update.id} update={update} />
+                        ))}
+                    </ol>
+                  )}
                 </>
+
               )}
             </div>
           </section>
