@@ -1,73 +1,76 @@
+# The Journal, evolved: writing, builds and events in one place
 
-# Xero handoff for diagnostic bookings
+Today the site has three separate strands of "what Brendan is doing": the Journal (writing), Builds (the build-in-public timeline), and nothing at all for events. This plan turns the Journal into a single hub that holds all three, without flattening what makes each one different.
 
-Keep the embedded Stripe checkout exactly as it is. When a booking flips to `paid` (in both `confirm-power-hour-checkout` and `payments-webhook`), also push it to Xero: find-or-create the contact, create an AUTHORISED invoice with a discount line if a coupon was used, and mark it paid against a Stripe clearing bank account so it reconciles cleanly.
+## The idea
 
-## A note on naming
+`/journal` becomes one mixed, newest-first feed. Every item is dated and carries a type: **Writing**, **Build**, or **Event**. A filter row at the top lets people show everything or just one type, and the existing topic filters stay for writing.
 
-Everything the buyer, Xero, or Stripe sees will say **Diagnostic** — invoice line items, invoice references, PaymentIntent descriptions, admin UI labels, transactional emails. The existing internal names (`power_hour_bookings` table, `create-power-hour-checkout` / `confirm-power-hour-checkout` edge functions, `PowerHourBookingDrawer` component, `/power-hour/thank-you` route) stay as they are — renaming those is a much bigger refactor with real risk (existing bookings, Stripe metadata already referencing `power_hour_*`, deep links, the return URL in production Stripe sessions). Happy to do that rename as a separate, dedicated pass if you want; it should not be tangled with the Xero work.
+Each type keeps its own card design, so the feed reads as a varied, editorial page rather than a uniform list:
 
-Concretely, in this plan:
-- Invoice line 1 description: `AI Diagnostic — 1:1 with Brendan`.
-- Invoice `Reference`: `Diagnostic — {source}{coupon?}`.
-- PaymentIntent + Stripe invoice `description`: `AI Diagnostic`.
-- Admin Xero card label: "Diagnostic bookings".
+- **Writing** — image-led card, topic pill, reading time, intro line. Same as today.
+- **Build** — compact changelog card: build icon, version chip, change-type chips, product name. Keeps the lineage cue (a small "3rd release of 6" style marker) so it still feels like part of a timeline, not a loose post.
+- **Event** — event card: date block, location, "Hosted" or "Attended" badge, format (talk, workshop, meetup, panel), and a small photo. Past and upcoming handled differently, with upcoming events pinned in a slim strip above the feed.
 
-I will also update the two existing places in `create-power-hour-checkout` that currently pass `productDescription` (which resolves to the Stripe product name) to instead use the fixed string `"AI Diagnostic"` if the product name still reads "Thread & Stack Diagnostic" or similar — I'll verify the current product name and only override if it isn't already right.
+Nothing is lost. `/builds` stays exactly as it is, with its grouped and combined timelines — the Journal feed just surfaces the same entries in a mixed context and links through. Build detail pages and blog post pages are untouched.
 
-## One-time setup (you'll do this)
+Events get a detail page at `/journal/events/:slug` with the write-up, photos, links to slides or recordings, and any related post or build.
 
-1. Xero app is created and `XERO_CLIENT_ID` / `XERO_CLIENT_SECRET` are saved.
-2. Confirm the redirect URI on the Xero app is exactly:
-   `https://uohhfesyumigbpqjpacl.supabase.co/functions/v1/xero-oauth-callback`
-3. In Xero → **Accounting → Advanced → Chart of Accounts**, note two account codes:
-   - A **revenue** account for consulting income (e.g. `200 Sales`).
-   - A **bank/clearing** account representing Stripe payouts (e.g. `Stripe Clearing`). Payments get applied here; Xero's bank rules then match real Stripe payouts to it.
-4. Once the code is built, click a one-time "Connect Xero" button in the admin area to authorise the org. That stores the refresh token; nothing else is manual after that.
+## Navigation
 
-## What gets built
+Untouched for now, as agreed. Journal and Builds both stay in the bar. If the hub works, removing Builds from the nav later is a one-line change.
 
-### Secrets
-- `XERO_CLIENT_ID`, `XERO_CLIENT_SECRET` — done.
-- `XERO_REVENUE_ACCOUNT_CODE` (default `200`) and `XERO_STRIPE_CLEARING_ACCOUNT_CODE` — settable as secrets so you can change without a redeploy.
+## Events data
 
-### DB (one migration)
-- `xero_connection` table (single row): `tenant_id`, `tenant_name`, `refresh_token`, `access_token`, `access_token_expires_at`, `updated_at`. Service-role only.
-- `power_hour_bookings` (existing table — kept for compatibility): add nullable `xero_contact_id`, `xero_invoice_id`, `xero_invoice_number`, `xero_synced_at`, `xero_sync_error`, `discount_amount` (integer pence, so the sync doesn't have to re-derive coupon math).
+Events come from a new Notion database you'll create with Notion AI, synced into the site the same way builds and posts are. Below is the prompt to paste into Notion AI.
 
-### Edge functions (new)
-- `xero-oauth-start` — admin-only: returns the Xero authorise URL with `offline_access accounting.contacts accounting.transactions` scopes and a state nonce.
-- `xero-oauth-callback` (`verify_jwt = false`) — exchanges the code, fetches `/connections` to pick the tenant, writes to `xero_connection`. Redirects back to `/admin` with a success flag.
-- `_shared/xero.ts` — helper: `getXeroAccessToken()` auto-refreshes when <60s to expiry using the stored refresh token, rotates the stored refresh token on every refresh, plus `xeroFetch(path, init)` that injects `Authorization` and `Xero-Tenant-Id`.
-- `sync-booking-to-xero` — internal, invoked with service-role:
-  - Input: `bookingId`. Idempotent: if `xero_invoice_id` already set, exits.
-  - **Contact match:** `GET /Contacts?where=EmailAddress=="…"`. If none, fallback on exact `Name`. If none, `POST /Contacts` with name + email + optional company from `role_org`.
-  - **Invoice:** `POST /Invoices` with `Type: ACCREC`, `Status: AUTHORISED`, contact, `Reference: "Diagnostic — {source}{coupon?}"`, dated today.
-    - Line 1: `AI Diagnostic — 1:1 with Brendan`, qty 1, £395.00, `AccountCode: XERO_REVENUE_ACCOUNT_CODE`, `TaxType: NONE` (not VAT registered).
-    - Line 2 (only if coupon): `Discount ({couponCode})`, qty 1, `-<discountGBP>`, same account, `TaxType: NONE`.
-  - **Payment:** `POST /Payments` against the invoice, `Account: { Code: XERO_STRIPE_CLEARING_ACCOUNT_CODE }`, `Amount: amount_paid/100`, `Reference: stripe_session_id`.
-  - Stores contact/invoice ids + number + `xero_synced_at`. On failure, writes `xero_sync_error` and returns 500 (booking + Stripe payment untouched).
+### Prompt for Notion AI
 
-### Wiring into paid handlers
-In `confirm-power-hour-checkout` and `payments-webhook`, inside the existing `justPaid` branch, fire `supabase.functions.invoke("sync-booking-to-xero", { body: { bookingId } })` alongside the email jobs in the same `Promise.allSettled`. Xero failure never blocks the buyer or admin email.
+```text
+Create a new Notion database called "Events" with these properties:
 
-### Admin UI (small)
-- On `/admin`, add a "Xero" card:
-  - Status pill: "Not connected" / "Connected to {org name}".
-  - "Connect Xero" / "Reconnect" button → hits `xero-oauth-start`, opens the returned URL.
-- Diagnostic bookings list shows `xero_invoice_number` linking to `https://go.xero.com/AccountsReceivable/View.aspx?InvoiceID={id}`, plus any `xero_sync_error` and a per-row "Retry Xero sync" button.
+- Name (title) — the event name
+- Slug (text) — url-friendly, lowercase, hyphenated
+- Status (select) — Draft, Live
+- Role (select) — Hosted, Attended, Spoke, Panel
+- Format (select) — Talk, Workshop, Meetup, Conference, Panel, Webinar
+- Date (date) — supports an end date for multi-day events
+- Location (text) — e.g. "London, UK" or "Online"
+- Venue (text)
+- Organiser (text)
+- Summary (text) — one or two sentences for the card
+- Topics (multi-select) — Strategy, Systems, Notion, AI, Brand, Community
+- Event URL (url) — the official event page
+- Slides URL (url)
+- Recording URL (url)
+- Cover (files) — a header image
+- Featured (checkbox)
 
-## Deliberately out of scope
-- **Renaming the internal `power_hour_*` tables/functions/component/route to `diagnostic_*`.** Real risk (breaks existing bookings, Stripe metadata references, production return URLs); do it as its own pass.
-- **Recording the Stripe fee** as a bank fee line — Xero's Stripe bank feed handles this. Clearing-account approach keeps invoices gross.
-- **Backfilling the two orphan payments** (Jocelyn, Cali) — separate manual pass; easy to add an admin action later.
-- **VAT.** Every line `TaxType: NONE`. One variable to flip if you register later.
-- **Auto-emailing invoices from Xero.** Off — your own transactional emails carry the invoice number.
+Add a default gallery view grouped by year, sorted by Date descending, filtered to Status = Live.
+The body of each page is the write-up: what it was, what I covered, what I took away.
+```
 
-## Order of implementation
-1. Migration (columns + `xero_connection` with grants).
-2. `_shared/xero.ts` + OAuth start/callback functions.
-3. Add `XERO_REVENUE_ACCOUNT_CODE` + `XERO_STRIPE_CLEARING_ACCOUNT_CODE` secrets; you complete the one-time Xero connect.
-4. `sync-booking-to-xero` + wire into `confirm-power-hour-checkout` and `payments-webhook`.
-5. Admin UI card + retry button.
-6. End-to-end sandbox test: Stripe checkout with the £100-off coupon → verify contact + invoice + payment appear in your Xero demo org, then a full-price run.
+Once it exists, share it with the Lovable Notion connection and send me the database link.
+
+## Build order
+
+1. **Events pipeline** — new `events_cache` table, a `sync-events-cache` function mirroring the builds sync (HTML rendering, image persistence, incremental + full sync), and a `fetch-events` reader.
+2. **Event cards and detail page** — `/journal/events/:slug`, plus an events-only view so events are browsable on their own.
+3. **The unified feed** — a shared item model that merges posts, build releases and events into one dated stream, with type filters and per-type card components.
+4. **Upcoming strip and cross-links** — pinned upcoming events, and "related" links between an event, a post and a build where they connect.
+
+## Alternative, if the hub feels like too much
+
+A lighter version: keep `/journal` as writing only, add `/journal/events` as a standalone events section reusing the Journal's look, and leave `/builds` alone. Same event cards, same Notion pipeline, no merged feed. Less interesting, but it's a smaller step and the merged feed can be layered on later without rework — the sync work in step 1 is identical either way.
+
+## Technical notes
+
+- New table `public.events_cache` (notion_id, slug, title, summary, html_content, cover_image_url, role, format, start_date, end_date, location, venue, organiser, topics[], event_url, slides_url, recording_url, featured, last_edited_time, synced_at) with anon read and service-role write, matching `build_updates_cache`.
+- Sync reuses the `persist-notion-media` proxy so Notion S3 image URLs don't expire.
+- Feed merging happens client-side over the three existing fetch functions, normalised into a single `JournalItem` union type in `src/lib/journalFeed.ts`. No new aggregate backend endpoint needed at this volume.
+- `sitemap.xml`, `llms.txt` and the prerender script get the new event routes.
+- Existing `/builds`, `/builds/:slug`, `/blog` and `/blog/:slug` routes and components are not modified beyond extracting the build card into a reusable component.
+
+## About / T&S Way
+
+Deliberately out of scope here, as agreed. Worth its own pass once the Journal hub settles.
