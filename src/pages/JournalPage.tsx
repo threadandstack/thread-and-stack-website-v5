@@ -346,14 +346,16 @@ const JournalPage = () => {
                   <button
                     key={f.key}
                     onClick={() => setFilter(f.key)}
-                    className={`rounded-full px-4 py-2 text-sm transition-all ${
+                    className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm transition-all ${
                       activeFilter === f.key
                         ? "bg-foreground text-background"
                         : "bg-muted text-muted-foreground hover:bg-muted/80"
                     }`}
                   >
+                    {f.Icon && <f.Icon className="h-4 w-4" />}
                     {f.label}
                   </button>
+
                 ))}
               </div>
 
