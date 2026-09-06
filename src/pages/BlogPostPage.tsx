@@ -16,6 +16,7 @@ interface BlogPostDetail {
   title: string;
   description: string;
   headerImage?: string | null;
+  ogImage?: string | null;
   content: string;
   readingTime?: string | null;
   theme?: string | null;
@@ -114,7 +115,7 @@ const BlogPostPage = () => {
 
     const siteUrl = window.location.origin;
     const pageUrl = `${siteUrl}/blog/${slug}`;
-    const imageUrl = post.headerImage || `https://threadandstack.com/__l5e/assets-v1/6bce079b-d3c5-4c8b-a9d7-79c333d9d9ca/OpenGraph_TS2026.png`;
+    const imageUrl = post.ogImage || post.headerImage || `https://threadandstack.com/__l5e/assets-v1/6bce079b-d3c5-4c8b-a9d7-79c333d9d9ca/OpenGraph_TS2026.png`;
 
     // Helper to update or create meta tag
     const setMetaTag = (property: string, content: string, isName = false) => {

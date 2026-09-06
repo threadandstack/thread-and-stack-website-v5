@@ -130,6 +130,19 @@ serve(async (req) => {
         ? featuredImageFiles[0].file?.url || featuredImageFiles[0].external?.url
         : null
 
+      const ogImageFiles = properties['OG IMG']?.files || properties['OG Image']?.files || []
+      let ogImage = ogImageFiles.length > 0
+        ? ogImageFiles[0].file?.url || ogImageFiles[0].external?.url
+        : null
+
+      if (ogImage) {
+        const persistedOg = await persistMediaUrl(supabase, supabaseUrl, ogImage, `blog-${slug}`, 'og')
+        if (persistedOg) {
+          ogImage = persistedOg
+          totalMediaPersisted++
+        }
+      }
+
       // Persist header image inline
       if (headerImage) {
         const persistedHeader = await persistMediaUrl(supabase, supabaseUrl, headerImage, `blog-${slug}`, 'header')
@@ -146,6 +159,7 @@ serve(async (req) => {
         description: properties['Description']?.rich_text?.[0]?.plain_text || null,
         intro: properties['Intro']?.rich_text?.[0]?.plain_text || null,
         header_image_url: headerImage,
+        og_image_url: ogImage,
         reading_time: properties['Reading time']?.rich_text?.[0]?.plain_text || null,
         theme: properties['Theme']?.select?.name || null,
         published_date: properties['Published']?.date?.start || null,
@@ -170,6 +184,7 @@ serve(async (req) => {
           title,
           html_content: htmlContent,
           header_image_url: headerImage,
+          og_image_url: ogImage,
           description: properties['Description']?.rich_text?.[0]?.plain_text || null,
           reading_time: properties['Reading time']?.rich_text?.[0]?.plain_text || null,
           theme: properties['Theme']?.select?.name || null,

@@ -34,6 +34,7 @@ serve(async (req) => {
       description: row.description || '',
       intro: row.intro,
       headerImage: row.header_image_url,
+      ogImage: row.og_image_url,
       readingTime: row.reading_time,
       theme: row.theme,
       publishedDate: row.published_date,

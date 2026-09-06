@@ -33,6 +33,7 @@ serve(async (req) => {
             title: cached.title,
             description: cached.description || '',
             headerImage: cached.header_image_url,
+            ogImage: cached.og_image_url,
             content: cached.html_content,
             readingTime: cached.reading_time,
             theme: cached.theme,
@@ -290,6 +291,11 @@ serve(async (req) => {
       ? featuredImageFiles[0].file?.url || featuredImageFiles[0].external?.url
       : null
 
+    const ogImageFiles = properties['OG IMG']?.files || properties['OG Image']?.files || []
+    const ogImage = ogImageFiles.length > 0
+      ? ogImageFiles[0].file?.url || ogImageFiles[0].external?.url
+      : null
+
     // Cache the result
     await sb.from('blog_content_cache').upsert({
       notion_id: postId,
@@ -297,6 +303,7 @@ serve(async (req) => {
       title: properties['Name']?.title?.[0]?.plain_text || 'Untitled',
       html_content: content,
       header_image_url: headerImage,
+      og_image_url: ogImage,
       description: properties['Description']?.rich_text?.[0]?.plain_text || null,
       reading_time: properties['Reading time']?.rich_text?.[0]?.plain_text || null,
       theme: properties['Theme']?.select?.name || null,
@@ -307,6 +314,7 @@ serve(async (req) => {
       title: properties['Name']?.title?.[0]?.plain_text || 'Untitled',
       description: properties['Description']?.rich_text?.[0]?.plain_text || '',
       headerImage,
+      ogImage,
       content,
       readingTime: properties['Reading time']?.rich_text?.[0]?.plain_text || null,
       theme: properties['Theme']?.select?.name || null,
