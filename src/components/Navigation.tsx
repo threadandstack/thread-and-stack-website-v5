@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Menu, X, ChevronDown, User, Home, Compass, Layers, BookOpen, Hammer, Rocket, Sun, Moon } from "lucide-react";
+import { Menu, X, ChevronDown, User, Home, Compass, Layers, BookOpen, Rocket, Sun, Moon } from "lucide-react";
 import { ContactDrawer } from "@/components/ContactDrawer";
 import { DiagnosticDrawer } from "@/components/home-draft2/DiagnosticDrawer";
 
