@@ -9,7 +9,7 @@ import { Tilt3D } from "@/components/Tilt3D";
 import { BlogNewsletterCTA } from "@/components/BlogNewsletterCTA";
 import { SubscribeLightbox } from "@/components/SubscribeLightbox";
 import { EventCard } from "@/components/journal/EventCard";
-import { BuildFeedCard } from "@/components/journal/BuildFeedCard";
+import { BuildFeedCard, BuildGroupCard } from "@/components/journal/BuildFeedCard";
 import journalLogoLight from "@/assets/journal-logo-light.png.asset.json";
 import journalLogoDark from "@/assets/journal-logo-dark.png.asset.json";
 import {
@@ -114,6 +114,8 @@ const JournalPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [showSubscribe, setShowSubscribe] = useState(searchParams.get("subscribe") === "true");
   const [theme, setTheme] = useState<"dark" | "light">("light");
+  const [expandedBuild, setExpandedBuild] = useState<string | null>(null);
+  const toggleBuild = (id: string) => setExpandedBuild((cur) => (cur === id ? null : id));
   const toggleTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
 
   const filterParam = searchParams.get("type") as FilterKey | null;
@@ -142,7 +144,7 @@ const JournalPage = () => {
         fetchBuildItems(),
         fetchEventItems(),
       ]);
-      setItems(mergeJournalItems([...writing, ...builds, ...events]));
+      setItems(mergeJournalItems([...writing, ...groupBuildItems(builds), ...events]));
       setIsLoading(false);
     };
     load();
@@ -157,7 +159,7 @@ const JournalPage = () => {
     const past = items.filter((i) => !(i.kind === "event" && isUpcoming(i)));
     if (activeFilter === "all") return past;
     if (activeFilter === "writing") return past.filter((i) => i.kind === "writing");
-    if (activeFilter === "builds") return past.filter((i) => i.kind === "build");
+    if (activeFilter === "builds") return past.filter((i) => i.kind === "buildGroup");
     return past.filter((i) => i.kind === "event");
   }, [items, activeFilter]);
 
@@ -251,7 +253,7 @@ const JournalPage = () => {
                 </div>
               ) : (
                 <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                  {feed.map(renderItem)}
+                  {feed.map((item) => renderItem(item, expandedBuild, toggleBuild))}
 
                   {feed.length === 0 && (
                     <div className="col-span-full py-20 text-center">
