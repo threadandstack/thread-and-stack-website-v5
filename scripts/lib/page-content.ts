@@ -338,6 +338,17 @@ export const pages: PageContent[] = [
     ],
   },
   {
+    path: "/journal",
+    title: "Thread & Stack Journal — writing, builds and events",
+    description:
+      "Writing on ops and strategy, a public log of what we're building, and the events Thread & Stack hosts and attends.",
+    h1: "Thread & Stack Journal",
+    schemaType: "CollectionPage",
+    body: [
+      "One place for the writing, the public build log, and the events Thread & Stack hosts, speaks at, and attends.",
+    ],
+  },
+  {
     path: "/favourite-fiction",
     title: "Favourite Fiction — Thread & Stack",
     description:
