@@ -82,10 +82,10 @@ export const BuildGroupCard = ({
         <div className="flex items-start gap-3">
           <BuildIcon slug={group.slug} name={group.buildName} />
           <div className="min-w-0 flex-1">
-            <h3 className="truncate text-xl leading-snug transition-colors group-hover:text-accent">
+            <h3 className="truncate text-2xl leading-snug transition-colors group-hover:text-accent">
               {group.buildName}
             </h3>
-            <p className="text-[12px] text-muted-foreground">
+            <p className="text-sm text-muted-foreground">
               {count} {count === 1 ? "update" : "updates"}
               {latest?.date ? ` · latest ${formatJournalDate(latest.date)}` : ""}
             </p>
@@ -109,9 +109,9 @@ export const BuildGroupCard = ({
             <div className="mt-4">
               <VersionChip version={latest.version} releaseType={latest.releaseType} />
             </div>
-            <p className="mt-3 text-sm font-medium leading-snug">{latest.title}</p>
+            <p className="mt-3 font-medium leading-snug">{latest.title}</p>
             {(latest.changelog || latest.description) && (
-              <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-muted-foreground">
+              <p className="mt-2 line-clamp-2 leading-relaxed text-muted-foreground">
                 {latest.changelog || latest.description}
               </p>
             )}
