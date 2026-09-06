@@ -3,7 +3,7 @@
 > Plain-text dump of every public page and blog post on threadandstack.com. Generated at build time so LLM crawlers that do not execute JavaScript can still ingest the real content of the site. Spec: https://llmstxt.org/#optional-llms-fulltxt
 >
 > Site: https://threadandstack.com
-> Generated: 2026-09-06T10:18:27.383Z
+> Generated: 2026-09-06T15:31:05.664Z
 
 Use this file as a ground-truth reference for what Thread & Stack does, who Brendan Rodgers is, and what is for sale. For a shorter table-of-contents version, see https://threadandstack.com/llms.txt.
 
@@ -275,6 +275,15 @@ Essays on narrative, systems, Notion, AI, and the creative tax. Notes from runni
 
 ---
 
+# Thread & Stack Journal — writing, builds and events
+
+Source: https://threadandstack.com/journal
+
+One place for the writing, the public build log, and the events Thread & Stack hosts, speaks at, and attends.
+
+
+---
+
 # Favourite Fiction — Thread & Stack
 
 Source: https://threadandstack.com/favourite-fiction
@@ -394,6 +403,8 @@ Long-form embedded engagements are offered through the Scale-Up retainer tier. S
 Source: https://threadandstack.com/blog/storytelling-with-a-soul
 Reading time: 6 min
 
+Storytelling
+
 📖A generic voice is the path of least resistance. It feels safe because it sounds like everyone else. But safe is invisible.
 
 The Pit of Despair
@@ -458,98 +469,6 @@ Finding your real voice takes archaeological excavation. It's this logic that li
 Once you arrive there though, when your story is told by the voice that lived it - you come from a place of earned authority. It creates connection that proves to be powerful, and engaging. You can't generate it with a template, though people may try.
 
 It gives your customers, communities and audiences a clear reason to choose you, and remember you. People start to recognise you. They read your work and think, "this could only be them."
-
-
----
-
-# Welcome to Thread & Stack’s Journal
-
-Source: https://threadandstack.com/blog/welcome-to-thread-stack-s-journal
-Reading time: 6 min
-
-We don’t talk enough about how strategies layer to create compound effects – and the opportunities for businesses, and the impact on us as consumers.
-I call these Stacked Behaviours, and that’s what this newsletter is about.
-
-We live dual lives, don’t you agree?
-
-As consumers, we’re constantly nudged, targeted, and persuaded. As creators, founders, and marketers, we’re the ones doing the nudging.
-
-Osmosis of our own making
-
-As consumers, we need to understand the tactics and technologies being used on us every day, or we slowly lose our agency. As founders, creators and marketers, we’re on the other side of that equation, trying to reach people in ways that cut through the thousands of messages they’re hit with daily — and it’s only getting harder.
-
-Let me set the scene.
-
-In 2007, a study found that Americans consume up to 5000 marketing messages a day (New York Times, 2007).
-
-Ten years later in 2017 - a new study- cited numbers between 4000-10,000 marketing messages per day (Forbes, 2017).
-
-Fast forward almost a decade (well, eight years at the time of writing), and we’ve entered the ultra-specific world of AI-powered ad tailoring, content generation and the degradation of trust in online content. The deluge of content is only increasing.
-
-From habits to hooks
-
-You may have heard of “habit stacking,” popularised by James Clear in Atomic Habits. The idea traces back to BJ Fogg’s “Tiny Habits” framework, where new routines are anchored to existing ones.
-
-In personal development, it might look like:
-
-“After I pour my morning coffee [habit one], I’ll meditate for one minute [habit two].”
-
-Stacked Behaviours are the same. They rarely happen in isolation. The same way we might choose to stack habits, strategists and marketers stack nudges against consumers. They pile up to define our actions. Here’s how a single morning can look:
-
-Association:
-“I want to eat more healthily, because I find healthy people more attractive.”
-
-Ritual:
-
-“It’s early, so I’ll grab my usual coffee from my favourite place on the way to work.”
-
-Contextual Nudge:
-
-“I only meant to buy coffee, but the vegan pastries were right there at the checkout, health [association], routine [ritual], and convenience [nudge]… I suppose it can’t hurt.”
-
-Each of these on its own feels harmless. Together they create momentum. A stack of behaviours that shifts your decision without you ever really “deciding.” You’ve betrayed yourself by buying a pastry you didn’t intend to, but your associations, rituals, and context have all been shaped for you.
-
-"People will come to love their oppression, to adore the technologies that undo their capacities to think."
-
-– Aldous Huxley, Brave New World
-
-This is how autonomy erodes: one nudge blends into the next, and soon you’re being carried by invisible currents into choices you didn’t plan to make. While much of this is harmless (sometimes even helpful), some marketers weaponise these tactics, and that results in lowered trust.
-
-💡Nudges aren't neutral. Every design choice is a vote for how you want your user to behave. The question is whether you're voting for their interest or yours.
-
-“Somebody poisoned the waterhole!”
-
-The dark side of stacked behaviours isn’t hypothetical. It’s happening in plain sight – and the most extreme examples are merciless.
-
-The $122m checkbox
-
-In 2020, during Trump’s fundraising campaign Supporters were unknowingly signed up for recurring donations by default unless they spotted and unchecked a small pre-ticked box.
-
-In 2020, Trump’s fundraising campaign pre-ticked recurring donation boxes by default – a dark UX trick that drained supporters’ accounts. The backlash was so severe that over $122 million had to be refunded (NYT, 2021). By comparison, Biden’s campaign initially experimented with the same tactic but pulled back, refunding just 2% of online donations (WRAL,2021).
-
-Making you feel better about war
-
-Now consider the recent Stagwell/Mark Penn reputation survey for the Israeli government.
-
-A leaked report (Dropsite News, 2025) revealed that the agency advised framing the conflict through the lens of “radical Jihadism” – messaging they claimed would be “universally effective” for conservative audiences (Marketing-Interactive, 2025). This wasn’t neutral research; it was bias confirmation, engineered to activate fear and justify violence at a geopolitical scale.
-
-Politics often exposes the most ruthless edges of persuasion. But the same tactics appear in business every day – and that’s what we’ll be unpacking in future issues.
-
-“Dark patterns” in design, marketing or strategy don’t pay off. They erode consumer experience, break down trust, and hurt your business. In both these examples, the brands in question suffered (or are experiencing) significant losses.
-
-When people smell a rat?
-
-They leave.
-
-The wins you make in short-term gains, you pay in audience connection.
-
-So again, welcome to Stacked Behaviours.
-
-This is what Stacked Behaviours is about: exposing tactics, unpacking their impact, and helping founders, creators, and marketers build strategies that don’t poison the waterhole. If that’s the path you want to walk, stick around… there’s more to come.
-
-Let’s build a better path! If we can recognise and resist these tactics, we can design marketing that wins trust rather than loses it.
-
-Thanks for reading, until next time.
 
 
 ---
@@ -999,3 +918,97 @@ The mechanics are more manageable than they look. A CSV export carries most fiel
 Start with an audit of which bases are genuinely live: migrate those first, and archive the rest where you can still reach them.
 
 Thread & Stack runs exactly these migrations, from the initial audit through to rebuilt relations, permissions and the AI layer on top. If your team is sitting on an Airtable estate and wondering what this acquisition means for you, get in touch and we will map the move together: a diagnostic session first, a clear plan with timings before anything gets touched.
+
+
+---
+
+# Stacked Behaviours
+
+Source: https://threadandstack.com/blog/stacked-behaviours
+Reading time: 6 min
+
+An earlier iteration of this blog, was called Stacked Behaviours, this was it’s welcome.
+
+We don’t talk enough about how strategies layer to create compound effects – and the opportunities for businesses, and the impact on us as consumers.
+I call these Stacked Behaviours.
+
+We live dual lives, don’t you agree?
+
+As consumers, we’re constantly nudged, targeted, and persuaded. As creators, founders, and marketers, we’re the ones doing the nudging.
+
+Osmosis of our own making
+
+As consumers, we need to understand the tactics and technologies being used on us every day, or we slowly lose our agency. As founders, creators and marketers, we’re on the other side of that equation, trying to reach people in ways that cut through the thousands of messages they’re hit with daily — and it’s only getting harder.
+
+Let me set the scene.
+
+In 2007, a study found that Americans consume up to 5000 marketing messages a day (New York Times, 2007).
+
+Ten years later in 2017 - a new study- cited numbers between 4000-10,000 marketing messages per day (Forbes, 2017).
+
+Fast forward almost a decade (well, eight years at the time of writing), and we’ve entered the ultra-specific world of AI-powered ad tailoring, content generation and the degradation of trust in online content. The deluge of content is only increasing.
+
+From habits to hooks
+
+You may have heard of “habit stacking,” popularised by James Clear in Atomic Habits. The idea traces back to BJ Fogg’s “Tiny Habits” framework, where new routines are anchored to existing ones.
+
+In personal development, it might look like:
+
+“After I pour my morning coffee [habit one], I’ll meditate for one minute [habit two].”
+
+Stacked Behaviours are the same. They rarely happen in isolation. The same way we might choose to stack habits, strategists and marketers stack nudges against consumers. They pile up to define our actions. Here’s how a single morning can look:
+
+Association:
+“I want to eat more healthily, because I find healthy people more attractive.”
+
+Ritual:
+
+“It’s early, so I’ll grab my usual coffee from my favourite place on the way to work.”
+
+Contextual Nudge:
+
+“I only meant to buy coffee, but the vegan pastries were right there at the checkout, health [association], routine [ritual], and convenience [nudge]… I suppose it can’t hurt.”
+
+Each of these on its own feels harmless. Together they create momentum. A stack of behaviours that shifts your decision without you ever really “deciding.” You’ve betrayed yourself by buying a pastry you didn’t intend to, but your associations, rituals, and context have all been shaped for you.
+
+"People will come to love their oppression, to adore the technologies that undo their capacities to think."
+
+– Aldous Huxley, Brave New World
+
+This is how autonomy erodes: one nudge blends into the next, and soon you’re being carried by invisible currents into choices you didn’t plan to make. While much of this is harmless (sometimes even helpful), some marketers weaponise these tactics, and that results in lowered trust.
+
+💡Nudges aren't neutral. Every design choice is a vote for how you want your user to behave. The question is whether you're voting for their interest or yours.
+
+“Somebody poisoned the waterhole!”
+
+The dark side of stacked behaviours isn’t hypothetical. It’s happening in plain sight – and the most extreme examples are merciless.
+
+The $122m checkbox
+
+In 2020, during Trump’s fundraising campaign Supporters were unknowingly signed up for recurring donations by default unless they spotted and unchecked a small pre-ticked box.
+
+In 2020, Trump’s fundraising campaign pre-ticked recurring donation boxes by default – a dark UX trick that drained supporters’ accounts. The backlash was so severe that over $122 million had to be refunded (NYT, 2021). By comparison, Biden’s campaign initially experimented with the same tactic but pulled back, refunding just 2% of online donations (WRAL,2021).
+
+Making you feel better about war
+
+Now consider the recent Stagwell/Mark Penn reputation survey for the Israeli government.
+
+A leaked report (Dropsite News, 2025) revealed that the agency advised framing the conflict through the lens of “radical Jihadism” – messaging they claimed would be “universally effective” for conservative audiences (Marketing-Interactive, 2025). This wasn’t neutral research; it was bias confirmation, engineered to activate fear and justify violence at a geopolitical scale.
+
+Politics often exposes the most ruthless edges of persuasion. But the same tactics appear in business every day – and that’s what we’ll be unpacking in future issues.
+
+“Dark patterns” in design, marketing or strategy don’t pay off. They erode consumer experience, break down trust, and hurt your business. In both these examples, the brands in question suffered (or are experiencing) significant losses.
+
+When people smell a rat?
+
+They leave.
+
+The wins you make in short-term gains, you pay in audience connection.
+
+So again, welcome to Stacked Behaviours.
+
+This is what Stacked Behaviours is about: exposing tactics, unpacking their impact, and helping founders, creators, and marketers build strategies that don’t poison the waterhole. If that’s the path you want to walk, stick around… there’s more to come.
+
+Let’s build a better path! If we can recognise and resist these tactics, we can design marketing that wins trust rather than loses it.
+
+Thanks for reading, until next time.

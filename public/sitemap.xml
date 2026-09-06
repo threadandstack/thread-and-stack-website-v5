@@ -43,12 +43,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://threadandstack.com/journal</loc>
-    <lastmod>2026-09-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://threadandstack.com/collective</loc>
     <lastmod>2026-09-06</lastmod>
     <changefreq>monthly</changefreq>
@@ -168,22 +162,12 @@
   </url>
   <url>
     <loc>https://threadandstack.com/blog/storytelling-with-a-soul</loc>
-    <lastmod>2026-06-27</lastmod>
+    <lastmod>2026-09-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <image:image>
       <image:loc>https://uohhfesyumigbpqjpacl.supabase.co/storage/v1/object/public/notion-media/blog-storytelling-with-a-soul/header.png</image:loc>
       <image:title>Storytelling with a Soul</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://threadandstack.com/blog/welcome-to-thread-stack-s-journal</loc>
-    <lastmod>2026-06-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://uohhfesyumigbpqjpacl.supabase.co/storage/v1/object/public/notion-media/blog-welcome-to-thread-stack-s-journal/header.png</image:loc>
-      <image:title>Welcome to Thread &amp; Stack’s Journal</image:title>
     </image:image>
   </url>
   <url>
@@ -204,6 +188,16 @@
     <image:image>
       <image:loc>https://uohhfesyumigbpqjpacl.supabase.co/storage/v1/object/public/notion-media/blog-cognitive-overload-you/header.png</image:loc>
       <image:title>Cognitive Overload &amp; You</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://threadandstack.com/blog/stacked-behaviours</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <image:image>
+      <image:loc>https://uohhfesyumigbpqjpacl.supabase.co/storage/v1/object/public/notion-media/blog-stacked-behaviours/header.png</image:loc>
+      <image:title>Stacked Behaviours</image:title>
     </image:image>
   </url>
   <url>

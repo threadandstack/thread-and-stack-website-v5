@@ -368,10 +368,20 @@ const JournalPage = () => {
                   <div className="flex flex-col gap-8">
                     {layout.map((block, blockIndex) =>
                       block.type === "full" ? (
-                        <div key={block.item.id}>
-                          {renderItem(block.item, expandedBuild, toggleBuild)}
+                        <div
+                          key={block.item.id}
+                          className={
+                            block.item.kind === "event"
+                              ? "grid items-start gap-8 md:grid-cols-2 lg:grid-cols-3"
+                              : undefined
+                          }
+                        >
+                          <div className={block.item.kind === "event" ? "md:col-span-2" : undefined}>
+                            {renderItem(block.item, expandedBuild, toggleBuild)}
+                          </div>
                         </div>
                       ) : (
+
                         <div
                           key={`cols-${blockIndex}`}
                           className="grid items-start gap-8 md:grid-cols-2 lg:grid-cols-3"
