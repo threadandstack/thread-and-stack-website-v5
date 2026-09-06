@@ -57,7 +57,9 @@ export const BuildFeedCard = ({ item }: { item: BuildItem }) => {
             {item.changelog || item.description}
           </p>
         )}
+        </div>
       </Card>
+
     </Link>
   );
 };
