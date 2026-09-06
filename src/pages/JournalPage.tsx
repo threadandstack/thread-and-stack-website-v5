@@ -106,25 +106,27 @@ const renderItem = (
         <BuildFeedCard item={item} />
       </motion.div>
     );
-  if (item.kind === "buildGroup")
+  if (item.kind === "buildGroup") {
+    const isOpen = expandedBuild === item.id;
+    // 120px rows: closed card = 2 rows, open card grows with its update list
+    const openRows = Math.max(4, 2 + Math.ceil((item.releases.length * 108) / 120));
     return (
       <motion.div
         key={item.id}
         layout
         transition={SPRING}
-        className={
-          expandedBuild === item.id
-            ? "md:col-span-2 md:row-span-6 lg:col-span-3"
-            : "md:row-span-2"
-        }
+        style={isOpen ? { gridRow: `span ${openRows} / span ${openRows}` } : undefined}
+        className={isOpen ? "md:col-span-2 lg:col-span-3" : "md:row-span-2"}
       >
         <BuildGroupCard
           group={item}
-          expanded={expandedBuild === item.id}
+          expanded={isOpen}
           onToggle={() => toggleBuild(item.id)}
         />
       </motion.div>
     );
+  }
+
   return (
     <motion.div
       key={item.id}
