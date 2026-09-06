@@ -83,42 +83,42 @@ const getThemeColors = (theme: string): string => {
 
 const WritingCard = ({ post }: { post: WritingItem }) => (
   <Link to={`/blog/${post.slug}`} className="group block h-full">
-    <Card className="flex h-full flex-col overflow-hidden transition-all hover:shadow-lg">
-      {post.headerImage && (
-        <div className="aspect-[16/9] shrink-0 overflow-hidden md:aspect-auto md:min-h-0 md:flex-1">
+    <JournalCardShell
+      media={
+        post.headerImage ? (
           <img
             src={post.headerImage}
             alt={post.title}
             className="h-full w-full object-cover transition-transform group-hover:scale-105"
             loading="lazy"
           />
-        </div>
-      )}
-      <div className="shrink-0 p-6">
-
-        <div className="mb-4 flex items-center gap-3">
-          {post.theme && (
-            <span className={`rounded-full px-3 py-1 text-sm ${getThemeColors(post.theme)}`}>
-              {post.theme}
-            </span>
-          )}
-          {post.readingTime && (
-            <span className="text-sm text-muted-foreground">{post.readingTime} min read</span>
-          )}
-        </div>
-
-        <h3 className="mb-3 text-2xl transition-colors group-hover:text-accent">{post.title}</h3>
-
-        {(post.intro || post.description) && (
-          <p className="mb-4 line-clamp-2 text-muted-foreground">{post.intro || post.description}</p>
+        ) : undefined
+      }
+    >
+      <div className="mb-3 flex items-center gap-3">
+        {post.theme && (
+          <span className={`rounded-full px-3 py-1 text-sm ${getThemeColors(post.theme)}`}>
+            {post.theme}
+          </span>
         )}
-
-        <div className="flex items-center justify-between text-sm text-muted-foreground">
-          <span className="italic">Brendan @ Thread and Stack</span>
-          {post.date && <span>{formatJournalDate(post.date)}</span>}
-        </div>
+        {post.readingTime && (
+          <span className="text-sm text-muted-foreground">{post.readingTime} min read</span>
+        )}
       </div>
-    </Card>
+
+      <h3 className="line-clamp-2 text-2xl leading-snug transition-colors group-hover:text-accent">
+        {post.title}
+      </h3>
+
+      {(post.intro || post.description) && (
+        <p className="mt-2 line-clamp-2 text-muted-foreground">{post.intro || post.description}</p>
+      )}
+
+      <div className="mt-auto flex items-center justify-between pt-4 text-sm text-muted-foreground">
+        <span className="italic">Brendan @ Thread and Stack</span>
+        {post.date && <span>{formatJournalDate(post.date)}</span>}
+      </div>
+    </JournalCardShell>
   </Link>
 );
 
@@ -130,12 +130,9 @@ const SPRING_TRANSITION = SPRING;
 const isFullWidth = (item: JournalItem, expandedBuild: string | null) =>
   item.kind === "buildGroup" && expandedBuild === item.id;
 
-/** Fixed footprint per type: writing is tall, events are wide, builds are compact */
-const spanClass = (item: JournalItem) => {
-  if (item.kind === "writing") return "md:row-span-2";
-  if (item.kind === "event") return "md:col-span-2";
-  return "";
-};
+/** Featured events are the only cards that go double width, and only on desktop */
+const spanClass = (item: JournalItem) =>
+  item.kind === "event" && item.featured ? "lg:col-span-2" : "";
 
 const renderCard = (
   item: JournalItem,
@@ -152,7 +149,7 @@ const renderCard = (
         onToggle={() => toggleBuild(item.id)}
       />
     );
-  return <EventCard event={item} wide />;
+  return <EventCard event={item} featured={item.featured} />;
 };
 
 const renderItem = (
@@ -194,6 +191,7 @@ const buildLayout = (items: JournalItem[], expandedBuild: string | null) => {
   flush();
   return blocks;
 };
+
 
 
 
