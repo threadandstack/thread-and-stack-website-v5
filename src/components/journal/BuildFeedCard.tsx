@@ -185,7 +185,7 @@ export const BuildGroupCard = ({
         <div className="flex items-start gap-3">
           <BuildIcon slug={group.slug} name={group.buildName} />
           <div className="min-w-0 flex-1">
-            <h3 className="line-clamp-2 text-2xl leading-snug transition-colors group-hover:text-accent">
+            <h3 className="line-clamp-1 text-2xl leading-snug transition-colors group-hover:text-accent">
               {group.buildName}
             </h3>
             <p className="text-sm text-muted-foreground">
