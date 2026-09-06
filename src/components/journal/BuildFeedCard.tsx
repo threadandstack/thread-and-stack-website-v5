@@ -81,7 +81,7 @@ export const BuildGroupCard = ({
 
   return (
     <Card
-      className={`h-full transition-shadow duration-300 ${
+      className={`flex h-full flex-col transition-shadow duration-300 ${
         expanded ? "overflow-y-auto shadow-xl" : "overflow-hidden hover:shadow-lg"
       }`}
     >
@@ -89,17 +89,18 @@ export const BuildGroupCard = ({
         type="button"
         onClick={onToggle}
         aria-expanded={expanded}
-        className="group w-full text-left"
+        className="group flex min-h-0 w-full flex-1 flex-col text-left"
       >
         {group.headerImage && (
           <img
             src={group.headerImage}
             alt=""
             loading="lazy"
-            className="h-28 w-full object-cover"
+            className={expanded ? "h-28 w-full shrink-0 object-cover" : "h-28 w-full min-h-0 flex-1 shrink-0 object-cover"}
           />
         )}
-        <div className="p-6">
+        <div className="shrink-0 p-6">
+
 
         <div className="flex items-start gap-3">
           <BuildIcon slug={group.slug} name={group.buildName} />

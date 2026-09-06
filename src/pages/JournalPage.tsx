@@ -82,9 +82,9 @@ const getThemeColors = (theme: string): string => {
 
 const WritingCard = ({ post }: { post: WritingItem }) => (
   <Link to={`/blog/${post.slug}`} className="group block h-full">
-    <Card className="h-full overflow-hidden transition-all hover:shadow-lg">
+    <Card className="flex h-full flex-col overflow-hidden transition-all hover:shadow-lg">
       {post.headerImage && (
-        <div className="aspect-[16/9] overflow-hidden">
+        <div className="aspect-[16/9] shrink-0 overflow-hidden md:aspect-auto md:min-h-0 md:flex-1">
           <img
             src={post.headerImage}
             alt={post.title}
@@ -93,7 +93,8 @@ const WritingCard = ({ post }: { post: WritingItem }) => (
           />
         </div>
       )}
-      <div className="p-6">
+      <div className="shrink-0 p-6">
+
         <div className="mb-4 flex items-center gap-3">
           {post.theme && (
             <span className={`rounded-full px-3 py-1 text-sm ${getThemeColors(post.theme)}`}>
@@ -124,12 +125,16 @@ const SPRING = { type: "spring" as const, stiffness: 220, damping: 30, mass: 0.9
 
 const SPRING_TRANSITION = SPRING;
 
-/** Items that always take the full width of the feed */
+/** Only an expanded build takes over a full row of the feed */
 const isFullWidth = (item: JournalItem, expandedBuild: string | null) =>
-  item.kind === "event" || (item.kind === "buildGroup" && expandedBuild === item.id);
+  item.kind === "buildGroup" && expandedBuild === item.id;
 
-/** Rough relative height used to balance the masonry columns */
-const itemWeight = (item: JournalItem) => (item.kind === "writing" ? 2 : 1);
+/** Fixed footprint per type: writing is tall, events are wide, builds are compact */
+const spanClass = (item: JournalItem) => {
+  if (item.kind === "writing") return "md:row-span-2";
+  if (item.kind === "event") return "md:col-span-2";
+  return "";
+};
 
 const renderCard = (
   item: JournalItem,
@@ -154,33 +159,26 @@ const renderItem = (
   expandedBuild: string | null,
   toggleBuild: (id: string) => void
 ) => (
-  <motion.div key={item.id} layout transition={SPRING_TRANSITION}>
+  <motion.div
+    key={item.id}
+    layout
+    transition={SPRING_TRANSITION}
+    className={`h-full min-h-0 ${spanClass(item)}`}
+  >
     {renderCard(item, expandedBuild, toggleBuild)}
   </motion.div>
 );
 
-/** Split the feed into full-width rows and balanced multi-column blocks */
-const buildLayout = (
-  items: JournalItem[],
-  columnCount: number,
-  expandedBuild: string | null
-) => {
+/** Split the feed into full-width rows and dense-packed grid blocks */
+const buildLayout = (items: JournalItem[], expandedBuild: string | null) => {
   const blocks: Array<
-    { type: "full"; item: JournalItem } | { type: "columns"; columns: JournalItem[][] }
+    { type: "full"; item: JournalItem } | { type: "grid"; items: JournalItem[] }
   > = [];
   let bucket: JournalItem[] = [];
 
   const flush = () => {
     if (!bucket.length) return;
-    const columns: JournalItem[][] = Array.from({ length: columnCount }, () => []);
-    const heights = new Array(columnCount).fill(0);
-    bucket.forEach((item) => {
-      let target = 0;
-      for (let i = 1; i < columnCount; i += 1) if (heights[i] < heights[target]) target = i;
-      columns[target].push(item);
-      heights[target] += itemWeight(item);
-    });
-    blocks.push({ type: "columns", columns });
+    blocks.push({ type: "grid", items: bucket });
     bucket = [];
   };
 
@@ -196,18 +194,7 @@ const buildLayout = (
   return blocks;
 };
 
-const useColumnCount = () => {
-  const [count, setCount] = useState(() =>
-    typeof window === "undefined" ? 3 : window.innerWidth >= 1024 ? 3 : window.innerWidth >= 768 ? 2 : 1
-  );
-  useEffect(() => {
-    const onResize = () =>
-      setCount(window.innerWidth >= 1024 ? 3 : window.innerWidth >= 768 ? 2 : 1);
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  }, []);
-  return count;
-};
+
 
 
 const JournalPage = () => {
@@ -265,11 +252,8 @@ const JournalPage = () => {
     return past.filter((i) => i.kind === "event");
   }, [items, activeFilter]);
 
-  const columnCount = useColumnCount();
-  const layout = useMemo(
-    () => buildLayout(feed, columnCount, expandedBuild),
-    [feed, columnCount, expandedBuild]
-  );
+  const layout = useMemo(() => buildLayout(feed, expandedBuild), [feed, expandedBuild]);
+
 
 
 
@@ -368,32 +352,19 @@ const JournalPage = () => {
                   <div className="flex flex-col gap-8">
                     {layout.map((block, blockIndex) =>
                       block.type === "full" ? (
-                        <div
-                          key={block.item.id}
-                          className={
-                            block.item.kind === "event"
-                              ? "grid items-start gap-8 md:grid-cols-2 lg:grid-cols-3"
-                              : undefined
-                          }
-                        >
-                          <div className={block.item.kind === "event" ? "md:col-span-2" : undefined}>
-                            {renderItem(block.item, expandedBuild, toggleBuild)}
-                          </div>
+                        <div key={block.item.id}>
+                          {renderItem(block.item, expandedBuild, toggleBuild)}
                         </div>
                       ) : (
-
                         <div
-                          key={`cols-${blockIndex}`}
-                          className="grid items-start gap-8 md:grid-cols-2 lg:grid-cols-3"
+                          key={`grid-${blockIndex}`}
+                          className="grid gap-8 md:grid-cols-2 md:[grid-auto-flow:dense] md:[grid-auto-rows:13.5rem] lg:grid-cols-3"
                         >
-                          {block.columns.map((column, colIndex) => (
-                            <div key={colIndex} className="flex flex-col gap-8">
-                              {column.map((item) => renderItem(item, expandedBuild, toggleBuild))}
-                            </div>
-                          ))}
+                          {block.items.map((item) => renderItem(item, expandedBuild, toggleBuild))}
                         </div>
                       )
                     )}
+
 
                     {feed.length === 0 && (
                       <div className="py-20 text-center">
