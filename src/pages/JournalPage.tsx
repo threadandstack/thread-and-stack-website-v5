@@ -363,32 +363,19 @@ const JournalPage = () => {
                   <div className="flex flex-col gap-8">
                     {layout.map((block, blockIndex) =>
                       block.type === "full" ? (
-                        <div
-                          key={block.item.id}
-                          className={
-                            block.item.kind === "event"
-                              ? "grid items-start gap-8 md:grid-cols-2 lg:grid-cols-3"
-                              : undefined
-                          }
-                        >
-                          <div className={block.item.kind === "event" ? "md:col-span-2" : undefined}>
-                            {renderItem(block.item, expandedBuild, toggleBuild)}
-                          </div>
+                        <div key={block.item.id}>
+                          {renderItem(block.item, expandedBuild, toggleBuild)}
                         </div>
                       ) : (
-
                         <div
-                          key={`cols-${blockIndex}`}
-                          className="grid items-start gap-8 md:grid-cols-2 lg:grid-cols-3"
+                          key={`grid-${blockIndex}`}
+                          className="grid gap-8 md:grid-cols-2 md:[grid-auto-flow:dense] md:[grid-auto-rows:13.5rem] lg:grid-cols-3"
                         >
-                          {block.columns.map((column, colIndex) => (
-                            <div key={colIndex} className="flex flex-col gap-8">
-                              {column.map((item) => renderItem(item, expandedBuild, toggleBuild))}
-                            </div>
-                          ))}
+                          {block.items.map((item) => renderItem(item, expandedBuild, toggleBuild))}
                         </div>
                       )
                     )}
+
 
                     {feed.length === 0 && (
                       <div className="py-20 text-center">
