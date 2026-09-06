@@ -97,3 +97,9 @@ verify_jwt = false
 
 [functions.sync-builds-cache]
 verify_jwt = false
+
+[functions.sync-events-cache]
+verify_jwt = false
+
+[functions.fetch-events]
+verify_jwt = false
