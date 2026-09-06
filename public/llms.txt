@@ -44,6 +44,7 @@ Brand essentials: "Stories that land. Systems that stick." Addresses the creativ
 ## Journal
 
 - [Blog index](https://threadandstack.com/blog): Thread & Stack Journal — essays on narrative, systems, Notion, AI, and the creative tax.
+- [Journal hub](https://threadandstack.com/journal): Writing, public build log, and events (hosted, spoken at, attended) in one dated feed.
 
 ## Optional
 

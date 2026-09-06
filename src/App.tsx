@@ -22,6 +22,8 @@ const SessionsAndSprints = lazy(() => import("./pages/SessionsAndSprints"));
 const FractionalDeepEngagement = lazy(() => import("./pages/FractionalDeepEngagement"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const BlogPage = lazy(() => import("./pages/BlogPage"));
+const JournalPage = lazy(() => import("./pages/JournalPage"));
+const EventDetailPage = lazy(() => import("./pages/EventDetailPage"));
 const HomePageDraft = lazy(() => import("./pages/HomePageDraft"));
 const HomePageDraft2 = lazy(() => import("./pages/HomePageDraft2"));
 const ScorecardPage = lazy(() => import("./pages/ScorecardPage"));
@@ -123,6 +125,8 @@ const App = () => (
             <Route path="/deep-engagement" element={<Navigate to="/services" replace />} />
 
             <Route path="/blog" element={<BlogPage />} />
+            <Route path="/journal" element={<JournalPage />} />
+            <Route path="/journal/events/:slug" element={<EventDetailPage />} />
             <Route path="/builds" element={<BuildsPage />} />
             <Route path="/builds/:slug" element={<BuildDetailPage />} />
             <Route path="/home-draft" element={<HomePageDraft />} />
