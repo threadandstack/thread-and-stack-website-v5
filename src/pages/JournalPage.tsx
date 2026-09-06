@@ -89,55 +89,93 @@ const WritingCard = ({ post }: { post: WritingItem }) => (
 
 const SPRING = { type: "spring" as const, stiffness: 220, damping: 30, mass: 0.9 };
 
-const renderItem = (
+const SPRING_TRANSITION = SPRING;
+
+/** Items that always take the full width of the feed */
+const isFullWidth = (item: JournalItem, expandedBuild: string | null) =>
+  item.kind === "event" || (item.kind === "buildGroup" && expandedBuild === item.id);
+
+/** Rough relative height used to balance the masonry columns */
+const itemWeight = (item: JournalItem) => (item.kind === "writing" ? 2 : 1);
+
+const renderCard = (
   item: JournalItem,
   expandedBuild: string | null,
   toggleBuild: (id: string) => void
 ) => {
-  if (item.kind === "writing")
+  if (item.kind === "writing") return <WritingCard post={item} />;
+  if (item.kind === "build") return <BuildFeedCard item={item} />;
+  if (item.kind === "buildGroup")
     return (
-      <motion.div key={item.id} layout transition={SPRING} className="md:row-span-4">
-        <WritingCard post={item} />
-      </motion.div>
+      <BuildGroupCard
+        group={item}
+        expanded={expandedBuild === item.id}
+        onToggle={() => toggleBuild(item.id)}
+      />
     );
-  if (item.kind === "build")
-    return (
-      <motion.div key={item.id} layout transition={SPRING} className="md:row-span-2">
-        <BuildFeedCard item={item} />
-      </motion.div>
-    );
-  if (item.kind === "buildGroup") {
-    const isOpen = expandedBuild === item.id;
-    // 120px rows: closed card = 2 rows, open card grows with its update list
-    const openRows = Math.max(4, 2 + Math.ceil((item.releases.length * 108) / 120));
-    return (
-      <motion.div
-        key={item.id}
-        layout
-        transition={SPRING}
-        style={isOpen ? { gridRow: `span ${openRows} / span ${openRows}` } : undefined}
-        className={isOpen ? "md:col-span-2 lg:col-span-3" : "md:row-span-2"}
-      >
-        <BuildGroupCard
-          group={item}
-          expanded={isOpen}
-          onToggle={() => toggleBuild(item.id)}
-        />
-      </motion.div>
-    );
-  }
-
-  return (
-    <motion.div
-      key={item.id}
-      layout
-      transition={SPRING}
-      className="md:col-span-2 md:row-span-2"
-    >
-      <EventCard event={item} wide />
-    </motion.div>
-  );
+  return <EventCard event={item} wide />;
 };
+
+const renderItem = (
+  item: JournalItem,
+  expandedBuild: string | null,
+  toggleBuild: (id: string) => void
+) => (
+  <motion.div key={item.id} layout transition={SPRING_TRANSITION}>
+    {renderCard(item, expandedBuild, toggleBuild)}
+  </motion.div>
+);
+
+/** Split the feed into full-width rows and balanced multi-column blocks */
+const buildLayout = (
+  items: JournalItem[],
+  columnCount: number,
+  expandedBuild: string | null
+) => {
+  const blocks: Array<
+    { type: "full"; item: JournalItem } | { type: "columns"; columns: JournalItem[][] }
+  > = [];
+  let bucket: JournalItem[] = [];
+
+  const flush = () => {
+    if (!bucket.length) return;
+    const columns: JournalItem[][] = Array.from({ length: columnCount }, () => []);
+    const heights = new Array(columnCount).fill(0);
+    bucket.forEach((item) => {
+      let target = 0;
+      for (let i = 1; i < columnCount; i += 1) if (heights[i] < heights[target]) target = i;
+      columns[target].push(item);
+      heights[target] += itemWeight(item);
+    });
+    blocks.push({ type: "columns", columns });
+    bucket = [];
+  };
+
+  items.forEach((item) => {
+    if (isFullWidth(item, expandedBuild)) {
+      flush();
+      blocks.push({ type: "full", item });
+    } else {
+      bucket.push(item);
+    }
+  });
+  flush();
+  return blocks;
+};
+
+const useColumnCount = () => {
+  const [count, setCount] = useState(() =>
+    typeof window === "undefined" ? 3 : window.innerWidth >= 1024 ? 3 : window.innerWidth >= 768 ? 2 : 1
+  );
+  useEffect(() => {
+    const onResize = () =>
+      setCount(window.innerWidth >= 1024 ? 3 : window.innerWidth >= 768 ? 2 : 1);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+  return count;
+};
+
 
 const JournalPage = () => {
   const [items, setItems] = useState<JournalItem[]>([]);
