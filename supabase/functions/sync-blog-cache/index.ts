@@ -140,7 +140,7 @@ serve(async (req) => {
         : null
 
       if (ogImage) {
-        const persistedOg = await persistMediaUrl(supabase, supabaseUrl, ogImage, `blog-${slug}`, 'og')
+        const persistedOg = await persistMediaUrl(supabase, supabaseUrl, ogImage, `blog-${slug}`, 'og', forceMedia)
         if (persistedOg) {
           ogImage = persistedOg
           totalMediaPersisted++
