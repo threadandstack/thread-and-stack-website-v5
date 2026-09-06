@@ -125,6 +125,7 @@ export type Database = {
           intro: string | null
           last_edited_time: string | null
           notion_id: string
+          og_image_url: string | null
           published_date: string | null
           reading_time: string | null
           release_type: string | null
@@ -148,6 +149,7 @@ export type Database = {
           intro?: string | null
           last_edited_time?: string | null
           notion_id: string
+          og_image_url?: string | null
           published_date?: string | null
           reading_time?: string | null
           release_type?: string | null
@@ -171,6 +173,7 @@ export type Database = {
           intro?: string | null
           last_edited_time?: string | null
           notion_id?: string
+          og_image_url?: string | null
           published_date?: string | null
           reading_time?: string | null
           release_type?: string | null
@@ -306,6 +309,7 @@ export type Database = {
           last_edited_time: string | null
           location: string | null
           notion_id: string
+          og_image_url: string | null
           organiser: string | null
           recording_url: string | null
           role: string | null
@@ -330,6 +334,7 @@ export type Database = {
           last_edited_time?: string | null
           location?: string | null
           notion_id: string
+          og_image_url?: string | null
           organiser?: string | null
           recording_url?: string | null
           role?: string | null
@@ -354,6 +359,7 @@ export type Database = {
           last_edited_time?: string | null
           location?: string | null
           notion_id?: string
+          og_image_url?: string | null
           organiser?: string | null
           recording_url?: string | null
           role?: string | null

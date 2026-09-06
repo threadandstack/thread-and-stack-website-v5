@@ -106,6 +106,19 @@ serve(async (req) => {
         }
       }
 
+      const ogFiles = p['OG IMG']?.files || p['OG Image']?.files || []
+      let ogImage = ogFiles.length > 0
+        ? ogFiles[0].file?.url || ogFiles[0].external?.url || null
+        : null
+
+      if (ogImage) {
+        const persistedOg = await persistMediaUrl(supabase, supabaseUrl, ogImage, `event-${slug}`, 'og')
+        if (persistedOg) {
+          ogImage = persistedOg
+          totalMediaPersisted++
+        }
+      }
+
       let htmlContent = ''
       try {
         htmlContent = await renderNotionPageHtml(page.id, NOTION_API_KEY)
@@ -123,6 +136,7 @@ serve(async (req) => {
         summary: richText(p['Summary']),
         html_content: htmlContent,
         cover_image_url: coverImage,
+        og_image_url: ogImage,
         role: p['Role']?.select?.name || null,
         format: p['Format']?.select?.name || null,
         start_date: p['Date']?.date?.start ? String(p['Date'].date.start).slice(0, 10) : null,

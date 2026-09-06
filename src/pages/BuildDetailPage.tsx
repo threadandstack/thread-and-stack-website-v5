@@ -23,6 +23,7 @@ interface BuildUpdateFull {
   description: string | null;
   html_content: string;
   header_image_url: string | null;
+  og_image_url?: string | null;
   published_date: string | null;
   last_edited_time: string | null;
 }
@@ -53,16 +54,29 @@ const BuildDetailPage = () => {
 
   const primary = updates[0];
   const buildTitle = primary?.build_name || primary?.title || "Build";
+  const buildDescription =
+    primary?.description || `Version history and build updates for ${buildTitle}.`;
+  const buildShareImage =
+    primary?.og_image_url ||
+    primary?.header_image_url ||
+    "https://threadandstack.com/__l5e/assets-v1/6bce079b-d3c5-4c8b-a9d7-79c333d9d9ca/OpenGraph_TS2026.png";
+  const buildCanonical = `https://threadandstack.com/builds/${slug}`;
 
   return (
     <>
       <Helmet>
         <title>{buildTitle} | Builds | Thread &amp; Stack</title>
-        <meta
-          name="description"
-          content={primary?.description || `Version history and build updates for ${buildTitle}.`}
-        />
-        <link rel="canonical" href={`https://threadandstack.com/builds/${slug}`} />
+        <meta name="description" content={buildDescription} />
+        <link rel="canonical" href={buildCanonical} />
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content={`${buildTitle} | Builds`} />
+        <meta property="og:description" content={buildDescription} />
+        <meta property="og:image" content={buildShareImage} />
+        <meta property="og:url" content={buildCanonical} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`${buildTitle} | Builds`} />
+        <meta name="twitter:description" content={buildDescription} />
+        <meta name="twitter:image" content={buildShareImage} />
       </Helmet>
 
       <div className="notion-canvas min-h-screen overflow-x-hidden" data-theme={theme}>

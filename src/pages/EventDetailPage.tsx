@@ -21,6 +21,7 @@ import { EventItem, formatEventDateRange, isUpcoming } from "@/lib/journalFeed";
 
 interface EventFull extends EventItem {
   htmlContent?: string | null;
+  ogImage?: string | null;
 }
 
 const EventDetailPage = () => {
@@ -48,6 +49,7 @@ const EventDetailPage = () => {
               title: e.title,
               summary: e.summary ?? null,
               coverImage: e.coverImage ?? null,
+              ogImage: e.ogImage ?? null,
               role: e.role ?? null,
               format: e.format ?? null,
               startDate: e.startDate ?? null,
@@ -75,15 +77,30 @@ const EventDetailPage = () => {
     event?.recordingUrl && { href: event.recordingUrl, label: "Recording", Icon: Video },
   ].filter(Boolean) as { href: string; label: string; Icon: typeof ExternalLink }[];
 
+  const eventDescription =
+    event?.summary || "An event hosted or attended by Thread & Stack.";
+  const eventCanonical = `https://threadandstack.com/journal/events/${slug}`;
+  const eventShareImage =
+    event?.ogImage ||
+    event?.coverImage ||
+    "https://threadandstack.com/__l5e/assets-v1/6bce079b-d3c5-4c8b-a9d7-79c333d9d9ca/OpenGraph_TS2026.png";
+
+
   return (
     <>
       <Helmet>
         <title>{event ? `${event.title} | Events` : "Event"} | Thread &amp; Stack</title>
-        <meta
-          name="description"
-          content={event?.summary || "An event hosted or attended by Thread & Stack."}
-        />
-        <link rel="canonical" href={`https://threadandstack.com/journal/events/${slug}`} />
+        <meta name="description" content={eventDescription} />
+        <link rel="canonical" href={eventCanonical} />
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content={`${event?.title || "Event"} | Events`} />
+        <meta property="og:description" content={eventDescription} />
+        <meta property="og:image" content={eventShareImage} />
+        <meta property="og:url" content={eventCanonical} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`${event?.title || "Event"} | Events`} />
+        <meta name="twitter:description" content={eventDescription} />
+        <meta name="twitter:image" content={eventShareImage} />
       </Helmet>
 
       <div className="notion-canvas min-h-screen overflow-x-hidden" data-theme={theme}>
