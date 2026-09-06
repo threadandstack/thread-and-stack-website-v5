@@ -21,6 +21,7 @@ import { EventItem, formatEventDateRange, isUpcoming } from "@/lib/journalFeed";
 
 interface EventFull extends EventItem {
   htmlContent?: string | null;
+  ogImage?: string | null;
 }
 
 const EventDetailPage = () => {
