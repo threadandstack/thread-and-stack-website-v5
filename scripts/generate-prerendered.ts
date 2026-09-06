@@ -194,6 +194,7 @@ interface BlogRow {
   published_date: string | null;
   synced_at: string | null;
   header_image_url: string | null;
+  og_image_url?: string | null;
 }
 
 async function fetchBlogPosts(): Promise<BlogRow[]> {
@@ -210,7 +211,7 @@ async function fetchBlogPosts(): Promise<BlogRow[]> {
         }
       ),
       fetch(
-        `${SUPABASE_URL}/rest/v1/blog_posts_cache?select=slug,header_image_url,published_date`,
+        `${SUPABASE_URL}/rest/v1/blog_posts_cache?select=slug,header_image_url,og_image_url,published_date`,
         {
           headers: {
             apikey: SUPABASE_ANON_KEY,
@@ -228,6 +229,7 @@ async function fetchBlogPosts(): Promise<BlogRow[]> {
       ? ((await postsRes.json()) as Array<{
           slug: string;
           header_image_url: string | null;
+          og_image_url: string | null;
           published_date: string | null;
         }>)
       : [];
@@ -237,6 +239,7 @@ async function fetchBlogPosts(): Promise<BlogRow[]> {
       .map((r) => ({
         ...r,
         header_image_url: metaBySlug.get(r.slug)?.header_image_url ?? null,
+        og_image_url: metaBySlug.get(r.slug)?.og_image_url ?? null,
         published_date: metaBySlug.get(r.slug)?.published_date ?? r.published_date ?? null,
       }));
   } catch (e) {
@@ -415,7 +418,8 @@ async function main() {
         },
       },
     };
-    if (post.header_image_url) articleLd.image = post.header_image_url;
+    const shareImage = post.og_image_url || post.header_image_url;
+    if (shareImage) articleLd.image = shareImage;
     if (post.published_date) articleLd.datePublished = post.published_date;
     if (post.synced_at) articleLd.dateModified = post.synced_at;
 
