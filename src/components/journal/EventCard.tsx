@@ -32,20 +32,23 @@ export const EventCard = ({ event, wide = false }: { event: EventItem; wide?: bo
           wide ? "flex flex-row" : ""
         }`}
       >
-        {event.coverImage && (
-          <div
-            className={
-              wide ? "hidden w-2/5 shrink-0 overflow-hidden sm:block" : "aspect-[16/9] overflow-hidden"
-            }
-          >
+        <div
+          className={
+            wide ? "hidden w-2/5 shrink-0 overflow-hidden sm:block" : "aspect-[16/9] overflow-hidden"
+          }
+        >
+          {event.coverImage ? (
             <img
               src={event.coverImage}
               alt={event.title}
               className="h-full w-full object-cover transition-transform group-hover:scale-105"
               loading="lazy"
             />
-          </div>
-        )}
+          ) : (
+            <div className="h-full w-full bg-gradient-primary opacity-90" />
+          )}
+        </div>
+
 
         <div className="flex min-w-0 flex-1 gap-4 p-6">
           <div className="flex h-14 w-14 shrink-0 flex-col items-center justify-center rounded-xl bg-muted text-center leading-none">
