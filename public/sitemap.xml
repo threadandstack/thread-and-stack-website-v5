@@ -152,11 +152,11 @@
   </url>
   <url>
     <loc>https://threadandstack.com/blog/airtable-to-notion-why-now</loc>
-    <lastmod>2026-08-07</lastmod>
+    <lastmod>2026-09-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <image:image>
-      <image:loc>https://uohhfesyumigbpqjpacl.supabase.co/storage/v1/object/public/notion-media/blog-airtable-to-notion-why-now/header.png</image:loc>
+      <image:loc>https://uohhfesyumigbpqjpacl.supabase.co/storage/v1/object/public/notion-media/blog-airtable-to-notion-why-now/header.png?v=1788716337297</image:loc>
       <image:title>AirTable to Notion: Why Now</image:title>
     </image:image>
   </url>
@@ -166,28 +166,8 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <image:image>
-      <image:loc>https://uohhfesyumigbpqjpacl.supabase.co/storage/v1/object/public/notion-media/blog-storytelling-with-a-soul/header.png</image:loc>
+      <image:loc>https://uohhfesyumigbpqjpacl.supabase.co/storage/v1/object/public/notion-media/blog-storytelling-with-a-soul/header.png?v=1788716344179</image:loc>
       <image:title>Storytelling with a Soul</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://threadandstack.com/blog/what-is-marketing-chaos</loc>
-    <lastmod>2026-06-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://uohhfesyumigbpqjpacl.supabase.co/storage/v1/object/public/notion-media/blog-what-is-marketing-chaos/header.png</image:loc>
-      <image:title>What is Marketing Chaos?</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://threadandstack.com/blog/cognitive-overload-you</loc>
-    <lastmod>2026-06-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://uohhfesyumigbpqjpacl.supabase.co/storage/v1/object/public/notion-media/blog-cognitive-overload-you/header.png</image:loc>
-      <image:title>Cognitive Overload &amp; You</image:title>
     </image:image>
   </url>
   <url>
@@ -196,17 +176,37 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <image:image>
-      <image:loc>https://uohhfesyumigbpqjpacl.supabase.co/storage/v1/object/public/notion-media/blog-stacked-behaviours/header.png</image:loc>
+      <image:loc>https://uohhfesyumigbpqjpacl.supabase.co/storage/v1/object/public/notion-media/blog-stacked-behaviours/header.png?v=1788716345516</image:loc>
       <image:title>Stacked Behaviours</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://threadandstack.com/blog/the-death-of-notion-mail</loc>
-    <lastmod>2026-08-06</lastmod>
+    <loc>https://threadandstack.com/blog/what-is-marketing-chaos</loc>
+    <lastmod>2026-09-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
     <image:image>
-      <image:loc>https://uohhfesyumigbpqjpacl.supabase.co/storage/v1/object/public/notion-media/blog-the-death-of-notion-mail/header.png</image:loc>
+      <image:loc>https://uohhfesyumigbpqjpacl.supabase.co/storage/v1/object/public/notion-media/blog-what-is-marketing-chaos/header.png?v=1788716348092</image:loc>
+      <image:title>What is Marketing Chaos?</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://threadandstack.com/blog/cognitive-overload-you</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <image:image>
+      <image:loc>https://uohhfesyumigbpqjpacl.supabase.co/storage/v1/object/public/notion-media/blog-cognitive-overload-you/header.png?v=1788716349358</image:loc>
+      <image:title>Cognitive Overload &amp; You</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://threadandstack.com/blog/the-death-of-notion-mail</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <image:image>
+      <image:loc>https://uohhfesyumigbpqjpacl.supabase.co/storage/v1/object/public/notion-media/blog-the-death-of-notion-mail/header.png?v=1788716338499</image:loc>
       <image:title>The Death of Notion Mail</image:title>
     </image:image>
   </url>
