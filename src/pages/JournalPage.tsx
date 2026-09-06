@@ -272,15 +272,17 @@ const JournalPage = () => {
                   <Loader2 className="h-8 w-8 animate-spin text-accent" />
                 </div>
               ) : (
-                <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                  {feed.map((item) => renderItem(item, expandedBuild, toggleBuild))}
+                <LayoutGroup>
+                  <div className="grid items-start gap-8 md:grid-cols-2 lg:grid-cols-3">
+                    {feed.map((item) => renderItem(item, expandedBuild, toggleBuild))}
 
-                  {feed.length === 0 && (
-                    <div className="col-span-full py-20 text-center">
-                      <p className="text-xl text-muted-foreground">Nothing here yet. Check back soon.</p>
-                    </div>
-                  )}
-                </div>
+                    {feed.length === 0 && (
+                      <div className="col-span-full py-20 text-center">
+                        <p className="text-xl text-muted-foreground">Nothing here yet. Check back soon.</p>
+                      </div>
+                    )}
+                  </div>
+                </LayoutGroup>
               )}
 
               {activeFilter === "builds" && !isLoading && (
