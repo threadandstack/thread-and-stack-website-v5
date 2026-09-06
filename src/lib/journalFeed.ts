@@ -56,7 +56,43 @@ export interface EventItem {
   featured: boolean;
 }
 
-export type JournalItem = WritingItem | BuildItem | EventItem;
+export interface BuildGroupItem {
+  kind: "buildGroup";
+  id: string;
+  /** Date of the most recent release, used for feed ordering */
+  date: string | null;
+  slug: string;
+  buildName: string;
+  releases: BuildItem[];
+}
+
+export type JournalItem = WritingItem | BuildItem | BuildGroupItem | EventItem;
+
+/** Collapse individual build releases into one card per build. */
+export function groupBuildItems(items: BuildItem[]): BuildGroupItem[] {
+  const groups = new Map<string, BuildItem[]>();
+  for (const item of items) {
+    const key = item.buildSlug || item.slug;
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key)!.push(item);
+  }
+
+  const toTime = (v?: string | null) => (v ? new Date(v).getTime() : 0);
+
+  return [...groups.entries()]
+    .map(([slug, releases]) => {
+      const ordered = [...releases].sort((a, b) => toTime(b.date) - toTime(a.date));
+      return {
+        kind: "buildGroup" as const,
+        id: `buildGroup-${slug}`,
+        date: ordered[0]?.date ?? null,
+        slug,
+        buildName: ordered[0]?.buildName || ordered[0]?.title || "Build",
+        releases: ordered,
+      };
+    })
+    .sort((a, b) => toTime(b.date) - toTime(a.date));
+}
 
 export const formatJournalDate = (value?: string | null): string => {
   if (!value) return "";
