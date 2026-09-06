@@ -92,13 +92,16 @@ export const BuildGroupCard = ({
         className="group flex min-h-0 w-full flex-1 flex-col text-left"
       >
         {group.headerImage && (
-          <img
-            src={group.headerImage}
-            alt=""
-            loading="lazy"
-            className={expanded ? "h-28 w-full shrink-0 object-cover" : "h-24 w-full min-h-0 flex-1 object-cover"}
-          />
+          <div className={expanded ? "h-28 w-full shrink-0 overflow-hidden" : "min-h-0 w-full flex-1 overflow-hidden"}>
+            <img
+              src={group.headerImage}
+              alt=""
+              loading="lazy"
+              className="h-full w-full object-cover"
+            />
+          </div>
         )}
+
         <div className="shrink-0 p-4">
 
         <div className="flex items-start gap-3">
