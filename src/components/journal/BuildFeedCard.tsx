@@ -96,11 +96,10 @@ export const BuildGroupCard = ({
             src={group.headerImage}
             alt=""
             loading="lazy"
-            className={expanded ? "h-28 w-full shrink-0 object-cover" : "h-28 w-full min-h-0 flex-1 shrink-0 object-cover"}
+            className={expanded ? "h-28 w-full shrink-0 object-cover" : "h-24 w-full min-h-0 flex-1 object-cover"}
           />
         )}
-        <div className="shrink-0 p-6">
-
+        <div className="shrink-0 p-4">
 
         <div className="flex items-start gap-3">
           <BuildIcon slug={group.slug} name={group.buildName} />
@@ -129,24 +128,12 @@ export const BuildGroupCard = ({
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
           >
-            <div className="mt-4">
-              <VersionChip version={latest.version} releaseType={latest.releaseType} />
-            </div>
-            <p className="mt-3 font-medium leading-snug">{latest.title}</p>
-            {(latest.changelog || latest.description) && (
-              <p className="mt-2 line-clamp-2 leading-relaxed text-muted-foreground">
-                {latest.changelog || latest.description}
-              </p>
-            )}
-            {latest.changeTypes.length > 0 && (
-              <div className="mt-3">
-                <ChangeChips types={latest.changeTypes} />
-              </div>
-            )}
+            <p className="mt-2 truncate text-sm font-medium leading-snug">{latest.title}</p>
           </motion.div>
         )}
         </AnimatePresence>
         </div>
+
       </button>
 
 
