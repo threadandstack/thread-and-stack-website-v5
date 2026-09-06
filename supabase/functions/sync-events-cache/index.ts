@@ -136,6 +136,7 @@ serve(async (req) => {
         summary: richText(p['Summary']),
         html_content: htmlContent,
         cover_image_url: coverImage,
+        og_image_url: ogImage,
         role: p['Role']?.select?.name || null,
         format: p['Format']?.select?.name || null,
         start_date: p['Date']?.date?.start ? String(p['Date'].date.start).slice(0, 10) : null,

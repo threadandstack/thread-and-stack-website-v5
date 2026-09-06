@@ -139,6 +139,19 @@ serve(async (req) => {
         }
       }
 
+      const ogImageFiles = properties['OG IMG']?.files || properties['OG Image']?.files || []
+      let ogImage = ogImageFiles.length > 0
+        ? ogImageFiles[0].file?.url || ogImageFiles[0].external?.url
+        : null
+
+      if (ogImage) {
+        const persistedOg = await persistMediaUrl(supabase, supabaseUrl, ogImage, `build-${slug}`, 'og')
+        if (persistedOg) {
+          ogImage = persistedOg
+          totalMediaPersisted++
+        }
+      }
+
       const buildName = properties['Build']?.select?.name || null
       const buildSlug = buildName
         ? buildName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
