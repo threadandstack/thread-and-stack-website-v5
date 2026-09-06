@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link, useSearchParams } from "react-router-dom";
 import { Loader2, Moon, Sun } from "lucide-react";
+import { LayoutGroup, motion } from "framer-motion";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Card } from "@/components/ui/card";
@@ -86,17 +87,31 @@ const WritingCard = ({ post }: { post: WritingItem }) => (
   </Link>
 );
 
+const SPRING = { type: "spring" as const, stiffness: 220, damping: 30, mass: 0.9 };
+
 const renderItem = (
   item: JournalItem,
   expandedBuild: string | null,
   toggleBuild: (id: string) => void
 ) => {
-  if (item.kind === "writing") return <WritingCard key={item.id} post={item} />;
-  if (item.kind === "build") return <BuildFeedCard key={item.id} item={item} />;
+  if (item.kind === "writing")
+    return (
+      <motion.div key={item.id} layout transition={SPRING}>
+        <WritingCard post={item} />
+      </motion.div>
+    );
+  if (item.kind === "build")
+    return (
+      <motion.div key={item.id} layout transition={SPRING}>
+        <BuildFeedCard item={item} />
+      </motion.div>
+    );
   if (item.kind === "buildGroup")
     return (
-      <div
+      <motion.div
         key={item.id}
+        layout
+        transition={SPRING}
         className={expandedBuild === item.id ? "md:col-span-2 lg:col-span-3" : undefined}
       >
         <BuildGroupCard
@@ -104,9 +119,13 @@ const renderItem = (
           expanded={expandedBuild === item.id}
           onToggle={() => toggleBuild(item.id)}
         />
-      </div>
+      </motion.div>
     );
-  return <EventCard key={item.id} event={item} />;
+  return (
+    <motion.div key={item.id} layout transition={SPRING}>
+      <EventCard event={item} />
+    </motion.div>
+  );
 };
 
 const JournalPage = () => {
@@ -253,15 +272,17 @@ const JournalPage = () => {
                   <Loader2 className="h-8 w-8 animate-spin text-accent" />
                 </div>
               ) : (
-                <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                  {feed.map((item) => renderItem(item, expandedBuild, toggleBuild))}
+                <LayoutGroup>
+                  <div className="grid items-start gap-8 md:grid-cols-2 lg:grid-cols-3">
+                    {feed.map((item) => renderItem(item, expandedBuild, toggleBuild))}
 
-                  {feed.length === 0 && (
-                    <div className="col-span-full py-20 text-center">
-                      <p className="text-xl text-muted-foreground">Nothing here yet. Check back soon.</p>
-                    </div>
-                  )}
-                </div>
+                    {feed.length === 0 && (
+                      <div className="col-span-full py-20 text-center">
+                        <p className="text-xl text-muted-foreground">Nothing here yet. Check back soon.</p>
+                      </div>
+                    )}
+                  </div>
+                </LayoutGroup>
               )}
 
               {activeFilter === "builds" && !isLoading && (
