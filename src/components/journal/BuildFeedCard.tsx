@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ChevronDown } from "lucide-react";
 import { Card } from "@/components/ui/card";
@@ -64,10 +65,12 @@ export const BuildGroupCard = ({
   const latest = group.releases[0];
   const count = group.releases.length;
 
+  const spring = { type: "spring" as const, stiffness: 220, damping: 30, mass: 0.9 };
+
   return (
     <Card
-      className={`h-full overflow-hidden transition-all ${
-        expanded ? "shadow-lg" : "hover:shadow-lg"
+      className={`h-full overflow-hidden transition-shadow duration-300 ${
+        expanded ? "shadow-xl" : "hover:shadow-lg"
       }`}
     >
       <button
@@ -94,8 +97,15 @@ export const BuildGroupCard = ({
           />
         </div>
 
+        <AnimatePresence initial={false}>
         {!expanded && latest && (
-          <>
+          <motion.div
+            key="preview"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+          >
             <div className="mt-4">
               <VersionChip version={latest.version} releaseType={latest.releaseType} />
             </div>
@@ -110,11 +120,21 @@ export const BuildGroupCard = ({
                 <ChangeChips types={latest.changeTypes} />
               </div>
             )}
-          </>
+          </motion.div>
         )}
+        </AnimatePresence>
       </button>
 
+      <AnimatePresence initial={false}>
       {expanded && (
+        <motion.div
+          key="expanded"
+          initial={{ height: 0, opacity: 0 }}
+          animate={{ height: "auto", opacity: 1 }}
+          exit={{ height: 0, opacity: 0 }}
+          transition={spring}
+          className="overflow-hidden"
+        >
         <div className="px-6 pb-6">
           <ol className="space-y-4 border-l border-border/60 pl-5">
             {group.releases.map((release) => (
@@ -149,7 +169,9 @@ export const BuildGroupCard = ({
             See this build in full →
           </Link>
         </div>
+        </motion.div>
       )}
+      </AnimatePresence>
     </Card>
   );
 };
