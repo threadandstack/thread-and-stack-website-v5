@@ -85,9 +85,26 @@ const WritingCard = ({ post }: { post: WritingItem }) => (
   </Link>
 );
 
-const renderItem = (item: JournalItem) => {
+const renderItem = (
+  item: JournalItem,
+  expandedBuild: string | null,
+  toggleBuild: (id: string) => void
+) => {
   if (item.kind === "writing") return <WritingCard key={item.id} post={item} />;
   if (item.kind === "build") return <BuildFeedCard key={item.id} item={item} />;
+  if (item.kind === "buildGroup")
+    return (
+      <div
+        key={item.id}
+        className={expandedBuild === item.id ? "md:col-span-2 lg:col-span-3" : undefined}
+      >
+        <BuildGroupCard
+          group={item}
+          expanded={expandedBuild === item.id}
+          onToggle={() => toggleBuild(item.id)}
+        />
+      </div>
+    );
   return <EventCard key={item.id} event={item} />;
 };
 
