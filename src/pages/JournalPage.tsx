@@ -195,18 +195,6 @@ const buildLayout = (items: JournalItem[], expandedBuild: string | null) => {
 };
 
 
-const useColumnCount = () => {
-  const [count, setCount] = useState(() =>
-    typeof window === "undefined" ? 3 : window.innerWidth >= 1024 ? 3 : window.innerWidth >= 768 ? 2 : 1
-  );
-  useEffect(() => {
-    const onResize = () =>
-      setCount(window.innerWidth >= 1024 ? 3 : window.innerWidth >= 768 ? 2 : 1);
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  }, []);
-  return count;
-};
 
 
 const JournalPage = () => {
