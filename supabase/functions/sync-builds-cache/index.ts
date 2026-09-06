@@ -278,16 +278,20 @@ async function persistMediaUrl(
   url: string,
   pageId: string,
   label: string,
+  force = false,
 ): Promise<string | null> {
   if (!isNotionS3Url(url)) return null
 
   try {
-    // Check if already persisted (skip re-download)
-    const { data: existing } = await sb.storage.from('notion-media').list(pageId, { search: `${label}.` })
-    if (existing && existing.some(f => f.name.startsWith(`${label}.`))) {
-      const match = existing.find(f => f.name.startsWith(`${label}.`))!
-      return `${supabaseUrl}/storage/v1/object/public/notion-media/${pageId}/${match.name}`
+    // Check if already persisted (skip re-download unless forced)
+    if (!force) {
+      const { data: existing } = await sb.storage.from('notion-media').list(pageId, { search: `${label}.` })
+      if (existing && existing.some(f => f.name.startsWith(`${label}.`))) {
+        const match = existing.find(f => f.name.startsWith(`${label}.`))!
+        return `${supabaseUrl}/storage/v1/object/public/notion-media/${pageId}/${match.name}`
+      }
     }
+
 
     const fileRes = await fetch(url)
     if (!fileRes.ok) {
