@@ -136,7 +136,7 @@ serve(async (req) => {
 
       // Persist header image inline
       if (headerImage) {
-        const persistedHeader = await persistMediaUrl(supabase, supabaseUrl, headerImage, `build-${slug}`, 'header')
+        const persistedHeader = await persistMediaUrl(supabase, supabaseUrl, headerImage, `build-${slug}`, 'header', forceMedia)
         if (persistedHeader) {
           headerImage = persistedHeader
           totalMediaPersisted++
