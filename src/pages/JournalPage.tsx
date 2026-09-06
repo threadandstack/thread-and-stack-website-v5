@@ -26,14 +26,47 @@ import {
   mergeJournalItems,
 } from "@/lib/journalFeed";
 
+type IconProps = { className?: string };
+
+const iconBase = {
+  fill: "none",
+  stroke: "currentColor",
+  strokeLinecap: "round" as const,
+  strokeLinejoin: "round" as const,
+  strokeWidth: 1.5,
+  viewBox: "0 0 24 24",
+};
+
+const WritingIcon = ({ className }: IconProps) => (
+  <svg {...iconBase} className={className} xmlns="http://www.w3.org/2000/svg">
+    <path d="M3 19a9 9 0 0 1 9 0 9 9 0 0 1 9 0M3 6a9 9 0 0 1 9 0 9 9 0 0 1 9 0M3 6v13m9-13v13m9-13v13" />
+  </svg>
+);
+
+const BuildsIcon = ({ className }: IconProps) => (
+  <svg {...iconBase} className={className} xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 12v.01m7.071-7.081c-1.562-1.562-6 .337-9.9 4.243-3.905 3.905-5.804 8.337-4.242 9.9 1.562 1.561 6-.338 9.9-4.244 3.905-3.905 5.804-8.337 4.242-9.9" />
+    <path d="M4.929 4.929c-1.562 1.562.337 6 4.243 9.9 3.905 3.905 8.337 5.804 9.9 4.242 1.561-1.562-.338-6-4.244-9.9-3.905-3.905-8.337-5.804-9.9-4.242" />
+  </svg>
+);
+
+const EventsIcon = ({ className }: IconProps) => (
+  <svg {...iconBase} className={className} xmlns="http://www.w3.org/2000/svg">
+    <path d="M3 12a9 9 0 1 0 18 0 9 9 0 1 0-18 0" />
+    <path d="M11 12a1 1 0 1 0 2 0 1 1 0 1 0-2 0m-4 0a5 5 0 0 1 5-5m0 10a5 5 0 0 0 5-5" />
+  </svg>
+);
+
 const FILTERS = [
-  { key: "all", label: "Everything" },
-  { key: "writing", label: "Writing" },
-  { key: "builds", label: "Builds" },
-  { key: "events", label: "Events" },
+  { key: "all", label: "Everything", Icon: null },
+  { key: "writing", label: "Writing", Icon: WritingIcon },
+  { key: "builds", label: "Builds", Icon: BuildsIcon },
+  { key: "events", label: "Events", Icon: EventsIcon },
 ] as const;
 
 type FilterKey = (typeof FILTERS)[number]["key"];
+
+
 
 const getThemeColors = (theme: string): string => {
   const themeMap: Record<string, string> = {
