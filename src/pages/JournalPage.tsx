@@ -82,9 +82,9 @@ const getThemeColors = (theme: string): string => {
 
 const WritingCard = ({ post }: { post: WritingItem }) => (
   <Link to={`/blog/${post.slug}`} className="group block h-full">
-    <Card className="h-full overflow-hidden transition-all hover:shadow-lg">
+    <Card className="flex h-full flex-col overflow-hidden transition-all hover:shadow-lg">
       {post.headerImage && (
-        <div className="aspect-[16/9] overflow-hidden">
+        <div className="aspect-[16/9] shrink-0 overflow-hidden md:aspect-auto md:min-h-0 md:flex-1">
           <img
             src={post.headerImage}
             alt={post.title}
@@ -93,7 +93,8 @@ const WritingCard = ({ post }: { post: WritingItem }) => (
           />
         </div>
       )}
-      <div className="p-6">
+      <div className="shrink-0 p-6">
+
         <div className="mb-4 flex items-center gap-3">
           {post.theme && (
             <span className={`rounded-full px-3 py-1 text-sm ${getThemeColors(post.theme)}`}>
