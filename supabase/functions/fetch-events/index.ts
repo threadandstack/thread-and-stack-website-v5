@@ -39,7 +39,7 @@ serve(async (req) => {
 
     const { data, error } = await supabase
       .from('events_cache')
-      .select('id, notion_id, slug, title, summary, cover_image_url, role, format, start_date, end_date, location, venue, organiser, topics, event_url, slides_url, recording_url, featured')
+      .select('id, notion_id, slug, title, summary, cover_image_url, og_image_url, role, format, start_date, end_date, location, venue, organiser, topics, event_url, slides_url, recording_url, featured')
       .order('start_date', { ascending: false })
 
     if (error) throw new Error(error.message)
