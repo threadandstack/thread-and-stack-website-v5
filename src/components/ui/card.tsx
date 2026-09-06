@@ -26,7 +26,9 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(({ className, disableTi
 
   return (
     <div
+      className="h-full min-h-0"
       style={{ perspective: "1400px" }}
+
       onMouseMove={(e) => {
         const el = e.currentTarget;
         const r = el.getBoundingClientRect();
