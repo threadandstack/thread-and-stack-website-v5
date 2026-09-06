@@ -330,16 +330,34 @@ const JournalPage = () => {
                 </div>
               ) : (
                 <LayoutGroup>
-                  <div className="grid grid-flow-row-dense items-stretch gap-8 md:auto-rows-[120px] md:grid-cols-2 lg:grid-cols-3">
-                    {feed.map((item) => renderItem(item, expandedBuild, toggleBuild))}
+                  <div className="flex flex-col gap-8">
+                    {layout.map((block, blockIndex) =>
+                      block.type === "full" ? (
+                        <div key={block.item.id}>
+                          {renderItem(block.item, expandedBuild, toggleBuild)}
+                        </div>
+                      ) : (
+                        <div
+                          key={`cols-${blockIndex}`}
+                          className="grid items-start gap-8 md:grid-cols-2 lg:grid-cols-3"
+                        >
+                          {block.columns.map((column, colIndex) => (
+                            <div key={colIndex} className="flex flex-col gap-8">
+                              {column.map((item) => renderItem(item, expandedBuild, toggleBuild))}
+                            </div>
+                          ))}
+                        </div>
+                      )
+                    )}
 
                     {feed.length === 0 && (
-                      <div className="col-span-full py-20 text-center">
+                      <div className="py-20 text-center">
                         <p className="text-xl text-muted-foreground">Nothing here yet. Check back soon.</p>
                       </div>
                     )}
                   </div>
                 </LayoutGroup>
+
               )}
 
               {activeFilter === "builds" && !isLoading && (
