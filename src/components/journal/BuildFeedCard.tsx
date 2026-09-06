@@ -69,8 +69,8 @@ export const BuildGroupCard = ({
 
   return (
     <Card
-      className={`h-full overflow-hidden transition-shadow duration-300 ${
-        expanded ? "shadow-xl" : "hover:shadow-lg"
+      className={`h-full transition-shadow duration-300 ${
+        expanded ? "overflow-y-auto shadow-xl" : "overflow-hidden hover:shadow-lg"
       }`}
     >
       <button

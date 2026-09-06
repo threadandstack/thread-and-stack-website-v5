@@ -96,13 +96,13 @@ const renderItem = (
 ) => {
   if (item.kind === "writing")
     return (
-      <motion.div key={item.id} layout transition={SPRING} className="row-span-4">
+      <motion.div key={item.id} layout transition={SPRING} className="md:row-span-4">
         <WritingCard post={item} />
       </motion.div>
     );
   if (item.kind === "build")
     return (
-      <motion.div key={item.id} layout transition={SPRING} className="row-span-2">
+      <motion.div key={item.id} layout transition={SPRING} className="md:row-span-2">
         <BuildFeedCard item={item} />
       </motion.div>
     );
@@ -114,8 +114,8 @@ const renderItem = (
         transition={SPRING}
         className={
           expandedBuild === item.id
-            ? "row-span-6 md:col-span-2 lg:col-span-3"
-            : "row-span-2"
+            ? "md:col-span-2 md:row-span-6 lg:col-span-3"
+            : "md:row-span-2"
         }
       >
         <BuildGroupCard
@@ -130,7 +130,7 @@ const renderItem = (
       key={item.id}
       layout
       transition={SPRING}
-      className="row-span-2 md:col-span-2"
+      className="md:col-span-2 md:row-span-2"
     >
       <EventCard event={item} wide />
     </motion.div>
