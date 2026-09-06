@@ -287,6 +287,81 @@ export type Database = {
         }
         Relationships: []
       }
+      events_cache: {
+        Row: {
+          cover_image_url: string | null
+          created_at: string
+          end_date: string | null
+          event_url: string | null
+          featured: boolean
+          format: string | null
+          html_content: string
+          id: string
+          last_edited_time: string | null
+          location: string | null
+          notion_id: string
+          organiser: string | null
+          recording_url: string | null
+          role: string | null
+          slides_url: string | null
+          slug: string
+          start_date: string | null
+          summary: string | null
+          synced_at: string
+          title: string
+          topics: string[]
+          venue: string | null
+        }
+        Insert: {
+          cover_image_url?: string | null
+          created_at?: string
+          end_date?: string | null
+          event_url?: string | null
+          featured?: boolean
+          format?: string | null
+          html_content?: string
+          id?: string
+          last_edited_time?: string | null
+          location?: string | null
+          notion_id: string
+          organiser?: string | null
+          recording_url?: string | null
+          role?: string | null
+          slides_url?: string | null
+          slug: string
+          start_date?: string | null
+          summary?: string | null
+          synced_at?: string
+          title: string
+          topics?: string[]
+          venue?: string | null
+        }
+        Update: {
+          cover_image_url?: string | null
+          created_at?: string
+          end_date?: string | null
+          event_url?: string | null
+          featured?: boolean
+          format?: string | null
+          html_content?: string
+          id?: string
+          last_edited_time?: string | null
+          location?: string | null
+          notion_id?: string
+          organiser?: string | null
+          recording_url?: string | null
+          role?: string | null
+          slides_url?: string | null
+          slug?: string
+          start_date?: string | null
+          summary?: string | null
+          synced_at?: string
+          title?: string
+          topics?: string[]
+          venue?: string | null
+        }
+        Relationships: []
+      }
       fiction_favorites: {
         Row: {
           answer: string
