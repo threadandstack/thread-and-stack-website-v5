@@ -54,12 +54,16 @@ serve(async (req) => {
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     const supabase = createClient(supabaseUrl, supabaseServiceKey)
 
-    // Check for full=true parameter
+    // Check for full=true / forceMedia=true parameters
     let fullSync = false
+    let forceMedia = false
     try {
       const body = await req.json()
       fullSync = body?.full === true
+      forceMedia = body?.forceMedia === true
     } catch { /* no body */ }
+    if (forceMedia) fullSync = true
+
 
     // Get last sync timestamp for incremental mode
     const { data: syncMeta } = await supabase
@@ -132,7 +136,7 @@ serve(async (req) => {
 
       // Persist header image inline
       if (headerImage) {
-        const persistedHeader = await persistMediaUrl(supabase, supabaseUrl, headerImage, `build-${slug}`, 'header')
+        const persistedHeader = await persistMediaUrl(supabase, supabaseUrl, headerImage, `build-${slug}`, 'header', forceMedia)
         if (persistedHeader) {
           headerImage = persistedHeader
           totalMediaPersisted++
@@ -145,7 +149,7 @@ serve(async (req) => {
         : null
 
       if (ogImage) {
-        const persistedOg = await persistMediaUrl(supabase, supabaseUrl, ogImage, `build-${slug}`, 'og')
+        const persistedOg = await persistMediaUrl(supabase, supabaseUrl, ogImage, `build-${slug}`, 'og', forceMedia)
         if (persistedOg) {
           ogImage = persistedOg
           totalMediaPersisted++
@@ -274,16 +278,20 @@ async function persistMediaUrl(
   url: string,
   pageId: string,
   label: string,
+  force = false,
 ): Promise<string | null> {
   if (!isNotionS3Url(url)) return null
 
   try {
-    // Check if already persisted (skip re-download)
-    const { data: existing } = await sb.storage.from('notion-media').list(pageId, { search: `${label}.` })
-    if (existing && existing.some(f => f.name.startsWith(`${label}.`))) {
-      const match = existing.find(f => f.name.startsWith(`${label}.`))!
-      return `${supabaseUrl}/storage/v1/object/public/notion-media/${pageId}/${match.name}`
+    // Check if already persisted (skip re-download unless forced)
+    if (!force) {
+      const { data: existing } = await sb.storage.from('notion-media').list(pageId, { search: `${label}.` })
+      if (existing && existing.some(f => f.name.startsWith(`${label}.`))) {
+        const match = existing.find(f => f.name.startsWith(`${label}.`))!
+        return `${supabaseUrl}/storage/v1/object/public/notion-media/${pageId}/${match.name}`
+      }
     }
+
 
     const fileRes = await fetch(url)
     if (!fileRes.ok) {
@@ -311,7 +319,8 @@ async function persistMediaUrl(
     }
 
     console.log(`Persisted ${label} -> ${storagePath}`)
-    return `${supabaseUrl}/storage/v1/object/public/notion-media/${storagePath}`
+    const cacheBust = force ? `?v=${Date.now()}` : ''
+    return `${supabaseUrl}/storage/v1/object/public/notion-media/${storagePath}${cacheBust}`
   } catch (e) {
     console.error(`Error persisting ${label}:`, e)
     return null
