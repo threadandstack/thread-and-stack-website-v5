@@ -23,6 +23,7 @@ interface BuildUpdateFull {
   description: string | null;
   html_content: string;
   header_image_url: string | null;
+  og_image_url?: string | null;
   published_date: string | null;
   last_edited_time: string | null;
 }
