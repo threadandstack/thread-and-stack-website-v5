@@ -13,8 +13,18 @@ export const BuildFeedCard = ({ item }: { item: BuildItem }) => {
 
   return (
     <Link to={`/builds/${target}`} className="group block h-full">
-      <Card className="h-full overflow-hidden p-6 transition-all hover:shadow-lg">
+      <Card className="h-full overflow-hidden transition-all hover:shadow-lg">
+        {item.headerImage && (
+          <img
+            src={item.headerImage}
+            alt=""
+            loading="lazy"
+            className="h-32 w-full object-cover"
+          />
+        )}
+        <div className="p-6">
         <div className="flex items-center gap-3">
+
           <BuildIcon slug={item.buildSlug} name={item.buildName || item.title} />
           <div className="min-w-0">
             <p className="truncate text-sm font-medium">{item.buildName || "Build"}</p>
@@ -47,7 +57,9 @@ export const BuildFeedCard = ({ item }: { item: BuildItem }) => {
             {item.changelog || item.description}
           </p>
         )}
+        </div>
       </Card>
+
     </Link>
   );
 };
@@ -77,8 +89,18 @@ export const BuildGroupCard = ({
         type="button"
         onClick={onToggle}
         aria-expanded={expanded}
-        className="group w-full p-6 text-left"
+        className="group w-full text-left"
       >
+        {group.headerImage && (
+          <img
+            src={group.headerImage}
+            alt=""
+            loading="lazy"
+            className="h-28 w-full object-cover"
+          />
+        )}
+        <div className="p-6">
+
         <div className="flex items-start gap-3">
           <BuildIcon slug={group.slug} name={group.buildName} />
           <div className="min-w-0 flex-1">
@@ -123,7 +145,9 @@ export const BuildGroupCard = ({
           </motion.div>
         )}
         </AnimatePresence>
+        </div>
       </button>
+
 
       <AnimatePresence initial={false}>
       {expanded && (
