@@ -96,13 +96,13 @@ const renderItem = (
 ) => {
   if (item.kind === "writing")
     return (
-      <motion.div key={item.id} layout transition={SPRING}>
+      <motion.div key={item.id} layout transition={SPRING} className="row-span-4">
         <WritingCard post={item} />
       </motion.div>
     );
   if (item.kind === "build")
     return (
-      <motion.div key={item.id} layout transition={SPRING}>
+      <motion.div key={item.id} layout transition={SPRING} className="row-span-2">
         <BuildFeedCard item={item} />
       </motion.div>
     );
@@ -112,7 +112,11 @@ const renderItem = (
         key={item.id}
         layout
         transition={SPRING}
-        className={expandedBuild === item.id ? "md:col-span-2 lg:col-span-3" : undefined}
+        className={
+          expandedBuild === item.id
+            ? "row-span-6 md:col-span-2 lg:col-span-3"
+            : "row-span-2"
+        }
       >
         <BuildGroupCard
           group={item}
@@ -122,8 +126,13 @@ const renderItem = (
       </motion.div>
     );
   return (
-    <motion.div key={item.id} layout transition={SPRING}>
-      <EventCard event={item} />
+    <motion.div
+      key={item.id}
+      layout
+      transition={SPRING}
+      className="row-span-2 md:col-span-2"
+    >
+      <EventCard event={item} wide />
     </motion.div>
   );
 };
@@ -273,7 +282,7 @@ const JournalPage = () => {
                 </div>
               ) : (
                 <LayoutGroup>
-                  <div className="grid items-start gap-8 md:grid-cols-2 lg:grid-cols-3">
+                  <div className="grid grid-flow-row-dense items-stretch gap-8 md:auto-rows-[120px] md:grid-cols-2 lg:grid-cols-3">
                     {feed.map((item) => renderItem(item, expandedBuild, toggleBuild))}
 
                     {feed.length === 0 && (

@@ -22,14 +22,22 @@ const dayNumber = (value?: string | null) => {
   return Number.isNaN(d.getTime()) ? "" : String(d.getDate());
 };
 
-export const EventCard = ({ event }: { event: EventItem }) => {
+export const EventCard = ({ event, wide = false }: { event: EventItem; wide?: boolean }) => {
   const upcoming = isUpcoming(event);
 
   return (
     <Link to={`/journal/events/${event.slug}`} className="group block h-full">
-      <Card className="h-full overflow-hidden transition-all hover:shadow-lg">
+      <Card
+        className={`h-full overflow-hidden transition-all hover:shadow-lg ${
+          wide ? "flex flex-row" : ""
+        }`}
+      >
         {event.coverImage && (
-          <div className="aspect-[16/9] overflow-hidden">
+          <div
+            className={
+              wide ? "hidden w-2/5 shrink-0 overflow-hidden sm:block" : "aspect-[16/9] overflow-hidden"
+            }
+          >
             <img
               src={event.coverImage}
               alt={event.title}
@@ -39,7 +47,7 @@ export const EventCard = ({ event }: { event: EventItem }) => {
           </div>
         )}
 
-        <div className="flex gap-4 p-6">
+        <div className="flex min-w-0 flex-1 gap-4 p-6">
           <div className="flex h-14 w-14 shrink-0 flex-col items-center justify-center rounded-xl bg-muted text-center leading-none">
             <span className="text-lg font-semibold tabular-nums">{dayNumber(event.startDate)}</span>
             <span className="mt-1 text-[11px] uppercase tracking-wider text-muted-foreground">
