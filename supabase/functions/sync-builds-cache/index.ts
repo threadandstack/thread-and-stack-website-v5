@@ -180,6 +180,7 @@ serve(async (req) => {
         description: properties['Description']?.rich_text?.[0]?.plain_text || null,
         intro: properties['Intro (max 50 chars)']?.rich_text?.[0]?.plain_text || null,
         header_image_url: headerImage,
+        og_image_url: ogImage,
         reading_time: properties['Reading time']?.rich_text?.[0]?.plain_text || null,
         theme: properties['Theme']?.select?.name || null,
         published_date: properties['Publication Date']?.date?.start || null,
