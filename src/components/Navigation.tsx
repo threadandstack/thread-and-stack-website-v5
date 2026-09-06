@@ -121,9 +121,8 @@ export const Navigation = ({ variant = "default", hideLogo = false, floatingBadg
             <NavItem href="/services" label="Services" icon={Layers} onClick={() => trackNavClick('Services', 'header')} />
 
 
-            <NavItem href="/builds" label="Builds" icon={Hammer} onClick={() => trackNavClick('Builds', 'header')} />
+            <NavItem href="/journal" label="Journal" icon={BookOpen} onClick={() => trackNavClick('Journal', 'header')} />
 
-            <NavItem href="/blog" label="Journal" icon={BookOpen} onClick={() => trackNavClick('Journal', 'header')} />
 
             <Button size="sm" style={gradientBtnStyle} className="group text-white hover:opacity-90 rounded-full px-5 ml-1 not-italic font-sans text-sm border-0" onClick={() => { trackCtaClick('Get Started', 'header'); setIsDiagnosticOpen(true); }}>
               <span className="w-0 h-5 flex items-center justify-center overflow-hidden transition-all duration-300 opacity-0 scale-75 group-hover:w-5 group-hover:opacity-100 group-hover:scale-100 group-hover:mr-1.5">
@@ -190,9 +189,8 @@ export const Navigation = ({ variant = "default", hideLogo = false, floatingBadg
                 <NavItem href="/services" label="Services" icon={Layers} onClick={() => trackNavClick('Services', 'floating')} />
 
 
-                <NavItem href="/builds" label="Builds" icon={Hammer} onClick={() => trackNavClick('Builds', 'floating')} />
+                <NavItem href="/journal" label="Journal" icon={BookOpen} onClick={() => trackNavClick('Journal', 'floating')} />
 
-                <NavItem href="/blog" label="Journal" icon={BookOpen} onClick={() => trackNavClick('Journal', 'floating')} />
 
                 <Button size="sm" style={gradientBtnStyle} className="group text-white hover:opacity-90 rounded-full px-5 ml-1 not-italic font-sans text-sm border-0" onClick={() => { trackCtaClick('Get Started', 'floating-nav'); setIsDiagnosticOpen(true); }}>
                   <span className="w-0 h-5 flex items-center justify-center overflow-hidden transition-all duration-300 opacity-0 scale-75 group-hover:w-5 group-hover:opacity-100 group-hover:scale-100 group-hover:mr-1.5">
@@ -242,16 +240,11 @@ export const Navigation = ({ variant = "default", hideLogo = false, floatingBadg
 
 
             <div className="border-t border-border/50 pt-4">
-              <a href="/builds" className="block py-3 text-lg font-sans text-foreground/80 hover:text-foreground transition-colors not-italic" onClick={() => setIsMobileMenuOpen(false)}>
-                Builds
-              </a>
-            </div>
-
-            <div className="border-t border-border/50 pt-4">
-              <a href="/blog" className="block py-3 text-lg font-sans text-foreground/80 hover:text-foreground transition-colors not-italic" onClick={() => setIsMobileMenuOpen(false)}>
+              <a href="/journal" className="block py-3 text-lg font-sans text-foreground/80 hover:text-foreground transition-colors not-italic" onClick={() => setIsMobileMenuOpen(false)}>
                 Journal
               </a>
             </div>
+
 
             <Button size="lg" style={gradientBtnStyle} className="w-full text-white hover:opacity-90 rounded-full mt-4 font-sans not-italic border-0" onClick={() => { setIsMobileMenuOpen(false); setIsDiagnosticOpen(true); }}>
               Get Started
