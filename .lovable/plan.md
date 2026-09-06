@@ -22,35 +22,12 @@ Untouched for now, as agreed. Journal and Builds both stay in the bar. If the hu
 
 ## Events data
 
-Events come from a new Notion database you'll create with Notion AI, synced into the site the same way builds and posts are. Below is the prompt to paste into Notion AI.
+Confirmed: the **Published Events** database exists in Notion (under Events / GROWTH // WIKI) and has everything needed — Name, Slug, Status (Draft/Live), Role (Hosted, Attended, Spoke, Panel), Format (Talk, Workshop, Meetup, Conference, Panel, Webinar), Date with end date, Location, Organiser, Summary, Event URL, Slides URL, Recording URL, Cover, Featured, plus a Planning Record relation to your internal planning database.
 
-### Prompt for Notion AI
+The site will only ever read entries where Status is Live. The Planning Record relation stays internal and is never published. The page body becomes the event write-up.
 
-```text
-Create a new Notion database called "Events" with these properties:
+One thing to check on your side: the Lovable Notion connection needs access to this database, otherwise the sync returns nothing. If the first sync comes back empty, that's the cause.
 
-- Name (title) — the event name
-- Slug (text) — url-friendly, lowercase, hyphenated
-- Status (select) — Draft, Live
-- Role (select) — Hosted, Attended, Spoke, Panel
-- Format (select) — Talk, Workshop, Meetup, Conference, Panel, Webinar
-- Date (date) — supports an end date for multi-day events
-- Location (text) — e.g. "London, UK" or "Online"
-- Venue (text)
-- Organiser (text)
-- Summary (text) — one or two sentences for the card
-- Topics (multi-select) — Strategy, Systems, Notion, AI, Brand, Community
-- Event URL (url) — the official event page
-- Slides URL (url)
-- Recording URL (url)
-- Cover (files) — a header image
-- Featured (checkbox)
-
-Add a default gallery view grouped by year, sorted by Date descending, filtered to Status = Live.
-The body of each page is the write-up: what it was, what I covered, what I took away.
-```
-
-Once it exists, share it with the Lovable Notion connection and send me the database link.
 
 ## Build order
 
