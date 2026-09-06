@@ -246,10 +246,10 @@ const JournalPage = () => {
 
   const feed = useMemo(() => {
     const past = items.filter((i) => !(i.kind === "event" && isUpcoming(i)));
-    if (activeFilter === "all") return past;
     if (activeFilter === "writing") return past.filter((i) => i.kind === "writing");
     if (activeFilter === "builds") return past.filter((i) => i.kind === "buildGroup");
-    return past.filter((i) => i.kind === "event");
+    if (activeFilter === "events") return past.filter((i) => i.kind === "event");
+    return interleaveJournalItems(past);
   }, [items, activeFilter]);
 
   const layout = useMemo(() => buildLayout(feed, expandedBuild), [feed, expandedBuild]);
