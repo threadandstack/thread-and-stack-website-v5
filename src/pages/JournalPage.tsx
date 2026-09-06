@@ -22,6 +22,7 @@ import {
   fetchWritingItems,
   formatJournalDate,
   groupBuildItems,
+  interleaveJournalItems,
   isUpcoming,
   mergeJournalItems,
 } from "@/lib/journalFeed";
