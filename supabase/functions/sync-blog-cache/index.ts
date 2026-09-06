@@ -322,7 +322,8 @@ async function persistMediaUrl(
     }
 
     console.log(`Persisted ${label} -> ${storagePath}`)
-    return `${supabaseUrl}/storage/v1/object/public/notion-media/${storagePath}`
+    const cacheBust = force ? `?v=${Date.now()}` : ''
+    return `${supabaseUrl}/storage/v1/object/public/notion-media/${storagePath}${cacheBust}`
   } catch (e) {
     console.error(`Error persisting ${label}:`, e)
     return null
