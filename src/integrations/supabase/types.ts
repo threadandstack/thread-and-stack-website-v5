@@ -22,6 +22,7 @@ export type Database = {
           html_content: string
           id: string
           notion_id: string
+          og_image_url: string | null
           reading_time: string | null
           slug: string
           synced_at: string
@@ -35,6 +36,7 @@ export type Database = {
           html_content: string
           id?: string
           notion_id: string
+          og_image_url?: string | null
           reading_time?: string | null
           slug: string
           synced_at?: string
@@ -48,6 +50,7 @@ export type Database = {
           html_content?: string
           id?: string
           notion_id?: string
+          og_image_url?: string | null
           reading_time?: string | null
           slug?: string
           synced_at?: string
@@ -65,6 +68,7 @@ export type Database = {
           id: string
           intro: string | null
           notion_id: string
+          og_image_url: string | null
           published_date: string | null
           reading_time: string | null
           slug: string
@@ -80,6 +84,7 @@ export type Database = {
           id?: string
           intro?: string | null
           notion_id: string
+          og_image_url?: string | null
           published_date?: string | null
           reading_time?: string | null
           slug: string
@@ -95,6 +100,7 @@ export type Database = {
           id?: string
           intro?: string | null
           notion_id?: string
+          og_image_url?: string | null
           published_date?: string | null
           reading_time?: string | null
           slug?: string
