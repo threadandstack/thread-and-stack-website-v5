@@ -89,8 +89,18 @@ export const BuildGroupCard = ({
         type="button"
         onClick={onToggle}
         aria-expanded={expanded}
-        className="group w-full p-6 text-left"
+        className="group w-full text-left"
       >
+        {group.headerImage && (
+          <img
+            src={group.headerImage}
+            alt=""
+            loading="lazy"
+            className="h-28 w-full object-cover"
+          />
+        )}
+        <div className="p-6">
+
         <div className="flex items-start gap-3">
           <BuildIcon slug={group.slug} name={group.buildName} />
           <div className="min-w-0 flex-1">
