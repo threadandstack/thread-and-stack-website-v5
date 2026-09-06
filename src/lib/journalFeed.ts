@@ -235,3 +235,33 @@ export function mergeJournalItems(items: JournalItem[]): JournalItem[] {
     return bv - av;
   });
 }
+
+/**
+ * Keep broadly newest-first order but avoid stacking same-type cards
+ * (especially the double-width events) directly next to each other.
+ * Items are only nudged within a small window, so dates stay near-accurate.
+ */
+export function interleaveJournalItems(items: JournalItem[], window = 3): JournalItem[] {
+  const pool = [...items];
+  const out: JournalItem[] = [];
+
+  while (pool.length) {
+    const prev = out[out.length - 1];
+    const prev2 = out[out.length - 2];
+
+    let pick = 0;
+    for (let i = 0; i < Math.min(window, pool.length); i++) {
+      const k = pool[i].kind;
+      const clashes =
+        (prev && prev.kind === k && k === "event") ||
+        (prev && prev2 && prev.kind === k && prev2.kind === k);
+      if (!clashes) {
+        pick = i;
+        break;
+      }
+    }
+    out.push(pool.splice(pick, 1)[0]);
+  }
+
+  return out;
+}
