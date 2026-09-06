@@ -237,40 +237,29 @@ export function mergeJournalItems(items: JournalItem[]): JournalItem[] {
 }
 
 /**
- * Keep broadly newest-first order but avoid stacking same-type cards
- * (especially the double-width events) directly next to each other.
+ * Keep newest-first order but avoid three cards of the same type in a row.
  * Items are only nudged within a small window, so dates stay near-accurate.
  */
-export function interleaveJournalItems(items: JournalItem[], window = 10): JournalItem[] {
+export function interleaveJournalItems(items: JournalItem[], window = 6): JournalItem[] {
   const pool = [...items];
   const out: JournalItem[] = [];
-  /** how many cards since the last event banner */
-  let sinceEvent = Infinity;
-  const MIN_GAP = 3; // events need at least this many other cards between them
 
   while (pool.length) {
     const prev = out[out.length - 1];
     const prev2 = out[out.length - 2];
     const limit = Math.min(window, pool.length);
 
-    let pick = -1;
+    let pick = 0;
     for (let i = 0; i < limit; i++) {
       const k = pool[i].kind;
-      if (k === "event" && sinceEvent < MIN_GAP) continue;
       if (prev && prev2 && prev.kind === k && prev2.kind === k) continue;
       pick = i;
       break;
     }
-    // nothing acceptable in range: relax the same-type rule, then give up
-    if (pick === -1) {
-      pick = pool.findIndex((it, i) => i < limit && it.kind !== "event");
-      if (pick === -1) pick = 0;
-    }
 
-    const chosen = pool.splice(pick, 1)[0];
-    sinceEvent = chosen.kind === "event" ? 0 : sinceEvent + 1;
-    out.push(chosen);
+    out.push(pool.splice(pick, 1)[0]);
   }
 
   return out;
 }
+
