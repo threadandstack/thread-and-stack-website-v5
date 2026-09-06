@@ -145,7 +145,9 @@ export const BuildGroupCard = ({
           </motion.div>
         )}
         </AnimatePresence>
+        </div>
       </button>
+
 
       <AnimatePresence initial={false}>
       {expanded && (
