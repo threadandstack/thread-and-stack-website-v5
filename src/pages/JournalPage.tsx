@@ -263,11 +263,8 @@ const JournalPage = () => {
     return past.filter((i) => i.kind === "event");
   }, [items, activeFilter]);
 
-  const columnCount = useColumnCount();
-  const layout = useMemo(
-    () => buildLayout(feed, columnCount, expandedBuild),
-    [feed, columnCount, expandedBuild]
-  );
+  const layout = useMemo(() => buildLayout(feed, expandedBuild), [feed, expandedBuild]);
+
 
 
 
