@@ -77,6 +77,15 @@ const EventDetailPage = () => {
     event?.recordingUrl && { href: event.recordingUrl, label: "Recording", Icon: Video },
   ].filter(Boolean) as { href: string; label: string; Icon: typeof ExternalLink }[];
 
+  const eventDescription =
+    event?.summary || "An event hosted or attended by Thread & Stack.";
+  const eventCanonical = `https://threadandstack.com/journal/events/${slug}`;
+  const eventShareImage =
+    event?.ogImage ||
+    event?.coverImage ||
+    "https://threadandstack.com/__l5e/assets-v1/6bce079b-d3c5-4c8b-a9d7-79c333d9d9ca/OpenGraph_TS2026.png";
+
+
   return (
     <>
       <Helmet>
