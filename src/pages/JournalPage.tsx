@@ -358,7 +358,7 @@ const JournalPage = () => {
                       ) : (
                         <div
                           key={`grid-${blockIndex}`}
-                          className="grid gap-8 md:grid-cols-2 md:[grid-auto-flow:dense] md:[grid-auto-rows:13.5rem] lg:grid-cols-3"
+                          className="grid auto-rows-auto gap-8 sm:grid-cols-2 sm:[grid-auto-flow:dense] sm:[grid-auto-rows:26rem] lg:grid-cols-3"
                         >
                           {block.items.map((item) => renderItem(item, expandedBuild, toggleBuild))}
                         </div>
