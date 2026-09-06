@@ -67,6 +67,7 @@ function mapEvent(row: any, withContent: boolean) {
     title: row.title,
     summary: row.summary,
     coverImage: row.cover_image_url,
+    ogImage: row.og_image_url || null,
     role: row.role,
     format: row.format,
     startDate: row.start_date,
