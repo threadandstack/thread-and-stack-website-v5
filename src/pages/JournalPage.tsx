@@ -124,12 +124,16 @@ const SPRING = { type: "spring" as const, stiffness: 220, damping: 30, mass: 0.9
 
 const SPRING_TRANSITION = SPRING;
 
-/** Items that always take the full width of the feed */
+/** Only an expanded build takes over a full row of the feed */
 const isFullWidth = (item: JournalItem, expandedBuild: string | null) =>
-  item.kind === "event" || (item.kind === "buildGroup" && expandedBuild === item.id);
+  item.kind === "buildGroup" && expandedBuild === item.id;
 
-/** Rough relative height used to balance the masonry columns */
-const itemWeight = (item: JournalItem) => (item.kind === "writing" ? 2 : 1);
+/** Fixed footprint per type: writing is tall, events are wide, builds are compact */
+const spanClass = (item: JournalItem) => {
+  if (item.kind === "writing") return "md:row-span-2";
+  if (item.kind === "event") return "md:col-span-2";
+  return "";
+};
 
 const renderCard = (
   item: JournalItem,
@@ -154,33 +158,26 @@ const renderItem = (
   expandedBuild: string | null,
   toggleBuild: (id: string) => void
 ) => (
-  <motion.div key={item.id} layout transition={SPRING_TRANSITION}>
+  <motion.div
+    key={item.id}
+    layout
+    transition={SPRING_TRANSITION}
+    className={`h-full min-h-0 ${spanClass(item)}`}
+  >
     {renderCard(item, expandedBuild, toggleBuild)}
   </motion.div>
 );
 
-/** Split the feed into full-width rows and balanced multi-column blocks */
-const buildLayout = (
-  items: JournalItem[],
-  columnCount: number,
-  expandedBuild: string | null
-) => {
+/** Split the feed into full-width rows and dense-packed grid blocks */
+const buildLayout = (items: JournalItem[], expandedBuild: string | null) => {
   const blocks: Array<
-    { type: "full"; item: JournalItem } | { type: "columns"; columns: JournalItem[][] }
+    { type: "full"; item: JournalItem } | { type: "grid"; items: JournalItem[] }
   > = [];
   let bucket: JournalItem[] = [];
 
   const flush = () => {
     if (!bucket.length) return;
-    const columns: JournalItem[][] = Array.from({ length: columnCount }, () => []);
-    const heights = new Array(columnCount).fill(0);
-    bucket.forEach((item) => {
-      let target = 0;
-      for (let i = 1; i < columnCount; i += 1) if (heights[i] < heights[target]) target = i;
-      columns[target].push(item);
-      heights[target] += itemWeight(item);
-    });
-    blocks.push({ type: "columns", columns });
+    blocks.push({ type: "grid", items: bucket });
     bucket = [];
   };
 
@@ -195,6 +192,7 @@ const buildLayout = (
   flush();
   return blocks;
 };
+
 
 const useColumnCount = () => {
   const [count, setCount] = useState(() =>
