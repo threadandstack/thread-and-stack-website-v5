@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { MapPin, Mic, Users } from "lucide-react";
-import { Card } from "@/components/ui/card";
+import { JournalCardShell } from "@/components/journal/JournalCardShell";
 import { EventItem, formatEventDateRange, isUpcoming } from "@/lib/journalFeed";
 
 const ROLE_STYLES: Record<string, string> = {
@@ -22,22 +22,22 @@ const dayNumber = (value?: string | null) => {
   return Number.isNaN(d.getTime()) ? "" : String(d.getDate());
 };
 
-export const EventCard = ({ event, wide = false }: { event: EventItem; wide?: boolean }) => {
+export const EventCard = ({
+  event,
+  featured = false,
+}: {
+  event: EventItem;
+  /** Featured events get a taller image; width is handled by the grid. */
+  featured?: boolean;
+}) => {
   const upcoming = isUpcoming(event);
 
   return (
     <Link to={`/journal/events/${event.slug}`} className="group block h-full">
-      <Card
-        className={`h-full overflow-hidden transition-all hover:shadow-lg ${
-          wide ? "flex flex-row" : ""
-        }`}
-      >
-        <div
-          className={
-            wide ? "hidden w-2/5 shrink-0 overflow-hidden sm:block" : "aspect-[16/9] overflow-hidden"
-          }
-        >
-          {event.coverImage ? (
+      <JournalCardShell
+        mediaClassName={featured ? "h-48 sm:h-56" : ""}
+        media={
+          event.coverImage ? (
             <img
               src={event.coverImage}
               alt={event.title}
@@ -46,11 +46,10 @@ export const EventCard = ({ event, wide = false }: { event: EventItem; wide?: bo
             />
           ) : (
             <div className="h-full w-full bg-gradient-primary opacity-90" />
-          )}
-        </div>
-
-
-        <div className="flex min-w-0 flex-1 gap-4 p-6">
+          )
+        }
+      >
+        <div className="flex min-w-0 flex-1 gap-4">
           <div className="flex h-14 w-14 shrink-0 flex-col items-center justify-center rounded-xl bg-muted text-center leading-none">
             <span className="text-lg font-semibold tabular-nums">{dayNumber(event.startDate)}</span>
             <span className="mt-1 text-[11px] uppercase tracking-wider text-muted-foreground">
@@ -58,7 +57,7 @@ export const EventCard = ({ event, wide = false }: { event: EventItem; wide?: bo
             </span>
           </div>
 
-          <div className="min-w-0 flex-1">
+          <div className="flex min-w-0 flex-1 flex-col">
             <div className="mb-2 flex flex-wrap items-center gap-2 text-[12px]">
               {upcoming && (
                 <span className="rounded-full bg-tertiary/15 px-2.5 py-0.5 font-medium text-tertiary">
@@ -86,17 +85,21 @@ export const EventCard = ({ event, wide = false }: { event: EventItem; wide?: bo
               )}
             </div>
 
-            <h3 className="text-xl leading-snug transition-colors group-hover:text-accent">
+            <h3 className="line-clamp-2 text-2xl leading-snug transition-colors group-hover:text-accent">
               {event.title}
             </h3>
 
             {event.summary && (
-              <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-muted-foreground">
+              <p
+                className={`mt-2 text-muted-foreground ${
+                  featured ? "line-clamp-3" : "line-clamp-2"
+                }`}
+              >
                 {event.summary}
               </p>
             )}
 
-            <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-[12.5px] text-muted-foreground">
+            <div className="mt-auto flex flex-wrap items-center gap-x-3 gap-y-1 pt-4 text-[12.5px] text-muted-foreground">
               <span className="tabular-nums">
                 {formatEventDateRange(event.startDate, event.endDate)}
               </span>
@@ -109,7 +112,7 @@ export const EventCard = ({ event, wide = false }: { event: EventItem; wide?: bo
             </div>
           </div>
         </div>
-      </Card>
+      </JournalCardShell>
     </Link>
   );
 };
