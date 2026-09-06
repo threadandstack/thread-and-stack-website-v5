@@ -54,12 +54,16 @@ serve(async (req) => {
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     const supabase = createClient(supabaseUrl, supabaseServiceKey)
 
-    // Check for full=true parameter
+    // Check for full=true / forceMedia=true parameters
     let fullSync = false
+    let forceMedia = false
     try {
       const body = await req.json()
       fullSync = body?.full === true
+      forceMedia = body?.forceMedia === true
     } catch { /* no body */ }
+    if (forceMedia) fullSync = true
+
 
     // Get last sync timestamp for incremental mode
     const { data: syncMeta } = await supabase
