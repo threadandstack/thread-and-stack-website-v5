@@ -240,9 +240,15 @@ const VervauntWalkthroughPage = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.15 }}
-            className="flex items-center justify-center mb-12 sm:mb-14 order-2 sm:order-1"
+            className="flex items-center justify-center gap-6 sm:gap-8 mb-12 sm:mb-14 order-2 sm:order-1"
           >
             <img src={BlackStacked} alt="Thread & Stack" className="h-20 md:h-24 w-auto" />
+            <span className="h-14 md:h-16 w-px bg-border" aria-hidden="true" />
+            <img
+              src={vervauntLogo.url}
+              alt="Vervaunt"
+              className="h-6 md:h-8 w-auto dark:invert"
+            />
           </motion.div>
 
           <motion.h1
