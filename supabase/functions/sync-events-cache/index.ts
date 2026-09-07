@@ -49,8 +49,8 @@ serve(async (req) => {
     const DOUBLE_WIDTH_STATUS = 'Live - Double Width'
     const baseFilter = {
       or: [
-        { property: 'Status', select: { equals: 'Live' } },
-        { property: 'Status', select: { equals: DOUBLE_WIDTH_STATUS } },
+        { property: 'Status', status: { equals: 'Live' } },
+        { property: 'Status', status: { equals: DOUBLE_WIDTH_STATUS } },
       ],
     }
     const queryFilter = useIncremental
@@ -154,7 +154,7 @@ serve(async (req) => {
         event_url: p['Event URL']?.url || null,
         slides_url: p['Slides URL']?.url || null,
         recording_url: p['Recording URL']?.url || null,
-        featured: p['Status']?.select?.name === DOUBLE_WIDTH_STATUS,
+        featured: (p['Status']?.status?.name ?? p['Status']?.select?.name) === DOUBLE_WIDTH_STATUS,
         last_edited_time: page.last_edited_time || null,
         synced_at: new Date().toISOString(),
       }
