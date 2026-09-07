@@ -1,0 +1,1 @@
+ALTER TABLE public.build_updates_cache ADD COLUMN IF NOT EXISTS build_description text;

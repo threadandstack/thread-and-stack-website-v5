@@ -11,14 +11,7 @@ import { BlogNewsletterCTA } from "@/components/BlogNewsletterCTA";
 import { SubscribeLightbox } from "@/components/SubscribeLightbox";
 import { EventCard } from "@/components/journal/EventCard";
 import { BuildFeedCard, BuildGroupCard } from "@/components/journal/BuildFeedCard";
-import { JournalCardShell } from "@/components/journal/JournalCardShell";
-import {
-  CardMeta,
-  CardPills,
-  CardSummary,
-  CardTitle,
-  MetaDot,
-} from "@/components/journal/CardParts";
+import { WritingCard } from "@/components/journal/WritingCard";
 
 import journalLogoLight from "@/assets/journal-logo-light.png.asset.json";
 import journalLogoDark from "@/assets/journal-logo-dark.png.asset.json";
@@ -78,70 +71,12 @@ type FilterKey = (typeof FILTERS)[number]["key"];
 
 
 
-const getThemeColors = (theme: string): string => {
-  const themeMap: Record<string, string> = {
-    Growth: "pill-growth",
-    Strategy: "pill-strategy",
-    Creative: "pill-creative",
-    Systems: "pill-systems",
-    "Case Studies": "pill-casestudy",
-    "Case Study": "pill-casestudy",
-  };
-  return themeMap[theme] || "pill-casestudy";
-};
-
-const WritingCard = ({ post }: { post: WritingItem }) => (
-  <Link to={`/blog/${post.slug}`} className="group block h-full">
-    <JournalCardShell
-      media={
-        post.headerImage ? (
-          <img
-            src={post.headerImage}
-            alt={post.title}
-            className="h-full w-full object-cover object-top transition-transform group-hover:scale-105"
-            loading="lazy"
-          />
-        ) : undefined
-      }
-    >
-      <CardPills>
-        <span className="rounded-full bg-muted px-2.5 py-0.5 font-medium text-muted-foreground">
-          Writing
-        </span>
-        {post.theme && (
-          <span className={`rounded-full px-2.5 py-0.5 font-medium ${getThemeColors(post.theme)}`}>
-            {post.theme}
-          </span>
-        )}
-      </CardPills>
-
-      <CardTitle>{post.title}</CardTitle>
-
-      {(post.intro || post.description) && (
-        <CardSummary>{post.intro || post.description}</CardSummary>
-      )}
-
-      <CardMeta>
-        {post.date && <span className="tabular-nums">{formatJournalDate(post.date)}</span>}
-        {post.readingTime && (
-          <>
-            <MetaDot />
-            <span>{post.readingTime} min read</span>
-          </>
-        )}
-      </CardMeta>
-
-    </JournalCardShell>
-  </Link>
-);
-
 const SPRING = { type: "spring" as const, stiffness: 220, damping: 30, mass: 0.9 };
 
 const SPRING_TRANSITION = SPRING;
 
-/** Only an expanded build takes over a full row of the feed */
-const isFullWidth = (item: JournalItem, expandedBuild: string | null) =>
-  item.kind === "buildGroup" && expandedBuild === item.id;
+/** An expanded card takes over a full row of the feed */
+const isFullWidth = (item: JournalItem, expandedId: string | null) => expandedId === item.id;
 
 /** Items marked "Live - Double Width" in Notion span two columns on desktop */
 const isDoubleWidth = (item: JournalItem) =>
@@ -151,26 +86,31 @@ const spanClass = (item: JournalItem) => (isDoubleWidth(item) ? "lg:col-span-2" 
 
 const renderCard = (
   item: JournalItem,
-  expandedBuild: string | null,
-  toggleBuild: (id: string) => void
+  expandedId: string | null,
+  toggle: (id: string) => void
 ) => {
-  if (item.kind === "writing") return <WritingCard post={item} />;
+  const expanded = expandedId === item.id;
+  const onToggle = () => toggle(item.id);
+
+  if (item.kind === "writing")
+    return <WritingCard post={item} expanded={expanded} onToggle={onToggle} />;
   if (item.kind === "build") return <BuildFeedCard item={item} />;
   if (item.kind === "buildGroup")
-    return (
-      <BuildGroupCard
-        group={item}
-        expanded={expandedBuild === item.id}
-        onToggle={() => toggleBuild(item.id)}
-      />
-    );
-  return <EventCard event={item} featured={item.featured} />;
+    return <BuildGroupCard group={item} expanded={expanded} onToggle={onToggle} />;
+  return (
+    <EventCard
+      event={item}
+      featured={item.featured}
+      expanded={expanded}
+      onToggle={onToggle}
+    />
+  );
 };
 
 const renderItem = (
   item: JournalItem,
-  expandedBuild: string | null,
-  toggleBuild: (id: string) => void
+  expandedId: string | null,
+  toggle: (id: string) => void
 ) => (
   <motion.div
     key={item.id}
@@ -178,12 +118,12 @@ const renderItem = (
     transition={SPRING_TRANSITION}
     className={`h-full min-h-0 ${spanClass(item)}`}
   >
-    {renderCard(item, expandedBuild, toggleBuild)}
+    {renderCard(item, expandedId, toggle)}
   </motion.div>
 );
 
 /** Split the feed into full-width rows and dense-packed grid blocks */
-const buildLayout = (items: JournalItem[], expandedBuild: string | null) => {
+const buildLayout = (items: JournalItem[], expandedId: string | null) => {
   const blocks: Array<
     { type: "full"; item: JournalItem } | { type: "grid"; items: JournalItem[] }
   > = [];
@@ -196,7 +136,7 @@ const buildLayout = (items: JournalItem[], expandedBuild: string | null) => {
   };
 
   items.forEach((item) => {
-    if (isFullWidth(item, expandedBuild)) {
+    if (isFullWidth(item, expandedId)) {
       flush();
       blocks.push({ type: "full", item });
     } else {
@@ -217,8 +157,8 @@ const JournalPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [showSubscribe, setShowSubscribe] = useState(searchParams.get("subscribe") === "true");
   const [theme, setTheme] = useState<"dark" | "light">("light");
-  const [expandedBuild, setExpandedBuild] = useState<string | null>(null);
-  const toggleBuild = (id: string) => setExpandedBuild((cur) => (cur === id ? null : id));
+  const [expandedId, setExpandedId] = useState<string | null>(null);
+  const toggleCard = (id: string) => setExpandedId((cur) => (cur === id ? null : id));
   const toggleTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
 
   const filterParam = searchParams.get("type") as FilterKey | null;
@@ -266,7 +206,7 @@ const JournalPage = () => {
     return interleaveJournalItems(past);
   }, [items, activeFilter]);
 
-  const layout = useMemo(() => buildLayout(feed, expandedBuild), [feed, expandedBuild]);
+  const layout = useMemo(() => buildLayout(feed, expandedId), [feed, expandedId]);
 
 
 
@@ -367,14 +307,14 @@ const JournalPage = () => {
                     {layout.map((block, blockIndex) =>
                       block.type === "full" ? (
                         <div key={block.item.id}>
-                          {renderItem(block.item, expandedBuild, toggleBuild)}
+                          {renderItem(block.item, expandedId, toggleCard)}
                         </div>
                       ) : (
                         <div
                           key={`grid-${blockIndex}`}
                           className="grid auto-rows-auto gap-8 sm:grid-cols-2 sm:[grid-auto-flow:dense] sm:[grid-auto-rows:28rem] lg:grid-cols-3"
                         >
-                          {block.items.map((item) => renderItem(item, expandedBuild, toggleBuild))}
+                          {block.items.map((item) => renderItem(item, expandedId, toggleCard))}
                         </div>
                       )
                     )}

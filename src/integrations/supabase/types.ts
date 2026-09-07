@@ -112,6 +112,7 @@ export type Database = {
       }
       build_updates_cache: {
         Row: {
+          build_description: string | null
           build_name: string | null
           build_slug: string | null
           change_types: string[]
@@ -136,6 +137,7 @@ export type Database = {
           version: string | null
         }
         Insert: {
+          build_description?: string | null
           build_name?: string | null
           build_slug?: string | null
           change_types?: string[]
@@ -160,6 +162,7 @@ export type Database = {
           version?: string | null
         }
         Update: {
+          build_description?: string | null
           build_name?: string | null
           build_slug?: string | null
           change_types?: string[]
