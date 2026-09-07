@@ -20,7 +20,7 @@ export const BuildFeedCard = ({ item }: { item: BuildItem }) => {
   const target = item.buildSlug || item.slug;
 
   return (
-    <Link to={`/builds/${target}`} className="group block h-full">
+    <Link to={`/journal/builds/${target}`} className="group block h-full">
       <JournalCardShell
         media={
           item.headerImage ? (
@@ -90,7 +90,7 @@ export const BuildGroupCard = ({
         }`}
         summary={group.description}
         footer={
-          <Link to={`/builds/${group.slug}`} className="inline-block">
+          <Link to={`/journal/builds/${group.slug}`} className="inline-block">
             <CardCta>See this build in full →</CardCta>
           </Link>
         }

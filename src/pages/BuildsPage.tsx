@@ -38,7 +38,7 @@ export const formatUpdateDate = (value?: string | null) => {
 };
 
 export const buildHref = (update: BuildUpdate) =>
-  `/builds/${update.build_slug || update.slug}`;
+  `/journal/builds/${update.build_slug || update.slug}`;
 
 const TimelineEntry = ({
   update,
@@ -60,7 +60,7 @@ const TimelineEntry = ({
             {showBuild && update.build_name && (
               <>
                 <Link
-                  to={`/builds/${update.build_slug || update.slug}`}
+                  to={`/journal/builds/${update.build_slug || update.slug}`}
                   className="inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.18em] text-accent transition-opacity hover:opacity-70"
                 >
                   <BuildIcon
@@ -157,7 +157,7 @@ const BuildGroup = ({
           </span>
           {group.slug && (
             <Link
-              to={`/builds/${group.slug}`}
+              to={`/journal/builds/${group.slug}`}
               className="text-[11px] uppercase tracking-[0.18em] text-accent transition-opacity hover:opacity-70"
             >
               View

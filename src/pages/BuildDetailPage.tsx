@@ -60,7 +60,7 @@ const BuildDetailPage = () => {
     primary?.og_image_url ||
     primary?.header_image_url ||
     "https://threadandstack.com/__l5e/assets-v1/6bce079b-d3c5-4c8b-a9d7-79c333d9d9ca/OpenGraph_TS2026.png";
-  const buildCanonical = `https://threadandstack.com/builds/${slug}`;
+  const buildCanonical = `https://threadandstack.com/journal/builds/${slug}`;
 
   return (
     <>
@@ -96,10 +96,10 @@ const BuildDetailPage = () => {
         <main className="pb-10 pt-32 md:pt-40">
           <div className="mx-auto max-w-3xl px-6">
             <Link
-              to="/builds"
+              to="/journal?type=builds"
               className="inline-flex items-center gap-2 text-sm text-ink-soft transition-colors hover:text-foreground"
             >
-              <ArrowLeft className="h-4 w-4" /> All builds
+              <ArrowLeft className="h-4 w-4" /> Back to the journal
             </Link>
 
             {isLoading ? (

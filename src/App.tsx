@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useParams } from "react-router-dom";
 import { CookieConsent } from "./components/CookieConsent";
 
 // Eager-load the homepage for fastest initial render
@@ -88,6 +88,11 @@ const BuildDetailPage = lazy(() => import("./pages/BuildDetailPage"));
 
 const queryClient = new QueryClient();
 
+const LegacyBuildRedirect = () => {
+  const { slug } = useParams<{ slug: string }>();
+  return <Navigate to={`/journal/builds/${slug}`} replace />;
+};
+
 const PageLoader = () => (
   <div className="min-h-screen bg-background flex items-center justify-center">
     <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
@@ -127,8 +132,11 @@ const App = () => (
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/journal" element={<JournalPage />} />
             <Route path="/journal/events/:slug" element={<EventDetailPage />} />
-            <Route path="/builds" element={<BuildsPage />} />
-            <Route path="/builds/:slug" element={<BuildDetailPage />} />
+            <Route path="/journal/builds/:slug" element={<BuildDetailPage />} />
+            {/* Retired public builds section — kept for reference under /depreciate */}
+            <Route path="/depreciate/builds" element={<BuildsPage />} />
+            <Route path="/builds" element={<Navigate to="/journal?type=builds" replace />} />
+            <Route path="/builds/:slug" element={<LegacyBuildRedirect />} />
             <Route path="/home-draft" element={<HomePageDraft />} />
             {/* Backward-compat redirects for old draft2 paths */}
             <Route path="/home-draft2" element={<Navigate to="/" replace />} />
