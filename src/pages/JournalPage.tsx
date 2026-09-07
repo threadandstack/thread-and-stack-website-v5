@@ -12,6 +12,7 @@ import { SubscribeLightbox } from "@/components/SubscribeLightbox";
 import { EventCard } from "@/components/journal/EventCard";
 import { BuildFeedCard, BuildGroupCard } from "@/components/journal/BuildFeedCard";
 import { WritingCard } from "@/components/journal/WritingCard";
+import { FilterPills } from "@/components/journal/FilterPills";
 
 import journalLogoLight from "@/assets/journal-logo-light.png.asset.json";
 import journalLogoDark from "@/assets/journal-logo-dark.png.asset.json";
