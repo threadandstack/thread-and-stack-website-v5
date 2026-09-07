@@ -82,16 +82,6 @@ export const EventCard = ({
             <Link to={`/journal/events/${event.slug}`} className="inline-block">
               <CardCta>Open the full write-up →</CardCta>
             </Link>
-            {event.eventUrl && (
-              <a
-                href={event.eventUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="text-muted-foreground transition-colors hover:text-foreground"
-              >
-                Event page →
-              </a>
-            )}
             {event.slidesUrl && (
               <a
                 href={event.slidesUrl}

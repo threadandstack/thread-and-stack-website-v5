@@ -98,7 +98,7 @@ export const BuildGroupCard = ({
         <p className="text-[11px] uppercase tracking-wider text-muted-foreground">
           Recent updates
         </p>
-        <ol className="mt-3 space-y-3 border-l border-border/60 pl-4">
+        <ol className="ml-5 mt-3 space-y-3 border-l border-border/60 pl-4">
           {group.releases.slice(0, 4).map((release) => (
             <li key={release.id} className="relative">
               <span className="absolute -left-[19px] top-2 h-1.5 w-1.5 rounded-full bg-accent" />
