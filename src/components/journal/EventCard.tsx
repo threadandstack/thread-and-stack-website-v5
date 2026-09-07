@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { MapPin, Mic, Users } from "lucide-react";
 import { JournalCardShell } from "@/components/journal/JournalCardShell";
+import { DetailGrid, DetailRow, ExpandToggle, ExpandedShell } from "@/components/journal/ExpandedCard";
 import {
   CardMeta,
   CardPills,
@@ -8,7 +9,12 @@ import {
   CardTitle,
   MetaDot,
 } from "@/components/journal/CardParts";
-import { EventItem, formatEventDateRange, isUpcoming } from "@/lib/journalFeed";
+import {
+  EventItem,
+  formatEventDateRange,
+  formatEventDuration,
+  isUpcoming,
+} from "@/lib/journalFeed";
 
 const ROLE_STYLES: Record<string, string> = {
   Hosted: "bg-magenta/15 text-magenta",
@@ -17,15 +23,131 @@ const ROLE_STYLES: Record<string, string> = {
   Attended: "bg-muted text-muted-foreground",
 };
 
+const RolePill = ({ role }: { role: string }) => (
+  <span
+    className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 font-medium ${
+      ROLE_STYLES[role] || "bg-muted text-muted-foreground"
+    }`}
+  >
+    {role === "Attended" ? <Users className="h-3 w-3" /> : <Mic className="h-3 w-3" />}
+    {role}
+  </span>
+);
+
+const TypePill = () => (
+  <span className="rounded-full bg-muted px-2.5 py-0.5 font-medium text-muted-foreground">
+    Event
+  </span>
+);
+
+const UpcomingPill = () => (
+  <span className="rounded-full bg-tertiary/15 px-2.5 py-0.5 font-medium text-tertiary">
+    Upcoming
+  </span>
+);
+
 export const EventCard = ({
   event,
   featured = false,
+  expanded = false,
+  onToggle,
 }: {
   event: EventItem;
   /** Featured events get a taller image; width is handled by the grid. */
   featured?: boolean;
+  expanded?: boolean;
+  onToggle?: () => void;
 }) => {
   const upcoming = isUpcoming(event);
+  const dates = formatEventDateRange(event.startDate, event.endDate);
+
+  if (expanded && onToggle) {
+    return (
+      <ExpandedShell
+        onToggle={onToggle}
+        image={event.coverImage}
+        pills={
+          <>
+            <TypePill />
+            {upcoming && <UpcomingPill />}
+            {event.role && <RolePill role={event.role} />}
+          </>
+        }
+        title={event.title}
+        subtitle={dates}
+        footer={
+          <div className="flex flex-wrap gap-4 text-sm">
+            <Link
+              to={`/journal/events/${event.slug}`}
+              className="text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Read the write-up →
+            </Link>
+            {event.eventUrl && (
+              <a
+                href={event.eventUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="text-muted-foreground transition-colors hover:text-foreground"
+              >
+                Event page →
+              </a>
+            )}
+            {event.slidesUrl && (
+              <a
+                href={event.slidesUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="text-muted-foreground transition-colors hover:text-foreground"
+              >
+                Slides →
+              </a>
+            )}
+            {event.recordingUrl && (
+              <a
+                href={event.recordingUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="text-muted-foreground transition-colors hover:text-foreground"
+              >
+                Recording →
+              </a>
+            )}
+          </div>
+        }
+      >
+        {event.summary && (
+          <p className="mb-4 text-[15px] leading-relaxed text-muted-foreground">{event.summary}</p>
+        )}
+
+        <DetailGrid>
+          <DetailRow label="Dates" value={dates} />
+          <DetailRow label="Duration" value={formatEventDuration(event.startDate, event.endDate)} />
+          <DetailRow label="Format" value={event.format} />
+          <DetailRow label="Role" value={event.role} />
+          <DetailRow
+            label="Where"
+            value={[event.venue, event.location].filter(Boolean).join(", ") || null}
+          />
+          <DetailRow label="Organiser" value={event.organiser} />
+          <DetailRow
+            label="Topics"
+            value={
+              event.topics.length ? (
+                <span className="flex flex-wrap gap-1.5">
+                  {event.topics.map((t) => (
+                    <span key={t} className="rounded-full bg-muted px-2 py-0.5 text-[12px]">
+                      {t}
+                    </span>
+                  ))}
+                </span>
+              ) : null
+            }
+          />
+        </DetailGrid>
+      </ExpandedShell>
+    );
+  }
 
   return (
     <Link to={`/journal/events/${event.slug}`} className="group block h-full">
@@ -45,27 +167,11 @@ export const EventCard = ({
         }
       >
         <CardPills>
-          <span className="rounded-full bg-muted px-2.5 py-0.5 font-medium text-muted-foreground">
-            Event
-          </span>
-          {upcoming && (
-            <span className="rounded-full bg-tertiary/15 px-2.5 py-0.5 font-medium text-tertiary">
-              Upcoming
-            </span>
-          )}
-          {event.role && (
-            <span
-              className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 font-medium ${
-                ROLE_STYLES[event.role] || "bg-muted text-muted-foreground"
-              }`}
-            >
-              {event.role === "Attended" ? (
-                <Users className="h-3 w-3" />
-              ) : (
-                <Mic className="h-3 w-3" />
-              )}
-              {event.role}
-            </span>
+          <TypePill />
+          {upcoming && <UpcomingPill />}
+          {event.role && <RolePill role={event.role} />}
+          {onToggle && (
+            <ExpandToggle expanded={false} onToggle={onToggle} label="Show event details" />
           )}
         </CardPills>
 
@@ -74,9 +180,7 @@ export const EventCard = ({
         {event.summary && <CardSummary>{event.summary}</CardSummary>}
 
         <CardMeta>
-          <span className="tabular-nums">
-            {formatEventDateRange(event.startDate, event.endDate)}
-          </span>
+          <span className="tabular-nums">{dates}</span>
           {event.location && (
             <>
               <MetaDot />
