@@ -68,16 +68,16 @@ export const ExpandedShell = ({
           )}
           <h3 className="line-clamp-2 break-words text-2xl leading-snug">{title}</h3>
           {subtitle && <p className="mt-1 text-sm text-muted-foreground">{subtitle}</p>}
-          {summary && (
-            <p className="mt-2 line-clamp-4 text-[15px] leading-relaxed text-muted-foreground">
-              {summary}
-            </p>
-          )}
+          {footer && <div className="mt-auto pt-4 shrink-0">{footer}</div>}
         </div>
 
         <div className="flex min-h-0 flex-col overflow-hidden">
+          {summary && (
+            <p className="mb-3 line-clamp-3 shrink-0 text-[15px] leading-relaxed text-muted-foreground">
+              {summary}
+            </p>
+          )}
           <div className="min-h-0 flex-1 overflow-hidden">{children}</div>
-          {footer && <div className="mt-4 shrink-0">{footer}</div>}
         </div>
       </motion.div>
     </AnimatePresence>
@@ -106,7 +106,7 @@ export const CardCta = ({
   className?: string;
 }) => (
   <span
-    className={`inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-accent-foreground shadow-sm transition-colors hover:bg-accent/90 ${className}`}
+    className={`inline-flex items-center gap-2 rounded-full bg-gradient-warm px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-opacity hover:opacity-90 ${className}`}
   >
     {children}
   </span>
