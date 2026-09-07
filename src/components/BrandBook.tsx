@@ -84,6 +84,7 @@ const SECTIONS = [
   ["05", "Typography"],
   ["06", "Cards & 3D float"],
   ["07", "Pill buttons"],
+  ["07a", "Liquid pill navigation"],
   ["08", "FAQ pattern"],
   ["09", "Drawers & lightbox"],
   ["10", "Bottom CTA block"],
