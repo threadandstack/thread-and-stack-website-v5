@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useLocation } from "react-router-dom";
 
 type IconProps = { className?: string };
@@ -14,11 +14,12 @@ export type LiquidNavItem = {
 type Rect = { x: number; y: number; width: number; height: number };
 
 /** Lead droplet: quick, lands with a hint of overshoot */
-const LEAD = { type: "spring" as const, stiffness: 520, damping: 30, mass: 0.8 };
+const LEAD = { type: "spring" as const, stiffness: 420, damping: 32, mass: 0.9 };
 /** Middle droplet */
-const MID = { type: "spring" as const, stiffness: 170, damping: 26, mass: 1.2 };
-/** Tail droplet: slow, so a thick neck of liquid drags behind */
-const TRAIL = { type: "spring" as const, stiffness: 70, damping: 20, mass: 1.6 };
+const MID = { type: "spring" as const, stiffness: 260, damping: 30, mass: 1 };
+/** Tail droplet: slower, so a neck of liquid drags behind (but stays connected) */
+const TRAIL = { type: "spring" as const, stiffness: 170, damping: 28, mass: 1.1 };
+
 
 const isCurrent = (pathname: string, href: string) =>
   href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
