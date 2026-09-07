@@ -548,7 +548,7 @@ const VervauntWalkthroughPage = () => {
 
             <P>
               Measurement comes from the MCP directly rather than from volunteers self-reporting
-              improvement. Pull entries for the cohort and compare against their own pre-pilot
+              improvement. I would pull entries for the cohort and compare against their own pre-pilot
               baseline. The baseline must be built before anything changes, and built the same way each
               month so it stays comparable.
             </P>
