@@ -1,7 +1,13 @@
 import { Link } from "react-router-dom";
 import { MapPin, Mic, Users } from "lucide-react";
 import { JournalCardShell } from "@/components/journal/JournalCardShell";
-import { DetailGrid, DetailRow, ExpandToggle, ExpandedShell } from "@/components/journal/ExpandedCard";
+import {
+  CardCta,
+  DetailGrid,
+  DetailRow,
+  ExpandToggle,
+  ExpandedShell,
+} from "@/components/journal/ExpandedCard";
 import {
   CardMeta,
   CardPills,
@@ -9,12 +15,7 @@ import {
   CardTitle,
   MetaDot,
 } from "@/components/journal/CardParts";
-import {
-  EventItem,
-  formatEventDateRange,
-  formatEventDuration,
-  isUpcoming,
-} from "@/lib/journalFeed";
+import { EventItem, formatEventDateRange, isUpcoming } from "@/lib/journalFeed";
 
 const ROLE_STYLES: Record<string, string> = {
   Hosted: "bg-magenta/15 text-magenta",
@@ -76,12 +77,9 @@ export const EventCard = ({
         title={event.title}
         subtitle={dates}
         footer={
-          <div className="flex flex-wrap gap-4 text-sm">
-            <Link
-              to={`/journal/events/${event.slug}`}
-              className="text-muted-foreground transition-colors hover:text-foreground"
-            >
-              Read the write-up →
+          <div className="flex flex-wrap items-center gap-4 text-sm">
+            <Link to={`/journal/events/${event.slug}`} className="inline-block">
+              <CardCta>Open the full write-up →</CardCta>
             </Link>
             {event.eventUrl && (
               <a
@@ -122,7 +120,6 @@ export const EventCard = ({
 
         <DetailGrid>
           <DetailRow label="Dates" value={dates} />
-          <DetailRow label="Duration" value={formatEventDuration(event.startDate, event.endDate)} />
           <DetailRow label="Format" value={event.format} />
           <DetailRow label="Role" value={event.role} />
           <DetailRow
@@ -149,55 +146,65 @@ export const EventCard = ({
     );
   }
 
+  const body = (
+    <JournalCardShell
+      mediaClassName={featured ? "h-48 sm:h-56" : ""}
+      media={
+        event.coverImage ? (
+          <img
+            src={event.coverImage}
+            alt={event.title}
+            className="h-full w-full object-cover object-top transition-transform group-hover:scale-105"
+            loading="lazy"
+          />
+        ) : (
+          <div className="h-full w-full bg-gradient-primary opacity-90" />
+        )
+      }
+    >
+      <CardPills>
+        <TypePill />
+        {upcoming && <UpcomingPill />}
+        {event.role && <RolePill role={event.role} />}
+        {onToggle && <ExpandToggle expanded={false} onToggle={onToggle} label="Show event details" />}
+      </CardPills>
+
+      <CardTitle>{event.title}</CardTitle>
+
+      {event.summary && <CardSummary>{event.summary}</CardSummary>}
+
+      <CardMeta>
+        <span className="tabular-nums">{dates}</span>
+        {event.location && (
+          <>
+            <MetaDot />
+            <span className="inline-flex items-center gap-1">
+              <MapPin className="h-3.5 w-3.5" />
+              {event.location}
+            </span>
+          </>
+        )}
+        {event.format && (
+          <>
+            <MetaDot />
+            <span>{event.format}</span>
+          </>
+        )}
+      </CardMeta>
+    </JournalCardShell>
+  );
+
+  if (onToggle) {
+    return (
+      <button type="button" onClick={onToggle} aria-expanded={false} className="group block h-full w-full text-left">
+        {body}
+      </button>
+    );
+  }
+
   return (
     <Link to={`/journal/events/${event.slug}`} className="group block h-full">
-      <JournalCardShell
-        mediaClassName={featured ? "h-48 sm:h-56" : ""}
-        media={
-          event.coverImage ? (
-            <img
-              src={event.coverImage}
-              alt={event.title}
-              className="h-full w-full object-cover object-top transition-transform group-hover:scale-105"
-              loading="lazy"
-            />
-          ) : (
-            <div className="h-full w-full bg-gradient-primary opacity-90" />
-          )
-        }
-      >
-        <CardPills>
-          <TypePill />
-          {upcoming && <UpcomingPill />}
-          {event.role && <RolePill role={event.role} />}
-          {onToggle && (
-            <ExpandToggle expanded={false} onToggle={onToggle} label="Show event details" />
-          )}
-        </CardPills>
-
-        <CardTitle>{event.title}</CardTitle>
-
-        {event.summary && <CardSummary>{event.summary}</CardSummary>}
-
-        <CardMeta>
-          <span className="tabular-nums">{dates}</span>
-          {event.location && (
-            <>
-              <MetaDot />
-              <span className="inline-flex items-center gap-1">
-                <MapPin className="h-3.5 w-3.5" />
-                {event.location}
-              </span>
-            </>
-          )}
-          {event.format && (
-            <>
-              <MetaDot />
-              <span>{event.format}</span>
-            </>
-          )}
-        </CardMeta>
-      </JournalCardShell>
+      {body}
     </Link>
   );
 };

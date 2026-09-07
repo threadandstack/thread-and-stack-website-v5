@@ -12,6 +12,7 @@ import {
 } from "@/components/journal/CardParts";
 import { BuildIcon } from "@/components/builds/BuildIcon";
 import { ChangeChips, VersionChip } from "@/components/builds/ChangeChips";
+import { CardCta } from "@/components/journal/ExpandedCard";
 import { BuildGroupItem, BuildItem, formatJournalDate } from "@/lib/journalFeed";
 
 /** Single release card (used on the combined view elsewhere) */
@@ -50,12 +51,6 @@ export const BuildFeedCard = ({ item }: { item: BuildItem }) => {
           <span className="truncate">{item.buildName || "Build"}</span>
           <MetaDot />
           <time className="tabular-nums">{formatJournalDate(item.date)}</time>
-          {(item.version || item.releaseType) && (
-            <>
-              <MetaDot />
-              <VersionChip version={item.version} releaseType={item.releaseType} />
-            </>
-          )}
         </CardMeta>
       </JournalCardShell>
     </Link>
@@ -94,11 +89,8 @@ export const BuildGroupCard = ({
           latest?.date ? ` · latest ${formatJournalDate(latest.date)}` : ""
         }`}
         footer={
-          <Link
-            to={`/builds/${group.slug}`}
-            className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-          >
-            See this build in full →
+          <Link to={`/builds/${group.slug}`} className="inline-block">
+            <CardCta>See this build in full →</CardCta>
           </Link>
         }
       >
@@ -162,7 +154,6 @@ export const BuildGroupCard = ({
           <span className="rounded-full bg-muted px-2.5 py-0.5 font-medium text-muted-foreground">
             Build
           </span>
-          {latest && <ChangeChips types={latest.changeTypes.slice(0, 2)} />}
           <ChevronDown className="ml-auto h-4 w-4 shrink-0 text-muted-foreground transition-transform" />
         </CardPills>
 
@@ -187,12 +178,6 @@ export const BuildGroupCard = ({
             <>
               <MetaDot />
               <time className="tabular-nums">{formatJournalDate(latest.date)}</time>
-            </>
-          )}
-          {(latest?.version || latest?.releaseType) && (
-            <>
-              <MetaDot />
-              <VersionChip version={latest?.version} releaseType={latest?.releaseType} />
             </>
           )}
         </CardMeta>
