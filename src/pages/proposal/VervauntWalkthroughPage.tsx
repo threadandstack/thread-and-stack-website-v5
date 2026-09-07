@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import { Download } from "lucide-react";
 import BlackStacked from "@/assets/logos/Black_TS_Stacked.svg";
 import GreyStacked from "@/assets/logos/Grey_TS_Stacked.svg";
+import vervauntLogo from "@/assets/proposal/vervaunt-black.png.asset.json";
+import harvestLogo from "@/assets/proposal/harvest-logo.png.asset.json";
 
 /* ---------------------------- Helpers ---------------------------- */
 
@@ -240,9 +242,15 @@ const VervauntWalkthroughPage = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.15 }}
-            className="flex items-center justify-center mb-12 sm:mb-14 order-2 sm:order-1"
+            className="flex items-center justify-center gap-6 sm:gap-8 mb-12 sm:mb-14 order-2 sm:order-1"
           >
             <img src={BlackStacked} alt="Thread & Stack" className="h-20 md:h-24 w-auto" />
+            <span className="h-14 md:h-16 w-px bg-border" aria-hidden="true" />
+            <img
+              src={vervauntLogo.url}
+              alt="Vervaunt"
+              className="h-6 md:h-8 w-auto dark:invert"
+            />
           </motion.div>
 
           <motion.h1
@@ -382,9 +390,16 @@ const VervauntWalkthroughPage = () => {
               <span className="absolute -top-3 left-6 sm:left-8 bg-accent text-accent-foreground text-[10.5px] font-sans font-semibold tracking-[0.12em] uppercase px-3 py-1 rounded-full">
                 The recommendation
               </span>
-              <h3 className="font-serif-pro text-[26px] md:text-[30px] italic font-medium text-foreground leading-tight mt-2 mb-4">
-                Voice-based reconstruction through the Harvest MCP
-              </h3>
+              <div className="flex items-center gap-4 mt-2 mb-4">
+                <img
+                  src={harvestLogo.url}
+                  alt="Harvest"
+                  className="h-10 w-10 rounded-lg flex-shrink-0"
+                />
+                <h3 className="font-serif-pro text-[26px] md:text-[30px] italic font-medium text-foreground leading-tight">
+                  Voice-based reconstruction through the Harvest MCP
+                </h3>
+              </div>
               <p className="font-sans text-[16px] leading-[1.8] text-foreground/85">
                 Reconstructing a week by talking is lower cognitive load than filling a grid, which
                 answers the friction hypothesis directly. It also solves categorisation sideways: the
