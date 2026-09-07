@@ -88,18 +88,6 @@ export const BuildGroupCard = ({
           aria-expanded
           className="group w-full text-left"
         >
-          {group.headerImage && (
-            <div className="aspect-[16/6] max-h-56 w-full overflow-hidden bg-muted">
-              <img
-                src={group.headerImage}
-                alt=""
-                loading="lazy"
-                className="h-full w-full object-cover object-center"
-              />
-            </div>
-          )}
-
-
           <div className="flex items-start gap-3 p-5 sm:p-6">
             <BuildIcon slug={group.slug} name={group.buildName} />
             <div className="min-w-0 flex-1">
@@ -111,8 +99,19 @@ export const BuildGroupCard = ({
                 {latest?.date ? ` · latest ${formatJournalDate(latest.date)}` : ""}
               </p>
             </div>
+            {group.headerImage && (
+              <div className="hidden h-16 w-24 shrink-0 overflow-hidden rounded-lg bg-muted sm:block sm:h-20 sm:w-32">
+                <img
+                  src={group.headerImage}
+                  alt=""
+                  loading="lazy"
+                  className="h-full w-full object-cover object-center"
+                />
+              </div>
+            )}
             <ChevronDown className="mt-1 h-4 w-4 shrink-0 rotate-180 text-muted-foreground transition-transform" />
           </div>
+
         </button>
 
         <AnimatePresence initial={false}>
