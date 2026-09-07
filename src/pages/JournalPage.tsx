@@ -273,13 +273,8 @@ const JournalPage = () => {
 
               )}
 
-              {activeFilter === "builds" && !isLoading && (
-                <div className="mt-10 text-center">
-                  <Link to="/builds" className="text-sm text-muted-foreground hover:text-foreground">
-                    See builds as a timeline →
-                  </Link>
-                </div>
-              )}
+
+
             </div>
           </section>
 
