@@ -89,7 +89,7 @@ export const BuildGroupCard = ({
           className="group w-full text-left"
         >
           {group.headerImage && (
-            <div className="aspect-[16/6] w-full overflow-hidden bg-muted">
+            <div className="aspect-[16/6] max-h-56 w-full overflow-hidden bg-muted">
               <img
                 src={group.headerImage}
                 alt=""
