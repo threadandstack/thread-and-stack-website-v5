@@ -30,6 +30,7 @@ export interface BuildItem {
   changelog: string | null;
   description: string | null;
   headerImage?: string | null;
+  featured?: boolean;
   /** Position of this release within its build's history, e.g. 3 of 6 */
   releaseIndex?: number;
   releaseCount?: number;
@@ -65,6 +66,7 @@ export interface BuildGroupItem {
   slug: string;
   buildName: string;
   headerImage?: string | null;
+  featured?: boolean;
   releases: BuildItem[];
 }
 
@@ -91,6 +93,7 @@ export function groupBuildItems(items: BuildItem[]): BuildGroupItem[] {
         slug,
         buildName: ordered[0]?.buildName || ordered[0]?.title || "Build",
         headerImage: ordered.find((r) => r.headerImage)?.headerImage ?? null,
+        featured: ordered.some((r) => r.featured),
         releases: ordered,
       };
     })
@@ -150,7 +153,7 @@ export async function fetchBuildItems(): Promise<BuildItem[]> {
   const { data, error } = await supabase
     .from("build_updates_cache")
     .select(
-      "notion_id, slug, title, build_name, build_slug, version, release_type, change_types, changelog, description, header_image_url, published_date, last_edited_time"
+      "notion_id, slug, title, build_name, build_slug, version, release_type, change_types, changelog, description, header_image_url, published_date, last_edited_time, featured"
     )
     .order("published_date", { ascending: false, nullsFirst: false });
 
@@ -194,6 +197,7 @@ export async function fetchBuildItems(): Promise<BuildItem[]> {
     changelog: row.changelog,
     description: row.description,
     headerImage: row.header_image_url || null,
+    featured: !!row.featured,
     releaseIndex: position.get(row.notion_id)?.index,
     releaseCount: position.get(row.notion_id)?.count,
   }));

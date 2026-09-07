@@ -46,7 +46,13 @@ serve(async (req) => {
     const useIncremental = !isFirstRun && !fullSync
 
     // Status is a `select` property in the Published Events database
-    const baseFilter = { property: 'Status', select: { equals: 'Live' } }
+    const DOUBLE_WIDTH_STATUS = 'Live - Double Width'
+    const baseFilter = {
+      or: [
+        { property: 'Status', status: { equals: 'Live' } },
+        { property: 'Status', status: { equals: DOUBLE_WIDTH_STATUS } },
+      ],
+    }
     const queryFilter = useIncremental
       ? {
           and: [
@@ -148,7 +154,7 @@ serve(async (req) => {
         event_url: p['Event URL']?.url || null,
         slides_url: p['Slides URL']?.url || null,
         recording_url: p['Recording URL']?.url || null,
-        featured: p['Featured']?.checkbox || false,
+        featured: (p['Status']?.status?.name ?? p['Status']?.select?.name) === DOUBLE_WIDTH_STATUS,
         last_edited_time: page.last_edited_time || null,
         synced_at: new Date().toISOString(),
       }
