@@ -131,7 +131,7 @@ const PEOPLE = [
   },
   {
     title: "Three or four team leads",
-    body: "Covering the different failure patterns, twenty minutes each, widening only if the patterns do not hold. Framed behaviourally: what factors are you seeing. Not whose numbers are bad. Say early rather than late that this is not about penalising anyone.",
+    body: "Covering the different failure patterns, twenty minutes each, widening only if the patterns do not hold. I would frame it behaviourally: what factors are you seeing, rather than whose numbers are bad. And I would say early rather than late that this is not about penalising anyone.",
   },
   {
     title: "The people actually logging",
