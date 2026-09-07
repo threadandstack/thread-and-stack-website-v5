@@ -75,9 +75,6 @@ const SPRING = { type: "spring" as const, stiffness: 220, damping: 30, mass: 0.9
 
 const SPRING_TRANSITION = SPRING;
 
-/** An expanded card takes over a full row of the feed */
-const isFullWidth = (item: JournalItem, expandedId: string | null) => expandedId === item.id;
-
 /** Items marked "Live - Double Width" in Notion span two columns on desktop */
 const isDoubleWidth = (item: JournalItem) =>
   item.kind !== "build" && !!(item as { featured?: boolean }).featured;
@@ -116,40 +113,13 @@ const renderItem = (
     key={item.id}
     layout
     transition={SPRING_TRANSITION}
-    className={`h-full min-h-0 ${spanClass(item)}`}
+    className={`h-full min-h-0 ${
+      expandedId === item.id ? "sm:col-span-2 sm:row-span-2" : spanClass(item)
+    }`}
   >
     {renderCard(item, expandedId, toggle)}
   </motion.div>
 );
-
-/** Split the feed into full-width rows and dense-packed grid blocks */
-const buildLayout = (items: JournalItem[], expandedId: string | null) => {
-  const blocks: Array<
-    { type: "full"; item: JournalItem } | { type: "grid"; items: JournalItem[] }
-  > = [];
-  let bucket: JournalItem[] = [];
-
-  const flush = () => {
-    if (!bucket.length) return;
-    blocks.push({ type: "grid", items: bucket });
-    bucket = [];
-  };
-
-  items.forEach((item) => {
-    if (isFullWidth(item, expandedId)) {
-      flush();
-      blocks.push({ type: "full", item });
-    } else {
-      bucket.push(item);
-    }
-  });
-  flush();
-  return blocks;
-};
-
-
-
-
 
 const JournalPage = () => {
   const [items, setItems] = useState<JournalItem[]>([]);
@@ -206,7 +176,6 @@ const JournalPage = () => {
     return interleaveJournalItems(past);
   }, [items, activeFilter]);
 
-  const layout = useMemo(() => buildLayout(feed, expandedId), [feed, expandedId]);
 
 
 
@@ -304,20 +273,9 @@ const JournalPage = () => {
               ) : (
                 <LayoutGroup>
                   <div className="flex flex-col gap-8">
-                    {layout.map((block, blockIndex) =>
-                      block.type === "full" ? (
-                        <div key={block.item.id}>
-                          {renderItem(block.item, expandedId, toggleCard)}
-                        </div>
-                      ) : (
-                        <div
-                          key={`grid-${blockIndex}`}
-                          className="grid auto-rows-auto gap-8 sm:grid-cols-2 sm:[grid-auto-flow:dense] sm:[grid-auto-rows:28rem] lg:grid-cols-3"
-                        >
-                          {block.items.map((item) => renderItem(item, expandedId, toggleCard))}
-                        </div>
-                      )
-                    )}
+                    <div className="grid auto-rows-auto gap-8 sm:grid-cols-2 sm:[grid-auto-flow:dense] sm:[grid-auto-rows:28rem] lg:grid-cols-3">
+                      {feed.map((item) => renderItem(item, expandedId, toggleCard))}
+                    </div>
 
 
                     {feed.length === 0 && (

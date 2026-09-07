@@ -28,22 +28,31 @@ export const ExpandedShell = ({
 }) => (
   <Card className="flex h-full flex-col overflow-hidden shadow-xl">
     <button type="button" onClick={onToggle} aria-expanded className="group w-full text-left">
-      <div className="flex items-start gap-3 p-5 sm:p-6">
-        <div className="min-w-0 flex-1">
+      <div className="p-5 sm:p-6">
+        <div className="flex items-start gap-3">
           {pills && (
-            <div className="mb-2 flex flex-wrap items-center gap-2 text-[12px]">{pills}</div>
+            <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2 text-[12px]">
+              {pills}
+            </div>
           )}
-          <h3 className="break-words text-2xl leading-snug transition-colors group-hover:text-accent">
-            {title}
-          </h3>
-          {subtitle && <p className="mt-1 text-sm text-muted-foreground">{subtitle}</p>}
+          <ChevronDown className="mt-0.5 h-4 w-4 shrink-0 rotate-180 text-muted-foreground transition-transform" />
         </div>
+
         {image && (
-          <div className="hidden h-16 w-24 shrink-0 overflow-hidden rounded-lg bg-muted sm:block sm:h-20 sm:w-32">
-            <img src={image} alt="" loading="lazy" className="h-full w-full object-cover object-center" />
+          <div className="mt-4 h-40 w-full overflow-hidden rounded-xl bg-muted sm:h-52">
+            <img
+              src={image}
+              alt=""
+              loading="lazy"
+              className="h-full w-full object-cover object-top"
+            />
           </div>
         )}
-        <ChevronDown className="mt-1 h-4 w-4 shrink-0 rotate-180 text-muted-foreground transition-transform" />
+
+        <h3 className="mt-4 break-words text-2xl leading-snug transition-colors group-hover:text-accent">
+          {title}
+        </h3>
+        {subtitle && <p className="mt-1 text-sm text-muted-foreground">{subtitle}</p>}
       </div>
     </button>
 
@@ -54,7 +63,7 @@ export const ExpandedShell = ({
         animate={{ height: "auto", opacity: 1 }}
         exit={{ height: 0, opacity: 0 }}
         transition={SPRING}
-        className="overflow-hidden"
+        className="min-h-0 flex-1 overflow-y-auto"
       >
         <div className="px-5 pb-6 sm:px-6">
           {children}
