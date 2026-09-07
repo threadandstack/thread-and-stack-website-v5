@@ -78,6 +78,21 @@ export const DetailRow = ({ label, value }: { label: string; value: ReactNode })
     </div>
   ) : null;
 
+/** Primary call to action inside an expanded card */
+export const CardCta = ({
+  children,
+  className = "",
+}: {
+  children: ReactNode;
+  className?: string;
+}) => (
+  <span
+    className={`inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-accent-foreground shadow-sm transition-colors hover:bg-accent/90 ${className}`}
+  >
+    {children}
+  </span>
+);
+
 /** Small chevron that expands a card without following its link */
 export const ExpandToggle = ({
   expanded,
