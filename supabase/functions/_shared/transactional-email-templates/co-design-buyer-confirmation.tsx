@@ -47,9 +47,15 @@ const CoDesignBuyerConfirmation = ({ name, amountPaid, variant }: Props) => {
           <Text style={text}>
             I'll be in touch within 24 hours from{' '}
             <strong>br@brendanrodgers.uk</strong> with{' '}
-            {six ? 'a schedule for your six sessions' : 'a couple of calendar options'} and
+            {six ? 'a weekly schedule for your six sessions' : 'a couple of calendar options'} and
             a short prep prompt so we hit the ground running.
           </Text>
+          {six ? (
+            <Text style={text}>
+              Your sprint includes six weekly 90-minute sessions, a written write-up after
+              every call, and async access to me throughout the six weeks.
+            </Text>
+          ) : null}
 
           <Hr style={hr} />
 
