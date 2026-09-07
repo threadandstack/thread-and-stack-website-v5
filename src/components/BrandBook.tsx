@@ -68,6 +68,13 @@ const LOGO_INVENTORY: ReadonlyArray<{ src: string; name: string; use: string; da
 
 // ── Helpers ───────────────────────────────────────────────────────────────
 
+const BRAND_BOOK_PILLS: readonly FilterOption[] = [
+  { key: "all", label: "Everything", Icon: Layers },
+  { key: "writing", label: "Writing", Icon: PenLine },
+  { key: "builds", label: "Builds", Icon: Hammer },
+  { key: "events", label: "Events", Icon: CalendarDays },
+];
+
 const SECTIONS = [
   ["01", "Brand essence"],
   ["02", "Logo system"],
