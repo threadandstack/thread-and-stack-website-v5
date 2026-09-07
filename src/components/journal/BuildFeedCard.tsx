@@ -34,6 +34,7 @@ export const BuildFeedCard = ({ item }: { item: BuildItem }) => {
         }
       >
         <CardPills>
+          <BuildIcon slug={item.buildSlug} name={item.buildName || item.title} />
           <span className="rounded-full bg-muted px-2.5 py-0.5 font-medium text-muted-foreground">
             Build
           </span>
@@ -47,10 +48,7 @@ export const BuildFeedCard = ({ item }: { item: BuildItem }) => {
         )}
 
         <CardMeta>
-          <span className="inline-flex items-center gap-2">
-            <BuildIcon slug={item.buildSlug} name={item.buildName || item.title} />
-            <span className="truncate">{item.buildName || "Build"}</span>
-          </span>
+          <span className="truncate">{item.buildName || "Build"}</span>
           <MetaDot />
           <time className="tabular-nums">{formatJournalDate(item.date)}</time>
           {(item.version || item.releaseType) && (
@@ -185,19 +183,15 @@ export const BuildGroupCard = ({
         }
       >
         <CardPills>
+          <BuildIcon slug={group.slug} name={group.buildName} />
           <span className="rounded-full bg-muted px-2.5 py-0.5 font-medium text-muted-foreground">
             Build
           </span>
           {latest && <ChangeChips types={latest.changeTypes.slice(0, 2)} />}
+          <ChevronDown className="ml-auto h-4 w-4 shrink-0 text-muted-foreground transition-transform" />
         </CardPills>
 
-        <div className="flex items-start gap-3">
-          <BuildIcon slug={group.slug} name={group.buildName} />
-          <div className="min-w-0 flex-1">
-            <CardTitle>{group.buildName}</CardTitle>
-          </div>
-          <ChevronDown className="mt-2 h-4 w-4 shrink-0 text-muted-foreground transition-transform" />
-        </div>
+        <CardTitle>{group.buildName}</CardTitle>
 
         {latest && (
           <CardSummary>
