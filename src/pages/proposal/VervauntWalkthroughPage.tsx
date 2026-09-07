@@ -364,9 +364,9 @@ const VervauntWalkthroughPage = () => {
 
             <P>
               Workarounds are where the real design brief lives: the spreadsheet someone keeps, the
-              notes app, the Friday afternoon reconstruction ritual. Do not open the survey with the
-              failure percentages. It tells the team in the first line that they have been measured
-              and found wanting, and it anchors every answer defensively.
+              notes app, the Friday afternoon reconstruction ritual. I would not open the survey with
+              the failure percentages. It tells the team in the first line that they have been
+              measured and found wanting, and it anchors every answer defensively.
             </P>
             <motion.p {...fadeUp} className="font-sans text-[14px] text-muted-foreground">
               Timeframe: a couple of weeks, not a couple of months.
