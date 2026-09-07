@@ -139,7 +139,7 @@ const PEOPLE = [
   },
   {
     title: "An anonymous survey to the whole delivery team",
-    body: "Not a selected cohort, because selecting by failure record means people work out why they were picked. Invite by preference instead: particularly keen to hear from anyone who does not love Harvest, especially anyone who has built their own workaround. Self-selection flips the social meaning of responding from confessing to being consulted. Two open questions and one scale, no team field, because team plus failure mode identifies people anyway.",
+    body: "Not a selected cohort, because selecting by failure record means people work out why they were picked. I would invite by preference instead: particularly keen to hear from anyone who does not love Harvest, especially anyone who has built their own workaround. Self-selection flips the social meaning of responding from confessing to being consulted. Two open questions and one scale, no team field, because team plus failure mode identifies people anyway.",
   },
 ];
 
