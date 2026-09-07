@@ -51,12 +51,6 @@ export const BuildFeedCard = ({ item }: { item: BuildItem }) => {
           <span className="truncate">{item.buildName || "Build"}</span>
           <MetaDot />
           <time className="tabular-nums">{formatJournalDate(item.date)}</time>
-          {(item.version || item.releaseType) && (
-            <>
-              <MetaDot />
-              <VersionChip version={item.version} releaseType={item.releaseType} />
-            </>
-          )}
         </CardMeta>
       </JournalCardShell>
     </Link>
