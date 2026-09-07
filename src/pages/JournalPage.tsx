@@ -96,29 +96,33 @@ const WritingCard = ({ post }: { post: WritingItem }) => (
         ) : undefined
       }
     >
-      <div className="mb-3 flex items-center gap-3">
+      <CardPills>
+        <span className="rounded-full bg-muted px-2.5 py-0.5 font-medium text-muted-foreground">
+          Writing
+        </span>
         {post.theme && (
-          <span className={`rounded-full px-3 py-1 text-sm ${getThemeColors(post.theme)}`}>
+          <span className={`rounded-full px-2.5 py-0.5 font-medium ${getThemeColors(post.theme)}`}>
             {post.theme}
           </span>
         )}
-        {post.readingTime && (
-          <span className="text-sm text-muted-foreground">{post.readingTime} min read</span>
-        )}
-      </div>
+      </CardPills>
 
-      <h3 className="line-clamp-2 text-2xl leading-snug transition-colors group-hover:text-accent">
-        {post.title}
-      </h3>
+      <CardTitle>{post.title}</CardTitle>
 
       {(post.intro || post.description) && (
-        <p className="mt-2 line-clamp-2 text-muted-foreground">{post.intro || post.description}</p>
+        <CardSummary>{post.intro || post.description}</CardSummary>
       )}
 
-      <div className="mt-auto flex items-center justify-between pt-4 text-sm text-muted-foreground">
-        <span className="italic">Brendan @ Thread and Stack</span>
-        {post.date && <span>{formatJournalDate(post.date)}</span>}
-      </div>
+      <CardMeta>
+        {post.date && <span className="tabular-nums">{formatJournalDate(post.date)}</span>}
+        {post.readingTime && (
+          <>
+            <MetaDot />
+            <span>{post.readingTime} min read</span>
+          </>
+        )}
+      </CardMeta>
+
     </JournalCardShell>
   </Link>
 );
