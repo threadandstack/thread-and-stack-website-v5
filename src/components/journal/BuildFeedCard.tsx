@@ -89,15 +89,16 @@ export const BuildGroupCard = ({
           className="group w-full text-left"
         >
           {group.headerImage && (
-            <div className="h-36 w-full overflow-hidden sm:h-44 lg:h-52">
+            <div className="aspect-[16/6] max-h-56 w-full overflow-hidden bg-muted">
               <img
                 src={group.headerImage}
                 alt=""
                 loading="lazy"
-                className="h-full w-full object-cover object-top"
+                className="h-full w-full object-cover object-center"
               />
             </div>
           )}
+
 
           <div className="flex items-start gap-3 p-5 sm:p-6">
             <BuildIcon slug={group.slug} name={group.buildName} />
