@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 type IconProps = { className?: string };
 
@@ -11,14 +11,12 @@ export type FilterOption = {
 
 type Rect = { x: number; y: number; width: number; height: number };
 
-/** Lead droplet: quick, with a touch of overshoot so it lands like liquid */
-const LEAD = { type: "spring" as const, stiffness: 520, damping: 30, mass: 0.8 };
-/** Trailing droplet: lags behind so the goo filter stretches a neck between them */
-const MID = { type: "spring" as const, stiffness: 170, damping: 26, mass: 1.2 };
-/** Tail droplet: very slow, so a thick neck of liquid drags from the last pill */
-const TRAIL = { type: "spring" as const, stiffness: 70, damping: 20, mass: 1.6 };
-/** The settled fill under the chosen pill */
-const SETTLE = { type: "spring" as const, stiffness: 340, damping: 30, mass: 0.9 };
+/** Lead droplet: quick, lands with a hint of overshoot */
+const LEAD = { type: "spring" as const, stiffness: 420, damping: 32, mass: 0.9 };
+/** Middle droplet */
+const MID = { type: "spring" as const, stiffness: 260, damping: 30, mass: 1 };
+/** Tail droplet: slower, so a neck of liquid drags behind (but stays connected) */
+const TRAIL = { type: "spring" as const, stiffness: 170, damping: 28, mass: 1.1 };
 
 /**
  * Journal category picker with a gooey liquid indicator: a droplet flows
@@ -75,15 +73,17 @@ export const FilterPills = <T extends string>({
   }, [measure]);
 
   const activeRect = rects[active as string];
-  const target = hovered ?? (active as string);
-  const targetRect = rects[target] ?? activeRect;
+  const hoverRect = hovered ? rects[hovered] : undefined;
 
   const blobStyle = (rect: Rect) => ({
     x: rect.x,
     y: rect.y,
     width: rect.width,
     height: rect.height,
+    opacity: 1,
   });
+
+  const startStyle = (rect: Rect) => ({ ...blobStyle(rect), opacity: 0.9 });
 
   return (
     <div
@@ -94,6 +94,59 @@ export const FilterPills = <T extends string>({
       {/* resting pill surfaces, below the liquid layer */}
       <div className="pointer-events-none absolute inset-0 z-0">
         {options.map((f) => {
+          const rect = rects[f.key];
+          if (!rect) return null;
+          return (
+            <span
+              key={`rest-${f.key}`}
+              className="absolute left-0 top-0 rounded-full bg-muted"
+              style={{
+                transform: `translate(${rect.x}px, ${rect.y}px)`,
+                width: rect.width,
+                height: rect.height,
+              }}
+            />
+          );
+        })}
+      </div>
+
+      {/* gooey indicator layer sits above the resting pills, below the labels */}
+      <div className="pointer-events-none absolute inset-0 z-10 [filter:url(#pill-goo)]">
+        {/* resting ink on the chosen pill: never travels back, just sits */}
+        {activeRect && (
+          <motion.span
+            className="absolute left-0 top-0 rounded-full bg-foreground"
+            initial={false}
+            animate={blobStyle(activeRect)}
+            transition={LEAD}
+          />
+        )}
+
+        {/* travelling ink: pours out of the chosen pill, fades where it lands */}
+        <AnimatePresence>
+          {hoverRect && hovered !== (active as string) && (
+            <motion.span
+              key="traveller"
+              className="absolute left-0 top-0"
+              initial={{ opacity: 1 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0, transition: { duration: 0.35, ease: "easeOut" } }}
+            >
+              {[TRAIL, MID, LEAD].map((spring, i) => (
+                <motion.span
+                  key={i}
+                  className="absolute left-0 top-0 rounded-full bg-foreground"
+                  initial={startStyle(activeRect ?? hoverRect)}
+                  animate={blobStyle(hoverRect)}
+                  transition={spring}
+                />
+              ))}
+            </motion.span>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {options.map((f) => {
           const rect = rects[f.key];
           if (!rect) return null;
           return (
@@ -163,7 +216,7 @@ export const FilterPills = <T extends string>({
           >
             <span
               className={`relative flex items-center gap-2 transition-colors duration-200 ${
-                isLit ? "text-white" : "text-muted-foreground"
+                isLit ? "text-background" : "text-muted-foreground"
               }`}
             >
               {f.Icon && <f.Icon className="h-4 w-4" />}
