@@ -133,7 +133,7 @@ export const LiquidNavGroup = ({ items }: { items: readonly LiquidNavItem[] }) =
 
 
       {items.map(({ href, label, Icon, onClick }) => {
-        const lit = target === href;
+        const lit = href === activeHref || href === hovered;
         return (
           <a
             key={href}
