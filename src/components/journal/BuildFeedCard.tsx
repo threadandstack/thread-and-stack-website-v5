@@ -189,12 +189,6 @@ export const BuildGroupCard = ({
               <time className="tabular-nums">{formatJournalDate(latest.date)}</time>
             </>
           )}
-          {(latest?.version || latest?.releaseType) && (
-            <>
-              <MetaDot />
-              <VersionChip version={latest?.version} releaseType={latest?.releaseType} />
-            </>
-          )}
         </CardMeta>
       </JournalCardShell>
 
