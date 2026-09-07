@@ -27,7 +27,7 @@ export const ExpandedShell = ({
   footer?: ReactNode;
 }) => (
   <Card className="flex h-full flex-col overflow-hidden shadow-xl">
-    <button type="button" onClick={onToggle} aria-expanded className="group w-full text-left">
+    <button type="button" onClick={onToggle} aria-expanded className="group w-full shrink-0 text-left">
       <div className="p-5 sm:p-6">
         <div className="flex items-start gap-3">
           {pills && (
@@ -39,7 +39,7 @@ export const ExpandedShell = ({
         </div>
 
         {image && (
-          <div className="mt-4 h-40 w-full overflow-hidden rounded-xl bg-muted sm:h-52">
+          <div className="mt-3 h-32 w-full overflow-hidden rounded-xl bg-muted sm:h-36 sm:w-1/2">
             <img
               src={image}
               alt=""
@@ -49,7 +49,7 @@ export const ExpandedShell = ({
           </div>
         )}
 
-        <h3 className="mt-4 break-words text-2xl leading-snug transition-colors group-hover:text-accent">
+        <h3 className="mt-3 break-words text-2xl leading-snug transition-colors group-hover:text-accent">
           {title}
         </h3>
         {subtitle && <p className="mt-1 text-sm text-muted-foreground">{subtitle}</p>}

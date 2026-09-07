@@ -114,7 +114,7 @@ const renderItem = (
     layout
     transition={SPRING_TRANSITION}
     className={`h-full min-h-0 ${
-      expandedId === item.id ? "sm:col-span-2 sm:row-span-2" : spanClass(item)
+      expandedId === item.id ? "sm:col-span-2" : spanClass(item)
     }`}
   >
     {renderCard(item, expandedId, toggle)}
