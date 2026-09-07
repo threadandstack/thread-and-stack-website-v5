@@ -300,7 +300,7 @@ const VervauntWalkthroughPage = () => {
           >
             Brendan Rodgers · Head of AI &amp; Automation
             <br />
-            Tuesday 8 September 2026, 12:30 to 13:30, 10 Devonshire Square
+            Tuesday 8 September 2026, 13:30 to 14:30, 10 Devonshire Square
           </motion.div>
         </div>
       </header>
