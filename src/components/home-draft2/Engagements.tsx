@@ -9,14 +9,14 @@ const tiers = [
     n: "01",
     name: "Co-Design Sprint",
     price: "£2,500",
-    sub: "Six weeks · 60 days async support",
+    sub: "Six weekly sessions · async access throughout",
     blurb:
       "For founders and functional owners building their own Notion OS. You have a clear goal and are ready to build. What you need is structure, a thinking partner, and someone who can help you navigate the harder parts. We meet weekly, you build between sessions, and the system that emerges is genuinely yours.",
     features: [
-      "Six weekly one-hour sessions",
-      "Session prep and follow-up",
+      "Six weekly 90-minute sessions",
+      "A written write-up after every call",
       "Resources and templates as we go",
-      "60 days async Slack access",
+      "Async access throughout the sprint",
     ],
     cta: "Start a sprint",
     accent: "tertiary",

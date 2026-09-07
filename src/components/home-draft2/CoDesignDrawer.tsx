@@ -38,9 +38,10 @@ const VARIANTS: Record<Variant, { label: string; price: number; blurb: string }>
     blurb: "One 90-minute co-design session to shape a workflow, product, or narrative together.",
   },
   six: {
-    label: "Six-session series",
+    label: "Six-session sprint",
     price: 250000,
-    blurb: "Six sessions over 6–12 weeks. Better value, deeper build. Ideal for iterative work.",
+    blurb:
+      "Six weekly 90-minute sessions, a written write-up after every call, and async access throughout the sprint.",
   },
 };
 
@@ -181,8 +182,8 @@ export function CoDesignDrawer({
                 </SheetTitle>
                 <SheetDescription className="text-[14.5px] leading-relaxed text-ink-soft">
                   Ninety minutes of shared thinking on a workflow, product, or narrative you're
-                  building. Pick a single session to unlock one thing, or a six-session series
-                  to build something end-to-end.
+                  building. Pick a single session to unlock one thing, or a six-week sprint of
+                  weekly sessions, write-ups and async access to build something end-to-end.
                 </SheetDescription>
                 <ul className="mt-2 flex flex-wrap gap-x-5 gap-y-1.5 text-[12px] text-ink-soft">
                   <li className="inline-flex items-center gap-1.5">
