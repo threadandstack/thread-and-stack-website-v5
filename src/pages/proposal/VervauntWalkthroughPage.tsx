@@ -214,6 +214,23 @@ const VervauntWalkthroughPage = () => {
 
   return (
     <main className="min-h-screen bg-background">
+      <style>{`
+        @media print {
+          main, main * {
+            opacity: 1 !important;
+            transform: none !important;
+            filter: none !important;
+            animation: none !important;
+            transition: none !important;
+          }
+          main section, main .rounded-2xl, main img, main h1, main h2, main h3, main h4, main p, main li {
+            break-inside: avoid;
+            page-break-inside: avoid;
+          }
+          @page { margin: 14mm; }
+        }
+      `}</style>
+
       {/* Download */}
       <div className="fixed top-4 right-4 z-40 print:hidden">
         <button
