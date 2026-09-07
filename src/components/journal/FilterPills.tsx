@@ -124,19 +124,19 @@ export const FilterPills = <T extends string>({
         {targetRect && !travellerIsActive && (
           <>
             <motion.span
-              className="absolute left-0 top-0 rounded-full bg-gradient-warm"
+              className="absolute left-0 top-0 rounded-full bg-foreground"
               initial={false}
               animate={blobStyle(targetRect)}
               transition={TRAIL}
             />
             <motion.span
-              className="absolute left-0 top-0 rounded-full bg-gradient-warm"
+              className="absolute left-0 top-0 rounded-full bg-foreground"
               initial={false}
               animate={blobStyle(targetRect)}
               transition={MID}
             />
             <motion.span
-              className="absolute left-0 top-0 rounded-full bg-gradient-warm"
+              className="absolute left-0 top-0 rounded-full bg-foreground"
               initial={false}
               animate={blobStyle(targetRect)}
               transition={LEAD}
