@@ -251,7 +251,7 @@ const VervauntWalkthroughPage = () => {
             transition={{ duration: 0.7, delay: 0.05 }}
             className="font-sans text-[10.5px] sm:text-[11px] tracking-[0.28em] uppercase text-muted-foreground mb-8 sm:mb-10 order-1 sm:order-2"
           >
-            Second round task <span className="text-muted-foreground/40 mx-2">·</span> Vervaunt{" "}
+            Final stage <span className="text-muted-foreground/40 mx-2">·</span> Vervaunt{" "}
             <span className="text-muted-foreground/40 mx-2">·</span> 8 September 2026
           </motion.div>
 
