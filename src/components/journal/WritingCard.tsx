@@ -62,17 +62,13 @@ export const WritingCard = ({
         }
         title={post.title}
         subtitle={formatJournalDate(post.date)}
+        summary={post.intro || post.description}
         footer={
           <Link to={`/blog/${post.slug}`} className="inline-block">
             <CardCta>Open the full blog →</CardCta>
           </Link>
         }
       >
-        {(post.intro || post.description) && (
-          <p className="mb-4 text-[15px] leading-relaxed text-muted-foreground">
-            {post.intro || post.description}
-          </p>
-        )}
 
         <DetailGrid>
           <DetailRow label="Published" value={formatJournalDate(post.date)} />

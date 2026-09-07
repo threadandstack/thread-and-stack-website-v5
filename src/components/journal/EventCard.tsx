@@ -76,6 +76,7 @@ export const EventCard = ({
         }
         title={event.title}
         subtitle={dates}
+        summary={event.summary}
         footer={
           <div className="flex flex-wrap items-center gap-4 text-sm">
             <Link to={`/journal/events/${event.slug}`} className="inline-block">
@@ -114,9 +115,6 @@ export const EventCard = ({
           </div>
         }
       >
-        {event.summary && (
-          <p className="mb-4 text-[15px] leading-relaxed text-muted-foreground">{event.summary}</p>
-        )}
 
         <DetailGrid>
           <DetailRow label="Dates" value={dates} />
