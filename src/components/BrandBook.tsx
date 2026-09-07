@@ -181,6 +181,7 @@ const SkillEmbed = ({ name, body }: { name: string; body: string }) => {
 
 export const BrandBook = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [pillDemo, setPillDemo] = useState("all");
 
   return (
     <>

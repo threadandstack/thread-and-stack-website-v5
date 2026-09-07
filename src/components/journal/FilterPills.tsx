@@ -6,7 +6,7 @@ type IconProps = { className?: string };
 export type FilterOption = {
   key: string;
   label: string;
-  Icon?: ((props: IconProps) => JSX.Element) | null;
+  Icon?: React.ComponentType<IconProps> | null;
 };
 
 type Rect = { x: number; y: number; width: number; height: number };
