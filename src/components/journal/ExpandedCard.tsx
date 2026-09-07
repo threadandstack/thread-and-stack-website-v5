@@ -6,8 +6,9 @@ import { Card } from "@/components/ui/card";
 const SPRING = { type: "spring" as const, stiffness: 220, damping: 30, mass: 0.9 };
 
 /**
- * One expanded shape for every journal card: pills and title on the left, a
- * small thumbnail top right, then the detail body and a link out.
+ * One expanded shape for every journal card, sized to a single grid row:
+ * pills across the top, then picture, title and summary on the left with the
+ * detail list and call to action on the right. Nothing scrolls.
  */
 export const ExpandedShell = ({
   pills,
@@ -15,6 +16,7 @@ export const ExpandedShell = ({
   subtitle,
   image,
   onToggle,
+  summary,
   children,
   footer,
 }: {
@@ -23,51 +25,59 @@ export const ExpandedShell = ({
   subtitle?: ReactNode;
   image?: string | null;
   onToggle: () => void;
+  summary?: ReactNode;
   children: ReactNode;
   footer?: ReactNode;
 }) => (
   <Card className="flex h-full flex-col overflow-hidden shadow-xl">
-    <button type="button" onClick={onToggle} aria-expanded className="group w-full shrink-0 text-left">
-      <div className="p-5 sm:p-6">
-        <div className="flex items-start gap-3">
-          {pills && (
-            <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2 text-[12px]">
-              {pills}
-            </div>
-          )}
-          <ChevronDown className="mt-0.5 h-4 w-4 shrink-0 rotate-180 text-muted-foreground transition-transform" />
-        </div>
-
-        {image && (
-          <div className="mt-3 h-32 w-full overflow-hidden rounded-xl bg-muted sm:h-36 sm:w-1/2">
-            <img
-              src={image}
-              alt=""
-              loading="lazy"
-              className="h-full w-full object-cover object-top"
-            />
+    <button
+      type="button"
+      onClick={onToggle}
+      aria-expanded
+      className="group w-full shrink-0 px-5 pt-5 text-left sm:px-6 sm:pt-6"
+    >
+      <div className="flex items-start gap-3">
+        {pills && (
+          <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2 text-[12px]">
+            {pills}
           </div>
         )}
-
-        <h3 className="mt-3 break-words text-2xl leading-snug transition-colors group-hover:text-accent">
-          {title}
-        </h3>
-        {subtitle && <p className="mt-1 text-sm text-muted-foreground">{subtitle}</p>}
+        <ChevronDown className="mt-0.5 h-4 w-4 shrink-0 rotate-180 text-muted-foreground transition-transform" />
       </div>
     </button>
 
     <AnimatePresence initial={false}>
       <motion.div
         key="expanded"
-        initial={{ height: 0, opacity: 0 }}
-        animate={{ height: "auto", opacity: 1 }}
-        exit={{ height: 0, opacity: 0 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
         transition={SPRING}
-        className="min-h-0 flex-1 overflow-y-auto"
+        className="grid min-h-0 flex-1 gap-x-8 gap-y-4 overflow-hidden p-5 pt-4 sm:grid-cols-2 sm:p-6 sm:pt-4"
       >
-        <div className="px-5 pb-6 sm:px-6">
-          {children}
-          {footer && <div className="mt-5">{footer}</div>}
+        <div className="flex min-h-0 flex-col overflow-hidden">
+          {image && (
+            <div className="mb-3 h-32 w-full shrink-0 overflow-hidden rounded-xl bg-muted sm:h-36">
+              <img
+                src={image}
+                alt=""
+                loading="lazy"
+                className="h-full w-full object-cover object-top"
+              />
+            </div>
+          )}
+          <h3 className="line-clamp-2 break-words text-2xl leading-snug">{title}</h3>
+          {subtitle && <p className="mt-1 text-sm text-muted-foreground">{subtitle}</p>}
+          {summary && (
+            <p className="mt-2 line-clamp-4 text-[15px] leading-relaxed text-muted-foreground">
+              {summary}
+            </p>
+          )}
+        </div>
+
+        <div className="flex min-h-0 flex-col overflow-hidden">
+          <div className="min-h-0 flex-1 overflow-hidden">{children}</div>
+          {footer && <div className="mt-4 shrink-0">{footer}</div>}
         </div>
       </motion.div>
     </AnimatePresence>
@@ -76,7 +86,7 @@ export const ExpandedShell = ({
 
 /** Label / value rows used inside every expanded card */
 export const DetailGrid = ({ children }: { children: ReactNode }) => (
-  <dl className="grid gap-x-8 gap-y-3 border-t border-border/60 pt-4 sm:grid-cols-2">{children}</dl>
+  <dl className="grid gap-x-6 gap-y-3 sm:grid-cols-2">{children}</dl>
 );
 
 export const DetailRow = ({ label, value }: { label: string; value: ReactNode }) =>
