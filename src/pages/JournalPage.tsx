@@ -206,7 +206,7 @@ const JournalPage = () => {
     return interleaveJournalItems(past);
   }, [items, activeFilter]);
 
-  const layout = useMemo(() => buildLayout(feed, expandedId), [feed, expandedBuild]);
+  const layout = useMemo(() => buildLayout(feed, expandedId), [feed, expandedId]);
 
 
 
