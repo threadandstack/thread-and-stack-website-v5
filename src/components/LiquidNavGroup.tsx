@@ -75,7 +75,7 @@ export const LiquidNavGroup = ({ items }: { items: readonly LiquidNavItem[] }) =
   }, [measure]);
 
   const activeHref = items.find((i) => isCurrent(pathname, i.href))?.href ?? null;
-  const target = hovered ?? activeHref;
+  
   const activeRect = activeHref ? rects[activeHref] : undefined;
   const hoverRect = hovered ? rects[hovered] : undefined;
 
@@ -133,7 +133,7 @@ export const LiquidNavGroup = ({ items }: { items: readonly LiquidNavItem[] }) =
 
 
       {items.map(({ href, label, Icon, onClick }) => {
-        const lit = target === href;
+        const lit = href === activeHref || href === hovered;
         return (
           <a
             key={href}
