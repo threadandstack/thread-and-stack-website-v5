@@ -188,6 +188,7 @@ serve(async (req) => {
         release_type: properties['Release Type']?.select?.name || null,
         changelog: (properties['Changelog']?.rich_text || []).map((t: any) => t.plain_text).join('') || null,
         description: properties['Description']?.rich_text?.[0]?.plain_text || null,
+        build_description: (properties['Build Description']?.rich_text || []).map((t: any) => t.plain_text).join('') || null,
         intro: properties['Intro (max 50 chars)']?.rich_text?.[0]?.plain_text || null,
         header_image_url: headerImage,
         og_image_url: ogImage,
