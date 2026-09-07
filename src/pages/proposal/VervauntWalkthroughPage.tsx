@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import { Download } from "lucide-react";
 import BlackStacked from "@/assets/logos/Black_TS_Stacked.svg";
 import GreyStacked from "@/assets/logos/Grey_TS_Stacked.svg";
+import vervauntLogo from "@/assets/proposal/vervaunt-black.png.asset.json";
+import harvestLogo from "@/assets/proposal/harvest-logo.png.asset.json";
 
 /* ---------------------------- Helpers ---------------------------- */
 
