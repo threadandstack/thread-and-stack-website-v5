@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useLocation } from "react-router-dom";
 
 type IconProps = { className?: string };
@@ -14,11 +14,12 @@ export type LiquidNavItem = {
 type Rect = { x: number; y: number; width: number; height: number };
 
 /** Lead droplet: quick, lands with a hint of overshoot */
-const LEAD = { type: "spring" as const, stiffness: 520, damping: 30, mass: 0.8 };
+const LEAD = { type: "spring" as const, stiffness: 420, damping: 32, mass: 0.9 };
 /** Middle droplet */
-const MID = { type: "spring" as const, stiffness: 170, damping: 26, mass: 1.2 };
-/** Tail droplet: slow, so a thick neck of liquid drags behind */
-const TRAIL = { type: "spring" as const, stiffness: 70, damping: 20, mass: 1.6 };
+const MID = { type: "spring" as const, stiffness: 260, damping: 30, mass: 1 };
+/** Tail droplet: slower, so a neck of liquid drags behind (but stays connected) */
+const TRAIL = { type: "spring" as const, stiffness: 170, damping: 28, mass: 1.1 };
+
 
 const isCurrent = (pathname: string, href: string) =>
   href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
@@ -75,8 +76,8 @@ export const LiquidNavGroup = ({ items }: { items: readonly LiquidNavItem[] }) =
 
   const activeHref = items.find((i) => isCurrent(pathname, i.href))?.href ?? null;
   const target = hovered ?? activeHref;
-  const targetRect = target ? rects[target] : undefined;
-  const visible = Boolean(targetRect);
+  const activeRect = activeHref ? rects[activeHref] : undefined;
+  const hoverRect = hovered ? rects[hovered] : undefined;
 
   const blobStyle = (rect: Rect) => ({
     x: rect.x,
@@ -86,6 +87,8 @@ export const LiquidNavGroup = ({ items }: { items: readonly LiquidNavItem[] }) =
     opacity: 1,
   });
 
+  const startStyle = (rect: Rect) => ({ ...blobStyle(rect), opacity: 0.9 });
+
   return (
     <div
       ref={containerRef}
@@ -94,29 +97,40 @@ export const LiquidNavGroup = ({ items }: { items: readonly LiquidNavItem[] }) =
     >
       {/* liquid indicator layer, behind the labels */}
       <div className="pointer-events-none absolute inset-0 z-0 [filter:url(#nav-goo)]">
-        {targetRect && visible && (
-          <>
-            <motion.span
-              className="absolute left-0 top-0 rounded-full bg-foreground"
-              initial={{ opacity: 0 }}
-              animate={blobStyle(targetRect)}
-              transition={TRAIL}
-            />
-            <motion.span
-              className="absolute left-0 top-0 rounded-full bg-foreground"
-              initial={{ opacity: 0 }}
-              animate={blobStyle(targetRect)}
-              transition={MID}
-            />
-            <motion.span
-              className="absolute left-0 top-0 rounded-full bg-foreground"
-              initial={{ opacity: 0 }}
-              animate={blobStyle(targetRect)}
-              transition={LEAD}
-            />
-          </>
+        {/* resting ink on the current page: never travels back, just sits */}
+        {activeRect && (
+          <motion.span
+            className="absolute left-0 top-0 rounded-full bg-foreground"
+            initial={false}
+            animate={blobStyle(activeRect)}
+            transition={LEAD}
+          />
         )}
+
+        {/* travelling ink: pours out of the current page on hover, fades where it lands */}
+        <AnimatePresence>
+          {hoverRect && (
+            <motion.span
+              key="traveller"
+              className="absolute left-0 top-0"
+              initial={{ opacity: 1 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0, transition: { duration: 0.35, ease: "easeOut" } }}
+            >
+              {[TRAIL, MID, LEAD].map((spring, i) => (
+                <motion.span
+                  key={i}
+                  className="absolute left-0 top-0 rounded-full bg-foreground"
+                  initial={startStyle(activeRect ?? hoverRect)}
+                  animate={blobStyle(hoverRect)}
+                  transition={spring}
+                />
+              ))}
+            </motion.span>
+          )}
+        </AnimatePresence>
       </div>
+
 
       {items.map(({ href, label, Icon, onClick }) => {
         const lit = target === href;
