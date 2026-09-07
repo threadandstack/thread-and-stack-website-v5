@@ -390,9 +390,16 @@ const VervauntWalkthroughPage = () => {
               <span className="absolute -top-3 left-6 sm:left-8 bg-accent text-accent-foreground text-[10.5px] font-sans font-semibold tracking-[0.12em] uppercase px-3 py-1 rounded-full">
                 The recommendation
               </span>
-              <h3 className="font-serif-pro text-[26px] md:text-[30px] italic font-medium text-foreground leading-tight mt-2 mb-4">
-                Voice-based reconstruction through the Harvest MCP
-              </h3>
+              <div className="flex items-center gap-4 mt-2 mb-4">
+                <img
+                  src={harvestLogo.url}
+                  alt="Harvest"
+                  className="h-10 w-10 rounded-lg flex-shrink-0"
+                />
+                <h3 className="font-serif-pro text-[26px] md:text-[30px] italic font-medium text-foreground leading-tight">
+                  Voice-based reconstruction through the Harvest MCP
+                </h3>
+              </div>
               <p className="font-sans text-[16px] leading-[1.8] text-foreground/85">
                 Reconstructing a week by talking is lower cognitive load than filling a grid, which
                 answers the friction hypothesis directly. It also solves categorisation sideways: the
