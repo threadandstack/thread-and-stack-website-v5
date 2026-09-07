@@ -14,7 +14,9 @@ type Rect = { x: number; y: number; width: number; height: number };
 /** Lead droplet: quick, with a touch of overshoot so it lands like liquid */
 const LEAD = { type: "spring" as const, stiffness: 520, damping: 30, mass: 0.8 };
 /** Trailing droplet: lags behind so the goo filter stretches a neck between them */
-const TRAIL = { type: "spring" as const, stiffness: 210, damping: 24, mass: 1.1 };
+const MID = { type: "spring" as const, stiffness: 170, damping: 26, mass: 1.2 };
+/** Tail droplet: very slow, so a thick neck of liquid drags from the last pill */
+const TRAIL = { type: "spring" as const, stiffness: 70, damping: 20, mass: 1.6 };
 /** The settled fill under the chosen pill */
 const SETTLE = { type: "spring" as const, stiffness: 340, damping: 30, mass: 0.9 };
 
@@ -131,6 +133,12 @@ export const FilterPills = <T extends string>({
               className="absolute left-0 top-0 rounded-full bg-gradient-warm"
               initial={false}
               animate={blobStyle(targetRect)}
+              transition={MID}
+            />
+            <motion.span
+              className="absolute left-0 top-0 rounded-full bg-gradient-warm"
+              initial={false}
+              animate={blobStyle(targetRect)}
               transition={LEAD}
             />
           </>
@@ -170,11 +178,11 @@ export const FilterPills = <T extends string>({
       <svg aria-hidden className="pointer-events-none absolute h-0 w-0">
         <defs>
           <filter id="pill-goo">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="7" result="blur" />
+            <feGaussianBlur in="SourceGraphic" stdDeviation="11" result="blur" />
             <feColorMatrix
               in="blur"
               mode="matrix"
-              values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 24 -11"
+              values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 26 -12"
               result="goo"
             />
           </filter>
