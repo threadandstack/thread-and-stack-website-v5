@@ -12,6 +12,7 @@ import {
 } from "@/components/journal/CardParts";
 import { BuildIcon } from "@/components/builds/BuildIcon";
 import { ChangeChips, VersionChip } from "@/components/builds/ChangeChips";
+import { CardCta } from "@/components/journal/ExpandedCard";
 import { BuildGroupItem, BuildItem, formatJournalDate } from "@/lib/journalFeed";
 
 /** Single release card (used on the combined view elsewhere) */
