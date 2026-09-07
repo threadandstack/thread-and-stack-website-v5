@@ -77,7 +77,6 @@ export const FilterPills = <T extends string>({
   const activeRect = rects[active as string];
   const target = hovered ?? (active as string);
   const targetRect = rects[target] ?? activeRect;
-  const travellerIsActive = target === active;
 
   const blobStyle = (rect: Rect) => ({
     x: rect.x,
@@ -121,7 +120,7 @@ export const FilterPills = <T extends string>({
             transition={SETTLE}
           />
         )}
-        {targetRect && !travellerIsActive && (
+        {targetRect && (
           <>
             <motion.span
               className="absolute left-0 top-0 rounded-full bg-foreground"
