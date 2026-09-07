@@ -21,7 +21,7 @@ export const BuildFeedCard = ({ item }: { item: BuildItem }) => {
               src={item.headerImage}
               alt=""
               loading="lazy"
-              className="h-full w-full object-cover transition-transform group-hover:scale-105"
+              className="h-full w-full object-cover object-top transition-transform group-hover:scale-105"
             />
           ) : undefined
         }
@@ -94,7 +94,7 @@ export const BuildGroupCard = ({
                 src={group.headerImage}
                 alt=""
                 loading="lazy"
-                className="h-full w-full object-cover"
+                className="h-full w-full object-cover object-top"
               />
             </div>
           )}
@@ -177,7 +177,7 @@ export const BuildGroupCard = ({
               src={group.headerImage}
               alt=""
               loading="lazy"
-              className="h-full w-full object-cover transition-transform group-hover:scale-105"
+              className="h-full w-full object-cover object-top transition-transform group-hover:scale-105"
             />
           ) : undefined
         }

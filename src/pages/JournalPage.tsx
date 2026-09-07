@@ -90,7 +90,7 @@ const WritingCard = ({ post }: { post: WritingItem }) => (
           <img
             src={post.headerImage}
             alt={post.title}
-            className="h-full w-full object-cover transition-transform group-hover:scale-105"
+            className="h-full w-full object-cover object-top transition-transform group-hover:scale-105"
             loading="lazy"
           />
         ) : undefined
