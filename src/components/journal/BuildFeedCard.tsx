@@ -163,7 +163,6 @@ export const BuildGroupCard = ({
           <span className="rounded-full bg-muted px-2.5 py-0.5 font-medium text-muted-foreground">
             Build
           </span>
-          {latest && <ChangeChips types={latest.changeTypes.slice(0, 2)} />}
           <ChevronDown className="ml-auto h-4 w-4 shrink-0 text-muted-foreground transition-transform" />
         </CardPills>
 
