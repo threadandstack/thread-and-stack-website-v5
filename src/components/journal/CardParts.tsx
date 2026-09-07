@@ -10,7 +10,7 @@ export const CardPills = ({ children }: { children: ReactNode }) => (
 );
 
 export const CardTitle = ({ children }: { children: ReactNode }) => (
-  <h3 className="line-clamp-2 break-words text-2xl leading-snug transition-colors group-hover:text-accent">
+  <h3 className="line-clamp-2 h-[2.75em] break-words text-2xl leading-snug transition-colors group-hover:text-accent">
     {children}
   </h3>
 );
