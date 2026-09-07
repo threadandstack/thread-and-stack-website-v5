@@ -68,6 +68,7 @@ const BfBLabsProposalPage = lazy(() => import("./pages/proposal/BfBLabsProposalP
 const SummitNetworkProposalPage = lazy(() => import("./pages/proposal/SummitNetworkProposalPage"));
 const PoindexterLabsProposalPage = lazy(() => import("./pages/proposal/PoindexterLabsProposalPage"));
 const PoindexterLabsPrintPage = lazy(() => import("./pages/proposal/PoindexterLabsPrintPage"));
+const VervauntWalkthroughPage = lazy(() => import("./pages/proposal/VervauntWalkthroughPage"));
 const NotionMasterclassPage = lazy(() => import("./pages/NotionMasterclassPage"));
 const CreativePortfolioPage = lazy(() => import("./pages/CreativePortfolioPage"));
 const NotionPortfolioPage = lazy(() => import("./pages/NotionPortfolioPage"));
@@ -188,6 +189,7 @@ const App = () => (
             <Route path="/proposal/summit-network" element={<SummitNetworkProposalPage />} />
             <Route path="/proposal/poindexter-labs" element={<PoindexterLabsProposalPage />} />
             <Route path="/proposal/poindexter-labs/print" element={<PoindexterLabsPrintPage />} />
+            <Route path="/proposal/vervaunt" element={<VervauntWalkthroughPage />} />
             <Route path="/notion-masterclass" element={<NotionMasterclassPage />} />
             <Route path="/portfolio/creative" element={<CreativePortfolioPage />} />
             <Route path="/portfolio/creative/:itemId" element={<CreativePortfolioPage />} />
