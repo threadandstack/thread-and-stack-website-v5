@@ -118,7 +118,7 @@ const renderItem = (
     transition={SPRING_TRANSITION}
     className={`h-full min-h-0 ${spanClass(item)}`}
   >
-    {renderCard(item, expandedId, toggleCard)}
+    {renderCard(item, expandedId, toggle)}
   </motion.div>
 );
 
