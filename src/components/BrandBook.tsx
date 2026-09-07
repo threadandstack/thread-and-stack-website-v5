@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Check, Download, Sparkles, Copy, ChevronDown } from "lucide-react";
+import { ArrowRight, Check, Download, Sparkles, Copy, ChevronDown, Layers, PenLine, CalendarDays, Hammer } from "lucide-react";
 import { Tilt3D } from "@/components/Tilt3D";
 import { FAQ } from "@/components/FAQ";
 import { CTA } from "@/components/home-draft2/CTA";
 import { DiagnosticDrawer } from "@/components/home-draft2/DiagnosticDrawer";
+import { FilterPills, type FilterOption } from "@/components/journal/FilterPills";
 import PageSeo from "@/components/seo/PageSeo";
 
 // Active logos — 12 variants. The 2024 gradient blue mark is retired
