@@ -41,7 +41,7 @@ export const EventCard = ({
             <img
               src={event.coverImage}
               alt={event.title}
-              className="h-full w-full object-cover transition-transform group-hover:scale-105"
+              className="h-full w-full object-cover object-top transition-transform group-hover:scale-105"
               loading="lazy"
             />
           ) : (
