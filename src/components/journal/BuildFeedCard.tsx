@@ -184,43 +184,50 @@ export const BuildGroupCard = ({
           ) : undefined
         }
       >
+        <CardPills>
+          <span className="rounded-full bg-muted px-2.5 py-0.5 font-medium text-muted-foreground">
+            Build
+          </span>
+          {latest && <ChangeChips types={latest.changeTypes.slice(0, 2)} />}
+        </CardPills>
+
         <div className="flex items-start gap-3">
           <BuildIcon slug={group.slug} name={group.buildName} />
           <div className="min-w-0 flex-1">
-            <h3 className="line-clamp-1 text-2xl leading-snug transition-colors group-hover:text-accent">
-              {group.buildName}
-            </h3>
-            <p className="text-sm text-muted-foreground">
-              {count} {count === 1 ? "update" : "updates"}
-            </p>
+            <CardTitle>{group.buildName}</CardTitle>
           </div>
-          <ChevronDown className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition-transform" />
+          <ChevronDown className="mt-2 h-4 w-4 shrink-0 text-muted-foreground transition-transform" />
         </div>
 
         {latest && (
-          <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[13px] text-muted-foreground">
-            <time className="tabular-nums">{formatJournalDate(latest.date)}</time>
-            {(latest.version || latest.releaseType) && (
-              <span className="text-muted-foreground/50">·</span>
-            )}
-            <VersionChip version={latest.version} releaseType={latest.releaseType} />
-          </div>
+          <CardSummary>
+            <span className="text-foreground/80">Latest: </span>
+            {latest.title}
+            {latest.changelog || latest.description
+              ? ` — ${latest.changelog || latest.description}`
+              : ""}
+          </CardSummary>
         )}
 
-        {latest && (
-          <p className="mt-2 line-clamp-2 font-medium leading-snug">{latest.title}</p>
-        )}
-
-        {latest && (latest.changelog || latest.description) && (
-          <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-muted-foreground">
-            {latest.changelog || latest.description}
-          </p>
-        )}
-
-        <span className="mt-auto pt-4 text-[13px] text-muted-foreground group-hover:text-foreground">
-          Open the log →
-        </span>
+        <CardMeta>
+          <span>
+            {count} {count === 1 ? "update" : "updates"}
+          </span>
+          {latest?.date && (
+            <>
+              <MetaDot />
+              <time className="tabular-nums">{formatJournalDate(latest.date)}</time>
+            </>
+          )}
+          {(latest?.version || latest?.releaseType) && (
+            <>
+              <MetaDot />
+              <VersionChip version={latest?.version} releaseType={latest?.releaseType} />
+            </>
+          )}
+        </CardMeta>
       </JournalCardShell>
+
     </button>
   );
 };
