@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Menu, X, ChevronDown, User, Home, Compass, Layers, BookOpen, Rocket, Sun, Moon } from "lucide-react";
 import { ContactDrawer } from "@/components/ContactDrawer";
+import { LiquidNavGroup } from "@/components/LiquidNavGroup";
 import { DiagnosticDrawer } from "@/components/home-draft2/DiagnosticDrawer";
 
 import { Button } from "@/components/ui/button";
@@ -114,14 +115,15 @@ export const Navigation = ({ variant = "default", hideLogo = false, floatingBadg
               </div>
             )}
             <div className="flex items-center gap-1 bg-background/90 backdrop-blur-md rounded-full px-2 py-1.5 shadow-[0_2px_20px_rgba(0,0,0,0.08)] border border-border/30">
-            <NavItem href="/" label="Home" icon={Home} onClick={() => trackNavClick('Home', 'header')} />
-            <NavItem href="/about" label="About" icon={User} onClick={() => trackNavClick('About', 'header')} />
-            <NavItem href="/how-i-work" label="The T&S Way" icon={Compass} onClick={() => trackNavClick('How I Work', 'header')} />
-
-            <NavItem href="/services" label="Services" icon={Layers} onClick={() => trackNavClick('Services', 'header')} />
-
-
-            <NavItem href="/journal" label="Journal" icon={BookOpen} onClick={() => trackNavClick('Journal', 'header')} />
+            <LiquidNavGroup
+              items={[
+                { href: "/", label: "Home", Icon: Home, onClick: () => trackNavClick('Home', 'header') },
+                { href: "/about", label: "About", Icon: User, onClick: () => trackNavClick('About', 'header') },
+                { href: "/how-i-work", label: "The T&S Way", Icon: Compass, onClick: () => trackNavClick('How I Work', 'header') },
+                { href: "/services", label: "Services", Icon: Layers, onClick: () => trackNavClick('Services', 'header') },
+                { href: "/journal", label: "Journal", Icon: BookOpen, onClick: () => trackNavClick('Journal', 'header') },
+              ]}
+            />
 
 
             <Button size="sm" style={gradientBtnStyle} className="group text-white hover:opacity-90 rounded-full px-5 ml-1 not-italic font-sans text-sm border-0" onClick={() => { trackCtaClick('Get Started', 'header'); setIsDiagnosticOpen(true); }}>
@@ -183,13 +185,14 @@ export const Navigation = ({ variant = "default", hideLogo = false, floatingBadg
               {floatingBadge && <div className="ml-2 hidden sm:flex items-center">{floatingBadge}</div>}
 
               <div className="hidden md:flex items-center gap-1">
-                <NavItem href="/about" label="About" icon={User} onClick={() => trackNavClick('About', 'floating')} />
-                <NavItem href="/how-i-work" label="The T&S Way" icon={Compass} onClick={() => trackNavClick('How I Work', 'floating')} />
-
-                <NavItem href="/services" label="Services" icon={Layers} onClick={() => trackNavClick('Services', 'floating')} />
-
-
-                <NavItem href="/journal" label="Journal" icon={BookOpen} onClick={() => trackNavClick('Journal', 'floating')} />
+                <LiquidNavGroup
+                  items={[
+                    { href: "/about", label: "About", Icon: User, onClick: () => trackNavClick('About', 'floating') },
+                    { href: "/how-i-work", label: "The T&S Way", Icon: Compass, onClick: () => trackNavClick('How I Work', 'floating') },
+                    { href: "/services", label: "Services", Icon: Layers, onClick: () => trackNavClick('Services', 'floating') },
+                    { href: "/journal", label: "Journal", Icon: BookOpen, onClick: () => trackNavClick('Journal', 'floating') },
+                  ]}
+                />
 
 
                 <Button size="sm" style={gradientBtnStyle} className="group text-white hover:opacity-90 rounded-full px-5 ml-1 not-italic font-sans text-sm border-0" onClick={() => { trackCtaClick('Get Started', 'floating-nav'); setIsDiagnosticOpen(true); }}>
