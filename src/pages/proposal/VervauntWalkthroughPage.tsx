@@ -632,7 +632,7 @@ const VervauntWalkthroughPage = () => {
           <section>
             <SectionHead num="06" eyebrow="Format" title={<>Format and time</>} />
             <P>
-              Working notes, talked through, happy to share the doc afterwards. Roughly three hours of
+              Working notes, talked through. This page is the reference version. Roughly three hours of
               prep, plus verifying the Harvest MCP documentation rather than assuming its capabilities.
             </P>
           </section>
