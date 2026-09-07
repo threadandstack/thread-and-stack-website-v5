@@ -38,9 +38,10 @@ const VARIANTS: Record<Variant, { label: string; price: number; blurb: string }>
     blurb: "One 90-minute co-design session to shape a workflow, product, or narrative together.",
   },
   six: {
-    label: "Six-session series",
+    label: "Six-session sprint",
     price: 250000,
-    blurb: "Six sessions over 6–12 weeks. Better value, deeper build. Ideal for iterative work.",
+    blurb:
+      "Six weekly 90-minute sessions, a written write-up after every call, and async access throughout the sprint.",
   },
 };
 
