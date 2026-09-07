@@ -679,6 +679,67 @@ export const BrandBook = () => {
             </div>
           </section>
 
+          {/* 07a — Liquid pill navigation */}
+          <section id="s07a" className="scroll-mt-24 space-y-8">
+            <SectionHead
+              num="07a"
+              title="Liquid pill navigation"
+              kicker="One shared ink blob rests on the current choice and pours across to whatever you hover, stretching a neck of liquid as it travels. Used by the journal filters and the main navigation."
+            />
+            <div className="rounded-3xl bg-card p-8 shadow-[0_8px_30px_rgba(0,0,0,0.06)] space-y-5">
+              <p className="text-xs uppercase tracking-widest text-muted-foreground font-mono">
+                Live · hover across the pills, then click to select
+              </p>
+              <FilterPills
+                options={BRAND_BOOK_PILLS}
+                active={pillDemo}
+                onSelect={setPillDemo}
+              />
+            </div>
+            <div className="rounded-3xl bg-card p-8 shadow-[0_8px_30px_rgba(0,0,0,0.06)] space-y-4">
+              <p className="text-xs uppercase tracking-widest text-muted-foreground font-mono">
+                Rules
+              </p>
+              <ul className="text-sm text-foreground/80 leading-relaxed list-disc pl-5 space-y-1.5">
+                <li>
+                  Ink is solid <code className="font-mono">bg-foreground</code>, so it
+                  inverts cleanly in night mode. No gradient on the blob.
+                </li>
+                <li>
+                  Three droplets (lead, mid, tail) on springs of decreasing
+                  stiffness, all inside one gooey SVG filter, produce the neck.
+                </li>
+                <li>
+                  Travel always starts from the currently selected item, never from
+                  the last hovered one.
+                </li>
+                <li>
+                  If the user hovers away without choosing, the travelling ink fades
+                  out where it stands. It never springs back.
+                </li>
+                <li>
+                  Both the selected item and the hovered item carry{" "}
+                  <code className="font-mono">text-background</code> while the ink is
+                  in play.
+                </li>
+                <li>
+                  Icon reveals still apply in navigation: the icon slides in on hover
+                  and the blob re-measures as the label grows.
+                </li>
+              </ul>
+            </div>
+            <div className="rounded-2xl bg-muted/40 p-5 text-sm text-foreground/80 leading-relaxed max-w-3xl">
+              Never re-implement this. Use{" "}
+              <code className="font-mono">FilterPills</code> from{" "}
+              <code className="font-mono">@/components/journal/FilterPills</code> for
+              filters, and <code className="font-mono">LiquidNavGroup</code> from{" "}
+              <code className="font-mono">@/components/LiquidNavGroup</code> for
+              navigation.
+            </div>
+          </section>
+
+
+
           {/* 08 — FAQ */}
           <section id="s08" className="scroll-mt-24 space-y-8">
             <SectionHead
