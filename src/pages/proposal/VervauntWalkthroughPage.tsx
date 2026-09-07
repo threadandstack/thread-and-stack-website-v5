@@ -131,7 +131,7 @@ const PEOPLE = [
   },
   {
     title: "Three or four team leads",
-    body: "Covering the different failure patterns, twenty minutes each, widening only if the patterns do not hold. Framed behaviourally: what factors are you seeing. Not whose numbers are bad. Say early rather than late that this is not about penalising anyone.",
+    body: "Covering the different failure patterns, twenty minutes each, widening only if the patterns do not hold. I would frame it behaviourally: what factors are you seeing, rather than whose numbers are bad. And I would say early rather than late that this is not about penalising anyone.",
   },
   {
     title: "The people actually logging",
@@ -139,7 +139,7 @@ const PEOPLE = [
   },
   {
     title: "An anonymous survey to the whole delivery team",
-    body: "Not a selected cohort, because selecting by failure record means people work out why they were picked. Invite by preference instead: particularly keen to hear from anyone who does not love Harvest, especially anyone who has built their own workaround. Self-selection flips the social meaning of responding from confessing to being consulted. Two open questions and one scale, no team field, because team plus failure mode identifies people anyway.",
+    body: "Not a selected cohort, because selecting by failure record means people work out why they were picked. I would invite by preference instead: particularly keen to hear from anyone who does not love Harvest, especially anyone who has built their own workaround. Self-selection flips the social meaning of responding from confessing to being consulted. Two open questions and one scale, no team field, because team plus failure mode identifies people anyway.",
   },
 ];
 
@@ -200,7 +200,7 @@ const RISKS = [
 const VervauntWalkthroughPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = "Harvest time tracking walkthrough — Vervaunt · Thread & Stack";
+    document.title = "Harvest time tracking walkthrough · Vervaunt · Thread & Stack";
 
     const metaRobots = document.createElement("meta");
     metaRobots.name = "robots";
@@ -214,6 +214,23 @@ const VervauntWalkthroughPage = () => {
 
   return (
     <main className="min-h-screen bg-background">
+      <style>{`
+        @media print {
+          main, main * {
+            opacity: 1 !important;
+            transform: none !important;
+            filter: none !important;
+            animation: none !important;
+            transition: none !important;
+          }
+          main section, main .rounded-2xl, main img, main h1, main h2, main h3, main h4, main p, main li {
+            break-inside: avoid;
+            page-break-inside: avoid;
+          }
+          @page { margin: 14mm; }
+        }
+      `}</style>
+
       {/* Download */}
       <div className="fixed top-4 right-4 z-40 print:hidden">
         <button
@@ -259,9 +276,9 @@ const VervauntWalkthroughPage = () => {
             transition={{ duration: 0.9, delay: 0.25 }}
             className="font-serif-pro text-[36px] sm:text-5xl md:text-6xl italic font-medium leading-[1.05] tracking-tight text-foreground text-balance mb-8 order-3"
           >
-            Make an accurate account of the week{" "}
+            An accurate week,{" "}
             <span className="inline-block text-gradient-warm" style={{ transform: "translateY(1px)" }}>
-              cheap to produce.
+              cheaper to produce.
             </span>
           </motion.h1>
 
@@ -364,9 +381,9 @@ const VervauntWalkthroughPage = () => {
 
             <P>
               Workarounds are where the real design brief lives: the spreadsheet someone keeps, the
-              notes app, the Friday afternoon reconstruction ritual. Do not open the survey with the
-              failure percentages. It tells the team in the first line that they have been measured
-              and found wanting, and it anchors every answer defensively.
+              notes app, the Friday afternoon reconstruction ritual. I would not open the survey with
+              the failure percentages. It tells the team in the first line that they have been
+              measured and found wanting, and it anchors every answer defensively.
             </P>
             <motion.p {...fadeUp} className="font-sans text-[14px] text-muted-foreground">
               Timeframe: a couple of weeks, not a couple of months.
@@ -491,7 +508,7 @@ const VervauntWalkthroughPage = () => {
                 <p className="font-sans text-[15px] leading-[1.75] text-foreground/75 m-0">
                   Agreed through the lead rather than around them, and selected on team-level baseline,
                   which is a team-level fact a lead can hear without anyone feeling named. If the lead
-                  wants to narrow it, let them choose on workload variety instead, someone on retainer
+                  wants to narrow it, I would let them choose on workload variety instead, someone on retainer
                   work, someone jumping between projects.
                 </p>
               </motion.div>
@@ -548,7 +565,7 @@ const VervauntWalkthroughPage = () => {
 
             <P>
               Measurement comes from the MCP directly rather than from volunteers self-reporting
-              improvement. Pull entries for the cohort and compare against their own pre-pilot
+              improvement. I would pull entries for the cohort and compare against their own pre-pilot
               baseline. The baseline must be built before anything changes, and built the same way each
               month so it stays comparable.
             </P>
@@ -583,7 +600,7 @@ const VervauntWalkthroughPage = () => {
               that it does not look like empire building.
             </P>
             <P>
-              <strong>Comparison team.</strong> Track a similar team running nothing over the same
+              <strong>Comparison team.</strong> I would track a similar team running nothing over the same
               weeks. Selecting the pilot on the worst baseline means some improvement arrives on its own
               through regression to the mean. If the pilot improves and the comparison does not, there
               is something real. If both improve, the intervention was attention rather than tooling,
@@ -632,7 +649,7 @@ const VervauntWalkthroughPage = () => {
           <section>
             <SectionHead num="06" eyebrow="Format" title={<>Format and time</>} />
             <P>
-              Working notes, talked through, happy to share the doc afterwards. Roughly three hours of
+              Working notes, talked through. This page is the reference version. Roughly three hours of
               prep, plus verifying the Harvest MCP documentation rather than assuming its capabilities.
             </P>
           </section>
