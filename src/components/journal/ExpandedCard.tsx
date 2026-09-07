@@ -16,6 +16,7 @@ export const ExpandedShell = ({
   subtitle,
   image,
   onToggle,
+  summary,
   children,
   footer,
 }: {
@@ -24,6 +25,7 @@ export const ExpandedShell = ({
   subtitle?: ReactNode;
   image?: string | null;
   onToggle: () => void;
+  summary?: ReactNode;
   children: ReactNode;
   footer?: ReactNode;
 }) => (
@@ -66,6 +68,11 @@ export const ExpandedShell = ({
           )}
           <h3 className="line-clamp-2 break-words text-2xl leading-snug">{title}</h3>
           {subtitle && <p className="mt-1 text-sm text-muted-foreground">{subtitle}</p>}
+          {summary && (
+            <p className="mt-2 line-clamp-4 text-[15px] leading-relaxed text-muted-foreground">
+              {summary}
+            </p>
+          )}
         </div>
 
         <div className="flex min-h-0 flex-col overflow-hidden">
