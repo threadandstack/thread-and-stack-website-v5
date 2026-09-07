@@ -56,6 +56,9 @@ export const LiquidNavGroup = ({ items }: { items: readonly LiquidNavItem[] }) =
 
   useLayoutEffect(() => {
     measure();
+    // labels grow as the icon reveals, so re-measure through that transition
+    const timers = [80, 180, 320].map((ms) => window.setTimeout(measure, ms));
+    return () => timers.forEach(window.clearTimeout);
   }, [measure, hovered]);
 
   useEffect(() => {
