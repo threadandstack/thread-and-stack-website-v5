@@ -583,7 +583,7 @@ const VervauntWalkthroughPage = () => {
               that it does not look like empire building.
             </P>
             <P>
-              <strong>Comparison team.</strong> Track a similar team running nothing over the same
+              <strong>Comparison team.</strong> I would track a similar team running nothing over the same
               weeks. Selecting the pilot on the worst baseline means some improvement arrives on its own
               through regression to the mean. If the pilot improves and the comparison does not, there
               is something real. If both improve, the intervention was attention rather than tooling,
