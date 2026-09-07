@@ -200,7 +200,7 @@ const RISKS = [
 const VervauntWalkthroughPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = "Harvest time tracking walkthrough — Vervaunt · Thread & Stack";
+    document.title = "Harvest time tracking walkthrough · Vervaunt · Thread & Stack";
 
     const metaRobots = document.createElement("meta");
     metaRobots.name = "robots";
