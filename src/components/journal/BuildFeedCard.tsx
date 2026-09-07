@@ -168,14 +168,15 @@ export const BuildGroupCard = ({
 
         <CardTitle>{group.buildName}</CardTitle>
 
-        {latest && (
-          <CardSummary>
-            <span className="text-foreground/80">Latest: </span>
-            {latest.title}
-            {latest.changelog || latest.description
-              ? ` — ${latest.changelog || latest.description}`
-              : ""}
-          </CardSummary>
+        {group.description ? (
+          <CardSummary>{group.description}</CardSummary>
+        ) : (
+          latest && (
+            <CardSummary>
+              <span className="text-foreground/80">Latest: </span>
+              {latest.title}
+            </CardSummary>
+          )
         )}
 
         <CardMeta>
