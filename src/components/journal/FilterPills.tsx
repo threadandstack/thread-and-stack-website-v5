@@ -90,8 +90,27 @@ export const FilterPills = <T extends string>({
       className="relative mb-12 flex flex-wrap justify-center gap-2"
       onMouseLeave={() => setHovered(null)}
     >
-      {/* gooey indicator layer sits behind the pills so the text stays crisp */}
-      <div className="pointer-events-none absolute inset-0 [filter:url(#pill-goo)]">
+      {/* resting pill surfaces, below the liquid layer */}
+      <div className="pointer-events-none absolute inset-0 z-0">
+        {options.map((f) => {
+          const rect = rects[f.key];
+          if (!rect) return null;
+          return (
+            <span
+              key={`rest-${f.key}`}
+              className="absolute left-0 top-0 rounded-full bg-muted"
+              style={{
+                transform: `translate(${rect.x}px, ${rect.y}px)`,
+                width: rect.width,
+                height: rect.height,
+              }}
+            />
+          );
+        })}
+      </div>
+
+      {/* gooey indicator layer sits above the resting pills, below the labels */}
+      <div className="pointer-events-none absolute inset-0 z-10 [filter:url(#pill-goo)]">
         {activeRect && (
           <motion.span
             className="absolute left-0 top-0 rounded-full bg-foreground"
@@ -133,9 +152,8 @@ export const FilterPills = <T extends string>({
             onMouseEnter={() => setHovered(f.key)}
             onFocus={() => setHovered(f.key)}
             aria-pressed={isActive}
-            className="relative flex items-center gap-2 rounded-full px-4 py-2 text-sm"
+            className="relative z-20 flex items-center gap-2 rounded-full px-4 py-2 text-sm"
           >
-            <span className="absolute inset-0 -z-10 rounded-full bg-muted" />
             <span
               className={`relative flex items-center gap-2 transition-colors duration-200 ${
                 isLit ? "text-white" : "text-muted-foreground"
