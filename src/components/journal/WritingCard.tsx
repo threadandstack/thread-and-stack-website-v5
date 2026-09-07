@@ -1,6 +1,12 @@
 import { Link } from "react-router-dom";
 import { JournalCardShell } from "@/components/journal/JournalCardShell";
-import { DetailGrid, DetailRow, ExpandToggle, ExpandedShell } from "@/components/journal/ExpandedCard";
+import {
+  CardCta,
+  DetailGrid,
+  DetailRow,
+  ExpandToggle,
+  ExpandedShell,
+} from "@/components/journal/ExpandedCard";
 import {
   CardMeta,
   CardPills,
@@ -57,11 +63,8 @@ export const WritingCard = ({
         title={post.title}
         subtitle={formatJournalDate(post.date)}
         footer={
-          <Link
-            to={`/blog/${post.slug}`}
-            className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Read the full piece →
+          <Link to={`/blog/${post.slug}`} className="inline-block">
+            <CardCta>Open the full blog →</CardCta>
           </Link>
         }
       >
@@ -87,44 +90,54 @@ export const WritingCard = ({
     );
   }
 
+  const body = (
+    <JournalCardShell
+      media={
+        post.headerImage ? (
+          <img
+            src={post.headerImage}
+            alt={post.title}
+            className="h-full w-full object-cover object-top transition-transform group-hover:scale-105"
+            loading="lazy"
+          />
+        ) : undefined
+      }
+    >
+      <CardPills>
+        <TypePill />
+        {themePill}
+        {onToggle && <ExpandToggle expanded={false} onToggle={onToggle} label="Show article details" />}
+      </CardPills>
+
+      <CardTitle>{post.title}</CardTitle>
+
+      {(post.intro || post.description) && (
+        <CardSummary>{post.intro || post.description}</CardSummary>
+      )}
+
+      <CardMeta>
+        {post.date && <span className="tabular-nums">{formatJournalDate(post.date)}</span>}
+        {post.readingTime && (
+          <>
+            <MetaDot />
+            <span>{post.readingTime} min read</span>
+          </>
+        )}
+      </CardMeta>
+    </JournalCardShell>
+  );
+
+  if (onToggle) {
+    return (
+      <button type="button" onClick={onToggle} aria-expanded={false} className="group block h-full w-full text-left">
+        {body}
+      </button>
+    );
+  }
+
   return (
     <Link to={`/blog/${post.slug}`} className="group block h-full">
-      <JournalCardShell
-        media={
-          post.headerImage ? (
-            <img
-              src={post.headerImage}
-              alt={post.title}
-              className="h-full w-full object-cover object-top transition-transform group-hover:scale-105"
-              loading="lazy"
-            />
-          ) : undefined
-        }
-      >
-        <CardPills>
-          <TypePill />
-          {themePill}
-          {onToggle && (
-            <ExpandToggle expanded={false} onToggle={onToggle} label="Show article details" />
-          )}
-        </CardPills>
-
-        <CardTitle>{post.title}</CardTitle>
-
-        {(post.intro || post.description) && (
-          <CardSummary>{post.intro || post.description}</CardSummary>
-        )}
-
-        <CardMeta>
-          {post.date && <span className="tabular-nums">{formatJournalDate(post.date)}</span>}
-          {post.readingTime && (
-            <>
-              <MetaDot />
-              <span>{post.readingTime} min read</span>
-            </>
-          )}
-        </CardMeta>
-      </JournalCardShell>
+      {body}
     </Link>
   );
 };
