@@ -12,6 +12,7 @@ import { SubscribeLightbox } from "@/components/SubscribeLightbox";
 import { EventCard } from "@/components/journal/EventCard";
 import { BuildFeedCard, BuildGroupCard } from "@/components/journal/BuildFeedCard";
 import { WritingCard } from "@/components/journal/WritingCard";
+import { FilterPills } from "@/components/journal/FilterPills";
 
 import journalLogoLight from "@/assets/journal-logo-light.png.asset.json";
 import journalLogoDark from "@/assets/journal-logo-dark.png.asset.json";
@@ -248,23 +249,7 @@ const JournalPage = () => {
               )}
 
               {/* Type filters */}
-              <div className="mb-12 flex flex-wrap justify-center gap-2">
-                {FILTERS.map((f) => (
-                  <button
-                    key={f.key}
-                    onClick={() => setFilter(f.key)}
-                    className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm transition-all ${
-                      activeFilter === f.key
-                        ? "bg-foreground text-background"
-                        : "bg-muted text-muted-foreground hover:bg-muted/80"
-                    }`}
-                  >
-                    {f.Icon && <f.Icon className="h-4 w-4" />}
-                    {f.label}
-                  </button>
-
-                ))}
-              </div>
+              <FilterPills options={FILTERS} active={activeFilter} onSelect={setFilter} />
 
               {isLoading ? (
                 <div className="flex justify-center py-20">
