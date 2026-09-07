@@ -4,6 +4,13 @@ import { Link } from "react-router-dom";
 import { ChevronDown } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { JournalCardShell } from "@/components/journal/JournalCardShell";
+import {
+  CardMeta,
+  CardPills,
+  CardSummary,
+  CardTitle,
+  MetaDot,
+} from "@/components/journal/CardParts";
 import { BuildIcon } from "@/components/builds/BuildIcon";
 import { ChangeChips, VersionChip } from "@/components/builds/ChangeChips";
 import { BuildGroupItem, BuildItem, formatJournalDate } from "@/lib/journalFeed";
@@ -26,43 +33,38 @@ export const BuildFeedCard = ({ item }: { item: BuildItem }) => {
           ) : undefined
         }
       >
-        <div className="flex items-center gap-3">
-          <BuildIcon slug={item.buildSlug} name={item.buildName || item.title} />
-          <div className="min-w-0">
-            <p className="truncate text-sm font-medium">{item.buildName || "Build"}</p>
-            <p className="text-[12px] text-muted-foreground">
-              {item.releaseIndex && item.releaseCount
-                ? `Release ${item.releaseIndex} of ${item.releaseCount}`
-                : "Release"}
-            </p>
-          </div>
-        </div>
+        <CardPills>
+          <span className="rounded-full bg-muted px-2.5 py-0.5 font-medium text-muted-foreground">
+            Build
+          </span>
+          <ChangeChips types={item.changeTypes.slice(0, 2)} />
+        </CardPills>
 
-        <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[13px] text-muted-foreground">
-          <time className="tabular-nums">{formatJournalDate(item.date)}</time>
-          {(item.version || item.releaseType) && <span className="text-muted-foreground/50">·</span>}
-          <VersionChip version={item.version} releaseType={item.releaseType} />
-        </div>
-
-        <h3 className="mt-2 line-clamp-2 text-2xl leading-snug transition-colors group-hover:text-accent">
-          {item.title}
-        </h3>
-
-        {item.changeTypes.length > 0 && (
-          <div className="mt-3">
-            <ChangeChips types={item.changeTypes} />
-          </div>
-        )}
+        <CardTitle>{item.title}</CardTitle>
 
         {(item.changelog || item.description) && (
-          <p className="mt-3 line-clamp-2 text-muted-foreground">
-            {item.changelog || item.description}
-          </p>
+          <CardSummary>{item.changelog || item.description}</CardSummary>
         )}
+
+        <CardMeta>
+          <span className="inline-flex items-center gap-2">
+            <BuildIcon slug={item.buildSlug} name={item.buildName || item.title} />
+            <span className="truncate">{item.buildName || "Build"}</span>
+          </span>
+          <MetaDot />
+          <time className="tabular-nums">{formatJournalDate(item.date)}</time>
+          {(item.version || item.releaseType) && (
+            <>
+              <MetaDot />
+              <VersionChip version={item.version} releaseType={item.releaseType} />
+            </>
+          )}
+        </CardMeta>
       </JournalCardShell>
     </Link>
   );
 };
+
 
 /** One card per build. Clicking expands it inside the grid to reveal its updates. */
 export const BuildGroupCard = ({
