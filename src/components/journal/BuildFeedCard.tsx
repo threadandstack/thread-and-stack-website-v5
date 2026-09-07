@@ -4,6 +4,13 @@ import { Link } from "react-router-dom";
 import { ChevronDown } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { JournalCardShell } from "@/components/journal/JournalCardShell";
+import {
+  CardMeta,
+  CardPills,
+  CardSummary,
+  CardTitle,
+  MetaDot,
+} from "@/components/journal/CardParts";
 import { BuildIcon } from "@/components/builds/BuildIcon";
 import { ChangeChips, VersionChip } from "@/components/builds/ChangeChips";
 import { BuildGroupItem, BuildItem, formatJournalDate } from "@/lib/journalFeed";
@@ -26,43 +33,36 @@ export const BuildFeedCard = ({ item }: { item: BuildItem }) => {
           ) : undefined
         }
       >
-        <div className="flex items-center gap-3">
+        <CardPills>
           <BuildIcon slug={item.buildSlug} name={item.buildName || item.title} />
-          <div className="min-w-0">
-            <p className="truncate text-sm font-medium">{item.buildName || "Build"}</p>
-            <p className="text-[12px] text-muted-foreground">
-              {item.releaseIndex && item.releaseCount
-                ? `Release ${item.releaseIndex} of ${item.releaseCount}`
-                : "Release"}
-            </p>
-          </div>
-        </div>
+          <span className="rounded-full bg-muted px-2.5 py-0.5 font-medium text-muted-foreground">
+            Build
+          </span>
+          <ChangeChips types={item.changeTypes.slice(0, 2)} />
+        </CardPills>
 
-        <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[13px] text-muted-foreground">
-          <time className="tabular-nums">{formatJournalDate(item.date)}</time>
-          {(item.version || item.releaseType) && <span className="text-muted-foreground/50">·</span>}
-          <VersionChip version={item.version} releaseType={item.releaseType} />
-        </div>
-
-        <h3 className="mt-2 line-clamp-2 text-2xl leading-snug transition-colors group-hover:text-accent">
-          {item.title}
-        </h3>
-
-        {item.changeTypes.length > 0 && (
-          <div className="mt-3">
-            <ChangeChips types={item.changeTypes} />
-          </div>
-        )}
+        <CardTitle>{item.title}</CardTitle>
 
         {(item.changelog || item.description) && (
-          <p className="mt-3 line-clamp-2 text-muted-foreground">
-            {item.changelog || item.description}
-          </p>
+          <CardSummary>{item.changelog || item.description}</CardSummary>
         )}
+
+        <CardMeta>
+          <span className="truncate">{item.buildName || "Build"}</span>
+          <MetaDot />
+          <time className="tabular-nums">{formatJournalDate(item.date)}</time>
+          {(item.version || item.releaseType) && (
+            <>
+              <MetaDot />
+              <VersionChip version={item.version} releaseType={item.releaseType} />
+            </>
+          )}
+        </CardMeta>
       </JournalCardShell>
     </Link>
   );
 };
+
 
 /** One card per build. Clicking expands it inside the grid to reveal its updates. */
 export const BuildGroupCard = ({
@@ -182,43 +182,46 @@ export const BuildGroupCard = ({
           ) : undefined
         }
       >
-        <div className="flex items-start gap-3">
+        <CardPills>
           <BuildIcon slug={group.slug} name={group.buildName} />
-          <div className="min-w-0 flex-1">
-            <h3 className="line-clamp-1 text-2xl leading-snug transition-colors group-hover:text-accent">
-              {group.buildName}
-            </h3>
-            <p className="text-sm text-muted-foreground">
-              {count} {count === 1 ? "update" : "updates"}
-            </p>
-          </div>
-          <ChevronDown className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition-transform" />
-        </div>
+          <span className="rounded-full bg-muted px-2.5 py-0.5 font-medium text-muted-foreground">
+            Build
+          </span>
+          {latest && <ChangeChips types={latest.changeTypes.slice(0, 2)} />}
+          <ChevronDown className="ml-auto h-4 w-4 shrink-0 text-muted-foreground transition-transform" />
+        </CardPills>
+
+        <CardTitle>{group.buildName}</CardTitle>
 
         {latest && (
-          <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[13px] text-muted-foreground">
-            <time className="tabular-nums">{formatJournalDate(latest.date)}</time>
-            {(latest.version || latest.releaseType) && (
-              <span className="text-muted-foreground/50">·</span>
-            )}
-            <VersionChip version={latest.version} releaseType={latest.releaseType} />
-          </div>
+          <CardSummary>
+            <span className="text-foreground/80">Latest: </span>
+            {latest.title}
+            {latest.changelog || latest.description
+              ? ` — ${latest.changelog || latest.description}`
+              : ""}
+          </CardSummary>
         )}
 
-        {latest && (
-          <p className="mt-2 line-clamp-2 font-medium leading-snug">{latest.title}</p>
-        )}
-
-        {latest && (latest.changelog || latest.description) && (
-          <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-muted-foreground">
-            {latest.changelog || latest.description}
-          </p>
-        )}
-
-        <span className="mt-auto pt-4 text-[13px] text-muted-foreground group-hover:text-foreground">
-          Open the log →
-        </span>
+        <CardMeta>
+          <span>
+            {count} {count === 1 ? "update" : "updates"}
+          </span>
+          {latest?.date && (
+            <>
+              <MetaDot />
+              <time className="tabular-nums">{formatJournalDate(latest.date)}</time>
+            </>
+          )}
+          {(latest?.version || latest?.releaseType) && (
+            <>
+              <MetaDot />
+              <VersionChip version={latest?.version} releaseType={latest?.releaseType} />
+            </>
+          )}
+        </CardMeta>
       </JournalCardShell>
+
     </button>
   );
 };

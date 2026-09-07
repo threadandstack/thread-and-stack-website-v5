@@ -12,6 +12,14 @@ import { SubscribeLightbox } from "@/components/SubscribeLightbox";
 import { EventCard } from "@/components/journal/EventCard";
 import { BuildFeedCard, BuildGroupCard } from "@/components/journal/BuildFeedCard";
 import { JournalCardShell } from "@/components/journal/JournalCardShell";
+import {
+  CardMeta,
+  CardPills,
+  CardSummary,
+  CardTitle,
+  MetaDot,
+} from "@/components/journal/CardParts";
+
 import journalLogoLight from "@/assets/journal-logo-light.png.asset.json";
 import journalLogoDark from "@/assets/journal-logo-dark.png.asset.json";
 import {
@@ -96,29 +104,33 @@ const WritingCard = ({ post }: { post: WritingItem }) => (
         ) : undefined
       }
     >
-      <div className="mb-3 flex items-center gap-3">
+      <CardPills>
+        <span className="rounded-full bg-muted px-2.5 py-0.5 font-medium text-muted-foreground">
+          Writing
+        </span>
         {post.theme && (
-          <span className={`rounded-full px-3 py-1 text-sm ${getThemeColors(post.theme)}`}>
+          <span className={`rounded-full px-2.5 py-0.5 font-medium ${getThemeColors(post.theme)}`}>
             {post.theme}
           </span>
         )}
-        {post.readingTime && (
-          <span className="text-sm text-muted-foreground">{post.readingTime} min read</span>
-        )}
-      </div>
+      </CardPills>
 
-      <h3 className="line-clamp-2 text-2xl leading-snug transition-colors group-hover:text-accent">
-        {post.title}
-      </h3>
+      <CardTitle>{post.title}</CardTitle>
 
       {(post.intro || post.description) && (
-        <p className="mt-2 line-clamp-2 text-muted-foreground">{post.intro || post.description}</p>
+        <CardSummary>{post.intro || post.description}</CardSummary>
       )}
 
-      <div className="mt-auto flex items-center justify-between pt-4 text-sm text-muted-foreground">
-        <span className="italic">Brendan @ Thread and Stack</span>
-        {post.date && <span>{formatJournalDate(post.date)}</span>}
-      </div>
+      <CardMeta>
+        {post.date && <span className="tabular-nums">{formatJournalDate(post.date)}</span>}
+        {post.readingTime && (
+          <>
+            <MetaDot />
+            <span>{post.readingTime} min read</span>
+          </>
+        )}
+      </CardMeta>
+
     </JournalCardShell>
   </Link>
 );
@@ -360,7 +372,7 @@ const JournalPage = () => {
                       ) : (
                         <div
                           key={`grid-${blockIndex}`}
-                          className="grid auto-rows-auto gap-8 sm:grid-cols-2 sm:[grid-auto-flow:dense] sm:[grid-auto-rows:26rem] lg:grid-cols-3"
+                          className="grid auto-rows-auto gap-8 sm:grid-cols-2 sm:[grid-auto-flow:dense] sm:[grid-auto-rows:28rem] lg:grid-cols-3"
                         >
                           {block.items.map((item) => renderItem(item, expandedBuild, toggleBuild))}
                         </div>
