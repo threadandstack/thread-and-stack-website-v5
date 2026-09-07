@@ -77,7 +77,13 @@ serve(async (req) => {
     const isFirstRun = new Date(lastSyncedAt).getTime() < new Date('2001-01-01').getTime()
 
     const useIncremental = !isFirstRun && !fullSync
-    const baseFilter = { property: 'Status', status: { equals: 'Live' } }
+    const DOUBLE_WIDTH_STATUS = 'Live - Double Width'
+    const baseFilter = {
+      or: [
+        { property: 'Status', status: { equals: 'Live' } },
+        { property: 'Status', status: { equals: DOUBLE_WIDTH_STATUS } },
+      ],
+    }
     const queryFilter = useIncremental
       ? {
           and: [
@@ -188,7 +194,7 @@ serve(async (req) => {
         reading_time: properties['Reading time']?.rich_text?.[0]?.plain_text || null,
         theme: properties['Theme']?.select?.name || null,
         published_date: properties['Publication Date']?.date?.start || null,
-        featured: properties['Featured']?.checkbox || false,
+        featured: properties['Status']?.status?.name === DOUBLE_WIDTH_STATUS,
         last_edited_time: page.last_edited_time || null,
         html_content: htmlContent,
         synced_at: new Date().toISOString(),
