@@ -95,11 +95,8 @@ export const BuildGroupCard = ({
           latest?.date ? ` · latest ${formatJournalDate(latest.date)}` : ""
         }`}
         footer={
-          <Link
-            to={`/builds/${group.slug}`}
-            className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-          >
-            See this build in full →
+          <Link to={`/builds/${group.slug}`} className="inline-block">
+            <CardCta>See this build in full →</CardCta>
           </Link>
         }
       >
