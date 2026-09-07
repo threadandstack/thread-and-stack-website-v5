@@ -16,7 +16,7 @@ export const CardTitle = ({ children }: { children: ReactNode }) => (
 );
 
 export const CardSummary = ({ children }: { children: ReactNode }) => (
-  <p className="mt-2 line-clamp-3 text-[15px] leading-relaxed text-muted-foreground">{children}</p>
+  <p className="mt-2 line-clamp-2 min-h-0 text-[15px] leading-relaxed text-muted-foreground">{children}</p>
 );
 
 export const CardMeta = ({ children }: { children: ReactNode }) => (
