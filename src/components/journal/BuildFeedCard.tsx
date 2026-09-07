@@ -88,43 +88,36 @@ export const BuildGroupCard = ({
         subtitle={`${count} ${count === 1 ? "update" : "updates"}${
           latest?.date ? ` · latest ${formatJournalDate(latest.date)}` : ""
         }`}
+        summary={group.description}
         footer={
           <Link to={`/builds/${group.slug}`} className="inline-block">
             <CardCta>See this build in full →</CardCta>
           </Link>
         }
       >
-        {group.description && (
-          <p className="mb-4 text-[15px] leading-relaxed text-muted-foreground">
-            {group.description}
-          </p>
-        )}
-
-        <ol className="space-y-4 border-l border-border/60 pl-5 pt-1">
-          {group.releases.map((release) => (
+        <p className="text-[11px] uppercase tracking-wider text-muted-foreground">
+          Recent updates
+        </p>
+        <ol className="mt-3 space-y-3 border-l border-border/60 pl-4">
+          {group.releases.slice(0, 4).map((release) => (
             <li key={release.id} className="relative">
-              <span className="absolute -left-[23px] top-2 h-1.5 w-1.5 rounded-full bg-accent" />
-              <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[13px] text-muted-foreground">
+              <span className="absolute -left-[19px] top-2 h-1.5 w-1.5 rounded-full bg-accent" />
+              <div className="flex flex-wrap items-center gap-x-2 text-[12px] text-muted-foreground">
                 <time className="tabular-nums">{formatJournalDate(release.date)}</time>
                 {(release.version || release.releaseType) && (
                   <span className="text-muted-foreground/50">·</span>
                 )}
                 <VersionChip version={release.version} releaseType={release.releaseType} />
               </div>
-              <p className="mt-1 text-base leading-snug">{release.title}</p>
-              {release.changeTypes.length > 0 && (
-                <div className="mt-2">
-                  <ChangeChips types={release.changeTypes} />
-                </div>
-              )}
-              {(release.changelog || release.description) && (
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  {release.changelog || release.description}
-                </p>
-              )}
+              <p className="line-clamp-1 text-sm leading-snug">{release.title}</p>
             </li>
           ))}
         </ol>
+        {count > 4 && (
+          <p className="mt-3 text-[12.5px] text-muted-foreground">
+            +{count - 4} earlier {count - 4 === 1 ? "update" : "updates"}
+          </p>
+        )}
       </ExpandedShell>
     );
   }
