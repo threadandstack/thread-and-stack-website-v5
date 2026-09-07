@@ -26,7 +26,6 @@ export const FilterPills = <T extends string>({
   onSelect: (key: T) => void;
 }) => {
   const [hovered, setHovered] = useState<string | null>(null);
-  const lit = hovered ?? active;
 
   return (
     <LayoutGroup id="journal-filters">
@@ -36,7 +35,7 @@ export const FilterPills = <T extends string>({
       >
         {options.map((f) => {
           const isActive = active === f.key;
-          const isLit = lit === f.key;
+          const isHovered = hovered === f.key;
 
           return (
             <button
@@ -51,14 +50,21 @@ export const FilterPills = <T extends string>({
               {/* resting surface */}
               <span className="absolute inset-0 -z-20 rounded-full bg-muted" />
 
-              {/* the travelling blob */}
-              {isLit && (
+              {/* selected pill stays solid dark */}
+              {isActive && (
+                <motion.span
+                  layoutId="filter-selected"
+                  transition={FLUID}
+                  className="absolute inset-0 -z-10 rounded-full bg-foreground"
+                />
+              )}
+
+              {/* the travelling warm blob follows the cursor */}
+              {isHovered && (
                 <motion.span
                   layoutId="filter-blob"
                   transition={FLUID}
-                  className={`absolute inset-0 -z-10 rounded-full bg-foreground ${
-                    isActive ? "" : "opacity-70"
-                  }`}
+                  className="absolute inset-0 -z-10 rounded-full bg-gradient-warm"
                 />
               )}
 
@@ -78,7 +84,7 @@ export const FilterPills = <T extends string>({
 
               <span
                 className={`relative flex items-center gap-2 transition-colors duration-200 ${
-                  isLit ? "text-background" : "text-muted-foreground"
+                  isActive || isHovered ? "text-white" : "text-muted-foreground"
                 }`}
               >
                 {f.Icon && <f.Icon className="h-4 w-4" />}
