@@ -131,9 +131,11 @@ const SPRING_TRANSITION = SPRING;
 const isFullWidth = (item: JournalItem, expandedBuild: string | null) =>
   item.kind === "buildGroup" && expandedBuild === item.id;
 
-/** Featured events are the only cards that go double width, and only on desktop */
-const spanClass = (item: JournalItem) =>
-  item.kind === "event" && item.featured ? "lg:col-span-2" : "";
+/** Items marked "Live - Double Width" in Notion span two columns on desktop */
+const isDoubleWidth = (item: JournalItem) =>
+  item.kind !== "build" && !!(item as { featured?: boolean }).featured;
+
+const spanClass = (item: JournalItem) => (isDoubleWidth(item) ? "lg:col-span-2" : "");
 
 const renderCard = (
   item: JournalItem,
