@@ -29,6 +29,7 @@ export interface BuildItem {
   changeTypes: string[];
   changelog: string | null;
   description: string | null;
+  buildDescription: string | null;
   headerImage?: string | null;
   featured?: boolean;
   /** Position of this release within its build's history, e.g. 3 of 6 */
@@ -65,6 +66,7 @@ export interface BuildGroupItem {
   date: string | null;
   slug: string;
   buildName: string;
+  description?: string | null;
   headerImage?: string | null;
   featured?: boolean;
   releases: BuildItem[];
@@ -92,6 +94,7 @@ export function groupBuildItems(items: BuildItem[]): BuildGroupItem[] {
         date: ordered[0]?.date ?? null,
         slug,
         buildName: ordered[0]?.buildName || ordered[0]?.title || "Build",
+        description: ordered.find((r) => r.buildDescription)?.buildDescription ?? null,
         headerImage: ordered.find((r) => r.headerImage)?.headerImage ?? null,
         featured: ordered.some((r) => r.featured),
         releases: ordered,
@@ -118,6 +121,16 @@ export const formatEventDateRange = (start?: string | null, end?: string | null)
     return `${s.getDate()}–${e.getDate()} ${e.toLocaleDateString("en-GB", { month: "short", year: "numeric" })}`;
   }
   return `${formatJournalDate(start)} – ${formatJournalDate(end)}`;
+};
+
+export const formatEventDuration = (start?: string | null, end?: string | null): string => {
+  if (!start) return "";
+  if (!end || end === start) return "Single day";
+  const s = new Date(start);
+  const e = new Date(end);
+  if (Number.isNaN(s.getTime()) || Number.isNaN(e.getTime())) return "";
+  const days = Math.round((e.getTime() - s.getTime()) / 86400000) + 1;
+  return days > 1 ? `${days} days` : "Single day";
 };
 
 export const isUpcoming = (item: EventItem): boolean => {
@@ -153,7 +166,7 @@ export async function fetchBuildItems(): Promise<BuildItem[]> {
   const { data, error } = await supabase
     .from("build_updates_cache")
     .select(
-      "notion_id, slug, title, build_name, build_slug, version, release_type, change_types, changelog, description, header_image_url, published_date, last_edited_time, featured"
+      "notion_id, slug, title, build_name, build_slug, version, release_type, change_types, changelog, description, build_description, header_image_url, published_date, last_edited_time, featured"
     )
     .order("published_date", { ascending: false, nullsFirst: false });
 
@@ -196,6 +209,7 @@ export async function fetchBuildItems(): Promise<BuildItem[]> {
     changeTypes: row.change_types || [],
     changelog: row.changelog,
     description: row.description,
+    buildDescription: row.build_description || null,
     headerImage: row.header_image_url || null,
     featured: !!row.featured,
     releaseIndex: position.get(row.notion_id)?.index,
