@@ -147,57 +147,6 @@ export const FilterPills = <T extends string>({
       </div>
 
       {options.map((f) => {
-          const rect = rects[f.key];
-          if (!rect) return null;
-          return (
-            <span
-              key={`rest-${f.key}`}
-              className="absolute left-0 top-0 rounded-full bg-muted"
-              style={{
-                transform: `translate(${rect.x}px, ${rect.y}px)`,
-                width: rect.width,
-                height: rect.height,
-              }}
-            />
-          );
-        })}
-      </div>
-
-      {/* gooey indicator layer sits above the resting pills, below the labels */}
-      <div className="pointer-events-none absolute inset-0 z-10 [filter:url(#pill-goo)]">
-        {activeRect && (
-          <motion.span
-            className="absolute left-0 top-0 rounded-full bg-foreground"
-            initial={false}
-            animate={blobStyle(activeRect)}
-            transition={SETTLE}
-          />
-        )}
-        {targetRect && (
-          <>
-            <motion.span
-              className="absolute left-0 top-0 rounded-full bg-foreground"
-              initial={false}
-              animate={blobStyle(targetRect)}
-              transition={TRAIL}
-            />
-            <motion.span
-              className="absolute left-0 top-0 rounded-full bg-foreground"
-              initial={false}
-              animate={blobStyle(targetRect)}
-              transition={MID}
-            />
-            <motion.span
-              className="absolute left-0 top-0 rounded-full bg-foreground"
-              initial={false}
-              animate={blobStyle(targetRect)}
-              transition={LEAD}
-            />
-          </>
-        )}
-      </div>
-
-      {options.map((f) => {
         const isActive = active === f.key;
         const isLit = isActive || hovered === f.key;
 
