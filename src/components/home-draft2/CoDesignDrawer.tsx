@@ -182,8 +182,8 @@ export function CoDesignDrawer({
                 </SheetTitle>
                 <SheetDescription className="text-[14.5px] leading-relaxed text-ink-soft">
                   Ninety minutes of shared thinking on a workflow, product, or narrative you're
-                  building. Pick a single session to unlock one thing, or a six-session series
-                  to build something end-to-end.
+                  building. Pick a single session to unlock one thing, or a six-week sprint of
+                  weekly sessions, write-ups and async access to build something end-to-end.
                 </SheetDescription>
                 <ul className="mt-2 flex flex-wrap gap-x-5 gap-y-1.5 text-[12px] text-ink-soft">
                   <li className="inline-flex items-center gap-1.5">
