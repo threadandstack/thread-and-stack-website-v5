@@ -491,7 +491,7 @@ const VervauntWalkthroughPage = () => {
                 <p className="font-sans text-[15px] leading-[1.75] text-foreground/75 m-0">
                   Agreed through the lead rather than around them, and selected on team-level baseline,
                   which is a team-level fact a lead can hear without anyone feeling named. If the lead
-                  wants to narrow it, let them choose on workload variety instead, someone on retainer
+                  wants to narrow it, I would let them choose on workload variety instead, someone on retainer
                   work, someone jumping between projects.
                 </p>
               </motion.div>
