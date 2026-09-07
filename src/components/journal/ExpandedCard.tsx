@@ -27,7 +27,7 @@ export const ExpandedShell = ({
   footer?: ReactNode;
 }) => (
   <Card className="flex h-full flex-col overflow-hidden shadow-xl">
-    <button type="button" onClick={onToggle} aria-expanded className="group w-full text-left">
+    <button type="button" onClick={onToggle} aria-expanded className="group w-full shrink-0 text-left">
       <div className="p-5 sm:p-6">
         <div className="flex items-start gap-3">
           {pills && (
