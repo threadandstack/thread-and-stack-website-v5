@@ -27,7 +27,7 @@ const CoDesignBuyerConfirmation = ({ name, amountPaid, variant }: Props) => {
   const amountStr =
     typeof amountPaid === 'number' ? `£${(amountPaid / 100).toFixed(0)}` : null
   const six = isSix(variant)
-  const packLabel = six ? 'six-session Co-Design series' : 'Co-Design Session'
+  const packLabel = six ? 'six-session Co-Design Sprint' : 'Co-Design Session'
 
   return (
     <Html lang="en" dir="ltr">
