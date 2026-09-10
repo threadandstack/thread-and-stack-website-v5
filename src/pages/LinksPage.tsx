@@ -2,22 +2,23 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Linkedin,
+  Instagram,
   ArrowRight,
   Calendar,
   Sparkles,
   BookOpen,
   Wrench,
   Mail,
+  ChevronDown,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
-import { SectionHeader } from "@/components/home-draft2/SectionHeader";
 import PageSeo from "@/components/seo/PageSeo";
-import avatar from "@/assets/photos/portraits/brendan-12.webp";
-import photo1 from "@/assets/photos/shoreditch/brendan-34.webp";
-import photo2 from "@/assets/photos/workshop/brendan-18.webp";
-import photo3 from "@/assets/photos/portraits/brendan-9.webp";
+import avatar from "@/assets/photos/shoreditch/brendan-31.webp";
+import banner from "@/assets/photos/shoreditch/brendan-26.webp";
+
+const CAL_LINK = "https://cal.com/thread-and-stack/15min-contactcard";
 
 const BlueskyIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 568 501" className={className} fill="currentColor">
@@ -25,9 +26,9 @@ const BlueskyIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-const SubstackIcon = ({ className }: { className?: string }) => (
+const XIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" className={className} fill="currentColor">
-    <path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24l9.54-5.503 9.54 5.503V10.812H1.46zm0-8.242h21.08V0H1.46v2.57z" />
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
   </svg>
 );
 
@@ -44,8 +45,8 @@ interface BlogPost {
 const PRIMARY_LINKS = [
   {
     label: "Book a free intro call",
-    detail: "30 minutes, no obligation",
-    to: "/work-with-me",
+    detail: "15 minutes, no obligation",
+    href: CAL_LINK,
     icon: Calendar,
   },
   {
@@ -70,13 +71,56 @@ const PRIMARY_LINKS = [
 
 const SOCIALS = [
   { label: "LinkedIn", href: "https://www.linkedin.com/in/rodgersbrendan/", icon: Linkedin },
+  { label: "X", href: "https://x.com/Brendan_on_X", icon: XIcon },
+  { label: "Instagram", href: "https://www.instagram.com/brendanrodgersuk/", icon: Instagram },
   { label: "Bluesky", href: "https://bsky.app/profile/threadandstack.com", icon: BlueskyIcon },
-  {
-    label: "Substack",
-    href: "https://stackedbehaviours.substack.com/?utm_campaign=links",
-    icon: SubstackIcon,
-  },
 ];
+
+const Toggle = ({
+  eyebrow,
+  title,
+  defaultOpen = false,
+  children,
+}: {
+  eyebrow: string;
+  title: React.ReactNode;
+  defaultOpen?: boolean;
+  children: React.ReactNode;
+}) => {
+  const [open, setOpen] = useState(defaultOpen);
+  return (
+    <div className="border-t border-hairline py-6">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        className="group flex w-full items-center gap-3 text-left"
+      >
+        <ChevronDown
+          className={`h-4 w-4 shrink-0 text-ink-soft transition-transform duration-300 ${
+            open ? "rotate-0" : "-rotate-90"
+          }`}
+        />
+        <span className="min-w-0 flex-1">
+          <span className="block text-[11px] uppercase tracking-[0.22em] text-ink-soft">
+            {eyebrow}
+          </span>
+          <span className="mt-1 block font-serif-pro text-[26px] italic leading-tight tracking-[-0.02em]">
+            {title}
+          </span>
+        </span>
+      </button>
+
+      <div
+        className={`grid transition-all duration-300 ease-out ${
+          open ? "mt-5 grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+        }`}
+      >
+        <div className="overflow-hidden">{children}</div>
+      </div>
+    </div>
+  );
+};
 
 const LinksPage = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
@@ -107,13 +151,22 @@ const LinksPage = () => {
       <main>
         {/* Hero */}
         <section className="relative">
-          <div className="mx-auto max-w-3xl px-6 pb-16 pt-20 md:pb-20 md:pt-28">
+          <div className="relative h-44 w-full overflow-hidden md:h-64">
+            <img
+              src={banner}
+              alt="Shoreditch street art near the Thread & Stack studio"
+              className="h-full w-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-background" />
+          </div>
+
+          <div className="mx-auto max-w-3xl px-6 pb-14 md:pb-20">
             <div className="flex flex-col items-center text-center">
-              <div className="relative h-36 w-36 overflow-hidden rounded-full border border-hairline shadow-[0_16px_40px_-24px_rgba(0,0,0,0.35)] md:h-44 md:w-44">
+              <div className="relative -mt-20 h-36 w-36 overflow-hidden rounded-full border-4 border-background shadow-[0_16px_40px_-24px_rgba(0,0,0,0.45)] md:-mt-24 md:h-44 md:w-44">
                 <img
                   src={avatar}
                   alt="Brendan Rodgers, founder of Thread & Stack"
-                  className="h-full w-full object-cover"
+                  className="h-full w-full object-cover object-top"
                 />
               </div>
 
@@ -122,8 +175,8 @@ const LinksPage = () => {
               </span>
 
               <h1 className="font-serif-pro italic font-normal max-w-2xl text-balance text-4xl leading-[1.05] tracking-[-0.02em] md:text-[60px]">
-                <span>Brendan's </span>
-                <span className="text-gradient-warm">Contact Card</span>
+                <span className="block">Brendan's</span>
+                <span className="block text-gradient-warm">Contact Card</span>
               </h1>
 
               <p className="mt-7 max-w-xl text-[16.5px] leading-relaxed text-ink-soft">
@@ -132,8 +185,10 @@ const LinksPage = () => {
               </p>
 
               <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
-                <Link
-                  to="/work-with-me"
+                <a
+                  href={CAL_LINK}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="group inline-flex h-12 items-center rounded-md px-6 text-[14.5px] font-medium text-accent-foreground shadow-[0_8px_20px_-8px_rgba(0,0,0,0.35)] transition-all hover:-translate-y-px"
                   style={{
                     backgroundImage: "linear-gradient(95deg, var(--gradient-3color))",
@@ -143,9 +198,9 @@ const LinksPage = () => {
                   <span className="inline-flex w-0 items-center justify-center overflow-hidden opacity-0 scale-75 transition-all duration-300 group-hover:w-5 group-hover:opacity-100 group-hover:scale-100 group-hover:ml-1.5">
                     <ArrowRight className="h-4 w-4 shrink-0" />
                   </span>
-                </Link>
+                </a>
                 <a
-                  href="mailto:br@brendanrodgers.uk"
+                  href="mailto:br@threadandstack.com"
                   className="group inline-flex h-12 items-center gap-2 rounded-md border border-hairline bg-background px-6 text-[14.5px] font-medium text-foreground transition-colors hover:bg-paper"
                 >
                   <Mail className="h-4 w-4" />
@@ -174,98 +229,105 @@ const LinksPage = () => {
           </div>
         </section>
 
-        {/* Primary links */}
+        {/* Toggles */}
         <section>
-          <div className="mx-auto max-w-3xl px-6 py-16 md:py-20">
-            <SectionHeader eyebrow="Start here">
-              The short <span className="text-gradient-warm">list.</span>
-            </SectionHeader>
-
-            <div className="space-y-3">
-              {PRIMARY_LINKS.map(({ label, detail, to, icon: Icon }) => (
-                <Link
-                  key={to}
-                  to={to}
-                  className="group flex items-center gap-4 rounded-2xl border border-hairline bg-background/70 p-5 backdrop-blur-sm transition-all hover:-translate-y-px hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)]"
-                >
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-hairline text-clay">
-                    <Icon className="h-[18px] w-[18px]" />
-                  </span>
-                  <span className="min-w-0 flex-1">
-                    <span className="block text-[15.5px] font-medium">{label}</span>
-                    <span className="mt-0.5 block text-[13.5px] text-ink-soft">{detail}</span>
-                  </span>
-                  <ArrowRight className="h-4 w-4 shrink-0 text-ink-soft transition-transform group-hover:translate-x-0.5 group-hover:text-clay" />
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Photos */}
-        <section>
-          <div className="mx-auto grid max-w-3xl grid-cols-3 gap-3 px-6 pb-4 md:gap-5">
-            {[photo1, photo2, photo3].map((src, i) => (
-              <img
-                key={i}
-                src={src}
-                alt="Brendan Rodgers at work"
-                loading="lazy"
-                className="aspect-[3/4] w-full rounded-2xl border border-hairline object-cover shadow-[0_16px_40px_-28px_rgba(0,0,0,0.4)]"
-              />
-            ))}
-          </div>
-        </section>
-
-        {/* Latest writing */}
-        {posts.length > 0 && (
-          <section>
-            <div className="mx-auto max-w-3xl px-6 py-16 md:py-24">
-              <SectionHeader eyebrow="Journal">
-                Latest <span className="text-gradient-warm">writing.</span>
-              </SectionHeader>
-
+          <div className="mx-auto max-w-3xl px-6 pb-20">
+            <Toggle
+              eyebrow="Start here"
+              title={
+                <>
+                  The short <span className="text-gradient-warm">list.</span>
+                </>
+              }
+              defaultOpen
+            >
               <div className="space-y-3">
-                {posts.map((post) => (
-                  <Link
-                    key={post.id}
-                    to={`/blog/${post.slug}`}
-                    className="group flex items-center gap-4 rounded-2xl border border-hairline bg-background/70 p-4 backdrop-blur-sm transition-all hover:-translate-y-px hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)]"
-                  >
-                    {post.headerImage && (
-                      <img
-                        src={post.headerImage}
-                        alt=""
-                        loading="lazy"
-                        className="h-16 w-16 shrink-0 rounded-xl object-cover"
-                      />
-                    )}
-                    <span className="min-w-0 flex-1">
-                      <span className="block text-[15.5px] font-medium leading-snug line-clamp-2 transition-colors group-hover:text-clay">
-                        {post.title}
+                {PRIMARY_LINKS.map(({ label, detail, to, href, icon: Icon }) => {
+                  const inner = (
+                    <>
+                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-hairline text-clay">
+                        <Icon className="h-[18px] w-[18px]" />
                       </span>
-                      <span className="mt-1 block text-[12.5px] text-ink-soft">
-                        {[post.theme, post.readingTime ? `${post.readingTime} min read` : null]
-                          .filter(Boolean)
-                          .join(" · ")}
+                      <span className="min-w-0 flex-1">
+                        <span className="block text-[15.5px] font-medium">{label}</span>
+                        <span className="mt-0.5 block text-[13.5px] text-ink-soft">{detail}</span>
                       </span>
-                    </span>
-                  </Link>
-                ))}
-              </div>
+                      <ArrowRight className="h-4 w-4 shrink-0 text-ink-soft transition-transform group-hover:translate-x-0.5 group-hover:text-clay" />
+                    </>
+                  );
+                  const cls =
+                    "group flex items-center gap-4 rounded-2xl border border-hairline bg-background/70 p-5 backdrop-blur-sm transition-all hover:-translate-y-px hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)]";
 
-              <div className="mt-8 flex justify-center">
-                <Link
-                  to="/blog"
-                  className="group inline-flex items-center gap-1.5 text-[14px] font-medium text-foreground transition-colors hover:text-clay"
-                >
-                  Read everything
-                  <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-                </Link>
+                  return href ? (
+                    <a
+                      key={label}
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={cls}
+                    >
+                      {inner}
+                    </a>
+                  ) : (
+                    <Link key={label} to={to!} className={cls}>
+                      {inner}
+                    </Link>
+                  );
+                })}
               </div>
-            </div>
-          </section>
-        )}
+            </Toggle>
+
+            {posts.length > 0 && (
+              <Toggle
+                eyebrow="Journal"
+                title={
+                  <>
+                    Latest <span className="text-gradient-warm">writing.</span>
+                  </>
+                }
+              >
+                <div className="space-y-3">
+                  {posts.map((post) => (
+                    <Link
+                      key={post.id}
+                      to={`/blog/${post.slug}`}
+                      className="group flex items-center gap-4 rounded-2xl border border-hairline bg-background/70 p-4 backdrop-blur-sm transition-all hover:-translate-y-px hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)]"
+                    >
+                      {post.headerImage && (
+                        <img
+                          src={post.headerImage}
+                          alt=""
+                          loading="lazy"
+                          className="h-16 w-16 shrink-0 rounded-xl object-cover"
+                        />
+                      )}
+                      <span className="min-w-0 flex-1">
+                        <span className="block text-[15.5px] font-medium leading-snug line-clamp-2 transition-colors group-hover:text-clay">
+                          {post.title}
+                        </span>
+                        <span className="mt-1 block text-[12.5px] text-ink-soft">
+                          {[post.theme, post.readingTime ? `${post.readingTime} min read` : null]
+                            .filter(Boolean)
+                            .join(" · ")}
+                        </span>
+                      </span>
+                    </Link>
+                  ))}
+                </div>
+
+                <div className="mt-6 flex justify-center">
+                  <Link
+                    to="/blog"
+                    className="group inline-flex items-center gap-1.5 text-[14px] font-medium text-foreground transition-colors hover:text-clay"
+                  >
+                    Read everything
+                    <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+                  </Link>
+                </div>
+              </Toggle>
+            )}
+          </div>
+        </section>
       </main>
 
       <Footer />
