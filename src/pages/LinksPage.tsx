@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Linkedin, ArrowUpRight, Calendar, Sparkles, BookOpen, Wrench, Mail } from "lucide-react";
+import { Linkedin, ArrowUpRight, Calendar, Sparkles, BookOpen, Wrench, Mail, Rocket } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { PillButton } from "@/components/ui/pill-button";
+import { Footer } from "@/components/Footer";
 import PageSeo from "@/components/seo/PageSeo";
-import avatar from "@/assets/photos/portraits/brendan-12.webp";
+import heroImage from "@/assets/photos/shoreditch/brendan-33.webp";
 import photo1 from "@/assets/photos/shoreditch/brendan-34.webp";
 import photo2 from "@/assets/photos/workshop/brendan-18.webp";
 import photo3 from "@/assets/photos/portraits/brendan-9.webp";
@@ -84,7 +86,7 @@ const LinksPage = () => {
   }, []);
 
   return (
-    <main className="min-h-screen bg-background px-5 py-12 sm:py-16">
+    <main className="min-h-screen bg-background">
       <PageSeo
         title="Brendan Rodgers | Thread & Stack links"
         description="One place for everything Thread & Stack: book a call, read the journal, take the scorecard and follow along."
@@ -92,88 +94,129 @@ const LinksPage = () => {
         ogType="profile"
       />
 
-      <div className="mx-auto w-full max-w-xl">
-        {/* Header */}
-        <header className="flex flex-col items-center text-center">
+      {/* Hero */}
+      <section className="relative">
+        <div className="relative h-[52vh] min-h-[320px] overflow-hidden">
           <img
-            src={avatar}
+            src={heroImage}
             alt="Brendan Rodgers, founder of Thread & Stack"
-            className="h-28 w-28 rounded-full object-cover shadow-[0_8px_24px_rgba(0,0,0,0.10)]"
+            className="absolute inset-0 h-full w-full object-cover"
+            style={{ objectPosition: "44% 38%" }}
           />
-          <h1 className="mt-6 text-4xl font-semibold italic">Brendan Rodgers</h1>
-          <p className="mt-2 font-sans text-sm text-muted-foreground">
-            Thread &amp; Stack. Stories that land. Systems that stick.
-          </p>
-        </header>
+          <div className="absolute inset-0 bg-black/20" />
+        </div>
 
-        {/* Socials */}
-        <nav aria-label="Social profiles" className="mt-8 flex justify-center gap-3">
-          {SOCIALS.map(({ label, href, icon: Icon }) => (
-            <a
-              key={label}
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={label}
-              className="flex h-12 w-12 items-center justify-center rounded-full bg-card shadow-[0_2px_10px_rgba(0,0,0,0.06)] text-foreground transition-all hover:-translate-y-0.5 hover:text-accent"
-            >
-              <Icon className="h-5 w-5" />
-            </a>
-          ))}
-          <a
-            href="/work-with-me"
-            aria-label="Get in touch"
-            className="flex h-12 w-12 items-center justify-center rounded-full bg-card shadow-[0_2px_10px_rgba(0,0,0,0.06)] text-foreground transition-all hover:-translate-y-0.5 hover:text-accent"
-          >
-            <Mail className="h-5 w-5" />
-          </a>
-        </nav>
-
-        {/* Primary links */}
-        <section className="mt-8 space-y-3">
-          {PRIMARY_LINKS.map(({ label, detail, to, icon: Icon }) => (
-            <Link
-              key={to}
-              to={to}
-              className="group flex items-center gap-4 rounded-2xl bg-card p-4 shadow-[0_4px_16px_rgba(0,0,0,0.06)] transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(0,0,0,0.10)]"
-            >
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-accent/10 text-accent">
-                <Icon className="h-5 w-5" />
+        <div className="relative -mt-24 md:-mt-28 w-full max-w-xl mx-auto px-4 sm:px-6">
+          <div className="rounded-2xl bg-background/95 backdrop-blur-sm p-6 md:p-8 shadow-[0_8px_30px_rgba(0,0,0,0.12)]">
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-accent/15 bg-accent/8 px-3 py-1.5">
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-accent" />
+              <span className="font-sans text-xs font-medium uppercase tracking-wide text-accent">
+                Taking on new clients
               </span>
-              <span className="min-w-0 flex-1">
-                <span className="block font-sans font-medium">{label}</span>
-                <span className="block font-sans text-sm text-muted-foreground">{detail}</span>
-              </span>
-              <ArrowUpRight className="h-5 w-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent" />
-            </Link>
-          ))}
-        </section>
+            </div>
 
-        {/* Photos */}
-        <section className="mt-10">
-          <div className="grid grid-cols-3 gap-3">
-            {[photo1, photo2, photo3].map((src, i) => (
-              <img
-                key={i}
-                src={src}
-                alt="Brendan Rodgers at work"
-                loading="lazy"
-                className="aspect-[3/4] w-full rounded-2xl object-cover shadow-[0_4px_16px_rgba(0,0,0,0.06)]"
-              />
+            <h1 className="mb-4 font-sans not-italic text-4xl md:text-5xl font-semibold leading-[1] tracking-[-0.035em] text-balance">
+              Stories that{" "}
+              <span className="font-serif-pro italic text-accent text-5xl md:text-6xl">land</span>.
+              <br />
+              Systems that{" "}
+              <span className="font-serif-pro italic text-accent text-5xl md:text-6xl">stick</span>.
+            </h1>
+
+            <p className="mb-6 font-sans text-base leading-relaxed text-muted-foreground">
+              I'm Brendan Rodgers. Everything Thread &amp; Stack in one place:{" "}
+              <span className="font-medium text-foreground">writing</span>,{" "}
+              <span className="font-medium text-foreground">builds</span> and the fastest way to
+              reach me.
+            </p>
+
+            <PillButton size="lg" icon={Rocket} className="font-semibold" asChild>
+              <Link to="/work-with-me">Book an Intro Call</Link>
+            </PillButton>
+
+            <nav
+              aria-label="Social profiles"
+              className="mt-6 flex gap-3 border-t border-border/50 pt-5"
+            >
+              {SOCIALS.map(({ label, href, icon: Icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="flex h-11 w-11 items-center justify-center rounded-full bg-card text-foreground shadow-[0_2px_10px_rgba(0,0,0,0.06)] transition-all hover:-translate-y-0.5 hover:text-accent"
+                >
+                  <Icon className="h-5 w-5" />
+                </a>
+              ))}
+              <Link
+                to="/work-with-me"
+                aria-label="Get in touch"
+                className="flex h-11 w-11 items-center justify-center rounded-full bg-card text-foreground shadow-[0_2px_10px_rgba(0,0,0,0.06)] transition-all hover:-translate-y-0.5 hover:text-accent"
+              >
+                <Mail className="h-5 w-5" />
+              </Link>
+            </nav>
+          </div>
+        </div>
+      </section>
+
+      {/* Primary links */}
+      <section className="bg-card px-4 sm:px-6 py-16 mt-12">
+        <div className="mx-auto w-full max-w-xl">
+          <h2 className="mb-8 text-3xl md:text-4xl font-semibold italic leading-tight text-balance">
+            Start here.
+          </h2>
+          <div className="space-y-3">
+            {PRIMARY_LINKS.map(({ label, detail, to, icon: Icon }) => (
+              <Link
+                key={to}
+                to={to}
+                className="group flex items-center gap-4 rounded-2xl bg-background p-4 shadow-[0_4px_16px_rgba(0,0,0,0.06)] transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(0,0,0,0.10)]"
+              >
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-accent/10 text-accent">
+                  <Icon className="h-5 w-5" />
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block font-sans font-medium">{label}</span>
+                  <span className="block font-sans text-sm text-muted-foreground">{detail}</span>
+                </span>
+                <ArrowUpRight className="h-5 w-5 shrink-0 text-muted-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent" />
+              </Link>
             ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Latest writing */}
-        {posts.length > 0 && (
-          <section className="mt-10">
-            <h2 className="mb-4 text-2xl font-semibold italic">Latest writing</h2>
+      {/* Photos */}
+      <section className="px-4 sm:px-6 py-16">
+        <div className="mx-auto grid w-full max-w-xl grid-cols-3 gap-3">
+          {[photo1, photo2, photo3].map((src, i) => (
+            <img
+              key={i}
+              src={src}
+              alt="Brendan Rodgers at work"
+              loading="lazy"
+              className="aspect-[3/4] w-full rounded-2xl object-cover shadow-[0_4px_16px_rgba(0,0,0,0.06)]"
+            />
+          ))}
+        </div>
+      </section>
+
+      {/* Latest writing */}
+      {posts.length > 0 && (
+        <section className="bg-card px-4 sm:px-6 py-16">
+          <div className="mx-auto w-full max-w-xl">
+            <h2 className="mb-8 text-3xl md:text-4xl font-semibold italic leading-tight">
+              Latest writing.
+            </h2>
             <div className="space-y-3">
               {posts.map((post) => (
                 <Link
                   key={post.id}
                   to={`/blog/${post.slug}`}
-                  className="group flex items-center gap-4 rounded-2xl bg-card p-3 shadow-[0_4px_16px_rgba(0,0,0,0.06)] transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(0,0,0,0.10)]"
+                  className="group flex items-center gap-4 rounded-2xl bg-background p-3 shadow-[0_4px_16px_rgba(0,0,0,0.06)] transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(0,0,0,0.10)]"
                 >
                   {post.headerImage && (
                     <img
@@ -198,17 +241,15 @@ const LinksPage = () => {
             </div>
             <Link
               to="/blog"
-              className="mt-4 inline-flex items-center gap-1 font-sans text-sm text-accent hover:underline"
+              className="relative mt-6 inline-block w-fit font-sans text-sm text-accent transition-colors after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-accent after:transition-transform after:duration-300 hover:text-accent/80 hover:after:origin-bottom-left hover:after:scale-x-100"
             >
-              Read everything <ArrowUpRight className="h-4 w-4" />
+              Read everything →
             </Link>
-          </section>
-        )}
+          </div>
+        </section>
+      )}
 
-        <footer className="mt-12 text-center font-sans text-xs text-muted-foreground">
-          &copy; {new Date().getFullYear()} Thread &amp; Stack
-        </footer>
-      </div>
+      <Footer />
     </main>
   );
 };
