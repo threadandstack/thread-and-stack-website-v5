@@ -118,12 +118,12 @@ const LinksPage = () => {
               </div>
 
               <span className="mb-4 mt-8 inline-block text-[11px] uppercase tracking-[0.22em] text-ink-soft">
-                Thread &amp; Stack
+                HEY! THANKS FOR FINDING MY LINKS.
               </span>
 
               <h1 className="font-serif-pro italic font-normal max-w-2xl text-balance text-4xl leading-[1.05] tracking-[-0.02em] md:text-[60px]">
-                Everything in{" "}
-                <span className="text-gradient-warm">one place.</span>
+                Brendan's
+                <span className="text-gradient-warm">Contact Card</span>
               </h1>
 
               <p className="mt-7 max-w-xl text-[16.5px] leading-relaxed text-ink-soft">
