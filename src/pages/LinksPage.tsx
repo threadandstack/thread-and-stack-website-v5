@@ -121,8 +121,8 @@ const LinksPage = () => {
             </a>
           ))}
           <a
-            href="#contact-me"
-            aria-label="Email"
+            href="/work-with-me"
+            aria-label="Get in touch"
             className="flex h-12 w-12 items-center justify-center rounded-full bg-card shadow-[0_2px_10px_rgba(0,0,0,0.06)] text-foreground transition-all hover:-translate-y-0.5 hover:text-accent"
           >
             <Mail className="h-5 w-5" />

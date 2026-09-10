@@ -53,6 +53,7 @@ const RetainerLaunchPage = lazy(() => import("./pages/RetainerLaunchPage"));
 const RetainerStartupPage = lazy(() => import("./pages/RetainerStartupPage"));
 const RetainerScaleUpPage = lazy(() => import("./pages/RetainerScaleUpPage"));
 const WorkWithMePage = lazy(() => import("./pages/WorkWithMePage"));
+const LinksPage = lazy(() => import("./pages/LinksPage"));
 const CometEffectPage = lazy(() => import("./pages/CometEffectPage"));
 const MomentumMapPage = lazy(() => import("./pages/MomentumMapPage"));
 const NotionHackathonLondonPage = lazy(() => import("./pages/NotionHackathonLondonPage"));
@@ -174,6 +175,7 @@ const App = () => (
             <Route path="/retainer/scaleup" element={<RetainerScaleUpPage />} />
             <Route path="/fiction-favorites" element={<Navigate to="/" replace />} />
             <Route path="/work-with-me" element={<WorkWithMePage />} />
+            <Route path="/links" element={<LinksPage />} />
             <Route path="/comet-effect" element={<CometEffectPage />} />
             <Route path="/momentum-map" element={<MomentumMapPage />} />
             <Route path="/notion-hackathon-london" element={<NotionHackathonLondonPage />} />
