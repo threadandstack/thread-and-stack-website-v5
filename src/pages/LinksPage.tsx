@@ -122,7 +122,7 @@ const LinksPage = () => {
               </span>
 
               <h1 className="font-serif-pro italic font-normal max-w-2xl text-balance text-4xl leading-[1.05] tracking-[-0.02em] md:text-[60px]">
-                Brendan's
+                <span>Brendan's </span>
                 <span className="text-gradient-warm">Contact Card</span>
               </h1>
 
