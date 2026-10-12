@@ -12,7 +12,6 @@ export type EventParams = Record<string, string | number | boolean | undefined>;
 export function trackEvent(eventName: string, params?: EventParams) {
   if (typeof window !== 'undefined' && window.gtag) {
     window.gtag('event', eventName, params);
-    console.log(`[GA4] ${eventName}`, params);
   }
 }
 
