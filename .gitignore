@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Env files: values live in Lovable / hosting / Supabase settings
+.env
+.env.*
+!.env.example

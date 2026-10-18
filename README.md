@@ -36,6 +36,14 @@ npm i
 npm run dev
 ```
 
+**Environment variables**
+
+Env files aren't committed. `.env.example` lists the variable names. Copy it to `.env` for local dev and fill in the values. Where the real values live:
+
+- `VITE_*` and `SUPABASE_*` client values: the Lovable project's environment settings, which feed the published build. They're also visible in the Supabase dashboard under Project Settings → API (use the anon/publishable key, never service_role).
+- `VITE_PAYMENTS_CLIENT_TOKEN`: the payments provider's publishable key. Use the test key for development and the live key for production.
+- Server-side secrets for edge functions: Supabase → Edge Functions → Secrets.
+
 **Edit a file directly in GitHub**
 
 - Navigate to the desired file(s).
