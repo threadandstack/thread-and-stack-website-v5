@@ -23,9 +23,9 @@ export function BlogCalendar({ posts }: { posts: JournalItem[] }) {
                   const url = kind === "writing" ? `/blog/${item.slug}` : kind === "event" ? `/journal/events/${item.slug}` : `/journal/builds/${kind === "build" ? item.buildSlug || item.slug : item.slug}`;
                   const Icon = kind === "writing" ? BookOpen : kind === "event" ? CalendarDays : Hammer;
                   return <Link key={item.id} to={url} className="group block p-4 transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                    <h3 className="mb-3 break-words font-serif text-xl leading-snug">{title}</h3>
                     <div className="mb-2 flex items-center gap-2 text-xs text-muted-foreground"><Icon className="h-3.5 w-3.5" /><span>{kind === "writing" ? "Writing" : kind === "event" ? "Event" : "Build update"}</span><ArrowUpRight className="ml-auto h-4 w-4" /></div>
-                    {image && <img src={image} alt="" loading="lazy" className="mb-3 aspect-[3/1] w-full rounded object-cover object-top" />}
-                    <h3 className="break-words font-serif text-xl leading-snug">{title}</h3>
+                    {image && <img src={image} alt="" loading="lazy" className="aspect-[3/1] w-full rounded object-cover object-top" />}
                   </Link>;
                 })}
               </div>
