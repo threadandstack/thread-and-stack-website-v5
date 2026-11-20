@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link, useSearchParams } from "react-router-dom";
-import { Loader2, Moon, Sun } from "lucide-react";
+import { CalendarDays, LayoutGrid, Loader2, Moon, Sun } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { BlogCalendar } from "@/components/journal/BlogCalendar";
 import { LayoutGroup, motion } from "framer-motion";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
@@ -135,8 +137,20 @@ const JournalPage = () => {
   const filterParam = searchParams.get("type") as FilterKey | null;
   const activeFilter: FilterKey =
     filterParam && FILTERS.some((f) => f.key === filterParam) ? filterParam : "all";
+  const calendarView = searchParams.get("view") === "calendar";
+  const writingPosts = items.filter((item): item is WritingItem => item.kind === "writing");
+  const setView = (calendar: boolean) => {
+    const params = new URLSearchParams(searchParams);
+    if (calendar) {
+      params.set("view", "calendar");
+      params.set("type", "writing");
+    } else params.delete("view");
+    setSearchParams(params, { replace: true });
+    setExpandedId(null);
+  };
 
   const setFilter = (key: FilterKey) => {
+    if (key !== "writing") searchParams.delete("view");
     if (key === "all") searchParams.delete("type");
     else searchParams.set("type", key);
     setSearchParams(searchParams, { replace: true });
@@ -235,7 +249,7 @@ const JournalPage = () => {
               </div>
 
               {/* Upcoming events strip */}
-              {!isLoading && upcomingEvents.length > 0 && (
+              {!calendarView && !isLoading && upcomingEvents.length > 0 && (
                 <div className="mb-12">
                   <h2 className="mb-4 text-sm uppercase tracking-wider text-muted-foreground">
                     Coming up
@@ -250,11 +264,17 @@ const JournalPage = () => {
 
               {/* Type filters */}
               <FilterPills options={FILTERS} active={activeFilter} onSelect={setFilter} />
+              <div className="mt-4 flex justify-end gap-1" role="group" aria-label="Journal view">
+                <Button variant={calendarView ? "ghost" : "secondary"} size="sm" aria-label="Card view" aria-pressed={!calendarView} title="Card view" onClick={() => setView(false)}><LayoutGrid className="h-4 w-4" /></Button>
+                <Button variant={calendarView ? "secondary" : "ghost"} size="sm" aria-label="Blog calendar" aria-pressed={calendarView} title="Blog calendar" onClick={() => setView(true)}><CalendarDays className="mr-2 h-4 w-4" />Calendar</Button>
+              </div>
 
               {isLoading ? (
                 <div className="flex justify-center py-20">
                   <Loader2 className="h-8 w-8 animate-spin text-accent" />
                 </div>
+              ) : calendarView ? (
+                <BlogCalendar posts={writingPosts} />
               ) : (
                 <LayoutGroup>
                   <div className="flex flex-col gap-8">
