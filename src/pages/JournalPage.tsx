@@ -138,19 +138,18 @@ const JournalPage = () => {
   const activeFilter: FilterKey =
     filterParam && FILTERS.some((f) => f.key === filterParam) ? filterParam : "all";
   const calendarView = searchParams.get("view") === "calendar";
-  const writingPosts = items.filter((item): item is WritingItem => item.kind === "writing");
+  const calendarItems = items.filter(item => activeFilter === "all" || (activeFilter === "writing" ? item.kind === "writing" : activeFilter === "events" ? item.kind === "event" : item.kind === "buildGroup"));
   const setView = (calendar: boolean) => {
     const params = new URLSearchParams(searchParams);
     if (calendar) {
       params.set("view", "calendar");
-      params.set("type", "writing");
+      params.delete("type");
     } else params.delete("view");
     setSearchParams(params, { replace: true });
     setExpandedId(null);
   };
 
   const setFilter = (key: FilterKey) => {
-    if (key !== "writing") searchParams.delete("view");
     if (key === "all") searchParams.delete("type");
     else searchParams.set("type", key);
     setSearchParams(searchParams, { replace: true });
@@ -266,7 +265,7 @@ const JournalPage = () => {
               <FilterPills options={FILTERS} active={activeFilter} onSelect={setFilter} />
               <div className="mt-4 flex justify-end gap-1" role="group" aria-label="Journal view">
                 <Button variant={calendarView ? "ghost" : "secondary"} size="sm" aria-label="Card view" aria-pressed={!calendarView} title="Card view" onClick={() => setView(false)}><LayoutGrid className="h-4 w-4" /></Button>
-                <Button variant={calendarView ? "secondary" : "ghost"} size="sm" aria-label="Blog calendar" aria-pressed={calendarView} title="Blog calendar" onClick={() => setView(true)}><CalendarDays className="mr-2 h-4 w-4" />Calendar</Button>
+                <Button variant={calendarView ? "secondary" : "ghost"} size="sm" aria-label="Journal calendar" aria-pressed={calendarView} title="Journal calendar" onClick={() => setView(true)}><CalendarDays className="mr-2 h-4 w-4" />Calendar</Button>
               </div>
 
               {isLoading ? (
@@ -274,7 +273,7 @@ const JournalPage = () => {
                   <Loader2 className="h-8 w-8 animate-spin text-accent" />
                 </div>
               ) : calendarView ? (
-                <BlogCalendar posts={writingPosts} />
+                <BlogCalendar posts={calendarItems} />
               ) : (
                 <LayoutGroup>
                   <div className="flex flex-col gap-8">

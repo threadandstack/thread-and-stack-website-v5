@@ -1,41 +1,40 @@
 import { Link } from "react-router-dom";
-import type { WritingItem } from "@/lib/journalFeed";
+import type { JournalItem } from "@/lib/journalFeed";
 import { groupCalendarPosts } from "@/lib/blogCalendar";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, BookOpen, CalendarDays, Hammer } from "lucide-react";
 
-export function BlogCalendar({ posts }: { posts: WritingItem[] }) {
-  const groups = groupCalendarPosts(posts);
-  let previousMonth = "";
+export function BlogCalendar({ posts }: { posts: JournalItem[] }) {
+  const days = groupCalendarPosts(posts);
+  const months = [...new Set(days.map(([date]) => date.slice(0, 7)))];
   return (
-    <div className="mt-8 space-y-8" aria-label="Blog calendar">
-      {groups.map(([date, entries]) => {
-        const month = date === "undated" ? "undated" : date.slice(0, 7);
-        const showMonth = month !== previousMonth;
-        previousMonth = month;
-        const parsed = date === "undated" ? null : new Date(`${date}T12:00:00Z`);
-        return (
-          <section key={date}>
-            {showMonth && <h2 className="mb-5 font-serif text-3xl text-foreground">{parsed ? parsed.toLocaleDateString("en-GB", { month: "long", year: "numeric", timeZone: "UTC" }) : "Awaiting a publication date"}</h2>}
-            <div className="grid gap-4 sm:grid-cols-[5rem_1fr]">
-              <div className="text-muted-foreground">
-                {parsed && <time dateTime={date} className="flex items-baseline gap-2 sm:block"><span className="block font-serif text-4xl text-foreground">{parsed.getUTCDate()}</span><span className="text-sm">{parsed.toLocaleDateString("en-GB", { weekday: "short", timeZone: "UTC" })}</span></time>}
+    <div className="mt-8 space-y-10" aria-label="Journal calendar">
+      {months.map(month => <section key={month}>
+        <h2 className="mb-5 font-serif text-3xl text-foreground">{new Date(`${month}-01T12:00:00Z`).toLocaleDateString("en-GB", { month: "long", year: "numeric", timeZone: "UTC" })}</h2>
+        <div className="grid items-start gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {days.filter(([date]) => date.startsWith(month)).map(([date, entries]) => {
+            const day = new Date(`${date}T12:00:00Z`);
+            return <section key={date} className="min-w-0 overflow-hidden rounded-lg bg-card text-card-foreground shadow-sm" aria-label={date}>
+              <time dateTime={date} className="flex items-baseline justify-between border-b border-border px-4 py-3"><span className="font-serif text-4xl">{day.getUTCDate()}</span><span className="text-sm text-muted-foreground">{day.toLocaleDateString("en-GB", { weekday: "long", timeZone: "UTC" })}</span></time>
+              <div className="divide-y divide-border">
+                {entries.map(item => {
+                  const kind = item.kind;
+                  const image = kind === "event" ? item.coverImage : item.headerImage;
+                  const title = kind === "buildGroup" ? item.buildName : item.title;
+                  const url = kind === "writing" ? `/blog/${item.slug}` : kind === "event" ? `/journal/events/${item.slug}` : `/journal/builds/${kind === "build" ? item.buildSlug || item.slug : item.slug}`;
+                  const Icon = kind === "writing" ? BookOpen : kind === "event" ? CalendarDays : Hammer;
+                  return <Link key={item.id} to={url} className="group block p-4 transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                    <div className="mb-2 flex items-center gap-2 text-xs text-muted-foreground"><Icon className="h-3.5 w-3.5" /><span>{kind === "writing" ? "Writing" : kind === "event" ? "Event" : "Build update"}</span><ArrowUpRight className="ml-auto h-4 w-4" /></div>
+                    {image && <img src={image} alt="" loading="lazy" className="mb-3 aspect-[3/1] w-full rounded object-cover object-top" />}
+                    <h3 className="break-words font-serif text-xl leading-snug">{title}</h3>
+                  </Link>;
+                })}
               </div>
-              <div className="grid gap-4 md:grid-cols-2">
-                {entries.map(post => <Link key={post.id} to={`/blog/${post.slug}`} className="group flex min-w-0 overflow-hidden rounded-lg bg-card text-card-foreground shadow-sm transition-shadow hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-                  {post.headerImage && <img src={post.headerImage} alt="" loading="lazy" className="w-20 shrink-0 object-cover object-top sm:w-24" />}
-                  <div className="min-w-0 flex-1 p-4">
-                    {post.theme && <p className="mb-2 text-xs text-muted-foreground">{post.theme}</p>}
-                    <h3 className="break-words font-serif text-xl leading-snug">{post.title}</h3>
-                    {(post.intro || post.description) && <p className="mt-2 line-clamp-2 text-sm text-muted-foreground">{post.intro || post.description}</p>}
-                    <ArrowUpRight className="mt-3 h-4 w-4 text-accent" aria-hidden="true" />
-                  </div>
-                </Link>)}
-              </div>
-            </div>
-          </section>
-        );
-      })}
-      {!groups.length && <p className="py-12 text-center text-muted-foreground">No published writing yet.</p>}
+            </section>;
+          })}
+        </div>
+      </section>)}
+      {!days.length && <p className="py-12 text-center text-muted-foreground">No dated entries in this selection.</p>}
+      {posts.some(item => !item.date) && <p className="text-sm text-muted-foreground">Undated entries remain in card view.</p>}
     </div>
   );
 }

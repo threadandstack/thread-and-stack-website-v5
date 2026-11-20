@@ -1,3 +1,3 @@
 # Architecture
 
-- The Journal blog calendar groups the existing public writing feed by publication day, omits empty dates and keeps undated entries separate; this preserves source dates without exposing unpublished Notion content.
+- The Journal calendar groups public writing, events and individual build releases into occupied day tiles under month headings; undated entries stay in card view so the calendar never invents dates or exposes unpublished content.
